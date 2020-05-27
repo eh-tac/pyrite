@@ -1,0 +1,529 @@
+Designation
+00	None
+01	Base
+02	Command Ship
+03	Convoy Craft
+04	Manufacturing Facility
+05	Mission Critical Craft
+06	Primary Target
+07	Reload Craft
+08	Resource Center
+09	Secondary Target
+0A	Station
+0B	Strike Craft
+0C	Tertiary Target
+
+CraftType
+00	None
+01	X-wing
+02	Y-wing
+03	A-wing
+04	B-wing
+05	TIE Fighter
+06	TIE Interceptor
+07	TIE Bomber
+08	TIE Advanced
+09	*TIE Defender
+0A	Unused
+0B	Unused
+0C	*Missile Boat
+0D	T-wing
+0E	Z-95 Headhunter
+0F	R-41 Starchaser
+10	Assault Gunboat
+11	Shuttle
+12	Escort Shuttle
+13	System Patrol Craft
+14	*Scout Craft
+15	Stormtrooper Transport
+16	Assault Transport
+17	Escort Transport
+18	Tug
+19	Combat Utility Vehicle
+1A	Container A
+1B	Container B
+1C	Container C
+1D	Container D
+1E	Heavy Lifter
+1F	Unused
+20	Bulk Freighter
+21	Cargo Ferry
+22	Modular Conveyor
+23	*Container Transport
+24	Medium Transport
+25	Murrian Transport
+26	Corellian Transport
+27	Unused
+28	Corellian Corvette
+29	Modified Corvette
+2A	Nebulon-B Frigate
+2B	Modified Frigate
+2C	*C-3 Passenger Liner
+2D	*Carrack Cruiser
+2E	Strike Cruiser
+2F	Escort Carrier
+30	Dreadnaught
+31	Mon Calamari Cruiser
+32	Light Mon Calamari Cruiser
+33	Interdictor Cruiser
+34	Victory-class Star Destroyer
+35	Imperator-class Star Destroyer
+36	Executor-class Star Destroyer
+37	Container E
+38	Container F
+39	Container G
+3A	Container H
+3B	Container I
+3C	Platform A
+3D	Platform B
+3E	Platform C
+3F	Platform D
+40	Platform E
+41	Platform F
+42	Asteroid R&D Station
+43	Asteroid Laser Battery
+44	Asteroid Warhead Battery
+45	X/7 Factory
+46	Satellite 1
+47	Satellite 2
+48	Unused
+49	Unused
+4A	Unused
+4B	Mine A
+4C	Mine B
+4D	Mine C
+4E	Gun Emplacement
+4F	Unused
+50	Probe A
+51	Probe B
+52	Unused
+53	Nav Buoy A
+54	Nav Buoy B
+55	Unused
+56	Asteroid Field
+57	Planet
+58	Unused
+59	Unused
+5A	Shipyard
+5B	Repair Yard
+5C	Modified Strike Cruiser
+
+Status
+00	None
+01	2X Warheads
+02	1/2 Warheads
+03	Disabled
+04	1/2 Shields
+05	No Lasers
+06	No Hyperdrive
+07	Shields 0%, charging
+08	Shields added or 200%
+09	Hyperdrive added
+0A	Unknown
+0B	Unknown
+0C	(200% Shields)
+0D	Shields 50%, Charging
+0E	(No Lasers)
+0F	Unknown
+10	Shields + Hyperdrive added
+11	Unknown
+12	200% Shields
+13	(50% Shields)
+14	Invincible
+15	Infinite Warheads
+
+Warhead
+00	None
+01	Heavy Rocket
+02	Space Bomb
+03	Concussion Missile
+04	Torpedo
+05	Advanced Concussion Missile
+06	Advanced Torpedo
+07	Mag Pulse Torpedo
+
+Beam
+00	None
+01	Tractor Beam
+02	Jamming Beam
+03	Decoy Beam
+
+GroupAI
+00	Rookie (None)
+01	Officer
+02	Veteran
+03	Ace
+04	Top Ace
+05	Jedi (Invincible)
+
+Markings
+00	Red (TIE - None)
+01	Gold (TIE - Red)
+02	Blue (TIE - Gold)
+03	Green (TIE - Blue)
+
+Radio
+00	None
+01	Team 1 (Imperial)
+02	Team 2 (Rebel)
+03	Team 3
+04	Team 4
+05	Team 5
+06	Team 6
+07	Team 7
+08	Team 8
+09	Player 1
+0A	Player 2
+0B	Player 3
+0C	Player 4
+0D	Player 5
+0E	Player 6
+0F	Player 7
+10	Player 8
+
+Formation
+00	Vic
+01	Finger Four
+02	Line Astern
+03	Line Abreast
+04	Echelon Right
+05	Echelon Left
+06	Double Astern
+07	Diamond
+08	Stack
+09	High X
+0A	Vic Abreast
+0B	High Vic
+0C	Reverse High Vic
+0D	Reverse Line Astern
+0E	Stacked Low
+0F	Abreast Right
+10	Abreast Left
+11	Wing Forward
+12	Wing Back
+13	Line Astern Up
+14	Line Astern Down
+15	Abreast V
+16	Abreast Inverted V
+17	Double Astern Mirror
+18	Double Stacked Astern
+19	Double Stacked High
+1A	Diamond 1
+1B	Diamond 2
+1C	Flat Pentagon
+1D	Side Pentagon
+1E	Front Pentagon
+1F	Flat Hexagon
+20	Side Hexagon
+21	Front Hexagon
+22	Single Point
+
+ArrivalDifficulty
+00	All
+01	Easy
+02	Medium
+03	Hard
+04	Medium, Hard
+05	Easy, Medium
+
+Condition
+00	Always (true)
+01	Created
+02	Destroyed
+03	Attacked
+04	Captured
+05	Inspected
+06	Boarded
+07	Docked
+08	Disabled
+09	Survived (exist)
+0A	None (false)
+0B	Unknown (---)
+0C	Completed mission
+0D	Completed Primary Goals
+0E	Failed Primary Goals
+0F	Completed Secondary Goals
+10	Failed Secondary Goals
+11	Completed Bonus Goals
+12	Failed Bonus Goals
+13	Dropped off
+14	Reinforced
+15	0% Shields
+16	50% Hull
+17	Out of Warheads
+18	Unknown (arrive?)
+19	be dropped off
+1A	destroyed in 1 hit
+1B	NOT be disabled
+1C	NOT be picked up
+1D	destroyed w/o Inspection
+1E	be docked with
+1F	NOT be docked with
+20	begin boarding
+21	NOT begin boarding
+22	50% Shields
+23	25% Shields
+24	75% Hull
+25	25% Hull
+26	Unknown
+27	Unknown
+28	Unknown
+29	be all Player Craft
+2A	reinforced by AI?
+2B	come and go
+2C	be picked up
+2D	withdraw
+2E	be carried away
+
+VariableType
+00	None
+01	Flight Group
+02	CraftType (enum)
+03	CraftCategory (enum)
+04	ObjectCategory (enum)
+05	IFF
+06	Order (enum)
+07	CraftWhen (enum)
+08	Global Group
+0C	Team
+15	All Teams except
+17	Global Unit
+
+CraftCategory
+00	Starfighters
+01	Transports
+02	Freighters/Containers
+03	Starships
+04	Utility Craft
+05	Platforms/Facilities
+06	Mines
+
+ObjectCategory
+00	Craft
+01	Weapons
+02	Space Objects
+
+Amount
+00	100%
+01	75%
+02	50%
+03	25%
+04	At least one
+05	All but one
+06	Special craft
+07	All non-special craft
+08	All non-player craft
+09	Player's craft
+0A	100% of first wave
+0B	75% of first wave
+0C	50% of first wave
+0D	25% of first wave
+0E	At least one of first wave
+0F	All but one of first wave
+10	66%
+11	33%
+12	Each craft
+
+AbortTrigger
+00	None
+01	0% Shields
+02	Unknown
+03	Out of warheads
+04	50% Hull
+05	Attacked
+06	50% Shields
+07	25% Shields
+08	75% Hull
+09	25% Hull
+
+Order
+00	Hold Station
+01	Go Home
+02	Circle
+	Var1	Number of Loops
+03	Circle and Evade
+	Var1	Number of Loops
+04	Rendezvous
+	Var1	Number of Dockings
+05	Disabled
+	Var1	Number of Dockings
+06	Await Boarding
+	Var1	Number of Dockings
+07	Attack
+08	Attack Escorts
+09	Protect
+0A	Escort
+	Var2	Attack Player (0/1)
+0B	Disable
+0C	Board and Give Cargo
+	Var1	Docking Time (seconds / 5)
+	Var2	Number of Dockings
+0D	Board and Take Cargo
+	Var1	Docking Time (seconds / 5)
+	Var2	Number of Dockings
+0E	Board and Exchange Cargo
+	Var1	Docking Time (seconds / 5)
+	Var2	Number of Dockings
+0F	Board and Capture Cargo
+	Var1	Docking Time (seconds / 5)
+	Var2	Number of Dockings
+10	Board and Destroy Cargo
+	Var1	Docking Time (seconds / 5)
+	Var2	Number of Dockings
+11	Pick up
+	Var1	Docking Time (seconds / 5)
+12	Drop off
+	Var1	Deploy Time?
+	Var2	Flight Group
+13	Wait
+	Var1	Wait time (seconds / 5)
+14	SS Wait
+	Var1	Wait time (seconds / 5)
+15	SS Patrol Loop
+	Var1	Number of Loops
+16	SS Await Return
+17	SS Launch
+18	SS Protect
+19	SS Wait and Protect
+1A	SS Patrol and Attack
+1B	SS Patrol and Disable
+1C	SS Hold Steady
+	Var1	Wait time (seconds / 5)
+1D	SS Go Home
+1E	SS Wait
+	Var1	Wait time (seconds / 5)
+1F	SS Board
+	Var1	Docking Time (seconds / 5)
+	Var2	Number of Dockings
+20	Board to Repair
+	Var1	Docking Time (seconds / 5)
+	Var2	Number of Dockings
+21	Hold Station
+22	Hold Steady
+23	SS Hold Station
+24	Self-destruct
+	Var1	Delay Time (seconds / 5)
+25	Kamikaze
+26	SS Disabled
+27	SS Hold Steady
+
+CraftWhen
+01	Inspected
+02	Boarded
+04	Disabled
+05	Attacked
+06	0% Shields?
+07	Special craft
+08	Non-special craft
+09	Player's craft
+0A	Non-player's craft
+0C	not disabled
+
+EventType
+03	Stop
+04	Title Text
+	Var1	String#
+05	Caption Text
+	Var1	String#
+06	Move Map
+	Var1	X
+	Var2	Y
+07	Zoom Map
+	Var1	X
+	Var2	Y
+08	Clear FG Tags
+09	FG Tag 1
+	Var1	Flight Group
+0A	FG Tag 2
+	Var1	Flight Group
+0B	FG Tag 3
+	Var1	Flight Group
+0C	FG Tag 4
+	Var1	Flight Group
+0D	FG Tag 5
+	Var1	Flight Group
+0E	FG Tag 6
+	Var1	Flight Group
+0F	FG Tag 7
+	Var1	Flight Group
+10	FG Tag 8
+	Var1	Flight Group
+11	Clear Text Tags
+12	Text Tag 1
+	Var1	Tag#
+	Var2	Color
+	Var3	X
+	Var4	Y
+13	Text Tag 2
+	Var1	Tag#
+	Var2	Color
+	Var3	X
+	Var4	Y
+14	Text Tag 3
+	Var1	Tag#
+	Var2	Color
+	Var3	X
+	Var4	Y
+15	Text Tag 4
+	Var1	Tag#
+	Var2	Color
+	Var3	X
+	Var4	Y
+16	Text Tag 5
+	Var1	Tag#
+	Var2	Color
+	Var3	X
+	Var4	Y
+17	Text Tag 6
+	Var1	Tag#
+	Var2	Color
+	Var3	X
+	Var4	Y
+18	Text Tag 7
+	Var1	Tag#
+	Var2	Color
+	Var3	X
+	Var4	Y
+19	Text Tag 8
+	Var1	Tag#
+	Var2	Color
+	Var3	X
+	Var4	Y
+22	End Briefing
+
+PlatformID
+12	XvT
+14	BoP
+
+MissionType
+00	Training
+01	Unknown
+02	Melee
+03	Multiplayer Training
+04	Multiplayer Combat
+
+Team
+31	Imperial
+32	Rebel
+33	Team 3
+34	Team 4
+61	All
+68	Unknown
+
+GoalArgument
+00	must
+01	must NOT
+02	BONUS must
+03	BONUS must NOT
+
+Countermeasures
+00	None
+01	Chaff
+02	Flare
+
+ShipCategory
+00	None
+01	All Flyable
+02	All Rebel Flyable
+03	All Imperial Flyable
+04	User Defined

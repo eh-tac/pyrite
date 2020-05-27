@@ -1,0 +1,17 @@
+{
+    "name": "eh-tac/pyrite",
+    "description": "Library for reading .TIE files and related things",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Pickled Yoda",
+            "email": "pickledyoda@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Pyrite\\": "lib/"
+        }
+    },
+    "require": {}
+}
