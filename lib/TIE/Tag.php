@@ -1,7 +1,7 @@
 <?php
 namespace Pyrite\TIE;
 
-class Tag extends TagBase
+class Tag extends Base\TagBase
 {
     protected function afterConstruct()
     {

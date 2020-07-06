@@ -1,7 +1,7 @@
 <?php
 namespace Pyrite\TIE;
 
-class TIEString extends TIEStringBase
+class TIEString extends Base\TIEStringBase
 {
     protected function afterConstruct()
     {

@@ -37,7 +37,8 @@ class Battle
                 $this->readme = file_get_contents($path);
             }
         }
-        $this->firstMission = '/downloads/battles/TIE/TC/TIETC1/' . $this->missionFiles[0];
+        // /downloads/battles/TIE/TC/TIETC1/
+        $this->firstMission = $this->folder . $this->missionFiles[0];
     }
 
     public static function fromZipUpload($fileData)
@@ -56,10 +57,12 @@ class Battle
         return self::fromEHM($path, $name);
     }
 
-    public static function fromEHM($path, $name = null)
+    public static function fromEHM($path, $name = null, $dir = null)
     {
-        $battle = self::fromZip($path, $name);
-        $battle->decrypt();
+        $battle = self::fromZip($path, $name, $dir);
+        if ($battle) {
+            $battle->decrypt();
+        }
         return $battle;
     }
 
@@ -72,50 +75,71 @@ class Battle
             $dir .= "/";
         }
         if (!file_exists($dir)) {
-            mkdir($dir);
+            mkdir($dir, 0777, true);
+        }
+        chmod($dir, 0777);
+        $dirContents = array_filter(scandir($dir), function ($f) {
+            return strlen($f) > 2;
+        });
+        if (!count($dirContents) > 0) {
+            $zip = new \ZipArchive();
+            if ($zip->open($path) === true) {
+                for ($f = 0; $f < $zip->numFiles; $f++) {
+                    $filename = $zip->getNameIndex($f);
+                    $zip->extractTo($dir, $filename);
+                }
+                $zip->close();
+            }
+        }
+        return self::fromFolder($name, $dir);
+    }
+
+    public static function fromFolder($name, $dir)
+    {
+        list($platform, $type, $num) = self::parseKey($name);
+        $dirContents = array_filter(scandir($dir), function ($f) {
+            return strlen($f) > 2;
+        });
+        if (!count($dirContents)) {
+            return null;
         }
 
-        list($platform, $type, $num) = self::parseKey($name);
+        $manifests = [];
+        $missions  = [];
+        $resources = [];
 
-        $zip = new \ZipArchive();
-        if ($zip->open($path) === true) {
-
-            $manifests = [];
-            $missions = [];
-            $resources = [];
-
-            for ($f = 0; $f < $zip->numFiles; $f++) {
-                $filename = $zip->getNameIndex($f);
-                $lcFile = strtolower($filename);
-                //                copy("zip://$path#$filename", $dir . $filename);
-                $zip->extractTo($dir, [$filename]);
-
-                $ext = substr($lcFile, -4, 4);
-                if ($ext === '.tie') {
-                    $missions[] = $filename;
+        foreach ($dirContents as $filename) {
+            $lcFile = strtolower($filename);
+            $ext = substr($lcFile, -4, 4);
+            if ($ext === '.tie') {
+                $missions[] = $filename;
+            } else {
+                if ($ext === '.lfd' || $ext === '.lst') {
+                    $manifests[] = $filename;
+                    $resources[] = $filename;
                 } else {
-                    if ($ext === '.lfd' || $ext === '.lst') {
-                        $manifests[] = $filename;
-                        $resources[] = $filename;
-                    } else {
-                        $resources[] = $filename;
-                    }
+                    $resources[] = $filename;
                 }
             }
+        }
 
-            $zip->close();
-
-            switch ($platform) {
-                case Platform::TIE:
-                    return \Pyrite\TIE\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
-                case Platform::XWA:
-                    return \Pyrite\XWA\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
-            }
+        switch ($platform) {
+            case Platform::TIE:
+                return \Pyrite\TIE\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
+            case Platform::XvT:
+            case Platform::BoP:
+                return \Pyrite\XvT\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
+            case Platform::XWA:
+                return \Pyrite\XWA\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
         }
     }
 
     public function decrypt()
     {
+        $df = $this->folder . '.decrypted';
+        if (file_exists($df)){
+            return; // already decrypted!
+        }
         $ehb = $this->getBattleIndex();
         $offset = $ehb->encryptionOffset;
         $originals = $this->missionFiles;
@@ -129,6 +153,7 @@ class Battle
             }
             file_put_contents($this->folder . $filename, $enc);
         }
+        file_put_contents($df, json_encode($ehb));
     }
 
     public function getBattleIndex()
@@ -148,6 +173,38 @@ class Battle
     public function name()
     {
         return $this->platform . $this->type . $this->num;
+    }
+
+    /**
+     * @param Battle $zipBattle
+     * @return array
+     */
+    public function validate($zipB){
+        $errors = [];
+        $ehb = $this->getBattleIndex();
+        if (!$ehb->title) {
+            $errors[] = "Has an EHM without a title";
+        }
+
+        // compare files
+        $mine = array_map('strtolower', array_merge($this->missionFiles, $this->resourceFiles));
+        $them = array_map('strtolower', array_merge($zipB->missionFiles, $zipB->resourceFiles));
+        $diff = array_merge(array_diff($mine, $them), array_diff($them, $mine));
+        $diff = array_filter($diff, function($f){
+            return $f !== '.decrypted' && $f !== 'battle.ehb';
+        });
+        if (count($diff)){
+            $errors[] = "Has different files in the EHM and ZIP: " . implode(", ", $diff);
+        }
+        foreach ($this->missionFiles as $missionFile){
+            $this->validateMission($missionFile, $errors);
+        }
+
+        return $errors;
+    }
+
+    public function validateMission($missionFile, &$errors){
+
     }
 
     public static function parseKey($key)

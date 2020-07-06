@@ -1,0 +1,22 @@
+@import "../../../assets/superhero.css";
+
+:host {
+  ion-list {
+    display: none;
+  }
+  .info .info,
+  .reviews .reviews,
+  .bugs .bugs,
+  .scores .scores,
+  .stats .stats {
+    display: block;
+  }
+
+  ion-list.reviews p.review {
+    white-space: pre-line;
+  }
+
+  ion-button.download {
+    width: 100%;
+  }
+}

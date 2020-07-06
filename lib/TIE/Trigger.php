@@ -2,7 +2,7 @@
 
 namespace Pyrite\TIE;
 
-class Trigger extends TriggerBase {
+class Trigger extends Base\TriggerBase {
 	public function __toString() {
 		if ($this->Condition === 0) {
 			return 'Always';

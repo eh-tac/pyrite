@@ -1,0 +1,22 @@
+pyrite-tie-messages {
+  .menu-list li {
+    a {
+      //   justify-content: start;
+    }
+    &.color-Red a {
+      color: #ae0000;
+    }
+
+    &.color-Blue a {
+      color: #0079e3;
+    }
+
+    &.color-Green a {
+      color: #00aa00;
+    }
+
+    &.color-Purple a {
+      color: #9200d1;
+    }
+  }
+}

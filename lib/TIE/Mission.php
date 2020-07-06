@@ -1,12 +1,20 @@
 <?php
+
 namespace Pyrite\TIE;
 
-class Mission extends MissionBase
+class Mission extends Base\MissionBase
 {
     public $valid = false;
+
+    public function __construct($hex)
+    {
+        parent::__construct($hex, $this);
+    }
+
     protected function afterConstruct()
     {
         $this->valid = true;
+        $this->TIE = $this;
     }
 
     public function lookupIFF($iff)
@@ -30,9 +38,24 @@ class Mission extends MissionBase
         return 'TODO ' . $gg;
     }
 
-    public static function validHex($hex){
-    	$plat = substr($hex, 0, 2);
-			$p = unpack('sshort', $plat)['short'];
-    	return $p === FileHeader::PLATFORM_ID;
-		}
+    public function validate(){
+        $errors = [];
+        foreach ($this->FlightGroups as $fg){
+            if ($fg->isFriendly()){
+                // TODO
+            } else {
+                if ($fg->ObeyPlayerOrders){
+                    $errors[] = "Non-Imperial IFF $fg obeys radio orders";
+                }
+            }
+        }
+        return $errors;
+    }
+
+    public static function validHex($hex)
+    {
+        $plat = substr($hex, 0, 2);
+        $p = unpack('sshort', $plat)['short'];
+        return $p === FileHeader::PLATFORM_ID;
+    }
 }

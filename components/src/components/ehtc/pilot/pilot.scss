@@ -1,0 +1,133 @@
+$topBar: rgb(225, 241, 253);
+$botBar: rgb(32, 43, 65);
+
+div.wrapper {
+  display: flex;
+  flex-direction: row;
+  max-width: 600px;
+  height: 100px;
+  box-shadow: 2px 2px 25px 1px rgba(0, 0, 0, 0.8);
+
+  background: linear-gradient(
+    180deg,
+    $topBar 0%,
+    $topBar 30%,
+    $botBar 40%,
+    $botBar 100%
+  );
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  div.left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 3px;
+    img {
+      max-width: 80%;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      max-height: 60px;
+    }
+    span.subtitle {
+      color: #ecdc11;
+      font-size: 13px;
+      font-style: italic;
+    }
+  }
+  div.right {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 350px;
+
+    .name {
+      display: flex;
+      flex-direction: row;
+      color: $botBar;
+      width: 100%;
+      justify-content: space-around;
+
+      h3 {
+        margin: 5px 0;
+        flex: 3;
+        display: flex;
+        align-items: center;
+      }
+      span.pin {
+        flex: 1;
+        margin: 5px 0;
+        opacity: 0.8;
+      }
+    }
+
+    p.id {
+      margin: 10px 4px 4px 4px;
+      color: $topBar;
+      font-size: 13px;
+      width: 100%;
+
+      & + p.id {
+        margin-top: 4px;
+      }
+    }
+  }
+}
+
+:host(.small) {
+  div.wrapper {
+    max-width: 300px;
+    height: 90px;
+  }
+  div.left {
+    img {
+      border-radius: 10px;
+    }
+    span.total {
+      display: none;
+    }
+  }
+  div.right {
+    flex: 1;
+    min-width: auto;
+    .name {
+      flex-direction: column-reverse;
+      align-items: center;
+      height: 100%;
+      h3 {
+        color: $topBar;
+      }
+    }
+    p.id {
+      display: none;
+    }
+  }
+}
+
+:host(.unlabelled) {
+  .subtitle {
+    display: none;
+  }
+}
+
+:host(:not(.rank)) {
+  .rank {
+    display: none;
+  }
+}
+
+:host(:not(.fchg)) {
+  .fchg {
+    display: none;
+  }
+}
+
+:host(.fchg) {
+  div.left img {
+    background: #333;
+  }
+}

@@ -18,4 +18,29 @@ class Battle extends \Pyrite\EHBL\Battle {
 		$lfd = new BattleLFD(file_get_contents($folder . reset($lfds)));
 		return new Battle($type, $num, $lfd->BattleText->TitleBattle1, $folder, $missionFiles, $resourceFiles);
 	}
+
+    /**
+     * @param Battle $zipBattle
+     * @return array
+     */
+    public function validate($zipB){
+	    $errors = parent::validate($zipB);
+
+        foreach ($this->missionFiles as $mission) {
+            if (strlen($mission) > 12) {
+                $errors[] = "has filename $mission which might not work in TIECD due to length";
+            }
+        }
+
+	    return $errors;
+    }
+
+    public function validateMission($missionFile, &$errors){
+        $m = file_get_contents($this->folder . $missionFile);
+        $tie = new Mission($m);
+        $me = $tie->validate();
+        if (count($me)){
+            $errors[$missionFile] = $me;
+        }
+    }
 }

@@ -1,0 +1,6 @@
+.tab-contents > .tab-content {
+  display: none;
+  &.show {
+    display: block;
+  }
+}

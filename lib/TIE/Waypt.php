@@ -1,7 +1,7 @@
 <?php
 namespace Pyrite\TIE;
 
-class Waypt extends WayptBase
+class Waypt extends Base\WayptBase
 {
 
 }

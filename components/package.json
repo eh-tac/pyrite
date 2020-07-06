@@ -1,0 +1,54 @@
+{
+  "name": "@pickledyoda/pyrite",
+  "version": "0.0.8",
+  "description": "Pyrite Web Components",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/pyrite/pyrite.js",
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "gencode": "ts-node -P tsconfig.commonjs.json src/build/run.ts",
+    "gentest": "jasmine-ts --project=tsconfig.commonjs.json --config=src/build/spec/jasmine.json",
+    "build": "stencil build --docs",
+    "prepublish": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate",
+    "lint": "eslint src --ext ts",
+    "tsc": "tsc",
+    "names": "tsc && node dist/scripts/names.js",
+    "coop": "tsc && node dist/scripts/coop.js"
+  },
+  "author": "Pickled Yoda",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jasmine": "^3.5.11",
+    "@types/jest": "^26.0.3",
+    "@types/node": "^13.1.7",
+    "@types/puppeteer": "^3.0.1",
+    "jasmine": "^3.5.0",
+    "jasmine-spec-reporter": "^5.0.2",
+    "jasmine-ts": "^0.3.0",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "@stencil/core": "^1.15.0",
+    "@stencil/sass": "^1.1.1",
+    "cli-progress": "^3.6.0",
+    "extract-zip": "^1.6.7"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}

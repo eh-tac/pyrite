@@ -47,7 +47,7 @@ class LFDString implements Byteable, \ArrayAccess {
 			$this->SubStrings = explode(chr(0), substr($hex, 2, $this->Length - 2));
 		}
 		$this->Reserved = $this->getByte($hex, $this->Length + 1);
-		$this->Hex      = Hex::hexToStr(substr($hex, 2, $this->Length - 1));
+//		$this->Hex      = Hex::hexToStr(substr($hex, 2, $this->Length - 1));
 	}
 
 	public function getLength() {

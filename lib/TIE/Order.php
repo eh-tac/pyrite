@@ -1,7 +1,7 @@
 <?php
 namespace Pyrite\TIE;
 
-class Order extends OrderBase
+class Order extends Base\OrderBase
 {
     public $diffLimit = true;
 

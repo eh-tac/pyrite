@@ -1,0 +1,54 @@
+@import "../../assets/superhero.css";
+@import "../../global/material-icons.scss";
+
+:host {
+  display: block;
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .container.card,
+  .list-group-item {
+    background-color: #2b3e50;
+  }
+
+  .nav-link.active {
+    background-color: #4e5d6c;
+  }
+  .list-group-item {
+    &.heading {
+      background-color: #4e5d6c;
+    }
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.5;
+    }
+  }
+  .data + .no-data {
+    display: none;
+  }
+
+  .material-icons {
+    &.gold {
+      color: gold;
+    }
+    &.silver {
+      color: silver;
+    }
+    &.bronze {
+      color: brown;
+    }
+    &.nickel {
+      color: cornflowerblue;
+    }
+    &.copper {
+      color: orange;
+    }
+    &.lead {
+      color: grey;
+    }
+  }
+}

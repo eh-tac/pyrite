@@ -1,0 +1,15 @@
+@import "../../../assets/superhero.css";
+
+:host {
+  // background-color: var(--ion-background-color);
+  display: block;
+  position: relative;
+
+  .platforms button {
+    border-width: 3px;
+  }
+
+  .lh-6 {
+    line-height: 6rem;
+  }
+}

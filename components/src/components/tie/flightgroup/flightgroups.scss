@@ -1,0 +1,32 @@
+pyrite-tie-flightgroups {
+  display: flex;
+  flex-direction: row;
+
+  .button .tags .tag {
+    margin: 0;
+    &.count {
+      width: 2rem;
+    }
+  }
+
+  .iff-0 .tags .iff {
+    // rebel
+    background-color: #00aa00;
+    color: white;
+  }
+  .iff-1 .tags .iff,
+  .iff-4 .tags .iff {
+    // imperial
+    background-color: #ae0000;
+    color: white;
+  }
+  .iff-2 .tags .iff,
+  .iff-5 .tags .iff {
+    background-color: #9200d1;
+    color: white;
+  }
+  .iff-3 .tags .iff {
+    background-color: #0079e3;
+    color: white;
+  }
+}

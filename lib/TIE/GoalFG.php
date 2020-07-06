@@ -1,7 +1,7 @@
 <?php
 namespace Pyrite\TIE;
 
-class GoalFG extends GoalFGBase
+class GoalFG extends Base\GoalFGBase
 {
 
 }

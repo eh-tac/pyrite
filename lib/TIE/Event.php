@@ -3,7 +3,7 @@ namespace Pyrite\TIE;
 
 use Pyrite\Summary;
 
-class Event extends EventBase implements Summary
+class Event extends Base\EventBase implements Summary
 {
 	public $Briefing;
 
@@ -38,7 +38,8 @@ class Event extends EventBase implements Summary
         if (isset($counts[$this->EventType])) {
             return $counts[$this->EventType];
         } else {
-            throw new \Error("Unknown count for {$this->EventType}");
+            return 0;
+//            throw new \Error("Unknown count for {$this->EventType}");
         }
     }
 

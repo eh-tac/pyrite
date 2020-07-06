@@ -3,7 +3,7 @@ namespace Pyrite\TIE;
 
 use Pyrite\Summary;
 
-class GlobalGoal extends GlobalGoalBase implements Summary
+class GlobalGoal extends Base\GlobalGoalBase implements Summary
 {
 	public function summaryHash(){
 		$triggas = [];

@@ -1,10 +1,16 @@
 <?php
+
 namespace Pyrite\TIE;
 
 use Pyrite\Summary;
 
-class FlightGroup extends FlightGroupBase implements Summary
+class FlightGroup extends Base\FlightGroupBase implements Summary
 {
+    public function isFriendly()
+    {
+        return $this->PlayerCraft > 0 || $this->Iff === 1;
+    }
+
     public function hasMothership()
     {
         return $this->ArriveViaMothership === true || $this->AlternateArriveViaMothership === true;
@@ -33,19 +39,21 @@ class FlightGroup extends FlightGroupBase implements Summary
         return $this->NumberOfWaves > 0;
     }
 
-    public function getIFFLabel(){
-    	return $this->TIE->lookupIFF($this->Iff);
-	}
+    public function getIFFLabel()
+    {
+        return $this->TIE->lookupIFF($this->Iff);
+    }
 
-	public function summaryHash(){
-		$waves = $this->NumberOfWaves === 0 ? '' : ($this->NumberOfWaves + 1) . 'x';
-		$diff = $this->getArrivalDifficultyLabel();
-		return [
-			'IFF' => $this->getIFFLabel(),
-			'Craft' => "{$waves}{$this->NumberOfCraft}",
-			'Type' => $this->getCraftTypeLabel(),
-			'Name' => $this->printChar($this->Name),
-			'Difficulty' => $diff
-		];
-	}
+    public function summaryHash()
+    {
+        $waves = $this->NumberOfWaves === 0 ? '' : ($this->NumberOfWaves + 1) . 'x';
+        $diff = $this->getArrivalDifficultyLabel();
+        return [
+            'IFF'        => $this->getIFFLabel(),
+            'Craft'      => "{$waves}{$this->NumberOfCraft}",
+            'Type'       => $this->getCraftTypeLabel(),
+            'Name'       => $this->printChar($this->Name),
+            'Difficulty' => $diff
+        ];
+    }
 }

@@ -3,7 +3,7 @@ namespace Pyrite\TIE;
 
 use Pyrite\Summary;
 
-class Message extends MessageBase implements Summary
+class Message extends Base\MessageBase implements Summary
 {
     public $messageColour = 0;
 

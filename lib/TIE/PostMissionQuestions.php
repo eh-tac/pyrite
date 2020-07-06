@@ -3,7 +3,7 @@ namespace Pyrite\TIE;
 
 use Pyrite\Summary;
 
-class PostMissionQuestions extends PostMissionQuestionsBase implements Summary
+class PostMissionQuestions extends Base\PostMissionQuestionsBase implements Summary
 {
     protected function afterConstruct()
     {

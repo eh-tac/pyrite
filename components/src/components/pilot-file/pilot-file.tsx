@@ -1,0 +1,131 @@
+import { Component, h, JSX, Prop, State, Element } from "@stencil/core";
+import { tabPanes } from "../../view-model/bootstrap";
+import { PilotFileController } from "../../view-model/pilot-file/controller";
+import { TFRController } from "../../view-model/pilot-file/tfr-controller";
+import { TFR } from "../../model/pilot";
+import { XvTPlt } from "../../model/pilot/xvt";
+import { XvTPltController } from "../../view-model/pilot-file/xvt-controller";
+import { Battle } from "../../model/ehtc";
+import { XWAPlt } from "../../model/pilot/xwa";
+import { XWAPltController } from "../../view-model/pilot-file/xwa-controller";
+
+@Component({
+  tag: "pyrite-pilot-file",
+  styleUrl: "pilot-file.scss",
+  shadow: true
+})
+export class PilotViewer {
+  @Element() private el: HTMLElement;
+  @Prop() public file: string;
+  @Prop() public bsf: string = "";
+
+  @State() protected controller: PilotFileController;
+  @State() protected battleData?: Battle;
+  @State() protected activeTab: string = "summary";
+
+  public componentWillLoad(): void {
+    if (this.file) {
+      fetch(this.file)
+        .then((res: Response) => res.arrayBuffer())
+        .then((value: ArrayBuffer) => {
+          this.controller = this.controllerFromFile(this.file, value);
+        });
+    }
+    if (this.bsf) {
+      fetch(this.bsf)
+        .then((res: Response) => res.json())
+        .then((value: object) => {
+          this.battleData = Battle.fromJSON(value as Battle);
+          this.activeTab = "bsf";
+        });
+    }
+  }
+
+  public render(): JSX.Element {
+    let title: JSX.Element = "Pyrite Pilot File Viewer";
+    let content: JSX.Element = (
+      <p class="text-center my-3">Select a file to view</p>
+    );
+
+    if (this.controller) {
+      title = this.controller.filename;
+      content = tabPanes(
+        this.controller.renderTabs(this.battleData),
+        this.activeTab,
+        this.tabSelect.bind(this)
+      );
+    }
+
+    return (
+      <div class="component bg-dark">
+        <nav class="navbar navbar-light bg-light">
+          <a class="navbar-brand" href="#">
+            {title}
+          </a>
+          <button
+            type="button"
+            class="btn btn-sm ml-1 btn-secondary"
+            onClick={this.getFile.bind(this)}
+          >
+            Upload
+          </button>
+        </nav>
+        <div class="container card">{content}</div>
+        <input
+          type="file"
+          id="pltUpload"
+          value=""
+          onChange={this.fileChange.bind(this)}
+        />
+      </div>
+    );
+  }
+
+  private tabSelect(tabName: string): void {
+    this.activeTab = tabName;
+  }
+
+  private getFile(): void {
+    this.el.shadowRoot.getElementById("pltUpload").click();
+  }
+
+  private fileChange(event: any): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      const file = input.files[0];
+      const fr = new FileReader();
+      fr.onloadend = () => {
+        this.controller = this.controllerFromFile(
+          file.name,
+          fr.result as ArrayBuffer
+        );
+      };
+      fr.readAsArrayBuffer(file);
+    } else {
+      // do nothing
+    }
+  }
+
+  private controllerFromFile(
+    filepath: string,
+    file: ArrayBuffer
+  ): PilotFileController {
+    const ext = filepath
+      .toLowerCase()
+      .split(".")
+      .pop();
+    if (ext === "tfr") {
+      return new TFRController(filepath, new TFR(file));
+    } else if (ext === "plt") {
+      if (file.byteLength > 200000) {
+        return new XvTPltController(filepath, new XvTPlt(file));
+      } else {
+        return new XWAPltController(filepath, new XWAPlt(file));
+      }
+    }
+    console.error(filepath, file);
+    throw new Error(
+      `Unknown pilot file: Unrecognised file format: ${filepath}`
+    );
+  }
+}

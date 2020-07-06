@@ -1,7 +1,7 @@
 <?php
 namespace Pyrite\TIE;
 
-class Briefing extends BriefingBase
+class Briefing extends Base\BriefingBase
 {
     public function __construct($hex)
     {
@@ -17,7 +17,7 @@ class Briefing extends BriefingBase
         $eventParsed = 0;
         while ($eventParsed < $this->EventsLength * 2) {
             //        for ($i = 0; $i < $this->EventsLength; $i++) {
-            $t = new Event(substr($hex, $offset));
+            $t = new Event(substr($hex, $offset), $this->TIE);
             $t->Briefing = $this;
             $this->Events[] = $t;
             $offset += $t->getLength();
@@ -27,7 +27,7 @@ class Briefing extends BriefingBase
         $this->Tags = [];
         $offset = 0x32a;
         for ($i = 0; $i < 32; $i++) {
-            $t = new Tag(substr($hex, $offset));
+            $t = new Tag(substr($hex, $offset), $this->TIE);
             $this->Tags[] = $t;
             $offset += $t->getLength();
         }
@@ -35,7 +35,7 @@ class Briefing extends BriefingBase
         $this->Strings = [];
 
         for ($i = 0; $i < 32; $i++) {
-            $t = new TIEString(substr($hex, $offset));
+            $t = new TIEString(substr($hex, $offset), $this->TIE);
             $this->Strings[] = $t;
             $offset += $t->getLength();
         }

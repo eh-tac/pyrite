@@ -3,7 +3,7 @@ namespace Pyrite\TIE;
 
 use Pyrite\Summary;
 
-class PreMissionQuestions extends PreMissionQuestionsBase implements Summary
+class PreMissionQuestions extends Base\PreMissionQuestionsBase implements Summary
 {
     protected function afterConstruct()
     {

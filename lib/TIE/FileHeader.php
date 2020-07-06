@@ -1,7 +1,7 @@
 <?php
 namespace Pyrite\TIE;
 
-class FileHeader extends FileHeaderBase
+class FileHeader extends Base\FileHeaderBase
 {
 	const PLATFORM_ID = -1;
 
