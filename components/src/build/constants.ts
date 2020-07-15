@@ -3,6 +3,10 @@ export class Constants {
   constructor(public name: string) {}
 
   public add(value: string, label: string) {
-    this.values.push([parseInt(value, 16), label]);
+    const num = parseInt(value, 16);
+    if (isNaN(num)) {
+      return; // not a value constant, some fluff from the file
+    }
+    this.values.push([num, label]);
   }
 }

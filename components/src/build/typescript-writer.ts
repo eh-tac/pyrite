@@ -1,37 +1,56 @@
-import { PyriteWriter, camelToKebab } from "./writer";
+import { PyriteWriter } from "./writer";
 import { Constants } from "./constants";
 import { Struct } from "./struct";
 import { Prop, PropInt } from "./prop";
+import * as lodash from "lodash";
 
 export class TypeScriptWriter extends PyriteWriter {
   public write(): this {
     super.write();
 
-    const modelIndex: string[] = [];
+    const modelIndex: string[] = [`export { Constants } from './constants';`];
     const contrIndex: string[] = [];
     Object.values(this.generator.structs).forEach((s: Struct) => {
-      const kebab = camelToKebab(s.name);
+      const kebab = lodash.kebabCase(s.name);
       modelIndex.push(`export { ${s.name} } from "./${kebab}";`);
       contrIndex.push(`export { ${this.generator.platform}${s.name}Controller } from "./${kebab}";`);
     });
 
     this.writeFile("model/PLT/index.ts", modelIndex.join("\n"));
     this.writeFile("controllers/PLT/index.ts", contrIndex.join("\n"));
+    this.copyFile("byteable.ts");
+    this.copyFile("pyrite-base.ts");
+    this.copyFile("hex.ts");
+    this.copyFile("controller-base.ts");
 
     return this;
   }
 
   public writeConstants(constants: Constants[]): void {
     const lines = [`export class Constants {`];
+    const enums: string[] = [];
+
     for (const constant of constants) {
       lines.push(`  public static ${constant.name.toUpperCase()} = {`);
+      enums.push(`export enum ${constant.name} {`);
+      let used = new Set<string>();
       for (const [value, label] of constant.values) {
         lines.push(`    ${value}: "${label}",`);
+
+        let eName = this.getEnumName(label);
+        if (used.has(eName)) {
+          eName = `// duplicate ${eName}`;
+        } else {
+          used.add(eName);
+        }
+        enums.push(`  ${eName} = ${value},`);
       }
       lines.push(`  };\n`);
+      enums.push("}\n");
     }
 
-    lines.push("}");
+    lines.push("}\n");
+    lines.push(...enums);
     this.writeFile("model/PLT/constants.ts", lines.join("\n"));
   }
 
@@ -42,96 +61,94 @@ export class TypeScriptWriter extends PyriteWriter {
   }
 
   public writeBaseModel(struct: Struct): void {
-    const file = this.filename(struct.name);
-    const lines: string[] = [];
+    const baseName = this.baseClass(struct.name);
 
-    // set up length property
+    const props = struct.getProps();
+    const enums = props.filter((p: Prop) => p.isEnum);
     let lengthProp = new PropInt("", `${struct.name}Length`, "INT");
     if (!struct.isVariableLength) {
       lengthProp.name = lengthProp.name.toUpperCase();
       lengthProp.reservedValue = struct.size;
     }
-    lines.push(this.initProp(lengthProp));
 
-    lines.push(...struct.getProps().map((p: Prop): string => this.initProp(p)));
-
-    lines.push(this.getBaseConstructor(struct));
-
-    const enums = struct.getProps().filter((p: Prop) => p.isEnum);
-    lines.push(...enums.map((p: Prop): string => this.enumLookup(p)));
-
-    lines.push(...struct.functionStubs.map((f: string): string => this.abstractFunction(f)));
-
-    // foreach prop , declare
-    // add length prop
-    // do contructor
-    // do debug output
-    // do function stubs
-    // do output function
-
-    const start = `import { Byteable } from "../../byteable";
-import { IMission, PyriteBase } from "../../pyrite-base";
-import { Constants } from "../constants";
+    const content = `${this.getBaseClassImports(props)}
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 
-export abstract class ${struct.name}Base extends PyriteBase implements Byteable {`;
-
-    lines.unshift(start);
-    lines.push("}\n");
-    this.writeFile(`model/PLT/base/${file}`, lines.join("\n"));
+export abstract class ${baseName} extends PyriteBase implements Byteable {
+  ${lengthProp.propertyDeclaration}
+  ${props.map((p: Prop): string => p.propertyDeclaration).join("\n  ")}
+  ${this.getBaseConstructor(struct, lengthProp)}
+  ${this.baseJSON(props)}
+  ${this.baseHexString(props)}
+  ${enums.map((p: Prop): string => p.enumLookupFunction).join("\n")}
+  ${struct.functionStubs.map((f: string): string => this.abstractFunction(f)).join("\n")}
+  public getLength(): number {
+    return this.${lengthProp.name};
+  }
+}`;
+    this.writeFile(`model/PLT/base/${this.filename(baseName)}`, content);
   }
 
   public writeImplModel(struct: Struct): void {
     const baseClass = this.baseClass(struct.name);
-    const baseFile = camelToKebab(baseClass);
+    const baseFile = lodash.kebabCase(baseClass);
 
-    const content = `import { ${baseClass} } from "./base/${baseFile}";
+    let content = `import { ${baseClass} } from "./base/${baseFile}";
     
-    export class ${struct.name} extends ${baseClass} {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class ${struct.name} extends ${baseClass} {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    `;
+  public toString(): string {
+    return '';
+  }
+
+  ${struct.functionStubs.map((f: string): string => this.functionStub(f)).join("\n  ")}
+}
+`;
 
     const file = this.filename(struct.name);
-    this.writeFile(`model/PLT/${file}`, content);
+    this.writeFile(`model/PLT/${file}`, content, true); // TODO stop overwrite
   }
 
   public writeController(struct: Struct): void {
-    const contents: string = `import { ${struct.name} } from "../../model/${this.generator.platform}";
+    const props = struct.getProps();
+    const fields: object = {};
+    props.forEach((p: Prop) => {
+      fields[p.name] = p.getFieldProps(this.generator.constants);
+    });
 
-export class ${this.controllerName(struct)} {
-  public static fields: any[] = [];
+    const contents: string = `import { ControllerBase } from "../../controller-base";
+import { ${struct.name} } from "../../model/${this.generator.platform}";
 
-  constructor(public model: ${struct.name}){}
+export class ${this.controllerName(struct)} extends ControllerBase {
+  public readonly fields: object = ${JSON.stringify(fields)};
 
-  public render(field: string){}
+  constructor(public model: ${struct.name}){
+    super(model);
+  }
 }`;
 
-    const file = this.filename(struct.name);
-    this.writeFile(`controllers/${this.generator.platform}/${file}.ts`, contents);
+    this.writeFile(`controllers/PLT/${this.filename(struct.name)}`, contents);
   }
 
   public writeComponent(struct: Struct): void {
-    const kebab = camelToKebab(struct.name);
+    const kebab = lodash.kebabCase(struct.name);
 
     const scssFile = `${kebab}.scss`;
     this.writeFile(`components/PLT/${kebab}/${scssFile}`, "");
 
     const plt = this.generator.platform;
-    const tag = `pyrite-${plt}-${kebab}`;
+    const tag = `xpyrite-${plt}-${kebab}`.toLowerCase();
     const lName = struct.name.toLowerCase();
     const cName = this.controllerName(struct);
+    const props = struct.getProps();
 
     const contents: string = `import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { ${struct.name} } from "../../../model/${plt}";
 import { ${cName} } from "../../../controllers/${plt}";
+import { Field } from "../../fields/field";
 
 @Component({
   tag: "${tag}",
@@ -142,16 +159,16 @@ export class ${plt}${struct.name}Component {
   @Element() public el: HTMLElement;
   @Prop() public ${lName}: ${struct.name};
 
-  private controller: ${this.controllerName(struct)};
+  private controller: ${cName};
 
   public componentWillLoad(): void {
-    this.controller = new ${this.controllerName(struct)}(this.${lName});
+    this.controller = new ${cName}(this.${lName});
   }
 
   public render(): JSX.Element {
     return (
       <Host>
-      ${this.renderFields(struct.getProps())}        
+        ${props.map((p: Prop) => `<Field {...this.controller.getProps('${p.name}')} />`).join("\n        ")}
       </Host>
     )
   }
@@ -161,74 +178,101 @@ export class ${plt}${struct.name}Component {
     this.writeFile(`components/PLT/${kebab}/${file}x`, contents);
   }
 
-  protected getBaseConstructor(struct: Struct): string {
+  protected getBaseClassImports(props: Prop[]): string {
+    const importLines: [string[], string][] = [
+      [["Byteable"], "../../../byteable"],
+      [["IMission", "PyriteBase"], "../../../pyrite-base"]
+    ];
+
+    const usedHexImports = [];
+    const usedClassImports = [];
+    let useConstants: boolean = false;
+    props.forEach((p: Prop): void => {
+      usedHexImports.push(...p.hexImports);
+      usedClassImports.push(...p.classImports);
+      useConstants = useConstants || !!p.enumName;
+    });
+
+    if (useConstants) {
+      importLines.push([["Constants"], "../constants"]);
+    }
+
+    const hex = Array.from(new Set(usedHexImports));
+    importLines.push([hex, "../../../hex"]);
+
+    const classes = Array.from(new Set(usedClassImports));
+    classes.forEach((c: string) => {
+      importLines.push([[c], `../${lodash.kebabCase(c)}`]);
+    });
+
+    return importLines
+      .sort()
+      .map(([imports, path]): string => `import { ${imports.sort().join(", ")} } from "${path}";`)
+      .join("\n");
+  }
+
+  protected getBaseConstructor(struct: Struct, lengthProp: Prop): string {
+    const props = struct.getProps();
+
     return `
-  constructor(hex: ArrayBuffer, tie?: any){
+  constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
+    this.beforeConstruct();
+    let offset = 0;
+
+    ${props.map((p: Prop) => p.getConstructorInit()).join("\n    ")}
+    ${struct.isVariableLength ? `this.${lengthProp.name} = offset;` : ""}
   }`;
   }
 
-  protected initProp(prop: Prop): string {
-    let type = this.tsType(prop);
-    if (prop.isArray) {
-      type = `${type}[]`;
-    }
-
-    let p = `${prop.name}: ${type}`;
-    if (prop.isStatic) {
-      p = `static ${p} = ${prop.reservedValue}`;
-    }
-    p = `  public ${p};`;
-    if (prop.comment) {
-      p = `${p} //${prop.comment}`;
-    }
-    return p;
-  }
-
-  protected propExpr(prop: Prop): string {
-    return `this.${prop.name}`;
-  }
-
-  protected enumLookup(prop: Prop): string {
-    const enumName = prop.enumName.toUpperCase();
-    const index = this.propExpr(prop);
-
+  protected baseJSON(props: Prop[]): string {
+    const nonStatics = props.filter(p => !p.isStatic);
     return `
-  public get ${prop.name}Label(): string {
-    return Constants.${enumName}[${index}] || "Unknown";
+  public toJSON(): object {
+    return {
+      ${nonStatics.map((p: Prop) => `${p.name}: this.${p.tsLabel}`).join(",\n      ")}
+    };
+  }`;
+  }
+
+  protected baseHexString(props: Prop[]): string {
+    return `
+  public toHexString(): string {
+    let hex: string = '';
+    let offset = 0;
+
+    ${props.map((p: Prop) => p.getOutputHex()).join("\n    ")}
+
+    return hex;
   }`;
   }
 
   protected abstractFunction(name: string): string {
-    return `  
-  protected abstract ${name}();
-`;
+    return `protected abstract ${name.replace("()", "")}();`;
+  }
+
+  protected functionStub(name: string): string {
+    return `protected ${name.replace("()", "")}(): number {
+    return 0;
+  }`;
   }
 
   protected filename(className: string): string {
-    return `${camelToKebab(className)}.ts`;
+    return `${lodash.kebabCase(className)}.ts`;
   }
 
   private controllerName(struct: Struct): string {
     return `${this.generator.platform}${struct.name}Controller`;
   }
 
-  private renderFields(props: Prop[]): string {
-    return props
-      .map((p: Prop): string => {
-        return `{this.controller.render("${p.name}")}`;
-      })
-      .join("\n      ");
-  }
-
-  private tsType(prop: Prop): string {
-    if (["SHORT", "INT", "BYTE", "SBYTE"].includes(prop.type)) {
-      return "number";
-    } else if ("BOOL" === prop.type) {
-      return "boolean";
-    } else if (["STR", "CHAR"].includes(prop.type)) {
-      return "string";
+  private getEnumName(label: string): string {
+    let clean = label
+      .replace("%", "Percent")
+      .replace("&", "n")
+      .replace(/[^\w\s]/g, "");
+    if (!isNaN(parseInt(clean[0], 10))) {
+      clean = `n${clean}`;
     }
-    return prop.type;
+    return lodash.camelCase(clean);
   }
 }

@@ -21,4 +21,8 @@ export class Constants {`
     lines.push("}");
     this.writeFile("Constants.php", lines.join("\n"));
   }
+
+  public writeBaseModel(): void {}
+
+  public writeImplModel(): void {}
 }

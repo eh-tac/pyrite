@@ -32,16 +32,26 @@ export abstract class PyriteWriter {
 
   public abstract writeImplModel(struct: Struct): void;
 
-  public writeFile(path: string, contents: string) {
+  public writeFile(path: string, contents: string, overwriteIfExists: boolean = true) {
     path = this.buildPath(path);
-    console.log("writing to ", path);
 
     const dir = nodePath.dirname(path);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
+    if (fs.existsSync(path) && !overwriteIfExists) {
+      return;
+    }
+    console.log("writing to ", path);
 
     fs.writeFileSync(path, contents, {});
+  }
+
+  public copyFile(path: string): void {
+    const from = nodePath.join(__dirname, path);
+    if (fs.existsSync(from)) {
+      this.writeFile(path, fs.readFileSync(from, { encoding: "UTF8" }));
+    }
   }
 
   protected baseClass(className: string): string {
@@ -51,31 +61,4 @@ export abstract class PyriteWriter {
   protected filename(className: string): string {
     return className.toLowerCase();
   }
-}
-
-export function camelToKebab(camel: string): string {
-  const c = camel.length;
-  camel += "?";
-  const upper = camel.toUpperCase();
-  const lower = camel.toLowerCase();
-
-  let kebab = lower[0];
-  for (let i = 1; i < c; i++) {
-    const l = i - 1; // last index
-    const n = i + 1; // next index
-
-    const wasUp = upper[l] === camel[l];
-    const wasLo = lower[l] === camel[l];
-    const nowUp = upper[i] === camel[i];
-    const nxtLo = lower[n] === camel[n] && camel[n] !== "?";
-
-    if (wasLo && nowUp) {
-      kebab += "-";
-    } else if (wasUp && nowUp && nxtLo) {
-      kebab += "-";
-    }
-    kebab += lower[i];
-  }
-
-  return kebab;
 }

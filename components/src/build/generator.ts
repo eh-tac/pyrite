@@ -91,11 +91,10 @@ export class PyriteGenerator {
     } else {
       console.warn("very confused by", bits);
     }
-    prop.handleTypeLength(match.groups["typeLen"]);
-    prop.handleArrayLength(match.groups["arrayLen"]);
-    prop.handleRest(rest);
-
-    return prop;
+    return prop
+      .handleTypeLength(match.groups["typeLen"])
+      .handleArrayLength(match.groups["arrayLen"])
+      .handleRest(rest);
   }
 
   /**

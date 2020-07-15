@@ -12,7 +12,7 @@ struct Mission (size 0)
 
 struct FileHeader (size 0x1CA)
 {
-	0x000	SHORT	PlatformID (-1)
+	0x000	SHORT	PlatformID Reserved(-1)
 	0x002	SHORT	NumFGs
 	0x004	SHORT	NumMessages
 	0x006	SHORT	NumGGs Reserved(3)		might be # of GlobalGoals

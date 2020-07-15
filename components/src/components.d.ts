@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Battle } from "./model/ehtc/battle";
 import { FlightGroup, Message, Mission } from "./model/TIE";
 import { Mission as Mission1 } from "./model/TIE/mission";
+import { Briefing, Event, FileHeader, FlightGroup as FlightGroup1, GlobalGoal, GoalFG, Message as Message1, Mission as Mission2, Order, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./x/model/TIE";
 export namespace Components {
     interface EhtcBattle {
         "battle": Battle;
@@ -63,6 +64,51 @@ export namespace Components {
     }
     interface PyriteTieScore {
         "mission": Mission;
+    }
+    interface XpyriteTieBriefing {
+        "briefing": Briefing;
+    }
+    interface XpyriteTieEvent {
+        "event": Event;
+    }
+    interface XpyriteTieFileHeader {
+        "fileheader": FileHeader;
+    }
+    interface XpyriteTieFlightGroup {
+        "flightgroup": FlightGroup;
+    }
+    interface XpyriteTieGlobalGoal {
+        "globalgoal": GlobalGoal;
+    }
+    interface XpyriteTieGoalFg {
+        "goalfg": GoalFG;
+    }
+    interface XpyriteTieMessage {
+        "message": Message;
+    }
+    interface XpyriteTieMission {
+        "mission": Mission;
+    }
+    interface XpyriteTieOrder {
+        "order": Order;
+    }
+    interface XpyriteTiePostMissionQuestions {
+        "postmissionquestions": PostMissionQuestions;
+    }
+    interface XpyriteTiePreMissionQuestions {
+        "premissionquestions": PreMissionQuestions;
+    }
+    interface XpyriteTieTag {
+        "tag": Tag;
+    }
+    interface XpyriteTieTieString {
+        "tiestring": TIEString;
+    }
+    interface XpyriteTieTrigger {
+        "trigger": Trigger;
+    }
+    interface XpyriteTieWaypt {
+        "waypt": Waypt;
     }
 }
 declare global {
@@ -168,6 +214,96 @@ declare global {
         prototype: HTMLPyriteTieScoreElement;
         new (): HTMLPyriteTieScoreElement;
     };
+    interface HTMLXpyriteTieBriefingElement extends Components.XpyriteTieBriefing, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieBriefingElement: {
+        prototype: HTMLXpyriteTieBriefingElement;
+        new (): HTMLXpyriteTieBriefingElement;
+    };
+    interface HTMLXpyriteTieEventElement extends Components.XpyriteTieEvent, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieEventElement: {
+        prototype: HTMLXpyriteTieEventElement;
+        new (): HTMLXpyriteTieEventElement;
+    };
+    interface HTMLXpyriteTieFileHeaderElement extends Components.XpyriteTieFileHeader, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieFileHeaderElement: {
+        prototype: HTMLXpyriteTieFileHeaderElement;
+        new (): HTMLXpyriteTieFileHeaderElement;
+    };
+    interface HTMLXpyriteTieFlightGroupElement extends Components.XpyriteTieFlightGroup, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieFlightGroupElement: {
+        prototype: HTMLXpyriteTieFlightGroupElement;
+        new (): HTMLXpyriteTieFlightGroupElement;
+    };
+    interface HTMLXpyriteTieGlobalGoalElement extends Components.XpyriteTieGlobalGoal, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieGlobalGoalElement: {
+        prototype: HTMLXpyriteTieGlobalGoalElement;
+        new (): HTMLXpyriteTieGlobalGoalElement;
+    };
+    interface HTMLXpyriteTieGoalFgElement extends Components.XpyriteTieGoalFg, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieGoalFgElement: {
+        prototype: HTMLXpyriteTieGoalFgElement;
+        new (): HTMLXpyriteTieGoalFgElement;
+    };
+    interface HTMLXpyriteTieMessageElement extends Components.XpyriteTieMessage, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieMessageElement: {
+        prototype: HTMLXpyriteTieMessageElement;
+        new (): HTMLXpyriteTieMessageElement;
+    };
+    interface HTMLXpyriteTieMissionElement extends Components.XpyriteTieMission, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieMissionElement: {
+        prototype: HTMLXpyriteTieMissionElement;
+        new (): HTMLXpyriteTieMissionElement;
+    };
+    interface HTMLXpyriteTieOrderElement extends Components.XpyriteTieOrder, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieOrderElement: {
+        prototype: HTMLXpyriteTieOrderElement;
+        new (): HTMLXpyriteTieOrderElement;
+    };
+    interface HTMLXpyriteTiePostMissionQuestionsElement extends Components.XpyriteTiePostMissionQuestions, HTMLStencilElement {
+    }
+    var HTMLXpyriteTiePostMissionQuestionsElement: {
+        prototype: HTMLXpyriteTiePostMissionQuestionsElement;
+        new (): HTMLXpyriteTiePostMissionQuestionsElement;
+    };
+    interface HTMLXpyriteTiePreMissionQuestionsElement extends Components.XpyriteTiePreMissionQuestions, HTMLStencilElement {
+    }
+    var HTMLXpyriteTiePreMissionQuestionsElement: {
+        prototype: HTMLXpyriteTiePreMissionQuestionsElement;
+        new (): HTMLXpyriteTiePreMissionQuestionsElement;
+    };
+    interface HTMLXpyriteTieTagElement extends Components.XpyriteTieTag, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieTagElement: {
+        prototype: HTMLXpyriteTieTagElement;
+        new (): HTMLXpyriteTieTagElement;
+    };
+    interface HTMLXpyriteTieTieStringElement extends Components.XpyriteTieTieString, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieTieStringElement: {
+        prototype: HTMLXpyriteTieTieStringElement;
+        new (): HTMLXpyriteTieTieStringElement;
+    };
+    interface HTMLXpyriteTieTriggerElement extends Components.XpyriteTieTrigger, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieTriggerElement: {
+        prototype: HTMLXpyriteTieTriggerElement;
+        new (): HTMLXpyriteTieTriggerElement;
+    };
+    interface HTMLXpyriteTieWayptElement extends Components.XpyriteTieWaypt, HTMLStencilElement {
+    }
+    var HTMLXpyriteTieWayptElement: {
+        prototype: HTMLXpyriteTieWayptElement;
+        new (): HTMLXpyriteTieWayptElement;
+    };
     interface HTMLElementTagNameMap {
         "ehtc-battle": HTMLEhtcBattleElement;
         "ehtc-battle-center": HTMLEhtcBattleCenterElement;
@@ -186,6 +322,21 @@ declare global {
         "pyrite-tie-mission": HTMLPyriteTieMissionElement;
         "pyrite-tie-pre-mission-questions": HTMLPyriteTiePreMissionQuestionsElement;
         "pyrite-tie-score": HTMLPyriteTieScoreElement;
+        "xpyrite-tie-briefing": HTMLXpyriteTieBriefingElement;
+        "xpyrite-tie-event": HTMLXpyriteTieEventElement;
+        "xpyrite-tie-file-header": HTMLXpyriteTieFileHeaderElement;
+        "xpyrite-tie-flight-group": HTMLXpyriteTieFlightGroupElement;
+        "xpyrite-tie-global-goal": HTMLXpyriteTieGlobalGoalElement;
+        "xpyrite-tie-goal-fg": HTMLXpyriteTieGoalFgElement;
+        "xpyrite-tie-message": HTMLXpyriteTieMessageElement;
+        "xpyrite-tie-mission": HTMLXpyriteTieMissionElement;
+        "xpyrite-tie-order": HTMLXpyriteTieOrderElement;
+        "xpyrite-tie-post-mission-questions": HTMLXpyriteTiePostMissionQuestionsElement;
+        "xpyrite-tie-pre-mission-questions": HTMLXpyriteTiePreMissionQuestionsElement;
+        "xpyrite-tie-tag": HTMLXpyriteTieTagElement;
+        "xpyrite-tie-tie-string": HTMLXpyriteTieTieStringElement;
+        "xpyrite-tie-trigger": HTMLXpyriteTieTriggerElement;
+        "xpyrite-tie-waypt": HTMLXpyriteTieWayptElement;
     }
 }
 declare namespace LocalJSX {
@@ -245,6 +396,51 @@ declare namespace LocalJSX {
     interface PyriteTieScore {
         "mission"?: Mission;
     }
+    interface XpyriteTieBriefing {
+        "briefing"?: Briefing;
+    }
+    interface XpyriteTieEvent {
+        "event"?: Event;
+    }
+    interface XpyriteTieFileHeader {
+        "fileheader"?: FileHeader;
+    }
+    interface XpyriteTieFlightGroup {
+        "flightgroup"?: FlightGroup;
+    }
+    interface XpyriteTieGlobalGoal {
+        "globalgoal"?: GlobalGoal;
+    }
+    interface XpyriteTieGoalFg {
+        "goalfg"?: GoalFG;
+    }
+    interface XpyriteTieMessage {
+        "message"?: Message;
+    }
+    interface XpyriteTieMission {
+        "mission"?: Mission;
+    }
+    interface XpyriteTieOrder {
+        "order"?: Order;
+    }
+    interface XpyriteTiePostMissionQuestions {
+        "postmissionquestions"?: PostMissionQuestions;
+    }
+    interface XpyriteTiePreMissionQuestions {
+        "premissionquestions"?: PreMissionQuestions;
+    }
+    interface XpyriteTieTag {
+        "tag"?: Tag;
+    }
+    interface XpyriteTieTieString {
+        "tiestring"?: TIEString;
+    }
+    interface XpyriteTieTrigger {
+        "trigger"?: Trigger;
+    }
+    interface XpyriteTieWaypt {
+        "waypt"?: Waypt;
+    }
     interface IntrinsicElements {
         "ehtc-battle": EhtcBattle;
         "ehtc-battle-center": EhtcBattleCenter;
@@ -263,6 +459,21 @@ declare namespace LocalJSX {
         "pyrite-tie-mission": PyriteTieMission;
         "pyrite-tie-pre-mission-questions": PyriteTiePreMissionQuestions;
         "pyrite-tie-score": PyriteTieScore;
+        "xpyrite-tie-briefing": XpyriteTieBriefing;
+        "xpyrite-tie-event": XpyriteTieEvent;
+        "xpyrite-tie-file-header": XpyriteTieFileHeader;
+        "xpyrite-tie-flight-group": XpyriteTieFlightGroup;
+        "xpyrite-tie-global-goal": XpyriteTieGlobalGoal;
+        "xpyrite-tie-goal-fg": XpyriteTieGoalFg;
+        "xpyrite-tie-message": XpyriteTieMessage;
+        "xpyrite-tie-mission": XpyriteTieMission;
+        "xpyrite-tie-order": XpyriteTieOrder;
+        "xpyrite-tie-post-mission-questions": XpyriteTiePostMissionQuestions;
+        "xpyrite-tie-pre-mission-questions": XpyriteTiePreMissionQuestions;
+        "xpyrite-tie-tag": XpyriteTieTag;
+        "xpyrite-tie-tie-string": XpyriteTieTieString;
+        "xpyrite-tie-trigger": XpyriteTieTrigger;
+        "xpyrite-tie-waypt": XpyriteTieWaypt;
     }
 }
 export { LocalJSX as JSX };
@@ -286,6 +497,21 @@ declare module "@stencil/core" {
             "pyrite-tie-mission": LocalJSX.PyriteTieMission & JSXBase.HTMLAttributes<HTMLPyriteTieMissionElement>;
             "pyrite-tie-pre-mission-questions": LocalJSX.PyriteTiePreMissionQuestions & JSXBase.HTMLAttributes<HTMLPyriteTiePreMissionQuestionsElement>;
             "pyrite-tie-score": LocalJSX.PyriteTieScore & JSXBase.HTMLAttributes<HTMLPyriteTieScoreElement>;
+            "xpyrite-tie-briefing": LocalJSX.XpyriteTieBriefing & JSXBase.HTMLAttributes<HTMLXpyriteTieBriefingElement>;
+            "xpyrite-tie-event": LocalJSX.XpyriteTieEvent & JSXBase.HTMLAttributes<HTMLXpyriteTieEventElement>;
+            "xpyrite-tie-file-header": LocalJSX.XpyriteTieFileHeader & JSXBase.HTMLAttributes<HTMLXpyriteTieFileHeaderElement>;
+            "xpyrite-tie-flight-group": LocalJSX.XpyriteTieFlightGroup & JSXBase.HTMLAttributes<HTMLXpyriteTieFlightGroupElement>;
+            "xpyrite-tie-global-goal": LocalJSX.XpyriteTieGlobalGoal & JSXBase.HTMLAttributes<HTMLXpyriteTieGlobalGoalElement>;
+            "xpyrite-tie-goal-fg": LocalJSX.XpyriteTieGoalFg & JSXBase.HTMLAttributes<HTMLXpyriteTieGoalFgElement>;
+            "xpyrite-tie-message": LocalJSX.XpyriteTieMessage & JSXBase.HTMLAttributes<HTMLXpyriteTieMessageElement>;
+            "xpyrite-tie-mission": LocalJSX.XpyriteTieMission & JSXBase.HTMLAttributes<HTMLXpyriteTieMissionElement>;
+            "xpyrite-tie-order": LocalJSX.XpyriteTieOrder & JSXBase.HTMLAttributes<HTMLXpyriteTieOrderElement>;
+            "xpyrite-tie-post-mission-questions": LocalJSX.XpyriteTiePostMissionQuestions & JSXBase.HTMLAttributes<HTMLXpyriteTiePostMissionQuestionsElement>;
+            "xpyrite-tie-pre-mission-questions": LocalJSX.XpyriteTiePreMissionQuestions & JSXBase.HTMLAttributes<HTMLXpyriteTiePreMissionQuestionsElement>;
+            "xpyrite-tie-tag": LocalJSX.XpyriteTieTag & JSXBase.HTMLAttributes<HTMLXpyriteTieTagElement>;
+            "xpyrite-tie-tie-string": LocalJSX.XpyriteTieTieString & JSXBase.HTMLAttributes<HTMLXpyriteTieTieStringElement>;
+            "xpyrite-tie-trigger": LocalJSX.XpyriteTieTrigger & JSXBase.HTMLAttributes<HTMLXpyriteTieTriggerElement>;
+            "xpyrite-tie-waypt": LocalJSX.XpyriteTieWaypt & JSXBase.HTMLAttributes<HTMLXpyriteTieWayptElement>;
         }
     }
 }

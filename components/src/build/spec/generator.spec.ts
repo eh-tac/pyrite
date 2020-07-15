@@ -34,7 +34,7 @@ describe("generator test", () => {
       const prop = getProp("PV GlobalGoal[3] GlobalGoals");
 
       expectProp(prop, "PV", "GlobalGoals", true, true);
-      expect(prop.arrayLength).toBe(3);
+      expect(prop.arrayLengthValue).toBe(3);
       expect(prop instanceof PropObject).toBeTrue();
       expect((prop as PropObject).structName).toBe("GlobalGoal");
     });
@@ -71,7 +71,7 @@ describe("generator test", () => {
       expectProp(prop, "0x018", "EndOfMissionMessages", true, false);
       expect(prop instanceof PropChar).toBe(true);
       expect(prop.baseSize).toBe(64);
-      expect(prop.arrayLength).toBe(6);
+      expect(prop.arrayLengthValue).toBe(6);
       expect(prop.size).toBe(64 * 6);
     });
 

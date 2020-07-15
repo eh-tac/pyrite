@@ -32,7 +32,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jasmine": "^3.5.11",
-    "@types/jest": "^26.0.3",
+    "@types/lodash": "^4.14.157",
     "@types/node": "^13.1.7",
     "@types/puppeteer": "^3.0.1",
     "jasmine": "^3.5.0",
@@ -40,13 +40,15 @@
     "jasmine-ts": "^0.3.0",
     "prettier": "^1.19.1",
     "ts-node": "^8.6.2",
+    "tslint-ionic-rules": "0.0.21",
     "typescript": "^3.7.4"
   },
   "dependencies": {
     "@stencil/core": "^1.15.0",
     "@stencil/sass": "^1.1.1",
     "cli-progress": "^3.6.0",
-    "extract-zip": "^1.6.7"
+    "extract-zip": "^1.6.7",
+    "lodash": "^4.17.15"
   },
   "prettier": {
     "printWidth": 120

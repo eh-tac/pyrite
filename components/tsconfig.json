@@ -13,7 +13,8 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "jsx": "react",
-    "jsxFactory": "h"
+    "jsxFactory": "h",
+    "esModuleInterop": true
   },
   "include": ["src", "types/jsx.d.ts"],
   "exclude": ["node_modules"]

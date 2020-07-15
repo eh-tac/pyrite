@@ -1,0 +1,53 @@
+PilotStatus
+00 Normal
+01 Captured
+02 Killed
+
+PilotRank
+00 Cadet
+01 Officer
+02 Lieutenant
+03 Captain
+04 Commander
+05 General
+
+KalidorCrescent
+00 None
+01 Kalidor Crescent
+02 Bronze Cluster
+03 Silver Talons
+04 Silver Scimitar
+05 Gold Wings
+06 Diamond Eyes
+
+TourStatus
+00 Inactive
+01 Active
+02 Incomplete
+03 Complete
+
+ShipType
+00 X-Wing
+01 Y-Wing
+02 A-Wing
+03 TIE Fighter
+04 TIE Interceptor
+05 TIE Bomber
+06 Assault Gunboat
+07 Transport
+08 Shuttle
+09 Tug
+0A Container
+0B Freighter
+0C Calamari
+0D NebulonB
+0E Corvette
+0F Star Destroyer
+10 TIE Advanced
+11 Mine1
+12 Mine2
+13 Mine3
+14 Mine4
+15 CommSat1
+16 CommSat2
+17 Probe

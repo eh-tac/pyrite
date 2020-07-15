@@ -1,0 +1,49 @@
+struct PilotFile (size 0x6A8)
+{
+  0x000 SHORT PlatformID
+  0x002 BYTE  PilotStatus (enum)
+  0x003 BYTE  PilotRank (enum)
+  0x004 INT   TotalTODScore
+  0x008 SHORT RookieNumber
+  0x00A BOOL  CorellianCross
+  0x00B BOOL  MantooineMedal
+  0x00C BOOL  StarOfAlderaan
+  0x00D BOOL  ShieldOfYavin
+  0x00E BOOL  TalonsOfHoth
+  0x011 BYTE  KalidorCrescent (enum)
+  0x026 INT   XWingMazeScore
+  0x02A INT   YWingMazeScore
+  0x02E INT   AWingMazeScore
+  0x032 INT   BWingMazeScore
+  0x086 BYTE  XWingMazeLevel
+  0x087 BYTE  YWingMazeLevel
+  0x088 BYTE  AWingMazeLevel
+  0x098 BYTE  BWingMazeLevel
+  0x0A0 INT[6] XWingHistoricalScore
+  0x0E0 INT[6] YWingHistoricalScore
+  0x120 INT[6] AWingHistoricalScore
+  0x160 INT[6] BWingHistoricalScore
+  0x1A0 INT[6] BonusHistoricalScore
+  0x220 BOOL[6] XWingHistoricalComplete
+  0x230 BOOL[6] YWingHistoricalComplete
+  0x240 BOOL[6] AWingHistoricalComplete
+  0x250 BOOL[6] BWingHistoricalComplete
+  0x260 BOOL[6] BonusHistoricalComplete
+  0x2DF BYTE[5] TourStatus (enum)
+  0x2EF BYTE[5] TourOperationsComplete
+  0x2F7 INT[12] Tour1Scores
+  0x35B INT[12] Tour2Scores
+  0x3BF INT[14] Tour3Scores
+  0x423 INT[24] Tour4Scores
+  0x487 INT[24] Tour5Scores
+  0x633 SHORT SurfaceVictories
+  0x635 SHORT[24] TODKills
+  0x665 SHORT[24] TODCaptures
+  0x695 INT LasersFired
+  0x699 INT LaserCraftHits
+  0x69D INT LaserGroundHits
+  0x6A1 SHORT MissilesFired
+  0x6A3 SHORT MissileCraftHits
+  0x6A5 SHORT MissileGroundHits
+  0x6A7 SHORT CraftLost
+}
