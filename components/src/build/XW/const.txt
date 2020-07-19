@@ -26,6 +26,13 @@ TourStatus
 02 Incomplete
 03 Complete
 
+TourMedals
+01 Corellian Cross
+02 Mantooine Medallion
+03 Star Of Alderaan
+04 Shield Of Yavin
+05 Talons Of Hoth
+
 ShipType
 00 X-Wing
 01 Y-Wing
@@ -51,3 +58,133 @@ ShipType
 15 CommSat1
 16 CommSat2
 17 Probe
+
+EndState
+00 Rescued
+01 Captured
+05 Hit Exhaust Port
+
+MissionLocation
+00 Deep Space
+01 Death Star
+
+CraftType
+00 None
+01 X-Wing
+02 Y-Wing
+03 A-Wing
+04 TIE Fighter
+05 TIE Interceptor
+06 TIE Bomber
+07 Assault Gunboat
+08 Transport
+09 Shuttle
+0A Tug
+0B Container
+0C Freighter
+0D Calamari Cruiser
+0E Nebulon B Frigate
+0F Corellian Corvette
+10 Imperial Star Destroyer
+11 TIE Advanced
+12 B-Wing 
+
+IFF
+00 Default
+01 Rebel
+02 Imperial
+03 Neutral
+
+FlightGroupStatus
+00 Normal
+01 No Missiles
+02 Half Missiles
+03 No Shields
+
+ArrivalEvent
+00 Mission Start
+01 On Arrival
+02 On Destroyed
+03 On Attacked
+04 On Boarded
+05 On Identified
+06 On Disabled
+
+Formation
+00 Vic
+01 Finger Four
+02 Line Astern
+03 Line Abrest
+04 Echelon Right
+05 Echelon Left
+06 Double Astern
+07 Diamond
+08 Stacked
+09 Spread
+10 Hi-Lo
+11 Spiral
+
+CraftAI
+00 Rookie
+01 Officer
+02 Veteran
+03 Ace
+04 Top Ace
+
+Order
+00 Hold Steady
+01 Fly Home
+02 Circle and Ignore
+03 Fly Once and Ignore
+04 Circle and Evade
+05 Fly Once and Evade
+06 Close Escort
+07 Loose Escort
+08 Attack Escorts
+09 Attack Targets
+0A Attack Enemies
+0B Rendezous
+0C Disabled
+0D Board to Deliver
+0E Board to Take
+0F Board to Exchange
+10 Board to Capture
+11 Board to Destroy
+12 Disable Targets
+13 Disable All
+14 Attack Transports
+15 Attack Freighters
+16 Attack Starships
+17 Attack Satellites and Mines
+18 Disable Freighters
+19 Disable Starships
+1A Starship Static Fire
+1B Starship Fly Dance
+1C Starship Circle
+1D Starship Await Return
+1E Starship Await Launch
+1F Starship Await Boarding
+
+CraftColour
+00 Red
+01 Gold
+02 Blue
+
+CraftObjective
+00 None
+01 All Destroyed
+02 All Survive
+03 All Captured
+04 All Docked
+05 Special Craft Destroyed
+06 Special Craft Survive
+07 Special Craft Captured
+08 Special Craft Docked
+09 Half Destroyed
+0A Half Survive
+0B Half Captured
+0C Half Docked
+0D All Identified
+0E Special Craft Identified
+0F Half Identified
+10 Arrived

@@ -167,7 +167,9 @@ class Battle
 
     public function createBattleIndex()
     {
-        return BattleIndex::build($this->name(), $this->title, $this->missionFiles);
+        $ehb = BattleIndex::build($this->name(), $this->title, $this->missionFiles);
+        $ehb->platform = Platform::battleIndexID($this->platform);
+        return $ehb;
     }
 
     public function name()

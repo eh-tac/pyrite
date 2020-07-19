@@ -1,9 +1,10 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { GoalFG } from "../../../model/TIE";
 import { TIEGoalFGController } from "../../../controllers/TIE";
+import { Field } from "../../fields/field";
 
 @Component({
-  tag: "pyrite-TIE-goal-fg",
+  tag: "xpyrite-tie-goal-fg",
   styleUrl: "goal-fg.scss",
   shadow: false
 })
@@ -20,8 +21,8 @@ export class TIEGoalFGComponent {
   public render(): JSX.Element {
     return (
       <Host>
-      {this.controller.render("Condition")}
-      {this.controller.render("GoalAmount")}        
+        <Field {...this.controller.getProps('Condition')} />
+        <Field {...this.controller.getProps('GoalAmount')} />
       </Host>
     )
   }

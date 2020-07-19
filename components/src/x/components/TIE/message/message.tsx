@@ -1,9 +1,10 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { Message } from "../../../model/TIE";
 import { TIEMessageController } from "../../../controllers/TIE";
+import { Field } from "../../fields/field";
 
 @Component({
-  tag: "pyrite-TIE-message",
+  tag: "xpyrite-tie-message",
   styleUrl: "message.scss",
   shadow: false
 })
@@ -20,11 +21,11 @@ export class TIEMessageComponent {
   public render(): JSX.Element {
     return (
       <Host>
-      {this.controller.render("Message")}
-      {this.controller.render("Triggers")}
-      {this.controller.render("EditorNote")}
-      {this.controller.render("DelaySeconds")}
-      {this.controller.render("Trigger1OrTrigger2")}        
+        <Field {...this.controller.getProps('Message')} />
+        <Field {...this.controller.getProps('Triggers')} />
+        <Field {...this.controller.getProps('EditorNote')} />
+        <Field {...this.controller.getProps('DelaySeconds')} />
+        <Field {...this.controller.getProps('Trigger1OrTrigger2')} />
       </Host>
     )
   }

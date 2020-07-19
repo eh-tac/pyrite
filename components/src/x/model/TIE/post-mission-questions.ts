@@ -1,12 +1,17 @@
 import { PostMissionQuestionsBase } from "./base/post-mission-questions-base";
     
-    export class PostMissionQuestions extends PostMissionQuestionsBase {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class PostMissionQuestions extends PostMissionQuestionsBase {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    
+  public toString(): string {
+    return '';
+  }
+
+  protected QuestionLength(): number {
+    return 0;
+  }
+  protected AnswerLength(): number {
+    return 0;
+  }
+}

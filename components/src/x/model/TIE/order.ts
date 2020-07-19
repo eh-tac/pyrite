@@ -1,12 +1,12 @@
 import { OrderBase } from "./base/order-base";
     
-    export class Order extends OrderBase {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class Order extends OrderBase {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    
+  public toString(): string {
+    return '';
+  }
+
+  
+}

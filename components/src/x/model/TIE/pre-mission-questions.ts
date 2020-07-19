@@ -1,12 +1,17 @@
 import { PreMissionQuestionsBase } from "./base/pre-mission-questions-base";
     
-    export class PreMissionQuestions extends PreMissionQuestionsBase {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class PreMissionQuestions extends PreMissionQuestionsBase {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    
+  public toString(): string {
+    return '';
+  }
+
+  protected QuestionLength(): number {
+    return 0;
+  }
+  protected AnswerLength(): number {
+    return 0;
+  }
+}

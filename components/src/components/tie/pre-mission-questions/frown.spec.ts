@@ -1,7 +1,7 @@
-import { PreMissionQuestions } from "./frown";
+import { PreMissionQuestionsComponent } from "./frown";
 
 describe("app", () => {
   it("builds", () => {
-    expect(new PreMissionQuestions()).toBeTruthy();
+    expect(new PreMissionQuestionsComponent()).toBeTruthy();
   });
 });

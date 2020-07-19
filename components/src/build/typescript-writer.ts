@@ -109,7 +109,7 @@ export class ${struct.name} extends ${baseClass} {
 `;
 
     const file = this.filename(struct.name);
-    this.writeFile(`model/PLT/${file}`, content, true); // TODO stop overwrite
+    this.writeFile(`model/PLT/${file}`, content, false);
   }
 
   public writeController(struct: Struct): void {

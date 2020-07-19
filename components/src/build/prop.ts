@@ -212,7 +212,7 @@ export class PropShort extends Prop {
   public baseSize = 2;
 
   public get tsGetter(): string {
-    return `getShort(hex, ${this.tsOffset})`;
+    return `getShort(hex, ${this.isArray ? "offset" : this.tsOffset})`;
   }
 
   public getSetter(propOverride?: string): string {
@@ -227,7 +227,7 @@ export class PropShort extends Prop {
 
 export class PropByte extends Prop {
   public get tsGetter(): string {
-    return `getByte(hex, ${this.tsOffset})`;
+    return `getByte(hex, ${this.isArray ? "offset" : this.tsOffset})`;
   }
 
   public getSetter(propOverride?: string): string {
@@ -246,7 +246,7 @@ export class PropBool extends Prop {
   }
 
   public get tsGetter(): string {
-    return `getBool(hex, ${this.tsOffset})`;
+    return `getBool(hex, ${this.isArray ? "offset" : this.tsOffset})`;
   }
 
   public getSetter(propOverride?: string): string {
@@ -261,7 +261,7 @@ export class PropBool extends Prop {
 
 export class PropSByte extends Prop {
   public get tsGetter(): string {
-    return `getSByte(hex, ${this.tsOffset})`;
+    return `getSByte(hex, ${this.isArray ? "offset" : this.tsOffset})`;
   }
 
   public getSetter(propOverride?: string): string {
@@ -278,7 +278,7 @@ export class PropInt extends Prop {
   public baseSize = 4;
 
   public get tsGetter(): string {
-    return `getInt(hex, ${this.tsOffset})`;
+    return `getInt(hex, ${this.isArray ? "offset" : this.tsOffset})`;
   }
 
   public getSetter(propOverride?: string): string {
@@ -299,7 +299,7 @@ export class PropChar extends Prop {
   public get tsGetter(): string {
     const len = this.arrayLengthExpression ? `this.${this.arrayLengthExpression}` : this.arrayLengthValue;
 
-    return `getChar(hex, ${this.tsOffset}, ${len})`;
+    return `getChar(hex, ${this.isArray ? "offset" : this.tsOffset}, ${len})`;
   }
 
   public getSetter(propOverride?: string): string {
@@ -318,7 +318,7 @@ export class PropStr extends Prop {
   }
 
   public get tsGetter(): string {
-    return `getString(hex, ${this.tsOffset})`;
+    return `getString(hex, ${this.isArray ? "offset" : this.tsOffset})`;
   }
 
   public getSetter(propOverride?: string): string {
@@ -339,7 +339,7 @@ export class PropObject extends Prop {
   }
 
   public get tsGetter(): string {
-    return `new ${this.tsType}(hex.slice(${this.tsOffset}), this.TIE)`;
+    return `new ${this.tsType}(hex.slice(${this.isArray ? "offset" : this.tsOffset}), this.TIE)`;
   }
 
   public get typeLength(): string {

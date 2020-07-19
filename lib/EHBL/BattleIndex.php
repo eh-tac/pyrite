@@ -116,6 +116,7 @@ class BattleIndex extends PyriteBase implements Byteable, Output {
 
 	public function __debugInfo() {
 		return [
+		    "platform" => $this->platform,
 			"key"      => $this->key,
 			"offset"   => $this->encryptionOffset,
 			"title"    => $this->title,

@@ -1,9 +1,10 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { FlightGroup } from "../../../model/TIE";
 import { TIEFlightGroupController } from "../../../controllers/TIE";
+import { Field } from "../../fields/field";
 
 @Component({
-  tag: "pyrite-TIE-flight-group",
+  tag: "xpyrite-tie-flight-group",
   styleUrl: "flight-group.scss",
   shadow: false
 })
@@ -20,64 +21,64 @@ export class TIEFlightGroupComponent {
   public render(): JSX.Element {
     return (
       <Host>
-      {this.controller.render("Name")}
-      {this.controller.render("Pilot")}
-      {this.controller.render("Cargo")}
-      {this.controller.render("SpecialCargo")}
-      {this.controller.render("SpecialCargoCraft")}
-      {this.controller.render("RandomSpecialCargoCraft")}
-      {this.controller.render("CraftType")}
-      {this.controller.render("NumberOfCraft")}
-      {this.controller.render("Status")}
-      {this.controller.render("Warhead")}
-      {this.controller.render("Beam")}
-      {this.controller.render("Iff")}
-      {this.controller.render("GroupAI")}
-      {this.controller.render("Markings")}
-      {this.controller.render("ObeyPlayerOrders")}
-      {this.controller.render("Reserved1")}
-      {this.controller.render("Formation")}
-      {this.controller.render("FormationSpacing")}
-      {this.controller.render("GlobalGroup")}
-      {this.controller.render("LeaderSpacing")}
-      {this.controller.render("NumberOfWaves")}
-      {this.controller.render("Unknown5")}
-      {this.controller.render("PlayerCraft")}
-      {this.controller.render("Yaw")}
-      {this.controller.render("Pitch")}
-      {this.controller.render("Roll")}
-      {this.controller.render("Unknown9")}
-      {this.controller.render("Unknown10")}
-      {this.controller.render("Reserved2")}
-      {this.controller.render("ArrivalDifficulty")}
-      {this.controller.render("Arrival1")}
-      {this.controller.render("Arrival2")}
-      {this.controller.render("Arrival1OrArrival2")}
-      {this.controller.render("Reserved3")}
-      {this.controller.render("ArrivalDelayMinutes")}
-      {this.controller.render("ArrivalDelaySeconds")}
-      {this.controller.render("Departure")}
-      {this.controller.render("DepartureDelayMinutes")}
-      {this.controller.render("DepartureDelatSeconds")}
-      {this.controller.render("AbortTrigger")}
-      {this.controller.render("Reserved4")}
-      {this.controller.render("Unknown16")}
-      {this.controller.render("Reserved5")}
-      {this.controller.render("ArrivalMothership")}
-      {this.controller.render("ArriveViaMothership")}
-      {this.controller.render("DepartureMothership")}
-      {this.controller.render("DepartViaMothership")}
-      {this.controller.render("AlternateArrivalMothership")}
-      {this.controller.render("AlternateArriveViaMothership")}
-      {this.controller.render("AlternateDepartureMothership")}
-      {this.controller.render("AlternateDepartViaMothership")}
-      {this.controller.render("Orders")}
-      {this.controller.render("FlightGroupGoals")}
-      {this.controller.render("BonusGoalPoints")}
-      {this.controller.render("Waypoints")}
-      {this.controller.render("Unknown19")}
-      {this.controller.render("Unknown20")}
-      {this.controller.render("Unknown21")}        
+        <Field {...this.controller.getProps('Name')} />
+        <Field {...this.controller.getProps('Pilot')} />
+        <Field {...this.controller.getProps('Cargo')} />
+        <Field {...this.controller.getProps('SpecialCargo')} />
+        <Field {...this.controller.getProps('SpecialCargoCraft')} />
+        <Field {...this.controller.getProps('RandomSpecialCargoCraft')} />
+        <Field {...this.controller.getProps('CraftType')} />
+        <Field {...this.controller.getProps('NumberOfCraft')} />
+        <Field {...this.controller.getProps('Status')} />
+        <Field {...this.controller.getProps('Warhead')} />
+        <Field {...this.controller.getProps('Beam')} />
+        <Field {...this.controller.getProps('Iff')} />
+        <Field {...this.controller.getProps('GroupAI')} />
+        <Field {...this.controller.getProps('Markings')} />
+        <Field {...this.controller.getProps('ObeyPlayerOrders')} />
+        <Field {...this.controller.getProps('Reserved1')} />
+        <Field {...this.controller.getProps('Formation')} />
+        <Field {...this.controller.getProps('FormationSpacing')} />
+        <Field {...this.controller.getProps('GlobalGroup')} />
+        <Field {...this.controller.getProps('LeaderSpacing')} />
+        <Field {...this.controller.getProps('NumberOfWaves')} />
+        <Field {...this.controller.getProps('Unknown5')} />
+        <Field {...this.controller.getProps('PlayerCraft')} />
+        <Field {...this.controller.getProps('Yaw')} />
+        <Field {...this.controller.getProps('Pitch')} />
+        <Field {...this.controller.getProps('Roll')} />
+        <Field {...this.controller.getProps('Unknown9')} />
+        <Field {...this.controller.getProps('Unknown10')} />
+        <Field {...this.controller.getProps('Reserved2')} />
+        <Field {...this.controller.getProps('ArrivalDifficulty')} />
+        <Field {...this.controller.getProps('Arrival1')} />
+        <Field {...this.controller.getProps('Arrival2')} />
+        <Field {...this.controller.getProps('Arrival1OrArrival2')} />
+        <Field {...this.controller.getProps('Reserved3')} />
+        <Field {...this.controller.getProps('ArrivalDelayMinutes')} />
+        <Field {...this.controller.getProps('ArrivalDelaySeconds')} />
+        <Field {...this.controller.getProps('Departure')} />
+        <Field {...this.controller.getProps('DepartureDelayMinutes')} />
+        <Field {...this.controller.getProps('DepartureDelatSeconds')} />
+        <Field {...this.controller.getProps('AbortTrigger')} />
+        <Field {...this.controller.getProps('Reserved4')} />
+        <Field {...this.controller.getProps('Unknown16')} />
+        <Field {...this.controller.getProps('Reserved5')} />
+        <Field {...this.controller.getProps('ArrivalMothership')} />
+        <Field {...this.controller.getProps('ArriveViaMothership')} />
+        <Field {...this.controller.getProps('DepartureMothership')} />
+        <Field {...this.controller.getProps('DepartViaMothership')} />
+        <Field {...this.controller.getProps('AlternateArrivalMothership')} />
+        <Field {...this.controller.getProps('AlternateArriveViaMothership')} />
+        <Field {...this.controller.getProps('AlternateDepartureMothership')} />
+        <Field {...this.controller.getProps('AlternateDepartViaMothership')} />
+        <Field {...this.controller.getProps('Orders')} />
+        <Field {...this.controller.getProps('FlightGroupGoals')} />
+        <Field {...this.controller.getProps('BonusGoalPoints')} />
+        <Field {...this.controller.getProps('Waypoints')} />
+        <Field {...this.controller.getProps('Unknown19')} />
+        <Field {...this.controller.getProps('Unknown20')} />
+        <Field {...this.controller.getProps('Unknown21')} />
       </Host>
     )
   }

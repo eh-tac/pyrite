@@ -33,26 +33,23 @@ export function getChar(hex: ArrayBuffer, start: number = 0, length: number = 0)
 }
 
 export function getShort(hex: ArrayBuffer, start: number = 0): number {
-  return new Int16Array(hex, start, 1)[0];
+  return new Int16Array(hex.slice(start), 0, 1)[0];
 }
 
 export function getUShort(hex: ArrayBuffer, start: number = 0): number {
-  return new Uint16Array(hex, start, 1)[0];
+  return new Uint16Array(hex.slice(start), 0, 1)[0];
 }
 
 export function getInt(hex: ArrayBuffer, start: number = 0): number {
-  hex = hex.slice(start);
-  return new Int32Array(hex, 0, 1)[0];
+  return new Int32Array(hex.slice(start), 0, 1)[0];
 }
 
 export function getIntArray(hex: ArrayBuffer, start: number = 0, count: number = 1): number[] {
-  hex = hex.slice(start);
-  return Array.from(new Int32Array(hex, 0, count));
+  return Array.from(new Int32Array(hex.slice(start), 0, count));
 }
 
 export function getUInt(hex: ArrayBuffer, start: number = 0): number {
-  hex = hex.slice(start);
-  return new Uint32Array(hex, 0, 1)[0];
+  return new Uint32Array(hex.slice(start), 0, 1)[0];
 }
 
 export function getString(hex: ArrayBuffer, start: number = 0, length: number = 99999): string {

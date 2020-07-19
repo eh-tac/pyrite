@@ -16,7 +16,7 @@ class Battle extends \Pyrite\EHBL\Battle {
 		// TOTO validation that LFD matches mission files etc
 		// TODO handle multiple LFD battles
 		$lfd = new BattleLFD(file_get_contents($folder . reset($lfds)));
-		return new Battle($type, $num, $lfd->BattleText->TitleBattle1, $folder, $missionFiles, $resourceFiles);
+		return new Battle($type, $num, $lfd->BattleText->BattleName, $folder, $missionFiles, $resourceFiles);
 	}
 
     /**

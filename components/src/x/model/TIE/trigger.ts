@@ -1,12 +1,12 @@
 import { TriggerBase } from "./base/trigger-base";
     
-    export class Trigger extends TriggerBase {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class Trigger extends TriggerBase {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    
+  public toString(): string {
+    return '';
+  }
+
+  
+}

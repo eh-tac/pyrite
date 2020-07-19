@@ -1,9 +1,10 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { Briefing } from "../../../model/TIE";
 import { TIEBriefingController } from "../../../controllers/TIE";
+import { Field } from "../../fields/field";
 
 @Component({
-  tag: "pyrite-TIE-briefing",
+  tag: "xpyrite-tie-briefing",
   styleUrl: "briefing.scss",
   shadow: false
 })
@@ -20,13 +21,13 @@ export class TIEBriefingComponent {
   public render(): JSX.Element {
     return (
       <Host>
-      {this.controller.render("RunningTime")}
-      {this.controller.render("Unknown")}
-      {this.controller.render("StartLength")}
-      {this.controller.render("EventsLength")}
-      {this.controller.render("Events")}
-      {this.controller.render("Tags")}
-      {this.controller.render("Strings")}        
+        <Field {...this.controller.getProps('RunningTime')} />
+        <Field {...this.controller.getProps('Unknown')} />
+        <Field {...this.controller.getProps('StartLength')} />
+        <Field {...this.controller.getProps('EventsLength')} />
+        <Field {...this.controller.getProps('Events')} />
+        <Field {...this.controller.getProps('Tags')} />
+        <Field {...this.controller.getProps('Strings')} />
       </Host>
     )
   }

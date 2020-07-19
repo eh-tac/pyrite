@@ -1,12 +1,12 @@
 import { BriefingBase } from "./base/briefing-base";
     
-    export class Briefing extends BriefingBase {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class Briefing extends BriefingBase {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    
+  public toString(): string {
+    return '';
+  }
+
+  
+}

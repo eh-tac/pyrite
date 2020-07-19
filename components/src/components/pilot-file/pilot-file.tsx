@@ -8,6 +8,8 @@ import { XvTPltController } from "../../view-model/pilot-file/xvt-controller";
 import { Battle } from "../../model/ehtc";
 import { XWAPlt } from "../../model/pilot/xwa";
 import { XWAPltController } from "../../view-model/pilot-file/xwa-controller";
+import { PilotFile } from "../../model/XW";
+import { XWController } from "../../view-model/pilot-file/xw-controller";
 
 @Component({
   tag: "pyrite-pilot-file",
@@ -43,17 +45,11 @@ export class PilotViewer {
 
   public render(): JSX.Element {
     let title: JSX.Element = "Pyrite Pilot File Viewer";
-    let content: JSX.Element = (
-      <p class="text-center my-3">Select a file to view</p>
-    );
+    let content: JSX.Element = <p class="text-center my-3">Select a file to view</p>;
 
     if (this.controller) {
       title = this.controller.filename;
-      content = tabPanes(
-        this.controller.renderTabs(this.battleData),
-        this.activeTab,
-        this.tabSelect.bind(this)
-      );
+      content = tabPanes(this.controller.renderTabs(this.battleData), this.activeTab, this.tabSelect.bind(this));
     }
 
     return (
@@ -62,21 +58,12 @@ export class PilotViewer {
           <a class="navbar-brand" href="#">
             {title}
           </a>
-          <button
-            type="button"
-            class="btn btn-sm ml-1 btn-secondary"
-            onClick={this.getFile.bind(this)}
-          >
+          <button type="button" class="btn btn-sm ml-1 btn-secondary" onClick={this.getFile.bind(this)}>
             Upload
           </button>
         </nav>
         <div class="container card">{content}</div>
-        <input
-          type="file"
-          id="pltUpload"
-          value=""
-          onChange={this.fileChange.bind(this)}
-        />
+        <input type="file" id="pltUpload" value="" onChange={this.fileChange.bind(this)} />
       </div>
     );
   }
@@ -95,10 +82,7 @@ export class PilotViewer {
       const file = input.files[0];
       const fr = new FileReader();
       fr.onloadend = () => {
-        this.controller = this.controllerFromFile(
-          file.name,
-          fr.result as ArrayBuffer
-        );
+        this.controller = this.controllerFromFile(file.name, fr.result as ArrayBuffer);
       };
       fr.readAsArrayBuffer(file);
     } else {
@@ -106,10 +90,7 @@ export class PilotViewer {
     }
   }
 
-  private controllerFromFile(
-    filepath: string,
-    file: ArrayBuffer
-  ): PilotFileController {
+  private controllerFromFile(filepath: string, file: ArrayBuffer): PilotFileController {
     const ext = filepath
       .toLowerCase()
       .split(".")
@@ -117,15 +98,16 @@ export class PilotViewer {
     if (ext === "tfr") {
       return new TFRController(filepath, new TFR(file));
     } else if (ext === "plt") {
-      if (file.byteLength > 200000) {
+      if (file.byteLength === 1705 || file.byteLength === 3410) {
+        // x-wing
+        return new XWController(filepath, new PilotFile(file));
+      } else if (file.byteLength > 200000) {
         return new XvTPltController(filepath, new XvTPlt(file));
       } else {
         return new XWAPltController(filepath, new XWAPlt(file));
       }
     }
     console.error(filepath, file);
-    throw new Error(
-      `Unknown pilot file: Unrecognised file format: ${filepath}`
-    );
+    throw new Error(`Unknown pilot file: Unrecognised file format: ${filepath}`);
   }
 }

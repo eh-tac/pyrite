@@ -9,12 +9,18 @@ import { Battle } from "./model/ehtc/battle";
 import { FlightGroup, Message, Mission } from "./model/TIE";
 import { Mission as Mission1 } from "./model/TIE/mission";
 import { Briefing, Event, FileHeader, FlightGroup as FlightGroup1, GlobalGoal, GoalFG, Message as Message1, Mission as Mission2, Order, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./x/model/TIE";
+import { FileHeader as FileHeader1, FlightGroup as FlightGroup2, Mission as Mission3, ObjectGroup, PilotFile } from "./model/XW";
 export namespace Components {
     interface EhtcBattle {
         "battle": Battle;
         "code": string;
     }
     interface EhtcBattleCenter {
+    }
+    interface EhtcMemberSelect {
+        "domain": string;
+        "name": string;
+        "value": string;
     }
     interface EhtcPilot {
         "pin": number;
@@ -110,6 +116,21 @@ export namespace Components {
     interface XpyriteTieWaypt {
         "waypt": Waypt;
     }
+    interface XpyriteXwFileHeader {
+        "fileheader": FileHeader;
+    }
+    interface XpyriteXwFlightGroup {
+        "flightgroup": FlightGroup;
+    }
+    interface XpyriteXwMission {
+        "mission": Mission;
+    }
+    interface XpyriteXwObjectGroup {
+        "objectgroup": ObjectGroup;
+    }
+    interface XpyriteXwPilotFile {
+        "pilotfile": PilotFile;
+    }
 }
 declare global {
     interface HTMLEhtcBattleElement extends Components.EhtcBattle, HTMLStencilElement {
@@ -123,6 +144,12 @@ declare global {
     var HTMLEhtcBattleCenterElement: {
         prototype: HTMLEhtcBattleCenterElement;
         new (): HTMLEhtcBattleCenterElement;
+    };
+    interface HTMLEhtcMemberSelectElement extends Components.EhtcMemberSelect, HTMLStencilElement {
+    }
+    var HTMLEhtcMemberSelectElement: {
+        prototype: HTMLEhtcMemberSelectElement;
+        new (): HTMLEhtcMemberSelectElement;
     };
     interface HTMLEhtcPilotElement extends Components.EhtcPilot, HTMLStencilElement {
     }
@@ -304,9 +331,40 @@ declare global {
         prototype: HTMLXpyriteTieWayptElement;
         new (): HTMLXpyriteTieWayptElement;
     };
+    interface HTMLXpyriteXwFileHeaderElement extends Components.XpyriteXwFileHeader, HTMLStencilElement {
+    }
+    var HTMLXpyriteXwFileHeaderElement: {
+        prototype: HTMLXpyriteXwFileHeaderElement;
+        new (): HTMLXpyriteXwFileHeaderElement;
+    };
+    interface HTMLXpyriteXwFlightGroupElement extends Components.XpyriteXwFlightGroup, HTMLStencilElement {
+    }
+    var HTMLXpyriteXwFlightGroupElement: {
+        prototype: HTMLXpyriteXwFlightGroupElement;
+        new (): HTMLXpyriteXwFlightGroupElement;
+    };
+    interface HTMLXpyriteXwMissionElement extends Components.XpyriteXwMission, HTMLStencilElement {
+    }
+    var HTMLXpyriteXwMissionElement: {
+        prototype: HTMLXpyriteXwMissionElement;
+        new (): HTMLXpyriteXwMissionElement;
+    };
+    interface HTMLXpyriteXwObjectGroupElement extends Components.XpyriteXwObjectGroup, HTMLStencilElement {
+    }
+    var HTMLXpyriteXwObjectGroupElement: {
+        prototype: HTMLXpyriteXwObjectGroupElement;
+        new (): HTMLXpyriteXwObjectGroupElement;
+    };
+    interface HTMLXpyriteXwPilotFileElement extends Components.XpyriteXwPilotFile, HTMLStencilElement {
+    }
+    var HTMLXpyriteXwPilotFileElement: {
+        prototype: HTMLXpyriteXwPilotFileElement;
+        new (): HTMLXpyriteXwPilotFileElement;
+    };
     interface HTMLElementTagNameMap {
         "ehtc-battle": HTMLEhtcBattleElement;
         "ehtc-battle-center": HTMLEhtcBattleCenterElement;
+        "ehtc-member-select": HTMLEhtcMemberSelectElement;
         "ehtc-pilot": HTMLEhtcPilotElement;
         "pyrite-mission": HTMLPyriteMissionElement;
         "pyrite-mission-tabs": HTMLPyriteMissionTabsElement;
@@ -337,6 +395,11 @@ declare global {
         "xpyrite-tie-tie-string": HTMLXpyriteTieTieStringElement;
         "xpyrite-tie-trigger": HTMLXpyriteTieTriggerElement;
         "xpyrite-tie-waypt": HTMLXpyriteTieWayptElement;
+        "xpyrite-xw-file-header": HTMLXpyriteXwFileHeaderElement;
+        "xpyrite-xw-flight-group": HTMLXpyriteXwFlightGroupElement;
+        "xpyrite-xw-mission": HTMLXpyriteXwMissionElement;
+        "xpyrite-xw-object-group": HTMLXpyriteXwObjectGroupElement;
+        "xpyrite-xw-pilot-file": HTMLXpyriteXwPilotFileElement;
     }
 }
 declare namespace LocalJSX {
@@ -346,6 +409,11 @@ declare namespace LocalJSX {
         "onDownloadBattle"?: (event: CustomEvent<Battle>) => void;
     }
     interface EhtcBattleCenter {
+    }
+    interface EhtcMemberSelect {
+        "domain"?: string;
+        "name"?: string;
+        "value"?: string;
     }
     interface EhtcPilot {
         "pin"?: number;
@@ -441,9 +509,25 @@ declare namespace LocalJSX {
     interface XpyriteTieWaypt {
         "waypt"?: Waypt;
     }
+    interface XpyriteXwFileHeader {
+        "fileheader"?: FileHeader;
+    }
+    interface XpyriteXwFlightGroup {
+        "flightgroup"?: FlightGroup;
+    }
+    interface XpyriteXwMission {
+        "mission"?: Mission;
+    }
+    interface XpyriteXwObjectGroup {
+        "objectgroup"?: ObjectGroup;
+    }
+    interface XpyriteXwPilotFile {
+        "pilotfile"?: PilotFile;
+    }
     interface IntrinsicElements {
         "ehtc-battle": EhtcBattle;
         "ehtc-battle-center": EhtcBattleCenter;
+        "ehtc-member-select": EhtcMemberSelect;
         "ehtc-pilot": EhtcPilot;
         "pyrite-mission": PyriteMission;
         "pyrite-mission-tabs": PyriteMissionTabs;
@@ -474,6 +558,11 @@ declare namespace LocalJSX {
         "xpyrite-tie-tie-string": XpyriteTieTieString;
         "xpyrite-tie-trigger": XpyriteTieTrigger;
         "xpyrite-tie-waypt": XpyriteTieWaypt;
+        "xpyrite-xw-file-header": XpyriteXwFileHeader;
+        "xpyrite-xw-flight-group": XpyriteXwFlightGroup;
+        "xpyrite-xw-mission": XpyriteXwMission;
+        "xpyrite-xw-object-group": XpyriteXwObjectGroup;
+        "xpyrite-xw-pilot-file": XpyriteXwPilotFile;
     }
 }
 export { LocalJSX as JSX };
@@ -482,6 +571,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "ehtc-battle": LocalJSX.EhtcBattle & JSXBase.HTMLAttributes<HTMLEhtcBattleElement>;
             "ehtc-battle-center": LocalJSX.EhtcBattleCenter & JSXBase.HTMLAttributes<HTMLEhtcBattleCenterElement>;
+            "ehtc-member-select": LocalJSX.EhtcMemberSelect & JSXBase.HTMLAttributes<HTMLEhtcMemberSelectElement>;
             "ehtc-pilot": LocalJSX.EhtcPilot & JSXBase.HTMLAttributes<HTMLEhtcPilotElement>;
             "pyrite-mission": LocalJSX.PyriteMission & JSXBase.HTMLAttributes<HTMLPyriteMissionElement>;
             "pyrite-mission-tabs": LocalJSX.PyriteMissionTabs & JSXBase.HTMLAttributes<HTMLPyriteMissionTabsElement>;
@@ -512,6 +602,11 @@ declare module "@stencil/core" {
             "xpyrite-tie-tie-string": LocalJSX.XpyriteTieTieString & JSXBase.HTMLAttributes<HTMLXpyriteTieTieStringElement>;
             "xpyrite-tie-trigger": LocalJSX.XpyriteTieTrigger & JSXBase.HTMLAttributes<HTMLXpyriteTieTriggerElement>;
             "xpyrite-tie-waypt": LocalJSX.XpyriteTieWaypt & JSXBase.HTMLAttributes<HTMLXpyriteTieWayptElement>;
+            "xpyrite-xw-file-header": LocalJSX.XpyriteXwFileHeader & JSXBase.HTMLAttributes<HTMLXpyriteXwFileHeaderElement>;
+            "xpyrite-xw-flight-group": LocalJSX.XpyriteXwFlightGroup & JSXBase.HTMLAttributes<HTMLXpyriteXwFlightGroupElement>;
+            "xpyrite-xw-mission": LocalJSX.XpyriteXwMission & JSXBase.HTMLAttributes<HTMLXpyriteXwMissionElement>;
+            "xpyrite-xw-object-group": LocalJSX.XpyriteXwObjectGroup & JSXBase.HTMLAttributes<HTMLXpyriteXwObjectGroupElement>;
+            "xpyrite-xw-pilot-file": LocalJSX.XpyriteXwPilotFile & JSXBase.HTMLAttributes<HTMLXpyriteXwPilotFileElement>;
         }
     }
 }

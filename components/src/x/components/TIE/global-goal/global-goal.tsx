@@ -1,9 +1,10 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { GlobalGoal } from "../../../model/TIE";
 import { TIEGlobalGoalController } from "../../../controllers/TIE";
+import { Field } from "../../fields/field";
 
 @Component({
-  tag: "pyrite-TIE-global-goal",
+  tag: "xpyrite-tie-global-goal",
   styleUrl: "global-goal.scss",
   shadow: false
 })
@@ -20,8 +21,8 @@ export class TIEGlobalGoalComponent {
   public render(): JSX.Element {
     return (
       <Host>
-      {this.controller.render("Triggers")}
-      {this.controller.render("Trigger1OrTrigger2")}        
+        <Field {...this.controller.getProps('Triggers')} />
+        <Field {...this.controller.getProps('Trigger1OrTrigger2')} />
       </Host>
     )
   }

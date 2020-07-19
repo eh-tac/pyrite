@@ -1,12 +1,12 @@
 import { TIEStringBase } from "./base/tie-string-base";
     
-    export class TIEString extends TIEStringBase {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class TIEString extends TIEStringBase {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    
+  public toString(): string {
+    return '';
+  }
+
+  
+}

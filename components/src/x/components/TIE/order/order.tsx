@@ -1,9 +1,10 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { Order } from "../../../model/TIE";
 import { TIEOrderController } from "../../../controllers/TIE";
+import { Field } from "../../fields/field";
 
 @Component({
-  tag: "pyrite-TIE-order",
+  tag: "xpyrite-tie-order",
   styleUrl: "order.scss",
   shadow: false
 })
@@ -20,21 +21,21 @@ export class TIEOrderComponent {
   public render(): JSX.Element {
     return (
       <Host>
-      {this.controller.render("Order")}
-      {this.controller.render("Throttle")}
-      {this.controller.render("Variable1")}
-      {this.controller.render("Variable2")}
-      {this.controller.render("Unknown18")}
-      {this.controller.render("Target3Type")}
-      {this.controller.render("Target4Type")}
-      {this.controller.render("Target3")}
-      {this.controller.render("Target4")}
-      {this.controller.render("Target3OrTarget4")}
-      {this.controller.render("Target1Type")}
-      {this.controller.render("Target1")}
-      {this.controller.render("Target2Type")}
-      {this.controller.render("Target2")}
-      {this.controller.render("Target1OrTarget2")}        
+        <Field {...this.controller.getProps('Order')} />
+        <Field {...this.controller.getProps('Throttle')} />
+        <Field {...this.controller.getProps('Variable1')} />
+        <Field {...this.controller.getProps('Variable2')} />
+        <Field {...this.controller.getProps('Unknown18')} />
+        <Field {...this.controller.getProps('Target3Type')} />
+        <Field {...this.controller.getProps('Target4Type')} />
+        <Field {...this.controller.getProps('Target3')} />
+        <Field {...this.controller.getProps('Target4')} />
+        <Field {...this.controller.getProps('Target3OrTarget4')} />
+        <Field {...this.controller.getProps('Target1Type')} />
+        <Field {...this.controller.getProps('Target1')} />
+        <Field {...this.controller.getProps('Target2Type')} />
+        <Field {...this.controller.getProps('Target2')} />
+        <Field {...this.controller.getProps('Target1OrTarget2')} />
       </Host>
     )
   }

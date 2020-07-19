@@ -1,0 +1,43 @@
+.ehtc-member-select {
+  min-width: 20rem;
+  min-height: 2.5rem;
+
+  .field,
+  .selected-pilot,
+  .selected-pilot .pilot-summary,
+  .dropdown-menu {
+    width: 100%;
+  }
+  .selected-pilot {
+    display: flex;
+  }
+  .record {
+    border: 1px solid transparent;
+    & + .no-data {
+      display: none;
+    }
+    &:hover {
+      border: 1px solid white;
+    }
+  }
+
+  .pilot-summary {
+    .tag {
+      height: 1rem;
+      line-height: 1;
+      justify-content: start;
+    }
+
+    .topline.tags {
+      display: flex;
+
+      .pilot-label {
+        flex: 1;
+      }
+    }
+    .idline.tag {
+      display: flex;
+      font-size: 0.6rem;
+    }
+  }
+}

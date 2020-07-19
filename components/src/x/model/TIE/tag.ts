@@ -1,12 +1,12 @@
 import { TagBase } from "./base/tag-base";
     
-    export class Tag extends TagBase {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class Tag extends TagBase {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    
+  public toString(): string {
+    return '';
+  }
+
+  
+}

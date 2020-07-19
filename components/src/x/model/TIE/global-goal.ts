@@ -1,12 +1,12 @@
 import { GlobalGoalBase } from "./base/global-goal-base";
     
-    export class GlobalGoal extends GlobalGoalBase {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class GlobalGoal extends GlobalGoalBase {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    
+  public toString(): string {
+    return '';
+  }
+
+  
+}

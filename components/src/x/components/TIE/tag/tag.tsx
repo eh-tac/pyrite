@@ -1,9 +1,10 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { Tag } from "../../../model/TIE";
 import { TIETagController } from "../../../controllers/TIE";
+import { Field } from "../../fields/field";
 
 @Component({
-  tag: "pyrite-TIE-tag",
+  tag: "xpyrite-tie-tag",
   styleUrl: "tag.scss",
   shadow: false
 })
@@ -20,8 +21,8 @@ export class TIETagComponent {
   public render(): JSX.Element {
     return (
       <Host>
-      {this.controller.render("Length")}
-      {this.controller.render("Text")}        
+        <Field {...this.controller.getProps('Length')} />
+        <Field {...this.controller.getProps('Text')} />
       </Host>
     )
   }

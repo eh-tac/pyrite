@@ -5,20 +5,10 @@ struct PilotFile (size 0x6A8)
   0x003 BYTE  PilotRank (enum)
   0x004 INT   TotalTODScore
   0x008 SHORT RookieNumber
-  0x00A BOOL  CorellianCross
-  0x00B BOOL  MantooineMedal
-  0x00C BOOL  StarOfAlderaan
-  0x00D BOOL  ShieldOfYavin
-  0x00E BOOL  TalonsOfHoth
+  0x00A BOOL[5] TODMedals
   0x011 BYTE  KalidorCrescent (enum)
-  0x026 INT   XWingMazeScore
-  0x02A INT   YWingMazeScore
-  0x02E INT   AWingMazeScore
-  0x032 INT   BWingMazeScore
-  0x086 BYTE  XWingMazeLevel
-  0x087 BYTE  YWingMazeLevel
-  0x088 BYTE  AWingMazeLevel
-  0x098 BYTE  BWingMazeLevel
+  0x026 INT[4] MazeScore XW YW AW BW
+  0x086 BYTE[4] MazeLevel
   0x0A0 INT[6] XWingHistoricalScore
   0x0E0 INT[6] YWingHistoricalScore
   0x120 INT[6] AWingHistoricalScore
@@ -29,7 +19,7 @@ struct PilotFile (size 0x6A8)
   0x240 BOOL[6] AWingHistoricalComplete
   0x250 BOOL[6] BWingHistoricalComplete
   0x260 BOOL[6] BonusHistoricalComplete
-  0x2DF BYTE[5] TourStatus (enum)
+  0x2DF BYTE[5] TourStatus
   0x2EF BYTE[5] TourOperationsComplete
   0x2F7 INT[12] Tour1Scores
   0x35B INT[12] Tour2Scores
@@ -46,4 +36,73 @@ struct PilotFile (size 0x6A8)
   0x6A3 SHORT MissileCraftHits
   0x6A5 SHORT MissileGroundHits
   0x6A7 SHORT CraftLost
+}
+
+struct Mission (size 0)
+{
+  0x00 FileHeader FileHeader
+  PV FlightGroup[FileHeader-NumFGs]
+  PV ObjectGroup[FileHeader-NumObj]
+}
+
+struct FileHeader (size 0xCE) 
+{
+  0x00 SHORT Version
+  0x02 SHORT TimeLimit in minutes
+  0x04 SHORT EndState (enum)
+  0x06 SHORT Reserved Reserved(0)
+  0x08 SHORT MissionLocation (enum)
+  0x0A STR<64>[3] CompletionMessage
+  0xCA SHORT NumFGs
+  0xCC SHORT NumObj
+}
+
+struct FlightGroup (size 0x94)
+{
+  0x00 STR<16> Name
+  0x10 STR<16> Cargo
+  0x20 STR<16> SpecialCargo
+  0x30 SHORT SpecialCargoCraft
+  0x32 SHORT CraftType (enum)
+  0x34 SHORT IFF (enum)
+  0x36 SHORT FlightGroupStatus (enum)
+  0x38 SHORT NumberOfCraft
+  0x3A SHORT NumberOfWaves
+  0x3C SHORT ArrivalEvent (enum)
+  0x3E SHORT ArrivalDelay
+  0x40 SHORT ArrivalFlightGroup
+  0x42 SHORT MothershipFlightGroup
+  0x44 SHORT ArriveByHyperspace
+  0x46 SHORT DepartByHyperspace
+  0x48 SHORT[7] XCoordinates
+  0x56 SHORT[7] YCoordinates
+  0x64 SHORT[7] ZCoordinates
+  0x72 SHORT[7] CoordinatesEnabled
+  0x80 SHORT Formation (enum)
+  0x82 SHORT PlayerCraft
+  0x84 SHORT CraftAI (enum)
+  0x86 SHORT Order (enum)
+  0x88 SHORT OrderVariable
+  0x8A SHORT CraftColour (enum)
+  0x8C SHORT Reserved Reserved(0)
+  0x8E SHORT CraftObjective (enum)
+  0x90 SHORT PrimaryTarget
+  0x92 SHORT SecondaryTarget
+}
+
+struct ObjectGroup (size 0x46) {
+  0x00 STR<16> Name
+  0x10 STR<16> Cargo
+  0x20 STR<16> SpecialCargo
+  0x30 SHORT Reserved Reserved(0)
+  0x32 SHORT ObjectType
+  0x34 SHORT IFF (enum)
+  0x36 SHORT Objective
+  0x38 SHORT NumberOfObjects
+  0x3A SHORT PositionX
+  0x3C SHORT PositionY
+  0x3E SHORT PositionZ
+  0x40 SHORT Unknown1 Reserved(0)
+  0x42 SHORT Unknown2 Reserved(0x40)
+  0x44 SHORT Unknown3 Reserved(0)
 }

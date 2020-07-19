@@ -1,9 +1,10 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { Trigger } from "../../../model/TIE";
 import { TIETriggerController } from "../../../controllers/TIE";
+import { Field } from "../../fields/field";
 
 @Component({
-  tag: "pyrite-TIE-trigger",
+  tag: "xpyrite-tie-trigger",
   styleUrl: "trigger.scss",
   shadow: false
 })
@@ -20,10 +21,10 @@ export class TIETriggerComponent {
   public render(): JSX.Element {
     return (
       <Host>
-      {this.controller.render("Condition")}
-      {this.controller.render("VariableType")}
-      {this.controller.render("Variable")}
-      {this.controller.render("TriggerAmount")}        
+        <Field {...this.controller.getProps('Condition')} />
+        <Field {...this.controller.getProps('VariableType')} />
+        <Field {...this.controller.getProps('Variable')} />
+        <Field {...this.controller.getProps('TriggerAmount')} />
       </Host>
     )
   }

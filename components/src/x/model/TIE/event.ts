@@ -1,12 +1,14 @@
 import { EventBase } from "./base/event-base";
     
-    export class Event extends EventBase {
-      constructor(hex: ArrayBuffer, tie?: Mission) {
-        super(hex, tie);
-      }
+export class Event extends EventBase {
 
-      public beforeConstruct(): void {}
+  public beforeConstruct(): void {}
 
-      // TODO abstract stubs?
-    }
-    
+  public toString(): string {
+    return '';
+  }
+
+  protected VariableCount(): number {
+    return 0;
+  }
+}

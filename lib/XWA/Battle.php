@@ -14,7 +14,7 @@ class Battle extends \Pyrite\EHBL\Battle {
 		$missionLst = file_get_contents($folder . $lsts[0]);
 		$title      = '';
 		if (preg_match('/BATTLE_8_HEADER!\[(.*)\]/m', $missionLst, $m)) {
-			$title = $m[1];
+			$title = str_replace("Battle 8:", "", $m[1]);
 		}
 
 		return new Battle($type, $num, $title, $folder, $missionFiles, $resourceFiles);

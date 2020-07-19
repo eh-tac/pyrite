@@ -83,8 +83,7 @@ export class TIEFlightGroupComponent {
     return (
       <div class={`tab-content ${this.selectedTab === Tab.INFO && "show"}`}>
         <h3>Craft Information</h3>
-        {<Field fielder={this.flightGroup} name="Name" />}
-        {<Field fielder={this.flightGroup} name="Warhead" />}
+
         {Object.entries(fields).map((value: [string, string]) => this.renderItem(value[0], value[1]))}
       </div>
     );

@@ -16,6 +16,6 @@ export const config: Config = {
     }
   ],
   globalScript: "src/global/app.ts",
-  globalStyle: "src/assets/bulma.css",
+  globalStyle: "src/assets/bulmatc.css",
   plugins: [sass()]
 };

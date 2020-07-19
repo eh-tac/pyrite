@@ -1,9 +1,10 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { Waypt } from "../../../model/TIE";
 import { TIEWayptController } from "../../../controllers/TIE";
+import { Field } from "../../fields/field";
 
 @Component({
-  tag: "pyrite-TIE-waypt",
+  tag: "xpyrite-tie-waypt",
   styleUrl: "waypt.scss",
   shadow: false
 })
@@ -20,11 +21,11 @@ export class TIEWayptComponent {
   public render(): JSX.Element {
     return (
       <Host>
-      {this.controller.render("StartPoints")}
-      {this.controller.render("Waypoints")}
-      {this.controller.render("Rendezvous")}
-      {this.controller.render("Hyperspace")}
-      {this.controller.render("Briefing")}        
+        <Field {...this.controller.getProps('StartPoints')} />
+        <Field {...this.controller.getProps('Waypoints')} />
+        <Field {...this.controller.getProps('Rendezvous')} />
+        <Field {...this.controller.getProps('Hyperspace')} />
+        <Field {...this.controller.getProps('Briefing')} />
       </Host>
     )
   }
