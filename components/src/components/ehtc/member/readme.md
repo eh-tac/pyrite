@@ -7,11 +7,12 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `domain` | `domain`  |             | `string` | `undefined` |
-| `name`   | `name`    |             | `string` | `undefined` |
-| `value`  | `value`   |             | `string` | `undefined` |
+| Property | Attribute | Description | Type                     | Default       |
+| -------- | --------- | ----------- | ------------------------ | ------------- |
+| `domain` | `domain`  |             | `string`                 | `undefined`   |
+| `mode`   | `mode`    |             | `"character" \| "pilot"` | `"character"` |
+| `name`   | `name`    |             | `string`                 | `undefined`   |
+| `value`  | `value`   |             | `string`                 | `undefined`   |
 
 
 ----------------------------------------------

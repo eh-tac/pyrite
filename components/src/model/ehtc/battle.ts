@@ -2,6 +2,7 @@ import { PilotSummary } from "./pilot";
 
 export class BattleSummary {
   constructor(
+    public id: number,
     public code: string,
     public nr: number,
     public name: string,
@@ -32,7 +33,7 @@ export class Battle extends BattleSummary {
     public highScores: Score[],
     public statistics: Statistics
   ) {
-    super(code, nr, name, missions, ratingAvg, URL);
+    super(nr, code, nr, name, missions, ratingAvg, URL);
   }
 
   public static fromJSON(j: Battle): Battle {

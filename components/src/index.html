@@ -34,7 +34,8 @@
       <div class="container">
         <div class="box">
           <form action="/">
-            <ehtc-member-select domain="https://localhost" name="pin"></ehtc-member-select>
+            <ehtc-member-select domain="https://localhost" name="pin"  value="9555" mode="pilot"></ehtc-member-select>
+            <ehtc-battle-select domain="https://localhost" name="battleId"></ehtc-battle-select>
           <span onclick="console.log(Array.from(new FormData(document.querySelector('form')).entries()))">XXX</span>
           </form>
           <!-- <p>ehtc-pilot</p>

@@ -46,3 +46,15 @@ export class Pilot extends SimplePilot {
     super(PIN, label, profile, email, rank, rankImage, name, position, IDLine);
   }
 }
+
+export class CharacterSummary {
+  constructor(
+    public PIN: number,
+    public characterId: number,
+    public label: string,
+    public description: string,
+    public profile: string,
+    public subgroupLabel: string,
+    public subgroupName: string
+  ) {}
+}

@@ -1,15 +1,15 @@
-.ehtc-member-select {
+.ehtc-battle-select {
   width: 100%;
   min-width: 20rem;
   min-height: 2.5rem;
 
   .field,
-  .selected-pilot,
-  .selected-pilot .pilot-summary,
+  .selected-battle,
+  .selected-battle .battle-summary,
   .dropdown-menu {
     width: 100%;
   }
-  .selected-pilot {
+  .selected-battle {
     display: flex;
   }
   .record {
@@ -22,17 +22,15 @@
     }
   }
 
-  .pilot-summary {
+  .battle-summary {
     .tag {
-      height: 1rem;
-      line-height: 1;
-      justify-content: start;
+      height: 2.5em;
     }
 
     .topline.tags {
       display: flex;
 
-      .pilot-label {
+      .battle-label {
         flex: 1;
       }
     }

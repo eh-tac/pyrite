@@ -17,8 +17,14 @@ export namespace Components {
     }
     interface EhtcBattleCenter {
     }
+    interface EhtcBattleSelect {
+        "domain": string;
+        "name": string;
+        "value": string;
+    }
     interface EhtcMemberSelect {
         "domain": string;
+        "mode": "character" | "pilot";
         "name": string;
         "value": string;
     }
@@ -144,6 +150,12 @@ declare global {
     var HTMLEhtcBattleCenterElement: {
         prototype: HTMLEhtcBattleCenterElement;
         new (): HTMLEhtcBattleCenterElement;
+    };
+    interface HTMLEhtcBattleSelectElement extends Components.EhtcBattleSelect, HTMLStencilElement {
+    }
+    var HTMLEhtcBattleSelectElement: {
+        prototype: HTMLEhtcBattleSelectElement;
+        new (): HTMLEhtcBattleSelectElement;
     };
     interface HTMLEhtcMemberSelectElement extends Components.EhtcMemberSelect, HTMLStencilElement {
     }
@@ -364,6 +376,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "ehtc-battle": HTMLEhtcBattleElement;
         "ehtc-battle-center": HTMLEhtcBattleCenterElement;
+        "ehtc-battle-select": HTMLEhtcBattleSelectElement;
         "ehtc-member-select": HTMLEhtcMemberSelectElement;
         "ehtc-pilot": HTMLEhtcPilotElement;
         "pyrite-mission": HTMLPyriteMissionElement;
@@ -410,8 +423,14 @@ declare namespace LocalJSX {
     }
     interface EhtcBattleCenter {
     }
+    interface EhtcBattleSelect {
+        "domain"?: string;
+        "name"?: string;
+        "value"?: string;
+    }
     interface EhtcMemberSelect {
         "domain"?: string;
+        "mode"?: "character" | "pilot";
         "name"?: string;
         "value"?: string;
     }
@@ -527,6 +546,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "ehtc-battle": EhtcBattle;
         "ehtc-battle-center": EhtcBattleCenter;
+        "ehtc-battle-select": EhtcBattleSelect;
         "ehtc-member-select": EhtcMemberSelect;
         "ehtc-pilot": EhtcPilot;
         "pyrite-mission": PyriteMission;
@@ -571,6 +591,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "ehtc-battle": LocalJSX.EhtcBattle & JSXBase.HTMLAttributes<HTMLEhtcBattleElement>;
             "ehtc-battle-center": LocalJSX.EhtcBattleCenter & JSXBase.HTMLAttributes<HTMLEhtcBattleCenterElement>;
+            "ehtc-battle-select": LocalJSX.EhtcBattleSelect & JSXBase.HTMLAttributes<HTMLEhtcBattleSelectElement>;
             "ehtc-member-select": LocalJSX.EhtcMemberSelect & JSXBase.HTMLAttributes<HTMLEhtcMemberSelectElement>;
             "ehtc-pilot": LocalJSX.EhtcPilot & JSXBase.HTMLAttributes<HTMLEhtcPilotElement>;
             "pyrite-mission": LocalJSX.PyriteMission & JSXBase.HTMLAttributes<HTMLPyriteMissionElement>;

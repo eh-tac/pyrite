@@ -1,23 +1,26 @@
 import { JSX, Component, Prop, h, Element, State } from "@stencil/core";
-import { PilotSummary } from "../../../model/ehtc";
+import { PilotSummary, CharacterSummary } from "../../../model/ehtc";
+
+type Member = PilotSummary | CharacterSummary;
 
 @Component({
   tag: "ehtc-member-select",
   styleUrl: "member-select.scss",
   shadow: false
 })
-export class PilotComponent {
+export class MemberSelectComponent {
   @Element() el: HTMLElement;
   // member PIN = value
   @Prop({ reflect: true }) value: string;
   // domain override. defaults to empty for same domain requests
   @Prop() domain: string;
   @Prop() name: string;
+  @Prop() mode: "character" | "pilot" = "character";
 
-  @State() selection?: PilotSummary;
-  @State() suggestions?: PilotSummary[];
+  @State() selection?: Member;
+  @State() suggestions?: Member[];
   @State() query: string;
-  @State() pilotList: PilotSummary[] = [];
+  @State() memberList: Member[];
 
   private onInput: (e: Event) => void;
   private externalPINInputElement: HTMLInputElement;
@@ -31,8 +34,15 @@ export class PilotComponent {
       .then((r: Response) => {
         return r.json();
       })
-      .then((d: PilotSummary[]) => {
-        this.pilotList = d;
+      .then((d: Member[]) => {
+        this.memberList = d;
+        if (this.value) {
+          const v = parseInt(this.value, 10);
+          this.selection = this.memberList.find(
+            (m: CharacterSummary) =>
+              (this.mode === "pilot" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
+          );
+        }
       });
     const parent = this.el.parentElement;
     this.externalPINInputElement = parent.ownerDocument.createElement("input");
@@ -44,7 +54,7 @@ export class PilotComponent {
 
   private get listURL(): string {
     const d = this.domain || "";
-    return `${d}/api/pilot/list`;
+    return `${d}/api/${this.mode}/list`;
   }
 
   private updateQuery(query: string): void {
@@ -60,22 +70,27 @@ export class PilotComponent {
     const q = this.query.toLowerCase();
     const match = (str: string) => str.toLowerCase().includes(q);
 
-    this.suggestions = this.pilotList
-      .filter((p: PilotSummary): boolean => {
+    this.suggestions = this.memberList
+      .filter((p: Member): boolean => {
         return match(p.PIN.toString()) || match(p.label) || match(p.description);
       })
       .slice(0, 15);
   }
 
-  private selectPilot(p?: PilotSummary): void {
-    this.selection = p;
-    this.externalPINInputElement.value = p ? p.PIN.toString(10) : "";
+  private selectMember(m?: Member): void {
+    this.selection = m;
+    let val = "";
+    if (m) {
+      const num = this.mode === "character" ? (m as CharacterSummary).characterId : m.PIN;
+      val = num.toString(10);
+    }
+    this.externalPINInputElement.value = val;
     this.externalPINInputElement.dispatchEvent(new InputEvent("input"));
   }
 
-  private renderPilot(p: PilotSummary): JSX.Element {
+  private renderMember(p: Member): JSX.Element {
     return (
-      <div class="pilot-summary" onClick={this.selectPilot.bind(this, p)}>
+      <div class="pilot-summary" onClick={this.selectMember.bind(this, p)}>
         <div class="topline tags has-addons mb-0" style={{ width: "100%" }}>
           <span class="pilot-label tag is-primary mb-0 is-radiusless">{p.label}</span>
           <span class="tag is-info mb-0 is-radiusless">#{p.PIN}</span>
@@ -86,8 +101,8 @@ export class PilotComponent {
   }
 
   public render(): JSX.Element {
-    if (!this.pilotList) {
-      return "<p>Loading...</p>";
+    if (!this.memberList) {
+      return <p>Loading...</p>;
     }
     return (
       <div class={{ "ehtc-member-select": true, dropdown: true, "is-active": !this.selection && !!this.suggestions }}>
@@ -100,8 +115,8 @@ export class PilotComponent {
         )}
         {this.selection && (
           <div class="selected-pilot">
-            {this.renderPilot(this.selection)}
-            <a class="button is-warning is-small is-radiusless" onClick={this.selectPilot.bind(this, undefined)}>
+            {this.renderMember(this.selection)}
+            <a class="button is-warning is-small is-radiusless" onClick={this.selectMember.bind(this, undefined)}>
               X
             </a>
           </div>
@@ -109,7 +124,7 @@ export class PilotComponent {
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
             {this.suggestions &&
-              this.suggestions.map((s: PilotSummary) => <div class="record py-1">{this.renderPilot(s)}</div>)}
+              this.suggestions.map((s: Member) => <div class="record py-1">{this.renderMember(s)}</div>)}
             <span class="no-data">No matches found</span>
           </div>
         </div>

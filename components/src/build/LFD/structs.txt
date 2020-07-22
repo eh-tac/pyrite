@@ -1,0 +1,54 @@
+struct LFD (size 0)
+{
+  0x00 Header Header
+  0x10 Any DataBlock 
+}
+
+struct Header (size 10)
+{
+	0x00 CHR[4] Type
+  0x04 CHR[8] Name
+  0x0B INT Length little endian
+}
+
+struct Rmap (size 0)
+{
+  0x00 Header Header
+}
+
+struct TIEBattle (size 0)
+{
+  0x00 Rmap HeaderMap
+  0x30 BattleText BattleName
+  PV Delt BattleImage
+}
+
+struct BattleText (size 0)
+{
+  0x00 Header Header
+  0x10 SHORT NumStrings
+  0x12 STR BattleName
+  PV STR CutsceneName
+  PV STR BattleTitle1
+  PV STR BattleTitle2
+  PV STR CutsceneTitle1
+  PV STR CutsceneTitle2
+  PV STR ImageDeltName
+  PV STR ImageSystemName
+  PV STR ImageFrame
+  PV STR[NumMissions()] MissionFilenames
+  PV STR[NumMissions()] MissionDescriptions
+}
+
+struct LfdText (size 0)
+{
+  0x00 SHORT NumStrings
+  0x02 LfdString[NumStrings] Strings
+}
+
+struct LfdString (size 0)
+{
+  0x00 SHORT Length
+  0x02 STR Text
+  PV BYTE Reserved Reserved(0)
+}
