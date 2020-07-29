@@ -24,6 +24,7 @@ export abstract class PyriteWriter {
   public abstract writeConstants(constants: Constants[]): void;
 
   public writeStruct(struct: Struct): void {
+    struct.getProps().forEach(p => p.prepare(this.generator.structs));
     this.writeBaseModel(struct);
     this.writeImplModel(struct);
   }

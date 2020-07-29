@@ -1,11 +1,12 @@
 import { JSX, h } from "@stencil/core";
 
 import { PilotFileController } from "./controller";
-import { TFR, TrainingSummary, MissionScore, KillSummary, BattleSummary } from "../../model/pilot";
+import { TrainingSummary, MissionScore, KillSummary, BattleSummary } from "../../model/pilot";
 import { Battle } from "../../model/ehtc";
+import { PilotFile } from "../../model/TIE";
 
 export class TFRController extends PilotFileController {
-  public constructor(filepath: string, public tfr: TFR) {
+  public constructor(filepath: string, public tfr: PilotFile) {
     super(filepath);
   }
 
@@ -26,7 +27,7 @@ export class TFRController extends PilotFileController {
   private renderBSF(battleData: Battle): JSX.Element {
     const scores = battleData.highScores;
 
-    const totalScore: number = this.tfr.laserlessScore;
+    const totalScore: number = this.tfr.LaserlessScore;
     let percent: string = "";
     let type: string = "";
     if (battleData.missions === 1) {
@@ -76,8 +77,8 @@ export class TFRController extends PilotFileController {
         {this.renderItem("Filename", this.filename)}
         {this.renderItem("Lasers", this.tfr.LaserLabel, this.tfr.LaserPercent)}
         {this.renderItem("Warheads", this.tfr.WarheadLabel, this.tfr.WarheadPercent)}
-        {this.renderItem("Kills", this.tfr.totalKills)}
-        {this.renderItem("Captures", this.tfr.totalCaptures)}
+        {this.renderItem("Kills", this.tfr.TotalKills)}
+        {this.renderItem("Captures", this.tfr.TotalCaptures)}
 
         {battleRow}
         {missions}
@@ -126,17 +127,17 @@ export class TFRController extends PilotFileController {
   private renderPilotInformation(): JSX.Element {
     const fields: { [key: string]: string | number } = {
       Filename: this.filename,
-      Difficulty: this.tfr.DifficultyLabel,
+      Difficulty: this.tfr.PilotDifficultyLabel,
       Status: this.tfr.PilotStatusLabel,
-      Rank: this.tfr.RankLabel,
+      Rank: this.tfr.PilotRankLabel,
       "Secret Order": this.tfr.SecretOrderLabel,
-      Score: this.tfr.score,
-      Skill: this.tfr.skillScore === -1 ? "Maximum" : this.tfr.skillScore,
+      Score: this.tfr.Score,
+      Skill: this.tfr.SkillScore === -1 ? "Maximum" : this.tfr.SkillScore,
       "Laser hits": this.tfr.LaserLabel,
       "Warhead hits": this.tfr.WarheadLabel,
-      Kills: this.tfr.totalKills,
-      Captures: this.tfr.totalCaptures,
-      "Craft lost": this.tfr.craftLost
+      Kills: this.tfr.TotalKills,
+      Captures: this.tfr.TotalCaptures,
+      "Craft lost": this.tfr.CraftLost
     };
 
     return (

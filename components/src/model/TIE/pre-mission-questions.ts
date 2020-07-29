@@ -1,4 +1,4 @@
-import { PreMissionQuestionsBase } from "./gen/pre-mission-questions-base";
+import { PreMissionQuestionsBase } from "./base/pre-mission-questions-base";
 
 export enum QuestionType {
   Officer = "Officer",

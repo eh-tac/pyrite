@@ -1,4 +1,4 @@
-import { GoalFGBase } from "./gen/goal-fg-base";
+import { GoalFGBase } from "./base/goal-fg-base";
 
 export class GoalFG extends GoalFGBase {
   public toString(): string {

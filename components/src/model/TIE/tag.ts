@@ -1,4 +1,4 @@
-import { TagBase } from "./gen/tag-base";
+import { TagBase } from "./base/tag-base";
 
 export class Tag extends TagBase {
   public toString() {

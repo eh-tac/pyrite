@@ -87,7 +87,7 @@ export class Constants {
     84: "Nav Buoy B",
     85: "Unused",
     86: "Asteroid Field",
-    87: "Planet"
+    87: "Planet",
   };
 
   public static CRAFTABBR = {
@@ -178,7 +178,7 @@ export class Constants {
     84: "NAV 2",
     85: "Asteroid",
     86: "Asteroid",
-    87: "Planet"
+    87: "Planet",
   };
 
   public static STATUS = {
@@ -192,7 +192,7 @@ export class Constants {
     7: "Shields 0%, charging",
     8: "Shields added or 200%",
     9: "Hyperdrive added",
-    20: "Invincible"
+    20: "Invincible",
   };
 
   public static WARHEAD = {
@@ -203,13 +203,13 @@ export class Constants {
     4: "Torpedo",
     5: "Advanced Concussion Missile",
     6: "Advanced Torpedo",
-    7: "Mag Pulse Torpedo"
+    7: "Mag Pulse Torpedo",
   };
 
   public static BEAM = {
     0: "None",
     1: "Tractor Beam",
-    2: "Jamming Beam"
+    2: "Jamming Beam",
   };
 
   public static GROUPAI = {
@@ -218,14 +218,14 @@ export class Constants {
     2: "Veteran",
     3: "Officer",
     4: "Ace",
-    5: "Top Ace (Invincible)"
+    5: "Top Ace (Invincible)",
   };
 
   public static MARKINGS = {
     0: "Red (TIE - None)",
     1: "Gold (TIE - Red)",
     2: "Blue (TIE - Gold)",
-    3: "Green (TIE - Blue)"
+    3: "Green (TIE - Blue)",
   };
 
   public static FORMATION = {
@@ -241,7 +241,7 @@ export class Constants {
     9: "High X",
     10: "Vic Abreast",
     11: "High Vic",
-    12: "Reverse High Vic"
+    12: "Reverse High Vic",
   };
 
   public static ARRIVALDIFFICULTY = {
@@ -250,7 +250,7 @@ export class Constants {
     2: "Medium",
     3: "Hard",
     4: "Medium, Hard",
-    5: "Easy, Medium"
+    5: "Easy, Medium",
   };
 
   public static CONDITION = {
@@ -278,7 +278,7 @@ export class Constants {
     21: "0% Shields",
     22: "50% Hull",
     23: "Out of Warheads",
-    24: "Unknown (arrive?)"
+    24: "Unknown (arrive?)",
   };
 
   public static VARIABLETYPE = {
@@ -292,7 +292,7 @@ export class Constants {
     7: "CraftWhen (enum)",
     8: "Global Group",
     9: "Misc (enum)",
-    10: "Unknown"
+    10: "Unknown",
   };
 
   public static CRAFTCATEGORY = {
@@ -302,13 +302,13 @@ export class Constants {
     3: "Starships",
     4: "Utility Craft",
     5: "Platforms/Facilities",
-    6: "Mines"
+    6: "Mines",
   };
 
   public static OBJECTCATEGORY = {
     0: "Craft",
     1: "Weapons",
-    2: "Space Objects"
+    2: "Space Objects",
   };
 
   public static TRIGGERAMOUNT = {
@@ -327,7 +327,7 @@ export class Constants {
     12: "50% of first wave",
     13: "25% of first wave",
     14: "At least one of first wave",
-    15: "All but one of first wave"
+    15: "All but one of first wave",
   };
 
   public static GOALAMOUNT = {
@@ -335,23 +335,22 @@ export class Constants {
     1: "50%",
     2: "At least one",
     3: "All but one",
-    4: "Special craft"
+    4: "Special craft",
   };
 
   public static ABORTTRIGGER = {
-    0: "Never",
+    0: "None",
     1: "0% Shields",
     2: "Systems 75% (fighters and transports only)",
     3: "Out of warheads",
     4: "50% Hull",
-    5: "Attacked"
+    5: "Attacked",
   };
 
   public static ORDER = {
     0: "Hold Station",
     1: "Go Home",
     2: "Circle",
-    // Var1 Docking Time (seconds x 5)
     3: "Circle and Evade",
     4: "Rendezvous",
     5: "Disabled",
@@ -362,7 +361,6 @@ export class Constants {
     10: "Escort",
     11: "Disable",
     12: "Board and Give Cargo",
-    // Var2 Number of Dockings
     13: "Board and Take Cargo",
     14: "Board and Exchange Cargo",
     15: "Board and Capture Cargo",
@@ -389,7 +387,7 @@ export class Constants {
     36: "SS Kamikaze?",
     37: "SS Kamikaze?",
     38: "SS Disabled",
-    39: "SS Disabled"
+    39: "SS Disabled",
   };
 
   public static CRAFTWHEN = {
@@ -400,7 +398,7 @@ export class Constants {
     7: "Special craft",
     8: "Non-special craft",
     9: "Player's craft",
-    10: "Non-player's craft"
+    10: "Non-player's craft",
   };
 
   public static MISC = {
@@ -451,16 +449,14 @@ export class Constants {
     49: "Utility craft",
     50: "Startships",
     51: "Platforms",
-    54: "Mines"
+    54: "Mines",
   };
 
   public static EVENTTYPE = {
     3: "Page Break",
     4: "Title Text",
-    // Var1 Tag#
     5: "Caption Text",
     6: "Move Map",
-    // Var2 TextTagColor (enum)
     7: "Zoom Map",
     8: "Clear FG Tags",
     9: "FG Tag 1",
@@ -473,8 +469,6 @@ export class Constants {
     16: "FG Tag 8",
     17: "Clear Text Tags",
     18: "Text Tag 1",
-    // Var3 X
-    // Var4 Y
     19: "Text Tag 2",
     20: "Text Tag 3",
     21: "Text Tag 4",
@@ -482,7 +476,7 @@ export class Constants {
     23: "Text Tag 6",
     24: "Text Tag 7",
     25: "Text Tag 8",
-    34: "End Briefing"
+    34: "End Briefing",
   };
 
   public static TEXTTAGCOLOR = {
@@ -493,352 +487,414 @@ export class Constants {
     4: "Red",
     5: "Light Red",
     6: "Gray",
-    7: "White"
+    7: "White",
   };
 
   public static BRIEFINGOFFICERS = {
     1: "Both officers",
     2: "Flight Officer",
-    3: "Secret Order"
+    3: "Secret Order",
   };
 
   public static QUESTIONTYPE = {
     0: "None",
     1: "Primary Goals",
-    2: "Secondary Goals"
+    2: "Secondary Goals",
   };
 
   public static QUESTIONCONDITION = {
     0: "None",
     4: "Successful",
-    5: "Failed"
+    5: "Failed",
   };
 
   public static MESSAGECOLOR = {
     0: "Red",
     1: "Green",
     2: "Blue",
-    3: "Purple"
+    3: "Purple",
   };
 
   public static IFFCOLOR = {
     0: "Green",
     1: "Red",
     2: "Purple",
-    3: "Blue"
+    3: "Blue",
   };
+
+  public static PILOTSTATUS = {
+    0: "Alive",
+    1: "Captured",
+    2: "Killed",
+  };
+
+  public static PILOTRANK = {
+    0: "Cadet",
+    1: "Officer",
+    2: "Lieutenant",
+    3: "Captain",
+    4: "Commander",
+    5: "General",
+  };
+
+  public static PILOTDIFFICULTY = {
+    0: "Easy",
+    1: "Medium",
+    2: "Hard",
+  };
+
+  public static TRAININGCRAFT = {
+    0: "TIE Fighter",
+    1: "TIE Interceptor",
+    2: "TIE Bomber",
+    3: "TIE Advanced",
+    4: "Assault Gunboat",
+    5: "TIE Defender",
+    6: "Missile Boat",
+  };
+
+  public static TRAININGCRAFTABBR = {
+    0: "T/F",
+    1: "T/I",
+    2: "T/B",
+    3: "T/A",
+    4: "GUN",
+    5: "T/D",
+    6: "MIS",
+  };
+
+  public static BATTLESTATUS = {
+    0: "None",
+    1: "In Progress",
+    2: "Incomplete",
+    3: "Completed",
+  };
+
+  public static SECRETORDER = {
+    0: "None",
+    1: "First Circle",
+    2: "Second Circle",
+    3: "Third Circle",
+    4: "Fourth Circle",
+    5: "Inner Circle",
+    6: "Emperor's Hand",
+    7: "Emperor's Eyes",
+    8: "Emperor's Voice",
+    9: "Emperor's Reach",
+  };
+
 }
 
 export enum CraftType {
-  None = 0,
-  Xwing = 1,
-  Ywing = 2,
-  Awing = 3,
-  Bwing = 4,
-  TIEFighter = 5,
-  TIEInterceptor = 6,
-  TIEBomber = 7,
-  TIEAdvanced = 8,
-  TIEDefender = 9,
-  PatchSlot10 = 10,
-  PatchSlot11 = 11,
-  MissileBoat = 12,
-  Twing = 13,
-  Z95Headhunter = 14,
-  R41Starchaser = 15,
-  AssaultGunboat = 16,
-  Shuttle = 17,
-  EscortShuttle = 18,
-  SystemPatrolCraft = 19,
-  ScoutCraft = 20,
-  StormtrooperTransport = 21,
-  AssaultTransport = 22,
-  EscortTransport = 23,
-  Tug = 24,
-  CombatUtilityVehicle = 25,
-  ContainerA = 26,
-  ContainerB = 27,
-  ContainerC = 28,
-  ContainerD = 29,
-  HeavyLifter = 30,
-  Unused = 31,
-  BulkFreighter = 32,
-  CargoFerry = 33,
-  ModularConveyor = 34,
-  ContainerTransport = 35,
-  // Unused = 36,
-  MurrianTransport = 37,
-  CorellianTransport = 38,
-  // Unused = 39,
-  CorellianCorvette = 40,
-  ModifiedCorvette = 41,
-  NebulonBFrigate = 42,
-  ModifiedFrigate = 43,
-  C3PassengerLiner = 44,
-  CarrackCruiser = 45,
-  StrikeCruiser = 46,
-  EscortCarrier = 47,
-  Dreadnaught = 48,
-  MonCalamariCruiser = 49,
-  LightMonCalamariCruiser = 50,
-  InterdictorCruiser = 51,
-  VictoryclassStarDestroyer = 52,
-  ImperatorclassStarDestroyer = 53,
-  // Unused = 54,
-  ContainerE = 55,
-  ContainerF = 56,
-  ContainerG = 57,
-  ContainerH = 58,
-  ContainerI = 59,
-  PlatformA = 60,
-  PlatformB = 61,
-  PlatformC = 62,
-  PlatformD = 63,
-  PlatformE = 64,
-  PlatformF = 65,
-  AsteroidRnDStation = 66,
-  AsteroidLaserBattery = 67,
-  AsteroidWarheadBattery = 68,
-  X7Factory = 69,
-  Satellite1 = 70,
-  Satellite2 = 71,
-  // Unused = 72,
-  // Unused = 73,
-  // Unused = 74,
-  MineA = 75,
-  MineB = 76,
-  MineC = 77,
-  // Unused = 78,
-  // Unused = 79,
-  ProbeA = 80,
-  ProbeB = 81,
-  // Unused = 82,
-  NavBuoyA = 83,
-  NavBuoyB = 84,
-  // Unused = 85,
-  AsteroidField = 86,
-  Planet = 87
+  none = 0,
+  xwing = 1,
+  ywing = 2,
+  awing = 3,
+  bwing = 4,
+  tieFighter = 5,
+  tieInterceptor = 6,
+  tieBomber = 7,
+  tieAdvanced = 8,
+  tieDefender = 9,
+  patchSlot10 = 10,
+  patchSlot11 = 11,
+  missileBoat = 12,
+  twing = 13,
+  z95Headhunter = 14,
+  r41Starchaser = 15,
+  assaultGunboat = 16,
+  shuttle = 17,
+  escortShuttle = 18,
+  systemPatrolCraft = 19,
+  scoutCraft = 20,
+  stormtrooperTransport = 21,
+  assaultTransport = 22,
+  escortTransport = 23,
+  tug = 24,
+  combatUtilityVehicle = 25,
+  containerA = 26,
+  containerB = 27,
+  containerC = 28,
+  containerD = 29,
+  heavyLifter = 30,
+  unused = 31,
+  bulkFreighter = 32,
+  cargoFerry = 33,
+  modularConveyor = 34,
+  containerTransport = 35,
+  // duplicate unused = 36,
+  murrianTransport = 37,
+  corellianTransport = 38,
+  // duplicate unused = 39,
+  corellianCorvette = 40,
+  modifiedCorvette = 41,
+  nebulonBFrigate = 42,
+  modifiedFrigate = 43,
+  c3PassengerLiner = 44,
+  carrackCruiser = 45,
+  strikeCruiser = 46,
+  escortCarrier = 47,
+  dreadnaught = 48,
+  monCalamariCruiser = 49,
+  lightMonCalamariCruiser = 50,
+  interdictorCruiser = 51,
+  victoryclassStarDestroyer = 52,
+  imperatorclassStarDestroyer = 53,
+  // duplicate unused = 54,
+  containerE = 55,
+  containerF = 56,
+  containerG = 57,
+  containerH = 58,
+  containerI = 59,
+  platformA = 60,
+  platformB = 61,
+  platformC = 62,
+  platformD = 63,
+  platformE = 64,
+  platformF = 65,
+  asteroidRnDStation = 66,
+  asteroidLaserBattery = 67,
+  asteroidWarheadBattery = 68,
+  x7Factory = 69,
+  satellite1 = 70,
+  satellite2 = 71,
+  // duplicate unused = 72,
+  // duplicate unused = 73,
+  // duplicate unused = 74,
+  mineA = 75,
+  mineB = 76,
+  mineC = 77,
+  // duplicate unused = 78,
+  // duplicate unused = 79,
+  probeA = 80,
+  probeB = 81,
+  // duplicate unused = 82,
+  navBuoyA = 83,
+  navBuoyB = 84,
+  // duplicate unused = 85,
+  asteroidField = 86,
+  planet = 87,
 }
 
 export enum CraftAbbr {
-  None = 0,
-  XW = 1,
-  YW = 2,
-  AW = 3,
-  BW = 4,
-  TF = 5,
-  TI = 6,
-  TB = 7,
-  TA = 8,
-  TD = 9,
-  PATCH10 = 10,
-  PATCH11 = 11,
-  MIS = 12,
-  TW = 13,
-  Z95 = 14,
-  R41 = 15,
-  GUN = 16,
-  SHU = 17,
-  ES = 18,
-  SPC = 19,
-  SCT = 20,
-  TRN = 21,
-  ATR = 22,
-  ETR = 23,
-  TUG = 24,
-  CUV = 25,
-  CNA = 26,
-  CNB = 27,
-  CNC = 28,
-  CND = 29,
-  HLF = 30,
-  GPLT = 31,
-  FRT = 32,
-  CARG = 33,
-  CNVYR = 34,
-  CTRNS = 35,
-  MDTRN = 36,
-  MUTR = 37,
-  CORT = 38,
-  MSC = 39,
-  CRV = 40,
-  MCRV = 41,
-  FRG = 42,
-  MFRG = 43,
-  LINER = 44,
-  CRCK = 45,
-  STRCK = 46,
-  ESC = 47,
-  DREAD = 48,
-  CRS = 49,
-  CRL = 50,
-  INT = 51,
-  VSD = 52,
-  ISD = 53,
-  SSD = 54,
-  CNE = 55,
-  CNF = 56,
-  CNG = 57,
-  CNH = 58,
-  CNI = 59,
-  PLT1 = 60,
-  PLT2 = 61,
-  PLT3 = 62,
-  PLT4 = 63,
-  PLT5 = 64,
-  PLT6 = 65,
-  RnDFC = 66,
-  LASBAT = 67,
-  WLNCHR = 68,
-  FAC1 = 69,
-  SAT1 = 70,
-  SAT2 = 71,
-  UNK = 72,
-  // UNK = 73,
-  // UNK = 74,
-  MINE1 = 75,
-  MINEB = 76,
-  MINEC = 77,
-  // UNK = 78,
-  // UNK = 79,
-  PROBEA = 80,
-  PROBEB = 81,
-  // UNK = 82,
-  NAV1 = 83,
-  NAV2 = 84,
-  Asteroid = 85,
-  // Asteroid = 86,
-  Planet = 87
+  none = 0,
+  xw = 1,
+  yw = 2,
+  aw = 3,
+  bw = 4,
+  tf = 5,
+  ti = 6,
+  tb = 7,
+  ta = 8,
+  td = 9,
+  patch10 = 10,
+  patch11 = 11,
+  mis = 12,
+  tw = 13,
+  z95 = 14,
+  r41 = 15,
+  gun = 16,
+  shu = 17,
+  es = 18,
+  spc = 19,
+  sct = 20,
+  trn = 21,
+  atr = 22,
+  etr = 23,
+  tug = 24,
+  cuv = 25,
+  cna = 26,
+  cnb = 27,
+  cnc = 28,
+  cnd = 29,
+  hlf = 30,
+  gplt = 31,
+  frt = 32,
+  carg = 33,
+  cnvyr = 34,
+  ctrns = 35,
+  mdtrn = 36,
+  mutr = 37,
+  cort = 38,
+  msc = 39,
+  crv = 40,
+  mcrv = 41,
+  frg = 42,
+  mfrg = 43,
+  liner = 44,
+  crck = 45,
+  strck = 46,
+  esc = 47,
+  dread = 48,
+  crs = 49,
+  crl = 50,
+  int = 51,
+  vsd = 52,
+  isd = 53,
+  ssd = 54,
+  cne = 55,
+  cnf = 56,
+  cng = 57,
+  cnh = 58,
+  cni = 59,
+  plt1 = 60,
+  plt2 = 61,
+  plt3 = 62,
+  plt4 = 63,
+  plt5 = 64,
+  plt6 = 65,
+  rnDFc = 66,
+  lasBat = 67,
+  wLnchr = 68,
+  fac1 = 69,
+  sat1 = 70,
+  sat2 = 71,
+  unk = 72,
+  // duplicate unk = 73,
+  // duplicate unk = 74,
+  mine1 = 75,
+  mineB = 76,
+  mineC = 77,
+  // duplicate unk = 78,
+  // duplicate unk = 79,
+  probeA = 80,
+  probeB = 81,
+  // duplicate unk = 82,
+  nav1 = 83,
+  nav2 = 84,
+  asteroid = 85,
+  // duplicate asteroid = 86,
+  planet = 87,
 }
 
 export enum Status {
-  None = 0,
+  none = 0,
   n2XWarheads = 1,
   n12Warheads = 2,
-  Disabled = 3,
+  disabled = 3,
   n12Shields = 4,
-  NoLasers = 5,
-  NoHyperdrive = 6,
-  Shields0Percentcharging = 7,
-  Shieldsaddedor200Percent = 8,
-  Hyperdriveadded = 9,
-  Invincible = 20
+  noLasers = 5,
+  noHyperdrive = 6,
+  shields0PercentCharging = 7,
+  shieldsAddedOr200Percent = 8,
+  hyperdriveAdded = 9,
+  invincible = 20,
 }
 
 export enum Warhead {
-  None = 0,
-  HeavyRocket = 1,
-  SpaceBomb = 2,
-  ConcussionMissile = 3,
-  Torpedo = 4,
-  AdvancedConcussionMissile = 5,
-  AdvancedTorpedo = 6,
-  MagPulseTorpedo = 7
+  none = 0,
+  heavyRocket = 1,
+  spaceBomb = 2,
+  concussionMissile = 3,
+  torpedo = 4,
+  advancedConcussionMissile = 5,
+  advancedTorpedo = 6,
+  magPulseTorpedo = 7,
 }
 
 export enum Beam {
-  None = 0,
-  TractorBeam = 1,
-  JammingBeam = 2
+  none = 0,
+  tractorBeam = 1,
+  jammingBeam = 2,
 }
 
 export enum GroupAI {
-  RookieNone = 0,
-  Novice = 1,
-  Veteran = 2,
-  Officer = 3,
-  Ace = 4,
-  TopAceInvincible = 5
+  rookieNone = 0,
+  novice = 1,
+  veteran = 2,
+  officer = 3,
+  ace = 4,
+  topAceInvincible = 5,
 }
 
 export enum Markings {
-  RedTIENone = 0,
-  GoldTIERed = 1,
-  BlueTIEGold = 2,
-  GreenTIEBlue = 3
+  redTieNone = 0,
+  goldTieRed = 1,
+  blueTieGold = 2,
+  greenTieBlue = 3,
 }
 
 export enum Formation {
-  Vic = 0,
-  FingerFour = 1,
-  LineAstern = 2,
-  LineAbreast = 3,
-  EchelonRight = 4,
-  EchelonLeft = 5,
-  DoubleAstern = 6,
-  Diamond = 7,
-  Stack = 8,
-  HighX = 9,
-  VicAbreast = 10,
-  HighVic = 11,
-  ReverseHighVic = 12
+  vic = 0,
+  fingerFour = 1,
+  lineAstern = 2,
+  lineAbreast = 3,
+  echelonRight = 4,
+  echelonLeft = 5,
+  doubleAstern = 6,
+  diamond = 7,
+  stack = 8,
+  highX = 9,
+  vicAbreast = 10,
+  highVic = 11,
+  reverseHighVic = 12,
 }
 
 export enum ArrivalDifficulty {
-  All = 0,
-  Easy = 1,
-  Medium = 2,
-  Hard = 3,
-  MediumHard = 4,
-  EasyMedium = 5
+  all = 0,
+  easy = 1,
+  medium = 2,
+  hard = 3,
+  mediumHard = 4,
+  easyMedium = 5,
 }
 
 export enum Condition {
-  Alwaystrue = 0,
-  Created = 1,
-  Destroyed = 2,
-  Attacked = 3,
-  Captured = 4,
-  Inspected = 5,
-  Boarded = 6,
-  Docked = 7,
-  Disabled = 8,
-  Survivedexist = 9,
-  Nonefalse = 10,
-  Unknown = 11,
-  Completedmission = 12,
-  CompletedPrimaryGoals = 13,
-  FailedPrimaryGoals = 14,
-  CompletedSecondaryGoals = 15,
-  FailedSecondaryGoals = 16,
-  CompletedBonusGoals = 17,
-  FailedBonusGoals = 18,
-  Droppedoff = 19,
-  Reinforced = 20,
+  alwaysTrue = 0,
+  created = 1,
+  destroyed = 2,
+  attacked = 3,
+  captured = 4,
+  inspected = 5,
+  boarded = 6,
+  docked = 7,
+  disabled = 8,
+  survivedExist = 9,
+  noneFalse = 10,
+  unknown = 11,
+  completedMission = 12,
+  completedPrimaryGoals = 13,
+  failedPrimaryGoals = 14,
+  completedSecondaryGoals = 15,
+  failedSecondaryGoals = 16,
+  completedBonusGoals = 17,
+  failedBonusGoals = 18,
+  droppedOff = 19,
+  reinforced = 20,
   n0PercentShields = 21,
   n50PercentHull = 22,
-  OutofWarheads = 23,
-  Unknownarrive = 24
+  outOfWarheads = 23,
+  unknownArrive = 24,
 }
 
 export enum VariableType {
-  None = 0,
-  FlightGroup = 1,
-  CraftTypeenum = 2,
-  CraftCategoryenum = 3,
-  ObjectCategoryenum = 4,
-  IFF = 5,
-  Orderenum = 6,
-  CraftWhenenum = 7,
-  GlobalGroup = 8,
-  Miscenum = 9,
-  Unknown = 10
+  none = 0,
+  flightGroup = 1,
+  craftTypeEnum = 2,
+  craftCategoryEnum = 3,
+  objectCategoryEnum = 4,
+  iff = 5,
+  orderEnum = 6,
+  craftWhenEnum = 7,
+  globalGroup = 8,
+  miscEnum = 9,
+  unknown = 10,
 }
 
 export enum CraftCategory {
-  Starfighters = 0,
-  Transports = 1,
-  FreightersContainers = 2,
-  Starships = 3,
-  UtilityCraft = 4,
-  PlatformsFacilities = 5,
-  Mines = 6
+  starfighters = 0,
+  transports = 1,
+  freightersContainers = 2,
+  starships = 3,
+  utilityCraft = 4,
+  platformsFacilities = 5,
+  mines = 6,
 }
 
 export enum ObjectCategory {
-  Craft = 0,
-  Weapons = 1,
-  SpaceObjects = 2
+  craft = 0,
+  weapons = 1,
+  spaceObjects = 2,
 }
 
 export enum TriggerAmount {
@@ -846,208 +902,269 @@ export enum TriggerAmount {
   n75Percent = 1,
   n50Percent = 2,
   n25Percent = 3,
-  Atleastone = 4,
-  Allbutone = 5,
-  Specialcraft = 6,
-  Allnonspecialcraft = 7,
-  Allnonplayercraft = 8,
-  Playerscraft = 9,
-  n100Percentoffirstwave = 10,
-  n75Percentoffirstwave = 11,
-  n50Percentoffirstwave = 12,
-  n25Percentoffirstwave = 13,
-  Atleastoneoffirstwave = 14,
-  Allbutoneoffirstwave = 15
+  atLeastOne = 4,
+  allButOne = 5,
+  specialCraft = 6,
+  allNonspecialCraft = 7,
+  allNonplayerCraft = 8,
+  playersCraft = 9,
+  n100PercentOfFirstWave = 10,
+  n75PercentOfFirstWave = 11,
+  n50PercentOfFirstWave = 12,
+  n25PercentOfFirstWave = 13,
+  atLeastOneOfFirstWave = 14,
+  allButOneOfFirstWave = 15,
 }
 
 export enum GoalAmount {
   n100Percent = 0,
   n50Percent = 1,
-  Atleastone = 2,
-  Allbutone = 3,
-  Specialcraft = 4
+  atLeastOne = 2,
+  allButOne = 3,
+  specialCraft = 4,
 }
 
 export enum AbortTrigger {
-  None = 0,
+  none = 0,
   n0PercentShields = 1,
-  Systems75Percentfightersandtransportsonly = 2,
-  Outofwarheads = 3,
+  systems75PercentFightersAndTransportsOnly = 2,
+  outOfWarheads = 3,
   n50PercentHull = 4,
-  Attacked = 5
+  attacked = 5,
 }
 
 export enum Order {
-  HoldStation = 0,
-  GoHome = 1,
-  Circle = 2,
-  CircleandEvade = 3,
-  Rendezvous = 4,
-  Disabled = 5,
-  AwaitBoarding = 6,
-  Attack = 7,
-  AttackEscorts = 8,
-  Protect = 9,
-  Escort = 10,
-  Disable = 11,
-  BoardandGiveCargo = 12,
-  BoardandTakeCargo = 13,
-  BoardandExchangeCargo = 14,
-  BoardandCaptureCargo = 15,
-  BoardandDestroyCargo = 16,
-  Pickup = 17,
-  Dropoff = 18,
-  Wait = 19,
-  SSWait = 20,
-  SSPatrolLoop = 21,
-  SSAwaitReturn = 22,
-  SSLaunch = 23,
-  SSProtect = 24,
-  SSWaitandProtect = 25,
-  SSPatrolandAttack = 26,
-  SSPatrolandDisable = 27,
-  SSHoldSteady = 28,
-  SSGoHome = 29,
-  // SS Wait = 30,
-  SSBoard = 31,
-  BoardtoRepair = 32,
-  // Hold Station = 33,
-  HoldSteady = 34,
-  SSHoldStation = 35,
-  SSKamikaze = 36,
-  // SS Kamikaze? = 37,
-  SSDisabled = 38
-  // SS Disabled = 39,
+  holdStation = 0,
+  goHome = 1,
+  circle = 2,
+  circleAndEvade = 3,
+  rendezvous = 4,
+  disabled = 5,
+  awaitBoarding = 6,
+  attack = 7,
+  attackEscorts = 8,
+  protect = 9,
+  escort = 10,
+  disable = 11,
+  boardAndGiveCargo = 12,
+  boardAndTakeCargo = 13,
+  boardAndExchangeCargo = 14,
+  boardAndCaptureCargo = 15,
+  boardAndDestroyCargo = 16,
+  pickUp = 17,
+  dropOff = 18,
+  wait = 19,
+  ssWait = 20,
+  ssPatrolLoop = 21,
+  ssAwaitReturn = 22,
+  ssLaunch = 23,
+  ssProtect = 24,
+  ssWaitAndProtect = 25,
+  ssPatrolAndAttack = 26,
+  ssPatrolAndDisable = 27,
+  ssHoldSteady = 28,
+  ssGoHome = 29,
+  // duplicate ssWait = 30,
+  ssBoard = 31,
+  boardToRepair = 32,
+  // duplicate holdStation = 33,
+  holdSteady = 34,
+  ssHoldStation = 35,
+  ssKamikaze = 36,
+  // duplicate ssKamikaze = 37,
+  ssDisabled = 38,
+  // duplicate ssDisabled = 39,
 }
 
 export enum CraftWhen {
-  Boarding = 1,
-  Boarded = 2,
-  Defence = 3,
-  Disabled = 4,
-  Specialcraft = 7,
-  Nonspecialcraft = 8,
-  Playerscraft = 9,
-  Nonplayerscraft = 10
+  boarding = 1,
+  boarded = 2,
+  defence = 3,
+  disabled = 4,
+  specialCraft = 7,
+  nonspecialCraft = 8,
+  playersCraft = 9,
+  nonplayersCraft = 10,
 }
 
 export enum Misc {
-  Rookiecraft = 0,
-  Novicecraft = 1,
-  Officercraft = 2,
-  Veterancraft = 3,
-  Acecraft = 4,
-  TopAcecraft = 5,
-  Stationarycraft = 6,
-  Craftreturningtobase = 7,
-  Nonevadingcraft = 8,
-  Craftinformation = 9,
-  Rendezvousingcraft = 10,
-  Disabledcraft = 11,
-  Craftawaitingboarding = 12,
-  Attackingcraft = 13,
-  Craftatatckingescorts = 14,
-  Protectingcraft = 15,
-  Escortingcraft = 16,
-  Disablingcraft = 17,
-  Deliveringcraft = 18,
-  Siezingcraft = 19,
-  Exchangingcraft = 20,
-  Capturingcraft = 21,
-  Craftdestroyingcargo = 22,
-  Pickedupcraft = 23,
-  Droppedoffcraft = 24,
-  Waitingfighters = 25,
-  Waitingstarships = 26,
-  Patrollingstarships = 27,
-  SSawaitingreturns = 28,
-  SSwaitingtolaunch = 29,
-  SSwaitingtobeboarded = 30,
-  SSwitingforboardingcrafttoappear = 31,
-  SSattacking = 32,
-  SSdisabling = 33,
-  // SS disabling? = 34,
-  SSflyinghome = 35,
-  Rebels = 36,
-  Imperials = 37,
-  Spacecraft = 39,
-  Weapons = 40,
-  Spaceobjects = 41,
-  Fighters = 46,
-  Transports = 47,
-  Freighters = 48,
-  Utilitycraft = 49,
-  Startships = 50,
-  Platforms = 51,
-  Mines = 54
+  rookieCraft = 0,
+  noviceCraft = 1,
+  officerCraft = 2,
+  veteranCraft = 3,
+  aceCraft = 4,
+  topAceCraft = 5,
+  stationaryCraft = 6,
+  craftReturningToBase = 7,
+  nonevadingCraft = 8,
+  craftInFormation = 9,
+  rendezvousingCraft = 10,
+  disabledCraft = 11,
+  craftAwaitingBoarding = 12,
+  attackingCraft = 13,
+  craftAtatckingEscorts = 14,
+  protectingCraft = 15,
+  escortingCraft = 16,
+  disablingCraft = 17,
+  deliveringCraft = 18,
+  siezingCraft = 19,
+  exchangingCraft = 20,
+  capturingCraft = 21,
+  craftDestroyingCargo = 22,
+  pickedUpCraft = 23,
+  droppedOffCraft = 24,
+  waitingFighters = 25,
+  waitingStarships = 26,
+  patrollingStarships = 27,
+  ssAwaitingReturns = 28,
+  ssWaitingToLaunch = 29,
+  ssWaitingToBeBoarded = 30,
+  ssWitingForBoardingCraftToAppear = 31,
+  ssAttacking = 32,
+  ssDisabling = 33,
+  // duplicate ssDisabling = 34,
+  ssFlyingHome = 35,
+  rebels = 36,
+  imperials = 37,
+  spacecraft = 39,
+  weapons = 40,
+  spaceObjects = 41,
+  fighters = 46,
+  transports = 47,
+  freighters = 48,
+  utilityCraft = 49,
+  startships = 50,
+  platforms = 51,
+  mines = 54,
 }
 
 export enum EventType {
-  PageBreak = 3,
-  TitleText = 4,
-  CaptionText = 5,
-  MoveMap = 6,
-  ZoomMap = 7,
-  ClearFGTags = 8,
-  FGTag1 = 9,
-  FGTag2 = 10,
-  FGTag3 = 11,
-  FGTag4 = 12,
-  FGTag5 = 13,
-  FGTag6 = 14,
-  FGTag7 = 15,
-  FGTag8 = 16,
-  ClearTextTags = 17,
-  TextTag1 = 18,
-  TextTag2 = 19,
-  TextTag3 = 20,
-  TextTag4 = 21,
-  TextTag5 = 22,
-  TextTag6 = 23,
-  TextTag7 = 24,
-  TextTag8 = 25,
-  EndBriefing = 34
+  pageBreak = 3,
+  titleText = 4,
+  captionText = 5,
+  moveMap = 6,
+  zoomMap = 7,
+  clearFgTags = 8,
+  fgTag1 = 9,
+  fgTag2 = 10,
+  fgTag3 = 11,
+  fgTag4 = 12,
+  fgTag5 = 13,
+  fgTag6 = 14,
+  fgTag7 = 15,
+  fgTag8 = 16,
+  clearTextTags = 17,
+  textTag1 = 18,
+  textTag2 = 19,
+  textTag3 = 20,
+  textTag4 = 21,
+  textTag5 = 22,
+  textTag6 = 23,
+  textTag7 = 24,
+  textTag8 = 25,
+  endBriefing = 34,
 }
 
 export enum TextTagColor {
-  Green = 0,
-  Red = 1,
-  Purple = 2,
-  Blue = 3,
-  // Red = 4,
-  LightRed = 5,
-  Gray = 6,
-  White = 7
+  green = 0,
+  red = 1,
+  purple = 2,
+  blue = 3,
+  // duplicate red = 4,
+  lightRed = 5,
+  gray = 6,
+  white = 7,
 }
 
 export enum BriefingOfficers {
-  Bothofficers = 1,
-  FlightOfficer = 2,
-  SecretOrder = 3
+  bothOfficers = 1,
+  flightOfficer = 2,
+  secretOrder = 3,
 }
 
 export enum QuestionType {
-  None = 0,
-  PrimaryGoals = 1,
-  SecondaryGoals = 2
+  none = 0,
+  primaryGoals = 1,
+  secondaryGoals = 2,
 }
 
 export enum QuestionCondition {
-  None = 0,
-  Successful = 4,
-  Failed = 5
+  none = 0,
+  successful = 4,
+  failed = 5,
 }
 
 export enum MessageColor {
-  Red = 0,
-  Green = 1,
-  Blue = 2,
-  Purple = 3
+  red = 0,
+  green = 1,
+  blue = 2,
+  purple = 3,
 }
 
 export enum IFFColor {
-  Green = 0,
-  Red = 1,
-  Purple = 2,
-  Blue = 3
+  green = 0,
+  red = 1,
+  purple = 2,
+  blue = 3,
+}
+
+export enum PilotStatus {
+  alive = 0,
+  captured = 1,
+  killed = 2,
+}
+
+export enum PilotRank {
+  cadet = 0,
+  officer = 1,
+  lieutenant = 2,
+  captain = 3,
+  commander = 4,
+  general = 5,
+}
+
+export enum PilotDifficulty {
+  easy = 0,
+  medium = 1,
+  hard = 2,
+}
+
+export enum TrainingCraft {
+  tieFighter = 0,
+  tieInterceptor = 1,
+  tieBomber = 2,
+  tieAdvanced = 3,
+  assaultGunboat = 4,
+  tieDefender = 5,
+  missileBoat = 6,
+}
+
+export enum TrainingCraftAbbr {
+  tf = 0,
+  ti = 1,
+  tb = 2,
+  ta = 3,
+  gun = 4,
+  td = 5,
+  mis = 6,
+}
+
+export enum BattleStatus {
+  none = 0,
+  inProgress = 1,
+  incomplete = 2,
+  completed = 3,
+}
+
+export enum SecretOrder {
+  none = 0,
+  firstCircle = 1,
+  secondCircle = 2,
+  thirdCircle = 3,
+  fourthCircle = 4,
+  innerCircle = 5,
+  emperorsHand = 6,
+  emperorsEyes = 7,
+  emperorsVoice = 8,
+  emperorsReach = 9,
 }

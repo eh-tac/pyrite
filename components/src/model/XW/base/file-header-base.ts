@@ -31,7 +31,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     for (let i = 0; i < 3; i++) {
       const t = getString(hex, offset);
       this.CompletionMessage.push(t);
-      offset += 64;
+      offset += t.length;
     }
     this.NumFGs = getShort(hex, 0xCA);
     this.NumObj = getShort(hex, 0xCC);
@@ -63,7 +63,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     for (let i = 0; i < 3; i++) {
       const t = this.CompletionMessage[i];
       writeString(hex, t, 0x0A);
-      offset += 64;
+      offset += t.length;
     }
     writeShort(hex, this.NumFGs, 0xCA);
     writeShort(hex, this.NumObj, 0xCC);

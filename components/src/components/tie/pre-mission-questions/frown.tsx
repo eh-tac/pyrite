@@ -9,7 +9,7 @@ enum DisplayMode {
 }
 
 @Component({
-  tag: "pyrite-tie-pre-mission-questions",
+  tag: "pyrite-frown",
   styleUrl: "frown.scss",
   shadow: true
 })
@@ -35,7 +35,7 @@ export class PreMissionQuestionsComponent {
     return (
       <div class="wrapper">
         <div class="btn-group" role="group" aria-label="Pre Mission Question Mode Selector">
-          {modes.map((mode) => (
+          {modes.map(mode => (
             <button type="button" class="btn btn-info" onClick={this.modeSelect.bind(this, mode)}>
               {mode}
             </button>
@@ -65,7 +65,7 @@ export class PreMissionQuestionsComponent {
               </tr>
             </thead>
             <tbody>
-              {questions.map((question) => (
+              {questions.map(question => (
                 <tr>
                   <td class="type">{question.Type}</td>
                   <td class="question">{question.Question}</td>

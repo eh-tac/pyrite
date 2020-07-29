@@ -1,4 +1,4 @@
-import { BriefingBase } from "./gen/briefing-base";
+import { BriefingBase } from "./base/briefing-base";
 
 import { getInt, getShort } from "../hex";
 import { IMission } from "../pyrite-base";

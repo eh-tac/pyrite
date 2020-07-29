@@ -1,10 +1,10 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { Mission } from "../../../model/XW";
 import { XWMissionController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 
 @Component({
-  tag: "xpyrite-xw-mission",
+  tag: "pyrite-xw-mission",
   styleUrl: "mission.scss",
   shadow: false
 })
@@ -21,10 +21,9 @@ export class XWMissionComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('FileHeader')} />
-        <Field {...this.controller.getProps('Unnamed')} />
+        <Field {...this.controller.getProps("FileHeader")} />
+        <Field {...this.controller.getProps("Unnamed")} />
       </Host>
-    )
+    );
   }
 }
-  

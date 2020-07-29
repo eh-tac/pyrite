@@ -10,10 +10,11 @@ export class TypeScriptWriter extends PyriteWriter {
 
     const modelIndex: string[] = [`export { Constants } from './constants';`];
     const contrIndex: string[] = [];
+    const plt = this.generator.platform;
     Object.values(this.generator.structs).forEach((s: Struct) => {
       const kebab = lodash.kebabCase(s.name);
       modelIndex.push(`export { ${s.name} } from "./${kebab}";`);
-      contrIndex.push(`export { ${this.generator.platform}${s.name}Controller } from "./${kebab}";`);
+      contrIndex.push(`export { ${plt}${s.name.replace(plt, "")}Controller } from "./${kebab}";`);
     });
 
     this.writeFile("model/PLT/index.ts", modelIndex.join("\n"));
@@ -116,7 +117,7 @@ export class ${struct.name} extends ${baseClass} {
     const props = struct.getProps();
     const fields: object = {};
     props.forEach((p: Prop) => {
-      fields[p.name] = p.getFieldProps(this.generator.constants);
+      fields[p.name] = p.getFieldProps(this.generator.constants, this.generator.platform);
     });
 
     const contents: string = `import { ControllerBase } from "../../controller-base";
@@ -140,10 +141,12 @@ export class ${this.controllerName(struct)} extends ControllerBase {
     this.writeFile(`components/PLT/${kebab}/${scssFile}`, "");
 
     const plt = this.generator.platform;
-    const tag = `xpyrite-${plt}-${kebab}`.toLowerCase();
+    const tag = `pyrite-${plt}-${kebab.replace(plt, "")}`.toLowerCase();
     const lName = struct.name.toLowerCase();
     const cName = this.controllerName(struct);
     const props = struct.getProps();
+
+    const compName = `${plt}${struct.name.replace(plt, "")}Component`;
 
     const contents: string = `import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
 import { ${struct.name} } from "../../../model/${plt}";
@@ -155,7 +158,7 @@ import { Field } from "../../fields/field";
   styleUrl: "${scssFile}",
   shadow: false
 })
-export class ${plt}${struct.name}Component {
+export class ${compName} {
   @Element() public el: HTMLElement;
   @Prop() public ${lName}: ${struct.name};
 
@@ -175,7 +178,7 @@ export class ${plt}${struct.name}Component {
 }
   `;
     const file = this.filename(struct.name);
-    this.writeFile(`components/PLT/${kebab}/${file}x`, contents);
+    this.writeFile(`components/PLT/${kebab}/${file}x`, contents, false);
   }
 
   protected getBaseClassImports(props: Prop[]): string {
@@ -262,7 +265,8 @@ export class ${plt}${struct.name}Component {
   }
 
   private controllerName(struct: Struct): string {
-    return `${this.generator.platform}${struct.name}Controller`;
+    const plt = this.generator.platform;
+    return `${plt}${struct.name.replace(plt, "")}Controller`;
   }
 
   private getEnumName(label: string): string {

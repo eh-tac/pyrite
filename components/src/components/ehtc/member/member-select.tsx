@@ -16,6 +16,7 @@ export class MemberSelectComponent {
   @Prop() domain: string;
   @Prop() name: string;
   @Prop() mode: "character" | "pilot" = "character";
+  @Prop() filter: string = "";
 
   @State() selection?: Member;
   @State() suggestions?: Member[];
@@ -24,18 +25,36 @@ export class MemberSelectComponent {
 
   private onInput: (e: Event) => void;
   private externalPINInputElement: HTMLInputElement;
+  private filterArray: number[] = [];
 
   public componentWillLoad(): void {
     this.onInput = (e: Event) => {
       const input = e.target as HTMLInputElement;
       this.updateQuery(input.value);
     };
+
+    const parent = this.el.parentElement;
+    this.externalPINInputElement = parent.ownerDocument.createElement("input");
+    this.externalPINInputElement.type = "hidden";
+    this.externalPINInputElement.value = this.value;
+    this.externalPINInputElement.name = this.name;
+    parent.appendChild(this.externalPINInputElement);
+    this.filterArray = this.filter ? this.filter.split(",").map(s => parseInt(s, 10)) : [];
+
     fetch(this.listURL)
       .then((r: Response) => {
         return r.json();
       })
       .then((d: Member[]) => {
         this.memberList = d;
+        if (this.filterArray.length) {
+          this.memberList = d.filter(
+            (m: CharacterSummary) =>
+              (this.mode === "pilot" && this.filterArray.includes(m.PIN)) ||
+              (this.mode === "character" && this.filterArray.includes(m.characterId))
+          );
+        }
+
         if (this.value) {
           const v = parseInt(this.value, 10);
           this.selection = this.memberList.find(
@@ -44,12 +63,6 @@ export class MemberSelectComponent {
           );
         }
       });
-    const parent = this.el.parentElement;
-    this.externalPINInputElement = parent.ownerDocument.createElement("input");
-    this.externalPINInputElement.type = "hidden";
-    this.externalPINInputElement.value = this.value;
-    this.externalPINInputElement.name = this.name;
-    parent.appendChild(this.externalPINInputElement);
   }
 
   private get listURL(): string {

@@ -569,3 +569,57 @@ IFFColor
 01	Red
 02	Purple
 03	Blue
+
+PilotStatus
+00 Alive
+01 Captured
+02 Killed
+
+PilotRank 
+00 Cadet
+01 Officer
+02 Lieutenant
+03 Captain
+04 Commander
+05 General
+
+PilotDifficulty
+00 Easy
+01 Medium
+02 Hard
+
+TrainingCraft
+00 TIE Fighter
+01 TIE Interceptor
+02 TIE Bomber
+03 TIE Advanced
+04 Assault Gunboat
+05 TIE Defender
+06 Missile Boat
+
+TrainingCraftAbbr
+00 T/F
+01 T/I
+02 T/B
+03 T/A
+04 GUN
+05 T/D
+06 MIS
+
+BattleStatus
+00 None
+01 In Progress
+02 Incomplete
+03 Completed
+
+SecretOrder
+00 None
+01 First Circle
+02 Second Circle
+03 Third Circle
+04 Fourth Circle
+05 Inner Circle
+06 Emperor's Hand
+07 Emperor's Eyes
+08 Emperor's Voice
+09 Emperor's Reach

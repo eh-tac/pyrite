@@ -1,4 +1,4 @@
-import { PostMissionQuestionsBase } from "./gen/post-mission-questions-base";
+import { PostMissionQuestionsBase } from "./base/post-mission-questions-base";
 
 export class PostMissionQuestions extends PostMissionQuestionsBase {
   protected afterConstruct() {

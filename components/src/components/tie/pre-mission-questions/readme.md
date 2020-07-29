@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property  | Attribute | Description | Type      | Default     |
-| --------- | --------- | ----------- | --------- | ----------- |
-| `mission` | --        |             | `Mission` | `undefined` |
+| Property              | Attribute | Description | Type                  | Default     |
+| --------------------- | --------- | ----------- | --------------------- | ----------- |
+| `premissionquestions` | --        |             | `PreMissionQuestions` | `undefined` |
 
 
 ## Dependencies

@@ -1,4 +1,4 @@
-import { TIEStringBase } from "./gen/tie-string-base";
+import { TIEStringBase } from "./base/tie-string-base";
 
 export class TIEString extends TIEStringBase {
   public toString() {

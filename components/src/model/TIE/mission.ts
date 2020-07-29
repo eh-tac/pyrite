@@ -1,5 +1,5 @@
 import { FlightGroup } from "./flight-group";
-import { MissionBase } from "./gen/mission-base";
+import { MissionBase } from "./base/mission-base";
 import { PreMissionQuestions, QuestionType } from "./pre-mission-questions";
 
 export enum Difficulty {
@@ -17,8 +17,8 @@ export class Mission extends MissionBase {
 
   public get officerBriefing(): PreMissionQuestions[] {
     return this.PreMissionQuestions.slice(0, 4)
-      .filter((q) => q.Length)
-      .map((q) => {
+      .filter(q => q.Length)
+      .map(q => {
         q.Type = QuestionType.Officer;
         return q;
       });
@@ -26,8 +26,8 @@ export class Mission extends MissionBase {
 
   public get secretBriefing(): PreMissionQuestions[] {
     return this.PreMissionQuestions.slice(5, 9)
-      .filter((q) => q.Length)
-      .map((q) => {
+      .filter(q => q.Length)
+      .map(q => {
         q.Type = QuestionType.Secret;
         return q;
       });
@@ -51,7 +51,7 @@ export class Mission extends MissionBase {
   }
 
   public getGlobalGroup(gg: number): FlightGroup[] {
-    return this.FlightGroups.filter((fg) => fg.GlobalGroup === gg);
+    return this.FlightGroups.filter(fg => fg.GlobalGroup === gg);
   }
 
   public goalPoints(diff: Difficulty): number {

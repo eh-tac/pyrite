@@ -29,6 +29,15 @@ export const Field: FunctionalComponent<FieldAttr> = (props: FieldAttr) => {
         }}
       />
     );
+  } else if (props.type === "INT") {
+    let field = <input class="input is-small" type="number" value={props && props.value} />;
+  } else {
+    console.log("unhandled prop typee", props);
+    if (props.componentTag && props.componentProp) {
+      const T = props.componentTag;
+      const p = { [props.componentProp]: props.value };
+      field = <T {...p}></T>;
+    }
   }
 
   return (

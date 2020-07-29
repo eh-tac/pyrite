@@ -9,7 +9,8 @@ import {
   PropStr,
   PropObject,
   PropType,
-  PropChar
+  PropChar,
+  PropAny
 } from "./prop";
 import { Constants } from "./constants";
 
@@ -85,6 +86,8 @@ export class PyriteGenerator {
       prop = new PropStr(offset, name, type);
     } else if (type === "CHAR") {
       prop = new PropChar(offset, name, type);
+    } else if (type === "any") {
+      prop = new PropAny(offset, name, type);
     } else if (type) {
       prop = new PropObject(offset, name, type);
       (prop as PropObject).structName = type;

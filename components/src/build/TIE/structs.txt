@@ -190,3 +190,32 @@ struct PostMissionQuestions (size 0)
 	PV	BYTE	Spacer Reserved(0xA)
 	PV	CHAR<AnswerLength()>	Answer
 }
+
+struct PilotFile (size 0)
+{
+	0x00 BYTE Start Reserved(0)
+	0x01 BYTE PilotStatus (enum)
+	0x02 BYTE PilotRank (enum)
+	0x03 BYTE PilotDifficulty (enum)
+	0x04 INT Score
+	0x08 SHORT SkillScore
+	0x0A BYTE SecretOrder (enum)
+	0x2A INT[7] TrainingScores
+	0x5A BYTE[7] TrainingLevels
+	0x88 INT[56] CombatScores
+	0x208 BOOL[56] CombatCompletes
+	0x269 BYTE[20] BattleStatuses
+	0x27D BYTE[20] BattleLastMissions
+	0x291 BYTE[256] Persistence
+	0x391 BYTE[20] SecretObjectives
+	0x3A5 BYTE[20] BonusObjectives
+	0x3DA INT[160] BattleScores
+	0x65A SHORT TotalKills
+	0x65C SHORT TotalCaptures
+	0x660 SHORT[69] KillsByType
+	0x774 INT LasersFired
+	0x778 INT LasersHit
+	0x780 SHORT WarheadsFired
+	0x782 SHORT WarheadsHit
+	0x786 SHORT CraftLost
+}

@@ -15,6 +15,7 @@ export class Struct {
   public addProp(prop: Prop): void {
     this.props[prop.name] = prop;
     this.functionStubs.push(...prop.getFunctionStubs());
+    this.functionStubs = Array.from(new Set(this.functionStubs));
   }
 
   public getProps(): Prop[] {

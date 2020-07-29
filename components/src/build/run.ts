@@ -11,9 +11,13 @@ function mg(plt: string): PyriteGenerator {
 }
 
 const tieG = mg("TIE");
-const tieW = new TypeScriptWriter("src/x", tieG);
+const tieW = new TypeScriptWriter("src", tieG);
 tieW.write();
 
 const xwG = mg("XW");
 const xwW = new TypeScriptWriter("src", xwG);
 xwW.write();
+
+const lfdG = mg("LFD");
+const lfgW = new TypeScriptWriter("src", lfdG);
+lfgW.write();

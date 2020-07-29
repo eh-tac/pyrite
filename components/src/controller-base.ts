@@ -7,15 +7,17 @@ export interface FieldAttr {
   options?: { [key: number]: string };
   model?: PyriteBase;
   label?: string;
+  componentTag?: string;
+  componentProp?: string;
 }
 
 export class ControllerBase {
   public readonly fields: object;
   constructor(public model: PyriteBase) {}
 
-  public getProps(field: string): FieldAttr {
+  public getProps(field: string, value?: any): FieldAttr {
     const model = this.model;
-    const value = model[field];
+    value = value || model[field];
 
     return { ...this.fields[field], value, model };
   }

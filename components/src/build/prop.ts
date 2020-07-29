@@ -1,6 +1,8 @@
 import { Constants } from "./constants";
+import { Struct } from "./struct";
+import * as lodash from "lodash";
 
-export type PropType = "SHORT" | "BYTE" | "BOOL" | "SBYTE" | "INT" | "STR" | "CHAR" | string;
+export type PropType = "SHORT" | "BYTE" | "BOOL" | "SBYTE" | "INT" | "STR" | "CHAR" | "any" | string;
 
 export class Prop {
   public baseSize = 1;
@@ -10,6 +12,9 @@ export class Prop {
   public reservedValue?: number;
   public enumName: string = "";
   public comment: string = "";
+
+  public hexGetter: string;
+  public hexSetter: string;
 
   constructor(public offset: string, public name: string, public type: PropType) {}
 
@@ -77,6 +82,10 @@ export class Prop {
     return this.reservedValue !== undefined;
   }
 
+  public get isFixedLength(): boolean {
+    return this.baseSize !== 0;
+  }
+
   public getFunctionStubs(): string[] {
     return [this.typeLengthExpression, this.arrayLengthExpression].filter((expr: string): boolean => {
       return expr && expr.substr(-2, 2) === "()";
@@ -84,6 +93,11 @@ export class Prop {
   }
 
   // ^^ processing ^^
+
+  public prepare(structs: { [key: string]: Struct }): void {
+    // do nothing except if object
+  }
+
   // vv output vv
 
   public getExpression(object: string = "this"): string {
@@ -91,10 +105,15 @@ export class Prop {
   }
 
   public getConstructorInit(): string {
+    let offsetExpr = "";
     if (this.isStatic) {
-      return `// static prop ${this.name}`;
+      if (this.previousValueOffset) {
+        // ensure the offset is correct if the final prop is statically ignored
+        offsetExpr = `\n    offset += ${this.typeLength};`;
+      }
+      return `// static prop ${this.name}${offsetExpr}`;
     }
-    const offsetExpr = "";
+
     const p = `this.${this.name}`;
     let init = `${p} = ${this.tsGetter};`;
     if (this.isArray) {
@@ -105,8 +124,14 @@ export class Prop {
       ${p}.push(t);
       offset += ${this.typeLength};
     }`;
+    } else if (!this.isFixedLength) {
+      // strings and objects have dynamic lengths so the offsets must be adjusted on the fly
+      // if this is a string with a defined offset, make sure that is included when incrementing the offset
+      // otherwise if already in previous value mode, just += by the current length;
+      const op = this.previousValueOffset ? "+=" : `= ${this.offset} +`;
+      offsetExpr = `\n    offset ${op} ${this.typeLength}`;
     }
-    return `${offsetExpr}${init}`;
+    return `${init}${offsetExpr}`;
   }
 
   public getOutputHex(): string {
@@ -124,7 +149,7 @@ export class Prop {
     return `${offsetExpr}${out}`;
   }
 
-  public getFieldProps(constantLookup: object): object {
+  public getFieldProps(constantLookup: object, _plt: string): object {
     const props = {
       name: this.name,
       type: this.type
@@ -297,7 +322,7 @@ export class PropChar extends Prop {
   }
 
   public get tsGetter(): string {
-    const len = this.arrayLengthExpression ? `this.${this.arrayLengthExpression}` : this.arrayLengthValue;
+    const len = this.typeLengthExpression ? `this.${this.typeLengthExpression}` : this.typeLength;
 
     return `getChar(hex, ${this.isArray ? "offset" : this.tsOffset}, ${len})`;
   }
@@ -313,12 +338,18 @@ export class PropChar extends Prop {
 }
 
 export class PropStr extends Prop {
+  public baseSize = 0;
+
   public get tsType(): string {
     return "string";
   }
 
   public get tsGetter(): string {
     return `getString(hex, ${this.isArray ? "offset" : this.tsOffset})`;
+  }
+
+  public get typeLength(): string {
+    return this.isArray ? "t.length" : `this.${this.name}.length`;
   }
 
   public getSetter(propOverride?: string): string {
@@ -334,16 +365,12 @@ export class PropStr extends Prop {
 export class PropObject extends Prop {
   public baseSize = 0;
   public structName: string;
+  public get typeLength(): string {
+    return this.isArray ? "t.getLength()" : `this.${this.name}.getLength()`;
+  }
+
   public get tsType(): string {
     return this.structName;
-  }
-
-  public get tsGetter(): string {
-    return `new ${this.tsType}(hex.slice(${this.isArray ? "offset" : this.tsOffset}), this.TIE)`;
-  }
-
-  public get typeLength(): string {
-    return `t.getLength()`;
   }
 
   public getSetter(propOverride?: string): string {
@@ -357,5 +384,46 @@ export class PropObject extends Prop {
 
   public get classImports(): string[] {
     return [this.tsType];
+  }
+
+  public prepare(structs: { [key: string]: Struct }): void {
+    // do nothing except if object
+    const struct = structs[this.structName];
+    if (struct && struct.size) {
+      this.baseSize = struct.size;
+    }
+    if (!struct) {
+      console.warn("couldnt load data for type ", this.structName);
+    }
+  }
+
+  public getFieldProps(constantLookup: object, plt: string): object {
+    const sup = super.getFieldProps(constantLookup, plt);
+    const kebab = lodash.kebabCase(this.structName);
+    const componentTag = `pyrite-${plt}-${kebab.replace(plt, "")}`.toLowerCase();
+    const componentProp = kebab.toLowerCase();
+    return { ...sup, componentTag, componentProp };
+  }
+}
+
+export class PropAny extends Prop {
+  public baseSize = 0;
+  public hexGetter = "undefined";
+
+  public get tsGetter(): string {
+    return `undefined`;
+  }
+
+  public get tsType(): string {
+    return "any";
+  }
+
+  public getSetter(propOverride?: string): string {
+    const p = propOverride || `this.${this.name}`;
+    return `writeObject(hex, ${p}, ${this.tsOffset})`;
+  }
+
+  public getFunctionStubs(): string[] {
+    return [`load${this.name}()`, `write${this.name}()`];
   }
 }

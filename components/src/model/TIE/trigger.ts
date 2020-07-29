@@ -1,4 +1,4 @@
-import { TriggerBase } from "./gen/trigger-base";
+import { TriggerBase } from "./base/trigger-base";
 
 export class Trigger extends TriggerBase {
   public toString(): string {

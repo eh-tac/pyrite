@@ -1,4 +1,4 @@
-import { OrderBase } from "./gen/order-base";
+import { OrderBase } from "./base/order-base";
 import { Constants } from "./constants";
 
 export class Order extends OrderBase {
@@ -57,7 +57,7 @@ export class Order extends OrderBase {
         return Constants.CRAFTWHEN[instance];
       case 8:
         const fgs = this.TIE.getGlobalGroup(instance);
-        return fgs.map((fg) => fg.toString()).join(", ");
+        return fgs.map(fg => fg.toString()).join(", ");
       case 9:
         return Constants.MISC[instance];
     }

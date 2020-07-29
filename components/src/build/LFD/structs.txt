@@ -1,19 +1,19 @@
 struct LFD (size 0)
 {
-  0x00 Header Header
-  0x10 Any DataBlock 
+  0x00 Header Header 
 }
 
 struct Header (size 10)
 {
-	0x00 CHR[4] Type
-  0x04 CHR[8] Name
-  0x0B INT Length little endian
+	0x00 CHAR<4> Type
+  0x04 CHAR<8> Name
+  0x0C INT Length little endian
 }
 
 struct Rmap (size 0)
 {
-  0x00 Header Header
+  0x00 Header Header  
+  0x10 Header[HeaderCount()] Subheaders
 }
 
 struct TIEBattle (size 0)
@@ -26,29 +26,55 @@ struct TIEBattle (size 0)
 struct BattleText (size 0)
 {
   0x00 Header Header
-  0x10 SHORT NumStrings
-  0x12 STR BattleName
-  PV STR CutsceneName
-  PV STR BattleTitle1
-  PV STR BattleTitle2
-  PV STR CutsceneTitle1
-  PV STR CutsceneTitle2
-  PV STR ImageDeltName
-  PV STR ImageSystemName
-  PV STR ImageFrame
-  PV STR[NumMissions()] MissionFilenames
-  PV STR[NumMissions()] MissionDescriptions
+  0x10 SHORT NumStrings  
+  0x12 LString Names
+  PV LString Titles
+  PV LString Image
+  PV LString MissionFiles
+  PV LString[NumMissions()] MissionDescriptions
 }
 
-struct LfdText (size 0)
+struct LText (size 0)
 {
   0x00 SHORT NumStrings
-  0x02 LfdString[NumStrings] Strings
+  0x02 LString[NumStrings] Strings
 }
 
-struct LfdString (size 0)
+struct LString (size 0)
 {
   0x00 SHORT Length
-  0x02 STR Text
+  0x02 STR[0] Substrings
   PV BYTE Reserved Reserved(0)
+}
+
+struct Delt (size 0) 
+{
+  0x00 Header Header
+  0x10 SHORT Left
+  0x12 SHORT Top
+  0x14 SHORT Right
+  0x16 SHORT Bottom
+  0x18 Row[RowCount()] Rows
+  PV SHORT Reserved Reserved(0)
+}
+
+struct Row (size 0)
+{
+  0x00 SHORT Length
+  0x02 SHORT Left
+  0x04 SHORT Top
+  0x06 BYTE[ColorCount()] ColorIndexes
+  0x06 OpCode[OpCount()] Operations
+}
+
+struct OpCode (size 0)
+{
+  0x00 BYTE Value
+  0x01 BYTE[ColorCount()] ColorIndex
+}
+
+struct Voic (size 0)
+{
+  0x00 Header Header
+  0x10 any Data
 }

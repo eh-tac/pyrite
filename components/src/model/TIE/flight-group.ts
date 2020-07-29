@@ -1,4 +1,4 @@
-import { FlightGroupBase } from "./gen/flight-group-base";
+import { FlightGroupBase } from "./base/flight-group-base";
 import { Difficulty } from "./mission";
 import { Craft } from "./craft";
 import { GoalFG } from "./goal-fg";

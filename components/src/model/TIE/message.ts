@@ -1,4 +1,4 @@
-import { MessageBase } from "./gen/message-base";
+import { MessageBase } from "./base/message-base";
 import { Constants } from "./constants";
 import { IMission } from "../pyrite-base";
 

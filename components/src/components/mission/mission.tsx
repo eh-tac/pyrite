@@ -79,7 +79,7 @@ export class PyriteMission {
         </ion-tab-bar>
         <pyrite-tie-flightgroups mission={this.tie} class={this.tabClass(Tabs.FGS)} />
         <pyrite-tie-briefing mission={this.tie} class={this.tabClass(Tabs.BRIEF)} />
-        <pyrite-tie-pre-mission-questions mission={this.tie} class={this.tabClass(Tabs.PREQ)} />
+        <pyrite-tie-pre-mission-questions class={this.tabClass(Tabs.PREQ)} />
         <pyrite-tie-score mission={this.tie} class={this.tabClass(Tabs.SCORE)} />
       </ion-content>
     ];

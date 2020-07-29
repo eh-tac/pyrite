@@ -1,6 +1,6 @@
 import { Briefing } from "./briefing";
 import { Constants } from "./constants";
-import { EventBase } from "./gen/event-base";
+import { EventBase } from "./base/event-base";
 
 export enum EventType {
   PageBreak = 3,
