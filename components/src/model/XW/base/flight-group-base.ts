@@ -153,25 +153,25 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     offset = 0x48;
     for (let i = 0; i < 7; i++) {
       const t = this.XCoordinates[i];
-      writeShort(hex, t, 0x48);
+      writeShort(hex, t, offset);
       offset += 2;
     }
     offset = 0x56;
     for (let i = 0; i < 7; i++) {
       const t = this.YCoordinates[i];
-      writeShort(hex, t, 0x56);
+      writeShort(hex, t, offset);
       offset += 2;
     }
     offset = 0x64;
     for (let i = 0; i < 7; i++) {
       const t = this.ZCoordinates[i];
-      writeShort(hex, t, 0x64);
+      writeShort(hex, t, offset);
       offset += 2;
     }
     offset = 0x72;
     for (let i = 0; i < 7; i++) {
       const t = this.CoordinatesEnabled[i];
-      writeShort(hex, t, 0x72);
+      writeShort(hex, t, offset);
       offset += 2;
     }
     writeShort(hex, this.Formation, 0x80);

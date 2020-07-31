@@ -76,13 +76,13 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     offset = 0x018;
     for (let i = 0; i < 6; i++) {
       const t = this.EndOfMissionMessages[i];
-      writeChar(hex, t, 0x018);
+      writeChar(hex, t, offset);
       offset += 64;
     }
     offset = 0x19A;
     for (let i = 0; i < 4; i++) {
       const t = this.OtherIffNames[i];
-      writeChar(hex, t, 0x19A);
+      writeChar(hex, t, offset);
       offset += 12;
     }
 

@@ -45,7 +45,7 @@ export abstract class EventBase extends PyriteBase implements Byteable {
     offset = 0x4;
     for (let i = 0; i < this.VariableCount(); i++) {
       const t = this.Variables[i];
-      writeShort(hex, t, 0x4);
+      writeShort(hex, t, offset);
       offset += 2;
     }
 

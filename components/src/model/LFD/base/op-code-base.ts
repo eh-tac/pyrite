@@ -40,7 +40,7 @@ export abstract class OpCodeBase extends PyriteBase implements Byteable {
     offset = 0x01;
     for (let i = 0; i < this.ColorCount(); i++) {
       const t = this.ColorIndex[i];
-      writeByte(hex, t, 0x01);
+      writeByte(hex, t, offset);
       offset += 1;
     }
 

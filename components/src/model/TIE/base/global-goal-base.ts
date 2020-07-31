@@ -40,7 +40,7 @@ export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
     offset = 0x00;
     for (let i = 0; i < 2; i++) {
       const t = this.Triggers[i];
-      writeObject(hex, t, 0x00);
+      writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeBool(hex, this.Trigger1OrTrigger2, 0x19);

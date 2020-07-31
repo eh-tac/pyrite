@@ -41,7 +41,7 @@ export abstract class RmapBase extends PyriteBase implements Byteable {
     offset = 0x10;
     for (let i = 0; i < this.HeaderCount(); i++) {
       const t = this.Subheaders[i];
-      writeObject(hex, t, 0x10);
+      writeObject(hex, t, offset);
       offset += t.getLength();
     }
 

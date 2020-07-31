@@ -273,135 +273,135 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     offset = 0x00A;
     for (let i = 0; i < 5; i++) {
       const t = this.TODMedals[i];
-      writeBool(hex, t, 0x00A);
+      writeBool(hex, t, offset);
       offset += 1;
     }
     writeByte(hex, this.KalidorCrescent, 0x011);
     offset = 0x026;
     for (let i = 0; i < 4; i++) {
       const t = this.MazeScore[i];
-      writeInt(hex, t, 0x026);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x086;
     for (let i = 0; i < 4; i++) {
       const t = this.MazeLevel[i];
-      writeByte(hex, t, 0x086);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x0A0;
     for (let i = 0; i < 6; i++) {
       const t = this.XWingHistoricalScore[i];
-      writeInt(hex, t, 0x0A0);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0E0;
     for (let i = 0; i < 6; i++) {
       const t = this.YWingHistoricalScore[i];
-      writeInt(hex, t, 0x0E0);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x120;
     for (let i = 0; i < 6; i++) {
       const t = this.AWingHistoricalScore[i];
-      writeInt(hex, t, 0x120);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x160;
     for (let i = 0; i < 6; i++) {
       const t = this.BWingHistoricalScore[i];
-      writeInt(hex, t, 0x160);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x1A0;
     for (let i = 0; i < 6; i++) {
       const t = this.BonusHistoricalScore[i];
-      writeInt(hex, t, 0x1A0);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x220;
     for (let i = 0; i < 6; i++) {
       const t = this.XWingHistoricalComplete[i];
-      writeBool(hex, t, 0x220);
+      writeBool(hex, t, offset);
       offset += 1;
     }
     offset = 0x230;
     for (let i = 0; i < 6; i++) {
       const t = this.YWingHistoricalComplete[i];
-      writeBool(hex, t, 0x230);
+      writeBool(hex, t, offset);
       offset += 1;
     }
     offset = 0x240;
     for (let i = 0; i < 6; i++) {
       const t = this.AWingHistoricalComplete[i];
-      writeBool(hex, t, 0x240);
+      writeBool(hex, t, offset);
       offset += 1;
     }
     offset = 0x250;
     for (let i = 0; i < 6; i++) {
       const t = this.BWingHistoricalComplete[i];
-      writeBool(hex, t, 0x250);
+      writeBool(hex, t, offset);
       offset += 1;
     }
     offset = 0x260;
     for (let i = 0; i < 6; i++) {
       const t = this.BonusHistoricalComplete[i];
-      writeBool(hex, t, 0x260);
+      writeBool(hex, t, offset);
       offset += 1;
     }
     offset = 0x2DF;
     for (let i = 0; i < 5; i++) {
       const t = this.TourStatus[i];
-      writeByte(hex, t, 0x2DF);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x2EF;
     for (let i = 0; i < 5; i++) {
       const t = this.TourOperationsComplete[i];
-      writeByte(hex, t, 0x2EF);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x2F7;
     for (let i = 0; i < 12; i++) {
       const t = this.Tour1Scores[i];
-      writeInt(hex, t, 0x2F7);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x35B;
     for (let i = 0; i < 12; i++) {
       const t = this.Tour2Scores[i];
-      writeInt(hex, t, 0x35B);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x3BF;
     for (let i = 0; i < 14; i++) {
       const t = this.Tour3Scores[i];
-      writeInt(hex, t, 0x3BF);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x423;
     for (let i = 0; i < 24; i++) {
       const t = this.Tour4Scores[i];
-      writeInt(hex, t, 0x423);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x487;
     for (let i = 0; i < 24; i++) {
       const t = this.Tour5Scores[i];
-      writeInt(hex, t, 0x487);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     writeShort(hex, this.SurfaceVictories, 0x633);
     offset = 0x635;
     for (let i = 0; i < 24; i++) {
       const t = this.TODKills[i];
-      writeShort(hex, t, 0x635);
+      writeShort(hex, t, offset);
       offset += 2;
     }
     offset = 0x665;
     for (let i = 0; i < 24; i++) {
       const t = this.TODCaptures[i];
-      writeShort(hex, t, 0x665);
+      writeShort(hex, t, offset);
       offset += 2;
     }
     writeInt(hex, this.LasersFired, 0x695);

@@ -54,13 +54,13 @@ export abstract class WayptBase extends PyriteBase implements Byteable {
     offset = 0x00;
     for (let i = 0; i < 4; i++) {
       const t = this.StartPoints[i];
-      writeShort(hex, t, 0x00);
+      writeShort(hex, t, offset);
       offset += 2;
     }
     offset = 0x08;
     for (let i = 0; i < 8; i++) {
       const t = this.Waypoints[i];
-      writeShort(hex, t, 0x08);
+      writeShort(hex, t, offset);
       offset += 2;
     }
     writeShort(hex, this.Rendezvous, 0x18);

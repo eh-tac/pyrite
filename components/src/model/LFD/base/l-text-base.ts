@@ -41,7 +41,7 @@ export abstract class LTextBase extends PyriteBase implements Byteable {
     offset = 0x02;
     for (let i = 0; i < this.NumStrings; i++) {
       const t = this.Strings[i];
-      writeObject(hex, t, 0x02);
+      writeObject(hex, t, offset);
       offset += t.getLength();
     }
 

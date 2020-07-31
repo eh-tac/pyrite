@@ -61,7 +61,7 @@ export abstract class DeltBase extends PyriteBase implements Byteable {
     offset = 0x18;
     for (let i = 0; i < this.RowCount(); i++) {
       const t = this.Rows[i];
-      writeObject(hex, t, 0x18);
+      writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeShort(hex, 0, offset);

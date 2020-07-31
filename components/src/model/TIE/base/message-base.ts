@@ -50,7 +50,7 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
     offset = 0x40;
     for (let i = 0; i < 2; i++) {
       const t = this.Triggers[i];
-      writeObject(hex, t, 0x40);
+      writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeString(hex, this.EditorNote, 0x48);

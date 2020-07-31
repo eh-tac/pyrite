@@ -1,6 +1,4 @@
-import { Constants } from "./constants";
 import { Struct } from "./struct";
-import * as lodash from "lodash";
 
 export type PropType = "SHORT" | "BYTE" | "BOOL" | "SBYTE" | "INT" | "STR" | "CHAR" | "any" | string;
 
@@ -92,299 +90,54 @@ export class Prop {
     });
   }
 
-  // ^^ processing ^^
-
-  public prepare(structs: { [key: string]: Struct }): void {
+  public prepare(_structs: { [key: string]: Struct }): void {
     // do nothing except if object
   }
-
-  // vv output vv
-
-  public getExpression(object: string = "this"): string {
-    return `${object}.${this.name}`;
-  }
-
-  public getConstructorInit(): string {
-    let offsetExpr = "";
-    if (this.isStatic) {
-      if (this.previousValueOffset) {
-        // ensure the offset is correct if the final prop is statically ignored
-        offsetExpr = `\n    offset += ${this.typeLength};`;
-      }
-      return `// static prop ${this.name}${offsetExpr}`;
-    }
-
-    const p = `this.${this.name}`;
-    let init = `${p} = ${this.tsGetter};`;
-    if (this.isArray) {
-      init = `${p} = [];
-    offset = ${this.tsOffset};
-    for (let i = 0; i < ${this.arrayLength}; i++) {
-      const t = ${this.tsGetter};
-      ${p}.push(t);
-      offset += ${this.typeLength};
-    }`;
-    } else if (!this.isFixedLength) {
-      // strings and objects have dynamic lengths so the offsets must be adjusted on the fly
-      // if this is a string with a defined offset, make sure that is included when incrementing the offset
-      // otherwise if already in previous value mode, just += by the current length;
-      const op = this.previousValueOffset ? "+=" : `= ${this.offset} +`;
-      offsetExpr = `\n    offset ${op} ${this.typeLength}`;
-    }
-    return `${init}${offsetExpr}`;
-  }
-
-  public getOutputHex(): string {
-    const offsetExpr = "";
-    const p = `this.${this.name}`;
-    let out = `${this.getSetter(this.isStatic ? this.reservedValue.toString() : p)};`;
-    if (this.isArray) {
-      out = `offset = ${this.tsOffset};
-    for (let i = 0; i < ${this.arrayLength}; i++) {
-      const t = ${p}[i];
-      ${this.getSetter("t")};
-      offset += ${this.typeLength};
-    }`;
-    }
-    return `${offsetExpr}${out}`;
-  }
-
-  public getFieldProps(constantLookup: object, _plt: string): object {
-    const props = {
-      name: this.name,
-      type: this.type
-    };
-    if (this.enumName && constantLookup[this.enumName]) {
-      const constants = constantLookup[this.enumName] as Constants;
-      props["options"] = `Constants.${this.enumName.toUpperCase()}`;
-    }
-    return props;
-  }
-
-  public get propertyDeclaration(): string {
-    let type = this.tsType;
-    if (this.isArray) {
-      type = `${type}[]`;
-    }
-
-    let p = `${this.name}: ${type}`;
-    if (this.isStatic) {
-      p = `readonly ${p} = ${this.reservedValue}`;
-    }
-    p = `public ${p};`;
-    if (this.comment) {
-      p = `${p} //${this.comment}`;
-    }
-    return p;
-  }
-
-  public get enumLookupFunction(): string {
-    const name = this.name;
-    const enumName = this.enumName.toUpperCase();
-
-    return `
-  public get ${name}Label(): string {
-    return Constants.${enumName}[this.${name}] || "Unknown";
-  }`;
-  }
-
-  public get tsType(): string {
-    return "number";
-  }
-
-  public get hexImports(): string[] {
-    return [];
-  }
-
-  public get classImports(): string[] {
-    return [];
-  }
-
-  public get tsOffset(): string {
-    return this.previousValueOffset ? "offset" : this.offset;
-  }
-
-  public get tsGetter(): string {
-    return "getError!?";
-  }
-
-  public getSetter(_propOverride?: string): string {
-    return "writeError!?";
-  }
-
-  public get tsLabel(): string {
-    return this.enumName ? `${this.name}Label` : this.name;
-  }
-
-  public get arrayLength(): string {
-    if (this.arrayLengthExpression) {
-      return `this.${this.arrayLengthExpression.replace("-", ".")}`;
-    }
-    return this.arrayLengthValue.toString(10);
-  }
-
-  public get typeLength(): string {
-    if (this.typeLengthExpression) {
-      return `t.${this.typeLengthExpression}`;
-    }
-    return this.baseSize.toString(10);
-  }
-
-  // TODO turn type|array length expressions into property expressions at write time: string[]
 }
 
 export class PropShort extends Prop {
   public baseSize = 2;
-
-  public get tsGetter(): string {
-    return `getShort(hex, ${this.isArray ? "offset" : this.tsOffset})`;
-  }
-
-  public getSetter(propOverride?: string): string {
-    const p = propOverride || `this.${this.name}`;
-    return `writeShort(hex, ${p}, ${this.tsOffset})`;
-  }
-
-  public get hexImports(): string[] {
-    return ["getShort", "writeShort"];
-  }
+  public hexGetter = "getShort";
+  public hexSetter = "writeShort";
 }
 
 export class PropByte extends Prop {
-  public get tsGetter(): string {
-    return `getByte(hex, ${this.isArray ? "offset" : this.tsOffset})`;
-  }
-
-  public getSetter(propOverride?: string): string {
-    const p = propOverride || `this.${this.name}`;
-    return `writeByte(hex, ${p}, ${this.tsOffset})`;
-  }
-
-  public get hexImports(): string[] {
-    return ["getByte", "writeByte"];
-  }
+  public hexGetter = "getByte";
+  public hexSetter = "writeByte";
 }
 
 export class PropBool extends Prop {
-  public get tsType(): string {
-    return "boolean";
-  }
-
-  public get tsGetter(): string {
-    return `getBool(hex, ${this.isArray ? "offset" : this.tsOffset})`;
-  }
-
-  public getSetter(propOverride?: string): string {
-    const p = propOverride || `this.${this.name}`;
-    return `writeBool(hex, ${p}, ${this.tsOffset})`;
-  }
-
-  public get hexImports(): string[] {
-    return ["getBool", "writeBool"];
-  }
+  public hexGetter = "getBool";
+  public hexSetter = "writeBool";
 }
 
 export class PropSByte extends Prop {
-  public get tsGetter(): string {
-    return `getSByte(hex, ${this.isArray ? "offset" : this.tsOffset})`;
-  }
-
-  public getSetter(propOverride?: string): string {
-    const p = propOverride || `this.${this.name}`;
-    return `writeSByte(hex, ${p}, ${this.tsOffset})`;
-  }
-
-  public get hexImports(): string[] {
-    return ["getSByte", "writeSByte"];
-  }
+  public hexGetter = "getSByte";
+  public hexSetter = "writeSByte";
 }
 
 export class PropInt extends Prop {
   public baseSize = 4;
-
-  public get tsGetter(): string {
-    return `getInt(hex, ${this.isArray ? "offset" : this.tsOffset})`;
-  }
-
-  public getSetter(propOverride?: string): string {
-    const p = propOverride || `this.${this.name}`;
-    return `writeInt(hex, ${p}, ${this.tsOffset})`;
-  }
-
-  public get hexImports(): string[] {
-    return ["getInt", "writeInt"];
-  }
+  public hexGetter = "getInt";
+  public hexSetter = "writeInt";
 }
 
 export class PropChar extends Prop {
-  public get tsType(): string {
-    return "string";
-  }
-
-  public get tsGetter(): string {
-    const len = this.typeLengthExpression ? `this.${this.typeLengthExpression}` : this.typeLength;
-
-    return `getChar(hex, ${this.isArray ? "offset" : this.tsOffset}, ${len})`;
-  }
-
-  public getSetter(propOverride?: string): string {
-    const p = propOverride || `this.${this.name}`;
-    return `writeChar(hex, ${p}, ${this.tsOffset})`;
-  }
-
-  public get hexImports(): string[] {
-    return ["getChar", "writeChar"];
-  }
+  public hexGetter = "getChar";
+  public hexSetter = "writeChar";
 }
 
 export class PropStr extends Prop {
   public baseSize = 0;
-
-  public get tsType(): string {
-    return "string";
-  }
-
-  public get tsGetter(): string {
-    return `getString(hex, ${this.isArray ? "offset" : this.tsOffset})`;
-  }
-
-  public get typeLength(): string {
-    return this.isArray ? "t.length" : `this.${this.name}.length`;
-  }
-
-  public getSetter(propOverride?: string): string {
-    const p = propOverride || `this.${this.name}`;
-    return `writeString(hex, ${p}, ${this.tsOffset})`;
-  }
-
-  public get hexImports(): string[] {
-    return ["getString", "writeString"];
-  }
+  public hexGetter = "getString";
+  public hexSetter = "writeString";
 }
 
 export class PropObject extends Prop {
   public baseSize = 0;
   public structName: string;
-  public get typeLength(): string {
-    return this.isArray ? "t.getLength()" : `this.${this.name}.getLength()`;
-  }
-
-  public get tsType(): string {
-    return this.structName;
-  }
-
-  public getSetter(propOverride?: string): string {
-    const p = propOverride || `this.${this.name}`;
-    return `writeObject(hex, ${p}, ${this.tsOffset})`;
-  }
-
-  public get hexImports(): string[] {
-    return ["writeObject"];
-  }
-
-  public get classImports(): string[] {
-    return [this.tsType];
-  }
+  public hexGetter = "";
+  public hexSetter = "writeObject";
 
   public prepare(structs: { [key: string]: Struct }): void {
     // do nothing except if object
@@ -396,32 +149,11 @@ export class PropObject extends Prop {
       console.warn("couldnt load data for type ", this.structName);
     }
   }
-
-  public getFieldProps(constantLookup: object, plt: string): object {
-    const sup = super.getFieldProps(constantLookup, plt);
-    const kebab = lodash.kebabCase(this.structName);
-    const componentTag = `pyrite-${plt}-${kebab.replace(plt, "")}`.toLowerCase();
-    const componentProp = kebab.toLowerCase();
-    return { ...sup, componentTag, componentProp };
-  }
 }
 
 export class PropAny extends Prop {
   public baseSize = 0;
-  public hexGetter = "undefined";
-
-  public get tsGetter(): string {
-    return `undefined`;
-  }
-
-  public get tsType(): string {
-    return "any";
-  }
-
-  public getSetter(propOverride?: string): string {
-    const p = propOverride || `this.${this.name}`;
-    return `writeObject(hex, ${p}, ${this.tsOffset})`;
-  }
+  public hexSetter = "writeObject";
 
   public getFunctionStubs(): string[] {
     return [`load${this.name}()`, `write${this.name}()`];

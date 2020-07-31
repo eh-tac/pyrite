@@ -58,13 +58,13 @@ export abstract class RowBase extends PyriteBase implements Byteable {
     offset = 0x06;
     for (let i = 0; i < this.ColorCount(); i++) {
       const t = this.ColorIndexes[i];
-      writeByte(hex, t, 0x06);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x06;
     for (let i = 0; i < this.OpCount(); i++) {
       const t = this.Operations[i];
-      writeObject(hex, t, 0x06);
+      writeObject(hex, t, offset);
       offset += t.getLength();
     }
 

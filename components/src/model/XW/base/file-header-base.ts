@@ -62,7 +62,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     offset = 0x0A;
     for (let i = 0; i < 3; i++) {
       const t = this.CompletionMessage[i];
-      writeString(hex, t, 0x0A);
+      writeString(hex, t, offset);
       offset += t.length;
     }
     writeShort(hex, this.NumFGs, 0xCA);

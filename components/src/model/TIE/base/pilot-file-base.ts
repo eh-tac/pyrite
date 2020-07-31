@@ -175,61 +175,61 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     offset = 0x2A;
     for (let i = 0; i < 7; i++) {
       const t = this.TrainingScores[i];
-      writeInt(hex, t, 0x2A);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x5A;
     for (let i = 0; i < 7; i++) {
       const t = this.TrainingLevels[i];
-      writeByte(hex, t, 0x5A);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x88;
     for (let i = 0; i < 56; i++) {
       const t = this.CombatScores[i];
-      writeInt(hex, t, 0x88);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x208;
     for (let i = 0; i < 56; i++) {
       const t = this.CombatCompletes[i];
-      writeBool(hex, t, 0x208);
+      writeBool(hex, t, offset);
       offset += 1;
     }
     offset = 0x269;
     for (let i = 0; i < 20; i++) {
       const t = this.BattleStatuses[i];
-      writeByte(hex, t, 0x269);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x27D;
     for (let i = 0; i < 20; i++) {
       const t = this.BattleLastMissions[i];
-      writeByte(hex, t, 0x27D);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x291;
     for (let i = 0; i < 256; i++) {
       const t = this.Persistence[i];
-      writeByte(hex, t, 0x291);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x391;
     for (let i = 0; i < 20; i++) {
       const t = this.SecretObjectives[i];
-      writeByte(hex, t, 0x391);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x3A5;
     for (let i = 0; i < 20; i++) {
       const t = this.BonusObjectives[i];
-      writeByte(hex, t, 0x3A5);
+      writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x3DA;
     for (let i = 0; i < 160; i++) {
       const t = this.BattleScores[i];
-      writeInt(hex, t, 0x3DA);
+      writeInt(hex, t, offset);
       offset += 4;
     }
     writeShort(hex, this.TotalKills, 0x65A);
@@ -237,7 +237,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     offset = 0x660;
     for (let i = 0; i < 69; i++) {
       const t = this.KillsByType[i];
-      writeShort(hex, t, 0x660);
+      writeShort(hex, t, offset);
       offset += 2;
     }
     writeInt(hex, this.LasersFired, 0x774);

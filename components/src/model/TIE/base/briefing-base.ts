@@ -73,13 +73,13 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     offset = 0x00A;
     for (let i = 0; i < 0; i++) {
       const t = this.Events[i];
-      writeObject(hex, t, 0x00A);
+      writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0x32A;
     for (let i = 0; i < 32; i++) {
       const t = this.Tags[i];
-      writeObject(hex, t, 0x32A);
+      writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = offset;
