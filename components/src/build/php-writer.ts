@@ -1,7 +1,22 @@
 import { PyriteWriter } from "./writer";
 import { Constants } from "./constants";
+import { Struct } from "./struct";
+import { PropInt } from "./prop";
+import { PHPPropWriter } from "./php-prop-writer";
+import * as lodash from "lodash";
 
 export class PHPWriter extends PyriteWriter {
+  public write(): this {
+    super.write();
+
+    // this.copyFile("byteable.ts");
+    // this.copyFile("pyrite-base.ts");
+    // this.copyFile("hex.ts");
+    // this.copyFile("controller-base.ts");
+
+    return this;
+  }
+
   public writeConstants(constants: Constants[]): void {
     const lines = [
       `<?php
@@ -19,10 +34,130 @@ export class Constants {`
     }
 
     lines.push("}");
-    this.writeFile("Constants.php", lines.join("\n"));
+    this.writeFile("PLT/Constants.php", lines.join("\n"));
   }
 
-  public writeBaseModel(): void {}
+  public writeBaseModel(struct: Struct): void {
+    const baseName = this.baseClass(struct.name);
+    const plt = this.generator.platform;
 
-  public writeImplModel(): void {}
+    const props = struct.getProps().map(p => new PHPPropWriter(p));
+    const enums = props.filter((p: PHPPropWriter) => p.prop.isEnum);
+    let lengthProp = new PHPPropWriter(new PropInt("", `${struct.name}Length`, "INT"));
+    if (!struct.isVariableLength) {
+      lengthProp.prop.name = lengthProp.prop.name.toUpperCase();
+      lengthProp.prop.reservedValue = struct.size;
+    }
+
+    const content = `<?php
+namespace Pyrite\\${plt}\\Base;
+
+use Pyrite\\Byteable;
+use Pyrite\\HexDecoder;
+use Pyrite\\PyriteBase;
+use Pyrite\\${plt}\\Constants;
+
+abstract class ${baseName} extends PyriteBase implements Byteable {
+  use HexDecoder;
+
+  ${lengthProp.propertyDeclaration}
+  ${props.map((p: PHPPropWriter): string => p.propertyDeclaration).join("\n  ")}
+  ${this.getBaseConstructor(struct, lengthProp)}
+  ${this.baseJSON(props)}
+  ${this.baseHexString(props)}
+  ${enums.map((p: PHPPropWriter): string => p.enumLookupFunction).join("\n")}
+  ${struct.functionStubs.map((f: string): string => this.abstractFunction(f)).join("\n")}
+  public function getLength() {
+    return $this->${lengthProp.prop.name};
+  }
+}`;
+    this.writeFile(`PLT/base/${this.filename(baseName)}`, content);
+  }
+
+  public writeImplModel(struct: Struct): void {
+    const baseClass = this.baseClass(struct.name);
+    const plt = this.generator.platform;
+
+    let content = `<?php
+namespace Pyrite\\${plt};
+    
+export class ${struct.name} extends Base\\${baseClass} {
+
+  public function beforeConstruct() {}
+
+  public function __toString() {
+    return '';
+  }
+
+  ${struct.functionStubs.map((f: string): string => this.functionStub(f)).join("\n  ")}
+}
+`;
+
+    const file = this.filename(struct.name);
+    this.writeFile(`PLT/${file}`, content, false);
+  }
+
+  protected getBaseConstructor(struct: Struct, lengthProp: PHPPropWriter): string {
+    const props = struct.getProps().map(p => new PHPPropWriter(p));
+
+    return `
+  public function __construct($hex, $tie) {    
+    parent::__construct(hex, tie);
+    $this->beforeConstruct();
+    $offset = 0;
+
+    ${props.map((p: PHPPropWriter) => p.getConstructorInit()).join("\n    ")}
+    ${struct.isVariableLength ? `this.${lengthProp.prop.name} = offset;` : ""}
+  }`;
+  }
+
+  protected baseJSON(props: PHPPropWriter[]): string {
+    const nonStatics = props.filter(p => !p.prop.isStatic);
+    return `
+  public function __debugInfo() {
+    return [
+      ${nonStatics.map((p: PHPPropWriter) => `"${p.prop.name}" => $this->${p.labelExpr}`).join(",\n      ")}
+    ];
+  }`;
+  }
+
+  protected baseHexString(props: PHPPropWriter[]): string {
+    return `
+  public function toHexString() {
+    $hex = '';
+    $offset = 0;
+
+    ${props.map((p: PHPPropWriter) => p.getOutputHex()).join("\n    ")}
+
+    return $hex;
+  }`;
+  }
+
+  protected abstractFunction(name: string): string {
+    return `protected abstract function ${name.replace("()", "")}();`;
+  }
+
+  protected functionStub(name: string): string {
+    return `protected function ${name.replace("()", "")}() {
+    return 0;
+  }`;
+  }
+
+  protected filename(className: string): string {
+    return `${lodash
+      .startCase(className)
+      .split(" ")
+      .join("")}.php`;
+  }
+
+  private getEnumName(label: string): string {
+    let clean = label
+      .replace("%", "Percent")
+      .replace("&", "n")
+      .replace(/[^\w\s]/g, "");
+    if (!isNaN(parseInt(clean[0], 10))) {
+      clean = `n${clean}`;
+    }
+    return lodash.camelCase(clean);
+  }
 }

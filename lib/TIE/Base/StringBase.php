@@ -1,4 +1,5 @@
 <?php
+
 namespace Pyrite\TIE;
 
 use Pyrite\Byteable;

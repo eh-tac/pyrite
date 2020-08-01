@@ -1,4 +1,5 @@
 <?php
+
 namespace Pyrite\TIE\Base;
 
 use Pyrite\Byteable;
@@ -6,44 +7,46 @@ use Pyrite\HexDecoder;
 use Pyrite\PyriteBase;
 use Pyrite\TIE\Constants;
 
-abstract class FileHeaderBase extends PyriteBase implements Byteable {
-	use HexDecoder;
+abstract class FileHeaderBase extends PyriteBase implements Byteable
+{
+    use HexDecoder;
 
-	const FILEHEADER_LENGTH = 0x1CA;
+    const FILEHEADER_LENGTH = 0x1CA;
 
-	/** @var \Pyrite\TIE\SHORT */
-	public $PlatformID; // (-1)
-	/** @var \Pyrite\TIE\SHORT */
-	public $NumFGs;
-	/** @var \Pyrite\TIE\SHORT */
-	public $NumMessages;
-	/** @var \Pyrite\TIE\SHORT */
-	public $Reserved; // (3) might be # of GlobalGoals
-	/** @var \Pyrite\TIE\BYTE */
-	public $Unknown1;
-	/** @var \Pyrite\TIE\BOOL */
-	public $Unknown2;
-	/** @var \Pyrite\TIE\BYTE */
-	public $BriefingOfficers;
-	/** @var \Pyrite\TIE\BOOL */
-	public $CapturedOnEject;
-	/** @var \Pyrite\TIE\CHAR<64> */
-	public $EndOfMissionMessages;
-	/** @var \Pyrite\TIE\CHAR<12> */
-	public $OtherIffNames;
+    /** @var \Pyrite\TIE\SHORT */
+    public $PlatformID; // (-1)
+    /** @var \Pyrite\TIE\SHORT */
+    public $NumFGs;
+    /** @var \Pyrite\TIE\SHORT */
+    public $NumMessages;
+    /** @var \Pyrite\TIE\SHORT */
+    public $Reserved; // (3) might be # of GlobalGoals
+    /** @var \Pyrite\TIE\BYTE */
+    public $Unknown1;
+    /** @var \Pyrite\TIE\BOOL */
+    public $Unknown2;
+    /** @var \Pyrite\TIE\BYTE */
+    public $BriefingOfficers;
+    /** @var \Pyrite\TIE\BOOL */
+    public $CapturedOnEject;
+    /** @var \Pyrite\TIE\CHAR<64> */
+    public $EndOfMissionMessages;
+    /** @var \Pyrite\TIE\CHAR<12> */
+    public $OtherIffNames;
 
-	public function __construct($hex, $tie){
-		$this->hex = $hex;
-		$this->TIE = $tie; 
-		$offset = 0;
-		$this->PlatformID = $this->getShort($hex, 0x000);
-		$this->NumFGs = $this->getShort($hex, 0x002);
-		$this->NumMessages = $this->getShort($hex, 0x004);
-		$this->Reserved = $this->getShort($hex, 0x006);
-		$this->Unknown1 = $this->getByte($hex, 0x008);
-		$this->Unknown2 = $this->getBool($hex, 0x009);
-		$this->BriefingOfficers = $this->getByte($hex, 0x00A);
-		$this->CapturedOnEject = $this->getBool($hex, 0x00D);
+    public function __construct($hex, $tie)
+    {
+        $this->hex = $hex;
+        $this->TIE = $tie;
+        $offset = 0;
+        $this->PlatformID = $this->getShort($hex, 0x000);
+        $this->NumFGs = $this->getShort($hex, 0x002);
+        $this->NumMessages = $this->getShort($hex, 0x004);
+        $this->Reserved = $this->getShort($hex, 0x006);
+        $this->Unknown1 = $this->getByte($hex, 0x008);
+        $this->Unknown2 = $this->getBool($hex, 0x009);
+        $this->BriefingOfficers = $this->getByte($hex, 0x00A);
+        $this->CapturedOnEject = $this->getBool($hex, 0x00D);
 
         $this->EndOfMissionMessages = [];
         $offset = 0x018;
@@ -60,40 +63,44 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable {
             $this->OtherIffNames[] = $t;
             $offset += 12;
         }
-		$this->afterConstruct();
-	}
+        $this->afterConstruct();
+    }
 
-	public function __debugInfo() {
-		return [
-			"PlatformID" => $this->PlatformID,
-			"NumFGs" => $this->NumFGs,
-			"NumMessages" => $this->NumMessages,
-			"Reserved" => $this->Reserved,
-			"Unknown1" => $this->Unknown1,
-			"Unknown2" => $this->Unknown2,
-			"BriefingOfficers" => $this->getBriefingOfficersLabel(),
-			"CapturedOnEject" => $this->CapturedOnEject,
-			"EndOfMissionMessages" => $this->EndOfMissionMessages,
-			"OtherIffNames" => $this->OtherIffNames		];
-	}
+    public function __debugInfo()
+    {
+        return [
+            "PlatformID"           => $this->PlatformID,
+            "NumFGs"               => $this->NumFGs,
+            "NumMessages"          => $this->NumMessages,
+            "Reserved"             => $this->Reserved,
+            "Unknown1"             => $this->Unknown1,
+            "Unknown2"             => $this->Unknown2,
+            "BriefingOfficers"     => $this->getBriefingOfficersLabel(),
+            "CapturedOnEject"      => $this->CapturedOnEject,
+            "EndOfMissionMessages" => $this->EndOfMissionMessages,
+            "OtherIffNames"        => $this->OtherIffNames
+        ];
+    }
 
-        protected function getBriefingOfficersLabel() {
-            return isset($this->BriefingOfficers) && isset(Constants::$BRIEFINGOFFICERS[$this->BriefingOfficers]) ? Constants::$BRIEFINGOFFICERS[$this->BriefingOfficers] : "Unknown";
-        }
+    protected function getBriefingOfficersLabel()
+    {
+        return isset($this->BriefingOfficers) && isset(Constants::$BRIEFINGOFFICERS[$this->BriefingOfficers]) ? Constants::$BRIEFINGOFFICERS[$this->BriefingOfficers] : "Unknown";
+    }
 
-	protected function toHexString() {
+    protected function toHexString()
+    {
 
-		$hex = "";
+        $hex = "";
 
-		$offset = 0;
-		$this->writeShort($hex, $this->PlatformID, 0x000);
-		$this->writeShort($hex, $this->NumFGs, 0x002);
-		$this->writeShort($hex, $this->NumMessages, 0x004);
-		$this->writeShort($hex, $this->Reserved, 0x006);
-		$this->writeByte($hex, $this->Unknown1, 0x008);
-		$this->writeBool($hex, $this->Unknown2, 0x009);
-		$this->writeByte($hex, $this->BriefingOfficers, 0x00A);
-		$this->writeBool($hex, $this->CapturedOnEject, 0x00D);
+        $offset = 0;
+        $this->writeShort($hex, $this->PlatformID, 0x000);
+        $this->writeShort($hex, $this->NumFGs, 0x002);
+        $this->writeShort($hex, $this->NumMessages, 0x004);
+        $this->writeShort($hex, $this->Reserved, 0x006);
+        $this->writeByte($hex, $this->Unknown1, 0x008);
+        $this->writeBool($hex, $this->Unknown2, 0x009);
+        $this->writeByte($hex, $this->BriefingOfficers, 0x00A);
+        $this->writeBool($hex, $this->CapturedOnEject, 0x00D);
 
         $offset = 0x018;
         for ($i = 0; $i < 6; $i++) {
@@ -108,11 +115,12 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable {
             $this->writeChar($hex, $this->OtherIffNames[$i], $offset, 12);
             $offset += 12;
         }
-		return $hex;
-	}
+        return $hex;
+    }
 
 
-    public function getLength(){
+    public function getLength()
+    {
         return self::FILEHEADER_LENGTH;
     }
 }

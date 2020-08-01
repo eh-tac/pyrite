@@ -1,7 +1,7 @@
 import { PyriteWriter } from "./writer";
 import { Constants } from "./constants";
 import { Struct } from "./struct";
-import { Prop, PropInt } from "./prop";
+import { PropInt } from "./prop";
 import * as lodash from "lodash";
 import { TypeScriptPropWriter } from "./typescript-prop-writer";
 
