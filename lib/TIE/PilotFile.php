@@ -1,13 +1,28 @@
 <?php
+
 namespace Pyrite\TIE;
-    
-export class PilotFile extends Base\PilotFileBase {
 
-  public function beforeConstruct() {}
+class PilotFile extends Base\PilotFileBase
+{
+    public $filename = "";
 
-  public function __toString() {
-    return '';
-  }
+    public function beforeConstruct()
+    {
+    }
 
-  
+    public function __toString()
+    {
+        return "XW PLT: {$this->filename}";
+    }
+
+    public static function load($file)
+    {
+        $hex = file_get_contents($file);
+        $info = pathinfo($file);
+        $plt = new PilotFile($hex);
+        $plt->filename = $info['filename'];
+
+        return $plt;
+    }
+
 }

@@ -1,0 +1,155 @@
+Ships
+00 Unknown
+01 X-Wing
+02 Y-Wing
+03 A-Wing
+04 *B-Wing
+05 TIE Fighter
+06 TIE Interceptor
+07 TIE Bomber
+08 TIE Advanced
+09 *TIE Defender
+0A Patch Slot 10
+0B Patch Slot 11
+0C Missile Boat
+0D T-Wing
+0E Z-95 Headhunter
+0F R-41 Starchaser
+10 Assault Gunboat
+11 Shuttle
+12 Escort Shuttle
+13 System Patrol Craft
+14 *Scout Craft
+15 Stormtrooper Transport
+16 Assault Transport
+17 Escort Transport
+18 Utility Tug
+19 Combat Utility Vehicle
+1A Container Class A
+1B Container Class B
+1C Container Class C
+1D Container Class D
+1E Heavy Lifter
+1F *bulk_barge2
+20 Bulk Freighter
+21 Cargo Ferry
+22 Modular Conveyor
+23 Container Transport
+24 *new_freighter3
+25 Muurian Transport
+26 Corellian Transport
+27 *Millenium
+28 Corellian Corvette
+29 *Modified Corvette
+2A Nebulon B Frigate
+2B *Modified Frigate
+2C *Passenger Liner
+2D *Carrack Cruiser
+2E Strike Cruiser
+2F Escort Carrier
+30 Dreadnaught
+31 Calamari Cruiser
+32 Lt. Calamari Cruiser
+33 Interdictor
+34 Victory Star Destroyer
+35 Imperial Star Destroyer
+36 *super_sd
+37 Container Class E
+38 Container Class F
+39 Container Class G
+3A Container Class H
+3B Container Class I
+3C XQ1 Platform
+3D XQ2 Platform
+3E XQ3 Platform
+3F XQ4 Platform
+40 XQ5 Platform
+41 XQ6 Platform
+42 Asteroid Hangar
+43 Asteroid Laser Battery
+44 Asteroid War Launcher
+45 X7 Factory
+46 Comm Sat
+47 Comm Sat
+48 *Sat3
+49 *Sat4
+4A *Sat5
+4B Mine Type A
+4C Mine Type B
+4D Mine Type C
+4E *Mine4
+4F *Mine5
+50 Probe
+51 *Probe2
+52 *Probe3
+53 Nav Buoy
+54 Nav Buoy
+55 *Pilot
+56 Asteroid
+57 Planet
+58 Obstacle
+59	Unused
+5A	Shipyard
+5B	Repair Yard
+5C	Modified Strike Cruiser
+
+PilotRating
+00 Target Drone
+01 Ground Crew
+02 Trainee
+03 Flight Cadet
+04 Officer 4th Class
+05 Officer 3rd Class
+06 Officer 2nd Class
+07 Officer 1st Class
+08 Veteran 4th Grade
+09 Veteran 3rd Grade
+0A Veteran 2nd Grade
+0B Veteran 1st Grade
+0C Ace 4th Level
+0D Ace 3rd Level
+0E Ace 2nd Level
+0F Ace 1st Level
+10 Top Ace 4th Order
+11 Top Ace 3rd Order
+12 Top Ace 2nd Order
+13 Top Ace 1st Order
+14 Jedi 4th Degree
+15 Jedi 3rd Degree
+16 Jedi 2nd Degree
+17 Jedi 1st Degree
+18 Jedi Master
+
+Warheads
+00 None
+01 Space Bombs
+02 Cluster Bombs
+03 Heavy Rockets
+04 Missiles
+05 Proton Torpedoes
+06 Advanced Missiles
+07 Advanced Torpedoes
+08 Mag Pulse
+09 Ion Pulse
+
+BeamWeapons
+00 None
+01 Tractor
+02 Jamming
+03 Decoy
+04 Energy
+
+Countermeasures
+00 None
+01 Chaff
+02 Flare
+03 Cluster Mine
+
+BestRating
+00 Gold
+01 Silver
+02 Bronze
+03 Nickel
+04 Copper
+05 Lead
+

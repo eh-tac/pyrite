@@ -1,4 +1,4 @@
-import { JSX, Component, Prop, h, Element, State } from "@stencil/core";
+import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } from "@stencil/core";
 import { BattleSummary } from "../../../model/ehtc";
 
 @Component({
@@ -8,8 +8,11 @@ import { BattleSummary } from "../../../model/ehtc";
 })
 export class BattleSelectComponent {
   @Element() el: HTMLElement;
-  // member PIN = value
+  @Event() battleSelect: EventEmitter<BattleSummary>;
+
+  // battle id = value
   @Prop({ reflect: true }) value: string;
+  @Prop({ reflect: true }) battle: BattleSummary;
   // domain override. defaults to empty for same domain requests
   @Prop() domain: string;
   @Prop() name: string;
@@ -46,6 +49,12 @@ export class BattleSelectComponent {
     parent.appendChild(this.externalInputElement);
   }
 
+  @Method()
+  public search(query: string): Promise<void> {
+    this.updateQuery(query);
+    return Promise.resolve();
+  }
+
   private get listURL(): string {
     const d = this.domain || "";
     return `${d}/api/battles/list`;
@@ -78,7 +87,8 @@ export class BattleSelectComponent {
 
   private selectBattle(b?: BattleSummary): void {
     this.selection = b;
-    this.externalInputElement.value = b ? b.id.toString(10) : "";
+    this.value = this.externalInputElement.value = b ? b.id.toString(10) : "";
+    this.battleSelect.emit(b);
     this.externalInputElement.dispatchEvent(new InputEvent("input"));
   }
 

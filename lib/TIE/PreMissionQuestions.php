@@ -1,12 +1,15 @@
 <?php
+
 namespace Pyrite\TIE;
 
 use Pyrite\Summary;
 
 class PreMissionQuestions extends Base\PreMissionQuestionsBase implements Summary
 {
-    protected function afterConstruct()
+    public function __construct($hex, $tie)
     {
+        parent::__construct($hex, $tie);
+
         if ($this->Length === 0) {
             $this->PreMissionQuestionsLength = 2;
         }
@@ -36,13 +39,14 @@ class PreMissionQuestions extends Base\PreMissionQuestionsBase implements Summar
         }
     }
 
-    public function summaryHash(){
-		if ($this->Length === 0) {
-			return false;
-		}
-    	return [
-    		'Question' => $this->Question,
-			'Answer' => $this->Answer
-		];
-	}
+    public function summaryHash()
+    {
+        if ($this->Length === 0) {
+            return false;
+        }
+        return [
+            'Question' => $this->Question,
+            'Answer' => $this->Answer
+        ];
+    }
 }

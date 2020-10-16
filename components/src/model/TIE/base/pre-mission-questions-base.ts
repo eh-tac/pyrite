@@ -18,9 +18,11 @@ export abstract class PreMissionQuestionsBase extends PyriteBase implements Byte
 
     this.Length = getShort(hex, 0x0);
     this.Question = getChar(hex, 0x2, this.QuestionLength());
+    offset = 0x2 + this.QuestionLength();
     // static prop Spacer
     offset += 1;
     this.Answer = getChar(hex, offset, this.AnswerLength());
+    offset += this.AnswerLength();
     this.PreMissionQuestionsLength = offset;
   }
   

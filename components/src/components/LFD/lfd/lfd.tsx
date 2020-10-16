@@ -1,4 +1,4 @@
-import { Component, Prop, Host, State, h, JSX, Element } from "@stencil/core";
+import { Component, Prop, Host, State, h, JSX, Element, Method } from "@stencil/core";
 import { LFD, Rmap } from "../../../model/LFD";
 import { LFDController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
@@ -15,6 +15,14 @@ export class LFDComponent {
 
   private controller: LFDController;
 
+  @Method()
+  public loadArrayBuffer(value: ArrayBuffer): Promise<void> {
+    this.lfd = LFD.load(value);
+    this.controller = new LFDController(this.lfd);
+    console.log("load array buffer", this.lfd);
+    return Promise.resolve();
+  }
+
   public componentWillLoad(): void {
     if (!this.file) {
       return;
@@ -22,15 +30,13 @@ export class LFDComponent {
     fetch(this.file)
       .then((res: Response) => res.arrayBuffer())
       .then((value: ArrayBuffer) => {
-        this.lfd = LFD.load(value);
-        this.controller = new LFDController(this.lfd);
-        console.log("sgdih", this.lfd);
+        this.loadArrayBuffer(value);
       });
   }
 
   public render(): JSX.Element {
     if (!this.lfd) {
-      return <p>Loading...</p>;
+      return <p>Loading...!!</p>;
     }
     let comp = <Field {...this.controller.getProps("Header")} />;
     if (this.lfd instanceof Rmap) {

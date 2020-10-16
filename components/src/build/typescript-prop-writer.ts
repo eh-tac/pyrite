@@ -89,7 +89,7 @@ export class TypeScriptPropWriter {
       // if this is a string with a defined offset, make sure that is included when incrementing the offset
       // otherwise if already in previous value mode, just += by the current length;
       const op = this.prop.previousValueOffset ? "+=" : `= ${this.prop.offset} +`;
-      offsetExpr = `\n    offset ${op} ${this.propLength}`;
+      offsetExpr = `\n    offset ${op} ${this.propLength};`;
     }
     return `${init}${offsetExpr}`;
   }
@@ -127,7 +127,7 @@ export class TypeScriptPropWriter {
   public get propLength(): string {
     const obj = this.prop.isArray ? "t" : `this.${this.prop.name}`;
     if (this.prop instanceof PropStr) {
-      return `${obj}.length`;
+      return `${obj}.length + 1`;
     } else if (this.prop instanceof PropObject) {
       return `${obj}.getLength()`;
     }
@@ -177,7 +177,7 @@ export class TypeScriptPropWriter {
     if (this.prop instanceof PropObject) {
       const kebab = lodash.kebabCase(this.prop.structName);
       props["componentTag"] = `pyrite-${plt}-${kebab.replace(plt, "")}`.toLowerCase();
-      props["componentProp"] = kebab.toLowerCase();
+      props["componentProp"] = this.prop.structName.toLowerCase();
     }
     return props;
   }

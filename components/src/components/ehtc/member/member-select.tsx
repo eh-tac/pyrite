@@ -1,4 +1,4 @@
-import { JSX, Component, Prop, h, Element, State } from "@stencil/core";
+import { JSX, Component, Prop, h, Element, State, Method } from "@stencil/core";
 import { PilotSummary, CharacterSummary } from "../../../model/ehtc";
 
 type Member = PilotSummary | CharacterSummary;
@@ -63,6 +63,12 @@ export class MemberSelectComponent {
           );
         }
       });
+  }
+
+  @Method()
+  public search(query: string): Promise<void> {
+    this.updateQuery(query);
+    return Promise.resolve();
   }
 
   private get listURL(): string {

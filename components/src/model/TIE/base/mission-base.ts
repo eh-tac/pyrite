@@ -29,7 +29,7 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
 
     this.FileHeader = new FileHeader(hex.slice(0x000), this.TIE);
     this.FlightGroups = [];
-    offset = offset;
+    offset = 0x1CA;
     for (let i = 0; i < this.FileHeader.NumFGs; i++) {
       const t = new FlightGroup(hex.slice(offset), this.TIE);
       this.FlightGroups.push(t);
@@ -50,7 +50,7 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
       offset += t.getLength();
     }
     this.Briefing = new Briefing(hex.slice(offset), this.TIE);
-    offset += this.Briefing.getLength()
+    offset += this.Briefing.getLength();
     this.PreMissionQuestions = [];
     offset = offset;
     for (let i = 0; i < 10; i++) {
@@ -87,7 +87,7 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
     let offset = 0;
 
     writeObject(hex, this.FileHeader, 0x000);
-    offset = offset;
+    offset = 0x1CA;
     for (let i = 0; i < this.FileHeader.NumFGs; i++) {
       const t = this.FlightGroups[i];
       writeObject(hex, t, offset);

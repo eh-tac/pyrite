@@ -11,7 +11,14 @@ export class Message extends MessageBase {
 
   public constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
-    this.afterConstruct();
+
+    this.DisplayText = this.Message;
+
+    const num = parseInt(this.Message[0], 10);
+    if (!isNaN(num)) {
+      this.MessageColour = num;
+      this.DisplayText = this.Message.substr(1);
+    }
   }
 
   public toJSON(): object {
@@ -23,16 +30,5 @@ export class Message extends MessageBase {
       EditorNote: this.EditorNote,
       Trigger1OrTrigger2: this.Trigger1OrTrigger2
     };
-  }
-
-  protected afterConstruct(): void {
-    this.DisplayText = this.Message;
-
-    const num = parseInt(this.Message[0], 10);
-    if (!isNaN(num)) {
-      this.MessageColour = num;
-      this.DisplayText = this.Message.substr(1);
-    }
-    console.log(this.MessageColour, this.DisplayText);
   }
 }

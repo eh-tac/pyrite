@@ -1,0 +1,39 @@
+struct PilotFile (size 0)
+{
+  0x000 CHAR<14> Name
+  0x0E INT TotalScore
+  0x9E INT TourOfDutyScore
+  0xA2 INT AzzameenScore
+  0xA6 INT SimulatorScore
+  0xD2 INT[256] TourOfDutyKills
+  0x8CE INT[256] AzzameenKills
+  0x10d2 INT[256] SimulatorKills
+  0x18d2 INT[256] TourOfDutyPartials
+  0x20ce INT[256] AzzameenPartials
+  0x28d2 INT[256] SimulatorPartials  
+  0x4d36 INT LasersHit
+  0x4d42 INT LasersFired
+  0x4d4e INT WarheadsHit
+  0x4d5a INT WarheadsFired
+  0x4d6e INT CraftLosses
+  0xacfa MissionData[100] MissionData
+  0x10EA2 INT CurrentRank
+  0x10EA6 INT CurrentMedal
+  0x1144E INT BonusTen
+}
+
+struct MissionData (size 0x30)
+{
+  0x00 INT UnkA
+  0x04 INT AttemptCount
+  0x08 INT UnkB
+  0x0C INT UnkC
+  0x10 INT UnkD
+  0x14 INT WinCount
+  0x18 INT UnkE  
+  0x1C INT Score
+  0x20 INT Time
+  0x24 INT UnkF
+  0x28 INT UnkG
+  0x2C INT BonusScoreTen
+}

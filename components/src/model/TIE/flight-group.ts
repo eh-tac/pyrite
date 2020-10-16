@@ -4,9 +4,15 @@ import { Craft } from "./craft";
 import { GoalFG } from "./goal-fg";
 import { Constants } from "./constants";
 import { IFielder, FieldProp, DataType } from "../pyrite-base";
+import { IMission } from "../../pyrite-base";
 
 export class FlightGroup extends FlightGroupBase implements IFielder {
   public craft: Craft;
+
+  public constructor(hex: ArrayBuffer, tie?: IMission) {
+    super(hex, tie);
+    this.craft = new Craft(this.CraftType);
+  }
 
   public get label(): string {
     return this.toString();
@@ -132,10 +138,6 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
 
   public get destroyable(): boolean {
     return this.GroupAI !== 5 || !!this.FlightGroupGoals.find((goal: GoalFG) => goal.isInvincibleGoal); // TODO check global goals
-  }
-
-  protected afterConstruct(): void {
-    this.craft = new Craft(this.CraftType);
   }
 
   public field(name: string): FieldProp {

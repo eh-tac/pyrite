@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { LString } from "../../../model/LFD";
 import { LFDLStringController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
@@ -21,11 +21,10 @@ export class LFDLStringComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Length')} />
-        <Field {...this.controller.getProps('Text')} />
-        <Field {...this.controller.getProps('Reserved')} />
+        <Field {...this.controller.getProps("Length")} />
+        <Field {...this.controller.getProps("Substrings")} />
+        <Field {...this.controller.getProps("Reserved")} />
       </Host>
-    )
+    );
   }
 }
-  

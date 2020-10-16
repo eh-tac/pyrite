@@ -139,7 +139,7 @@ export class ${this.controllerName(struct)} extends ControllerBase {
     const kebab = lodash.kebabCase(struct.name);
 
     const scssFile = `${kebab}.scss`;
-    this.writeFile(`components/PLT/${kebab}/${scssFile}`, "");
+    this.writeFile(`components/PLT/${kebab}/${scssFile}`, "", false);
 
     const plt = this.generator.platform;
     const tag = `pyrite-${plt}-${kebab.replace(plt, "")}`.toLowerCase();

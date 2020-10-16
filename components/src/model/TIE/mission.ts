@@ -15,6 +15,10 @@ const EASY_PTS = 2750;
 export class Mission extends MissionBase {
   public valid = false;
 
+  public constructor(x: ArrayBuffer) {
+    super(x);
+  }
+
   public get officerBriefing(): PreMissionQuestions[] {
     return this.PreMissionQuestions.slice(0, 4)
       .filter(q => q.Length)
@@ -71,9 +75,5 @@ export class Mission extends MissionBase {
 
   protected beforeConstruct() {
     this.TIE = this;
-  }
-
-  protected afterConstruct() {
-    this.valid = true;
   }
 }

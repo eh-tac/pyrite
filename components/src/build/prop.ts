@@ -21,6 +21,7 @@ export class Prop {
       const lengthInt = parseInt(lengthStr);
       if (isNaN(lengthInt)) {
         this.typeLengthExpression = lengthStr;
+        this.baseSize = 0;
       } else {
         this.baseSize = lengthInt;
       }

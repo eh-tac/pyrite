@@ -1,10 +1,10 @@
 export function getBool(hex: ArrayBuffer, start: number = 0): boolean {
-  const byte = getByte(hex, start);
+  const byte = getByte(hex.slice(start));
   return !!byte;
 }
 
 export function getByte(hex: ArrayBuffer, start: number = 0): number {
-  return new Uint8Array(hex, start)[0];
+  return new Uint8Array(hex.slice(start))[0];
 }
 
 export function getByteString(byte: number): string {
@@ -16,15 +16,15 @@ export function getByteString(byte: number): string {
 }
 
 export function getSByte(hex: ArrayBuffer, start: number = 0): number {
-  return new Int8Array(hex, start)[0];
+  return new Int8Array(hex.slice(start))[0];
 }
 
 export function getSChar(hex: ArrayBuffer, start: number = 0, length: number = 0): string {
-  return String.fromCharCode.apply(null, new Int8Array(hex, start, length));
+  return String.fromCharCode.apply(null, new Int8Array(hex.slice(start), length));
 }
 
 export function getChar(hex: ArrayBuffer, start: number = 0, length: number = 0): string {
-  let str = String.fromCharCode.apply(null, new Uint8Array(hex, start, length));
+  let str: string = String.fromCharCode.apply(null, new Uint8Array(hex.slice(start, start + length)));
   const end = str.indexOf(String.fromCharCode(0));
   if (end !== -1) {
     str = str.substr(0, end);

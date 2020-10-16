@@ -45,12 +45,12 @@ class Event extends Base\EventBase implements Summary
 
     public function summaryHash(){
     	$notes = '';
-    	if ($this->EventType == 4 || $this->EventType == 5){
-    		$notes = (string)$this->Briefing->Strings[$this->Variables[0]];
-		} else if ($this->EventType >= 9 && $this->EventType <= 16){
-    		$notes = (string)$this->TIE->FlightGroups[$this->Variables[0]];
-		} else if ($this->EventType >= 19 && $this->EventType <= 25){
-    		$notes = (string)$this->Briefing->Tags[$this->Variables[0]];
+    	if ($str = $this->getStr()){
+    		$notes = (string)$str;
+		} else if ($fg = $this->getFG()){
+    	    $notes = (string)$fg;
+		} else if ($tag = $this->getTag()){
+    		$notes = (string)$tag;
 		}
     	return [
     		'Type' => $this->getEventTypeLabel(),
@@ -58,4 +58,25 @@ class Event extends Base\EventBase implements Summary
 			'Notes' => $notes
 		];
 	}
+
+	public function getStr(){
+        if ($this->EventType == 4 || $this->EventType == 5) {
+            return $this->Briefing->Strings[$this->Variables[0]];
+        }
+        return false;
+    }
+
+    public function getFG(){
+        if ($this->EventType >= 9 && $this->EventType <= 16){
+            return $this->TIE->FlightGroups[$this->Variables[0]];
+        }
+        return false;
+    }
+
+    public function getTag(){
+        if ($this->EventType >= 19 && $this->EventType <= 25){
+            return $this->Briefing->Tags[$this->Variables[0]];
+        }
+        return false;
+    }
 }

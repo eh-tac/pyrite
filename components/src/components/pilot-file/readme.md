@@ -7,10 +7,24 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `bsf`    | `bsf`     |             | `string` | `""`        |
-| `file`   | `file`    |             | `string` | `undefined` |
+| Property      | Attribute      | Description | Type      | Default     |
+| ------------- | -------------- | ----------- | --------- | ----------- |
+| `allowUpload` | `allow-upload` |             | `boolean` | `false`     |
+| `bsf`         | `bsf`          |             | `string`  | `""`        |
+| `file`        | `file`         |             | `string`  | `undefined` |
+
+
+## Methods
+
+### `useFileInput(file: File) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ----------------------------------------------

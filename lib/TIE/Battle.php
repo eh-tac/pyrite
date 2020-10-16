@@ -40,6 +40,7 @@ class Battle extends \Pyrite\EHBL\Battle {
         $tie = new Mission($m);
         $me = $tie->validate();
         if (count($me)){
+            $me[] = $this->folder . $missionFile;
             $errors[$missionFile] = $me;
         }
     }

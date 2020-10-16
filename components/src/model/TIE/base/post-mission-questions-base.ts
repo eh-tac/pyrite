@@ -23,9 +23,11 @@ export abstract class PostMissionQuestionsBase extends PyriteBase implements Byt
     this.QuestionCondition = getByte(hex, 0x2);
     this.QuestionType = getByte(hex, 0x3);
     this.Question = getChar(hex, 0x4, this.QuestionLength());
+    offset = 0x4 + this.QuestionLength();
     // static prop Spacer
     offset += 1;
     this.Answer = getChar(hex, offset, this.AnswerLength());
+    offset += this.AnswerLength();
     this.PostMissionQuestionsLength = offset;
   }
   

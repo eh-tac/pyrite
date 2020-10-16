@@ -1,7 +1,7 @@
 struct Mission (size 0)
 {
 	0x000 FileHeader FileHeader
-	PV FlightGroup[FileHeader-NumFGs] FlightGroups
+	0x1CA FlightGroup[FileHeader-NumFGs] FlightGroups
 	PV Message[FileHeader-NumMessages] Messages
 	PV GlobalGoal[3] GlobalGoals
 	PV Briefing Briefing

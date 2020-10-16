@@ -1,7 +1,9 @@
 import { PostMissionQuestionsBase } from "./base/post-mission-questions-base";
+import { IMission } from "../../pyrite-base";
 
 export class PostMissionQuestions extends PostMissionQuestionsBase {
-  protected afterConstruct() {
+  constructor(hex: ArrayBuffer, tie?: IMission) {
+    super(hex, tie);
     if (this.Length === 0) {
       this.PostMissionQuestionsLength = 2;
     }

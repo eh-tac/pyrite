@@ -41,4 +41,30 @@ class Briefing extends Base\BriefingBase
         }
         $this->BriefingLength = $offset;
     }
+
+    public function getUsedTags(){
+        $tags = [];
+        /**
+         * @var Event $event
+         */
+        foreach ($this->Events as $event){
+            if ($tag = $event->getTag()){
+                $tags[] = $tag;
+            }
+        }
+        return array_unique($tags);
+    }
+
+    public function getUsedStrings(){
+        $strings = [];
+        /**
+         * @var Event $event
+         */
+        foreach ($this->Events as $event){
+            if ($str = $event->getStr()){
+                $strings[] = $str;
+            }
+        }
+        return array_unique($strings);
+    }
 }

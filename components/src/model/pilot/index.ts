@@ -1,5 +1,3 @@
-export { XvTPlt } from "./xvt";
-
 export interface PilotData {
   LaserLabel: string;
   WarheadLabel: string;

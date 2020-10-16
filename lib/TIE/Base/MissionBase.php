@@ -5,152 +5,142 @@ namespace Pyrite\TIE\Base;
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\PyriteBase;
-use Pyrite\TIE\Constants;
+use Pyrite\TIE\Briefing;
+use Pyrite\TIE\FileHeader;
+use Pyrite\TIE\FlightGroup;
+use Pyrite\TIE\GlobalGoal;
+use Pyrite\TIE\Message;
+use Pyrite\TIE\PostMissionQuestions;
+use Pyrite\TIE\PreMissionQuestions;
 
 abstract class MissionBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
 
-    public $MissionLength = 0;
-
-    /** @var \Pyrite\TIE\FileHeader */
+    /** @var integer */
+    public $MissionLength;
+    /** @var FileHeader */
     public $FileHeader;
-    /** @var \Pyrite\TIE\FlightGroup[] */
+    /** @var FlightGroup[] */
     public $FlightGroups;
-    /** @var \Pyrite\TIE\Message */
+    /** @var Message[] */
     public $Messages;
-    /** @var \Pyrite\TIE\GlobalGoal */
+    /** @var GlobalGoal[] */
     public $GlobalGoals;
-    /** @var \Pyrite\TIE\Briefing */
+    /** @var Briefing */
     public $Briefing;
-    /** @var \Pyrite\TIE\PreMissionQuestions */
+    /** @var PreMissionQuestions[] */
     public $PreMissionQuestions;
-    /** @var \Pyrite\TIE\PostMissionQuestions */
+    /** @var PostMissionQuestions[] */
     public $PostMissionQuestions;
-    /** @var \Pyrite\TIE\BYTE */
-    public $End; // Reserved(0xFF)
-
-    public function __construct($hex, $tie)
+    /** @var integer */
+    public const End = 255;
+    
+    public function __construct($hex, $tie = null)
     {
-        $this->hex = $hex;
-        $this->TIE = $tie;
+        parent::__construct($hex, $tie);
+        $this->beforeConstruct();
         $offset = 0;
-        $this->FileHeader = new \Pyrite\TIE\FileHeader(substr($hex, 0x000), $this->TIE);
-        $offset = 0x000;
-        $offset += $this->FileHeader->getLength();
 
+        $this->FileHeader = new FileHeader(substr($hex, 0x000), $this->TIE);
         $this->FlightGroups = [];
-
+        $offset = 0x1CA;
         for ($i = 0; $i < $this->FileHeader->NumFGs; $i++) {
-            $t = new \Pyrite\TIE\FlightGroup(substr($hex, $offset), $this->TIE);
+            $t = new FlightGroup(substr($hex, $offset), $this->TIE);
             $this->FlightGroups[] = $t;
             $offset += $t->getLength();
         }
-
         $this->Messages = [];
-
+        $offset = $offset;
         for ($i = 0; $i < $this->FileHeader->NumMessages; $i++) {
-            $t = new \Pyrite\TIE\Message(substr($hex, $offset), $this->TIE);
+            $t = new Message(substr($hex, $offset), $this->TIE);
             $this->Messages[] = $t;
             $offset += $t->getLength();
         }
-
         $this->GlobalGoals = [];
-
+        $offset = $offset;
         for ($i = 0; $i < 3; $i++) {
-            $t = new \Pyrite\TIE\GlobalGoal(substr($hex, $offset), $this->TIE);
+            $t = new GlobalGoal(substr($hex, $offset), $this->TIE);
             $this->GlobalGoals[] = $t;
             $offset += $t->getLength();
         }
-        $this->Briefing = new \Pyrite\TIE\Briefing(substr($hex, $offset), $this->TIE);
+        $this->Briefing = new Briefing(substr($hex, $offset), $this->TIE);
         $offset += $this->Briefing->getLength();
-
         $this->PreMissionQuestions = [];
-
+        $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
-            $t = new \Pyrite\TIE\PreMissionQuestions(substr($hex, $offset), $this->TIE);
+            $t = new PreMissionQuestions(substr($hex, $offset), $this->TIE);
             $this->PreMissionQuestions[] = $t;
             $offset += $t->getLength();
         }
-
         $this->PostMissionQuestions = [];
-
+        $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
-            $t = new \Pyrite\TIE\PostMissionQuestions(substr($hex, $offset), $this->TIE);
+            $t = new PostMissionQuestions(substr($hex, $offset), $this->TIE);
             $this->PostMissionQuestions[] = $t;
             $offset += $t->getLength();
         }
-        $this->End = $this->getByte($hex, $offset);
+        // static BYTE value End = 255
         $offset += 1;
         $this->MissionLength = $offset;
-        $this->afterConstruct();
     }
-
+    
     public function __debugInfo()
     {
         return [
-            "FileHeader"           => $this->FileHeader,
-            "FlightGroups"         => $this->FlightGroups,
-            "Messages"             => $this->Messages,
-            "GlobalGoals"          => $this->GlobalGoals,
-            "Briefing"             => $this->Briefing,
-            "PreMissionQuestions"  => $this->PreMissionQuestions,
-            "PostMissionQuestions" => $this->PostMissionQuestions,
-            "End"                  => $this->End
+            "FileHeader" => $this->FileHeader,
+            "FlightGroups" => $this->FlightGroups,
+            "Messages" => $this->Messages,
+            "GlobalGoals" => $this->GlobalGoals,
+            "Briefing" => $this->Briefing,
+            "PreMissionQuestions" => $this->PreMissionQuestions,
+            "PostMissionQuestions" => $this->PostMissionQuestions
         ];
     }
-
-    protected function toHexString()
+    
+    public function toHexString()
     {
-
         $hex = "";
-
         $offset = 0;
-        $this->writeObject($hex, $this->FileHeader, 0x000);
-        $offset = 0x000;
-        $offset += $this->FileHeader->getLength();
 
-        $offset = $offset;
+        $this->writeObject($hex, $this->FileHeader, 0x000);
+        $offset = 0x1CA;
         for ($i = 0; $i < $this->FileHeader->NumFGs; $i++) {
             $t = $this->FlightGroups[$i];
-            $this->writeObject($hex, $this->FlightGroups[$i], $offset);
+            $this->writeObject($hex, $t, $offset);
             $offset += $t->getLength();
         }
-
         $offset = $offset;
         for ($i = 0; $i < $this->FileHeader->NumMessages; $i++) {
             $t = $this->Messages[$i];
-            $this->writeObject($hex, $this->Messages[$i], $offset);
+            $this->writeObject($hex, $t, $offset);
             $offset += $t->getLength();
         }
-
         $offset = $offset;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->GlobalGoals[$i];
-            $this->writeObject($hex, $this->GlobalGoals[$i], $offset);
+            $this->writeObject($hex, $t, $offset);
             $offset += $t->getLength();
         }
         $this->writeObject($hex, $this->Briefing, $offset);
-
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->PreMissionQuestions[$i];
-            $this->writeObject($hex, $this->PreMissionQuestions[$i], $offset);
+            $this->writeObject($hex, $t, $offset);
             $offset += $t->getLength();
         }
-
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->PostMissionQuestions[$i];
-            $this->writeObject($hex, $this->PostMissionQuestions[$i], $offset);
+            $this->writeObject($hex, $t, $offset);
             $offset += $t->getLength();
         }
-        $this->writeByte($hex, $this->End, $offset);
-        $offset += 1;
+        $this->writeByte($hex, 255, $offset);
+
         return $hex;
     }
-
-
+    
+    
     public function getLength()
     {
         return $this->MissionLength;

@@ -1,0 +1,10 @@
+import { ControllerBase } from "../../controller-base";
+import { TeamStats } from "../../model/XvT";
+
+export class XvTTeamStatsController extends ControllerBase {
+  public readonly fields: object = {"MeleeMedals":{"name":"MeleeMedals","type":"INT"},"TournamentMedals":{"name":"TournamentMedals","type":"INT"},"MissionTopRatings":{"name":"MissionTopRatings","type":"INT"},"MissionMedals":{"name":"MissionMedals","type":"INT"},"PlayCounts":{"name":"PlayCounts","type":"INT"},"TotalKills":{"name":"TotalKills","type":"INT"},"ExerciseKillsByType":{"name":"ExerciseKillsByType","type":"INT"},"MeleeKillsByType":{"name":"MeleeKillsByType","type":"INT"},"CombatKillsByType":{"name":"CombatKillsByType","type":"INT"},"ExercisePartialsByType":{"name":"ExercisePartialsByType","type":"INT"},"MeleePartialsByType":{"name":"MeleePartialsByType","type":"INT"},"CombatPartialsByType":{"name":"CombatPartialsByType","type":"INT"},"ExerciseAssistsByType":{"name":"ExerciseAssistsByType","type":"INT"},"MeleeAssistsByType":{"name":"MeleeAssistsByType","type":"INT"},"CombatAssistsByType":{"name":"CombatAssistsByType","type":"INT"},"HiddenCargoFound":{"name":"HiddenCargoFound","type":"INT"},"LasersHit":{"name":"LasersHit","type":"INT"},"LasersTotal":{"name":"LasersTotal","type":"INT"},"WarheadsHit":{"name":"WarheadsHit","type":"INT"},"WarheadsTotal":{"name":"WarheadsTotal","type":"INT"},"CraftLosses":{"name":"CraftLosses","type":"INT"},"CollisionLosses":{"name":"CollisionLosses","type":"INT"},"StarshipLosses":{"name":"StarshipLosses","type":"INT"},"MineLosses":{"name":"MineLosses","type":"INT"},"TrainingMissionData":{"name":"TrainingMissionData","type":"MissionData","componentTag":"pyrite-xvt-mission-data","componentProp":"missiondata"},"MeleeMissionData":{"name":"MeleeMissionData","type":"MissionData","componentTag":"pyrite-xvt-mission-data","componentProp":"missiondata"},"CombatMissionData":{"name":"CombatMissionData","type":"MissionData","componentTag":"pyrite-xvt-mission-data","componentProp":"missiondata"}};
+
+  constructor(public model: TeamStats){
+    super(model);
+  }
+}

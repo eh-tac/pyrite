@@ -1,4 +1,4 @@
-import { newE2EPage } from "@stencil/core/testing";
+import { newE2EPage } from "./node_modules/@stencil/core/testing";
 
 describe("pyrite-tie-pre-mission-questions", () => {
   it("renders", async () => {

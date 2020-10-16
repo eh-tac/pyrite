@@ -19,8 +19,8 @@ struct FileHeader (size 0x34)
   0x1C SHORT Unused
   0x1E SHORT Unknown
   0x20 CHAR<12> Reserved
-  0x2C CHAR Width
-  0x2D CHAR Height
+  0x2C BYTE Width
+  0x2D BYTE Height
   0x2E SHORT NumClues
   0x30 SHORT Bitmask1
   0x32 SHORT Bitmask2

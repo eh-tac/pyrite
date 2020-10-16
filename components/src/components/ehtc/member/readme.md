@@ -16,6 +16,19 @@
 | `value`  | `value`   |             | `string`                 | `undefined`   |
 
 
+## Methods
+
+### `search(query: string) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

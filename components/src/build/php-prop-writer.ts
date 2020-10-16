@@ -4,7 +4,7 @@ export class PHPPropWriter {
   public constructor(public prop: Prop) {}
 
   public get labelExpr(): string {
-    return this.prop.enumName ? `${this.prop.name}Label` : this.prop.name;
+    return this.prop.enumName ? `get${this.prop.name}Label()` : this.prop.name;
   }
 
   public get offsetExpr(): string {
@@ -41,13 +41,13 @@ export class PHPPropWriter {
 
     let p = `$${this.prop.name}`;
     if (this.prop.isStatic) {
-      p = `const ${p} = ${this.prop.reservedValue}`;
+      p = `const ${this.prop.name} = ${this.prop.reservedValue}`;
     }
     p = `public ${p};`;
     if (this.prop.comment) {
       p = `${p} //${this.prop.comment}`;
     }
-    return `/** @var ${type} */\n  ${p}`;
+    return `/** @var ${type} */\n    ${p}`;
   }
 
   public get typeExpr(): string {
@@ -68,27 +68,27 @@ export class PHPPropWriter {
     if (this.prop.isStatic) {
       if (this.prop.previousValueOffset) {
         // ensure the offset is correct if the final prop is statically ignored
-        offsetExpr = `\n    $offset += ${this.propLength};`;
+        offsetExpr = `\n        $offset += ${this.propLength};`;
       }
-      return `// static prop ${this.prop.name}${offsetExpr}`;
+      return `// static ${this.prop.type} value ${this.prop.name} = ${this.prop.reservedValue}${offsetExpr}`;
     }
 
     const p = `$this->${this.prop.name}`;
     let init = `${p} = ${this.getGetter()};`;
     if (this.prop.isArray) {
       init = `${p} = [];
-    $offset = ${this.offsetExpr};
-    for ($i = 0; $i < ${this.arrayLength}; $i++) {
-      $t = ${this.getGetter(true)};
-      ${p}[] = $t;
-      $offset += ${this.propLength};
-    }`;
+        $offset = ${this.offsetExpr};
+        for ($i = 0; $i < ${this.arrayLength}; $i++) {
+            $t = ${this.getGetter(true)};
+            ${p}[] = $t;
+            $offset += ${this.propLength};
+        }`;
     } else if (!this.prop.isFixedLength) {
       // strings and objects have dynamic lengths so the offsets must be adjusted on the fly
       // if this is a string with a defined offset, make sure that is included when incrementing the offset
       // otherwise if already in previous value mode, just += by the current length;
       const op = this.prop.previousValueOffset ? "+=" : `= ${this.prop.offset} +`;
-      offsetExpr = `\n    $offset ${op} ${this.propLength}`;
+      offsetExpr = `\n        $offset ${op} ${this.propLength};`;
     }
     return `${init}${offsetExpr}`;
   }
@@ -96,7 +96,7 @@ export class PHPPropWriter {
   public getGetter(inLoop = false): string {
     const off = inLoop ? "$offset" : this.offsetExpr;
     if (this.prop instanceof PropObject) {
-      return `new ${this.prop.structName}(substr($hex, ${off}), this.TIE)`;
+      return `new ${this.prop.structName}(substr($hex, ${off}), $this->TIE)`;
     } else if (this.prop instanceof PropAny) {
       return `undefined`;
     }
@@ -105,12 +105,12 @@ export class PHPPropWriter {
       params.push(this.typeLength);
     }
 
-    return `${this.prop.hexGetter}(${params.join(", ")})`;
+    return `$this->${this.prop.hexGetter}(${params.join(", ")})`;
   }
 
   public get arrayLength(): string {
     if (this.prop.arrayLengthExpression) {
-      return `$this->${this.prop.arrayLengthExpression.replace("-", ".")}`;
+      return `$this->${this.prop.arrayLengthExpression.replace("-", "->")}`;
     }
     return this.prop.arrayLengthValue.toString(10);
   }
@@ -138,9 +138,9 @@ export class PHPPropWriter {
     const enumName = this.prop.enumName.toUpperCase();
 
     return `
-  public function ${name}Label() {
-    return isset($this->${name}) && isset(Constants::$${enumName}[$this->${name}]) ? Constants::$${enumName}[$this->${name}] : "Unknown"
-  }`;
+    public function get${name}Label() {
+        return isset($this->${name}) && isset(Constants::$${enumName}[$this->${name}]) ? Constants::$${enumName}[$this->${name}] : "Unknown";
+    }`;
   }
 
   public getOutputHex(): string {
@@ -149,11 +149,11 @@ export class PHPPropWriter {
     let out = `${this.getSetter(this.prop.isStatic ? this.prop.reservedValue.toString() : p)};`;
     if (this.prop.isArray) {
       out = `$offset = ${this.offsetExpr};
-    for ($i = 0; $i < ${this.arrayLength}; $i++) {
-      $t = ${p}[$i];
-      ${this.getSetter("$t", true)};
-      $offset += ${this.propLength};
-    }`;
+        for ($i = 0; $i < ${this.arrayLength}; $i++) {
+            $t = ${p}[$i];
+            ${this.getSetter("$t", true)};
+            $offset += ${this.propLength};
+        }`;
     }
     return `${offsetExpr}${out}`;
   }

@@ -6,135 +6,140 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\PyriteBase;
 use Pyrite\TIE\Constants;
+use Pyrite\TIE\GoalFG;
+use Pyrite\TIE\Order;
+use Pyrite\TIE\Trigger;
+use Pyrite\TIE\Waypt;
 
 abstract class FlightGroupBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
 
-    const FLIGHTGROUP_LENGTH = 0x124;
-
-    /** @var \Pyrite\TIE\CHAR<12> */
+    /** @var integer */
+    public const FLIGHTGROUPLENGTH = 292;
+    /** @var string */
     public $Name;
-    /** @var \Pyrite\TIE\CHAR<12> */
+    /** @var string */
     public $Pilot;
-    /** @var \Pyrite\TIE\CHAR<12> */
+    /** @var string */
     public $Cargo;
-    /** @var \Pyrite\TIE\CHAR<12> */
+    /** @var string */
     public $SpecialCargo;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $SpecialCargoCraft;
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var boolean */
     public $RandomSpecialCargoCraft;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $CraftType;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $NumberOfCraft;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $Status;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $Warhead;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $Beam;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $Iff;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $GroupAI;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $Markings;
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var boolean */
     public $ObeyPlayerOrders;
-    /** @var \Pyrite\TIE\BYTE */
-    public $Reserved1; // (0)  Unknown1 in TFW
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
+    public const Reserved1 = 0; //Unknown1 in TFW
+    /** @var integer */
     public $Formation;
-    /** @var \Pyrite\TIE\BYTE */
-    public $FormationSpacing; // Unknown2
-    /** @var \Pyrite\TIE\BYTE */
-    public $GlobalGroup; // Unknown3
-    /** @var \Pyrite\TIE\BYTE */
-    public $LeaderSpacing; // Unknown4
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
+    public $FormationSpacing; //Unknown2
+    /** @var integer */
+    public $GlobalGroup; //Unknown3
+    /** @var integer */
+    public $LeaderSpacing; //Unknown4
+    /** @var integer */
     public $NumberOfWaves;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $Unknown5;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $PlayerCraft;
-    /** @var \Pyrite\TIE\BYTE */
-    public $Yaw; // Unknown6
-    /** @var \Pyrite\TIE\BYTE */
-    public $Pitch; // Unknown7
-    /** @var \Pyrite\TIE\BYTE */
-    public $Roll; // Unknown8
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var integer */
+    public $Yaw; //Unknown6
+    /** @var integer */
+    public $Pitch; //Unknown7
+    /** @var integer */
+    public $Roll; //Unknown8
+    /** @var boolean */
     public $Unknown9;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $Unknown10;
-    /** @var \Pyrite\TIE\BYTE */
-    public $Reserved2; // (0)  Unknown11
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
+    public const Reserved2 = 0; //Unknown11
+    /** @var integer */
     public $ArrivalDifficulty;
-    /** @var \Pyrite\TIE\Trigger */
+    /** @var Trigger */
     public $Arrival1;
-    /** @var \Pyrite\TIE\Trigger */
+    /** @var Trigger */
     public $Arrival2;
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var boolean */
     public $Arrival1OrArrival2;
-    /** @var \Pyrite\TIE\BYTE */
-    public $Reserved3; // (0)  Unknown12
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
+    public const Reserved3 = 0; //Unknown12
+    /** @var integer */
     public $ArrivalDelayMinutes;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $ArrivalDelaySeconds;
-    /** @var \Pyrite\TIE\Trigger */
+    /** @var Trigger */
     public $Departure;
-    /** @var \Pyrite\TIE\BYTE */
-    public $DepartureDelayMinutes; // Unknown13
-    /** @var \Pyrite\TIE\BYTE */
-    public $DepartureDelatSeconds; // Unknown14
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
+    public $DepartureDelayMinutes; //Unknown13
+    /** @var integer */
+    public $DepartureDelatSeconds; //Unknown14
+    /** @var integer */
     public $AbortTrigger;
-    /** @var \Pyrite\TIE\BYTE */
-    public $Reserved4; // (0)  Unknown15
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
+    public const Reserved4 = 0; //Unknown15
+    /** @var integer */
     public $Unknown16;
-    /** @var \Pyrite\TIE\BYTE */
-    public $Reserved5; // (0)  Unknown17
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
+    public const Reserved5 = 0; //Unknown17
+    /** @var integer */
     public $ArrivalMothership;
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var boolean */
     public $ArriveViaMothership;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $DepartureMothership;
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var boolean */
     public $DepartViaMothership;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $AlternateArrivalMothership;
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var boolean */
     public $AlternateArriveViaMothership;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $AlternateDepartureMothership;
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var boolean */
     public $AlternateDepartViaMothership;
-    /** @var \Pyrite\TIE\Order */
+    /** @var Order[] */
     public $Orders;
-    /** @var \Pyrite\TIE\GoalFG */
+    /** @var GoalFG[] */
     public $FlightGroupGoals;
-    /** @var \Pyrite\TIE\SBYTE */
+    /** @var integer */
     public $BonusGoalPoints;
-    /** @var \Pyrite\TIE\Waypt */
+    /** @var Waypt[] */
     public $Waypoints;
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var boolean */
     public $Unknown19;
-    /** @var \Pyrite\TIE\BYTE */
+    /** @var integer */
     public $Unknown20;
-    /** @var \Pyrite\TIE\BOOL */
+    /** @var boolean */
     public $Unknown21;
-
-    public function __construct($hex, $tie)
+    
+    public function __construct($hex, $tie = null)
     {
-        $this->hex = $hex;
-        $this->TIE = $tie;
+        parent::__construct($hex, $tie);
+        $this->beforeConstruct();
         $offset = 0;
+
         $this->Name = $this->getChar($hex, 0x000, 12);
         $this->Pilot = $this->getChar($hex, 0x00C, 12);
         $this->Cargo = $this->getChar($hex, 0x018, 12);
@@ -150,7 +155,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $this->GroupAI = $this->getByte($hex, 0x038);
         $this->Markings = $this->getByte($hex, 0x039);
         $this->ObeyPlayerOrders = $this->getBool($hex, 0x03A);
-        $this->Reserved1 = $this->getByte($hex, 0x03B);
+        // static BYTE value Reserved1 = 0
         $this->Formation = $this->getByte($hex, 0x03C);
         $this->FormationSpacing = $this->getByte($hex, 0x03D);
         $this->GlobalGroup = $this->getByte($hex, 0x03E);
@@ -163,21 +168,21 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $this->Roll = $this->getByte($hex, 0x045);
         $this->Unknown9 = $this->getBool($hex, 0x046);
         $this->Unknown10 = $this->getByte($hex, 0x047);
-        $this->Reserved2 = $this->getByte($hex, 0x048);
+        // static BYTE value Reserved2 = 0
         $this->ArrivalDifficulty = $this->getByte($hex, 0x049);
-        $this->Arrival1 = new \Pyrite\TIE\Trigger(substr($hex, 0x04A), $this->TIE);
-        $this->Arrival2 = new \Pyrite\TIE\Trigger(substr($hex, 0x04E), $this->TIE);
+        $this->Arrival1 = new Trigger(substr($hex, 0x04A), $this->TIE);
+        $this->Arrival2 = new Trigger(substr($hex, 0x04E), $this->TIE);
         $this->Arrival1OrArrival2 = $this->getBool($hex, 0x052);
-        $this->Reserved3 = $this->getByte($hex, 0x053);
+        // static BYTE value Reserved3 = 0
         $this->ArrivalDelayMinutes = $this->getByte($hex, 0x054);
         $this->ArrivalDelaySeconds = $this->getByte($hex, 0x055);
-        $this->Departure = new \Pyrite\TIE\Trigger(substr($hex, 0x056), $this->TIE);
+        $this->Departure = new Trigger(substr($hex, 0x056), $this->TIE);
         $this->DepartureDelayMinutes = $this->getByte($hex, 0x05A);
         $this->DepartureDelatSeconds = $this->getByte($hex, 0x05B);
         $this->AbortTrigger = $this->getByte($hex, 0x05C);
-        $this->Reserved4 = $this->getByte($hex, 0x05D);
+        // static BYTE value Reserved4 = 0
         $this->Unknown16 = $this->getByte($hex, 0x05E);
-        $this->Reserved5 = $this->getByte($hex, 0x05F);
+        // static BYTE value Reserved5 = 0
         $this->ArrivalMothership = $this->getByte($hex, 0x060);
         $this->ArriveViaMothership = $this->getBool($hex, 0x061);
         $this->DepartureMothership = $this->getByte($hex, 0x062);
@@ -186,156 +191,102 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $this->AlternateArriveViaMothership = $this->getBool($hex, 0x065);
         $this->AlternateDepartureMothership = $this->getByte($hex, 0x066);
         $this->AlternateDepartViaMothership = $this->getBool($hex, 0x067);
-
         $this->Orders = [];
         $offset = 0x068;
         for ($i = 0; $i < 3; $i++) {
-            $t = new \Pyrite\TIE\Order(substr($hex, $offset), $this->TIE);
+            $t = new Order(substr($hex, $offset), $this->TIE);
             $this->Orders[] = $t;
             $offset += $t->getLength();
         }
-
         $this->FlightGroupGoals = [];
         $offset = 0x09E;
         for ($i = 0; $i < 4; $i++) {
-            $t = new \Pyrite\TIE\GoalFG(substr($hex, $offset), $this->TIE);
+            $t = new GoalFG(substr($hex, $offset), $this->TIE);
             $this->FlightGroupGoals[] = $t;
             $offset += $t->getLength();
         }
         $this->BonusGoalPoints = $this->getSByte($hex, 0x0A6);
-
         $this->Waypoints = [];
         $offset = 0x0A8;
         for ($i = 0; $i < 4; $i++) {
-            $t = new \Pyrite\TIE\Waypt(substr($hex, $offset), $this->TIE);
+            $t = new Waypt(substr($hex, $offset), $this->TIE);
             $this->Waypoints[] = $t;
             $offset += $t->getLength();
         }
         $this->Unknown19 = $this->getBool($hex, 0x120);
         $this->Unknown20 = $this->getByte($hex, 0x122);
         $this->Unknown21 = $this->getBool($hex, 0x123);
-        $this->afterConstruct();
+        
     }
-
+    
     public function __debugInfo()
     {
         return [
-            "Name"                         => $this->Name,
-            "Pilot"                        => $this->Pilot,
-            "Cargo"                        => $this->Cargo,
-            "SpecialCargo"                 => $this->SpecialCargo,
-            "SpecialCargoCraft"            => $this->SpecialCargoCraft,
-            "RandomSpecialCargoCraft"      => $this->RandomSpecialCargoCraft,
-            "CraftType"                    => $this->getCraftTypeLabel(),
-            "NumberOfCraft"                => $this->NumberOfCraft,
-            "Status"                       => $this->getStatusLabel(),
-            "Warhead"                      => $this->getWarheadLabel(),
-            "Beam"                         => $this->getBeamLabel(),
-            "Iff"                          => $this->Iff,
-            "GroupAI"                      => $this->getGroupAILabel(),
-            "Markings"                     => $this->getMarkingsLabel(),
-            "ObeyPlayerOrders"             => $this->ObeyPlayerOrders,
-            "Reserved1"                    => $this->Reserved1,
-            "Formation"                    => $this->getFormationLabel(),
-            "FormationSpacing"             => $this->FormationSpacing,
-            "GlobalGroup"                  => $this->GlobalGroup,
-            "LeaderSpacing"                => $this->LeaderSpacing,
-            "NumberOfWaves"                => $this->NumberOfWaves,
-            "Unknown5"                     => $this->Unknown5,
-            "PlayerCraft"                  => $this->PlayerCraft,
-            "Yaw"                          => $this->Yaw,
-            "Pitch"                        => $this->Pitch,
-            "Roll"                         => $this->Roll,
-            "Unknown9"                     => $this->Unknown9,
-            "Unknown10"                    => $this->Unknown10,
-            "Reserved2"                    => $this->Reserved2,
-            "ArrivalDifficulty"            => $this->getArrivalDifficultyLabel(),
-            "Arrival1"                     => $this->Arrival1,
-            "Arrival2"                     => $this->Arrival2,
-            "Arrival1OrArrival2"           => $this->Arrival1OrArrival2,
-            "Reserved3"                    => $this->Reserved3,
-            "ArrivalDelayMinutes"          => $this->ArrivalDelayMinutes,
-            "ArrivalDelaySeconds"          => $this->ArrivalDelaySeconds,
-            "Departure"                    => $this->Departure,
-            "DepartureDelayMinutes"        => $this->DepartureDelayMinutes,
-            "DepartureDelatSeconds"        => $this->DepartureDelatSeconds,
-            "AbortTrigger"                 => $this->getAbortTriggerLabel(),
-            "Reserved4"                    => $this->Reserved4,
-            "Unknown16"                    => $this->Unknown16,
-            "Reserved5"                    => $this->Reserved5,
-            "ArrivalMothership"            => $this->ArrivalMothership,
-            "ArriveViaMothership"          => $this->ArriveViaMothership,
-            "DepartureMothership"          => $this->DepartureMothership,
-            "DepartViaMothership"          => $this->DepartViaMothership,
-            "AlternateArrivalMothership"   => $this->AlternateArrivalMothership,
+            "Name" => $this->Name,
+            "Pilot" => $this->Pilot,
+            "Cargo" => $this->Cargo,
+            "SpecialCargo" => $this->SpecialCargo,
+            "SpecialCargoCraft" => $this->SpecialCargoCraft,
+            "RandomSpecialCargoCraft" => $this->RandomSpecialCargoCraft,
+            "CraftType" => $this->getCraftTypeLabel(),
+            "NumberOfCraft" => $this->NumberOfCraft,
+            "Status" => $this->getStatusLabel(),
+            "Warhead" => $this->getWarheadLabel(),
+            "Beam" => $this->getBeamLabel(),
+            "Iff" => $this->Iff,
+            "GroupAI" => $this->getGroupAILabel(),
+            "Markings" => $this->getMarkingsLabel(),
+            "ObeyPlayerOrders" => $this->ObeyPlayerOrders,
+            "Formation" => $this->getFormationLabel(),
+            "FormationSpacing" => $this->FormationSpacing,
+            "GlobalGroup" => $this->GlobalGroup,
+            "LeaderSpacing" => $this->LeaderSpacing,
+            "NumberOfWaves" => $this->NumberOfWaves,
+            "Unknown5" => $this->Unknown5,
+            "PlayerCraft" => $this->PlayerCraft,
+            "Yaw" => $this->Yaw,
+            "Pitch" => $this->Pitch,
+            "Roll" => $this->Roll,
+            "Unknown9" => $this->Unknown9,
+            "Unknown10" => $this->Unknown10,
+            "ArrivalDifficulty" => $this->getArrivalDifficultyLabel(),
+            "Arrival1" => $this->Arrival1,
+            "Arrival2" => $this->Arrival2,
+            "Arrival1OrArrival2" => $this->Arrival1OrArrival2,
+            "ArrivalDelayMinutes" => $this->ArrivalDelayMinutes,
+            "ArrivalDelaySeconds" => $this->ArrivalDelaySeconds,
+            "Departure" => $this->Departure,
+            "DepartureDelayMinutes" => $this->DepartureDelayMinutes,
+            "DepartureDelatSeconds" => $this->DepartureDelatSeconds,
+            "AbortTrigger" => $this->getAbortTriggerLabel(),
+            "Unknown16" => $this->Unknown16,
+            "ArrivalMothership" => $this->ArrivalMothership,
+            "ArriveViaMothership" => $this->ArriveViaMothership,
+            "DepartureMothership" => $this->DepartureMothership,
+            "DepartViaMothership" => $this->DepartViaMothership,
+            "AlternateArrivalMothership" => $this->AlternateArrivalMothership,
             "AlternateArriveViaMothership" => $this->AlternateArriveViaMothership,
             "AlternateDepartureMothership" => $this->AlternateDepartureMothership,
             "AlternateDepartViaMothership" => $this->AlternateDepartViaMothership,
-            "Orders"                       => $this->Orders,
-            "FlightGroupGoals"             => $this->FlightGroupGoals,
-            "BonusGoalPoints"              => $this->BonusGoalPoints,
-            "Waypoints"                    => $this->Waypoints,
-            "Unknown19"                    => $this->Unknown19,
-            "Unknown20"                    => $this->Unknown20,
-            "Unknown21"                    => $this->Unknown21
+            "Orders" => $this->Orders,
+            "FlightGroupGoals" => $this->FlightGroupGoals,
+            "BonusGoalPoints" => $this->BonusGoalPoints,
+            "Waypoints" => $this->Waypoints,
+            "Unknown19" => $this->Unknown19,
+            "Unknown20" => $this->Unknown20,
+            "Unknown21" => $this->Unknown21
         ];
     }
-
-    protected function getCraftTypeLabel()
+    
+    public function toHexString()
     {
-        return isset($this->CraftType) && isset(Constants::$CRAFTTYPE[$this->CraftType]) ? Constants::$CRAFTTYPE[$this->CraftType] : "Unknown";
-    }
-
-    protected function getStatusLabel()
-    {
-        return isset($this->Status) && isset(Constants::$STATUS[$this->Status]) ? Constants::$STATUS[$this->Status] : "Unknown";
-    }
-
-    protected function getWarheadLabel()
-    {
-        return isset($this->Warhead) && isset(Constants::$WARHEAD[$this->Warhead]) ? Constants::$WARHEAD[$this->Warhead] : "Unknown";
-    }
-
-    protected function getBeamLabel()
-    {
-        return isset($this->Beam) && isset(Constants::$BEAM[$this->Beam]) ? Constants::$BEAM[$this->Beam] : "Unknown";
-    }
-
-    protected function getGroupAILabel()
-    {
-        return isset($this->GroupAI) && isset(Constants::$GROUPAI[$this->GroupAI]) ? Constants::$GROUPAI[$this->GroupAI] : "Unknown";
-    }
-
-    protected function getMarkingsLabel()
-    {
-        return isset($this->Markings) && isset(Constants::$MARKINGS[$this->Markings]) ? Constants::$MARKINGS[$this->Markings] : "Unknown";
-    }
-
-    protected function getFormationLabel()
-    {
-        return isset($this->Formation) && isset(Constants::$FORMATION[$this->Formation]) ? Constants::$FORMATION[$this->Formation] : "Unknown";
-    }
-
-    protected function getArrivalDifficultyLabel()
-    {
-        return isset($this->ArrivalDifficulty) && isset(Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty]) ? Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty] : "Unknown";
-    }
-
-    protected function getAbortTriggerLabel()
-    {
-        return isset($this->AbortTrigger) && isset(Constants::$ABORTTRIGGER[$this->AbortTrigger]) ? Constants::$ABORTTRIGGER[$this->AbortTrigger] : "Unknown";
-    }
-
-    protected function toHexString()
-    {
-
         $hex = "";
-
         $offset = 0;
-        $this->writeChar($hex, $this->Name, 0x000, 12);
-        $this->writeChar($hex, $this->Pilot, 0x00C, 12);
-        $this->writeChar($hex, $this->Cargo, 0x018, 12);
-        $this->writeChar($hex, $this->SpecialCargo, 0x024, 12);
+
+        $this->writeChar($hex, $this->Name, 0x000);
+        $this->writeChar($hex, $this->Pilot, 0x00C);
+        $this->writeChar($hex, $this->Cargo, 0x018);
+        $this->writeChar($hex, $this->SpecialCargo, 0x024);
         $this->writeByte($hex, $this->SpecialCargoCraft, 0x030);
         $this->writeBool($hex, $this->RandomSpecialCargoCraft, 0x031);
         $this->writeByte($hex, $this->CraftType, 0x032);
@@ -347,7 +298,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $this->writeByte($hex, $this->GroupAI, 0x038);
         $this->writeByte($hex, $this->Markings, 0x039);
         $this->writeBool($hex, $this->ObeyPlayerOrders, 0x03A);
-        $this->writeByte($hex, $this->Reserved1, 0x03B);
+        $this->writeByte($hex, 0, 0x03B);
         $this->writeByte($hex, $this->Formation, 0x03C);
         $this->writeByte($hex, $this->FormationSpacing, 0x03D);
         $this->writeByte($hex, $this->GlobalGroup, 0x03E);
@@ -360,21 +311,21 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $this->writeByte($hex, $this->Roll, 0x045);
         $this->writeBool($hex, $this->Unknown9, 0x046);
         $this->writeByte($hex, $this->Unknown10, 0x047);
-        $this->writeByte($hex, $this->Reserved2, 0x048);
+        $this->writeByte($hex, 0, 0x048);
         $this->writeByte($hex, $this->ArrivalDifficulty, 0x049);
         $this->writeObject($hex, $this->Arrival1, 0x04A);
         $this->writeObject($hex, $this->Arrival2, 0x04E);
         $this->writeBool($hex, $this->Arrival1OrArrival2, 0x052);
-        $this->writeByte($hex, $this->Reserved3, 0x053);
+        $this->writeByte($hex, 0, 0x053);
         $this->writeByte($hex, $this->ArrivalDelayMinutes, 0x054);
         $this->writeByte($hex, $this->ArrivalDelaySeconds, 0x055);
         $this->writeObject($hex, $this->Departure, 0x056);
         $this->writeByte($hex, $this->DepartureDelayMinutes, 0x05A);
         $this->writeByte($hex, $this->DepartureDelatSeconds, 0x05B);
         $this->writeByte($hex, $this->AbortTrigger, 0x05C);
-        $this->writeByte($hex, $this->Reserved4, 0x05D);
+        $this->writeByte($hex, 0, 0x05D);
         $this->writeByte($hex, $this->Unknown16, 0x05E);
-        $this->writeByte($hex, $this->Reserved5, 0x05F);
+        $this->writeByte($hex, 0, 0x05F);
         $this->writeByte($hex, $this->ArrivalMothership, 0x060);
         $this->writeBool($hex, $this->ArriveViaMothership, 0x061);
         $this->writeByte($hex, $this->DepartureMothership, 0x062);
@@ -383,37 +334,70 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $this->writeBool($hex, $this->AlternateArriveViaMothership, 0x065);
         $this->writeByte($hex, $this->AlternateDepartureMothership, 0x066);
         $this->writeBool($hex, $this->AlternateDepartViaMothership, 0x067);
-
         $offset = 0x068;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->Orders[$i];
-            $this->writeObject($hex, $this->Orders[$i], $offset);
+            $this->writeObject($hex, $t, $offset);
             $offset += $t->getLength();
         }
-
         $offset = 0x09E;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->FlightGroupGoals[$i];
-            $this->writeObject($hex, $this->FlightGroupGoals[$i], $offset);
+            $this->writeObject($hex, $t, $offset);
             $offset += $t->getLength();
         }
         $this->writeSByte($hex, $this->BonusGoalPoints, 0x0A6);
-
         $offset = 0x0A8;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->Waypoints[$i];
-            $this->writeObject($hex, $this->Waypoints[$i], $offset);
+            $this->writeObject($hex, $t, $offset);
             $offset += $t->getLength();
         }
         $this->writeBool($hex, $this->Unknown19, 0x120);
         $this->writeByte($hex, $this->Unknown20, 0x122);
         $this->writeBool($hex, $this->Unknown21, 0x123);
+
         return $hex;
     }
+    
+    public function getCraftTypeLabel() {
+        return isset($this->CraftType) && isset(Constants::$CRAFTTYPE[$this->CraftType]) ? Constants::$CRAFTTYPE[$this->CraftType] : "Unknown";
+    }
 
+    public function getStatusLabel() {
+        return isset($this->Status) && isset(Constants::$STATUS[$this->Status]) ? Constants::$STATUS[$this->Status] : "Unknown";
+    }
 
+    public function getWarheadLabel() {
+        return isset($this->Warhead) && isset(Constants::$WARHEAD[$this->Warhead]) ? Constants::$WARHEAD[$this->Warhead] : "Unknown";
+    }
+
+    public function getBeamLabel() {
+        return isset($this->Beam) && isset(Constants::$BEAM[$this->Beam]) ? Constants::$BEAM[$this->Beam] : "Unknown";
+    }
+
+    public function getGroupAILabel() {
+        return isset($this->GroupAI) && isset(Constants::$GROUPAI[$this->GroupAI]) ? Constants::$GROUPAI[$this->GroupAI] : "Unknown";
+    }
+
+    public function getMarkingsLabel() {
+        return isset($this->Markings) && isset(Constants::$MARKINGS[$this->Markings]) ? Constants::$MARKINGS[$this->Markings] : "Unknown";
+    }
+
+    public function getFormationLabel() {
+        return isset($this->Formation) && isset(Constants::$FORMATION[$this->Formation]) ? Constants::$FORMATION[$this->Formation] : "Unknown";
+    }
+
+    public function getArrivalDifficultyLabel() {
+        return isset($this->ArrivalDifficulty) && isset(Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty]) ? Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty] : "Unknown";
+    }
+
+    public function getAbortTriggerLabel() {
+        return isset($this->AbortTrigger) && isset(Constants::$ABORTTRIGGER[$this->AbortTrigger]) ? Constants::$ABORTTRIGGER[$this->AbortTrigger] : "Unknown";
+    }
+    
     public function getLength()
     {
-        return self::FLIGHTGROUP_LENGTH;
+        return self::FLIGHTGROUPLENGTH;
     }
 }

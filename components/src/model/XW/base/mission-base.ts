@@ -1,5 +1,6 @@
 import { Byteable } from "../../../byteable";
 import { FileHeader } from "../file-header";
+import { FlightGroup } from "../flight-group";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { ObjectGroup } from "../object-group";
 import { writeObject } from "../../../hex";
@@ -9,7 +10,8 @@ import { writeObject } from "../../../hex";
 export abstract class MissionBase extends PyriteBase implements Byteable {
   public MissionLength: number;
   public FileHeader: FileHeader;
-  public Unnamed: ObjectGroup[];
+  public FlightGroups: FlightGroup[];
+  public ObjectGroups: ObjectGroup[];
   
   constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
@@ -17,11 +19,18 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
     let offset = 0;
 
     this.FileHeader = new FileHeader(hex.slice(0x00), this.TIE);
-    this.Unnamed = [];
+    this.FlightGroups = [];
+    offset = 0xCE;
+    for (let i = 0; i < this.FileHeader.NumFGs; i++) {
+      const t = new FlightGroup(hex.slice(offset), this.TIE);
+      this.FlightGroups.push(t);
+      offset += t.getLength();
+    }
+    this.ObjectGroups = [];
     offset = offset;
     for (let i = 0; i < this.FileHeader.NumObj; i++) {
       const t = new ObjectGroup(hex.slice(offset), this.TIE);
-      this.Unnamed.push(t);
+      this.ObjectGroups.push(t);
       offset += t.getLength();
     }
     this.MissionLength = offset;
@@ -30,7 +39,8 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
   public toJSON(): object {
     return {
       FileHeader: this.FileHeader,
-      Unnamed: this.Unnamed
+      FlightGroups: this.FlightGroups,
+      ObjectGroups: this.ObjectGroups
     };
   }
   
@@ -39,9 +49,15 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
     let offset = 0;
 
     writeObject(hex, this.FileHeader, 0x00);
+    offset = 0xCE;
+    for (let i = 0; i < this.FileHeader.NumFGs; i++) {
+      const t = this.FlightGroups[i];
+      writeObject(hex, t, offset);
+      offset += t.getLength();
+    }
     offset = offset;
     for (let i = 0; i < this.FileHeader.NumObj; i++) {
-      const t = this.Unnamed[i];
+      const t = this.ObjectGroups[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }

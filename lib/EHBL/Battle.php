@@ -105,13 +105,15 @@ class Battle
         }
 
         $manifests = [];
-        $missions  = [];
+        $missions = [];
         $resources = [];
 
         foreach ($dirContents as $filename) {
             $lcFile = strtolower($filename);
             $ext = substr($lcFile, -4, 4);
             if ($ext === '.tie') {
+                $missions[] = $filename;
+            } else if ($ext === ".xwi") {
                 $missions[] = $filename;
             } else {
                 if ($ext === '.lfd' || $ext === '.lst') {
@@ -131,13 +133,15 @@ class Battle
                 return \Pyrite\XvT\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
             case Platform::XWA:
                 return \Pyrite\XWA\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
+            case Platform::XW:
+                return \Pyrite\XW\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
         }
     }
 
     public function decrypt()
     {
         $df = $this->folder . '.decrypted';
-        if (file_exists($df)){
+        if (file_exists($df)) {
             return; // already decrypted!
         }
         $ehb = $this->getBattleIndex();
@@ -181,7 +185,8 @@ class Battle
      * @param Battle $zipBattle
      * @return array
      */
-    public function validate($zipB){
+    public function validate($zipB)
+    {
         $errors = [];
         $ehb = $this->getBattleIndex();
         if (!$ehb->title) {
@@ -192,20 +197,24 @@ class Battle
         $mine = array_map('strtolower', array_merge($this->missionFiles, $this->resourceFiles));
         $them = array_map('strtolower', array_merge($zipB->missionFiles, $zipB->resourceFiles));
         $diff = array_merge(array_diff($mine, $them), array_diff($them, $mine));
-        $diff = array_filter($diff, function($f){
+        $diff = array_filter($diff, function ($f) {
             return $f !== '.decrypted' && $f !== 'battle.ehb';
         });
-        if (count($diff)){
+        if (count($diff)) {
             $errors[] = "Has different files in the EHM and ZIP: " . implode(", ", $diff);
         }
-        foreach ($this->missionFiles as $missionFile){
+        foreach ($this->missionFiles as $missionFile) {
             $this->validateMission($missionFile, $errors);
+        }
+        foreach ($zipB->missionFiles as $missionFile) {
+            $zipB->validateMission($missionFile, $errors);
         }
 
         return $errors;
     }
 
-    public function validateMission($missionFile, &$errors){
+    public function validateMission($missionFile, &$errors)
+    {
 
     }
 
@@ -213,9 +222,9 @@ class Battle
     {
         $platform = $type = $num = '';
         foreach (Platform::$ALL as $p) {
-            if (substr($key, 0, 3) === $p) {
+            if (substr($key, 0, strlen($p)) === $p) {
                 $platform = $p;
-                $key = substr($key, 3);
+                $key = substr($key, strlen($p));
                 break;
             }
         }

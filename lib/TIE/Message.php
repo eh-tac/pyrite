@@ -1,4 +1,5 @@
 <?php
+
 namespace Pyrite\TIE;
 
 use Pyrite\Summary;
@@ -7,8 +8,9 @@ class Message extends Base\MessageBase implements Summary
 {
     public $messageColour = 0;
 
-    protected function afterConstruct()
+    public function __construct($hex, $tie)
     {
+        parent::__construct($hex, $tie);
         if (strlen($this->Message) && is_numeric($this->Message[0])) {
             $this->messageColour = (int) $this->Message[0];
         }
@@ -31,21 +33,22 @@ class Message extends Base\MessageBase implements Summary
         ];
     }
 
-    public function summaryHash() {
-		$start = $this->messageColour !== 0;
-		foreach ($this->Triggers as $trig){
-			$trig->TIE = $this->TIE;
-		}
-		$triggas = [(string)$this->Triggers[0]];
-		$two = (string)$this->Triggers[1];
-		if ($two !== 'Always') {
-			$triggas[] = $this->Trigger1OrTrigger2 ? 'OR' : 'AND';
-			$triggas[] = $two;
-		}
-		return [
-			'Message' => substr($this->Message, $start),
-			'MessageColour' => $this->getMessageColourLabel(),
-			'Triggers' => implode("<br />", $triggas)
-			];
-	}
+    public function summaryHash()
+    {
+        $start = $this->messageColour !== 0;
+        foreach ($this->Triggers as $trig) {
+            $trig->TIE = $this->TIE;
+        }
+        $triggas = [(string)$this->Triggers[0]];
+        $two = (string)$this->Triggers[1];
+        if ($two !== 'Always') {
+            $triggas[] = $this->Trigger1OrTrigger2 ? 'OR' : 'AND';
+            $triggas[] = $two;
+        }
+        return [
+            'Message' => substr($this->Message, $start),
+            'MessageColour' => $this->getMessageColourLabel(),
+            'Triggers' => implode("<br />", $triggas)
+        ];
+    }
 }

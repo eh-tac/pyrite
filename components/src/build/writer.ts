@@ -43,7 +43,7 @@ export abstract class PyriteWriter {
     if (fs.existsSync(path) && !overwriteIfExists) {
       return;
     }
-    console.log("writing to ", path);
+    console.log("writing to", path);
 
     fs.writeFileSync(path, contents, {});
   }

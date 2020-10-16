@@ -32,6 +32,4 @@ export abstract class PyriteBase {
   // }
 
   protected beforeConstruct() {}
-
-  protected afterConstruct() {}
 }

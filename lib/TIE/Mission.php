@@ -9,10 +9,6 @@ class Mission extends Base\MissionBase
     public function __construct($hex)
     {
         parent::__construct($hex, $this);
-    }
-
-    protected function afterConstruct()
-    {
         $this->valid = true;
         $this->TIE = $this;
     }
@@ -38,15 +34,30 @@ class Mission extends Base\MissionBase
         return 'TODO ' . $gg;
     }
 
-    public function validate(){
+    public function validate()
+    {
         $errors = [];
-        foreach ($this->FlightGroups as $fg){
-            if ($fg->isFriendly()){
+        foreach ($this->FlightGroups as $fg) {
+            if ($fg->isFriendly()) {
                 // TODO
             } else {
-                if ($fg->ObeyPlayerOrders){
+                if ($fg->ObeyPlayerOrders) {
                     $errors[] = "Non-Imperial IFF $fg obeys radio orders";
                 }
+            }
+        }
+        if (count($this->FlightGroups) > 48){
+            $errors[] = "More than 48 flightgroups - " . count($this->FlightGroups);
+            $errors[] = "Header count is " . $this->FileHeader->NumFGs;
+        }
+        foreach ($this->Briefing->getUsedTags() as $tag){
+            if ($tag->Length > 40){
+                $errors[] = "Tag {$tag->Text} is long {$tag->Length}";
+            }
+        }
+        foreach ($this->Briefing->getUsedStrings() as $str){
+            if ($str->Length > 160){
+                $errors[] = "Briefing String {$str->Text} is long {$str->Length}";
             }
         }
         return $errors;

@@ -7,11 +7,32 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type     | Default     |
-| -------- | --------- | ----------- | -------- | ----------- |
-| `domain` | `domain`  |             | `string` | `undefined` |
-| `name`   | `name`    |             | `string` | `undefined` |
-| `value`  | `value`   |             | `string` | `undefined` |
+| Property | Attribute | Description | Type            | Default     |
+| -------- | --------- | ----------- | --------------- | ----------- |
+| `battle` | --        |             | `BattleSummary` | `undefined` |
+| `domain` | `domain`  |             | `string`        | `undefined` |
+| `name`   | `name`    |             | `string`        | `undefined` |
+| `value`  | `value`   |             | `string`        | `undefined` |
+
+
+## Events
+
+| Event          | Description | Type                         |
+| -------------- | ----------- | ---------------------------- |
+| `battleSelect` |             | `CustomEvent<BattleSummary>` |
+
+
+## Methods
+
+### `search(query: string) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 
 ----------------------------------------------

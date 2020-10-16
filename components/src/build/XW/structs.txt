@@ -41,8 +41,8 @@ struct PilotFile (size 0x6A8)
 struct Mission (size 0)
 {
   0x00 FileHeader FileHeader
-  PV FlightGroup[FileHeader-NumFGs]
-  PV ObjectGroup[FileHeader-NumObj]
+  0xCE FlightGroup[FileHeader-NumFGs] FlightGroups
+  PV ObjectGroup[FileHeader-NumObj] ObjectGroups
 }
 
 struct FileHeader (size 0xCE) 
@@ -95,9 +95,9 @@ struct ObjectGroup (size 0x46) {
   0x10 STR<16> Cargo
   0x20 STR<16> SpecialCargo
   0x30 SHORT Reserved Reserved(0)
-  0x32 SHORT ObjectType
+  0x32 SHORT ObjectType (enum)
   0x34 SHORT IFF (enum)
-  0x36 SHORT Objective
+  0x36 SHORT Objective (enum)
   0x38 SHORT NumberOfObjects
   0x3A SHORT PositionX
   0x3C SHORT PositionY

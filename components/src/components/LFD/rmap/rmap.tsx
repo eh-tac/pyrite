@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Rmap } from "../../../model/LFD";
+import { Rmap, BattleText, Delt } from "../../../model/LFD";
 import { LFDRmapController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 
@@ -26,10 +26,14 @@ export class LFDRmapComponent {
         {this.rmap.Subheaders.map(s => (
           <Field {...this.controller.getProps("Subheaders", s)} />
         ))}
-        {this.rmap.RawData.map((r, i) => [
-          <p>Rmap Raw Data {i}</p>,
-          <pyrite-lfd-header header={r.Header}></pyrite-lfd-header>
-        ])}
+        {this.rmap.RawData.map((r, i) => {
+          if (r instanceof BattleText) {
+            return <pyrite-lfd-battle-text battletext={r}></pyrite-lfd-battle-text>;
+          } else if (r instanceof Delt) {
+            return <h3>Delt</h3>;
+          }
+          return "";
+        })}
       </Host>
     );
   }

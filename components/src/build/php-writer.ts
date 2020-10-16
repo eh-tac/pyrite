@@ -4,8 +4,12 @@ import { Struct } from "./struct";
 import { PropInt } from "./prop";
 import { PHPPropWriter } from "./php-prop-writer";
 import * as lodash from "lodash";
+import { PyriteGenerator } from "./generator";
 
 export class PHPWriter extends PyriteWriter {
+  public constructor(rootDir: string, generator: PyriteGenerator, public namespace: string = "Pyrite") {
+    super(rootDir, generator);
+  }
   public write(): this {
     super.write();
 
@@ -20,17 +24,18 @@ export class PHPWriter extends PyriteWriter {
   public writeConstants(constants: Constants[]): void {
     const lines = [
       `<?php
-namespace Pyrite\\${this.generator.platform};
+namespace ${this.namespace}\\${this.generator.platform};
 
-export class Constants {`
+class Constants
+{`
     ];
 
     for (const constant of constants) {
-      lines.push(`  public static \$${constant.name.toUpperCase()} = [`);
+      lines.push(`    public static \$${constant.name.toUpperCase()} = [`);
       for (const [value, label] of constant.values) {
-        lines.push(`    ${value} => "${label}",`);
+        lines.push(`        ${value} => "${label}",`);
       }
-      lines.push(`  ];\n`);
+      lines.push(`    ];\n`);
     }
 
     lines.push("}");
@@ -50,26 +55,26 @@ export class Constants {`
     }
 
     const content = `<?php
-namespace Pyrite\\${plt}\\Base;
 
-use Pyrite\\Byteable;
-use Pyrite\\HexDecoder;
-use Pyrite\\PyriteBase;
-use Pyrite\\${plt}\\Constants;
+namespace ${this.namespace}\\${plt}\\Base;
 
-abstract class ${baseName} extends PyriteBase implements Byteable {
-  use HexDecoder;
+${this.getBaseClassImports(props)}
 
-  ${lengthProp.propertyDeclaration}
-  ${props.map((p: PHPPropWriter): string => p.propertyDeclaration).join("\n  ")}
-  ${this.getBaseConstructor(struct, lengthProp)}
-  ${this.baseJSON(props)}
-  ${this.baseHexString(props)}
-  ${enums.map((p: PHPPropWriter): string => p.enumLookupFunction).join("\n")}
-  ${struct.functionStubs.map((f: string): string => this.abstractFunction(f)).join("\n")}
-  public function getLength() {
-    return $this->${lengthProp.prop.name};
-  }
+abstract class ${baseName} extends PyriteBase implements Byteable
+{
+    use HexDecoder;
+
+    ${lengthProp.propertyDeclaration}
+    ${props.map((p: PHPPropWriter): string => p.propertyDeclaration).join("\n    ")}
+    ${this.getBaseConstructor(struct, lengthProp)}
+    ${this.baseJSON(props)}
+    ${this.baseHexString(props)}
+    ${enums.map((p: PHPPropWriter): string => p.enumLookupFunction).join("\n")}
+    ${struct.functionStubs.map((f: string): string => this.abstractFunction(f)).join("\n")}
+    public function getLength()
+    {
+        return ${lengthProp.prop.isStatic ? "self::" : "$this->"}${lengthProp.prop.name};
+    }
 }`;
     this.writeFile(`PLT/base/${this.filename(baseName)}`, content);
   }
@@ -79,17 +84,19 @@ abstract class ${baseName} extends PyriteBase implements Byteable {
     const plt = this.generator.platform;
 
     let content = `<?php
-namespace Pyrite\\${plt};
+namespace ${this.namespace}\\${plt};
     
-export class ${struct.name} extends Base\\${baseClass} {
+class ${struct.name} extends Base\\${baseClass}
+{
 
-  public function beforeConstruct() {}
+    public function beforeConstruct() {}
 
-  public function __toString() {
-    return '';
-  }
+    public function __toString() 
+    {
+      return '';
+    }
 
-  ${struct.functionStubs.map((f: string): string => this.functionStub(f)).join("\n  ")}
+    ${struct.functionStubs.map((f: string): string => this.functionStub(f)).join("\n  ")}
 }
 `;
 
@@ -101,36 +108,63 @@ export class ${struct.name} extends Base\\${baseClass} {
     const props = struct.getProps().map(p => new PHPPropWriter(p));
 
     return `
-  public function __construct($hex, $tie) {    
-    parent::__construct(hex, tie);
-    $this->beforeConstruct();
-    $offset = 0;
+    public function __construct($hex, $tie = null)
+    {
+        parent::__construct($hex, $tie);
+        $this->beforeConstruct();
+        $offset = 0;
 
-    ${props.map((p: PHPPropWriter) => p.getConstructorInit()).join("\n    ")}
-    ${struct.isVariableLength ? `this.${lengthProp.prop.name} = offset;` : ""}
-  }`;
+        ${props.map((p: PHPPropWriter) => p.getConstructorInit()).join("\n        ")}
+        ${struct.isVariableLength ? `$this->${lengthProp.prop.name} = $offset;` : ""}
+    }`;
+  }
+
+  protected getBaseClassImports(props: PHPPropWriter[]): string {
+    const imports: string[] = ["Byteable", "HexDecoder", "PyriteBase"];
+
+    const usedClassImports = [];
+    let useConstants: boolean = false;
+    props.forEach((p: PHPPropWriter): void => {
+      usedClassImports.push(...p.classImports);
+      useConstants = useConstants || !!p.prop.enumName;
+    });
+    const plt = this.generator.platform;
+
+    if (useConstants) {
+      imports.push(`${plt}\\Constants`);
+    }
+    Array.from(new Set(usedClassImports)).forEach((c: string) => {
+      imports.push(`${plt}\\${c}`);
+    });
+
+    return imports
+      .sort()
+      .map(i => `use Pyrite\\${i};`)
+      .join("\n");
   }
 
   protected baseJSON(props: PHPPropWriter[]): string {
     const nonStatics = props.filter(p => !p.prop.isStatic);
     return `
-  public function __debugInfo() {
-    return [
-      ${nonStatics.map((p: PHPPropWriter) => `"${p.prop.name}" => $this->${p.labelExpr}`).join(",\n      ")}
-    ];
-  }`;
+    public function __debugInfo()
+    {
+        return [
+            ${nonStatics.map((p: PHPPropWriter) => `"${p.prop.name}" => $this->${p.labelExpr}`).join(",\n            ")}
+        ];
+    }`;
   }
 
   protected baseHexString(props: PHPPropWriter[]): string {
     return `
-  public function toHexString() {
-    $hex = '';
-    $offset = 0;
+    public function toHexString()
+    {
+        $hex = "";
+        $offset = 0;
 
-    ${props.map((p: PHPPropWriter) => p.getOutputHex()).join("\n    ")}
+        ${props.map((p: PHPPropWriter) => p.getOutputHex()).join("\n        ")}
 
-    return $hex;
-  }`;
+        return $hex;
+    }`;
   }
 
   protected abstractFunction(name: string): string {

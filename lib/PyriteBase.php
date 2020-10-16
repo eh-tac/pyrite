@@ -8,7 +8,13 @@ class PyriteBase implements \JsonSerializable {
 
 	public $hex;
 
-	public function jsonSerialize() {
+	public function __construct($hex, $tie)
+    {
+        $this->hex = $hex;
+        $this->TIE = $tie;
+    }
+
+    public function jsonSerialize() {
 		return $this->__debugInfo();
 	}
 
@@ -20,7 +26,7 @@ class PyriteBase implements \JsonSerializable {
 		return $this->hex === $otherHex;
 	}
 
-	protected function afterConstruct() {
+	protected function beforeConstruct() {
 
-	}
+    }
 }

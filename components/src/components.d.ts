@@ -6,10 +6,14 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Battle } from "./model/ehtc/battle";
+import { BattleSummary } from "./model/ehtc";
 import { Mission } from "./model/TIE/mission";
 import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic } from "./model/LFD";
-import { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
-import { FileHeader as FileHeader1, FlightGroup as FlightGroup1, Mission as Mission2, ObjectGroup, PilotFile as PilotFile1 } from "./model/XW";
+import { Crossword, FileHeader } from "./model/Puz";
+import { Event, FileHeader as FileHeader1, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
+import { MissionData, PilotFile as PilotFile1, TeamStats } from "./model/XvT";
+import { FileHeader as FileHeader2, FlightGroup as FlightGroup1, Mission as Mission2, ObjectGroup, PilotFile as PilotFile2 } from "./model/XW";
+import { MissionData as MissionData1, PilotFile as PilotFile3 } from "./model/XWA";
 export namespace Components {
     interface EhtcBattle {
         "battle": Battle;
@@ -18,8 +22,10 @@ export namespace Components {
     interface EhtcBattleCenter {
     }
     interface EhtcBattleSelect {
+        "battle": BattleSummary;
         "domain": string;
         "name": string;
+        "search": (query: string) => Promise<void>;
         "value": string;
     }
     interface EhtcMemberSelect {
@@ -27,6 +33,7 @@ export namespace Components {
         "filter": string;
         "mode": "character" | "pilot";
         "name": string;
+        "search": (query: string) => Promise<void>;
         "value": string;
     }
     interface EhtcPilot {
@@ -38,6 +45,7 @@ export namespace Components {
     }
     interface PyriteLfd {
         "file": string;
+        "loadArrayBuffer": (value: ArrayBuffer) => Promise<void>;
     }
     interface PyriteLfdBattleText {
         "battletext": BattleText;
@@ -82,8 +90,16 @@ export namespace Components {
         "file": string;
     }
     interface PyritePilotFile {
+        "allowUpload": boolean;
         "bsf": string;
         "file": string;
+        "useFileInput": (file: File) => Promise<void>;
+    }
+    interface PyritePuzCrossword {
+        "crossword": Crossword;
+    }
+    interface PyritePuzFileHeader {
+        "fileheader": FileHeader;
     }
     interface PyriteResource {
         "name": string;
@@ -150,6 +166,15 @@ export namespace Components {
     interface PyriteTieWaypt {
         "waypt": Waypt;
     }
+    interface PyriteXvtMissionData {
+        "missiondata": MissionData;
+    }
+    interface PyriteXvtPilotFile {
+        "pilotfile": PilotFile;
+    }
+    interface PyriteXvtTeamStats {
+        "teamstats": TeamStats;
+    }
     interface PyriteXwFileHeader {
         "fileheader": FileHeader;
     }
@@ -163,6 +188,12 @@ export namespace Components {
         "objectgroup": ObjectGroup;
     }
     interface PyriteXwPilotFile {
+        "pilotfile": PilotFile;
+    }
+    interface PyriteXwaMissionData {
+        "missiondata": MissionData;
+    }
+    interface PyriteXwaPilotFile {
         "pilotfile": PilotFile;
     }
 }
@@ -292,6 +323,18 @@ declare global {
     var HTMLPyritePilotFileElement: {
         prototype: HTMLPyritePilotFileElement;
         new (): HTMLPyritePilotFileElement;
+    };
+    interface HTMLPyritePuzCrosswordElement extends Components.PyritePuzCrossword, HTMLStencilElement {
+    }
+    var HTMLPyritePuzCrosswordElement: {
+        prototype: HTMLPyritePuzCrosswordElement;
+        new (): HTMLPyritePuzCrosswordElement;
+    };
+    interface HTMLPyritePuzFileHeaderElement extends Components.PyritePuzFileHeader, HTMLStencilElement {
+    }
+    var HTMLPyritePuzFileHeaderElement: {
+        prototype: HTMLPyritePuzFileHeaderElement;
+        new (): HTMLPyritePuzFileHeaderElement;
     };
     interface HTMLPyriteResourceElement extends Components.PyriteResource, HTMLStencilElement {
     }
@@ -425,6 +468,24 @@ declare global {
         prototype: HTMLPyriteTieWayptElement;
         new (): HTMLPyriteTieWayptElement;
     };
+    interface HTMLPyriteXvtMissionDataElement extends Components.PyriteXvtMissionData, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtMissionDataElement: {
+        prototype: HTMLPyriteXvtMissionDataElement;
+        new (): HTMLPyriteXvtMissionDataElement;
+    };
+    interface HTMLPyriteXvtPilotFileElement extends Components.PyriteXvtPilotFile, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPilotFileElement: {
+        prototype: HTMLPyriteXvtPilotFileElement;
+        new (): HTMLPyriteXvtPilotFileElement;
+    };
+    interface HTMLPyriteXvtTeamStatsElement extends Components.PyriteXvtTeamStats, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtTeamStatsElement: {
+        prototype: HTMLPyriteXvtTeamStatsElement;
+        new (): HTMLPyriteXvtTeamStatsElement;
+    };
     interface HTMLPyriteXwFileHeaderElement extends Components.PyriteXwFileHeader, HTMLStencilElement {
     }
     var HTMLPyriteXwFileHeaderElement: {
@@ -455,6 +516,18 @@ declare global {
         prototype: HTMLPyriteXwPilotFileElement;
         new (): HTMLPyriteXwPilotFileElement;
     };
+    interface HTMLPyriteXwaMissionDataElement extends Components.PyriteXwaMissionData, HTMLStencilElement {
+    }
+    var HTMLPyriteXwaMissionDataElement: {
+        prototype: HTMLPyriteXwaMissionDataElement;
+        new (): HTMLPyriteXwaMissionDataElement;
+    };
+    interface HTMLPyriteXwaPilotFileElement extends Components.PyriteXwaPilotFile, HTMLStencilElement {
+    }
+    var HTMLPyriteXwaPilotFileElement: {
+        prototype: HTMLPyriteXwaPilotFileElement;
+        new (): HTMLPyriteXwaPilotFileElement;
+    };
     interface HTMLElementTagNameMap {
         "ehtc-battle": HTMLEhtcBattleElement;
         "ehtc-battle-center": HTMLEhtcBattleCenterElement;
@@ -477,6 +550,8 @@ declare global {
         "pyrite-mission-tabs": HTMLPyriteMissionTabsElement;
         "pyrite-mission-wrapper": HTMLPyriteMissionWrapperElement;
         "pyrite-pilot-file": HTMLPyritePilotFileElement;
+        "pyrite-puz-crossword": HTMLPyritePuzCrosswordElement;
+        "pyrite-puz-file-header": HTMLPyritePuzFileHeaderElement;
         "pyrite-resource": HTMLPyriteResourceElement;
         "pyrite-resources": HTMLPyriteResourcesElement;
         "pyrite-tie-briefing": HTMLPyriteTieBriefingElement;
@@ -499,11 +574,16 @@ declare global {
         "pyrite-tie-tie-string": HTMLPyriteTieTieStringElement;
         "pyrite-tie-trigger": HTMLPyriteTieTriggerElement;
         "pyrite-tie-waypt": HTMLPyriteTieWayptElement;
+        "pyrite-xvt-mission-data": HTMLPyriteXvtMissionDataElement;
+        "pyrite-xvt-pilot-file": HTMLPyriteXvtPilotFileElement;
+        "pyrite-xvt-team-stats": HTMLPyriteXvtTeamStatsElement;
         "pyrite-xw-file-header": HTMLPyriteXwFileHeaderElement;
         "pyrite-xw-flight-group": HTMLPyriteXwFlightGroupElement;
         "pyrite-xw-mission": HTMLPyriteXwMissionElement;
         "pyrite-xw-object-group": HTMLPyriteXwObjectGroupElement;
         "pyrite-xw-pilot-file": HTMLPyriteXwPilotFileElement;
+        "pyrite-xwa-mission-data": HTMLPyriteXwaMissionDataElement;
+        "pyrite-xwa-pilot-file": HTMLPyriteXwaPilotFileElement;
     }
 }
 declare namespace LocalJSX {
@@ -515,8 +595,10 @@ declare namespace LocalJSX {
     interface EhtcBattleCenter {
     }
     interface EhtcBattleSelect {
+        "battle"?: BattleSummary;
         "domain"?: string;
         "name"?: string;
+        "onBattleSelect"?: (event: CustomEvent<BattleSummary>) => void;
         "value"?: string;
     }
     interface EhtcMemberSelect {
@@ -579,8 +661,15 @@ declare namespace LocalJSX {
         "file"?: string;
     }
     interface PyritePilotFile {
+        "allowUpload"?: boolean;
         "bsf"?: string;
         "file"?: string;
+    }
+    interface PyritePuzCrossword {
+        "crossword"?: Crossword;
+    }
+    interface PyritePuzFileHeader {
+        "fileheader"?: FileHeader;
     }
     interface PyriteResource {
         "name"?: string;
@@ -647,6 +736,15 @@ declare namespace LocalJSX {
     interface PyriteTieWaypt {
         "waypt"?: Waypt;
     }
+    interface PyriteXvtMissionData {
+        "missiondata"?: MissionData;
+    }
+    interface PyriteXvtPilotFile {
+        "pilotfile"?: PilotFile;
+    }
+    interface PyriteXvtTeamStats {
+        "teamstats"?: TeamStats;
+    }
     interface PyriteXwFileHeader {
         "fileheader"?: FileHeader;
     }
@@ -660,6 +758,12 @@ declare namespace LocalJSX {
         "objectgroup"?: ObjectGroup;
     }
     interface PyriteXwPilotFile {
+        "pilotfile"?: PilotFile;
+    }
+    interface PyriteXwaMissionData {
+        "missiondata"?: MissionData;
+    }
+    interface PyriteXwaPilotFile {
         "pilotfile"?: PilotFile;
     }
     interface IntrinsicElements {
@@ -684,6 +788,8 @@ declare namespace LocalJSX {
         "pyrite-mission-tabs": PyriteMissionTabs;
         "pyrite-mission-wrapper": PyriteMissionWrapper;
         "pyrite-pilot-file": PyritePilotFile;
+        "pyrite-puz-crossword": PyritePuzCrossword;
+        "pyrite-puz-file-header": PyritePuzFileHeader;
         "pyrite-resource": PyriteResource;
         "pyrite-resources": PyriteResources;
         "pyrite-tie-briefing": PyriteTieBriefing;
@@ -706,11 +812,16 @@ declare namespace LocalJSX {
         "pyrite-tie-tie-string": PyriteTieTieString;
         "pyrite-tie-trigger": PyriteTieTrigger;
         "pyrite-tie-waypt": PyriteTieWaypt;
+        "pyrite-xvt-mission-data": PyriteXvtMissionData;
+        "pyrite-xvt-pilot-file": PyriteXvtPilotFile;
+        "pyrite-xvt-team-stats": PyriteXvtTeamStats;
         "pyrite-xw-file-header": PyriteXwFileHeader;
         "pyrite-xw-flight-group": PyriteXwFlightGroup;
         "pyrite-xw-mission": PyriteXwMission;
         "pyrite-xw-object-group": PyriteXwObjectGroup;
         "pyrite-xw-pilot-file": PyriteXwPilotFile;
+        "pyrite-xwa-mission-data": PyriteXwaMissionData;
+        "pyrite-xwa-pilot-file": PyriteXwaPilotFile;
     }
 }
 export { LocalJSX as JSX };
@@ -738,6 +849,8 @@ declare module "@stencil/core" {
             "pyrite-mission-tabs": LocalJSX.PyriteMissionTabs & JSXBase.HTMLAttributes<HTMLPyriteMissionTabsElement>;
             "pyrite-mission-wrapper": LocalJSX.PyriteMissionWrapper & JSXBase.HTMLAttributes<HTMLPyriteMissionWrapperElement>;
             "pyrite-pilot-file": LocalJSX.PyritePilotFile & JSXBase.HTMLAttributes<HTMLPyritePilotFileElement>;
+            "pyrite-puz-crossword": LocalJSX.PyritePuzCrossword & JSXBase.HTMLAttributes<HTMLPyritePuzCrosswordElement>;
+            "pyrite-puz-file-header": LocalJSX.PyritePuzFileHeader & JSXBase.HTMLAttributes<HTMLPyritePuzFileHeaderElement>;
             "pyrite-resource": LocalJSX.PyriteResource & JSXBase.HTMLAttributes<HTMLPyriteResourceElement>;
             "pyrite-resources": LocalJSX.PyriteResources & JSXBase.HTMLAttributes<HTMLPyriteResourcesElement>;
             "pyrite-tie-briefing": LocalJSX.PyriteTieBriefing & JSXBase.HTMLAttributes<HTMLPyriteTieBriefingElement>;
@@ -760,11 +873,16 @@ declare module "@stencil/core" {
             "pyrite-tie-tie-string": LocalJSX.PyriteTieTieString & JSXBase.HTMLAttributes<HTMLPyriteTieTieStringElement>;
             "pyrite-tie-trigger": LocalJSX.PyriteTieTrigger & JSXBase.HTMLAttributes<HTMLPyriteTieTriggerElement>;
             "pyrite-tie-waypt": LocalJSX.PyriteTieWaypt & JSXBase.HTMLAttributes<HTMLPyriteTieWayptElement>;
+            "pyrite-xvt-mission-data": LocalJSX.PyriteXvtMissionData & JSXBase.HTMLAttributes<HTMLPyriteXvtMissionDataElement>;
+            "pyrite-xvt-pilot-file": LocalJSX.PyriteXvtPilotFile & JSXBase.HTMLAttributes<HTMLPyriteXvtPilotFileElement>;
+            "pyrite-xvt-team-stats": LocalJSX.PyriteXvtTeamStats & JSXBase.HTMLAttributes<HTMLPyriteXvtTeamStatsElement>;
             "pyrite-xw-file-header": LocalJSX.PyriteXwFileHeader & JSXBase.HTMLAttributes<HTMLPyriteXwFileHeaderElement>;
             "pyrite-xw-flight-group": LocalJSX.PyriteXwFlightGroup & JSXBase.HTMLAttributes<HTMLPyriteXwFlightGroupElement>;
             "pyrite-xw-mission": LocalJSX.PyriteXwMission & JSXBase.HTMLAttributes<HTMLPyriteXwMissionElement>;
             "pyrite-xw-object-group": LocalJSX.PyriteXwObjectGroup & JSXBase.HTMLAttributes<HTMLPyriteXwObjectGroupElement>;
             "pyrite-xw-pilot-file": LocalJSX.PyriteXwPilotFile & JSXBase.HTMLAttributes<HTMLPyriteXwPilotFileElement>;
+            "pyrite-xwa-mission-data": LocalJSX.PyriteXwaMissionData & JSXBase.HTMLAttributes<HTMLPyriteXwaMissionDataElement>;
+            "pyrite-xwa-pilot-file": LocalJSX.PyriteXwaPilotFile & JSXBase.HTMLAttributes<HTMLPyriteXwaPilotFileElement>;
         }
     }
 }

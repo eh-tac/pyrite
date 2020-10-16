@@ -1,4 +1,5 @@
 import { PreMissionQuestionsBase } from "./base/pre-mission-questions-base";
+import { IMission } from "../../pyrite-base";
 
 export enum QuestionType {
   Officer = "Officer",
@@ -8,7 +9,8 @@ export enum QuestionType {
 export class PreMissionQuestions extends PreMissionQuestionsBase {
   public Type: QuestionType;
 
-  protected afterConstruct() {
+  public constructor(hex: ArrayBuffer, tie?: IMission) {
+    super(hex, tie);
     if (this.Length === 0) {
       this.PreMissionQuestionsLength = 2;
     }

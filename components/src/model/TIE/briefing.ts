@@ -42,6 +42,5 @@ export class Briefing extends BriefingBase {
       offset += t.getLength();
     }
     this.BriefingLength = offset;
-    this.afterConstruct();
   }
 }

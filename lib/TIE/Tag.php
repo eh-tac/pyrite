@@ -1,14 +1,18 @@
 <?php
+
 namespace Pyrite\TIE;
 
 class Tag extends Base\TagBase
 {
-    protected function afterConstruct()
+    public function __construct($hex, $tie)
     {
+        parent::__construct($hex, $tie);
+
         $this->TagLength = $this->Length + 2;
     }
 
-	public function __toString(){
-		return $this->Text;
-	}
+    public function __toString()
+    {
+        return $this->Text;
+    }
 }

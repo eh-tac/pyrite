@@ -16,6 +16,7 @@ export abstract class TagBase extends PyriteBase implements Byteable {
 
     this.Length = getShort(hex, 0x0);
     this.Text = getChar(hex, 0x2, this.Length);
+    offset = 0x2 + this.Length;
     this.TagLength = offset;
   }
   

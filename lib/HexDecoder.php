@@ -35,7 +35,7 @@ trait HexDecoder {
 		if ($startPos !== NULL) {
 			$str = substr($str, $startPos, 2);
 		}
-		if (!$str) {
+		if (!$str || strlen($str) !== 2) {
 			return 0;
 		}
 		return unpack('sshort', $str)['short'];

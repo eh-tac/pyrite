@@ -1,0 +1,59 @@
+struct PilotFile (size 0)
+{
+  0x0000 CHAR<12> Name
+  0x000E INT TotalScore
+  0x035E INT Kills  
+  0x143E INT LasersHit
+  0x144A INT LasersTotal
+  0x1456 INT WarheadsHit
+  0x1462 INT WarheadsTotal
+  0x146E INT CraftLosses
+  0x2326 INT PilotRating (enum)
+  0x2392 CHAR<32> RatingLabel
+  0x3ef2 TeamStats RebelStats
+  0x12716 TeamStats ImperialStats
+}
+
+struct TeamStats (size 0)
+{
+  0x0000 INT[6] MeleeMedals
+  0x0018 INT[6] TournamentMedals
+  0x0030 INT[6] MissionTopRatings
+  0x0048 INT[6] MissionMedals
+  0x0090 INT[3] PlayCounts
+  0x00A8 INT[3] TotalKills
+  0x00C0 INT[88] ExerciseKillsByType
+  0x0220 INT[88] MeleeKillsByType
+  0x0380 INT[88] CombatKillsByType
+  0x4e0 INT[88] ExercisePartialsByType
+  0x640 INT[88] MeleePartialsByType
+  0x7a0 INT[88] CombatPartialsByType
+  0x900 INT[88] ExerciseAssistsByType
+  0xa60 INT[88] MeleeAssistsByType
+  0xbc0 INT[88] CombatAssistsByType
+  0x117c INT[3] HiddenCargoFound
+  0x1188 INT[3] LasersHit
+  0x1194 INT[3] LasersTotal
+  0x11a0 INT[3] WarheadsHit
+  0x11ac INT[3] WarheadsTotal
+  0x11b8 INT[3] CraftLosses
+  0x11c4 INT[3] CollisionLosses
+  0x11d0 INT[3] StarshipLosses
+  0x11dc INT[3] MineLosses
+  0x1360 MissionData[40] TrainingMissionData
+  0x2170 MissionData[100] MeleeMissionData
+  0x4498 MissionData[100] CombatMissionData
+}
+
+struct MissionData (size 0x24)
+{
+  0x00 INT AttemptCount
+  0x04 INT WinCount
+  0x08 INT LossCount
+  0x0C INT BestScore
+  0x10 INT BestTime
+  0x14 INT BestTimeSecond
+  0x18 INT BestRating (enum)
+  0x1C INT Something
+  0x20 INT Other
+}

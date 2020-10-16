@@ -1,12 +1,14 @@
 <?php
+
 namespace Pyrite\TIE;
 
 use Pyrite\Summary;
 
 class PostMissionQuestions extends Base\PostMissionQuestionsBase implements Summary
 {
-    protected function afterConstruct()
+    public function __construct($hex, $tie)
     {
+        parent::__construct($hex, $tie);
         if ($this->Length === 0) {
             $this->PostMissionQuestionsLength = 2;
         }
@@ -36,15 +38,16 @@ class PostMissionQuestions extends Base\PostMissionQuestionsBase implements Summ
         }
     }
 
-	public function summaryHash(){
-		if ($this->Length === 0) {
-			return false;
-		}
-		return [
-			'Type' => $this->getQuestionTypeLabel(),
-			'Condition' => $this->getQuestionConditionLabel(),
-			'Question' => $this->Question,
-			'Answer' => $this->Answer
-		];
-	}
+    public function summaryHash()
+    {
+        if ($this->Length === 0) {
+            return false;
+        }
+        return [
+            'Type' => $this->getQuestionTypeLabel(),
+            'Condition' => $this->getQuestionConditionLabel(),
+            'Question' => $this->Question,
+            'Answer' => $this->Answer
+        ];
+    }
 }

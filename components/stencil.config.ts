@@ -5,6 +5,10 @@ export const config: Config = {
   namespace: "pyrite",
   outputTargets: [
     {
+      type: "dist",
+      dir: "../../../../pages/js/pyrite"
+    },
+    {
       type: "dist"
     },
     {

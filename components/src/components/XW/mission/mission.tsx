@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
+import { Component, Prop, Host, h, JSX, Element, Watch } from "@stencil/core";
 import { Mission } from "../../../model/XW";
 import { XWMissionController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
@@ -15,10 +15,20 @@ export class XWMissionComponent {
   private controller: XWMissionController;
 
   public componentWillLoad(): void {
-    this.controller = new XWMissionController(this.mission);
+    this.init();
+  }
+
+  @Watch("mission")
+  public init(): void {
+    if (this.mission) {
+      this.controller = new XWMissionController(this.mission);
+    }
   }
 
   public render(): JSX.Element {
+    if (!this.controller) {
+      return "Loading...";
+    }
     return (
       <Host>
         <Field {...this.controller.getProps("FileHeader")} />

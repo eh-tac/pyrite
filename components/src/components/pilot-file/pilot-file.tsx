@@ -1,14 +1,14 @@
-import { Component, h, JSX, Prop, State, Element } from "@stencil/core";
+import { Component, h, JSX, Prop, State, Element, Method, Watch } from "@stencil/core";
 import { tabPanes } from "../../view-model/bootstrap";
 import { PilotFileController } from "../../view-model/pilot-file/controller";
 import { TFRController } from "../../view-model/pilot-file/tfr-controller";
-import { XvTPlt } from "../../model/pilot/xvt";
 import { XvTPltController } from "../../view-model/pilot-file/xvt-controller";
 import { Battle } from "../../model/ehtc";
-import { XWAPlt } from "../../model/pilot/xwa";
 import { XWAPltController } from "../../view-model/pilot-file/xwa-controller";
 import { PilotFile as XWingPilot } from "../../model/XW";
 import { PilotFile as TIEPilot } from "../../model/TIE";
+import { PilotFile as XvTPilot } from "../../model/XvT";
+import { PilotFile as XWAPilot } from "../../model/XWA";
 import { XWController } from "../../view-model/pilot-file/xw-controller";
 
 @Component({
@@ -20,8 +20,10 @@ export class PilotViewer {
   @Element() private el: HTMLElement;
   @Prop() public file: string;
   @Prop() public bsf: string = "";
+  @Prop() public allowUpload: boolean = false;
 
-  @State() protected controller: PilotFileController;
+  @State()
+  protected controller: PilotFileController;
   @State() protected battleData?: Battle;
   @State() protected activeTab: string = "summary";
 
@@ -33,6 +35,11 @@ export class PilotViewer {
           this.controller = this.controllerFromFile(this.file, value);
         });
     }
+    this.fetchBSF();
+  }
+
+  @Watch("bsf")
+  private fetchBSF(): void {
     if (this.bsf) {
       fetch(this.bsf)
         .then((res: Response) => res.json())
@@ -41,6 +48,16 @@ export class PilotViewer {
           this.activeTab = "bsf";
         });
     }
+  }
+
+  @Method()
+  public async useFileInput(file: File): Promise<void> {
+    const fr = new FileReader();
+    fr.onloadend = () => {
+      this.controller = this.controllerFromFile(file.name, fr.result as ArrayBuffer);
+    };
+    fr.readAsArrayBuffer(file);
+    return Promise.resolve();
   }
 
   public render(): JSX.Element {
@@ -63,7 +80,7 @@ export class PilotViewer {
           </button>
         </nav>
         <div class="container card">{content}</div>
-        <input type="file" id="pltUpload" value="" onChange={this.fileChange.bind(this)} />
+        {this.allowUpload && <input type="file" id="pltUpload" value="" onChange={this.fileChange.bind(this)} />}
       </div>
     );
   }
@@ -80,11 +97,7 @@ export class PilotViewer {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       const file = input.files[0];
-      const fr = new FileReader();
-      fr.onloadend = () => {
-        this.controller = this.controllerFromFile(file.name, fr.result as ArrayBuffer);
-      };
-      fr.readAsArrayBuffer(file);
+      this.useFileInput(file);
     } else {
       // do nothing
     }
@@ -102,9 +115,9 @@ export class PilotViewer {
         // x-wing
         return new XWController(filepath, new XWingPilot(file));
       } else if (file.byteLength > 200000) {
-        return new XvTPltController(filepath, new XvTPlt(file));
-      } else {
-        return new XWAPltController(filepath, new XWAPlt(file));
+        return new XvTPltController(filepath, new XvTPilot(file));
+      } else if (file.byteLength === 152076) {
+        return new XWAPltController(filepath, new XWAPilot(file));
       }
     }
     console.error(filepath, file);

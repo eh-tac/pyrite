@@ -188,3 +188,8 @@ CraftObjective
 0E Special Craft Identified
 0F Half Identified
 10 Arrived
+
+ObjectObjective
+03 None
+04 Destroy
+05 Survive

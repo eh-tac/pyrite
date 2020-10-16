@@ -5,79 +5,62 @@ namespace Pyrite\TIE\Base;
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\PyriteBase;
-use Pyrite\TIE\Constants;
 
 abstract class PreMissionQuestionsBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
 
-    public $PreMissionQuestionsLength = 0;
-
-    /** @var \Pyrite\TIE\SHORT */
+    /** @var integer */
+    public $PreMissionQuestionsLength;
+    /** @var integer */
     public $Length;
-    /** @var \Pyrite\TIE\CHAR<QuestionLength()> */
+    /** @var string */
     public $Question;
-    /** @var \Pyrite\TIE\BYTE */
-    public $Reserved; // (0xA)
-    /** @var \Pyrite\TIE\CHAR<AnswerLength()> */
+    /** @var integer */
+    public const Spacer = 10;
+    /** @var string */
     public $Answer;
-
-    public function __construct($hex, $tie)
+    
+    public function __construct($hex, $tie = null)
     {
-        $this->hex = $hex;
-        $this->TIE = $tie;
+        parent::__construct($hex, $tie);
+        $this->beforeConstruct();
         $offset = 0;
+
         $this->Length = $this->getShort($hex, 0x0);
-        if ($this->Length === 0) {
-            $this->afterConstruct();
-            return;
-        }
         $this->Question = $this->getChar($hex, 0x2, $this->QuestionLength());
-        $offset = 0x2;
-        $offset += $this->QuestionLength();
-        $this->Reserved = $this->getByte($hex, $offset);
+        $offset = 0x2 + $this->QuestionLength();
+        // static BYTE value Spacer = 10
         $offset += 1;
         $this->Answer = $this->getChar($hex, $offset, $this->AnswerLength());
         $offset += $this->AnswerLength();
         $this->PreMissionQuestionsLength = $offset;
-        $this->afterConstruct();
     }
-
+    
     public function __debugInfo()
     {
         return [
-            "Length"   => $this->Length,
+            "Length" => $this->Length,
             "Question" => $this->Question,
-            "Reserved" => $this->Reserved,
-            "Answer"   => $this->Answer
+            "Answer" => $this->Answer
         ];
     }
-
-    abstract protected function QuestionLength();
-
-    abstract protected function AnswerLength();
-
-    protected function toHexString()
+    
+    public function toHexString()
     {
-
         $hex = "";
-
         $offset = 0;
+
         $this->writeShort($hex, $this->Length, 0x0);
-        if ($this->Length === 0) {
-            return;
-        }
-        $this->writeChar($hex, $this->Question, 0x2, $this->QuestionLength());
-        $offset = 0x2;
-        $offset += $this->QuestionLength();
-        $this->writeByte($hex, $this->Reserved, $offset);
-        $offset += 1;
-        $this->writeChar($hex, $this->Answer, $offset, $this->AnswerLength());
-        $offset += $this->AnswerLength();
+        $this->writeChar($hex, $this->Question, 0x2);
+        $this->writeByte($hex, 10, $offset);
+        $this->writeChar($hex, $this->Answer, $offset);
+
         return $hex;
     }
-
-
+    
+    protected abstract function QuestionLength();
+protected abstract function AnswerLength();
     public function getLength()
     {
         return $this->PreMissionQuestionsLength;
