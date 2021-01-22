@@ -5,7 +5,7 @@
 
   .field,
   .selected-pilot,
-  .selected-pilot .pilot-summary,
+  .pilot-summary,
   .dropdown-menu {
     width: 100%;
   }
@@ -31,6 +31,7 @@
 
     .topline.tags {
       display: flex;
+      margin-bottom: 0;
 
       .pilot-label {
         flex: 1;

@@ -83,6 +83,13 @@ export class BattleSelectComponent {
         return match(b.id.toString()) || match(b.name) || match(b.code);
       })
       .slice(0, 15);
+    document.body.addEventListener(
+      "click",
+      () => {
+        this.suggestions = undefined;
+      },
+      { once: true }
+    );
   }
 
   private selectBattle(b?: BattleSummary): void {
@@ -127,7 +134,7 @@ export class BattleSelectComponent {
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
             {this.suggestions &&
-              this.suggestions.map((s: BattleSummary) => <div class="record py-1">{this.renderBattle(s)}</div>)}
+              this.suggestions.map((s: BattleSummary) => <div class="record">{this.renderBattle(s)}</div>)}
             <span class="no-data">No matches found</span>
           </div>
         </div>

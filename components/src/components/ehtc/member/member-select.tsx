@@ -94,6 +94,13 @@ export class MemberSelectComponent {
         return match(p.PIN.toString()) || match(p.label) || match(p.description);
       })
       .slice(0, 15);
+    document.body.addEventListener(
+      "click",
+      () => {
+        this.suggestions = undefined;
+      },
+      { once: true }
+    );
   }
 
   private selectMember(m?: Member): void {
@@ -142,8 +149,7 @@ export class MemberSelectComponent {
         )}
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
-            {this.suggestions &&
-              this.suggestions.map((s: Member) => <div class="record py-1">{this.renderMember(s)}</div>)}
+            {this.suggestions && this.suggestions.map((s: Member) => <div class="record">{this.renderMember(s)}</div>)}
             <span class="no-data">No matches found</span>
           </div>
         </div>

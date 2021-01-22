@@ -5,7 +5,7 @@
 
   .field,
   .selected-battle,
-  .selected-battle .battle-summary,
+  .battle-summary,
   .dropdown-menu {
     width: 100%;
   }
@@ -29,6 +29,7 @@
 
     .topline.tags {
       display: flex;
+      margin-bottom: 0;
 
       .battle-label {
         flex: 1;

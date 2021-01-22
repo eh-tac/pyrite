@@ -75,9 +75,9 @@ export class PilotViewer {
           <a class="navbar-brand" href="#">
             {title}
           </a>
-          <button type="button" class="btn btn-sm ml-1 btn-secondary" onClick={this.getFile.bind(this)}>
+          {this.allowUpload && <button type="button" class="btn btn-sm ml-1 btn-secondary" onClick={this.getFile.bind(this)}>
             Upload
-          </button>
+          </button>}
         </nav>
         <div class="container card">{content}</div>
         {this.allowUpload && <input type="file" id="pltUpload" value="" onChange={this.fileChange.bind(this)} />}
