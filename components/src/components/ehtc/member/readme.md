@@ -16,6 +16,13 @@
 | `value`  | `value`   |             | `string`                 | `undefined`   |
 
 
+## Events
+
+| Event          | Description | Type                                            |
+| -------------- | ----------- | ----------------------------------------------- |
+| `memberSelect` |             | `CustomEvent<CharacterSummary \| PilotSummary>` |
+
+
 ## Methods
 
 ### `search(query: string) => Promise<void>`

@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Battle } from "./model/ehtc/battle";
-import { BattleSummary } from "./model/ehtc";
+import { BattleSummary, CharacterSummary, PilotSummary } from "./model/ehtc";
 import { Mission } from "./model/TIE/mission";
 import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic } from "./model/LFD";
 import { Crossword, FileHeader } from "./model/Puz";
@@ -606,6 +606,7 @@ declare namespace LocalJSX {
         "filter"?: string;
         "mode"?: "character" | "pilot";
         "name"?: string;
+        "onMemberSelect"?: (event: CustomEvent<PilotSummary | CharacterSummary>) => void;
         "value"?: string;
     }
     interface EhtcPilot {

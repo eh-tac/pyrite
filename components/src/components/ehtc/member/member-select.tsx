@@ -1,4 +1,4 @@
-import { JSX, Component, Prop, h, Element, State, Method } from "@stencil/core";
+import { JSX, Component, Prop, h, Element, Event, EventEmitter, State, Method } from "@stencil/core";
 import { PilotSummary, CharacterSummary } from "../../../model/ehtc";
 
 type Member = PilotSummary | CharacterSummary;
@@ -10,6 +10,7 @@ type Member = PilotSummary | CharacterSummary;
 })
 export class MemberSelectComponent {
   @Element() el: HTMLElement;
+  @Event() memberSelect: EventEmitter<PilotSummary | CharacterSummary>;
   // member PIN = value
   @Prop({ reflect: true }) value: string;
   // domain override. defaults to empty for same domain requests
@@ -110,6 +111,8 @@ export class MemberSelectComponent {
       const num = this.mode === "character" ? (m as CharacterSummary).characterId : m.PIN;
       val = num.toString(10);
     }
+    this.value = val;
+    this.memberSelect.emit(m);
     this.externalPINInputElement.value = val;
     this.externalPINInputElement.dispatchEvent(new InputEvent("input"));
   }
