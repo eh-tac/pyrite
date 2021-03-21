@@ -2,16 +2,19 @@
 
 namespace Pyrite;
 
-trait HexDecoder {
+trait HexDecoder
+{
 	// TODO remove all early returns and replace with checks to see why they're not being decoded properly
-	public function getBool($chr, $startPos = NULL) {
+	public function getBool($chr, $startPos = NULL)
+	{
 		if ($startPos !== NULL) {
 			$chr = substr($chr, $startPos, 1);
 		}
 		return ord($chr) ? TRUE : FALSE;
 	}
 
-	public function getSByte($chr, $startPos = NULL) {
+	public function getSByte($chr, $startPos = NULL)
+	{
 		if ($startPos !== NULL) {
 			$chr = substr($chr, $startPos, 1);
 		}
@@ -19,19 +22,22 @@ trait HexDecoder {
 		return unpack('csbyte', $chr)['sbyte'];
 	}
 
-	public function getChar($chr, $startPos = 0, $length = 1) {
+	public function getChar($chr, $startPos = 0, $length = 1)
+	{
 		$chr = substr($chr, $startPos, $length);
 		return $this->printChar($chr);
 		//        $chr = substr($chr, $startPos ? $startPos : 0, $length);
 		//        return unpack('cchar', $chr)['char'];
 	}
 
-	public function printChar($char) {
+	public function printChar($char)
+	{
 		$bits = explode(chr(0), $char);
 		return $bits[0];
 	}
 
-	public function getShort($str, $startPos = NULL) {
+	public function getShort($str, $startPos = NULL)
+	{
 		if ($startPos !== NULL) {
 			$str = substr($str, $startPos, 2);
 		}
@@ -41,7 +47,8 @@ trait HexDecoder {
 		return unpack('sshort', $str)['short'];
 	}
 
-	public function getInt($str, $startPos = NULL) {
+	public function getInt($str, $startPos = NULL)
+	{
 		if ($startPos !== NULL) {
 			$str = substr($str, $startPos, 4);
 		}
@@ -56,7 +63,8 @@ trait HexDecoder {
 	 * @param int $length If set, perform a substr to this length from the start position
 	 * @return string
 	 */
-	public function getString($str, $start = 0, $length = PHP_INT_MAX) {
+	public function getString($str, $start = 0, $length = PHP_INT_MAX)
+	{
 		if ($start || $length) {
 			$str = substr($str, $start, $length);
 		}
@@ -64,7 +72,8 @@ trait HexDecoder {
 		return utf8_encode(trim($bits[0]));
 	}
 
-	public function lookup($array, $chr, $startPos = NULL) {
+	public function lookup($array, $chr, $startPos = NULL)
+	{
 		$key = $this->getByte($chr, $startPos);
 		if (!isset($array[$key])) {
 			return "Unknown lookup $key";
@@ -72,7 +81,8 @@ trait HexDecoder {
 		return $array[$key];
 	}
 
-	public function getByte($chr, $startPos = NULL) {
+	public function getByte($chr, $startPos = NULL)
+	{
 		if ($startPos !== NULL) {
 			$chr = substr($chr, $startPos, 1);
 		}
@@ -80,5 +90,10 @@ trait HexDecoder {
 			return 0;
 		}
 		return unpack('Cbyte', $chr)['byte'];
+	}
+
+	public function getByteString(int $byte): string
+	{
+		return str_pad(decbin($byte), 8, '0', STR_PAD_LEFT);
 	}
 }

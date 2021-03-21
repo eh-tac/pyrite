@@ -9,10 +9,9 @@ import { Battle } from "./model/ehtc/battle";
 import { BattleSummary, CharacterSummary, PilotSummary } from "./model/ehtc";
 import { Mission } from "./model/TIE/mission";
 import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic } from "./model/LFD";
-import { Crossword, FileHeader } from "./model/Puz";
-import { Event, FileHeader as FileHeader1, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
+import { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
 import { MissionData, PilotFile as PilotFile1, TeamStats } from "./model/XvT";
-import { FileHeader as FileHeader2, FlightGroup as FlightGroup1, Mission as Mission2, ObjectGroup, PilotFile as PilotFile2 } from "./model/XW";
+import { FileHeader as FileHeader1, FlightGroup as FlightGroup1, Mission as Mission2, ObjectGroup, PilotFile as PilotFile2 } from "./model/XW";
 import { MissionData as MissionData1, PilotFile as PilotFile3 } from "./model/XWA";
 export namespace Components {
     interface EhtcBattle {
@@ -94,12 +93,6 @@ export namespace Components {
         "bsf": string;
         "file": string;
         "useFileInput": (file: File) => Promise<void>;
-    }
-    interface PyritePuzCrossword {
-        "crossword": Crossword;
-    }
-    interface PyritePuzFileHeader {
-        "fileheader": FileHeader;
     }
     interface PyriteResource {
         "name": string;
@@ -324,18 +317,6 @@ declare global {
         prototype: HTMLPyritePilotFileElement;
         new (): HTMLPyritePilotFileElement;
     };
-    interface HTMLPyritePuzCrosswordElement extends Components.PyritePuzCrossword, HTMLStencilElement {
-    }
-    var HTMLPyritePuzCrosswordElement: {
-        prototype: HTMLPyritePuzCrosswordElement;
-        new (): HTMLPyritePuzCrosswordElement;
-    };
-    interface HTMLPyritePuzFileHeaderElement extends Components.PyritePuzFileHeader, HTMLStencilElement {
-    }
-    var HTMLPyritePuzFileHeaderElement: {
-        prototype: HTMLPyritePuzFileHeaderElement;
-        new (): HTMLPyritePuzFileHeaderElement;
-    };
     interface HTMLPyriteResourceElement extends Components.PyriteResource, HTMLStencilElement {
     }
     var HTMLPyriteResourceElement: {
@@ -550,8 +531,6 @@ declare global {
         "pyrite-mission-tabs": HTMLPyriteMissionTabsElement;
         "pyrite-mission-wrapper": HTMLPyriteMissionWrapperElement;
         "pyrite-pilot-file": HTMLPyritePilotFileElement;
-        "pyrite-puz-crossword": HTMLPyritePuzCrosswordElement;
-        "pyrite-puz-file-header": HTMLPyritePuzFileHeaderElement;
         "pyrite-resource": HTMLPyriteResourceElement;
         "pyrite-resources": HTMLPyriteResourcesElement;
         "pyrite-tie-briefing": HTMLPyriteTieBriefingElement;
@@ -665,12 +644,6 @@ declare namespace LocalJSX {
         "allowUpload"?: boolean;
         "bsf"?: string;
         "file"?: string;
-    }
-    interface PyritePuzCrossword {
-        "crossword"?: Crossword;
-    }
-    interface PyritePuzFileHeader {
-        "fileheader"?: FileHeader;
     }
     interface PyriteResource {
         "name"?: string;
@@ -789,8 +762,6 @@ declare namespace LocalJSX {
         "pyrite-mission-tabs": PyriteMissionTabs;
         "pyrite-mission-wrapper": PyriteMissionWrapper;
         "pyrite-pilot-file": PyritePilotFile;
-        "pyrite-puz-crossword": PyritePuzCrossword;
-        "pyrite-puz-file-header": PyritePuzFileHeader;
         "pyrite-resource": PyriteResource;
         "pyrite-resources": PyriteResources;
         "pyrite-tie-briefing": PyriteTieBriefing;
@@ -850,8 +821,6 @@ declare module "@stencil/core" {
             "pyrite-mission-tabs": LocalJSX.PyriteMissionTabs & JSXBase.HTMLAttributes<HTMLPyriteMissionTabsElement>;
             "pyrite-mission-wrapper": LocalJSX.PyriteMissionWrapper & JSXBase.HTMLAttributes<HTMLPyriteMissionWrapperElement>;
             "pyrite-pilot-file": LocalJSX.PyritePilotFile & JSXBase.HTMLAttributes<HTMLPyritePilotFileElement>;
-            "pyrite-puz-crossword": LocalJSX.PyritePuzCrossword & JSXBase.HTMLAttributes<HTMLPyritePuzCrosswordElement>;
-            "pyrite-puz-file-header": LocalJSX.PyritePuzFileHeader & JSXBase.HTMLAttributes<HTMLPyritePuzFileHeaderElement>;
             "pyrite-resource": LocalJSX.PyriteResource & JSXBase.HTMLAttributes<HTMLPyriteResourceElement>;
             "pyrite-resources": LocalJSX.PyriteResources & JSXBase.HTMLAttributes<HTMLPyriteResourcesElement>;
             "pyrite-tie-briefing": LocalJSX.PyriteTieBriefing & JSXBase.HTMLAttributes<HTMLPyriteTieBriefingElement>;
