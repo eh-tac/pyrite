@@ -6,17 +6,19 @@ class ShipType
 {
     public $ID;
     public $Name;
+    public $Abbr;
 
     public function __construct($ID)
     {
-        $this->ID = ord($ID);
+        $this->ID = $ID;
         $this->Name = $this->getName();
+        $this->Abbr = $this->getAbbr();
     }
 
     public function isStarship()
     {
         switch ($this->Name) {
-            //TODO decide on the canonical source of names
+                //TODO decide on the canonical source of names
             case 'Corellian Corvette':
             case 'Modified Corvette':
             case 'Nebulon B Frigate':
@@ -46,16 +48,13 @@ class ShipType
 
     private function getName()
     {
-        $names = array(
-            'Unassigned', 'X-Wing', 'Y-Wing', 'A-Wing', 'B-Wing', 'TIE Fighter', 'TIE Interceptor', 'TIE Bomber', 'TIE Advanced', 'TIE Defender', 'Slot 10',
-            'Slot 11', 'Missile Boat', 'T-Wing', 'Z-95 Headhunter', 'R-41 Starchaser', 'Assault Gunboat', 'Shuttle', 'Escort Shuttle', 'System Patrol Craft', 'Scout Craft',
-            'Transport', 'Assault Transport', 'Escort Transport', 'Tug', 'Combat Utility Vehicle', 'Container A', 'Container B', 'Container C', 'Container D',
-            'Heavy Lifter', 'Bulk Barge', 'Freighter', 'Cargo Ferry', 'Modular Conveyor', 'Container Transport', 'Medium Transport', 'Muurian Transport', 'Corellian Transport', 'Slot 39', 'Corellian Corvette',
-            'Modified Corvette', 'Nebulon B Frigate', 'Modified Frigate', 'C3 Passenger Liner', 'Carrack Cruiser', 'Strike Cruiser', 'Escort Carrier', 'Dreadnaught', 'Calamari Cruiser', 'Lt Calamari Cruiser',
-            'Interdictor Cruiser', 'Victory Star Destroyer', 'Star Destroyer', 'Super Star Destroyer', 'Container E', 'Container F', 'Container G',
-            'Container H', 'Container I', 'Platform A', 'Platform B', 'Platform C', 'Platform D', 'Platform E', 'Platform F', 'Asteroid Hanger', 'Asteroid Laser Platform', 'Asteroid Warhead Platform',
-            'X7 Factory', 'Comm Satellite A', 'Comm Satellite B', 'Comm Satellite C', 'Comm Satellite D', 'Comm Satellite E', 'Class 1 Mine', 'Class 2 Mine', 'Class 3 Mine', 'Class 4 Mine', 'Gun Emplacement',
-            'Probe A', 'Probe B', 'Probe C', 'Nav Buoy A', 'Nav Buoy B', 'Pilot', 'Asteroid', 'Planet');
+        $names = Constants::$CRAFTTYPE;
+        return isset($names[$this->ID]) ? $names[$this->ID] : 'Unknown type ' . $this->ID;
+    }
+
+    private function getAbbr()
+    {
+        $names = Constants::$CRAFTABBR;
         return isset($names[$this->ID]) ? $names[$this->ID] : 'Unknown type ' . $this->ID;
     }
 

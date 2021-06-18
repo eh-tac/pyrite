@@ -2,17 +2,18 @@
   "name": "@pickledyoda/pyrite",
   "version": "0.2.0",
   "description": "Pyrite Web Components",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "../../../../pages/js/pyrite//index.js",
+  "module": "../../../../pages/js/pyrite//index.mjs",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
   "types": "dist/types/components.d.ts",
-  "collection": "dist/collection/collection-manifest.json",
+  "collection": "../../../../pages/js/pyrite//collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/pyrite/pyrite.js",
   "files": [
     "dist/",
-    "loader/"
+    "loader/",
+    "../../../../pages/js/pyrite/"
   ],
   "scripts": {
     "gencode": "ts-node -P tsconfig.commonjs.json src/build/run.ts",
@@ -24,32 +25,32 @@
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "lint": "eslint src --ext ts",
-    "tsc": "tsc",
-    "names": "tsc && node dist/scripts/names.js",
-    "coop": "tsc && node dist/scripts/coop.js",
+    "chalops": "tsc -p tsconfig.commonjs.json && node dist/scripts/chalops.js",
+    "names": "tsc -p tsconfig.commonjs.json && node dist/scripts/names.js",
+    "coop": "tsc -p tsconfig.commonjs.json && node dist/scripts/coop.js",
     "puz": "ts-node -P tsconfig.commonjs.json src/scripts/puz.ts"
   },
   "author": "Pickled Yoda",
   "license": "ISC",
   "devDependencies": {
-    "@types/jasmine": "^3.5.11",
-    "@types/lodash": "^4.14.157",
-    "@types/node": "^13.1.7",
-    "@types/puppeteer": "^3.0.1",
-    "jasmine": "^3.5.0",
+    "@types/jasmine": "^3.6.9",
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^13.13.49",
+    "@types/puppeteer": "^3.0.5",
+    "jasmine": "^3.7.0",
     "jasmine-spec-reporter": "^5.0.2",
-    "jasmine-ts": "^0.3.0",
+    "jasmine-ts": "^0.3.2",
     "prettier": "^1.19.1",
-    "ts-node": "^8.6.2",
+    "ts-node": "^8.10.2",
     "tslint-ionic-rules": "0.0.21",
-    "typescript": "^3.7.4"
+    "typescript": "^3.9.9"
   },
   "dependencies": {
-    "@stencil/core": "^1.15.0",
-    "@stencil/sass": "^1.1.1",
-    "cli-progress": "^3.6.0",
-    "extract-zip": "^1.6.7",
-    "lodash": "^4.17.15"
+    "@stencil/core": "^2.5.2",
+    "@stencil/sass": "^1.4.1",
+    "cli-progress": "^3.9.0",
+    "extract-zip": "^1.7.0",
+    "lodash": "^4.17.21"
   },
   "prettier": {
     "printWidth": 120

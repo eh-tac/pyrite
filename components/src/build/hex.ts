@@ -53,7 +53,7 @@ export function getUInt(hex: ArrayBuffer, start: number = 0): number {
 }
 
 export function getString(hex: ArrayBuffer, start: number = 0, length: number = 99999): string {
-  let str = String.fromCharCode.apply(null, new Uint8Array(hex.slice(start)));
+  let str = String.fromCharCode.apply(null, new Uint8Array(hex.slice(start, length)));
   const end = str.indexOf(String.fromCharCode(0));
   if (end !== -1) {
     str = str.substr(0, end);

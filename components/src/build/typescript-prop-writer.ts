@@ -102,7 +102,7 @@ export class TypeScriptPropWriter {
       return `undefined`;
     }
     const params = ["hex", off];
-    if (this.prop instanceof PropChar) {
+    if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
       params.push(this.typeLength);
     }
 

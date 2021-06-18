@@ -1,4 +1,5 @@
 <?php
+
 namespace Pyrite\TIE;
 
 class ScoreKeeper
@@ -23,22 +24,21 @@ class ScoreKeeper
     {
         $this->TIE = $TIE;
         $this->difficultyFilter = $difficulty;
-        if ($this->TIE->valid()) {
-            $this->process();
-        }
+        $this->process();
     }
 
     public function process()
     {
-        foreach ($this->goalTypes as $type => &$goals) {
-            foreach ($this->TIE->globalGoals[$type] as $trigger) {
-                if ($trigger instanceof Trigger && $trigger->hasData()) {
-                    $goals[] = (string) $trigger;
-                }
+
+
+        foreach (['Primary', 'Secondary', 'Bonus'] as $idx => $type) {
+            $gg = $this->TIE->GlobalGoals[$idx];
+            if ($gg instanceof GlobalGoal && $gg->hasData()) {
+                $this->goalTypes[$type][] = (string) $gg;
             }
         }
 
-        foreach ($this->TIE->flightGroups as $idx => $fg) {
+        foreach ($this->TIE->FlightGroups as $idx => $fg) {
             if (!$fg->isInDifficultyLevel($this->difficultyFilter)) {
                 continue;
             }
@@ -47,7 +47,7 @@ class ScoreKeeper
             $points = $fg->pointValue($this->difficultyFilter);
 
             if ($points > 0) {
-                if ($fg->captureable()) {
+                if ($fg->capturable()) {
                     if (count($fg) == 1) {
                         $points *= 5;
                         $name .= ' capturable ';
@@ -58,30 +58,34 @@ class ScoreKeeper
                     }
                 } elseif (!$fg->destroyable()) {
                     $points = 0;
-                    $name .= ' invincible or mission critical ';
                 }
-                $this->total += $points;
-                $this->fgs[] = $name . ': ' . $points;
+                if ($points) {
+                    $this->total += $points;
+                    $this->fgs[] = $name . ': ' . $points;
+                }
             }
 
             if ($fg->invincible()) {
-                $this->invincible[] = 'Invincible: ' . $fg;
+                $this->invincible[] = (string)$fg;
             }
 
-            $win = $fg->goals;
+            $goalIndex = ['Primary' => 0, 'Secondary' => 1, 'Secret' => 2, 'Bonus' => 3];
+
             foreach ($this->goalTypes as $type => &$goals) {
-                if ($win[$type . 'What'] !== 'None' && $win[$type . 'What'] !== 'Always') {
-                    $goal = $win[$type . 'Who'] . ' Flight Group ' . $fg . ' must be ' . $win[$type . 'What'];
-                    if (isset($win[$type . 'Pts'])) {
-                        $goal .= ' (' . $win[$type . 'Pts'] . ' pts)';
-                        $pts = (int) $win[$type . 'Pts'];
+                $idx = $goalIndex[$type];
+                $goal = $fg->FlightGroupGoals[$idx];
+                if ($goal->hasData()) {
+                    $label = "$fg must be $goal";
+                    if ($type === 'Bonus' && $fg->getBonusPoints()) {
+                        $label .= " ({$fg->getBonusPoints()} pts)";
+                        $pts = (int)$fg->getBonusPoints();
                         if ($pts < 0) {
                             $this->badBonus = true;
                         } else {
                             $this->total += $pts;
                         }
                     }
-                    $goals[] = $goal;
+                    $goals[] = $label;
                 }
             }
 
@@ -99,8 +103,12 @@ class ScoreKeeper
     public function printDump()
     {
         $goalPoints = $this->goalPoints[$this->difficultyFilter];
-        $goals = array("Primary goals: $goalPoints pts");
-        $this->total += $goalPoints; //primary goals
+        if (count($this->goalTypes['Primary'])) {
+            $this->total += $goalPoints;
+            $goals[] = "Primary goals: $goalPoints pts";
+        } else {
+            unset($this->goalTypes['Primary']);
+        }
         if (count($this->goalTypes['Secondary'])) {
             $this->total += $goalPoints;
             $goals[] = "Secondary goals: $goalPoints pts";
@@ -133,6 +141,7 @@ class ScoreKeeper
         return array(
             'Difficulty' => $this->difficultyFilter,
             'Enemies' => $this->fgs,
+            'Invincible' => $this->invincible,
             'Player Craft' => $craft,
             'Goals' => array_merge($goals, $this->goalTypes),
             //            'FGGoals' => $this->fgGoals,

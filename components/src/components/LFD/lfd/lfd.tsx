@@ -19,7 +19,6 @@ export class LFDComponent {
   public loadArrayBuffer(value: ArrayBuffer): Promise<void> {
     this.lfd = LFD.load(value);
     this.controller = new LFDController(this.lfd);
-    console.log("load array buffer", this.lfd);
     return Promise.resolve();
   }
 

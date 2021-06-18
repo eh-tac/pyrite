@@ -2,7 +2,8 @@ import { JSX, h } from "@stencil/core";
 
 import { PilotFileController } from "./controller";
 import { Battle } from "../../model/ehtc";
-import { PilotFile, MissionData, TeamStats, TriStat } from "../../model/XvT";
+import { PilotFile, MissionData, TeamStats } from "../../model/XvT";
+import { TriStat } from "../../model/XvT/team-stats";
 
 export class XvTPltController extends PilotFileController {
   public constructor(filepath: string, public plt: PilotFile) {

@@ -43,7 +43,6 @@ export class PilotFile extends PilotFileBase {
     const battles: BattleSummary[] = [];
     let m = 0;
     for (const mCount of BaseMissionCounts) {
-      // console.log(m);
       const missions = this.MissionData.slice(m, m + mCount);
       const won = missions.filter(m => m.WinCount && m.AttemptCount).length;
       const completed = won === mCount;
@@ -69,7 +68,6 @@ export class PilotFile extends PilotFileBase {
     battles.push({ completed, status, missions });
     for (let i = 0; i < 255; i++) {
       if (this.MissionData[i] && this.MissionData[i].WinCount) {
-        // console.log(i, "mission i", this.MissionData[i]);
       }
     }
 

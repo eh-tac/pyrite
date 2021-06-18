@@ -3,6 +3,22 @@ namespace Pyrite\XvT;
 
 class Constants
 {
+    public static $DESIGNATION = [
+        0 => "None",
+        1 => "Base",
+        2 => "Command Ship",
+        3 => "Convoy Craft",
+        4 => "Manufacturing Facility",
+        5 => "Mission Critical Craft",
+        6 => "Primary Target",
+        7 => "Reload Craft",
+        8 => "Resource Center",
+        9 => "Secondary Target",
+        10 => "Station",
+        11 => "Strike Craft",
+        12 => "Tertiary Target",
+    ];
+
     public static $SHIPS = [
         0 => "Unknown",
         1 => "X-Wing",
@@ -127,32 +143,30 @@ class Constants
         24 => "Jedi Master",
     ];
 
-    public static $WARHEADS = [
+    public static $WARHEAD = [
         0 => "None",
-        1 => "Space Bombs",
-        2 => "Cluster Bombs",
-        3 => "Heavy Rockets",
-        4 => "Missiles",
-        5 => "Proton Torpedoes",
-        6 => "Advanced Missiles",
-        7 => "Advanced Torpedoes",
-        8 => "Mag Pulse",
-        9 => "Ion Pulse",
+        1 => "Heavy Rocket",
+        2 => "Space Bomb",
+        3 => "Concussion Missile",
+        4 => "Torpedo",
+        5 => "Advanced Concussion Missile",
+        6 => "Advanced Torpedo",
+        7 => "Mag Pulse Torpedo",
+        8 => "(Ion Pulse)",
     ];
 
-    public static $BEAMWEAPONS = [
+    public static $BEAM = [
         0 => "None",
-        1 => "Tractor",
-        2 => "Jamming",
-        3 => "Decoy",
-        4 => "Energy",
+        1 => "Tractor Beam",
+        2 => "Jamming Beam",
+        3 => "Decoy Beam",
     ];
 
     public static $COUNTERMEASURES = [
         0 => "None",
         1 => "Chaff",
         2 => "Flare",
-        3 => "Cluster Mine",
+        3 => "(Cluster Mine)",
     ];
 
     public static $BESTRATING = [
@@ -162,6 +176,350 @@ class Constants
         3 => "Nickel",
         4 => "Copper",
         5 => "Lead",
+    ];
+
+    public static $STATUS = [
+        0 => "None",
+        1 => "2X Warheads",
+        2 => "1/2 Warheads",
+        3 => "Disabled",
+        4 => "1/2 Shields",
+        5 => "No Lasers",
+        6 => "No Hyperdrive",
+        7 => "Shields 0%, charging",
+        8 => "Shields added or 200%",
+        9 => "Hyperdrive added",
+        10 => "Unknown",
+        11 => "Unknown",
+        12 => "(200% Shields)",
+        13 => "Shields 50%, Charging",
+        14 => "(No Lasers)",
+        15 => "Unknown",
+        16 => "Shields + Hyperdrive added",
+        17 => "Unknown",
+        18 => "200% Shields",
+        19 => "(50% Shields)",
+        20 => "Invincible",
+        21 => "Infinite Warheads",
+    ];
+
+    public static $GROUPAI = [
+        0 => "Rookie (None)",
+        1 => "Officer",
+        2 => "Veteran",
+        3 => "Ace",
+        4 => "Top Ace",
+        5 => "Jedi (Invincible)",
+    ];
+
+    public static $MARKINGS = [
+        0 => "Red (TIE - None)",
+        1 => "Gold (TIE - Red)",
+        2 => "Blue (TIE - Gold)",
+        3 => "Green (TIE - Blue)",
+    ];
+
+    public static $RADIO = [
+        0 => "None",
+        1 => "Team 1 (Imperial)",
+        2 => "Team 2 (Rebel)",
+        3 => "Team 3",
+        4 => "Team 4",
+        5 => "Team 5",
+        6 => "Team 6",
+        7 => "Team 7",
+        8 => "Team 8",
+        9 => "Player 1",
+        10 => "Player 2",
+        11 => "Player 3",
+        12 => "Player 4",
+        13 => "Player 5",
+        14 => "Player 6",
+        15 => "Player 7",
+        16 => "Player 8",
+    ];
+
+    public static $FORMATION = [
+        0 => "Vic",
+        1 => "Finger Four",
+        2 => "Line Astern",
+        3 => "Line Abreast",
+        4 => "Echelon Right",
+        5 => "Echelon Left",
+        6 => "Double Astern",
+        7 => "Diamond",
+        8 => "Stack",
+        9 => "High X",
+        10 => "Vic Abreast",
+        11 => "High Vic",
+        12 => "Reverse High Vic",
+        13 => "Reverse Line Astern",
+        14 => "Stacked Low",
+        15 => "Abreast Right",
+        16 => "Abreast Left",
+        17 => "Wing Forward",
+        18 => "Wing Back",
+        19 => "Line Astern Up",
+        20 => "Line Astern Down",
+        21 => "Abreast V",
+        22 => "Abreast Inverted V",
+        23 => "Double Astern Mirror",
+        24 => "Double Stacked Astern",
+        25 => "Double Stacked High",
+        26 => "Diamond 1",
+        27 => "Diamond 2",
+        28 => "Flat Pentagon",
+        29 => "Side Pentagon",
+        30 => "Front Pentagon",
+        31 => "Flat Hexagon",
+        32 => "Side Hexagon",
+        33 => "Front Hexagon",
+        34 => "Single Point",
+    ];
+
+    public static $ARRIVALDIFFICULTY = [
+        0 => "All",
+        1 => "Easy",
+        2 => "Medium",
+        3 => "Hard",
+        4 => "Medium, Hard",
+        5 => "Easy, Medium",
+    ];
+
+    public static $CONDITION = [
+        0 => "Always (true)",
+        1 => "Created",
+        2 => "Destroyed",
+        3 => "Attacked",
+        4 => "Captured",
+        5 => "Inspected",
+        6 => "Boarded",
+        7 => "Docked",
+        8 => "Disabled",
+        9 => "Survived (exist)",
+        10 => "None (false)",
+        11 => "Unknown (---)",
+        12 => "Completed mission",
+        13 => "Completed Primary Goals",
+        14 => "Failed Primary Goals",
+        15 => "Completed Secondary Goals",
+        16 => "Failed Secondary Goals",
+        17 => "Completed Bonus Goals",
+        18 => "Failed Bonus Goals",
+        19 => "Dropped off",
+        20 => "Reinforced",
+        21 => "0% Shields",
+        22 => "50% Hull",
+        23 => "Out of Warheads",
+        24 => "Unknown (arrive?)",
+        25 => "be dropped off",
+        26 => "destroyed in 1 hit",
+        27 => "NOT be disabled",
+        28 => "NOT be picked up",
+        29 => "destroyed w/o Inspection",
+        30 => "be docked with",
+        31 => "NOT be docked with",
+        32 => "begin boarding",
+        33 => "NOT begin boarding",
+        34 => "50% Shields",
+        35 => "25% Shields",
+        36 => "75% Hull",
+        37 => "25% Hull",
+        38 => "Unknown",
+        39 => "Unknown",
+        40 => "Unknown",
+        41 => "be all Player Craft",
+        42 => "reinforced by AI?",
+        43 => "come and go",
+        44 => "be picked up",
+        45 => "withdraw",
+        46 => "be carried away",
+    ];
+
+    public static $VARIABLETYPE = [
+        0 => "None",
+        1 => "Flight Group",
+        2 => "CraftType (enum)",
+        3 => "CraftCategory (enum)",
+        4 => "ObjectCategory (enum)",
+        5 => "IFF",
+        6 => "Order (enum)",
+        7 => "CraftWhen (enum)",
+        8 => "Global Group",
+        12 => "Team",
+        21 => "All Teams except",
+        23 => "Global Unit",
+    ];
+
+    public static $CRAFTCATEGORY = [
+        0 => "Starfighters",
+        1 => "Transports",
+        2 => "Freighters/Containers",
+        3 => "Starships",
+        4 => "Utility Craft",
+        5 => "Platforms/Facilities",
+        6 => "Mines",
+    ];
+
+    public static $OBJECTCATEGORY = [
+        0 => "Craft",
+        1 => "Weapons",
+        2 => "Space Objects",
+    ];
+
+    public static $AMOUNT = [
+        0 => "100%",
+        1 => "75%",
+        2 => "50%",
+        3 => "25%",
+        4 => "At least one",
+        5 => "All but one",
+        6 => "Special craft",
+        7 => "All non-special craft",
+        8 => "All non-player craft",
+        9 => "Player's craft",
+        10 => "100% of first wave",
+        11 => "75% of first wave",
+        12 => "50% of first wave",
+        13 => "25% of first wave",
+        14 => "At least one of first wave",
+        15 => "All but one of first wave",
+        16 => "66%",
+        17 => "33%",
+        18 => "Each craft",
+    ];
+
+    public static $ABORTTRIGGER = [
+        0 => "None",
+        1 => "0% Shields",
+        2 => "Unknown",
+        3 => "Out of warheads",
+        4 => "50% Hull",
+        5 => "Attacked",
+        6 => "50% Shields",
+        7 => "25% Shields",
+        8 => "75% Hull",
+        9 => "25% Hull",
+    ];
+
+    public static $ORDER = [
+        0 => "Hold Station",
+        1 => "Go Home",
+        2 => "Circle",
+        3 => "Circle and Evade",
+        4 => "Rendezvous",
+        5 => "Disabled",
+        6 => "Await Boarding",
+        7 => "Attack",
+        8 => "Attack Escorts",
+        9 => "Protect",
+        10 => "Escort",
+        11 => "Disable",
+        12 => "Board and Give Cargo",
+        13 => "Board and Take Cargo",
+        14 => "Board and Exchange Cargo",
+        15 => "Board and Capture Cargo",
+        16 => "Board and Destroy Cargo",
+        17 => "Pick up",
+        18 => "Drop off",
+        19 => "Wait",
+        20 => "SS Wait",
+        21 => "SS Patrol Loop",
+        22 => "SS Await Return",
+        23 => "SS Launch",
+        24 => "SS Protect",
+        25 => "SS Wait and Protect",
+        26 => "SS Patrol and Attack",
+        27 => "SS Patrol and Disable",
+        28 => "SS Hold Steady",
+        29 => "SS Go Home",
+        30 => "SS Wait",
+        31 => "SS Board",
+        32 => "Board to Repair",
+        33 => "Hold Station",
+        34 => "Hold Steady",
+        35 => "SS Hold Station",
+        36 => "Self-destruct",
+        37 => "Kamikaze",
+        38 => "SS Disabled",
+        39 => "SS Hold Steady",
+    ];
+
+    public static $CRAFTWHEN = [
+        1 => "Inspected",
+        2 => "Boarded",
+        4 => "Disabled",
+        5 => "Attacked",
+        6 => "0% Shields?",
+        7 => "Special craft",
+        8 => "Non-special craft",
+        9 => "Player's craft",
+        10 => "Non-player's craft",
+        12 => "not disabled",
+    ];
+
+    public static $EVENTTYPE = [
+        3 => "Stop",
+        4 => "Title Text",
+        5 => "Caption Text",
+        6 => "Move Map",
+        7 => "Zoom Map",
+        8 => "Clear FG Tags",
+        9 => "FG Tag 1",
+        10 => "FG Tag 2",
+        11 => "FG Tag 3",
+        12 => "FG Tag 4",
+        13 => "FG Tag 5",
+        14 => "FG Tag 6",
+        15 => "FG Tag 7",
+        16 => "FG Tag 8",
+        17 => "Clear Text Tags",
+        18 => "Text Tag 1",
+        19 => "Text Tag 2",
+        20 => "Text Tag 3",
+        21 => "Text Tag 4",
+        22 => "Text Tag 5",
+        23 => "Text Tag 6",
+        24 => "Text Tag 7",
+        25 => "Text Tag 8",
+        34 => "End Briefing",
+    ];
+
+    public static $PLATFORMID = [
+        18 => "XvT",
+        20 => "BoP",
+    ];
+
+    public static $MISSIONTYPE = [
+        0 => "Training",
+        1 => "Unknown",
+        2 => "Melee",
+        3 => "Multiplayer Training",
+        4 => "Multiplayer Combat",
+    ];
+
+    public static $TEAM = [
+        49 => "Imperial",
+        50 => "Rebel",
+        51 => "Team 3",
+        52 => "Team 4",
+        97 => "All",
+        104 => "Unknown",
+    ];
+
+    public static $GOALARGUMENT = [
+        0 => "must",
+        1 => "must NOT",
+        2 => "BONUS must",
+        3 => "BONUS must NOT",
+    ];
+
+    public static $SHIPCATEGORY = [
+        0 => "None",
+        1 => "All Flyable",
+        2 => "All Rebel Flyable",
+        3 => "All Imperial Flyable",
+        4 => "User Defined",
     ];
 
 }

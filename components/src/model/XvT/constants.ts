@@ -1,4 +1,20 @@
 export class Constants {
+  public static DESIGNATION = {
+    0: "None",
+    1: "Base",
+    2: "Command Ship",
+    3: "Convoy Craft",
+    4: "Manufacturing Facility",
+    5: "Mission Critical Craft",
+    6: "Primary Target",
+    7: "Reload Craft",
+    8: "Resource Center",
+    9: "Secondary Target",
+    10: "Station",
+    11: "Strike Craft",
+    12: "Tertiary Target",
+  };
+
   public static SHIPS = {
     0: "Unknown",
     1: "X-Wing",
@@ -123,32 +139,30 @@ export class Constants {
     24: "Jedi Master",
   };
 
-  public static WARHEADS = {
+  public static WARHEAD = {
     0: "None",
-    1: "Space Bombs",
-    2: "Cluster Bombs",
-    3: "Heavy Rockets",
-    4: "Missiles",
-    5: "Proton Torpedoes",
-    6: "Advanced Missiles",
-    7: "Advanced Torpedoes",
-    8: "Mag Pulse",
-    9: "Ion Pulse",
+    1: "Heavy Rocket",
+    2: "Space Bomb",
+    3: "Concussion Missile",
+    4: "Torpedo",
+    5: "Advanced Concussion Missile",
+    6: "Advanced Torpedo",
+    7: "Mag Pulse Torpedo",
+    8: "(Ion Pulse)",
   };
 
-  public static BEAMWEAPONS = {
+  public static BEAM = {
     0: "None",
-    1: "Tractor",
-    2: "Jamming",
-    3: "Decoy",
-    4: "Energy",
+    1: "Tractor Beam",
+    2: "Jamming Beam",
+    3: "Decoy Beam",
   };
 
   public static COUNTERMEASURES = {
     0: "None",
     1: "Chaff",
     2: "Flare",
-    3: "Cluster Mine",
+    3: "(Cluster Mine)",
   };
 
   public static BESTRATING = {
@@ -160,6 +174,366 @@ export class Constants {
     5: "Lead",
   };
 
+  public static STATUS = {
+    0: "None",
+    1: "2X Warheads",
+    2: "1/2 Warheads",
+    3: "Disabled",
+    4: "1/2 Shields",
+    5: "No Lasers",
+    6: "No Hyperdrive",
+    7: "Shields 0%, charging",
+    8: "Shields added or 200%",
+    9: "Hyperdrive added",
+    10: "Unknown",
+    11: "Unknown",
+    12: "(200% Shields)",
+    13: "Shields 50%, Charging",
+    14: "(No Lasers)",
+    15: "Unknown",
+    16: "Shields + Hyperdrive added",
+    17: "Unknown",
+    18: "200% Shields",
+    19: "(50% Shields)",
+    20: "Invincible",
+    21: "Infinite Warheads",
+  };
+
+  public static GROUPAI = {
+    0: "Rookie (None)",
+    1: "Officer",
+    2: "Veteran",
+    3: "Ace",
+    4: "Top Ace",
+    5: "Jedi (Invincible)",
+  };
+
+  public static MARKINGS = {
+    0: "Red (TIE - None)",
+    1: "Gold (TIE - Red)",
+    2: "Blue (TIE - Gold)",
+    3: "Green (TIE - Blue)",
+  };
+
+  public static RADIO = {
+    0: "None",
+    1: "Team 1 (Imperial)",
+    2: "Team 2 (Rebel)",
+    3: "Team 3",
+    4: "Team 4",
+    5: "Team 5",
+    6: "Team 6",
+    7: "Team 7",
+    8: "Team 8",
+    9: "Player 1",
+    10: "Player 2",
+    11: "Player 3",
+    12: "Player 4",
+    13: "Player 5",
+    14: "Player 6",
+    15: "Player 7",
+    16: "Player 8",
+  };
+
+  public static FORMATION = {
+    0: "Vic",
+    1: "Finger Four",
+    2: "Line Astern",
+    3: "Line Abreast",
+    4: "Echelon Right",
+    5: "Echelon Left",
+    6: "Double Astern",
+    7: "Diamond",
+    8: "Stack",
+    9: "High X",
+    10: "Vic Abreast",
+    11: "High Vic",
+    12: "Reverse High Vic",
+    13: "Reverse Line Astern",
+    14: "Stacked Low",
+    15: "Abreast Right",
+    16: "Abreast Left",
+    17: "Wing Forward",
+    18: "Wing Back",
+    19: "Line Astern Up",
+    20: "Line Astern Down",
+    21: "Abreast V",
+    22: "Abreast Inverted V",
+    23: "Double Astern Mirror",
+    24: "Double Stacked Astern",
+    25: "Double Stacked High",
+    26: "Diamond 1",
+    27: "Diamond 2",
+    28: "Flat Pentagon",
+    29: "Side Pentagon",
+    30: "Front Pentagon",
+    31: "Flat Hexagon",
+    32: "Side Hexagon",
+    33: "Front Hexagon",
+    34: "Single Point",
+  };
+
+  public static ARRIVALDIFFICULTY = {
+    0: "All",
+    1: "Easy",
+    2: "Medium",
+    3: "Hard",
+    4: "Medium, Hard",
+    5: "Easy, Medium",
+  };
+
+  public static CONDITION = {
+    0: "Always (true)",
+    1: "Created",
+    2: "Destroyed",
+    3: "Attacked",
+    4: "Captured",
+    5: "Inspected",
+    6: "Boarded",
+    7: "Docked",
+    8: "Disabled",
+    9: "Survived (exist)",
+    10: "None (false)",
+    11: "Unknown (---)",
+    12: "Completed mission",
+    13: "Completed Primary Goals",
+    14: "Failed Primary Goals",
+    15: "Completed Secondary Goals",
+    16: "Failed Secondary Goals",
+    17: "Completed Bonus Goals",
+    18: "Failed Bonus Goals",
+    19: "Dropped off",
+    20: "Reinforced",
+    21: "0% Shields",
+    22: "50% Hull",
+    23: "Out of Warheads",
+    24: "Unknown (arrive?)",
+    25: "be dropped off",
+    26: "destroyed in 1 hit",
+    27: "NOT be disabled",
+    28: "NOT be picked up",
+    29: "destroyed w/o Inspection",
+    30: "be docked with",
+    31: "NOT be docked with",
+    32: "begin boarding",
+    33: "NOT begin boarding",
+    34: "50% Shields",
+    35: "25% Shields",
+    36: "75% Hull",
+    37: "25% Hull",
+    38: "Unknown",
+    39: "Unknown",
+    40: "Unknown",
+    41: "be all Player Craft",
+    42: "reinforced by AI?",
+    43: "come and go",
+    44: "be picked up",
+    45: "withdraw",
+    46: "be carried away",
+  };
+
+  public static VARIABLETYPE = {
+    0: "None",
+    1: "Flight Group",
+    2: "CraftType (enum)",
+    3: "CraftCategory (enum)",
+    4: "ObjectCategory (enum)",
+    5: "IFF",
+    6: "Order (enum)",
+    7: "CraftWhen (enum)",
+    8: "Global Group",
+    12: "Team",
+    21: "All Teams except",
+    23: "Global Unit",
+  };
+
+  public static CRAFTCATEGORY = {
+    0: "Starfighters",
+    1: "Transports",
+    2: "Freighters/Containers",
+    3: "Starships",
+    4: "Utility Craft",
+    5: "Platforms/Facilities",
+    6: "Mines",
+  };
+
+  public static OBJECTCATEGORY = {
+    0: "Craft",
+    1: "Weapons",
+    2: "Space Objects",
+  };
+
+  public static AMOUNT = {
+    0: "100%",
+    1: "75%",
+    2: "50%",
+    3: "25%",
+    4: "At least one",
+    5: "All but one",
+    6: "Special craft",
+    7: "All non-special craft",
+    8: "All non-player craft",
+    9: "Player's craft",
+    10: "100% of first wave",
+    11: "75% of first wave",
+    12: "50% of first wave",
+    13: "25% of first wave",
+    14: "At least one of first wave",
+    15: "All but one of first wave",
+    16: "66%",
+    17: "33%",
+    18: "Each craft",
+  };
+
+  public static ABORTTRIGGER = {
+    0: "None",
+    1: "0% Shields",
+    2: "Unknown",
+    3: "Out of warheads",
+    4: "50% Hull",
+    5: "Attacked",
+    6: "50% Shields",
+    7: "25% Shields",
+    8: "75% Hull",
+    9: "25% Hull",
+  };
+
+  public static ORDER = {
+    0: "Hold Station",
+    1: "Go Home",
+    2: "Circle",
+    3: "Circle and Evade",
+    4: "Rendezvous",
+    5: "Disabled",
+    6: "Await Boarding",
+    7: "Attack",
+    8: "Attack Escorts",
+    9: "Protect",
+    10: "Escort",
+    11: "Disable",
+    12: "Board and Give Cargo",
+    13: "Board and Take Cargo",
+    14: "Board and Exchange Cargo",
+    15: "Board and Capture Cargo",
+    16: "Board and Destroy Cargo",
+    17: "Pick up",
+    18: "Drop off",
+    19: "Wait",
+    20: "SS Wait",
+    21: "SS Patrol Loop",
+    22: "SS Await Return",
+    23: "SS Launch",
+    24: "SS Protect",
+    25: "SS Wait and Protect",
+    26: "SS Patrol and Attack",
+    27: "SS Patrol and Disable",
+    28: "SS Hold Steady",
+    29: "SS Go Home",
+    30: "SS Wait",
+    31: "SS Board",
+    32: "Board to Repair",
+    33: "Hold Station",
+    34: "Hold Steady",
+    35: "SS Hold Station",
+    36: "Self-destruct",
+    37: "Kamikaze",
+    38: "SS Disabled",
+    39: "SS Hold Steady",
+  };
+
+  public static CRAFTWHEN = {
+    1: "Inspected",
+    2: "Boarded",
+    4: "Disabled",
+    5: "Attacked",
+    6: "0% Shields?",
+    7: "Special craft",
+    8: "Non-special craft",
+    9: "Player's craft",
+    10: "Non-player's craft",
+    12: "not disabled",
+  };
+
+  public static EVENTTYPE = {
+    3: "Stop",
+    4: "Title Text",
+    5: "Caption Text",
+    6: "Move Map",
+    7: "Zoom Map",
+    8: "Clear FG Tags",
+    9: "FG Tag 1",
+    10: "FG Tag 2",
+    11: "FG Tag 3",
+    12: "FG Tag 4",
+    13: "FG Tag 5",
+    14: "FG Tag 6",
+    15: "FG Tag 7",
+    16: "FG Tag 8",
+    17: "Clear Text Tags",
+    18: "Text Tag 1",
+    19: "Text Tag 2",
+    20: "Text Tag 3",
+    21: "Text Tag 4",
+    22: "Text Tag 5",
+    23: "Text Tag 6",
+    24: "Text Tag 7",
+    25: "Text Tag 8",
+    34: "End Briefing",
+  };
+
+  public static PLATFORMID = {
+    18: "XvT",
+    20: "BoP",
+  };
+
+  public static MISSIONTYPE = {
+    0: "Training",
+    1: "Unknown",
+    2: "Melee",
+    3: "Multiplayer Training",
+    4: "Multiplayer Combat",
+  };
+
+  public static TEAM = {
+    49: "Imperial",
+    50: "Rebel",
+    51: "Team 3",
+    52: "Team 4",
+    97: "All",
+    104: "Unknown",
+  };
+
+  public static GOALARGUMENT = {
+    0: "must",
+    1: "must NOT",
+    2: "BONUS must",
+    3: "BONUS must NOT",
+  };
+
+  public static SHIPCATEGORY = {
+    0: "None",
+    1: "All Flyable",
+    2: "All Rebel Flyable",
+    3: "All Imperial Flyable",
+    4: "User Defined",
+  };
+
+}
+
+export enum Designation {
+  none = 0,
+  base = 1,
+  commandShip = 2,
+  convoyCraft = 3,
+  manufacturingFacility = 4,
+  missionCriticalCraft = 5,
+  primaryTarget = 6,
+  reloadCraft = 7,
+  resourceCenter = 8,
+  secondaryTarget = 9,
+  station = 10,
+  strikeCraft = 11,
+  tertiaryTarget = 12,
 }
 
 export enum Ships {
@@ -286,25 +660,23 @@ export enum PilotRating {
   jediMaster = 24,
 }
 
-export enum Warheads {
+export enum Warhead {
   none = 0,
-  spaceBombs = 1,
-  clusterBombs = 2,
-  heavyRockets = 3,
-  missiles = 4,
-  protonTorpedoes = 5,
-  advancedMissiles = 6,
-  advancedTorpedoes = 7,
-  magPulse = 8,
-  ionPulse = 9,
+  heavyRocket = 1,
+  spaceBomb = 2,
+  concussionMissile = 3,
+  torpedo = 4,
+  advancedConcussionMissile = 5,
+  advancedTorpedo = 6,
+  magPulseTorpedo = 7,
+  ionPulse = 8,
 }
 
-export enum BeamWeapons {
+export enum Beam {
   none = 0,
-  tractor = 1,
-  jamming = 2,
-  decoy = 3,
-  energy = 4,
+  tractorBeam = 1,
+  jammingBeam = 2,
+  decoyBeam = 3,
 }
 
 export enum Countermeasures {
@@ -321,4 +693,348 @@ export enum BestRating {
   nickel = 3,
   copper = 4,
   lead = 5,
+}
+
+export enum Status {
+  none = 0,
+  n2XWarheads = 1,
+  n12Warheads = 2,
+  disabled = 3,
+  n12Shields = 4,
+  noLasers = 5,
+  noHyperdrive = 6,
+  shields0PercentCharging = 7,
+  shieldsAddedOr200Percent = 8,
+  hyperdriveAdded = 9,
+  unknown = 10,
+  // duplicate unknown = 11,
+  n200PercentShields = 12,
+  shields50PercentCharging = 13,
+  // duplicate noLasers = 14,
+  // duplicate unknown = 15,
+  shieldsHyperdriveAdded = 16,
+  // duplicate unknown = 17,
+  // duplicate n200PercentShields = 18,
+  n50PercentShields = 19,
+  invincible = 20,
+  infiniteWarheads = 21,
+}
+
+export enum GroupAI {
+  rookieNone = 0,
+  officer = 1,
+  veteran = 2,
+  ace = 3,
+  topAce = 4,
+  jediInvincible = 5,
+}
+
+export enum Markings {
+  redTieNone = 0,
+  goldTieRed = 1,
+  blueTieGold = 2,
+  greenTieBlue = 3,
+}
+
+export enum Radio {
+  none = 0,
+  team1Imperial = 1,
+  team2Rebel = 2,
+  team3 = 3,
+  team4 = 4,
+  team5 = 5,
+  team6 = 6,
+  team7 = 7,
+  team8 = 8,
+  player1 = 9,
+  player2 = 10,
+  player3 = 11,
+  player4 = 12,
+  player5 = 13,
+  player6 = 14,
+  player7 = 15,
+  player8 = 16,
+}
+
+export enum Formation {
+  vic = 0,
+  fingerFour = 1,
+  lineAstern = 2,
+  lineAbreast = 3,
+  echelonRight = 4,
+  echelonLeft = 5,
+  doubleAstern = 6,
+  diamond = 7,
+  stack = 8,
+  highX = 9,
+  vicAbreast = 10,
+  highVic = 11,
+  reverseHighVic = 12,
+  reverseLineAstern = 13,
+  stackedLow = 14,
+  abreastRight = 15,
+  abreastLeft = 16,
+  wingForward = 17,
+  wingBack = 18,
+  lineAsternUp = 19,
+  lineAsternDown = 20,
+  abreastV = 21,
+  abreastInvertedV = 22,
+  doubleAsternMirror = 23,
+  doubleStackedAstern = 24,
+  doubleStackedHigh = 25,
+  diamond1 = 26,
+  diamond2 = 27,
+  flatPentagon = 28,
+  sidePentagon = 29,
+  frontPentagon = 30,
+  flatHexagon = 31,
+  sideHexagon = 32,
+  frontHexagon = 33,
+  singlePoint = 34,
+}
+
+export enum ArrivalDifficulty {
+  all = 0,
+  easy = 1,
+  medium = 2,
+  hard = 3,
+  mediumHard = 4,
+  easyMedium = 5,
+}
+
+export enum Condition {
+  alwaysTrue = 0,
+  created = 1,
+  destroyed = 2,
+  attacked = 3,
+  captured = 4,
+  inspected = 5,
+  boarded = 6,
+  docked = 7,
+  disabled = 8,
+  survivedExist = 9,
+  noneFalse = 10,
+  unknown = 11,
+  completedMission = 12,
+  completedPrimaryGoals = 13,
+  failedPrimaryGoals = 14,
+  completedSecondaryGoals = 15,
+  failedSecondaryGoals = 16,
+  completedBonusGoals = 17,
+  failedBonusGoals = 18,
+  droppedOff = 19,
+  reinforced = 20,
+  n0PercentShields = 21,
+  n50PercentHull = 22,
+  outOfWarheads = 23,
+  unknownArrive = 24,
+  beDroppedOff = 25,
+  destroyedIn1Hit = 26,
+  notBeDisabled = 27,
+  notBePickedUp = 28,
+  destroyedWoInspection = 29,
+  beDockedWith = 30,
+  notBeDockedWith = 31,
+  beginBoarding = 32,
+  notBeginBoarding = 33,
+  n50PercentShields = 34,
+  n25PercentShields = 35,
+  n75PercentHull = 36,
+  n25PercentHull = 37,
+  // duplicate unknown = 38,
+  // duplicate unknown = 39,
+  // duplicate unknown = 40,
+  beAllPlayerCraft = 41,
+  reinforcedByAi = 42,
+  comeAndGo = 43,
+  bePickedUp = 44,
+  withdraw = 45,
+  beCarriedAway = 46,
+}
+
+export enum VariableType {
+  none = 0,
+  flightGroup = 1,
+  craftTypeEnum = 2,
+  craftCategoryEnum = 3,
+  objectCategoryEnum = 4,
+  iff = 5,
+  orderEnum = 6,
+  craftWhenEnum = 7,
+  globalGroup = 8,
+  team = 12,
+  allTeamsExcept = 21,
+  globalUnit = 23,
+}
+
+export enum CraftCategory {
+  starfighters = 0,
+  transports = 1,
+  freightersContainers = 2,
+  starships = 3,
+  utilityCraft = 4,
+  platformsFacilities = 5,
+  mines = 6,
+}
+
+export enum ObjectCategory {
+  craft = 0,
+  weapons = 1,
+  spaceObjects = 2,
+}
+
+export enum Amount {
+  n100Percent = 0,
+  n75Percent = 1,
+  n50Percent = 2,
+  n25Percent = 3,
+  atLeastOne = 4,
+  allButOne = 5,
+  specialCraft = 6,
+  allNonspecialCraft = 7,
+  allNonplayerCraft = 8,
+  playersCraft = 9,
+  n100PercentOfFirstWave = 10,
+  n75PercentOfFirstWave = 11,
+  n50PercentOfFirstWave = 12,
+  n25PercentOfFirstWave = 13,
+  atLeastOneOfFirstWave = 14,
+  allButOneOfFirstWave = 15,
+  n66Percent = 16,
+  n33Percent = 17,
+  eachCraft = 18,
+}
+
+export enum AbortTrigger {
+  none = 0,
+  n0PercentShields = 1,
+  unknown = 2,
+  outOfWarheads = 3,
+  n50PercentHull = 4,
+  attacked = 5,
+  n50PercentShields = 6,
+  n25PercentShields = 7,
+  n75PercentHull = 8,
+  n25PercentHull = 9,
+}
+
+export enum Order {
+  holdStation = 0,
+  goHome = 1,
+  circle = 2,
+  circleAndEvade = 3,
+  rendezvous = 4,
+  disabled = 5,
+  awaitBoarding = 6,
+  attack = 7,
+  attackEscorts = 8,
+  protect = 9,
+  escort = 10,
+  disable = 11,
+  boardAndGiveCargo = 12,
+  boardAndTakeCargo = 13,
+  boardAndExchangeCargo = 14,
+  boardAndCaptureCargo = 15,
+  boardAndDestroyCargo = 16,
+  pickUp = 17,
+  dropOff = 18,
+  wait = 19,
+  ssWait = 20,
+  ssPatrolLoop = 21,
+  ssAwaitReturn = 22,
+  ssLaunch = 23,
+  ssProtect = 24,
+  ssWaitAndProtect = 25,
+  ssPatrolAndAttack = 26,
+  ssPatrolAndDisable = 27,
+  ssHoldSteady = 28,
+  ssGoHome = 29,
+  // duplicate ssWait = 30,
+  ssBoard = 31,
+  boardToRepair = 32,
+  // duplicate holdStation = 33,
+  holdSteady = 34,
+  ssHoldStation = 35,
+  selfdestruct = 36,
+  kamikaze = 37,
+  ssDisabled = 38,
+  // duplicate ssHoldSteady = 39,
+}
+
+export enum CraftWhen {
+  inspected = 1,
+  boarded = 2,
+  disabled = 4,
+  attacked = 5,
+  n0PercentShields = 6,
+  specialCraft = 7,
+  nonspecialCraft = 8,
+  playersCraft = 9,
+  nonplayersCraft = 10,
+  notDisabled = 12,
+}
+
+export enum EventType {
+  stop = 3,
+  titleText = 4,
+  captionText = 5,
+  moveMap = 6,
+  zoomMap = 7,
+  clearFgTags = 8,
+  fgTag1 = 9,
+  fgTag2 = 10,
+  fgTag3 = 11,
+  fgTag4 = 12,
+  fgTag5 = 13,
+  fgTag6 = 14,
+  fgTag7 = 15,
+  fgTag8 = 16,
+  clearTextTags = 17,
+  textTag1 = 18,
+  textTag2 = 19,
+  textTag3 = 20,
+  textTag4 = 21,
+  textTag5 = 22,
+  textTag6 = 23,
+  textTag7 = 24,
+  textTag8 = 25,
+  endBriefing = 34,
+}
+
+export enum PlatformID {
+  xvT = 18,
+  boP = 20,
+}
+
+export enum MissionType {
+  training = 0,
+  unknown = 1,
+  melee = 2,
+  multiplayerTraining = 3,
+  multiplayerCombat = 4,
+}
+
+export enum Team {
+  imperial = 49,
+  rebel = 50,
+  team3 = 51,
+  team4 = 52,
+  all = 97,
+  unknown = 104,
+}
+
+export enum GoalArgument {
+  must = 0,
+  mustNot = 1,
+  bonusMust = 2,
+  bonusMustNot = 3,
+}
+
+export enum ShipCategory {
+  none = 0,
+  allFlyable = 1,
+  allRebelFlyable = 2,
+  allImperialFlyable = 3,
+  userDefined = 4,
 }

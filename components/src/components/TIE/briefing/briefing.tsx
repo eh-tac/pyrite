@@ -154,7 +154,7 @@ export class PyriteTIEBriefing {
           } else if (event.EventType === EventType.ClearTextTags) {
             this.drawObjects = this.drawObjects.filter(draw => !(draw instanceof DrawTextTag));
           } else {
-            console.log("unhandled event", event);
+            console.warn("unhandled event", event);
             // Page Break
           }
       }
