@@ -69,7 +69,7 @@ class Battle
     public static function fromZip($path, $name = null, $dir = null)
     {
         $name = $name ? $name : basename($path);
-        $rand = date("Ymd") . rand(1,999);
+        $rand = date("Ymd") . rand(1, 999);
         $dir = $dir ? $dir : "/tmp/$rand$name/";
         if (substr($dir, -1, 1) !== "/") {
             $dir .= "/";
@@ -215,7 +215,6 @@ class Battle
 
     public function validateMission($missionFile, &$errors)
     {
-
     }
 
     public static function parseKey($key)

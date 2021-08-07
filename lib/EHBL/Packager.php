@@ -2,7 +2,8 @@
 
 namespace Pyrite\EHBL;
 
-class Packager {
+class Packager
+{
 	private $dir;
 	/**
 	 * @var BattleIndex
@@ -11,7 +12,8 @@ class Packager {
 	private $missionFiles = [];
 	private $files = [];
 
-	public function __construct($dir, $ehb, $missionFiles, $resourceFiles) {
+	public function __construct($dir, $ehb, $missionFiles, $resourceFiles)
+	{
 		$this->dir = $dir;
 		$this->loadEHB($ehb);
 		$this->loadMissions($missionFiles);
@@ -21,18 +23,21 @@ class Packager {
 	/**
 	 * @param $ehb BattleIndex
 	 */
-	private function loadEHB($ehb) {
+	private function loadEHB($ehb)
+	{
 		$this->ehb                 = $ehb;
 		$this->files['Battle.ehb'] = $ehb->toHex();
 	}
 
-	private function loadMissions($files) {
+	private function loadMissions($files)
+	{
 		foreach ($files as $file) {
 			$this->missionFiles[basename($file)] = file_get_contents($this->dir . $file);
 		}
 	}
 
-	private function loadResources($files) {
+	private function loadResources($files)
+	{
 		foreach ($files as $file) {
 			$this->files[basename($file)] = file_get_contents($this->dir . $file);
 		}
@@ -40,9 +45,9 @@ class Packager {
 
 	/**
 	 * @param $battle Battle
-	 * @return string filename
 	 */
-	public static function fromBattle($battle) {
+	public static function fromBattle($battle)
+	{
 		return new Packager(
 			$battle->folder,
 			$battle->getBattleIndex(),
@@ -51,12 +56,14 @@ class Packager {
 		);
 	}
 
-	public function __toString() {
+	public function __toString()
+	{
 		$f = implode(", ", array_keys($this->files));
 		return "{$this->dir} with files {$f}";
 	}
 
-	public function getReadme() {
+	public function getReadme()
+	{
 		$options = ['readme.txt', 'README.TXT', 'Readme.txt', 'readme.rtf', 'README.RTF'];
 		foreach ($options as $o) {
 			if (isset($this->files[$o])) {
@@ -67,27 +74,32 @@ class Packager {
 		return '';
 	}
 
-	public function getMissions() {
+	public function getMissions()
+	{
 		return $this->missionFiles;
 	}
 
-	public function getTextFiles() {
+	public function getTextFiles()
+	{
 		return array_filter($this->files, function ($value, $key) {
 			return strpos(strtolower($key), '.txt') !== FALSE;
 		}, ARRAY_FILTER_USE_BOTH);
 	}
 
-	public function package() {
+	public function package()
+	{
 		$zipPath = $this->toZip();
 		$ehmPath = $this->toEHM();
 		return [$zipPath, $ehmPath];
 	}
 
-	public function toZip() {
+	public function toZip()
+	{
 		return $this->createZip($this->ehb->key . '.zip');
 	}
 
-	private function createZip($filename, $makeEHM = false) {
+	private function createZip($filename, $makeEHM = false)
+	{
 		$filename = $this->dir . $filename;
 		$zip      = new \ZipArchive();
 
@@ -107,12 +119,14 @@ class Packager {
 		return $filename;
 	}
 
-	public function toEHM() {
+	public function toEHM()
+	{
 		$this->encodeMissions();
 		return $this->createZip($this->ehb->key . '.ehm', TRUE);
 	}
 
-	private function encodeMissions() {
+	private function encodeMissions()
+	{
 		// TODO probably this should work based on the Mission objects not the files
 		$offset    = $this->ehb->encryptionOffset;
 		$originals = $this->missionFiles;

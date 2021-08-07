@@ -13,7 +13,7 @@ import { XWController } from "../../view-model/pilot-file/xw-controller";
 
 @Component({
   tag: "pyrite-pilot-file",
-  styleUrl: "pilot-file.scss",
+  styleUrls: ["../../assets/superhero.css", "../../global/material-icons.scss", "pilot-file.scss"],
   shadow: true
 })
 export class PilotViewer {
@@ -75,12 +75,16 @@ export class PilotViewer {
           <a class="navbar-brand" href="#">
             {title}
           </a>
-          {this.allowUpload && <button type="button" class="btn btn-sm ml-1 btn-secondary" onClick={this.getFile.bind(this)}>
-            Upload
-          </button>}
+          {this.allowUpload && (
+            <button type="button" class="btn btn-sm ml-1 btn-secondary" onClick={this.getFile.bind(this)}>
+              Upload
+            </button>
+          )}
         </nav>
         <div class="container card">{content}</div>
-        {this.allowUpload && <input type="file" id="pltUpload" value="" onChange={this.fileChange.bind(this)} />}
+        {this.allowUpload && (
+          <input type="file" id="pltUpload" value="" onChange={this.fileChange.bind(this)} class="testhide" />
+        )}
       </div>
     );
   }

@@ -6,7 +6,7 @@ export const config: Config = {
   outputTargets: [
     {
       type: "dist",
-      dir: "../../../../pages/js/pyrite"
+      dir: "../../../../pages/js"
     },
     {
       type: "dist"

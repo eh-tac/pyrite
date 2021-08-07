@@ -59,19 +59,18 @@ export class XWAPltController extends PilotFileController {
       </li>
     );
 
-    const mCount = Math.max(missionScores.length, battleData.missions);
+    const mCount = Math.max(missionScores.length, battleData.missions) + 1;
     const missions: JSX.Element[] = [];
     missionScores.unshift(missionScores[0]); // make it 1 indexed basically.
     for (let m = 1; m <= mCount; m++) {
-      if (missionScores[m] && scores[m]) {
-        missions.push(this.renderXWAMission(`Mission ${m}`, missionScores[m], scores[m].score));
-      } else if (missionScores[m]) {
+      if (missionScores[m]) {
+        const score = scores[m] ? scores[m].score : undefined;
+        missions.push(this.renderXWAMission(`Mission ${m}`, missionScores[m], score));
+      } else if (missionScores[m] && m < battleData.missions) {
         missions.push(
-          this.renderItem(`Mission ${m}`, missionScores[m].Total),
-          "Too many missions flown",
-          "text-danger"
+          this.renderItem(`Mission ${m}`, missionScores[m].Total, "Too many missions flown", "text-danger")
         );
-      } else if (scores[m]) {
+      } else if (!missionScores[m] && m <= battleData.missions) {
         missions.push(this.renderItem(`Mission ${m}`, "Not flown", "", "text-danger"));
       } else {
         console.error("Unknown state?");

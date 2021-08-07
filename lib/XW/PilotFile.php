@@ -17,11 +17,14 @@ class PilotFile extends Base\PilotFileBase
     public function getCompletedTrainingMissionScores()
     {
         $scores = array_merge($this->XWingHistoricalScore, $this->YWingHistoricalScore, $this->AWingHistoricalScore);
-        $compls = array_merge($this->XWingHistoricalComplete, $this->YWingHistoricalComplete,
-            $this->AWingHistoricalComplete);
+        $compls = array_merge(
+            $this->XWingHistoricalComplete,
+            $this->YWingHistoricalComplete,
+            $this->AWingHistoricalComplete
+        );
 
         $missions = [];
-        foreach ($compls as $i => $complete){
+        foreach ($compls as $i => $complete) {
             if ($complete) {
                 $missions[] = $scores[$i];
             }
@@ -29,4 +32,8 @@ class PilotFile extends Base\PilotFileBase
         return $missions;
     }
 
+    public function getTotalKills()
+    {
+        return array_sum($this->TODKills);
+    }
 }

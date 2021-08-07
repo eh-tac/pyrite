@@ -1,6 +1,6 @@
 {
   "name": "@pickledyoda/pyrite",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Pyrite Web Components",
   "main": "../../../../pages/js/pyrite//index.js",
   "module": "../../../../pages/js/pyrite//index.mjs",
@@ -13,7 +13,7 @@
   "files": [
     "dist/",
     "loader/",
-    "../../../../pages/js/pyrite/"
+    "../../../../pages/js/"
   ],
   "scripts": {
     "gencode": "ts-node -P tsconfig.commonjs.json src/build/run.ts",
@@ -28,7 +28,9 @@
     "chalops": "tsc -p tsconfig.commonjs.json && node dist/scripts/chalops.js",
     "names": "tsc -p tsconfig.commonjs.json && node dist/scripts/names.js",
     "coop": "tsc -p tsconfig.commonjs.json && node dist/scripts/coop.js",
-    "puz": "ts-node -P tsconfig.commonjs.json src/scripts/puz.ts"
+    "puz": "ts-node -P tsconfig.commonjs.json src/scripts/puz.ts",
+    "css-build": "node-sass --omit-source-map-url src/assets/bulma/superhero.scss src/assets/superhero-build.css",
+    "css-watch": "npm run css-build -- --watch"
   },
   "author": "Pickled Yoda",
   "license": "ISC",
@@ -37,9 +39,11 @@
     "@types/lodash": "^4.14.168",
     "@types/node": "^13.13.49",
     "@types/puppeteer": "^3.0.5",
+    "bulma": "^0.9.3",
     "jasmine": "^3.7.0",
     "jasmine-spec-reporter": "^5.0.2",
     "jasmine-ts": "^0.3.2",
+    "node-sass": "^6.0.1",
     "prettier": "^1.19.1",
     "ts-node": "^8.10.2",
     "tslint-ionic-rules": "0.0.21",

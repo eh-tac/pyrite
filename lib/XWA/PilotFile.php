@@ -28,5 +28,8 @@ class PilotFile extends Base\PilotFileBase
         });
     }
 
-
+    public function getTotalKills()
+    {
+        return array_sum($this->TourOfDutyKills);
+    }
 }
