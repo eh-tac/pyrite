@@ -1,19 +1,19 @@
 {
   "name": "@pickledyoda/pyrite",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Pyrite Web Components",
-  "main": "../../../../pages/js/pyrite//index.js",
-  "module": "../../../../pages/js/pyrite//index.mjs",
+  "main": "../../../../pages/js/pyrite/index.cjs.js",
+  "module": "../../../../pages/js/pyrite/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
   "types": "dist/types/components.d.ts",
-  "collection": "../../../../pages/js/pyrite//collection/collection-manifest.json",
+  "collection": "../../../../pages/js/pyrite/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/pyrite/pyrite.js",
   "files": [
     "dist/",
     "loader/",
-    "../../../../pages/js/"
+    "../../../../pages/js/pyrite/"
   ],
   "scripts": {
     "gencode": "ts-node -P tsconfig.commonjs.json src/build/run.ts",
@@ -50,7 +50,7 @@
     "typescript": "^3.9.9"
   },
   "dependencies": {
-    "@stencil/core": "^2.5.2",
+    "@stencil/core": "^2.6.0",
     "@stencil/sass": "^1.4.1",
     "cli-progress": "^3.9.0",
     "extract-zip": "^1.7.0",

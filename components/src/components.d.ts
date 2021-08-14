@@ -5,6 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ApiSummary } from "./components/ehtc/api-select/api-select";
 import { Battle } from "./model/ehtc/battle";
 import { BattleSummary, CharacterSummary, PilotSummary } from "./model/ehtc";
 import { Mission } from "./model/TIE/mission";
@@ -14,6 +15,14 @@ import { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as Fl
 import { FileHeader as FileHeader2, FlightGroup as FlightGroup2, Mission as Mission3, ObjectGroup, PilotFile as PilotFile2 } from "./model/XW";
 import { MissionData as MissionData1, PilotFile as PilotFile3 } from "./model/XWA";
 export namespace Components {
+    interface EhtcApiSelect {
+        "domain": string;
+        "item": ApiSummary;
+        "name": string;
+        "search": (query: string) => Promise<void>;
+        "url": string;
+        "value": string;
+    }
     interface EhtcBattle {
         "battle": Battle;
         "code": string;
@@ -242,6 +251,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLEhtcApiSelectElement extends Components.EhtcApiSelect, HTMLStencilElement {
+    }
+    var HTMLEhtcApiSelectElement: {
+        prototype: HTMLEhtcApiSelectElement;
+        new (): HTMLEhtcApiSelectElement;
+    };
     interface HTMLEhtcBattleElement extends Components.EhtcBattle, HTMLStencilElement {
     }
     var HTMLEhtcBattleElement: {
@@ -663,6 +678,7 @@ declare global {
         new (): HTMLPyriteXwaPilotFileElement;
     };
     interface HTMLElementTagNameMap {
+        "ehtc-api-select": HTMLEhtcApiSelectElement;
         "ehtc-battle": HTMLEhtcBattleElement;
         "ehtc-battle-center": HTMLEhtcBattleCenterElement;
         "ehtc-battle-select": HTMLEhtcBattleSelectElement;
@@ -736,6 +752,14 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface EhtcApiSelect {
+        "domain"?: string;
+        "item"?: ApiSummary;
+        "name"?: string;
+        "onApiSelect"?: (event: CustomEvent<ApiSummary>) => void;
+        "url"?: string;
+        "value"?: string;
+    }
     interface EhtcBattle {
         "battle"?: Battle;
         "code"?: string;
@@ -962,6 +986,7 @@ declare namespace LocalJSX {
         "pilotfile"?: PilotFile;
     }
     interface IntrinsicElements {
+        "ehtc-api-select": EhtcApiSelect;
         "ehtc-battle": EhtcBattle;
         "ehtc-battle-center": EhtcBattleCenter;
         "ehtc-battle-select": EhtcBattleSelect;
@@ -1038,6 +1063,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "ehtc-api-select": LocalJSX.EhtcApiSelect & JSXBase.HTMLAttributes<HTMLEhtcApiSelectElement>;
             "ehtc-battle": LocalJSX.EhtcBattle & JSXBase.HTMLAttributes<HTMLEhtcBattleElement>;
             "ehtc-battle-center": LocalJSX.EhtcBattleCenter & JSXBase.HTMLAttributes<HTMLEhtcBattleCenterElement>;
             "ehtc-battle-select": LocalJSX.EhtcBattleSelect & JSXBase.HTMLAttributes<HTMLEhtcBattleSelectElement>;

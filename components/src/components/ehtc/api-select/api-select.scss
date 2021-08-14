@@ -1,0 +1,44 @@
+.ehtc-api-select {
+  width: 100%;
+  min-width: 20rem;
+  min-height: 2.5rem;
+
+  .field,
+  .selected-item,
+  .item-summary,
+  .dropdown-menu {
+    width: 100%;
+  }
+  .selected-item {
+    display: flex;
+  }
+  .record {
+    border: 1px solid transparent;
+    & + .no-data {
+      display: none;
+    }
+    &:hover {
+      border: 1px solid white;
+    }
+  }
+
+  .item-summary {
+    .tag {
+      height: 2.5em;
+    }
+
+    .topline.tags {
+      display: flex;
+      margin-bottom: 0;
+
+      .item-label {
+        flex: 1;
+        justify-content: flex-start;
+      }
+    }
+    .idline.tag {
+      display: flex;
+      font-size: 0.6rem;
+    }
+  }
+}

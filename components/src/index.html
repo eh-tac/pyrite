@@ -75,13 +75,19 @@
     <!-- <p>ehtc-battle-center</p> -->
     <!-- <ehtc-battle-center></ehtc-battle-center> -->
 
+    <p>Patches</p>
+    <ehtc-api-select
+      domain="https://localhost"
+      url="/api/patches/list"
+    ></ehtc-api-select>
     <p>pilot file viewer</p>
     <pyrite-pilot-file
       bsf="https://localhost/api/battle/XWA/F/160"
       
-      file="/assets/tie.tfr"
+      allow-upload="true"
       style="width: 600px;"
     ></pyrite-pilot-file>
+
 
     <!-- allow-upload=true -->
     <!-- <h5 class="title">Briefing</h5> -->

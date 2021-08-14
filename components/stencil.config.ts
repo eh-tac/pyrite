@@ -5,17 +5,8 @@ export const config: Config = {
   namespace: "pyrite",
   outputTargets: [
     {
-      type: "dist",
-      dir: "../../../../pages/js"
-    },
-    {
-      type: "dist"
-    },
-    {
-      type: "docs-readme"
-    },
-    {
       type: "www",
+      dir: "../../../../pages/js/pyrite",
       serviceWorker: null // disable service workers
     }
   ],
