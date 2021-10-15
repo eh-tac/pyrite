@@ -36,7 +36,7 @@ export class PyriteMissionWrapper {
           console.warn("no idea how to parse this one", first, value);
         }
         if (this.tie) {
-          console.log("loaded mission", this.file, this.tie);
+          // console.log("loaded mission", this.file, this.tie);
           const slot = this.el.shadowRoot.firstChild as HTMLSlotElement;
           const child = slot.assignedElements()[0];
           if (child) {

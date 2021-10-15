@@ -9,12 +9,11 @@ export class DrawFGTag extends TIEDrawingObject {
     super(map, event);
     this.fg = map.mission.getFlightGroup(event.Variables[0]);
     this.colour = this.getHex(Constants.IFFCOLOR[this.fg.Iff].toLowerCase());
-    console.log("FG", this.fg.toString(), this.colour);
   }
 
   public draw(tick: number): void {
     const [x, y] = this.map.translate(this.fg.briefingCoordinates);
-    let size = 24;
+    let size = 34;
     let off = 4;
     if (this.startTick) {
       // don't animate anything which is there at the start

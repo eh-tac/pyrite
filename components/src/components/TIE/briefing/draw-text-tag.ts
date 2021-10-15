@@ -13,7 +13,7 @@ export class DrawTextTag extends TIEDrawingObject {
     this.x = event.Variables[1];
     this.y = event.Variables[2];
     this.colour = Constants.TEXTTAGCOLOR[event.Variables[3]].toLowerCase();
-    console.log("text", this.text, this.colour);
+    // console.log("text", this.text, this.colour);
   }
 
   public draw(tick: number): void {

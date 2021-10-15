@@ -15,6 +15,7 @@ export class PyriteTIEBriefing {
   @Prop() public mission?: Mission;
   @State() public time: number = 0;
   @State() public font: FontFile;
+  @State() public iconBitmap: ImageBitmap;
   @Element() public dom: HTMLElement;
 
   protected briefing: Briefing;
@@ -43,10 +44,16 @@ export class PyriteTIEBriefing {
           .then((res: Response) => res.arrayBuffer())
           .then((value: ArrayBuffer) => {
             this.font = new FontFile(value);
-            this.ctx = canvas.getContext("2d");
-            this.init();
-            this.pause();
-            this.tick();
+            fetch(`/assets/craft_TIE.bmp`)
+              .then((res2: Response) => res2.blob())
+              .then((bmpBlob: Blob) => createImageBitmap(bmpBlob))
+              .then((bmp: ImageBitmap) => {
+                this.iconBitmap = bmp;
+                this.ctx = canvas.getContext("2d");
+                this.init();
+                this.pause();
+                this.tick();
+              });
           });
       }
     }
@@ -55,32 +62,43 @@ export class PyriteTIEBriefing {
   public render(): JSX.Element {
     return (
       <Host>
-        <canvas class="notification is-marginless" width={this.width} height={this.height} />
-        <div class="is-centered buttons notification is-primary" style={{ width: `${this.width}px` }}>
-          <a class="button is-primary is-small is-inverted" onClick={this.init.bind(this)}>
+        <div
+          class="is-centered buttons box is-primary"
+          style={{ width: `${this.width}px`, "background-color": "#1c063a", padding: "8px" }}
+        >
+          <canvas style={{ "margin-bottom": "1rem" }} width={this.width} height={this.height} />
+          <a class="button is-primary is-small is-inverted" onClick={this.reset.bind(this)}>
             <span class="icon">
               <i class="fa fa-undo fa-lg"></i>
             </span>
-            <span>Reset</span>
+            <span style={{ display: "inline-block", "min-width": "40px" }}>Reset</span>
           </a>
           <a class="button is-primary is-small is-inverted" onClick={this.pause.bind(this)}>
             <span class="icon">
               <i class={`fa fa-lg ${this.timer ? "fa-pause" : "fa-play"}`}></i>
             </span>
-            <span>{this.timer ? "Pause" : "Play"}</span>
+            <span style={{ display: "inline-block", "min-width": "40px" }}>{this.timer ? "Pause" : "Play"}</span>
           </a>
-          {/* <a class="button is-primary is-small is-inverted" onClick={this.skip.bind(this)}>
+          <a class="button is-primary is-small is-inverted" onClick={this.skip.bind(this)}>
             <span class="icon">
               <i class="fa fa-forward fa-lg"></i>
             </span>
-            <span>Skip</span>
-          </a> */}
+            <span style={{ display: "inline-block", "min-width": "40px" }}>Skip</span>
+          </a>
         </div>
       </Host>
     );
   }
 
-  private skip(): void {}
+  private skip(): void {
+    const pageBreak = this.events.find((e: Event) => e.EventType === EventType.PageBreak && e.Time > this.time);
+    // console.log("skip from", this.time, "to", pageBreak);
+    if (pageBreak) {
+      this.time = pageBreak.Time;
+      this.draw();
+      this.tick();
+    }
+  }
 
   private pause(): void {
     if (this.timer) {
@@ -112,13 +130,7 @@ export class PyriteTIEBriefing {
   }
 
   private init(): void {
-    this.time = 0;
-    this.events = this.briefing.Events.sort((a: Event, b: Event) => a.Time - b.Time);
-
-    this.drawMap = new TIEDrawMap(this.ctx, this.font, this.mission);
-    this.drawObjects = [this.drawMap];
-    this.draw();
-    this.tick();
+    this.reset();
 
     if (this.timer) {
       clearInterval(this.timer);
@@ -126,10 +138,31 @@ export class PyriteTIEBriefing {
     this.timer = setInterval(this.tick.bind(this), 80);
   }
 
+  private reset(): void {
+    this.time = 0;
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = 0;
+    }
+    this.events = this.briefing.Events.sort((a: Event, b: Event) => a.Time - b.Time);
+
+    this.drawMap = new TIEDrawMap(
+      this.ctx,
+      this.font,
+      this.mission,
+      this.iconBitmap,
+      document.createElement("canvas").getContext("2d")
+    );
+    this.drawObjects = [this.drawMap];
+    this.draw();
+    this.tick();
+  }
+
   private draw(): void {
     for (const drawObject of this.drawObjects) {
       drawObject.draw(this.time);
     }
+    this.drawMap.drawEdges();
   }
 
   private processEvents(events: Event[]): void {
@@ -153,9 +186,10 @@ export class PyriteTIEBriefing {
             this.drawObjects = this.drawObjects.filter(draw => !(draw instanceof DrawFGTag));
           } else if (event.EventType === EventType.ClearTextTags) {
             this.drawObjects = this.drawObjects.filter(draw => !(draw instanceof DrawTextTag));
+          } else if (event.EventType === EventType.PageBreak) {
+            // page break only matters for navigation (not entirely true but good enough)
           } else {
             console.warn("unhandled event", event);
-            // Page Break
           }
       }
     }

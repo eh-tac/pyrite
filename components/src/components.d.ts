@@ -8,6 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ApiSummary } from "./components/ehtc/api-select/api-select";
 import { Battle } from "./model/ehtc/battle";
 import { BattleSummary, CharacterSummary, PilotSummary } from "./model/ehtc";
+import { ItemSummary } from "./components/ehtc/wrap-select/wrap-select";
 import { Mission } from "./model/TIE/mission";
 import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic } from "./model/LFD";
 import { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
@@ -48,8 +49,16 @@ export namespace Components {
         "pin": number;
         "secondary": boolean;
     }
+    interface EhtcWrapSelect {
+        "item": ItemSummary;
+        "name": string;
+        "search": (query: string) => Promise<void>;
+        "value": string;
+    }
     interface PyriteFrown {
         "mission": Mission;
+        "modeSelect": (mode: "Officer" | "Secret" | "Table") => Promise<void>;
+        "showButtons": boolean;
     }
     interface PyriteLfd {
         "file": string;
@@ -286,6 +295,12 @@ declare global {
     var HTMLEhtcPilotElement: {
         prototype: HTMLEhtcPilotElement;
         new (): HTMLEhtcPilotElement;
+    };
+    interface HTMLEhtcWrapSelectElement extends Components.EhtcWrapSelect, HTMLStencilElement {
+    }
+    var HTMLEhtcWrapSelectElement: {
+        prototype: HTMLEhtcWrapSelectElement;
+        new (): HTMLEhtcWrapSelectElement;
     };
     interface HTMLPyriteFrownElement extends Components.PyriteFrown, HTMLStencilElement {
     }
@@ -684,6 +699,7 @@ declare global {
         "ehtc-battle-select": HTMLEhtcBattleSelectElement;
         "ehtc-member-select": HTMLEhtcMemberSelectElement;
         "ehtc-pilot": HTMLEhtcPilotElement;
+        "ehtc-wrap-select": HTMLEhtcWrapSelectElement;
         "pyrite-frown": HTMLPyriteFrownElement;
         "pyrite-lfd": HTMLPyriteLfdElement;
         "pyrite-lfd-battle-text": HTMLPyriteLfdBattleTextElement;
@@ -786,8 +802,15 @@ declare namespace LocalJSX {
         "pin"?: number;
         "secondary"?: boolean;
     }
+    interface EhtcWrapSelect {
+        "item"?: ItemSummary;
+        "name"?: string;
+        "onItemSelect"?: (event: CustomEvent<ItemSummary>) => void;
+        "value"?: string;
+    }
     interface PyriteFrown {
         "mission"?: Mission;
+        "showButtons"?: boolean;
     }
     interface PyriteLfd {
         "file"?: string;
@@ -992,6 +1015,7 @@ declare namespace LocalJSX {
         "ehtc-battle-select": EhtcBattleSelect;
         "ehtc-member-select": EhtcMemberSelect;
         "ehtc-pilot": EhtcPilot;
+        "ehtc-wrap-select": EhtcWrapSelect;
         "pyrite-frown": PyriteFrown;
         "pyrite-lfd": PyriteLfd;
         "pyrite-lfd-battle-text": PyriteLfdBattleText;
@@ -1069,6 +1093,7 @@ declare module "@stencil/core" {
             "ehtc-battle-select": LocalJSX.EhtcBattleSelect & JSXBase.HTMLAttributes<HTMLEhtcBattleSelectElement>;
             "ehtc-member-select": LocalJSX.EhtcMemberSelect & JSXBase.HTMLAttributes<HTMLEhtcMemberSelectElement>;
             "ehtc-pilot": LocalJSX.EhtcPilot & JSXBase.HTMLAttributes<HTMLEhtcPilotElement>;
+            "ehtc-wrap-select": LocalJSX.EhtcWrapSelect & JSXBase.HTMLAttributes<HTMLEhtcWrapSelectElement>;
             "pyrite-frown": LocalJSX.PyriteFrown & JSXBase.HTMLAttributes<HTMLPyriteFrownElement>;
             "pyrite-lfd": LocalJSX.PyriteLfd & JSXBase.HTMLAttributes<HTMLPyriteLfdElement>;
             "pyrite-lfd-battle-text": LocalJSX.PyriteLfdBattleText & JSXBase.HTMLAttributes<HTMLPyriteLfdBattleTextElement>;

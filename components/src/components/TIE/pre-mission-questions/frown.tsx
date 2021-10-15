@@ -1,12 +1,8 @@
-import { Component, h, JSX, Prop, State } from "@stencil/core";
+import { Component, h, JSX, Method, Prop, State, Watch } from "@stencil/core";
 import { Mission } from "../../../model/TIE/mission";
 import { PreMissionQuestions } from "../../../model/TIE/pre-mission-questions";
 
-enum DisplayMode {
-  Officer = "Officer",
-  Secret = "Secret",
-  Table = "Table"
-}
+type DisplayMode = "Officer" | "Secret" | "Table";
 
 @Component({
   tag: "pyrite-frown",
@@ -15,46 +11,59 @@ enum DisplayMode {
 })
 export class PreMissionQuestionsComponent {
   @Prop() public mission: Mission;
+  @Prop() public showButtons: boolean = true;
+
   @State() private officer: PreMissionQuestions[];
   @State() private secret: PreMissionQuestions[];
-  @State() private displayMode: DisplayMode = DisplayMode.Officer;
+  @State() private displayMode: "Officer" | "Secret" | "Table" = "Table";
   @State() private selected: PreMissionQuestions;
 
-  public componentWillLoad() {
-    this.officer = this.mission.officerBriefing;
-    this.secret = this.mission.secretBriefing;
+  private modes: DisplayMode[] = [];
+
+  public componentWillLoad(): void {
+    this.init();
+  }
+
+  @Watch("mission")
+  public init(): void {
+    if (this.mission) {
+      this.officer = this.mission.officerBriefing;
+      this.secret = this.mission.secretBriefing;
+      this.modes = ["Officer"];
+      if (this.secret && this.secret.length) {
+        this.modes.push("Secret");
+      }
+      this.modes.push("Table");
+    }
   }
 
   public render(): JSX.Element {
-    const modes = [DisplayMode.Officer];
-    if (this.secret && this.secret.length) {
-      modes.push(DisplayMode.Secret);
-    }
-    modes.push(DisplayMode.Table);
-
     return (
       <div class="wrapper">
         <div class="btn-group" role="group" aria-label="Pre Mission Question Mode Selector">
-          {modes.map(mode => (
-            <button type="button" class="btn btn-info" onClick={this.modeSelect.bind(this, mode)}>
-              {mode}
-            </button>
-          ))}
+          {this.showButtons &&
+            this.modes.map(mode => (
+              <button type="button" class="btn btn-info" onClick={this.modeSelect.bind(this, mode)}>
+                {mode}
+              </button>
+            ))}
         </div>
         {this.renderMode()}
       </div>
     );
   }
 
-  private modeSelect(mode: DisplayMode): void {
+  @Method()
+  public async modeSelect(mode: "Officer" | "Secret" | "Table"): Promise<void> {
     this.displayMode = mode;
+    this.selected = undefined;
   }
 
   private renderMode(): JSX.Element {
     let questions = this.officer || [];
     switch (this.displayMode) {
-      case DisplayMode.Table:
-        questions = questions.concat(this.secret);
+      case "Table":
+        questions = questions.concat(this.secret || []);
         return (
           <table class="table table-striped table-dark table-bordered">
             <thead class="thead-light">
@@ -75,9 +84,9 @@ export class PreMissionQuestionsComponent {
             </tbody>
           </table>
         );
-      case DisplayMode.Secret:
+      case "Secret":
         questions = this.secret;
-      case DisplayMode.Officer:
+      case "Officer":
         return (
           <div class={`image-wrapper tietext ${this.displayMode}`}>
             <div class="answer">{this.selected ? this.selected.Answer : ""}</div>
