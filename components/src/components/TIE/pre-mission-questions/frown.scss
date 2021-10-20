@@ -15,11 +15,11 @@
     background-color: black;
 
     &.Officer {
-      background-image: url("/assets/images/frown.jpg");
+      background-image: url("assets/images/frown.jpg");
     }
 
     &.Secret {
-      background-image: url("/assets/images/priest.jpg");
+      background-image: url("assets/images/priest.jpg");
     }
 
     .questions {
@@ -59,6 +59,10 @@
       overflow-y: scroll;
 
       white-space: pre;
+
+      .highlight {
+        color: green;
+      }
     }
   }
 

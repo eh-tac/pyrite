@@ -8,6 +8,10 @@ export const config: Config = {
       type: "www",
       dir: "../../../../pages/js/pyrite",
       serviceWorker: null // disable service workers
+    },
+    {
+      type: "dist",
+      dir: "/mnt/c/Users/pickl/projects/ehbl/src/assets/pyrite"
     }
   ],
   globalScript: "src/global/app.ts",

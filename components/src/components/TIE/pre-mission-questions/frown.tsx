@@ -59,6 +59,28 @@ export class PreMissionQuestionsComponent {
     this.selected = undefined;
   }
 
+  private renderText(text: string): JSX.Element[] {
+    let out: JSX.Element[] = [];
+    let current: string = "";
+    for (let i = 0; i < text.length; i++) {
+      const code = text.charCodeAt(i);
+      if (code === 2) {
+        // open special; current gets added as normal.
+        out.push(<span class="normal">{current}</span>);
+        current = "";
+      } else if (code === 1) {
+        // end special section; current is added as special.
+        out.push(<span class="highlight">{current}</span>);
+        current = "";
+      } else {
+        // normal, append to current string
+        current = `${current}${text[i]}`;
+      }
+    }
+    out.push(<span class="normal">{current}</span>);
+    return out;
+  }
+
   private renderMode(): JSX.Element {
     let questions = this.officer || [];
     switch (this.displayMode) {
@@ -89,7 +111,7 @@ export class PreMissionQuestionsComponent {
       case "Officer":
         return (
           <div class={`image-wrapper tietext ${this.displayMode}`}>
-            <div class="answer">{this.selected ? this.selected.Answer : ""}</div>
+            <div class="answer">{this.renderText(this.selected ? this.selected.Answer : "")}</div>
             <div class="questions">
               <ul>
                 {questions.map((question: PreMissionQuestions) => {

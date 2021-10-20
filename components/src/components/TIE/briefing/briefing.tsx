@@ -40,11 +40,11 @@ export class PyriteTIEBriefing {
       const canvas = this.dom.querySelector("canvas");
       if (canvas) {
         const font = "tiny";
-        fetch(`/assets/${font}.fnt`)
+        fetch(`assets/${font}.fnt`)
           .then((res: Response) => res.arrayBuffer())
           .then((value: ArrayBuffer) => {
             this.font = new FontFile(value);
-            fetch(`/assets/craft_TIE.bmp`)
+            fetch(`assets/craft_TIE.bmp`)
               .then((res2: Response) => res2.blob())
               .then((bmpBlob: Blob) => createImageBitmap(bmpBlob))
               .then((bmp: ImageBitmap) => {
