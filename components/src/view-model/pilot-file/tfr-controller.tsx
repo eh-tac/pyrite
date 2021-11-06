@@ -28,15 +28,9 @@ export class TFRController extends PilotFileController {
     const scores = battleData.highScores;
 
     const totalScore: number = this.tfr.LaserlessScore;
-    let percent: string = "";
-    let type: string = "";
-    if (battleData.missions === 1) {
-      type = "Mission";
-      percent = scores && scores["1"] ? this.percentage(totalScore, scores["1"].score) : "No high score found";
-    } else {
-      type = "Battle";
-      percent = scores && scores.length ? this.percentage(totalScore, scores[0].score) : "No high score found";
-    }
+    const percent: string =
+      scores && scores.total ? this.percentage(totalScore, scores.total.score) : "No high score found";
+    const type = battleData.missions === 1 ? "Mission" : "Battle";
 
     const battleRow = (
       <li class="list-group-item kv heading d-flex justify-content-between">
@@ -52,7 +46,7 @@ export class TFRController extends PilotFileController {
     );
 
     const missionScores = this.tfr.MissionScores;
-    const mCount = Math.max(missionScores.length, scores.length - 1);
+    const mCount = Math.max(missionScores.length, scores.missions.length);
     const missions: JSX.Element[] = [];
     missionScores.unshift(missionScores[0]); // make it 1 indexed basically.
     for (let m = 1; m <= mCount; m++) {

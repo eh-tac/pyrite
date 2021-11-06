@@ -35,133 +35,19 @@
     <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico" />
     <link rel="manifest" href="manifest.json" />
     <script>
-      function goStart() {
-        document.getElementById("start").style.display = "block";
-        document.getElementById("brief").style.display = "none";
-        document.getElementById("frown").style.display = "none";
-      }
-      function goBrief() {
-        document.getElementById("start").style.display = "none";
-        document.getElementById("brief").style.display = "block";
-      }
-
-      function goFrown() {
-        document.getElementById("start").style.display = "none";
-        const frown = document.querySelector("pyrite-frown");
-        frown.modeSelect("Officer");
-        document.getElementById("frown").style.display = "block";
-      }
-
-      function goMonk() {
-        document.getElementById("start").style.display = "none";
-        const frown = document.querySelector("pyrite-frown");
-        frown.modeSelect("Secret");
-        document.getElementById("frown").style.display = "block";
-      }
+      fetch("https://localhost/api/battle/XvT/TC/41")
+        .then(res => res.json())
+        .then(battle => {
+          const comp = document.querySelector("ehtc-battle");
+          comp.battle = battle;
+        });
     </script>
   </head>
   <body style="padding: 1rem;">
     <section class="section">
       <div class="container">
-        <div class="box" style="background-color: black;">
-          <div class="start" id="start">
-            <img src="assets/start.png" />
-            <div
-              onclick="goBrief()"
-              style="position: absolute; cursor: pointer; width: 280px; height: 360px; left: 250px; top: 100px;"
-            ></div>
-            <div
-              onclick="goFrown()"
-              style="position: absolute; cursor: pointer; width: 100px; height: 260px; left: 530px; top:200px;"
-            ></div>
-            <div
-              onclick="goMonk()"
-              style="position: absolute; cursor: pointer; width: 300px; height: 200px; left: 880px; top:200px;"
-            ></div>
-          </div>
-          <!-- <form action="/">
-            <ehtc-member-select domain="https://localhost" name="pin"  value="9555" mode="pilot"></ehtc-member-select>
-            <ehtc-member-select domain="https://localhost" name="characterId"  value="" filter="108,110,111,116"></ehtc-member-select>
-            <ehtc-battle-select domain="https://localhost" name="battleId"></ehtc-battle-select>
-          <span onclick="console.log(Array.from(new FormData(document.querySelector('form')).entries()))">XXX</span>
-          </form> -->
-
-          <!-- <p>xvt validator</p> -->
-          <!-- <pyrite-mission-wrapper file="/assets/D45/Challenge05.tie"> -->
-          <!-- <pyrite-xvt-mission></pyrite-xvt-mission> -->
-          <!-- </pyrite-mission-wrapper> -->
-          <div id="frown" style="display: none;">
-            <a href="#" onclick="goStart()" style="margin: 1rem 0; display: block;">< Back to briefing room</a>
-            <pyrite-mission-wrapper file="assets/TUSORIX.TIE">
-              <pyrite-frown show-buttons="false"></pyrite-frown>
-            </pyrite-mission-wrapper>
-          </div>
-          <div id="brief" style="display: none;">
-            <a href="#" onclick="goStart()" style="margin: 1rem 0; display: block;">< Back to briefing room</a>
-            <pyrite-mission-wrapper file="assets/TUSORIX.TIE">
-              <pyrite-tie-briefing></pyrite-tie-briefing>
-            </pyrite-mission-wrapper>
-          </div>
-
-          <!-- <pyrite-mission-wrapper file="/assets/XvTTC1/B77M1XVT.TIE"> -->
-          <!-- <pyrite-xvt-mission></pyrite-xvt-mission> -->
-          <!-- </pyrite-mission-wrapper> -->
-
-          <!-- <pyrite-mission-wrapper file="/assets/BoPTC1/CRUCOMP1.TIE"> -->
-          <!-- <pyrite-xvt-mission></pyrite-xvt-mission> -->
-          <!-- </pyrite-mission-wrapper> -->
-
-          <!-- <pyrite-mission-wrapper file="/assets/XWATC1/1b8m1g.tie"> -->
-          <!-- <pyrite-xvt-mission></pyrite-xvt-mission> -->
-          <!-- </pyrite-mission-wrapper> -->
-
-          <!-- <h5 class='title'>LFD</h5> -->
-          <!-- <p>Zip</p> -->
-          <!-- <pyrite-lfd file="/assets/data/zip/Battle5.lfd"></pyrite-lfd> -->
-          <!-- <p>=====EhM====</p> -->
-          <!-- <hr /> -->
-          <!-- <pyrite-lfd file="/assets/data/ehm/Battle5.lfd"></pyrite-lfd> -->
-
-          <!-- <p>ehtc-pilot</p>
-    <div style="display: flex; justify-content: space-between;">
-      <ehtc-pilot pin="9555" class="small fchg"></ehtc-pilot>
-      <ehtc-pilot pin="9555" class="rank" style="margin-left: 1rem;"></ehtc-pilot>
-    </div> -->
-          <!-- <p>ehtc-battle-center</p> -->
-          <!-- <ehtc-battle-center></ehtc-battle-center> -->
-
-          <!-- <p>Pets</p>
-    <ehtc-wrap-select>
-        <select name="pets" id="pet-select">
-          <option value="">--Please choose an option--</option>
-          <option value="1">Dog</option>
-          <option value="2">Cat</option>
-          <option value="3">Hamster</option>
-          <option value="4">Parrot</option>
-          <option value="5">Spider</option>
-          <option value="6">Goldfish</option>
-      </select>
-    </ehtc-wrap-select>
-    <ehtc-wrap-select>
-        <option value="">--Please choose an option--</option>
-        <option value="1">Dog</option>
-        <option value="2">Cat</option>
-        <option value="3">Hamster</option>
-        <option value="4">Parrot</option>
-        <option value="5">Spider</option>
-        <option value="6">Goldfish</option>
-  </ehtc-wrap-select> -->
-          <!-- <p>pilot file viewer</p>
-    <pyrite-pilot-file
-      bsf="https://localhost/api/battle/XWA/F/160"
-      
-      allow-upload="true"
-      style="width: 600px;"
-    ></pyrite-pilot-file> -->
-
-          <!-- allow-upload=true -->
-          <!-- <h5 class="title">Briefing</h5> -->
-          <!-- <pyrite-tie-mission file="/assets/Option3.tie"></pyrite-tie-mission> -->
+        <div class="box">
+          <ehtc-battle></ehtc-battle>
         </div>
       </div>
     </section>

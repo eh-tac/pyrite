@@ -30,7 +30,7 @@ export class Battle extends BattleSummary {
     public bugs: Bug[],
     public creators: PilotSummary[],
     public patches: string[],
-    public highScores: Score[],
+    public highScores: { missions: Score[]; total: Score },
     public statistics: Statistics
   ) {
     super(nr, code, nr, name, missions, ratingAvg, URL);

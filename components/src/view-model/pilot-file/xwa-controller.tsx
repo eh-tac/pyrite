@@ -25,15 +25,7 @@ export class XWAPltController extends PilotFileController {
 
   protected renderBSF(battleData: Battle): JSX.Element {
     let scores = battleData.highScores;
-    let battleHS = 0;
-
-    // dirty API format switch
-    if (scores["missions"]) {
-      battleHS = scores["total"].score;
-      scores = scores["missions"];
-    } else {
-      battleHS = battleData.missions === 1 ? scores["1"].score : scores[0].score;
-    }
+    let battleHS = battleData.highScores.total.score;
 
     let totalScore: number = 0;
 
