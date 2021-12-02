@@ -17,6 +17,7 @@ export class MemberSelectComponent {
   @Prop() domain: string;
   @Prop() name: string;
   @Prop() mode: "character" | "pilot" = "character";
+  @Prop() status: "active" | "all" = "active";
   @Prop() filter: string = "";
 
   @State() selection?: Member;
@@ -74,7 +75,7 @@ export class MemberSelectComponent {
 
   private get listURL(): string {
     const d = this.domain || "";
-    return `${d}/api/${this.mode}/list`;
+    return `${d}/api/${this.mode}/list/${this.status}`;
   }
 
   private updateQuery(query: string): void {

@@ -30,6 +30,8 @@
     "coop": "tsc -p tsconfig.commonjs.json && node dist/scripts/coop.js",
     "puz": "ts-node -P tsconfig.commonjs.json src/scripts/puz.ts",
     "xw": "ts-node -P tsconfig.commonjs.json src/scripts/xw.ts",
+    "xwa": "ts-node -P tsconfig.commonjs.json src/scripts/xwa.ts",
+    "ssd": "ts-node -P tsconfig.commonjs.json src/scripts/ssd.ts",
     "css-build": "node-sass --omit-source-map-url src/assets/bulma/superhero.scss src/assets/superhero-build.css",
     "css-watch": "npm run css-build -- --watch"
   },

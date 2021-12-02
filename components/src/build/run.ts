@@ -23,17 +23,17 @@ function mg(plt: string): PyriteGenerator {
 // const xwP = new PHPWriter("../lib", xwG);
 // xwP.write();
 
-const vG = mg("XvT");
-const vW = new TypeScriptWriter("src", vG);
-const vP = new PHPWriter("../lib", vG);
-vW.write();
-vP.write();
+// const vG = mg("XvT");
+// const vW = new TypeScriptWriter("src", vG);
+// const vP = new PHPWriter("../lib", vG);
+// vW.write();
+// vP.write();
 
-// const wG = mg("XWA");
-// const wW = new TypeScriptWriter("src", wG);
-// const wP = new PHPWriter("../lib", wG);
-// wW.write();
-// wP.write();
+const wG = mg("XWA");
+const wW = new TypeScriptWriter("src", wG);
+const wP = new PHPWriter("../lib", wG);
+wW.write();
+wP.write();
 
 // const lfdG = mg("LFD");
 // const lfgW = new TypeScriptWriter("src", lfdG);
