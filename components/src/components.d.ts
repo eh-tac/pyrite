@@ -14,7 +14,7 @@ import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle,
 import { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
 import { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
 import { FileHeader as FileHeader2, FlightGroup as FlightGroup2, Mission as Mission3, ObjectGroup, PilotFile as PilotFile2 } from "./model/XW";
-import { Briefing as Briefing1, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, LengthString, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Skip, String, Tag as Tag2, Team as Team1, Trigger as Trigger2, Waypt as Waypt2, XWAString } from "./model/XWA";
+import { Briefing as Briefing1, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, LengthString, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Skip, Tag as Tag2, Team as Team1, Trigger as Trigger2, Waypt as Waypt2, XWAString } from "./model/XWA";
 export namespace Components {
     interface EhtcApiSelect {
         "domain": string;
@@ -297,9 +297,6 @@ export namespace Components {
     }
     interface PyriteXwaSkip {
         "skip": Skip;
-    }
-    interface PyriteXwaString {
-        "string": String;
     }
     interface PyriteXwaTag {
         "tag": Tag;
@@ -828,12 +825,6 @@ declare global {
         prototype: HTMLPyriteXwaSkipElement;
         new (): HTMLPyriteXwaSkipElement;
     };
-    interface HTMLPyriteXwaStringElement extends Components.PyriteXwaString, HTMLStencilElement {
-    }
-    var HTMLPyriteXwaStringElement: {
-        prototype: HTMLPyriteXwaStringElement;
-        new (): HTMLPyriteXwaStringElement;
-    };
     interface HTMLPyriteXwaTagElement extends Components.PyriteXwaTag, HTMLStencilElement {
     }
     var HTMLPyriteXwaTagElement: {
@@ -950,7 +941,6 @@ declare global {
         "pyrite-xwa-order": HTMLPyriteXwaOrderElement;
         "pyrite-xwa-pilot-file": HTMLPyriteXwaPilotFileElement;
         "pyrite-xwa-skip": HTMLPyriteXwaSkipElement;
-        "pyrite-xwa-string": HTMLPyriteXwaStringElement;
         "pyrite-xwa-tag": HTMLPyriteXwaTagElement;
         "pyrite-xwa-team": HTMLPyriteXwaTeamElement;
         "pyrite-xwa-trigger": HTMLPyriteXwaTriggerElement;
@@ -1239,9 +1229,6 @@ declare namespace LocalJSX {
     interface PyriteXwaSkip {
         "skip"?: Skip;
     }
-    interface PyriteXwaString {
-        "string"?: String;
-    }
     interface PyriteXwaTag {
         "tag"?: Tag;
     }
@@ -1343,7 +1330,6 @@ declare namespace LocalJSX {
         "pyrite-xwa-order": PyriteXwaOrder;
         "pyrite-xwa-pilot-file": PyriteXwaPilotFile;
         "pyrite-xwa-skip": PyriteXwaSkip;
-        "pyrite-xwa-string": PyriteXwaString;
         "pyrite-xwa-tag": PyriteXwaTag;
         "pyrite-xwa-team": PyriteXwaTeam;
         "pyrite-xwa-trigger": PyriteXwaTrigger;
@@ -1440,7 +1426,6 @@ declare module "@stencil/core" {
             "pyrite-xwa-order": LocalJSX.PyriteXwaOrder & JSXBase.HTMLAttributes<HTMLPyriteXwaOrderElement>;
             "pyrite-xwa-pilot-file": LocalJSX.PyriteXwaPilotFile & JSXBase.HTMLAttributes<HTMLPyriteXwaPilotFileElement>;
             "pyrite-xwa-skip": LocalJSX.PyriteXwaSkip & JSXBase.HTMLAttributes<HTMLPyriteXwaSkipElement>;
-            "pyrite-xwa-string": LocalJSX.PyriteXwaString & JSXBase.HTMLAttributes<HTMLPyriteXwaStringElement>;
             "pyrite-xwa-tag": LocalJSX.PyriteXwaTag & JSXBase.HTMLAttributes<HTMLPyriteXwaTagElement>;
             "pyrite-xwa-team": LocalJSX.PyriteXwaTeam & JSXBase.HTMLAttributes<HTMLPyriteXwaTeamElement>;
             "pyrite-xwa-trigger": LocalJSX.PyriteXwaTrigger & JSXBase.HTMLAttributes<HTMLPyriteXwaTriggerElement>;

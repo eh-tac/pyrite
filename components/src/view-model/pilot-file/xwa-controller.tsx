@@ -2,8 +2,9 @@ import { JSX, h } from "@stencil/core";
 
 import { PilotFileController } from "./controller";
 import { Battle } from "../../model/ehtc";
-import { PilotFile, MissionData, TriStat } from "../../model/XWA";
+import { PilotFile, MissionData } from "../../model/XWA";
 import { BattleSummary } from "../../model/pilot";
+import { TriStat } from "../../model/XWA/pilot-file";
 
 export class XWAPltController extends PilotFileController {
   public constructor(filepath: string, public plt: PilotFile) {
