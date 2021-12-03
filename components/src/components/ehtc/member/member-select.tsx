@@ -1,5 +1,6 @@
 import { JSX, Component, Prop, h, Element, Event, EventEmitter, State, Method } from "@stencil/core";
 import { PilotSummary, CharacterSummary } from "../../../model/ehtc";
+import { ehtcAPI } from "../api-store/util";
 
 type Member = PilotSummary | CharacterSummary;
 
@@ -43,28 +44,26 @@ export class MemberSelectComponent {
     parent.appendChild(this.externalPINInputElement);
     this.filterArray = this.filter ? this.filter.split(",").map(s => parseInt(s, 10)) : [];
 
-    fetch(this.listURL)
-      .then((r: Response) => {
-        return r.json();
-      })
-      .then((d: Member[]) => {
-        this.memberList = d;
-        if (this.filterArray.length) {
-          this.memberList = d.filter(
-            (m: CharacterSummary) =>
-              (this.mode === "pilot" && this.filterArray.includes(m.PIN)) ||
-              (this.mode === "character" && this.filterArray.includes(m.characterId))
-          );
-        }
+    console.log("member select", this.listURL);
+    ehtcAPI(this.listURL).then((d: Member[]) => {
+      console.log("got member data now!");
+      this.memberList = d;
+      if (this.filterArray.length) {
+        this.memberList = d.filter(
+          (m: CharacterSummary) =>
+            (this.mode === "pilot" && this.filterArray.includes(m.PIN)) ||
+            (this.mode === "character" && this.filterArray.includes(m.characterId))
+        );
+      }
 
-        if (this.value) {
-          const v = parseInt(this.value, 10);
-          this.selection = this.memberList.find(
-            (m: CharacterSummary) =>
-              (this.mode === "pilot" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
-          );
-        }
-      });
+      if (this.value) {
+        const v = parseInt(this.value, 10);
+        this.selection = this.memberList.find(
+          (m: CharacterSummary) =>
+            (this.mode === "pilot" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
+        );
+      }
+    });
   }
 
   @Method()

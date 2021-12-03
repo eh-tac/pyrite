@@ -24,6 +24,11 @@ export namespace Components {
         "url": string;
         "value": string;
     }
+    interface EhtcApiStore {
+        "apiFetch": (url: string) => Promise<any>;
+        "cachePrefix": string;
+        "domain": string;
+    }
     interface EhtcBattle {
         "battle": Battle;
         "code": string;
@@ -320,6 +325,12 @@ declare global {
     var HTMLEhtcApiSelectElement: {
         prototype: HTMLEhtcApiSelectElement;
         new (): HTMLEhtcApiSelectElement;
+    };
+    interface HTMLEhtcApiStoreElement extends Components.EhtcApiStore, HTMLStencilElement {
+    }
+    var HTMLEhtcApiStoreElement: {
+        prototype: HTMLEhtcApiStoreElement;
+        new (): HTMLEhtcApiStoreElement;
     };
     interface HTMLEhtcBattleElement extends Components.EhtcBattle, HTMLStencilElement {
     }
@@ -857,6 +868,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "ehtc-api-select": HTMLEhtcApiSelectElement;
+        "ehtc-api-store": HTMLEhtcApiStoreElement;
         "ehtc-battle": HTMLEhtcBattleElement;
         "ehtc-battle-center": HTMLEhtcBattleCenterElement;
         "ehtc-battle-select": HTMLEhtcBattleSelectElement;
@@ -956,6 +968,10 @@ declare namespace LocalJSX {
         "onApiSelect"?: (event: CustomEvent<ApiSummary>) => void;
         "url"?: string;
         "value"?: string;
+    }
+    interface EhtcApiStore {
+        "cachePrefix"?: string;
+        "domain"?: string;
     }
     interface EhtcBattle {
         "battle"?: Battle;
@@ -1246,6 +1262,7 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "ehtc-api-select": EhtcApiSelect;
+        "ehtc-api-store": EhtcApiStore;
         "ehtc-battle": EhtcBattle;
         "ehtc-battle-center": EhtcBattleCenter;
         "ehtc-battle-select": EhtcBattleSelect;
@@ -1342,6 +1359,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "ehtc-api-select": LocalJSX.EhtcApiSelect & JSXBase.HTMLAttributes<HTMLEhtcApiSelectElement>;
+            "ehtc-api-store": LocalJSX.EhtcApiStore & JSXBase.HTMLAttributes<HTMLEhtcApiStoreElement>;
             "ehtc-battle": LocalJSX.EhtcBattle & JSXBase.HTMLAttributes<HTMLEhtcBattleElement>;
             "ehtc-battle-center": LocalJSX.EhtcBattleCenter & JSXBase.HTMLAttributes<HTMLEhtcBattleCenterElement>;
             "ehtc-battle-select": LocalJSX.EhtcBattleSelect & JSXBase.HTMLAttributes<HTMLEhtcBattleSelectElement>;
