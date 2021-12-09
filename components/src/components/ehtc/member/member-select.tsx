@@ -44,9 +44,7 @@ export class MemberSelectComponent {
     parent.appendChild(this.externalPINInputElement);
     this.filterArray = this.filter ? this.filter.split(",").map(s => parseInt(s, 10)) : [];
 
-    console.log("member select", this.listURL);
     ehtcAPI(this.listURL).then((d: Member[]) => {
-      console.log("got member data now!");
       this.memberList = d;
       if (this.filterArray.length) {
         this.memberList = d.filter(
