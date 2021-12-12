@@ -2,6 +2,8 @@
 
 namespace Pyrite\EHBL;
 
+use Exception;
+
 class Battle
 {
     public $platform;
@@ -132,6 +134,7 @@ class Battle
             case Platform::BoP:
                 return \Pyrite\XvT\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
             case Platform::XWA:
+            case Platform::TFTC:
                 return \Pyrite\XWA\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
             case Platform::XW:
                 return \Pyrite\XW\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
