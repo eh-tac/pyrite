@@ -23,15 +23,23 @@ export class WrapSelectComponent {
   @State() query: string;
   @State() fullList: ItemSummary[];
 
-  private onInput: (e: Event) => void;
+  private onInput: (e: Event) => void = (e: Event) => {
+    const input = e.target as HTMLInputElement;
+    this.updateQuery(input.value);
+  };
+
+  private onClick: (e: Event) => void = (e: Event) => {
+    if (this.query) {
+      this.getSuggestions();
+    } else {
+      this.suggestions = this.fullList;
+    }
+    e.stopPropagation();
+  };
+
   private externalInputElement: HTMLInputElement;
 
   public componentWillLoad(): void {
-    this.onInput = (e: Event) => {
-      const input = e.target as HTMLInputElement;
-      this.updateQuery(input.value);
-    };
-
     this.fullList = [];
     this.el.querySelectorAll("option").forEach(optEl => {
       this.fullList.push({
@@ -39,7 +47,6 @@ export class WrapSelectComponent {
         name: optEl.textContent
       });
     });
-    console.log("wrap ", this.fullList);
 
     const parent = this.el.parentElement;
     this.externalInputElement = parent.ownerDocument.createElement("input");
@@ -114,7 +121,10 @@ export class WrapSelectComponent {
       );
     }
     return (
-      <div class={{ "ehtc-wrap-select": true, dropdown: true, "is-active": !this.selection && !!this.suggestions }}>
+      <div
+        class={{ "ehtc-wrap-select": true, dropdown: true, "is-active": !this.selection && !!this.suggestions }}
+        onClick={this.onClick}
+      >
         <div style={{ display: "none" }}>
           <slot />
         </div>

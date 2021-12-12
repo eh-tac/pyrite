@@ -48,6 +48,7 @@ export namespace Components {
         "mode": "character" | "pilot";
         "name": string;
         "search": (query: string) => Promise<void>;
+        "setValue": (val: string | number) => Promise<void>;
         "status": "active" | "all";
         "value": string;
     }

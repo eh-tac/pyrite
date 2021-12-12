@@ -55,11 +55,7 @@ export class MemberSelectComponent {
       }
 
       if (this.value) {
-        const v = parseInt(this.value, 10);
-        this.selection = this.memberList.find(
-          (m: CharacterSummary) =>
-            (this.mode === "pilot" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
-        );
+        this.setValue(this.value);
       }
     });
   }
@@ -67,6 +63,16 @@ export class MemberSelectComponent {
   @Method()
   public search(query: string): Promise<void> {
     this.updateQuery(query);
+    return Promise.resolve();
+  }
+
+  @Method()
+  public setValue(val: string | number): Promise<void> {
+    const v = typeof val === "number" ? val : parseInt(val, 10);
+    this.selection = this.memberList.find(
+      (m: CharacterSummary) =>
+        (this.mode === "pilot" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
+    );
     return Promise.resolve();
   }
 

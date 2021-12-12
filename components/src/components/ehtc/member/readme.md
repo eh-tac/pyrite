@@ -36,6 +36,16 @@ Type: `Promise<void>`
 
 
 
+### `setValue(val: string | number) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ----------------------------------------------
 
