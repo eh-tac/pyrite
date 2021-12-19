@@ -41,12 +41,6 @@ export class WrapSelectComponent {
 
   public componentWillLoad(): void {
     this.fullList = [];
-    this.el.querySelectorAll("option").forEach(optEl => {
-      this.fullList.push({
-        id: optEl.value ? parseInt(optEl.value, 10) : null,
-        name: optEl.textContent
-      });
-    });
 
     const parent = this.el.parentElement;
     this.externalInputElement = parent.ownerDocument.createElement("input");
@@ -54,6 +48,17 @@ export class WrapSelectComponent {
     this.externalInputElement.value = this.value;
     this.externalInputElement.name = this.name;
     parent.appendChild(this.externalInputElement);
+
+    this.el.querySelectorAll("option").forEach(optEl => {
+      const item = {
+        id: optEl.value ? parseInt(optEl.value, 10) : null,
+        name: optEl.textContent
+      };
+      this.fullList.push(item);
+      if (optEl.selected) {
+        this.selectItem(item);
+      }
+    });
   }
 
   @Method()
