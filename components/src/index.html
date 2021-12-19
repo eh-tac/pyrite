@@ -38,8 +38,8 @@
       fetch("https://localhost/api/battle/XvT/TC/41")
         .then(res => res.json())
         .then(battle => {
-          const comp = document.querySelector("ehtc-battle");
-          comp.battle = battle;
+          // const comp = document.querySelector("ehtc-battle");
+          // comp.battle = battle;
         });
     </script>
   </head>
@@ -47,7 +47,33 @@
     <section class="section">
       <div class="container">
         <div class="box">
-          <ehtc-battle></ehtc-battle>
+          <!-- <ehtc-battle></ehtc-battle> -->
+          <ehtc-wrap-select name="MedalId"
+            ><select name="MedalId">
+              <option value="1">Medal of Honour</option>
+              <option value="3">Imperial Cross</option>
+              <option value="2">Order of the Renegade</option>
+              <option value="4">Grand Order of the Emperor</option>
+              <option value="5">Gold Star of the Empire</option>
+              <option value="6">Silver Star of the Empire</option>
+              <option value="7">Bronze Star of the Empire</option>
+              <option value="8">Palpatine Crescent</option>
+              <option value="9">Imperial Security Medal</option>
+              <option value="41">Imperial Achievement Ribbon</option>
+              <option value="10">Iron Star with Platinum Wings</option>
+              <option value="11">Iron Star with Gold Wings</option>
+              <option value="12">Iron Star with Silver Wings</option>
+              <option value="13">Iron Star with Bronze Wings</option>
+              <option value="39">Iron Star with Copper Wings</option>
+              <option value="14">Iron Star with Platinum Ribbon</option>
+              <option value="15">Iron Star with Gold Ribbon</option>
+              <option value="16">Iron Star with Silver Ribbon</option>
+              <option value="17">Iron Star with Bronze Ribbon</option>
+              <option value="40">Iron Star with Copper Ribbon</option>
+              <option value="29">Commendation of Loyalty</option>
+              <option value="32">Commendation of Bravery</option>
+            </select></ehtc-wrap-select
+          >
         </div>
       </div>
     </section>

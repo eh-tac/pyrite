@@ -33,6 +33,13 @@ export class WrapSelectComponent {
       this.getSuggestions();
     } else {
       this.suggestions = this.fullList;
+      document.body.addEventListener(
+        "click",
+        () => {
+          this.suggestions = undefined;
+        },
+        { once: true }
+      );
     }
     e.stopPropagation();
   };
@@ -54,6 +61,12 @@ export class WrapSelectComponent {
     this.externalInputElement.value = this.value;
     this.externalInputElement.name = this.name;
     parent.appendChild(this.externalInputElement);
+
+    document.body.addEventListener("keydown", (ke: KeyboardEvent) => {
+      if (ke.key === "Escape" && this.suggestions) {
+        this.suggestions = undefined;
+      }
+    });
   }
 
   @Method()
