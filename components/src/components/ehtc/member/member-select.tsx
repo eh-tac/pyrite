@@ -58,6 +58,12 @@ export class MemberSelectComponent {
         this.setValue(this.value);
       }
     });
+
+    document.body.addEventListener("keydown", (ke: KeyboardEvent) => {
+      if (ke.key === "Escape" && this.suggestions) {
+        this.suggestions = undefined;
+      }
+    });
   }
 
   @Method()

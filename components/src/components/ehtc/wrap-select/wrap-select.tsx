@@ -33,6 +33,13 @@ export class WrapSelectComponent {
       this.getSuggestions();
     } else {
       this.suggestions = this.fullList;
+      document.body.addEventListener(
+        "click",
+        () => {
+          this.suggestions = undefined;
+        },
+        { once: true }
+      );
     }
     e.stopPropagation();
   };
@@ -57,6 +64,11 @@ export class WrapSelectComponent {
       this.fullList.push(item);
       if (optEl.selected) {
         this.selectItem(item);
+      }
+    });
+    document.body.addEventListener("keydown", (ke: KeyboardEvent) => {
+      if (ke.key === "Escape" && this.suggestions) {
+        this.suggestions = undefined;
       }
     });
   }

@@ -47,6 +47,11 @@ export class BattleSelectComponent {
     this.externalInputElement.value = this.value;
     this.externalInputElement.name = this.name;
     parent.appendChild(this.externalInputElement);
+    document.body.addEventListener("keydown", (ke: KeyboardEvent) => {
+      if (ke.key === "Escape" && this.suggestions) {
+        this.suggestions = undefined;
+      }
+    });
   }
 
   @Method()
