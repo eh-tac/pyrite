@@ -110,7 +110,7 @@ export class MemberSelectComponent {
 
   private getSuggestions() {
     const q = this.query.toLowerCase();
-    const match = (str: string) => str.toLowerCase().includes(q);
+    const match = (str?: string) => str && str.toLowerCase().includes(q);
 
     this.suggestions = this.memberList
       .filter((p: Member): boolean => {

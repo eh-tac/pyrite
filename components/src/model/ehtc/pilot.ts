@@ -4,7 +4,7 @@ export interface Rating {
   image?: string;
 }
 export class PilotSummary {
-  constructor(public PIN: number, public label: string, public profile: string, public description: string) {}
+  constructor(public PIN: number, public label: string, public profile: string, public description?: string) {}
 }
 
 export class SimplePilot extends PilotSummary {
