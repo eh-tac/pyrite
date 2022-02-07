@@ -20,27 +20,37 @@ export class MemberSelectComponent {
   @Prop() mode: "character" | "pilot" = "character";
   @Prop() status: "active" | "all" = "active";
   @Prop() filter: string = "";
-
-  @State() selection?: Member;
+  @Prop() disabled: boolean;
+  @Prop() readonly: boolean;
+  @State()
+  selection?: Member;
   @State() suggestions?: Member[];
   @State() query: string;
   @State() memberList: Member[];
 
-  private onInput: (e: Event) => void;
+  private onInput: (e: Event) => void = (e: Event) => {
+    if (this.disabled) {
+      return;
+    }
+    const input = e.target as HTMLInputElement;
+    this.updateQuery(input.value);
+  };
   private externalPINInputElement: HTMLInputElement;
   private filterArray: number[] = [];
 
-  public componentWillLoad(): void {
-    this.onInput = (e: Event) => {
-      const input = e.target as HTMLInputElement;
-      this.updateQuery(input.value);
-    };
+  private get editable(): boolean {
+    return !this.disabled && !this.readonly;
+  }
 
+  public componentWillLoad(): void {
     const parent = this.el.parentElement;
     this.externalPINInputElement = parent.ownerDocument.createElement("input");
     this.externalPINInputElement.type = "hidden";
     this.externalPINInputElement.value = this.value;
     this.externalPINInputElement.name = this.name;
+    this.externalPINInputElement.disabled = this.disabled;
+    this.externalPINInputElement.readOnly = this.readonly;
+
     parent.appendChild(this.externalPINInputElement);
     this.filterArray = this.filter ? this.filter.split(",").map(s => parseInt(s, 10)) : [];
 
@@ -75,9 +85,11 @@ export class MemberSelectComponent {
   @Method()
   public setValue(val: string | number): Promise<void> {
     const v = typeof val === "number" ? val : parseInt(val, 10);
-    this.selection = this.memberList.find(
-      (m: CharacterSummary) =>
-        (this.mode === "pilot" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
+    this.selectMember(
+      this.memberList.find(
+        (m: CharacterSummary) =>
+          (this.mode === "pilot" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
+      )
     );
     return Promise.resolve();
   }
@@ -148,16 +160,26 @@ export class MemberSelectComponent {
         {!this.selection && (
           <div class="dropdown-trigger field mb-0">
             <div class="control">
-              <input class="input" type="text" placeholder="Member search" onInput={this.onInput} value={this.query} />
+              <input
+                class="input"
+                type="text"
+                placeholder="Member search"
+                onInput={this.onInput}
+                value={this.query}
+                disabled={this.disabled}
+                readOnly={this.readonly}
+              />
             </div>
           </div>
         )}
         {this.selection && (
           <div class="selected-pilot">
             {this.renderMember(this.selection)}
-            <a class="button is-warning is-small is-radiusless" onClick={this.selectMember.bind(this, undefined)}>
-              X
-            </a>
+            {this.editable && (
+              <a class="button is-warning is-small is-radiusless" onClick={this.selectMember.bind(this, undefined)}>
+                X
+              </a>
+            )}
           </div>
         )}
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">

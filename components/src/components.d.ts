@@ -37,16 +37,20 @@ export namespace Components {
     }
     interface EhtcBattleSelect {
         "battle": BattleSummary;
+        "disabled": boolean;
         "domain": string;
         "name": string;
+        "readonly": boolean;
         "search": (query: string) => Promise<void>;
         "value": string;
     }
     interface EhtcMemberSelect {
+        "disabled": boolean;
         "domain": string;
         "filter": string;
         "mode": "character" | "pilot";
         "name": string;
+        "readonly": boolean;
         "search": (query: string) => Promise<void>;
         "setValue": (val: string | number) => Promise<void>;
         "status": "active" | "all";
@@ -57,8 +61,10 @@ export namespace Components {
         "secondary": boolean;
     }
     interface EhtcWrapSelect {
+        "disabled": boolean;
         "item": ItemSummary;
         "name": string;
+        "readonly": boolean;
         "search": (query: string) => Promise<void>;
         "value": string;
     }
@@ -983,17 +989,21 @@ declare namespace LocalJSX {
     }
     interface EhtcBattleSelect {
         "battle"?: BattleSummary;
+        "disabled"?: boolean;
         "domain"?: string;
         "name"?: string;
         "onBattleSelect"?: (event: CustomEvent<BattleSummary>) => void;
+        "readonly"?: boolean;
         "value"?: string;
     }
     interface EhtcMemberSelect {
+        "disabled"?: boolean;
         "domain"?: string;
         "filter"?: string;
         "mode"?: "character" | "pilot";
         "name"?: string;
         "onMemberSelect"?: (event: CustomEvent<PilotSummary | CharacterSummary>) => void;
+        "readonly"?: boolean;
         "status"?: "active" | "all";
         "value"?: string;
     }
@@ -1002,9 +1012,11 @@ declare namespace LocalJSX {
         "secondary"?: boolean;
     }
     interface EhtcWrapSelect {
+        "disabled"?: boolean;
         "item"?: ItemSummary;
         "name"?: string;
         "onItemSelect"?: (event: CustomEvent<ItemSummary>) => void;
+        "readonly"?: boolean;
         "value"?: string;
     }
     interface PyriteFrown {

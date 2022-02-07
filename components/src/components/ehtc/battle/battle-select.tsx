@@ -16,20 +16,29 @@ export class BattleSelectComponent {
   // domain override. defaults to empty for same domain requests
   @Prop() domain: string;
   @Prop() name: string;
+  @Prop() disabled: boolean;
+  @Prop() readonly: boolean;
 
   @State() selection?: BattleSummary;
   @State() suggestions?: BattleSummary[];
   @State() query: string;
   @State() battleList: BattleSummary[];
 
-  private onInput: (e: Event) => void;
+  private onInput: (e: Event) => void = (e: Event) => {
+    if (this.disabled) {
+      return;
+    }
+    const input = e.target as HTMLInputElement;
+    this.updateQuery(input.value);
+  };
+
   private externalInputElement: HTMLInputElement;
 
+  private get editable(): boolean {
+    return !this.disabled && !this.readonly;
+  }
+
   public componentWillLoad(): void {
-    this.onInput = (e: Event) => {
-      const input = e.target as HTMLInputElement;
-      this.updateQuery(input.value);
-    };
     fetch(this.listURL)
       .then((r: Response) => {
         return r.json();
@@ -46,6 +55,9 @@ export class BattleSelectComponent {
     this.externalInputElement.type = "hidden";
     this.externalInputElement.value = this.value;
     this.externalInputElement.name = this.name;
+    this.externalInputElement.disabled = this.disabled;
+    this.externalInputElement.readOnly = this.readonly;
+
     parent.appendChild(this.externalInputElement);
     document.body.addEventListener("keydown", (ke: KeyboardEvent) => {
       if (ke.key === "Escape" && this.suggestions) {
@@ -124,16 +136,26 @@ export class BattleSelectComponent {
         {!this.selection && (
           <div class="dropdown-trigger field mb-0">
             <div class="control">
-              <input class="input" type="text" placeholder="Battle search" onInput={this.onInput} value={this.query} />
+              <input
+                class="input"
+                type="text"
+                placeholder="Battle search"
+                onInput={this.onInput}
+                value={this.query}
+                disabled={this.disabled}
+                readOnly={this.readonly}
+              />
             </div>
           </div>
         )}
         {this.selection && (
           <div class="selected-battle">
             {this.renderBattle(this.selection)}
-            <a class="button is-warning is-small is-radiusless" onClick={this.selectBattle.bind(this, undefined)}>
-              X
-            </a>
+            {this.editable && (
+              <a class="button is-warning is-small is-radiusless" onClick={this.selectBattle.bind(this, undefined)}>
+                X
+              </a>
+            )}
           </div>
         )}
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">

@@ -17,6 +17,8 @@ export class WrapSelectComponent {
   @Prop({ reflect: true }) value: string;
   @Prop({ reflect: true }) item: ItemSummary;
   @Prop() name: string;
+  @Prop() disabled: boolean;
+  @Prop() readonly: boolean;
 
   @State() selection?: ItemSummary;
   @State() suggestions?: ItemSummary[];
@@ -29,6 +31,10 @@ export class WrapSelectComponent {
   };
 
   private onClick: (e: Event) => void = (e: Event) => {
+    if (this.disabled) {
+      return;
+    }
+
     if (this.query) {
       this.getSuggestions();
     } else {
@@ -46,6 +52,10 @@ export class WrapSelectComponent {
 
   private externalInputElement: HTMLInputElement;
 
+  private get editable(): boolean {
+    return !this.disabled && !this.readonly;
+  }
+
   public componentWillLoad(): void {
     this.fullList = [];
 
@@ -54,6 +64,8 @@ export class WrapSelectComponent {
     this.externalInputElement.type = "hidden";
     this.externalInputElement.value = this.value;
     this.externalInputElement.name = this.name;
+    this.externalInputElement.disabled = this.disabled;
+    this.externalInputElement.readOnly = this.readonly;
     parent.appendChild(this.externalInputElement);
 
     this.el.querySelectorAll("option").forEach(optEl => {
@@ -61,9 +73,13 @@ export class WrapSelectComponent {
         id: optEl.value ? parseInt(optEl.value, 10) : null,
         name: optEl.textContent
       };
-      this.fullList.push(item);
-      if (optEl.selected) {
-        this.selectItem(item);
+      if (item.id) {
+        // skip blanks
+        this.fullList.push(item);
+        if (optEl.selected) {
+          // select the initially selected value
+          this.selectItem(item);
+        }
       }
     });
     document.body.addEventListener("keydown", (ke: KeyboardEvent) => {
@@ -148,16 +164,26 @@ export class WrapSelectComponent {
         {!this.selection && (
           <div class="dropdown-trigger field mb-0">
             <div class="control">
-              <input class="input" type="text" placeholder="Search" onInput={this.onInput} value={this.query} />
+              <input
+                class="input"
+                type="text"
+                placeholder="Search"
+                onInput={this.onInput}
+                value={this.query}
+                disabled={this.disabled}
+                readOnly={this.readonly}
+              />
             </div>
           </div>
         )}
         {this.selection && (
           <div class="selected-item">
             {this.renderItem(this.selection)}
-            <a class="button is-warning is-small is-radiusless" onClick={this.selectItem.bind(this, undefined)}>
-              X
-            </a>
+            {this.editable && (
+              <a class="button is-warning is-small is-radiusless" onClick={this.selectItem.bind(this, undefined)}>
+                X
+              </a>
+            )}
           </div>
         )}
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
