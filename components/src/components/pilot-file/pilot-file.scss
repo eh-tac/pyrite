@@ -25,24 +25,22 @@ input[type="file"] {
   display: none;
 }
 
-.material-icons {
-  &.gold {
-    color: gold;
+.icons {
+  svg {
+    height: 12px;
+    vertical-align: inherit;
   }
-  &.silver {
-    color: silver;
+  .complete svg {
+    fill: #4e5d6c;
   }
-  &.bronze {
-    color: brown;
+  .incomplete svg {
+    fill: red;
   }
-  &.nickel {
-    color: cornflowerblue;
+  .secret svg {
+    fill: silver;
   }
-  &.copper {
-    color: orange;
-  }
-  &.lead {
-    color: grey;
+  .bonus svg {
+    fill: gold;
   }
 }
 

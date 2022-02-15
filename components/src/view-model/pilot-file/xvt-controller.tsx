@@ -64,18 +64,17 @@ export class XvTPltController extends PilotFileController {
 
     const mCount = Math.max(missionScores.length, scores.missions.length);
     const missions: JSX.Element[] = [];
-    missionScores.unshift(missionScores[0]); // make it 1 indexed basically.
-    for (let m = 1; m <= mCount; m++) {
-      if (missionScores[m] && scores[m]) {
-        missions.push(this.renderXvTMission(`Mission ${m}`, missionScores[m], scores[m].score));
+    for (let m = 0; m < mCount; m++) {
+      if (missionScores[m] && scores.missions[m]) {
+        missions.push(this.renderXvTMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
         missions.push(
-          this.renderItem(`Mission ${m}`, missionScores[m].BestScore),
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].BestScore),
           "Too many missions flown",
           "text-danger"
         );
-      } else if (scores[m]) {
-        missions.push(this.renderItem(`Mission ${m}`, "Not flown", "", "text-danger"));
+      } else if (scores.missions[m]) {
+        missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
       } else {
         console.error("Unknown state?");
       }
@@ -104,7 +103,6 @@ export class XvTPltController extends PilotFileController {
         <div class="d-flex flex-column">
           <span class="d-flex">
             <span class="text-info">{mission.scoreLabel}</span>
-            <i class={`material-icons ${mission.BestRatingLabel.toLowerCase()}`}>check_circle</i>
           </span>
           <small class="text-light text-right">{mission.timeLabel}</small>
           <small class="text-light text-right">{hs}</small>

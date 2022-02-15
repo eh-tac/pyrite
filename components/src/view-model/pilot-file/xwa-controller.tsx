@@ -54,17 +54,16 @@ export class XWAPltController extends PilotFileController {
 
     const mCount = Math.max(missionScores.length, battleData.missions) + 1;
     const missions: JSX.Element[] = [];
-    missionScores.unshift(missionScores[0]); // make it 1 indexed basically.
-    for (let m = 1; m <= mCount; m++) {
+    for (let m = 0; m < mCount; m++) {
       if (missionScores[m]) {
-        const score = scores[m] ? scores[m].score : undefined;
-        missions.push(this.renderXWAMission(`Mission ${m}`, missionScores[m], score));
-      } else if (missionScores[m] && m < battleData.missions) {
+        const score = scores.missions[m] ? scores.missions[m].score : undefined;
+        missions.push(this.renderXWAMission(`Mission ${m + 1}`, missionScores[m], score));
+      } else if (missionScores[m] && m >= battleData.missions) {
         missions.push(
-          this.renderItem(`Mission ${m}`, missionScores[m].Total, "Too many missions flown", "text-danger")
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].Total, "Too many missions flown", "text-danger")
         );
-      } else if (!missionScores[m] && m <= battleData.missions) {
-        missions.push(this.renderItem(`Mission ${m}`, "Not flown", "", "text-danger"));
+      } else if (!missionScores[m] && m < battleData.missions) {
+        missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
       } else {
         console.error("Unknown state?");
       }
@@ -94,7 +93,6 @@ export class XWAPltController extends PilotFileController {
         <div class="d-flex flex-column">
           <span class="d-flex">
             <span class="text-info mr-2">{mission.scoreLabel}</span>
-            {/* <i class={`material-icons ${mission.scoreLabel.toLowerCase()}`}>check_circle</i> */}
           </span>
           <small class="text-light">{mission.timeLabel}</small>
           <small class="text-muted">{hs}</small>

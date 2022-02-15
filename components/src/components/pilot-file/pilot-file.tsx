@@ -13,7 +13,7 @@ import { XWController } from "../../view-model/pilot-file/xw-controller";
 
 @Component({
   tag: "pyrite-pilot-file",
-  styleUrls: ["../../assets/superhero.css", "../../global/material-icons.scss", "pilot-file.scss"],
+  styleUrls: ["../../assets/superhero.css", "pilot-file.scss"],
   shadow: true
 })
 export class PilotViewer {

@@ -50,17 +50,16 @@ export class XWController extends PilotFileController {
     const missionScores = this.plt.XWingHistoricalMissions;
     const mCount = Math.max(missionScores.length, scores.missions.length);
     const missions: JSX.Element[] = [];
-    missionScores.unshift(missionScores[0]); // make it 1 indexed basically.
-    for (let m = 1; m <= mCount; m++) {
-      if (missionScores[m] && scores[m]) {
-        missions.push(this.renderXWMission(`Mission ${m}`, missionScores[m], scores[m].score));
+    for (let m = 0; m < mCount; m++) {
+      if (missionScores[m] && scores.missions[m]) {
+        missions.push(this.renderXWMission(`Mission ${m}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
         missions.push(
           this.renderItem(`Mission ${m}`, missionScores[m].score),
           "Too many missions flown",
           "text-danger"
         );
-      } else if (scores[m]) {
+      } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m}`, "Not flown", "", "text-danger"));
       } else {
         console.error("Unknown state?");
@@ -112,7 +111,6 @@ export class XWController extends PilotFileController {
         <div class="d-flex flex-column">
           <span class="d-flex">
             <span class="text-info">{score}</span>
-            <span>{icons}</span>
           </span>
           <small class="text-light text-right">{hs}</small>
         </div>

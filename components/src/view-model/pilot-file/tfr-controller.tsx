@@ -4,6 +4,7 @@ import { PilotFileController } from "./controller";
 import { TrainingSummary, MissionScore, KillSummary, BattleSummary } from "../../model/pilot";
 import { Battle } from "../../model/ehtc";
 import { PilotFile } from "../../model/TIE";
+import { ICON_CHECK_CIRCLE, ICON_CLOSE, ICON_DONE } from "../../global/icons";
 
 export class TFRController extends PilotFileController {
   public constructor(filepath: string, public tfr: PilotFile) {
@@ -48,18 +49,17 @@ export class TFRController extends PilotFileController {
     const missionScores = this.tfr.MissionScores;
     const mCount = Math.max(missionScores.length, scores.missions.length);
     const missions: JSX.Element[] = [];
-    missionScores.unshift(missionScores[0]); // make it 1 indexed basically.
-    for (let m = 1; m <= mCount; m++) {
-      if (missionScores[m] && scores[m]) {
-        missions.push(this.renderTIEMission(`Mission ${m}`, missionScores[m], scores[m].score));
+    for (let m = 0; m < mCount; m++) {
+      if (missionScores[m] && scores.missions[m]) {
+        missions.push(this.renderTIEMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
         missions.push(
-          this.renderItem(`Mission ${m}`, missionScores[m].score),
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].score),
           "Too many missions flown",
           "text-danger"
         );
-      } else if (scores[m]) {
-        missions.push(this.renderItem(`Mission ${m}`, "Not flown", "", "text-danger"));
+      } else if (scores.missions[m]) {
+        missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
       } else {
         console.error("Unknown state?");
       }
@@ -90,27 +90,23 @@ export class TFRController extends PilotFileController {
     if (!complete && !score) {
       return "";
     }
+    // TODO get icons rendering with styles
     const icons: JSX.Element[] = [
-      <i
-        class={`material-icons ${complete ? "complete" : "failed"}`}
-        aria-label={complete ? "Mission complete" : "Mission failed"}
-      >
-        {complete ? "done" : "close"}
-      </i>
+      complete ? <span class="complete">{ICON_DONE}</span> : <span class="incomplete">{ICON_CLOSE}</span>
     ];
     if (secret) {
-      icons.push(<i class="material-icons secret">check_circle</i>);
+      icons.push(<span class="secret">{ICON_CHECK_CIRCLE}</span>);
     }
     if (bonus) {
-      icons.push(<i class="material-icons bonus">check_circle</i>);
+      icons.push(<span class="bonus">{ICON_CHECK_CIRCLE}</span>);
     }
+
     return (
       <div class="list-group-item data d-flex justify-content-between">
         <h6 class="">{key}</h6>
         <div class="d-flex flex-column">
           <span class="d-flex">
             <span class="text-info">{score}</span>
-            <span>{icons}</span>
           </span>
           <small class="text-light text-right">{hs}</small>
         </div>
