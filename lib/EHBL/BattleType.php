@@ -14,8 +14,9 @@ final class BattleType
   const BHG = "BHG";
   const FMC = "FMC";
   const HF = "HF";
+  const CD = "CD";
   const UNKNOWN = "UNK";
   const TAC = "TAC";
 
-  public static $ALL = [self::FREE, self::TC, self::IW, self::DB, self::FCHG, self::CAB, self::ID, self::BHG, self::FMC, self::HF, self::TAC];
+  public static $ALL = [self::TC, self::IW, self::DB, self::FCHG, self::CAB, self::ID, self::BHG, self::FMC, self::HF, self::CD, self::TAC, self::FREE];
 }
