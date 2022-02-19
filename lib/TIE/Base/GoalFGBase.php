@@ -48,11 +48,13 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getConditionLabel() {
+    public function getConditionLabel() 
+    {
         return isset($this->Condition) && isset(Constants::$CONDITION[$this->Condition]) ? Constants::$CONDITION[$this->Condition] : "Unknown";
     }
 
-    public function getGoalAmountLabel() {
+    public function getGoalAmountLabel() 
+    {
         return isset($this->GoalAmount) && isset(Constants::$GOALAMOUNT[$this->GoalAmount]) ? Constants::$GOALAMOUNT[$this->GoalAmount] : "Unknown";
     }
     

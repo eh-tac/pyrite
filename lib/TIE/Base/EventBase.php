@@ -64,7 +64,8 @@ abstract class EventBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getEventTypeLabel() {
+    public function getEventTypeLabel() 
+    {
         return isset($this->EventType) && isset(Constants::$EVENTTYPE[$this->EventType]) ? Constants::$EVENTTYPE[$this->EventType] : "Unknown";
     }
     protected abstract function VariableCount();

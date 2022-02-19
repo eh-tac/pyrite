@@ -168,15 +168,18 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getHangarLabel() {
+    public function getHangarLabel() 
+    {
         return isset($this->Hangar) && isset(Constants::$HANGAR[$this->Hangar]) ? Constants::$HANGAR[$this->Hangar] : "Unknown";
     }
 
-    public function getBriefingOfficerLabel() {
+    public function getBriefingOfficerLabel() 
+    {
         return isset($this->BriefingOfficer) && isset(Constants::$BRIEFINGOFFICER[$this->BriefingOfficer]) ? Constants::$BRIEFINGOFFICER[$this->BriefingOfficer] : "Unknown";
     }
 
-    public function getBriefingLogoLabel() {
+    public function getBriefingLogoLabel() 
+    {
         return isset($this->BriefingLogo) && isset(Constants::$BRIEFINGLOGO[$this->BriefingLogo]) ? Constants::$BRIEFINGLOGO[$this->BriefingLogo] : "Unknown";
     }
     

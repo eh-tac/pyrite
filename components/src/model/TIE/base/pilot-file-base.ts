@@ -1,17 +1,7 @@
 import { Byteable } from "../../../byteable";
 import { Constants } from "../constants";
 import { IMission, PyriteBase } from "../../../pyrite-base";
-import {
-  getBool,
-  getByte,
-  getInt,
-  getShort,
-  getUShort,
-  writeBool,
-  writeByte,
-  writeInt,
-  writeShort
-} from "../../../hex";
+import { getBool, getByte, getInt, getShort, getUShort, writeBool, writeByte, writeInt, writeShort, writeUShort } from "../../../hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 
@@ -42,7 +32,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public WarheadsFired: number;
   public WarheadsHit: number;
   public CraftLost: number;
-
+  
   constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
     this.beforeConstruct();
@@ -54,16 +44,16 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.PilotDifficulty = getByte(hex, 0x03);
     this.Score = getInt(hex, 0x04);
     this.SkillScore = getUShort(hex, 0x08);
-    this.SecretOrder = getByte(hex, 0x0a);
+    this.SecretOrder = getByte(hex, 0x0A);
     this.TrainingScores = [];
-    offset = 0x2a;
+    offset = 0x2A;
     for (let i = 0; i < 7; i++) {
       const t = getInt(hex, offset);
       this.TrainingScores.push(t);
       offset += 4;
     }
     this.TrainingLevels = [];
-    offset = 0x5a;
+    offset = 0x5A;
     for (let i = 0; i < 7; i++) {
       const t = getByte(hex, offset);
       this.TrainingLevels.push(t);
@@ -91,7 +81,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       offset += 1;
     }
     this.BattleLastMissions = [];
-    offset = 0x27d;
+    offset = 0x27D;
     for (let i = 0; i < 20; i++) {
       const t = getByte(hex, offset);
       this.BattleLastMissions.push(t);
@@ -112,21 +102,21 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       offset += 1;
     }
     this.BonusObjectives = [];
-    offset = 0x3a5;
+    offset = 0x3A5;
     for (let i = 0; i < 20; i++) {
       const t = getByte(hex, offset);
       this.BonusObjectives.push(t);
       offset += 1;
     }
     this.BattleScores = [];
-    offset = 0x3da;
+    offset = 0x3DA;
     for (let i = 0; i < 160; i++) {
       const t = getInt(hex, offset);
       this.BattleScores.push(t);
       offset += 4;
     }
-    this.TotalKills = getShort(hex, 0x65a);
-    this.TotalCaptures = getShort(hex, 0x65c);
+    this.TotalKills = getShort(hex, 0x65A);
+    this.TotalCaptures = getShort(hex, 0x65C);
     this.KillsByType = [];
     offset = 0x660;
     for (let i = 0; i < 69; i++) {
@@ -141,7 +131,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.CraftLost = getShort(hex, 0x786);
     this.PilotFileLength = offset;
   }
-
+  
   public toJSON(): object {
     return {
       PilotStatus: this.PilotStatusLabel,
@@ -170,9 +160,9 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       CraftLost: this.CraftLost
     };
   }
-
+  
   public toHexString(): string {
-    let hex: string = "";
+    let hex: string = '';
     let offset = 0;
 
     writeByte(hex, 0, 0x00);
@@ -180,15 +170,15 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     writeByte(hex, this.PilotRank, 0x02);
     writeByte(hex, this.PilotDifficulty, 0x03);
     writeInt(hex, this.Score, 0x04);
-    writeShort(hex, this.SkillScore, 0x08);
-    writeByte(hex, this.SecretOrder, 0x0a);
-    offset = 0x2a;
+    writeUShort(hex, this.SkillScore, 0x08);
+    writeByte(hex, this.SecretOrder, 0x0A);
+    offset = 0x2A;
     for (let i = 0; i < 7; i++) {
       const t = this.TrainingScores[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
-    offset = 0x5a;
+    offset = 0x5A;
     for (let i = 0; i < 7; i++) {
       const t = this.TrainingLevels[i];
       writeByte(hex, t, offset);
@@ -212,7 +202,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       writeByte(hex, t, offset);
       offset += 1;
     }
-    offset = 0x27d;
+    offset = 0x27D;
     for (let i = 0; i < 20; i++) {
       const t = this.BattleLastMissions[i];
       writeByte(hex, t, offset);
@@ -230,20 +220,20 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       writeByte(hex, t, offset);
       offset += 1;
     }
-    offset = 0x3a5;
+    offset = 0x3A5;
     for (let i = 0; i < 20; i++) {
       const t = this.BonusObjectives[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
-    offset = 0x3da;
+    offset = 0x3DA;
     for (let i = 0; i < 160; i++) {
       const t = this.BattleScores[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
-    writeShort(hex, this.TotalKills, 0x65a);
-    writeShort(hex, this.TotalCaptures, 0x65c);
+    writeShort(hex, this.TotalKills, 0x65A);
+    writeShort(hex, this.TotalCaptures, 0x65C);
     offset = 0x660;
     for (let i = 0; i < 69; i++) {
       const t = this.KillsByType[i];
@@ -252,13 +242,13 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     }
     writeInt(hex, this.LasersFired, 0x774);
     writeInt(hex, this.LasersHit, 0x778);
-    writeShort(hex, this.WarheadsFired, 0x780);
-    writeShort(hex, this.WarheadsHit, 0x782);
+    writeUShort(hex, this.WarheadsFired, 0x780);
+    writeUShort(hex, this.WarheadsHit, 0x782);
     writeShort(hex, this.CraftLost, 0x786);
 
     return hex;
   }
-
+  
   public get PilotStatusLabel(): string {
     return Constants.PILOTSTATUS[this.PilotStatus] || "Unknown";
   }
@@ -274,7 +264,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public get SecretOrderLabel(): string {
     return Constants.SECRETORDER[this.SecretOrder] || "Unknown";
   }
-
+  
   public getLength(): number {
     return this.PilotFileLength;
   }

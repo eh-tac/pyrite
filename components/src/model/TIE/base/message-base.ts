@@ -18,7 +18,7 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Message = getString(hex, 0x00);
+    this.Message = getString(hex, 0x00, 64);
     this.Triggers = [];
     offset = 0x40;
     for (let i = 0; i < 2; i++) {
@@ -26,7 +26,7 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
       this.Triggers.push(t);
       offset += t.getLength();
     }
-    this.EditorNote = getString(hex, 0x48);
+    this.EditorNote = getString(hex, 0x48, 12);
     this.DelaySeconds = getByte(hex, 0x58);
     this.Trigger1OrTrigger2 = getBool(hex, 0x59);
     

@@ -138,7 +138,8 @@ export class PHPPropWriter {
     const enumName = this.prop.enumName.toUpperCase();
 
     return `
-    public function get${name}Label() {
+    public function get${name}Label() 
+    {
         return isset($this->${name}) && isset(Constants::$${enumName}[$this->${name}]) ? Constants::$${enumName}[$this->${name}] : "Unknown";
     }`;
   }

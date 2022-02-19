@@ -87,7 +87,7 @@ export class Constants {
     84: "Nav Buoy B",
     85: "Unused",
     86: "Asteroid Field",
-    87: "Planet"
+    87: "Planet",
   };
 
   public static CRAFTABBR = {
@@ -178,7 +178,7 @@ export class Constants {
     84: "NAV 2",
     85: "Asteroid",
     86: "Asteroid",
-    87: "Planet"
+    87: "Planet",
   };
 
   public static STATUS = {
@@ -192,7 +192,7 @@ export class Constants {
     7: "Shields 0%, charging",
     8: "Shields added or 200%",
     9: "Hyperdrive added",
-    20: "Invincible"
+    20: "Invincible",
   };
 
   public static WARHEAD = {
@@ -203,13 +203,13 @@ export class Constants {
     4: "Torpedo",
     5: "Advanced Concussion Missile",
     6: "Advanced Torpedo",
-    7: "Mag Pulse Torpedo"
+    7: "Mag Pulse Torpedo",
   };
 
   public static BEAM = {
     0: "None",
     1: "Tractor Beam",
-    2: "Jamming Beam"
+    2: "Jamming Beam",
   };
 
   public static GROUPAI = {
@@ -218,14 +218,14 @@ export class Constants {
     2: "Veteran",
     3: "Officer",
     4: "Ace",
-    5: "Top Ace (Invincible)"
+    5: "Top Ace (Invincible)",
   };
 
   public static MARKINGS = {
     0: "Red (TIE - None)",
     1: "Gold (TIE - Red)",
     2: "Blue (TIE - Gold)",
-    3: "Green (TIE - Blue)"
+    3: "Green (TIE - Blue)",
   };
 
   public static FORMATION = {
@@ -241,7 +241,7 @@ export class Constants {
     9: "High X",
     10: "Vic Abreast",
     11: "High Vic",
-    12: "Reverse High Vic"
+    12: "Reverse High Vic",
   };
 
   public static ARRIVALDIFFICULTY = {
@@ -250,7 +250,7 @@ export class Constants {
     2: "Medium",
     3: "Hard",
     4: "Medium, Hard",
-    5: "Easy, Medium"
+    5: "Easy, Medium",
   };
 
   public static CONDITION = {
@@ -278,7 +278,7 @@ export class Constants {
     21: "0% Shields",
     22: "50% Hull",
     23: "Out of Warheads",
-    24: "Unknown (arrive?)"
+    24: "Unknown (arrive?)",
   };
 
   public static VARIABLETYPE = {
@@ -292,7 +292,7 @@ export class Constants {
     7: "CraftWhen (enum)",
     8: "Global Group",
     9: "Misc (enum)",
-    10: "Unknown"
+    10: "Unknown",
   };
 
   public static CRAFTCATEGORY = {
@@ -302,13 +302,13 @@ export class Constants {
     3: "Starships",
     4: "Utility Craft",
     5: "Platforms/Facilities",
-    6: "Mines"
+    6: "Mines",
   };
 
   public static OBJECTCATEGORY = {
     0: "Craft",
     1: "Weapons",
-    2: "Space Objects"
+    2: "Space Objects",
   };
 
   public static TRIGGERAMOUNT = {
@@ -327,7 +327,7 @@ export class Constants {
     12: "50% of first wave",
     13: "25% of first wave",
     14: "At least one of first wave",
-    15: "All but one of first wave"
+    15: "All but one of first wave",
   };
 
   public static GOALAMOUNT = {
@@ -335,7 +335,7 @@ export class Constants {
     1: "50%",
     2: "At least one",
     3: "All but one",
-    4: "Special craft"
+    4: "Special craft",
   };
 
   public static ABORTTRIGGER = {
@@ -344,7 +344,7 @@ export class Constants {
     2: "Systems 75% (fighters and transports only)",
     3: "Out of warheads",
     4: "50% Hull",
-    5: "Attacked"
+    5: "Attacked",
   };
 
   public static ORDER = {
@@ -387,7 +387,7 @@ export class Constants {
     36: "SS Kamikaze?",
     37: "SS Kamikaze?",
     38: "SS Disabled",
-    39: "SS Disabled"
+    39: "SS Disabled",
   };
 
   public static CRAFTWHEN = {
@@ -398,7 +398,7 @@ export class Constants {
     7: "Special craft",
     8: "Non-special craft",
     9: "Player's craft",
-    10: "Non-player's craft"
+    10: "Non-player's craft",
   };
 
   public static MISC = {
@@ -449,7 +449,7 @@ export class Constants {
     49: "Utility craft",
     50: "Startships",
     51: "Platforms",
-    54: "Mines"
+    54: "Mines",
   };
 
   public static EVENTTYPE = {
@@ -476,7 +476,7 @@ export class Constants {
     23: "Text Tag 6",
     24: "Text Tag 7",
     25: "Text Tag 8",
-    34: "End Briefing"
+    34: "End Briefing",
   };
 
   public static TEXTTAGCOLOR = {
@@ -487,45 +487,45 @@ export class Constants {
     4: "Red",
     5: "Light Red",
     6: "Gray",
-    7: "White"
+    7: "White",
   };
 
   public static BRIEFINGOFFICERS = {
     1: "Both officers",
     2: "Flight Officer",
-    3: "Secret Order"
+    3: "Secret Order",
   };
 
   public static QUESTIONTYPE = {
     0: "None",
     1: "Primary Goals",
-    2: "Secondary Goals"
+    2: "Secondary Goals",
   };
 
   public static QUESTIONCONDITION = {
     0: "None",
     4: "Successful",
-    5: "Failed"
+    5: "Failed",
   };
 
   public static MESSAGECOLOR = {
     0: "Red",
     1: "Green",
     2: "Blue",
-    3: "Purple"
+    3: "Purple",
   };
 
   public static IFFCOLOR = {
     0: "Green",
     1: "Red",
-    2: "Blue",
-    3: "Purple"
+    2: "Purple",
+    3: "Blue",
   };
 
   public static PILOTSTATUS = {
     0: "Alive",
     1: "Captured",
-    2: "Killed"
+    2: "Killed",
   };
 
   public static PILOTRANK = {
@@ -534,13 +534,13 @@ export class Constants {
     2: "Lieutenant",
     3: "Captain",
     4: "Commander",
-    5: "General"
+    5: "General",
   };
 
   public static PILOTDIFFICULTY = {
     0: "Easy",
     1: "Medium",
-    2: "Hard"
+    2: "Hard",
   };
 
   public static TRAININGCRAFT = {
@@ -550,7 +550,7 @@ export class Constants {
     3: "TIE Advanced",
     4: "Assault Gunboat",
     5: "TIE Defender",
-    6: "Missile Boat"
+    6: "Missile Boat",
   };
 
   public static TRAININGCRAFTABBR = {
@@ -560,14 +560,14 @@ export class Constants {
     3: "T/A",
     4: "GUN",
     5: "T/D",
-    6: "MIS"
+    6: "MIS",
   };
 
   public static BATTLESTATUS = {
     0: "None",
     1: "In Progress",
     2: "Incomplete",
-    3: "Completed"
+    3: "Completed",
   };
 
   public static SECRETORDER = {
@@ -580,8 +580,9 @@ export class Constants {
     6: "Emperor's Hand",
     7: "Emperor's Eyes",
     8: "Emperor's Voice",
-    9: "Emperor's Reach"
+    9: "Emperor's Reach",
   };
+
 }
 
 export enum CraftType {
@@ -672,7 +673,7 @@ export enum CraftType {
   navBuoyB = 84,
   // duplicate unused = 85,
   asteroidField = 86,
-  planet = 87
+  planet = 87,
 }
 
 export enum CraftAbbr {
@@ -763,7 +764,7 @@ export enum CraftAbbr {
   nav2 = 84,
   asteroid = 85,
   // duplicate asteroid = 86,
-  planet = 87
+  planet = 87,
 }
 
 export enum Status {
@@ -777,7 +778,7 @@ export enum Status {
   shields0PercentCharging = 7,
   shieldsAddedOr200Percent = 8,
   hyperdriveAdded = 9,
-  invincible = 20
+  invincible = 20,
 }
 
 export enum Warhead {
@@ -788,13 +789,13 @@ export enum Warhead {
   torpedo = 4,
   advancedConcussionMissile = 5,
   advancedTorpedo = 6,
-  magPulseTorpedo = 7
+  magPulseTorpedo = 7,
 }
 
 export enum Beam {
   none = 0,
   tractorBeam = 1,
-  jammingBeam = 2
+  jammingBeam = 2,
 }
 
 export enum GroupAI {
@@ -803,14 +804,14 @@ export enum GroupAI {
   veteran = 2,
   officer = 3,
   ace = 4,
-  topAceInvincible = 5
+  topAceInvincible = 5,
 }
 
 export enum Markings {
   redTieNone = 0,
   goldTieRed = 1,
   blueTieGold = 2,
-  greenTieBlue = 3
+  greenTieBlue = 3,
 }
 
 export enum Formation {
@@ -826,7 +827,7 @@ export enum Formation {
   highX = 9,
   vicAbreast = 10,
   highVic = 11,
-  reverseHighVic = 12
+  reverseHighVic = 12,
 }
 
 export enum ArrivalDifficulty {
@@ -835,7 +836,7 @@ export enum ArrivalDifficulty {
   medium = 2,
   hard = 3,
   mediumHard = 4,
-  easyMedium = 5
+  easyMedium = 5,
 }
 
 export enum Condition {
@@ -863,7 +864,7 @@ export enum Condition {
   n0PercentShields = 21,
   n50PercentHull = 22,
   outOfWarheads = 23,
-  unknownArrive = 24
+  unknownArrive = 24,
 }
 
 export enum VariableType {
@@ -877,7 +878,7 @@ export enum VariableType {
   craftWhenEnum = 7,
   globalGroup = 8,
   miscEnum = 9,
-  unknown = 10
+  unknown = 10,
 }
 
 export enum CraftCategory {
@@ -887,13 +888,13 @@ export enum CraftCategory {
   starships = 3,
   utilityCraft = 4,
   platformsFacilities = 5,
-  mines = 6
+  mines = 6,
 }
 
 export enum ObjectCategory {
   craft = 0,
   weapons = 1,
-  spaceObjects = 2
+  spaceObjects = 2,
 }
 
 export enum TriggerAmount {
@@ -912,7 +913,7 @@ export enum TriggerAmount {
   n50PercentOfFirstWave = 12,
   n25PercentOfFirstWave = 13,
   atLeastOneOfFirstWave = 14,
-  allButOneOfFirstWave = 15
+  allButOneOfFirstWave = 15,
 }
 
 export enum GoalAmount {
@@ -920,7 +921,7 @@ export enum GoalAmount {
   n50Percent = 1,
   atLeastOne = 2,
   allButOne = 3,
-  specialCraft = 4
+  specialCraft = 4,
 }
 
 export enum AbortTrigger {
@@ -929,7 +930,7 @@ export enum AbortTrigger {
   systems75PercentFightersAndTransportsOnly = 2,
   outOfWarheads = 3,
   n50PercentHull = 4,
-  attacked = 5
+  attacked = 5,
 }
 
 export enum Order {
@@ -971,7 +972,7 @@ export enum Order {
   ssHoldStation = 35,
   ssKamikaze = 36,
   // duplicate ssKamikaze = 37,
-  ssDisabled = 38
+  ssDisabled = 38,
   // duplicate ssDisabled = 39,
 }
 
@@ -983,7 +984,7 @@ export enum CraftWhen {
   specialCraft = 7,
   nonspecialCraft = 8,
   playersCraft = 9,
-  nonplayersCraft = 10
+  nonplayersCraft = 10,
 }
 
 export enum Misc {
@@ -1034,7 +1035,7 @@ export enum Misc {
   utilityCraft = 49,
   startships = 50,
   platforms = 51,
-  mines = 54
+  mines = 54,
 }
 
 export enum EventType {
@@ -1061,7 +1062,7 @@ export enum EventType {
   textTag6 = 23,
   textTag7 = 24,
   textTag8 = 25,
-  endBriefing = 34
+  endBriefing = 34,
 }
 
 export enum TextTagColor {
@@ -1072,45 +1073,45 @@ export enum TextTagColor {
   // duplicate red = 4,
   lightRed = 5,
   gray = 6,
-  white = 7
+  white = 7,
 }
 
 export enum BriefingOfficers {
   bothOfficers = 1,
   flightOfficer = 2,
-  secretOrder = 3
+  secretOrder = 3,
 }
 
 export enum QuestionType {
   none = 0,
   primaryGoals = 1,
-  secondaryGoals = 2
+  secondaryGoals = 2,
 }
 
 export enum QuestionCondition {
   none = 0,
   successful = 4,
-  failed = 5
+  failed = 5,
 }
 
 export enum MessageColor {
   red = 0,
   green = 1,
   blue = 2,
-  purple = 3
+  purple = 3,
 }
 
 export enum IFFColor {
   green = 0,
   red = 1,
   purple = 2,
-  blue = 3
+  blue = 3,
 }
 
 export enum PilotStatus {
   alive = 0,
   captured = 1,
-  killed = 2
+  killed = 2,
 }
 
 export enum PilotRank {
@@ -1119,13 +1120,13 @@ export enum PilotRank {
   lieutenant = 2,
   captain = 3,
   commander = 4,
-  general = 5
+  general = 5,
 }
 
 export enum PilotDifficulty {
   easy = 0,
   medium = 1,
-  hard = 2
+  hard = 2,
 }
 
 export enum TrainingCraft {
@@ -1135,7 +1136,7 @@ export enum TrainingCraft {
   tieAdvanced = 3,
   assaultGunboat = 4,
   tieDefender = 5,
-  missileBoat = 6
+  missileBoat = 6,
 }
 
 export enum TrainingCraftAbbr {
@@ -1145,14 +1146,14 @@ export enum TrainingCraftAbbr {
   ta = 3,
   gun = 4,
   td = 5,
-  mis = 6
+  mis = 6,
 }
 
 export enum BattleStatus {
   none = 0,
   inProgress = 1,
   incomplete = 2,
-  completed = 3
+  completed = 3,
 }
 
 export enum SecretOrder {
@@ -1165,5 +1166,5 @@ export enum SecretOrder {
   emperorsHand = 6,
   emperorsEyes = 7,
   emperorsVoice = 8,
-  emperorsReach = 9
+  emperorsReach = 9,
 }

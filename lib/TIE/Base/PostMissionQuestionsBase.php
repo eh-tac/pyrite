@@ -70,11 +70,13 @@ abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getQuestionConditionLabel() {
+    public function getQuestionConditionLabel() 
+    {
         return isset($this->QuestionCondition) && isset(Constants::$QUESTIONCONDITION[$this->QuestionCondition]) ? Constants::$QUESTIONCONDITION[$this->QuestionCondition] : "Unknown";
     }
 
-    public function getQuestionTypeLabel() {
+    public function getQuestionTypeLabel() 
+    {
         return isset($this->QuestionType) && isset(Constants::$QUESTIONTYPE[$this->QuestionType]) ? Constants::$QUESTIONTYPE[$this->QuestionType] : "Unknown";
     }
     protected abstract function QuestionLength();

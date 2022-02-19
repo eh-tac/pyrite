@@ -58,15 +58,18 @@ abstract class TriggerBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getConditionLabel() {
+    public function getConditionLabel() 
+    {
         return isset($this->Condition) && isset(Constants::$CONDITION[$this->Condition]) ? Constants::$CONDITION[$this->Condition] : "Unknown";
     }
 
-    public function getVariableTypeLabel() {
+    public function getVariableTypeLabel() 
+    {
         return isset($this->VariableType) && isset(Constants::$VARIABLETYPE[$this->VariableType]) ? Constants::$VARIABLETYPE[$this->VariableType] : "Unknown";
     }
 
-    public function getTriggerAmountLabel() {
+    public function getTriggerAmountLabel() 
+    {
         return isset($this->TriggerAmount) && isset(Constants::$TRIGGERAMOUNT[$this->TriggerAmount]) ? Constants::$TRIGGERAMOUNT[$this->TriggerAmount] : "Unknown";
     }
     

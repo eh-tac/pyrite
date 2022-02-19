@@ -63,7 +63,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     public $WarheadsHit;
     /** @var integer */
     public $CraftLost;
-
+    
     public function __construct($hex, $tie = null)
     {
         parent::__construct($hex, $tie);
@@ -158,12 +158,12 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         }
         $this->LasersFired = $this->getInt($hex, 0x774);
         $this->LasersHit = $this->getInt($hex, 0x778);
-        $this->WarheadsFired = $this->getShort($hex, 0x780);
-        $this->WarheadsHit = $this->getShort($hex, 0x782);
+        $this->WarheadsFired = $this->getUShort($hex, 0x780);
+        $this->WarheadsHit = $this->getUShort($hex, 0x782);
         $this->CraftLost = $this->getShort($hex, 0x786);
         $this->PilotFileLength = $offset;
     }
-
+    
     public function __debugInfo()
     {
         return [
@@ -193,7 +193,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             "CraftLost" => $this->CraftLost
         ];
     }
-
+    
     public function toHexString()
     {
         $hex = "";
@@ -204,7 +204,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->writeByte($hex, $this->PilotRank, 0x02);
         $this->writeByte($hex, $this->PilotDifficulty, 0x03);
         $this->writeInt($hex, $this->Score, 0x04);
-        $this->writeShort($hex, $this->SkillScore, 0x08);
+        $this->writeUShort($hex, $this->SkillScore, 0x08);
         $this->writeByte($hex, $this->SecretOrder, 0x0A);
         $offset = 0x2A;
         for ($i = 0; $i < 7; $i++) {
@@ -276,33 +276,33 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         }
         $this->writeInt($hex, $this->LasersFired, 0x774);
         $this->writeInt($hex, $this->LasersHit, 0x778);
-        $this->writeShort($hex, $this->WarheadsFired, 0x780);
-        $this->writeShort($hex, $this->WarheadsHit, 0x782);
+        $this->writeUShort($hex, $this->WarheadsFired, 0x780);
+        $this->writeUShort($hex, $this->WarheadsHit, 0x782);
         $this->writeShort($hex, $this->CraftLost, 0x786);
 
         return $hex;
     }
-
-    public function getPilotStatusLabel()
+    
+    public function getPilotStatusLabel() 
     {
         return isset($this->PilotStatus) && isset(Constants::$PILOTSTATUS[$this->PilotStatus]) ? Constants::$PILOTSTATUS[$this->PilotStatus] : "Unknown";
     }
 
-    public function getPilotRankLabel()
+    public function getPilotRankLabel() 
     {
         return isset($this->PilotRank) && isset(Constants::$PILOTRANK[$this->PilotRank]) ? Constants::$PILOTRANK[$this->PilotRank] : "Unknown";
     }
 
-    public function getPilotDifficultyLabel()
+    public function getPilotDifficultyLabel() 
     {
         return isset($this->PilotDifficulty) && isset(Constants::$PILOTDIFFICULTY[$this->PilotDifficulty]) ? Constants::$PILOTDIFFICULTY[$this->PilotDifficulty] : "Unknown";
     }
 
-    public function getSecretOrderLabel()
+    public function getSecretOrderLabel() 
     {
         return isset($this->SecretOrder) && isset(Constants::$SECRETORDER[$this->SecretOrder]) ? Constants::$SECRETORDER[$this->SecretOrder] : "Unknown";
     }
-
+    
     public function getLength()
     {
         return $this->PilotFileLength;

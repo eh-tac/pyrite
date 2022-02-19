@@ -685,55 +685,68 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getDesignation1Label() {
+    public function getDesignation1Label() 
+    {
         return isset($this->Designation1) && isset(Constants::$DESIGNATION[$this->Designation1]) ? Constants::$DESIGNATION[$this->Designation1] : "Unknown";
     }
 
-    public function getDesignation2Label() {
+    public function getDesignation2Label() 
+    {
         return isset($this->Designation2) && isset(Constants::$DESIGNATION[$this->Designation2]) ? Constants::$DESIGNATION[$this->Designation2] : "Unknown";
     }
 
-    public function getCraftTypeLabel() {
+    public function getCraftTypeLabel() 
+    {
         return isset($this->CraftType) && isset(Constants::$CRAFTTYPE[$this->CraftType]) ? Constants::$CRAFTTYPE[$this->CraftType] : "Unknown";
     }
 
-    public function getStatus1Label() {
+    public function getStatus1Label() 
+    {
         return isset($this->Status1) && isset(Constants::$STATUS[$this->Status1]) ? Constants::$STATUS[$this->Status1] : "Unknown";
     }
 
-    public function getWarheadLabel() {
+    public function getWarheadLabel() 
+    {
         return isset($this->Warhead) && isset(Constants::$WARHEAD[$this->Warhead]) ? Constants::$WARHEAD[$this->Warhead] : "Unknown";
     }
 
-    public function getBeamLabel() {
+    public function getBeamLabel() 
+    {
         return isset($this->Beam) && isset(Constants::$BEAM[$this->Beam]) ? Constants::$BEAM[$this->Beam] : "Unknown";
     }
 
-    public function getGroupAILabel() {
+    public function getGroupAILabel() 
+    {
         return isset($this->GroupAI) && isset(Constants::$GROUPAI[$this->GroupAI]) ? Constants::$GROUPAI[$this->GroupAI] : "Unknown";
     }
 
-    public function getMarkingsLabel() {
+    public function getMarkingsLabel() 
+    {
         return isset($this->Markings) && isset(Constants::$MARKINGS[$this->Markings]) ? Constants::$MARKINGS[$this->Markings] : "Unknown";
     }
 
-    public function getRadioLabel() {
+    public function getRadioLabel() 
+    {
         return isset($this->Radio) && isset(Constants::$RADIO[$this->Radio]) ? Constants::$RADIO[$this->Radio] : "Unknown";
     }
 
-    public function getFormationLabel() {
+    public function getFormationLabel() 
+    {
         return isset($this->Formation) && isset(Constants::$FORMATION[$this->Formation]) ? Constants::$FORMATION[$this->Formation] : "Unknown";
     }
 
-    public function getArrivalDifficultyLabel() {
+    public function getArrivalDifficultyLabel() 
+    {
         return isset($this->ArrivalDifficulty) && isset(Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty]) ? Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty] : "Unknown";
     }
 
-    public function getAbortTriggerLabel() {
+    public function getAbortTriggerLabel() 
+    {
         return isset($this->AbortTrigger) && isset(Constants::$ABORTTRIGGER[$this->AbortTrigger]) ? Constants::$ABORTTRIGGER[$this->AbortTrigger] : "Unknown";
     }
 
-    public function getStatus2Label() {
+    public function getStatus2Label() 
+    {
         return isset($this->Status2) && isset(Constants::$STATUS[$this->Status2]) ? Constants::$STATUS[$this->Status2] : "Unknown";
     }
     

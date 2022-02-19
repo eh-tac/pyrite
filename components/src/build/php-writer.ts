@@ -76,7 +76,7 @@ abstract class ${baseName} extends PyriteBase implements Byteable
         return ${lengthProp.prop.isStatic ? "self::" : "$this->"}${lengthProp.prop.name};
     }
 }`;
-    this.writeFile(`PLT/base/${this.filename(baseName)}`, content);
+    this.writeFile(`PLT/Base/${this.filename(baseName)}`, content);
   }
 
   public writeImplModel(struct: Struct): void {
@@ -172,9 +172,10 @@ class ${struct.name} extends Base\\${baseClass}
   }
 
   protected functionStub(name: string): string {
-    return `protected function ${name.replace("()", "")}() {
-    return 0;
-  }`;
+    return `protected function ${name.replace("()", "")}() 
+    {
+      return 0;
+    }`;
   }
 
   protected filename(className: string): string {

@@ -165,23 +165,28 @@ abstract class OrderBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getOrderLabel() {
+    public function getOrderLabel() 
+    {
         return isset($this->Order) && isset(Constants::$ORDER[$this->Order]) ? Constants::$ORDER[$this->Order] : "Unknown";
     }
 
-    public function getTarget3TypeLabel() {
+    public function getTarget3TypeLabel() 
+    {
         return isset($this->Target3Type) && isset(Constants::$VARIABLETYPE[$this->Target3Type]) ? Constants::$VARIABLETYPE[$this->Target3Type] : "Unknown";
     }
 
-    public function getTarget4TypeLabel() {
+    public function getTarget4TypeLabel() 
+    {
         return isset($this->Target4Type) && isset(Constants::$VARIABLETYPE[$this->Target4Type]) ? Constants::$VARIABLETYPE[$this->Target4Type] : "Unknown";
     }
 
-    public function getTarget1TypeLabel() {
+    public function getTarget1TypeLabel() 
+    {
         return isset($this->Target1Type) && isset(Constants::$VARIABLETYPE[$this->Target1Type]) ? Constants::$VARIABLETYPE[$this->Target1Type] : "Unknown";
     }
 
-    public function getTarget2TypeLabel() {
+    public function getTarget2TypeLabel() 
+    {
         return isset($this->Target2Type) && isset(Constants::$VARIABLETYPE[$this->Target2Type]) ? Constants::$VARIABLETYPE[$this->Target2Type] : "Unknown";
     }
     
