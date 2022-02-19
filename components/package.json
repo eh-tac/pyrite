@@ -1,6 +1,6 @@
 {
   "name": "@pickledyoda/pyrite",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Pyrite Web Components",
   "main": "../../../../pages/js/pyrite/index.cjs.js",
   "module": "../../../../pages/js/pyrite/index.js",

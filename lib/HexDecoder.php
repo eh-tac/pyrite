@@ -47,6 +47,17 @@ trait HexDecoder
 		return unpack('sshort', $str)['short'];
 	}
 
+	public function getUShort($str, $startPos = NULL)
+	{
+		if ($startPos !== NULL) {
+			$str = substr($str, $startPos, 2);
+		}
+		if (!$str || strlen($str) !== 2) {
+			return 0;
+		}
+		return unpack('Sshort', $str)['short'];
+	}
+
 	public function getInt($str, $startPos = NULL)
 	{
 		if ($startPos !== NULL) {

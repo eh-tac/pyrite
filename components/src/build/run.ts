@@ -11,11 +11,11 @@ function mg(plt: string): PyriteGenerator {
   );
 }
 
-// const tieG = mg("TIE");
-// const tieW = new TypeScriptWriter("src", tieG);
-// tieW.write();
-// const tieP = new PHPWriter("../lib", tieG);
-// tieP.write();
+const tieG = mg("TIE");
+const tieW = new TypeScriptWriter("src", tieG);
+tieW.write();
+const tieP = new PHPWriter("../lib", tieG);
+tieP.write();
 
 // const xwG = mg("XW");
 // const xwW = new TypeScriptWriter("src", xwG);

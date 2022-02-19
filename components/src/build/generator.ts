@@ -10,7 +10,8 @@ import {
   PropObject,
   PropType,
   PropChar,
-  PropAny
+  PropAny,
+  PropUShort
 } from "./prop";
 import { Constants } from "./constants";
 
@@ -74,6 +75,8 @@ export class PyriteGenerator {
 
     if (type === "SHORT") {
       prop = new PropShort(offset, name, type);
+    } else if (type === "USHORT") {
+      prop = new PropUShort(offset, name, type);
     } else if (type === "BOOL") {
       prop = new PropBool(offset, name, type);
     } else if (type === "BYTE") {

@@ -198,7 +198,7 @@ struct PilotFile (size 0)
 	0x02 BYTE PilotRank (enum)
 	0x03 BYTE PilotDifficulty (enum)
 	0x04 INT Score
-	0x08 SHORT SkillScore
+	0x08 USHORT SkillScore
 	0x0A BYTE SecretOrder (enum)
 	0x2A INT[7] TrainingScores
 	0x5A BYTE[7] TrainingLevels
@@ -215,7 +215,7 @@ struct PilotFile (size 0)
 	0x660 SHORT[69] KillsByType
 	0x774 INT LasersFired
 	0x778 INT LasersHit
-	0x780 SHORT WarheadsFired
-	0x782 SHORT WarheadsHit
+	0x780 USHORT WarheadsFired
+	0x782 USHORT WarheadsHit
 	0x786 SHORT CraftLost
 }

@@ -82,6 +82,10 @@ export function writeShort(hex: string, value: number, start: number = 0): void 
   // return new Int16Array(hex, start, 1)[0];
 }
 
+export function writeUShort(hex: string, value: number, start: number = 0): void {
+  // return new UInt16Array(hex, start, 1)[0];
+}
+
 export function writeInt(hex: string, value: number, start: number = 0): void {
   // return new Int32Array(hex, start, 1)[0];
 }

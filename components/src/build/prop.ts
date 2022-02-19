@@ -102,6 +102,12 @@ export class PropShort extends Prop {
   public hexSetter = "writeShort";
 }
 
+export class PropUShort extends Prop {
+  public baseSize = 2;
+  public hexGetter = "getUShort";
+  public hexSetter = "writeUShort";
+}
+
 export class PropByte extends Prop {
   public hexGetter = "getByte";
   public hexSetter = "writeByte";

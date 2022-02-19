@@ -63,7 +63,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     public $WarheadsHit;
     /** @var integer */
     public $CraftLost;
-    
+
     public function __construct($hex, $tie = null)
     {
         parent::__construct($hex, $tie);
@@ -75,7 +75,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->PilotRank = $this->getByte($hex, 0x02);
         $this->PilotDifficulty = $this->getByte($hex, 0x03);
         $this->Score = $this->getInt($hex, 0x04);
-        $this->SkillScore = $this->getShort($hex, 0x08);
+        $this->SkillScore = $this->getUShort($hex, 0x08);
         $this->SecretOrder = $this->getByte($hex, 0x0A);
         $this->TrainingScores = [];
         $offset = 0x2A;
@@ -163,7 +163,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->CraftLost = $this->getShort($hex, 0x786);
         $this->PilotFileLength = $offset;
     }
-    
+
     public function __debugInfo()
     {
         return [
@@ -193,7 +193,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             "CraftLost" => $this->CraftLost
         ];
     }
-    
+
     public function toHexString()
     {
         $hex = "";
@@ -282,23 +282,27 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
 
         return $hex;
     }
-    
-    public function getPilotStatusLabel() {
+
+    public function getPilotStatusLabel()
+    {
         return isset($this->PilotStatus) && isset(Constants::$PILOTSTATUS[$this->PilotStatus]) ? Constants::$PILOTSTATUS[$this->PilotStatus] : "Unknown";
     }
 
-    public function getPilotRankLabel() {
+    public function getPilotRankLabel()
+    {
         return isset($this->PilotRank) && isset(Constants::$PILOTRANK[$this->PilotRank]) ? Constants::$PILOTRANK[$this->PilotRank] : "Unknown";
     }
 
-    public function getPilotDifficultyLabel() {
+    public function getPilotDifficultyLabel()
+    {
         return isset($this->PilotDifficulty) && isset(Constants::$PILOTDIFFICULTY[$this->PilotDifficulty]) ? Constants::$PILOTDIFFICULTY[$this->PilotDifficulty] : "Unknown";
     }
 
-    public function getSecretOrderLabel() {
+    public function getSecretOrderLabel()
+    {
         return isset($this->SecretOrder) && isset(Constants::$SECRETORDER[$this->SecretOrder]) ? Constants::$SECRETORDER[$this->SecretOrder] : "Unknown";
     }
-    
+
     public function getLength()
     {
         return $this->PilotFileLength;
