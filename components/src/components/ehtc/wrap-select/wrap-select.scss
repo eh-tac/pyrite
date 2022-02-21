@@ -17,7 +17,8 @@
     & + .no-data {
       display: none;
     }
-    &:hover {
+    &:hover,
+    &.hover {
       border: 1px solid white;
     }
   }

@@ -14,7 +14,7 @@ export class WrapSelectComponent {
   @Element() el: HTMLElement;
   @Event() itemSelect: EventEmitter<ItemSummary>;
 
-  @Prop({ reflect: true }) value: string;
+  @Prop({ reflect: true, mutable: true }) value: string;
   @Prop({ reflect: true }) item: ItemSummary;
   @Prop() name: string;
   @Prop() disabled: boolean;
@@ -22,6 +22,7 @@ export class WrapSelectComponent {
 
   @State() selection?: ItemSummary;
   @State() suggestions?: ItemSummary[];
+  @State() suggestionIdx?: number;
   @State() query: string;
   @State() fullList: ItemSummary[];
 
@@ -29,7 +30,36 @@ export class WrapSelectComponent {
     const input = e.target as HTMLInputElement;
     this.updateQuery(input.value);
   };
+  private onKeyDown: (e: KeyboardEvent) => void = (e: KeyboardEvent) => {
+    if (!this.suggestions) {
+      return;
+    }
 
+    if (e.key === "ArrowDown") {
+      if (this.suggestionIdx === undefined) {
+        this.suggestionIdx = 0;
+      } else {
+        this.suggestionIdx++;
+        if (this.suggestionIdx === this.suggestions.length) {
+          this.suggestionIdx = 0; // wrap around
+        }
+      }
+    } else if (e.key === "ArrowUp") {
+      if (this.suggestionIdx === undefined) {
+        this.suggestionIdx = this.suggestions.length - 1;
+      } else {
+        this.suggestionIdx--;
+        if (this.suggestionIdx === -1) {
+          this.suggestionIdx = this.suggestions.length - 1; // wrap around
+        }
+      }
+    } else if (e.key === "Enter") {
+      const m = this.suggestions[this.suggestionIdx];
+      if (m) {
+        this.selectItem(m);
+      }
+    }
+  };
   private onClick: (e: Event) => void = (e: Event) => {
     if (this.disabled) {
       return;
@@ -125,6 +155,7 @@ export class WrapSelectComponent {
       },
       { once: true }
     );
+    this.suggestionIdx = undefined;
   }
 
   private selectItem(b?: ItemSummary): void {
@@ -169,6 +200,7 @@ export class WrapSelectComponent {
                 type="text"
                 placeholder="Search"
                 onInput={this.onInput}
+                onKeyDown={this.onKeyDown}
                 value={this.query}
                 disabled={this.disabled}
                 readOnly={this.readonly}
@@ -189,7 +221,9 @@ export class WrapSelectComponent {
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
             {this.suggestions &&
-              this.suggestions.map((s: ItemSummary) => <div class="record">{this.renderItem(s)}</div>)}
+              this.suggestions.map((s: ItemSummary, idx: number) => (
+                <div class={{ record: true, hover: this.suggestionIdx === idx }}>{this.renderItem(s)}</div>
+              ))}
             <span class="no-data">No matches found</span>
           </div>
         </div>

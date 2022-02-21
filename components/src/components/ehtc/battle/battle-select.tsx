@@ -11,7 +11,7 @@ export class BattleSelectComponent {
   @Event() battleSelect: EventEmitter<BattleSummary>;
 
   // battle id = value
-  @Prop({ reflect: true }) value: string;
+  @Prop({ reflect: true, mutable: true }) value: string;
   @Prop({ reflect: true }) battle: BattleSummary;
   // domain override. defaults to empty for same domain requests
   @Prop() domain: string;
@@ -21,6 +21,7 @@ export class BattleSelectComponent {
 
   @State() selection?: BattleSummary;
   @State() suggestions?: BattleSummary[];
+  @State() suggestionIdx?: number;
   @State() query: string;
   @State() battleList: BattleSummary[];
 
@@ -30,6 +31,36 @@ export class BattleSelectComponent {
     }
     const input = e.target as HTMLInputElement;
     this.updateQuery(input.value);
+  };
+  private onKeyDown: (e: KeyboardEvent) => void = (e: KeyboardEvent) => {
+    if (!this.suggestions) {
+      return;
+    }
+
+    if (e.key === "ArrowDown") {
+      if (this.suggestionIdx === undefined) {
+        this.suggestionIdx = 0;
+      } else {
+        this.suggestionIdx++;
+        if (this.suggestionIdx === this.suggestions.length) {
+          this.suggestionIdx = 0; // wrap around
+        }
+      }
+    } else if (e.key === "ArrowUp") {
+      if (this.suggestionIdx === undefined) {
+        this.suggestionIdx = this.suggestions.length - 1;
+      } else {
+        this.suggestionIdx--;
+        if (this.suggestionIdx === -1) {
+          this.suggestionIdx = this.suggestions.length - 1; // wrap around
+        }
+      }
+    } else if (e.key === "Enter") {
+      const m = this.suggestions[this.suggestionIdx];
+      if (m) {
+        this.selectBattle(m);
+      }
+    }
   };
 
   private externalInputElement: HTMLInputElement;
@@ -107,6 +138,7 @@ export class BattleSelectComponent {
       },
       { once: true }
     );
+    this.suggestionIdx = undefined;
   }
 
   private selectBattle(b?: BattleSummary): void {
@@ -141,6 +173,7 @@ export class BattleSelectComponent {
                 type="text"
                 placeholder="Battle search"
                 onInput={this.onInput}
+                onKeyDown={this.onKeyDown}
                 value={this.query}
                 disabled={this.disabled}
                 readOnly={this.readonly}
@@ -161,7 +194,9 @@ export class BattleSelectComponent {
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
             {this.suggestions &&
-              this.suggestions.map((s: BattleSummary) => <div class="record">{this.renderBattle(s)}</div>)}
+              this.suggestions.map((s: BattleSummary, idx: number) => (
+                <div class={{ record: true, hover: this.suggestionIdx === idx }}>{this.renderBattle(s)}</div>
+              ))}
             <span class="no-data">No matches found</span>
           </div>
         </div>

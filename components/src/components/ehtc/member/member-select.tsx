@@ -13,7 +13,7 @@ export class MemberSelectComponent {
   @Element() el: HTMLElement;
   @Event() memberSelect: EventEmitter<PilotSummary | CharacterSummary>;
   // member PIN = value
-  @Prop({ reflect: true }) value: string;
+  @Prop({ reflect: true, mutable: true }) value: string;
   // domain override. defaults to empty for same domain requests
   @Prop() domain: string;
   @Prop() name: string;
@@ -22,9 +22,9 @@ export class MemberSelectComponent {
   @Prop() filter: string = "";
   @Prop() disabled: boolean;
   @Prop() readonly: boolean;
-  @State()
-  selection?: Member;
+  @State() selection?: Member;
   @State() suggestions?: Member[];
+  @State() suggestionIdx?: number;
   @State() query: string;
   @State() memberList: Member[];
 
@@ -34,6 +34,36 @@ export class MemberSelectComponent {
     }
     const input = e.target as HTMLInputElement;
     this.updateQuery(input.value);
+  };
+  private onKeyDown: (e: KeyboardEvent) => void = (e: KeyboardEvent) => {
+    if (!this.suggestions) {
+      return;
+    }
+
+    if (e.key === "ArrowDown") {
+      if (this.suggestionIdx === undefined) {
+        this.suggestionIdx = 0;
+      } else {
+        this.suggestionIdx++;
+        if (this.suggestionIdx === this.suggestions.length) {
+          this.suggestionIdx = 0; // wrap around
+        }
+      }
+    } else if (e.key === "ArrowUp") {
+      if (this.suggestionIdx === undefined) {
+        this.suggestionIdx = this.suggestions.length - 1;
+      } else {
+        this.suggestionIdx--;
+        if (this.suggestionIdx === -1) {
+          this.suggestionIdx = this.suggestions.length - 1; // wrap around
+        }
+      }
+    } else if (e.key === "Enter") {
+      const m = this.suggestions[this.suggestionIdx];
+      if (m) {
+        this.selectMember(m);
+      }
+    }
   };
   private externalPINInputElement: HTMLInputElement;
   private filterArray: number[] = [];
@@ -124,6 +154,7 @@ export class MemberSelectComponent {
       },
       { once: true }
     );
+    this.suggestionIdx = undefined;
   }
 
   private selectMember(m?: Member): void {
@@ -165,6 +196,7 @@ export class MemberSelectComponent {
                 type="text"
                 placeholder="Member search"
                 onInput={this.onInput}
+                onKeyDown={this.onKeyDown}
                 value={this.query}
                 disabled={this.disabled}
                 readOnly={this.readonly}
@@ -184,7 +216,10 @@ export class MemberSelectComponent {
         )}
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
-            {this.suggestions && this.suggestions.map((s: Member) => <div class="record">{this.renderMember(s)}</div>)}
+            {this.suggestions &&
+              this.suggestions.map((s: Member, idx: number) => (
+                <div class={{ record: true, hover: this.suggestionIdx === idx }}>{this.renderMember(s)}</div>
+              ))}
             <span class="no-data">No matches found</span>
           </div>
         </div>
