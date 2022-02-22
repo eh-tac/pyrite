@@ -56,6 +56,8 @@ export class BattleSelectComponent {
         }
       }
     } else if (e.key === "Enter") {
+      e.stopPropagation();
+      e.preventDefault();
       const m = this.suggestions[this.suggestionIdx];
       if (m) {
         this.selectBattle(m);

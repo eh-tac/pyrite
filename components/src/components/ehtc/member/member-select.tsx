@@ -59,6 +59,8 @@ export class MemberSelectComponent {
         }
       }
     } else if (e.key === "Enter") {
+      e.stopPropagation();
+      e.preventDefault();
       const m = this.suggestions[this.suggestionIdx];
       if (m) {
         this.selectMember(m);
