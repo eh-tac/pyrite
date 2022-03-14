@@ -73,7 +73,10 @@ export class PilotViewer {
     if (this.controller) {
       title = this.controller.filename;
       content = tabPanes(this.controller.renderTabs(this.battleData), this.activeTab, this.tabSelect.bind(this));
+    } else if (!this.allowUpload && this.file) {
+      content = <p class="text-center my-3 text-warning">Unable to load file {this.file}</p>;
     }
+    console.log("render", this.controller, this.file, this.allowUpload);
 
     return (
       <div class="component bg-dark">
