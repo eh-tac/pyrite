@@ -30,7 +30,13 @@ export class PilotViewer {
   public componentWillLoad(): void {
     if (this.file) {
       fetch(this.file)
-        .then((res: Response) => res.arrayBuffer())
+        .then((res: Response) => {
+          if (res.status === 200) {
+            return res.arrayBuffer();
+          } else {
+            throw new Error("Invalid response while loading pilot file");
+          }
+        })
         .then((value: ArrayBuffer) => {
           this.controller = this.controllerFromFile(this.file, value);
         });
