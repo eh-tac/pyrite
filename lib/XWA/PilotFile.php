@@ -9,7 +9,7 @@ class PilotFile extends Base\PilotFileBase
     {
         $missions = $this->getCompletedMissions();
         return array_map(function (MissionData $mission) {
-            return $mission->Score + $mission->BonusScoreTen / 10;
+            return $mission->getTotal();
         }, array_values($missions));
     }
 

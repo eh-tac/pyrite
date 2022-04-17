@@ -13,6 +13,7 @@ export class BattleSelectComponent {
   // battle id = value
   @Prop({ reflect: true, mutable: true }) value: string;
   @Prop({ reflect: true }) battle: BattleSummary;
+  @Prop() category: string;
   // domain override. defaults to empty for same domain requests
   @Prop() domain: string;
   @Prop() name: string;
@@ -107,7 +108,8 @@ export class BattleSelectComponent {
 
   private get listURL(): string {
     const d = this.domain || "";
-    return `${d}/api/battles/list`;
+    const c = this.category ? `/${this.category}` : "";
+    return `${d}/api/battles/list${c}`;
   }
 
   private updateQuery(query: string): void {

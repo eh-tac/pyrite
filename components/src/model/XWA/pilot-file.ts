@@ -1,5 +1,5 @@
 import { BattleSummary, MissionScore } from "../pilot";
-import { MissionData } from "../XvT";
+import { MissionData } from "../XWA";
 import { PilotFileBase } from "./base/pilot-file-base";
 import { Constants } from "./constants";
 
@@ -11,6 +11,17 @@ export interface TriStat {
 }
 
 const BaseMissionCounts: number[] = [9, 7, 6, 7, 6, 7, 7, 4];
+const TFTCRCounts: Record<number, number> = {
+  3: 4,
+  9: 6,
+  15: 5,
+  20: 5,
+  25: 5,
+  30: 4,
+  34: 4,
+  38: 3,
+  41: 5
+};
 
 export class PilotFile extends PilotFileBase {
   public beforeConstruct(): void {}
@@ -41,34 +52,46 @@ export class PilotFile extends PilotFileBase {
 
   public get BattleSummary(): BattleSummary[] {
     const battles: BattleSummary[] = [];
-    let m = 0;
-    for (const mCount of BaseMissionCounts) {
-      const missions = this.MissionData.slice(m, m + mCount);
+    let mIdx = 0;
+
+    function processMissions(missions: MissionData[], expectedCount: number = 0) {
       const won = missions.filter(m => m.WinCount && m.AttemptCount).length;
-      const completed = won === mCount;
+      const completed = won === expectedCount;
       let status = "None";
-      if (completed) {
+      if (completed && won === expectedCount) {
         status = "Completed";
-      } else if (won) {
+      } else if (won && expectedCount) {
         status = "Incomplete";
+      } else if (won && !expectedCount) {
+        status = "Custom battle";
       }
       battles.push({ completed, status, missions });
-      m += mCount;
+      mIdx += expectedCount;
     }
-    let status = "None";
-    let completed = false;
-    let missions: MissionScore[] = [];
-    while (this.MissionData[m].AttemptCount) {
-      const mis = this.MissionData[m];
-      completed = true;
-      status = "Completed";
-      missions.push(mis);
-      m++;
-    }
-    battles.push({ completed, status, missions });
-    for (let i = 0; i < 255; i++) {
-      if (this.MissionData[i] && this.MissionData[i].WinCount) {
+
+    if (this.hasMissionData(0)) {
+      // base XWA starts from 0
+      for (const mCount of BaseMissionCounts) {
+        const missions = this.MissionData.slice(mIdx, mIdx + mCount);
+        processMissions(missions, mCount);
       }
+    } else if (!this.hasMissionData(2) && this.hasMissionData(3)) {
+      // TFTCR starts from 3
+      Object.entries(TFTCRCounts).forEach(([a, mCount]: [string, number]) => {
+        mIdx = parseInt(a, 10);
+        const missions = this.MissionData.slice(mIdx, mIdx + mCount);
+        processMissions(missions, mCount);
+      });
+    } else if (!this.hasMissionData(52) && this.hasMissionData(53)) {
+      // EH custom missions start at 53 (battle 8)
+      for (let i = 0; i < 8; i++) {
+        // add empty content for battles 0-7
+        battles.push({ completed: false, status: "None", missions: [] });
+      }
+      mIdx = 53;
+      // could be any number of custom missions added, but lets assume its not more than 53
+      const missions = this.MissionData.slice(mIdx, mIdx * 2);
+      processMissions(missions);
     }
 
     return battles;
@@ -107,5 +130,9 @@ export class PilotFile extends PilotFileBase {
       this.SimulatorKills[type] ||
       this.SimulatorPartials[type];
     return k > 0;
+  }
+
+  private hasMissionData(idx: number) {
+    return !!this.MissionData[idx].AttemptCount;
   }
 }

@@ -137,10 +137,9 @@ export class XWAPltController extends PilotFileController {
                     <h5 class="mb-1 text-muted">Battle {b}</h5>
                     <small>{battle.status}</small>
                   </div>
-                  {battle.completed &&
-                    battle.missions.map((mission: MissionData, m: number) =>
-                      this.renderXWAMission(`Mission ${m + 1}`, mission)
-                    )}
+                  {battle.missions.map((mission: MissionData, m: number) =>
+                    this.renderXWAMission(`Mission ${m + 1}`, mission)
+                  )}
                 </li>
               );
             }
