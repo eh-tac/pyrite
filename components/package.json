@@ -46,7 +46,7 @@
     "jasmine": "^3.7.0",
     "jasmine-spec-reporter": "^5.0.2",
     "jasmine-ts": "^0.3.2",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "prettier": "^1.19.1",
     "ts-node": "^8.10.2",
     "tslint-ionic-rules": "0.0.21",
