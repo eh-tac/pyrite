@@ -10,3 +10,4 @@ export { Delt } from "./delt";
 export { Row } from "./row";
 export { OpCode } from "./op-code";
 export { Voic } from "./voic";
+export { VoicData } from "./voic-data";

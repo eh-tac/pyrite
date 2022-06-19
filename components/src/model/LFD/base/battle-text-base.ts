@@ -24,13 +24,13 @@ export abstract class BattleTextBase extends PyriteBase implements Byteable {
     this.Header = new Header(hex.slice(0x00), this.TIE);
     this.NumStrings = getShort(hex, 0x10);
     this.Names = new LString(hex.slice(0x12), this.TIE);
-    offset = 0x12 + this.Names.getLength()
+    offset = 0x12 + this.Names.getLength();
     this.Titles = new LString(hex.slice(offset), this.TIE);
-    offset += this.Titles.getLength()
+    offset += this.Titles.getLength();
     this.Image = new LString(hex.slice(offset), this.TIE);
-    offset += this.Image.getLength()
+    offset += this.Image.getLength();
     this.MissionFiles = new LString(hex.slice(offset), this.TIE);
-    offset += this.MissionFiles.getLength()
+    offset += this.MissionFiles.getLength();
     this.MissionDescriptions = [];
     offset = offset;
     for (let i = 0; i < this.NumMissions(); i++) {

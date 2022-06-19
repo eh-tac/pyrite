@@ -5,6 +5,7 @@ import { IMission } from "../pyrite-base";
 import { Event } from "./event";
 import { Tag } from "./tag";
 import { TIEString } from "./tie-string";
+import { EventType } from "./constants";
 
 export class Briefing extends BriefingBase {
   public constructor(hex: ArrayBuffer, tie: IMission) {
@@ -42,5 +43,9 @@ export class Briefing extends BriefingBase {
       offset += t.getLength();
     }
     this.BriefingLength = offset;
+  }
+
+  public get Captions(): string[] {
+    return this.Events.filter(e => e.EventType === EventType.captionText).map(e => e.Text);
   }
 }

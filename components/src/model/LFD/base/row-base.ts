@@ -72,7 +72,7 @@ export abstract class RowBase extends PyriteBase implements Byteable {
   }
   
   protected abstract ColorCount();
-protected abstract OpCount();
+  protected abstract OpCount();
   public getLength(): number {
     return this.RowLength;
   }

@@ -1,6 +1,8 @@
 import { FlightGroup } from "./flight-group";
 import { MissionBase } from "./base/mission-base";
 import { PreMissionQuestions, QuestionType } from "./pre-mission-questions";
+import { PostMissionQuestions } from "./post-mission-questions";
+import { QuestionCondition } from "./constants";
 
 export enum Difficulty {
   Easy = "Easy",
@@ -35,6 +37,30 @@ export class Mission extends MissionBase {
         q.Type = QuestionType.Secret;
         return q;
       });
+  }
+
+  public get officerDebriefing(): PostMissionQuestions[] {
+    return this.PostMissionQuestions.slice(0, 4).filter(
+      q => q.Length && q.QuestionCondition === QuestionCondition.successful
+    );
+  }
+
+  public get secretDebriefing(): PostMissionQuestions[] {
+    return this.PostMissionQuestions.slice(5, 9).filter(
+      q => q.Length && q.QuestionCondition === QuestionCondition.successful
+    );
+  }
+
+  public get officerFailBriefing(): PostMissionQuestions[] {
+    return this.PostMissionQuestions.slice(0, 4).filter(
+      q => q.Length && q.QuestionCondition === QuestionCondition.failed
+    );
+  }
+
+  public get secretFailBriefing(): PostMissionQuestions[] {
+    return this.PostMissionQuestions.slice(5, 9).filter(
+      q => q.Length && q.QuestionCondition === QuestionCondition.failed
+    );
   }
 
   public getIFF(iff: number) {

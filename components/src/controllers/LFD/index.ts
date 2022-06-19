@@ -9,3 +9,4 @@ export { LFDDeltController } from "./delt";
 export { LFDRowController } from "./row";
 export { LFDOpCodeController } from "./op-code";
 export { LFDVoicController } from "./voic";
+export { LFDVoicDataController } from "./voic-data";

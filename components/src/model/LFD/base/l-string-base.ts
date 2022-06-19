@@ -19,9 +19,9 @@ export abstract class LStringBase extends PyriteBase implements Byteable {
     this.Substrings = [];
     offset = 0x02;
     for (let i = 0; i < 0; i++) {
-      const t = getString(hex, offset);
+      const t = getString(hex, offset, 0);
       this.Substrings.push(t);
-      offset += t.length;
+      offset += t.length + 1;
     }
     // static prop Reserved
     offset += 1;
@@ -44,7 +44,7 @@ export abstract class LStringBase extends PyriteBase implements Byteable {
     for (let i = 0; i < 0; i++) {
       const t = this.Substrings[i];
       writeString(hex, t, offset);
-      offset += t.length;
+      offset += t.length + 1;
     }
     writeByte(hex, 0, offset);
 

@@ -76,5 +76,16 @@ struct OpCode (size 0)
 struct Voic (size 0)
 {
   0x00 Header Header
-  0x10 any Data
+  0x10 CHAR<19> Creative
+  0x23 BYTE[3] Abort
+  0x26 BYTE[2] Version
+  0x28 BYTE[2] VersionHash
+  0x2A VoicData Data
+  PV BYTE Terminator
+}
+
+struct VoicData (size 0){
+  0x00 BYTE Type
+  0x01 BYTE[3] Size
+  0x04 any Data
 }

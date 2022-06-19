@@ -87,7 +87,7 @@ export class Prop {
 
   public getFunctionStubs(): string[] {
     return [this.typeLengthExpression, this.arrayLengthExpression].filter((expr: string): boolean => {
-      return expr && expr.substr(-2, 2) === "()";
+      return expr && expr.endsWith("()");
     });
   }
 

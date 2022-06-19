@@ -85,7 +85,7 @@ export abstract class ${baseName} extends PyriteBase implements Byteable {
   ${this.baseJSON(props)}
   ${this.baseHexString(props)}
   ${enums.map((p: TypeScriptPropWriter): string => p.enumLookupFunction).join("\n")}
-  ${struct.functionStubs.map((f: string): string => this.abstractFunction(f)).join("\n")}
+  ${struct.functionStubs.map((f: string): string => this.abstractFunction(f)).join("\n  ")}
   public getLength(): number {
     return this.${lengthProp.prop.name};
   }

@@ -11,36 +11,18 @@ function mg(plt: string): PyriteGenerator {
   );
 }
 
-const tieG = mg("TIE");
-const tieW = new TypeScriptWriter("src", tieG);
-tieW.write();
-const tieP = new PHPWriter("../lib", tieG);
-tieP.write();
+// make generators
+const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [mg("TIE"), mg("XW"), mg("XvT"), mg("XWA"), mg("LFD"), mg("Puz")];
 
-// const xwG = mg("XW");
-// const xwW = new TypeScriptWriter("src", xwG);
-// xwW.write();
-// const xwP = new PHPWriter("../lib", xwG);
-// xwP.write();
-
-// const vG = mg("XvT");
-// const vW = new TypeScriptWriter("src", vG);
-// const vP = new PHPWriter("../lib", vG);
-// vW.write();
-// vP.write();
-
-const wG = mg("XWA");
-const wW = new TypeScriptWriter("src", wG);
-const wP = new PHPWriter("../lib", wG);
-wW.write();
-wP.write();
-
-// const lfdG = mg("LFD");
-// const lfgW = new TypeScriptWriter("src", lfdG);
-// lfgW.write();
-
-// const pG = mg("Puz");
-// const pw = new TypeScriptWriter("src", pG);
-// pw.write();
-// const pp = new PHPWriter("../../../../../xword/src/Model", pG, "App\\Model");
-// pp.write();
+// make writers
+[
+  // new TypeScriptWriter("src", tieG),
+  // new PHPWriter("../lib", tieG),
+  // new TypeScriptWriter("src", xwG),
+  // new PHPWriter("../lib", xwG),
+  // new TypeScriptWriter("src", xvtG),
+  // new PHPWriter("../lib", xvtG),
+  // new TypeScriptWriter("src", xwaG),
+  // new PHPWriter("../lib", xwaG),
+  new TypeScriptWriter("src", lfdG)
+].forEach(writer => writer.write());

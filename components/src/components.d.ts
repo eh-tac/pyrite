@@ -10,7 +10,7 @@ import { Battle } from "./model/ehtc/battle";
 import { BattleSummary, CharacterSummary, PilotSummary } from "./model/ehtc";
 import { ItemSummary } from "./components/ehtc/wrap-select/wrap-select";
 import { Mission } from "./model/TIE/mission";
-import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic } from "./model/LFD";
+import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic, VoicData } from "./model/LFD";
 import { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
 import { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
 import { FileHeader as FileHeader2, FlightGroup as FlightGroup2, Mission as Mission3, ObjectGroup, PilotFile as PilotFile2 } from "./model/XW";
@@ -37,6 +37,7 @@ export namespace Components {
     }
     interface EhtcBattleSelect {
         "battle": BattleSummary;
+        "category": string;
         "disabled": boolean;
         "domain": string;
         "name": string;
@@ -107,6 +108,9 @@ export namespace Components {
     interface PyriteLfdVoic {
         "voic": Voic;
     }
+    interface PyriteLfdVoicData {
+        "voicdata": VoicData;
+    }
     interface PyriteMission {
         "file": string;
         "name": string;
@@ -132,6 +136,10 @@ export namespace Components {
     }
     interface PyriteTieBriefing {
         "mission"?: Mission;
+    }
+    interface PyriteTieChecklist {
+        "lfdUrl": string;
+        "missionUrl": string;
     }
     interface PyriteTieEvent {
         "event": Event;
@@ -447,6 +455,12 @@ declare global {
         prototype: HTMLPyriteLfdVoicElement;
         new (): HTMLPyriteLfdVoicElement;
     };
+    interface HTMLPyriteLfdVoicDataElement extends Components.PyriteLfdVoicData, HTMLStencilElement {
+    }
+    var HTMLPyriteLfdVoicDataElement: {
+        prototype: HTMLPyriteLfdVoicDataElement;
+        new (): HTMLPyriteLfdVoicDataElement;
+    };
     interface HTMLPyriteMissionElement extends Components.PyriteMission, HTMLStencilElement {
     }
     var HTMLPyriteMissionElement: {
@@ -488,6 +502,12 @@ declare global {
     var HTMLPyriteTieBriefingElement: {
         prototype: HTMLPyriteTieBriefingElement;
         new (): HTMLPyriteTieBriefingElement;
+    };
+    interface HTMLPyriteTieChecklistElement extends Components.PyriteTieChecklist, HTMLStencilElement {
+    }
+    var HTMLPyriteTieChecklistElement: {
+        prototype: HTMLPyriteTieChecklistElement;
+        new (): HTMLPyriteTieChecklistElement;
     };
     interface HTMLPyriteTieEventElement extends Components.PyriteTieEvent, HTMLStencilElement {
     }
@@ -894,6 +914,7 @@ declare global {
         "pyrite-lfd-row": HTMLPyriteLfdRowElement;
         "pyrite-lfd-tie-battle": HTMLPyriteLfdTieBattleElement;
         "pyrite-lfd-voic": HTMLPyriteLfdVoicElement;
+        "pyrite-lfd-voic-data": HTMLPyriteLfdVoicDataElement;
         "pyrite-mission": HTMLPyriteMissionElement;
         "pyrite-mission-tabs": HTMLPyriteMissionTabsElement;
         "pyrite-mission-wrapper": HTMLPyriteMissionWrapperElement;
@@ -901,6 +922,7 @@ declare global {
         "pyrite-resource": HTMLPyriteResourceElement;
         "pyrite-resources": HTMLPyriteResourcesElement;
         "pyrite-tie-briefing": HTMLPyriteTieBriefingElement;
+        "pyrite-tie-checklist": HTMLPyriteTieChecklistElement;
         "pyrite-tie-event": HTMLPyriteTieEventElement;
         "pyrite-tie-file-header": HTMLPyriteTieFileHeaderElement;
         "pyrite-tie-flight-group": HTMLPyriteTieFlightGroupElement;
@@ -989,6 +1011,7 @@ declare namespace LocalJSX {
     }
     interface EhtcBattleSelect {
         "battle"?: BattleSummary;
+        "category"?: string;
         "disabled"?: boolean;
         "domain"?: string;
         "name"?: string;
@@ -1056,6 +1079,9 @@ declare namespace LocalJSX {
     interface PyriteLfdVoic {
         "voic"?: Voic;
     }
+    interface PyriteLfdVoicData {
+        "voicdata"?: VoicData;
+    }
     interface PyriteMission {
         "file"?: string;
         "name"?: string;
@@ -1080,6 +1106,10 @@ declare namespace LocalJSX {
     }
     interface PyriteTieBriefing {
         "mission"?: Mission;
+    }
+    interface PyriteTieChecklist {
+        "lfdUrl"?: string;
+        "missionUrl"?: string;
     }
     interface PyriteTieEvent {
         "event"?: Event;
@@ -1294,6 +1324,7 @@ declare namespace LocalJSX {
         "pyrite-lfd-row": PyriteLfdRow;
         "pyrite-lfd-tie-battle": PyriteLfdTieBattle;
         "pyrite-lfd-voic": PyriteLfdVoic;
+        "pyrite-lfd-voic-data": PyriteLfdVoicData;
         "pyrite-mission": PyriteMission;
         "pyrite-mission-tabs": PyriteMissionTabs;
         "pyrite-mission-wrapper": PyriteMissionWrapper;
@@ -1301,6 +1332,7 @@ declare namespace LocalJSX {
         "pyrite-resource": PyriteResource;
         "pyrite-resources": PyriteResources;
         "pyrite-tie-briefing": PyriteTieBriefing;
+        "pyrite-tie-checklist": PyriteTieChecklist;
         "pyrite-tie-event": PyriteTieEvent;
         "pyrite-tie-file-header": PyriteTieFileHeader;
         "pyrite-tie-flight-group": PyriteTieFlightGroup;
@@ -1391,6 +1423,7 @@ declare module "@stencil/core" {
             "pyrite-lfd-row": LocalJSX.PyriteLfdRow & JSXBase.HTMLAttributes<HTMLPyriteLfdRowElement>;
             "pyrite-lfd-tie-battle": LocalJSX.PyriteLfdTieBattle & JSXBase.HTMLAttributes<HTMLPyriteLfdTieBattleElement>;
             "pyrite-lfd-voic": LocalJSX.PyriteLfdVoic & JSXBase.HTMLAttributes<HTMLPyriteLfdVoicElement>;
+            "pyrite-lfd-voic-data": LocalJSX.PyriteLfdVoicData & JSXBase.HTMLAttributes<HTMLPyriteLfdVoicDataElement>;
             "pyrite-mission": LocalJSX.PyriteMission & JSXBase.HTMLAttributes<HTMLPyriteMissionElement>;
             "pyrite-mission-tabs": LocalJSX.PyriteMissionTabs & JSXBase.HTMLAttributes<HTMLPyriteMissionTabsElement>;
             "pyrite-mission-wrapper": LocalJSX.PyriteMissionWrapper & JSXBase.HTMLAttributes<HTMLPyriteMissionWrapperElement>;
@@ -1398,6 +1431,7 @@ declare module "@stencil/core" {
             "pyrite-resource": LocalJSX.PyriteResource & JSXBase.HTMLAttributes<HTMLPyriteResourceElement>;
             "pyrite-resources": LocalJSX.PyriteResources & JSXBase.HTMLAttributes<HTMLPyriteResourcesElement>;
             "pyrite-tie-briefing": LocalJSX.PyriteTieBriefing & JSXBase.HTMLAttributes<HTMLPyriteTieBriefingElement>;
+            "pyrite-tie-checklist": LocalJSX.PyriteTieChecklist & JSXBase.HTMLAttributes<HTMLPyriteTieChecklistElement>;
             "pyrite-tie-event": LocalJSX.PyriteTieEvent & JSXBase.HTMLAttributes<HTMLPyriteTieEventElement>;
             "pyrite-tie-file-header": LocalJSX.PyriteTieFileHeader & JSXBase.HTMLAttributes<HTMLPyriteTieFileHeaderElement>;
             "pyrite-tie-flight-group": LocalJSX.PyriteTieFlightGroup & JSXBase.HTMLAttributes<HTMLPyriteTieFlightGroupElement>;

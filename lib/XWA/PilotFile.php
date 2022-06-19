@@ -5,20 +5,26 @@ namespace Pyrite\XWA;
 class PilotFile extends Base\PilotFileBase
 {
 
-    public function getCompletedMissionScores()
+    public function getCompletedMissionScores($resetNumbering = true)
     {
         $missions = $this->getCompletedMissions();
+        if ($resetNumbering) {
+            $missions = array_values($missions);
+        }
         return array_map(function (MissionData $mission) {
             return $mission->getTotal();
-        }, array_values($missions));
+        }, $missions);
     }
 
-    public function getCompletedMissionTimes()
+    public function getCompletedMissionTimes($resetNumbering = true)
     {
         $missions = $this->getCompletedMissions();
+        if ($resetNumbering) {
+            $missions = array_values($missions);
+        }
         return array_map(function (MissionData $mission) {
             return $mission->Time;
-        }, array_values($missions));
+        }, $missions);
     }
 
     public function getCompletedMissions()

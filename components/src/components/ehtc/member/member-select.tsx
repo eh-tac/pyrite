@@ -143,12 +143,25 @@ export class MemberSelectComponent {
   private getSuggestions() {
     const q = this.query.toLowerCase();
     const match = (str?: string) => str && str.toLowerCase().includes(q);
+    const exact = (str?: string) => str && str.toLowerCase() === q;
+    const score = (str?: string) => (match(str) ? str.toLowerCase().indexOf(q) : 99);
+    const nactv = (m: Member) => m.description.includes("[Inactive]");
 
-    this.suggestions = this.memberList
-      .filter((p: Member): boolean => {
-        return match(p.PIN.toString()) || match(p.label) || match(p.description);
-      })
-      .slice(0, 15);
+    // PIN > 1 excludes the system profile
+    const filtered = this.memberList.filter((p: Member): boolean => {
+      return p.PIN > 1 && (match(p.PIN.toString()) || match(p.label) || match(p.description));
+    });
+    const sorted = filtered.sort((a: Member, b: Member): number => {
+      if (exact(a.PIN.toString()) || exact(a.label) || exact(a.description)) return -1;
+      if (exact(b.PIN.toString()) || exact(b.label) || exact(b.description)) return 1;
+      if (nactv(a)) return 1;
+      if (nactv(b)) return -1;
+
+      const aScore = Math.min(score(a.PIN.toString()), score(a.label), score(a.description));
+      const bScore = Math.min(score(b.PIN.toString()), score(b.label), score(b.description));
+      return aScore - bScore;
+    });
+    this.suggestions = sorted.slice(0, 15);
     document.body.addEventListener(
       "click",
       () => {

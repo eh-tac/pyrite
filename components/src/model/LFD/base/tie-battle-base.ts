@@ -19,11 +19,11 @@ export abstract class TIEBattleBase extends PyriteBase implements Byteable {
     let offset = 0;
 
     this.HeaderMap = new Rmap(hex.slice(0x00), this.TIE);
-    offset = 0x00 + this.HeaderMap.getLength()
+    offset = 0x00 + this.HeaderMap.getLength();
     this.BattleName = new BattleText(hex.slice(0x30), this.TIE);
-    offset = 0x30 + this.BattleName.getLength()
+    offset = 0x30 + this.BattleName.getLength();
     this.BattleImage = new Delt(hex.slice(offset), this.TIE);
-    offset += this.BattleImage.getLength()
+    offset += this.BattleImage.getLength();
     this.TIEBattleLength = offset;
   }
   
