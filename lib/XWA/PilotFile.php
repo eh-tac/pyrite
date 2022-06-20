@@ -38,4 +38,25 @@ class PilotFile extends Base\PilotFileBase
     {
         return array_sum($this->TourOfDutyKills);
     }
+
+    public function getCurrentMissionID()
+    {
+        $win = 1;
+        $i = -1;
+        while ($win) {
+            $i++;
+            $win = $this->MissionData[$i]->WinCount;
+        }
+        return $i;
+    }
+
+    public function setUpForMissionID($id)
+    {
+        for ($i = 0; $i < $id; $i++) {
+            $this->MissionData[$i]->empty()->skip();
+        }
+        for ($i = $id; $i < count($this->MissionData); $i++) {
+            $this->MissionData[$i]->empty();
+        }
+    }
 }

@@ -161,7 +161,7 @@ export class PHPPropWriter {
 
   public getSetter(propOverride?: string, inLoop = false): string {
     const off = inLoop ? "$offset" : this.offsetExpr;
-    const params = ["$hex", propOverride || `$this->${this.prop.name}`, off];
-    return `$this->${this.prop.hexSetter}(${params.join(", ")})`;
+    const params = [propOverride || `$this->${this.prop.name}`, off];
+    return `$hex .= $this->${this.prop.hexSetter}(${params.join(", ")})`;
   }
 }

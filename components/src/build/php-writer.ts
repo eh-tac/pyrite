@@ -63,6 +63,7 @@ ${this.getBaseClassImports(props)}
 abstract class ${baseName} extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
     ${lengthProp.propertyDeclaration}
     ${props.map((p: PHPPropWriter): string => p.propertyDeclaration).join("\n    ")}
@@ -120,7 +121,7 @@ class ${struct.name} extends Base\\${baseClass}
   }
 
   protected getBaseClassImports(props: PHPPropWriter[]): string {
-    const imports: string[] = ["Byteable", "HexDecoder", "PyriteBase"];
+    const imports: string[] = ["Byteable", "HexDecoder", "HexEncoder", "PyriteBase"];
 
     const usedClassImports = [];
     let useConstants: boolean = false;

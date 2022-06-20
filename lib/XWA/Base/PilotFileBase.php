@@ -4,12 +4,14 @@ namespace Pyrite\XWA\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\XWA\MissionData;
 
 abstract class PilotFileBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
     /** @var integer */
     public $PilotFileLength;
@@ -53,7 +55,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     public $CurrentMedal;
     /** @var integer */
     public $BonusTen;
-    
+
     public function __construct($hex, $tie = null)
     {
         parent::__construct($hex, $tie);
@@ -124,7 +126,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->BonusTen = $this->getInt($hex, 0x1144E);
         $this->PilotFileLength = $offset;
     }
-    
+
     public function __debugInfo()
     {
         return [
@@ -150,7 +152,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             "BonusTen" => $this->BonusTen
         ];
     }
-    
+
     public function toHexString()
     {
         $hex = "";
@@ -214,8 +216,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
 
         return $hex;
     }
-    
-    
+
+
     public function getLength()
     {
         return $this->PilotFileLength;
