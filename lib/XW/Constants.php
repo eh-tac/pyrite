@@ -211,4 +211,10 @@ class Constants
         16 => "Arrived",
     ];
 
+    public static $OBJECTOBJECTIVE = [
+        3 => "None",
+        4 => "Destroy",
+        5 => "Survive",
+    ];
+
 }

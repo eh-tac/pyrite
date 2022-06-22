@@ -4,29 +4,41 @@ namespace Pyrite\TIE\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 
 abstract class TIEStringBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  TIEStringLength INT */
     public $TIEStringLength;
-    /** @var integer */
+    /** @var integer 0x0 Length SHORT */
     public $Length;
-    /** @var string */
+    /** @var string 0x2 Text CHAR */
     public $Text;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->Length = $this->getShort($hex, 0x0);
         $this->Text = $this->getChar($hex, 0x2, $this->Length);
         $offset = 0x2 + $this->Length;
         $this->TIEStringLength = $offset;
+        return $this;
     }
     
     public function __debugInfo()
@@ -37,13 +49,13 @@ abstract class TIEStringBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeShort($hex, $this->Length, 0x0);
-        $this->writeChar($hex, $this->Text, 0x2);
+        $hex = $this->writeShort($this->Length, $hex, 0x0);
+        $hex = $this->writeChar($this->Text, $hex, 0x2);
 
         return $hex;
     }

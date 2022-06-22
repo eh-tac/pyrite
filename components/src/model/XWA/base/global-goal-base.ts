@@ -8,7 +8,7 @@ import { getShort, writeObject, writeShort } from "../../../hex";
 export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
   public readonly GLOBALGOALLENGTH: number = 368;
   public Reserved: number; //(3)
-  public Unnamed: GoalGlobal[];
+  public Goal: GoalGlobal[];
   
   constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
@@ -16,11 +16,11 @@ export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
     let offset = 0;
 
     this.Reserved = getShort(hex, 0x00);
-    this.Unnamed = [];
+    this.Goal = [];
     offset = 0x02;
     for (let i = 0; i < 3; i++) {
       const t = new GoalGlobal(hex.slice(offset), this.TIE);
-      this.Unnamed.push(t);
+      this.Goal.push(t);
       offset += t.getLength();
     }
     
@@ -29,7 +29,7 @@ export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
   public toJSON(): object {
     return {
       Reserved: this.Reserved,
-      Unnamed: this.Unnamed
+      Goal: this.Goal
     };
   }
   
@@ -40,7 +40,7 @@ export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
     writeShort(hex, this.Reserved, 0x00);
     offset = 0x02;
     for (let i = 0; i < 3; i++) {
-      const t = this.Unnamed[i];
+      const t = this.Goal[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }

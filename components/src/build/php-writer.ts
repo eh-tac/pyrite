@@ -90,7 +90,9 @@ namespace ${this.namespace}\\${plt};
 class ${struct.name} extends Base\\${baseClass}
 {
 
-    public function beforeConstruct() {}
+    public static function fromHex($hex, $tie = null) {
+      return (new ${struct.name}($hex, $tie))->loadHex();
+    }
 
     public function __toString() 
     {
@@ -109,14 +111,24 @@ class ${struct.name} extends Base\\${baseClass}
     const props = struct.getProps().map(p => new PHPPropWriter(p));
 
     return `
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         ${props.map((p: PHPPropWriter) => p.getConstructorInit()).join("\n        ")}
         ${struct.isVariableLength ? `$this->${lengthProp.prop.name} = $offset;` : ""}
+        return $this;
     }`;
   }
 
@@ -157,9 +169,9 @@ class ${struct.name} extends Base\\${baseClass}
 
   protected baseHexString(props: PHPPropWriter[]): string {
     return `
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
         ${props.map((p: PHPPropWriter) => p.getOutputHex()).join("\n        ")}

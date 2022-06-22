@@ -4,38 +4,49 @@ namespace Pyrite\XvT\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\XvT\Trigger;
 
 abstract class GoalGlobalBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  GOALGLOBALLENGTH INT */
     public const GOALGLOBALLENGTH = 42;
-    /** @var Trigger[] */
+    /** @var Trigger[] 0x00 TriggerA Trigger */
     public $TriggerA;
-    /** @var boolean */
+    /** @var boolean 0x0A Trigger1OrTrigger2 BOOL */
     public $Trigger1OrTrigger2;
-    /** @var Trigger[] */
+    /** @var Trigger[] 0x0B TriggerB Trigger */
     public $TriggerB;
-    /** @var boolean */
+    /** @var boolean 0x15 Trigger2OrTrigger3 BOOL */
     public $Trigger2OrTrigger3;
-    /** @var boolean */
+    /** @var boolean 0x27 Trigger12OrTrigger34 BOOL */
     public $Trigger12OrTrigger34;
-    /** @var integer */
+    /** @var integer 0x29 Points SBYTE */
     public $Points;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->TriggerA = [];
         $offset = 0x00;
         for ($i = 0; $i < 2; $i++) {
-            $t = new Trigger(substr($hex, $offset), $this->TIE);
+            $t = (new Trigger(substr($hex, $offset), $this->TIE))->loadHex();
             $this->TriggerA[] = $t;
             $offset += $t->getLength();
         }
@@ -43,7 +54,7 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         $this->TriggerB = [];
         $offset = 0x0B;
         for ($i = 0; $i < 2; $i++) {
-            $t = new Trigger(substr($hex, $offset), $this->TIE);
+            $t = (new Trigger(substr($hex, $offset), $this->TIE))->loadHex();
             $this->TriggerB[] = $t;
             $offset += $t->getLength();
         }
@@ -51,6 +62,7 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         $this->Trigger12OrTrigger34 = $this->getBool($hex, 0x27);
         $this->Points = $this->getSByte($hex, 0x29);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -65,27 +77,27 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
         $offset = 0x00;
         for ($i = 0; $i < 2; $i++) {
             $t = $this->TriggerA[$i];
-            $this->writeObject($hex, $t, $offset);
+            $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
         }
-        $this->writeBool($hex, $this->Trigger1OrTrigger2, 0x0A);
+        $hex = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x0A);
         $offset = 0x0B;
         for ($i = 0; $i < 2; $i++) {
             $t = $this->TriggerB[$i];
-            $this->writeObject($hex, $t, $offset);
+            $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
         }
-        $this->writeBool($hex, $this->Trigger2OrTrigger3, 0x15);
-        $this->writeBool($hex, $this->Trigger12OrTrigger34, 0x27);
-        $this->writeSByte($hex, $this->Points, 0x29);
+        $hex = $this->writeBool($this->Trigger2OrTrigger3, $hex, 0x15);
+        $hex = $this->writeBool($this->Trigger12OrTrigger34, $hex, 0x27);
+        $hex = $this->writeSByte($this->Points, $hex, 0x29);
 
         return $hex;
     }

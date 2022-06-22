@@ -12,37 +12,46 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  MISSIONDATALENGTH INT */
     public const MISSIONDATALENGTH = 48;
-    /** @var integer */
+    /** @var integer 0x00 UnkA INT */
     public $UnkA;
-    /** @var integer */
+    /** @var integer 0x04 AttemptCount INT */
     public $AttemptCount;
-    /** @var integer */
+    /** @var integer 0x08 UnkB INT */
     public $UnkB;
-    /** @var integer */
+    /** @var integer 0x0C UnkC INT */
     public $UnkC;
-    /** @var integer */
+    /** @var integer 0x10 UnkD INT */
     public $UnkD;
-    /** @var integer */
+    /** @var integer 0x14 WinCount INT */
     public $WinCount;
-    /** @var integer */
+    /** @var integer 0x18 UnkE INT */
     public $UnkE;
-    /** @var integer */
+    /** @var integer 0x1C Score INT */
     public $Score;
-    /** @var integer */
+    /** @var integer 0x20 Time INT */
     public $Time;
-    /** @var integer */
+    /** @var integer 0x24 UnkF INT */
     public $UnkF;
-    /** @var integer */
+    /** @var integer 0x28 UnkG INT */
     public $UnkG;
-    /** @var integer */
+    /** @var integer 0x2C BonusScoreTen INT */
     public $BonusScoreTen;
-
-    public function __construct($hex, $tie = null)
+    
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->UnkA = $this->getInt($hex, 0x00);
@@ -57,8 +66,10 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         $this->UnkF = $this->getInt($hex, 0x24);
         $this->UnkG = $this->getInt($hex, 0x28);
         $this->BonusScoreTen = $this->getInt($hex, 0x2C);
+        
+        return $this;
     }
-
+    
     public function __debugInfo()
     {
         return [
@@ -76,48 +87,31 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
             "BonusScoreTen" => $this->BonusScoreTen
         ];
     }
-
-    public function toHexString()
+    
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex .= $this->writeInt($this->UnkA, 0x00);
-        $hex .= $this->writeInt($this->AttemptCount, 0x04);
-        $hex .= $this->writeInt($this->UnkB, 0x08);
-        $hex .= $this->writeInt($this->UnkC, 0x0C);
-        $hex .= $this->writeInt($this->UnkD, 0x10);
-        $hex .= $this->writeInt($this->WinCount, 0x14);
-        $hex .= $this->writeInt($this->UnkE, 0x18);
-        $hex .= $this->writeInt($this->Score, 0x1C);
-        $hex .= $this->writeInt($this->Time, 0x20);
-        $hex .= $this->writeInt($this->UnkF, 0x24);
-        $hex .= $this->writeInt($this->UnkG, 0x28);
-        $hex .= $this->writeInt($this->BonusScoreTen, 0x2C);
+        $hex = $this->writeInt($this->UnkA, $hex, 0x00);
+        $hex = $this->writeInt($this->AttemptCount, $hex, 0x04);
+        $hex = $this->writeInt($this->UnkB, $hex, 0x08);
+        $hex = $this->writeInt($this->UnkC, $hex, 0x0C);
+        $hex = $this->writeInt($this->UnkD, $hex, 0x10);
+        $hex = $this->writeInt($this->WinCount, $hex, 0x14);
+        $hex = $this->writeInt($this->UnkE, $hex, 0x18);
+        $hex = $this->writeInt($this->Score, $hex, 0x1C);
+        $hex = $this->writeInt($this->Time, $hex, 0x20);
+        $hex = $this->writeInt($this->UnkF, $hex, 0x24);
+        $hex = $this->writeInt($this->UnkG, $hex, 0x28);
+        $hex = $this->writeInt($this->BonusScoreTen, $hex, 0x2C);
 
         return $hex;
     }
-
-
+    
+    
     public function getLength()
     {
         return self::MISSIONDATALENGTH;
-    }
-
-    public function empty()
-    {
-        $this->UnkA = $this->UnkB = $this->UnkC = $this->UnkD = $this->UnkE = $this->UnkF = $this->UnkG = 0;
-        $this->AttemptCount = 0;
-        $this->WinCount = 0;
-        $this->Score = 0;
-        $this->Time = 0;
-        $this->BonusScoreTen = 0;
-        return $this;
-    }
-
-    public function skip()
-    {
-        $this->WinCount = 1;
-        return $this;
     }
 }

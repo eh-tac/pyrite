@@ -16,6 +16,11 @@ class PilotFile extends Base\PilotFileBase
         return $plt;
     }
 
+    public static function fromHex($hex, $tie = null)
+    {
+        return (new PilotFile($hex, $tie))->loadHex();
+    }
+
     public function beforeConstruct()
     {
     }

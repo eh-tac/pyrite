@@ -4,28 +4,39 @@ namespace Pyrite\TIE\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\TIE\Constants;
 
 abstract class TriggerBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  TRIGGERLENGTH INT */
     public const TRIGGERLENGTH = 4;
-    /** @var integer */
+    /** @var integer 0x0 Condition BYTE */
     public $Condition;
-    /** @var integer */
+    /** @var integer 0x1 VariableType BYTE */
     public $VariableType;
-    /** @var integer */
+    /** @var integer 0x2 Variable BYTE */
     public $Variable;
-    /** @var integer */
+    /** @var integer 0x3 TriggerAmount BYTE */
     public $TriggerAmount;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->Condition = $this->getByte($hex, 0x0);
@@ -33,6 +44,7 @@ abstract class TriggerBase extends PyriteBase implements Byteable
         $this->Variable = $this->getByte($hex, 0x2);
         $this->TriggerAmount = $this->getByte($hex, 0x3);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -45,15 +57,15 @@ abstract class TriggerBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeByte($hex, $this->Condition, 0x0);
-        $this->writeByte($hex, $this->VariableType, 0x1);
-        $this->writeByte($hex, $this->Variable, 0x2);
-        $this->writeByte($hex, $this->TriggerAmount, 0x3);
+        $hex = $this->writeByte($this->Condition, $hex, 0x0);
+        $hex = $this->writeByte($this->VariableType, $hex, 0x1);
+        $hex = $this->writeByte($this->Variable, $hex, 0x2);
+        $hex = $this->writeByte($this->TriggerAmount, $hex, 0x3);
 
         return $hex;
     }

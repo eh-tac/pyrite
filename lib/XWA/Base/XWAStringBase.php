@@ -4,25 +4,37 @@ namespace Pyrite\XWA\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 
 abstract class XWAStringBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  XWAStringLength INT */
     public $XWAStringLength;
-    /** @var integer */
+    /** @var integer 0x0 Magic BYTE */
     public $Magic;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->Magic = $this->getByte($hex, 0x0);
         $this->XWAStringLength = $offset;
+        return $this;
     }
     
     public function __debugInfo()
@@ -32,12 +44,12 @@ abstract class XWAStringBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeByte($hex, $this->Magic, 0x0);
+        $hex = $this->writeByte($this->Magic, $hex, 0x0);
 
         return $hex;
     }

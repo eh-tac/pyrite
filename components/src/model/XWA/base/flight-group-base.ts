@@ -2,6 +2,8 @@ import { Byteable } from "../../../byteable";
 import { Constants } from "../constants";
 import { GoalFG } from "../goal-fg";
 import { IMission, PyriteBase } from "../../../pyrite-base";
+import { Order } from "../order";
+import { Skip } from "../skip";
 import { Trigger } from "../trigger";
 import { Waypt } from "../waypt";
 import { getBool, getByte, getString, writeBool, writeByte, writeObject, writeString } from "../../../hex";
@@ -74,7 +76,9 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public AlternateArriveViaMothership: boolean;
   public AlternateDepartureMothership: number;
   public AlternateDepartViaMothership: boolean;
-  public Unnamed: GoalFG[];
+  public Orders: Order[];
+  public Skips: Skip[];
+  public Goals: GoalFG[];
   public StartPoints: Waypt[];
   public HyperPoint: Waypt;
   public StartPointRegions: number[];
@@ -189,11 +193,25 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.AlternateArriveViaMothership = getBool(hex, 0x0C7);
     this.AlternateDepartureMothership = getByte(hex, 0x0C8);
     this.AlternateDepartViaMothership = getBool(hex, 0x0C9);
-    this.Unnamed = [];
+    this.Orders = [];
+    offset = 0x0CA;
+    for (let i = 0; i < 16; i++) {
+      const t = new Order(hex.slice(offset), this.TIE);
+      this.Orders.push(t);
+      offset += t.getLength();
+    }
+    this.Skips = [];
+    offset = 0xA0A;
+    for (let i = 0; i < 16; i++) {
+      const t = new Skip(hex.slice(offset), this.TIE);
+      this.Skips.push(t);
+      offset += t.getLength();
+    }
+    this.Goals = [];
     offset = 0xB0A;
     for (let i = 0; i < 8; i++) {
       const t = new GoalFG(hex.slice(offset), this.TIE);
-      this.Unnamed.push(t);
+      this.Goals.push(t);
       offset += t.getLength();
     }
     this.StartPoints = [];
@@ -357,7 +375,9 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
       AlternateArriveViaMothership: this.AlternateArriveViaMothership,
       AlternateDepartureMothership: this.AlternateDepartureMothership,
       AlternateDepartViaMothership: this.AlternateDepartViaMothership,
-      Unnamed: this.Unnamed,
+      Orders: this.Orders,
+      Skips: this.Skips,
+      Goals: this.Goals,
       StartPoints: this.StartPoints,
       HyperPoint: this.HyperPoint,
       StartPointRegions: this.StartPointRegions,
@@ -473,9 +493,21 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     writeBool(hex, this.AlternateArriveViaMothership, 0x0C7);
     writeByte(hex, this.AlternateDepartureMothership, 0x0C8);
     writeBool(hex, this.AlternateDepartViaMothership, 0x0C9);
+    offset = 0x0CA;
+    for (let i = 0; i < 16; i++) {
+      const t = this.Orders[i];
+      writeObject(hex, t, offset);
+      offset += t.getLength();
+    }
+    offset = 0xA0A;
+    for (let i = 0; i < 16; i++) {
+      const t = this.Skips[i];
+      writeObject(hex, t, offset);
+      offset += t.getLength();
+    }
     offset = 0xB0A;
     for (let i = 0; i < 8; i++) {
-      const t = this.Unnamed[i];
+      const t = this.Goals[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }

@@ -4,6 +4,7 @@ namespace Pyrite\XWA\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\XWA\Constants;
 use Pyrite\XWA\GlobalCargo;
@@ -11,48 +12,58 @@ use Pyrite\XWA\GlobalCargo;
 abstract class FileHeaderBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  FILEHEADERLENGTH INT */
     public const FILEHEADERLENGTH = 9200;
-    /** @var integer */
+    /** @var integer 0x0000 PlatformID SHORT */
     public $PlatformID; //(0x20)
-    /** @var integer */
+    /** @var integer 0x0002 NumFGs SHORT */
     public $NumFGs;
-    /** @var integer */
+    /** @var integer 0x0004 NumMessages SHORT */
     public $NumMessages;
-    /** @var boolean */
+    /** @var boolean 0x0008 Unknown1 BOOL */
     public $Unknown1;
-    /** @var boolean */
+    /** @var boolean 0x000B Unknown2 BOOL */
     public $Unknown2;
-    /** @var string[] */
+    /** @var string[] 0x0014 IffNames STR */
     public $IffNames;
-    /** @var string[] */
+    /** @var string[] 0x0064 RegionNames STR */
     public $RegionNames;
-    /** @var GlobalCargo[] */
-    public $Unnamed;
-    /** @var string[] */
+    /** @var GlobalCargo[] 0x0274 GlobalCargo GlobalCargo */
+    public $GlobalCargo;
+    /** @var string[] 0x0B34 GlobalGroupNames STR */
     public $GlobalGroupNames;
-    /** @var integer */
+    /** @var integer 0x23AC Hangar BYTE */
     public $Hangar;
-    /** @var integer */
+    /** @var integer 0x23AE TimeLimitMinutes BYTE */
     public $TimeLimitMinutes;
-    /** @var boolean */
+    /** @var boolean 0x23AF EndMissionWhenComplete BOOL */
     public $EndMissionWhenComplete;
-    /** @var integer */
+    /** @var integer 0x23B0 BriefingOfficer BYTE */
     public $BriefingOfficer;
-    /** @var integer */
+    /** @var integer 0x23B1 BriefingLogo BYTE */
     public $BriefingLogo;
-    /** @var integer */
+    /** @var integer 0x23B3 Unknown3 BYTE */
     public $Unknown3;
-    /** @var integer */
+    /** @var integer 0x23B4 Unknown4 BYTE */
     public $Unknown4;
-    /** @var integer */
+    /** @var integer 0x23B5 Unknown5 BYTE */
     public $Unknown5;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->PlatformID = $this->getShort($hex, 0x0000);
@@ -74,11 +85,11 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
             $this->RegionNames[] = $t;
             $offset += strlen($t);
         }
-        $this->Unnamed = [];
+        $this->GlobalCargo = [];
         $offset = 0x0274;
         for ($i = 0; $i < 16; $i++) {
-            $t = new GlobalCargo(substr($hex, $offset), $this->TIE);
-            $this->Unnamed[] = $t;
+            $t = (new GlobalCargo(substr($hex, $offset), $this->TIE))->loadHex();
+            $this->GlobalCargo[] = $t;
             $offset += $t->getLength();
         }
         $this->GlobalGroupNames = [];
@@ -97,6 +108,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $this->Unknown4 = $this->getByte($hex, 0x23B4);
         $this->Unknown5 = $this->getByte($hex, 0x23B5);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -109,7 +121,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
             "Unknown2" => $this->Unknown2,
             "IffNames" => $this->IffNames,
             "RegionNames" => $this->RegionNames,
-            "Unnamed" => $this->Unnamed,
+            "GlobalCargo" => $this->GlobalCargo,
             "GlobalGroupNames" => $this->GlobalGroupNames,
             "Hangar" => $this->getHangarLabel(),
             "TimeLimitMinutes" => $this->TimeLimitMinutes,
@@ -122,48 +134,48 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeShort($hex, $this->PlatformID, 0x0000);
-        $this->writeShort($hex, $this->NumFGs, 0x0002);
-        $this->writeShort($hex, $this->NumMessages, 0x0004);
-        $this->writeBool($hex, $this->Unknown1, 0x0008);
-        $this->writeBool($hex, $this->Unknown2, 0x000B);
+        $hex = $this->writeShort($this->PlatformID, $hex, 0x0000);
+        $hex = $this->writeShort($this->NumFGs, $hex, 0x0002);
+        $hex = $this->writeShort($this->NumMessages, $hex, 0x0004);
+        $hex = $this->writeBool($this->Unknown1, $hex, 0x0008);
+        $hex = $this->writeBool($this->Unknown2, $hex, 0x000B);
         $offset = 0x0014;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->IffNames[$i];
-            $this->writeString($hex, $t, $offset);
+            $hex = $this->writeString($t, $hex, $offset);
             $offset += strlen($t);
         }
         $offset = 0x0064;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->RegionNames[$i];
-            $this->writeString($hex, $t, $offset);
+            $hex = $this->writeString($t, $hex, $offset);
             $offset += strlen($t);
         }
         $offset = 0x0274;
         for ($i = 0; $i < 16; $i++) {
-            $t = $this->Unnamed[$i];
-            $this->writeObject($hex, $t, $offset);
+            $t = $this->GlobalCargo[$i];
+            $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
         }
         $offset = 0x0B34;
         for ($i = 0; $i < 16; $i++) {
             $t = $this->GlobalGroupNames[$i];
-            $this->writeString($hex, $t, $offset);
+            $hex = $this->writeString($t, $hex, $offset);
             $offset += strlen($t);
         }
-        $this->writeByte($hex, $this->Hangar, 0x23AC);
-        $this->writeByte($hex, $this->TimeLimitMinutes, 0x23AE);
-        $this->writeBool($hex, $this->EndMissionWhenComplete, 0x23AF);
-        $this->writeByte($hex, $this->BriefingOfficer, 0x23B0);
-        $this->writeByte($hex, $this->BriefingLogo, 0x23B1);
-        $this->writeByte($hex, $this->Unknown3, 0x23B3);
-        $this->writeByte($hex, $this->Unknown4, 0x23B4);
-        $this->writeByte($hex, $this->Unknown5, 0x23B5);
+        $hex = $this->writeByte($this->Hangar, $hex, 0x23AC);
+        $hex = $this->writeByte($this->TimeLimitMinutes, $hex, 0x23AE);
+        $hex = $this->writeBool($this->EndMissionWhenComplete, $hex, 0x23AF);
+        $hex = $this->writeByte($this->BriefingOfficer, $hex, 0x23B0);
+        $hex = $this->writeByte($this->BriefingLogo, $hex, 0x23B1);
+        $hex = $this->writeByte($this->Unknown3, $hex, 0x23B3);
+        $hex = $this->writeByte($this->Unknown4, $hex, 0x23B4);
+        $hex = $this->writeByte($this->Unknown5, $hex, 0x23B5);
 
         return $hex;
     }

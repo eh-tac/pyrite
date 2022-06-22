@@ -16,6 +16,10 @@ export class Prop {
 
   constructor(public offset: string, public name: string, public type: PropType) {}
 
+  public get docString(): string {
+    return `${this.offset} ${this.name} ${this.type}`;
+  }
+
   public handleTypeLength(lengthStr: string): this {
     if (lengthStr) {
       const lengthInt = parseInt(lengthStr);

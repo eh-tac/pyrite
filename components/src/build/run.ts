@@ -17,12 +17,12 @@ const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [mg("TIE"), mg("XW"), mg("XvT"), mg(
 // make writers
 [
   // new TypeScriptWriter("src", tieG),
-  // new PHPWriter("../lib", tieG),
+  new PHPWriter("../lib", tieG),
   // new TypeScriptWriter("src", xwG),
-  // new PHPWriter("../lib", xwG),
+  new PHPWriter("../lib", xwG),
   // new TypeScriptWriter("src", xvtG),
-  // new PHPWriter("../lib", xvtG),
-  // new TypeScriptWriter("src", xwaG),
-  // new PHPWriter("../lib", xwaG),
+  new PHPWriter("../lib", xvtG),
+  new TypeScriptWriter("src", xwaG),
+  new PHPWriter("../lib", xwaG),
   new TypeScriptWriter("src", lfdG)
 ].forEach(writer => writer.write());

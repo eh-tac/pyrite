@@ -4,27 +4,38 @@ namespace Pyrite\XWA\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 
 abstract class WayptBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  WAYPTLENGTH INT */
     public const WAYPTLENGTH = 8;
-    /** @var integer */
+    /** @var integer 0x0 X SHORT */
     public $X;
-    /** @var integer */
+    /** @var integer 0x2 Y SHORT */
     public $Y;
-    /** @var integer */
+    /** @var integer 0x4 Z SHORT */
     public $Z;
-    /** @var boolean */
+    /** @var boolean 0x6 Enabled BOOL */
     public $Enabled;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->X = $this->getShort($hex, 0x0);
@@ -32,6 +43,7 @@ abstract class WayptBase extends PyriteBase implements Byteable
         $this->Z = $this->getShort($hex, 0x4);
         $this->Enabled = $this->getBool($hex, 0x6);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -44,15 +56,15 @@ abstract class WayptBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeShort($hex, $this->X, 0x0);
-        $this->writeShort($hex, $this->Y, 0x2);
-        $this->writeShort($hex, $this->Z, 0x4);
-        $this->writeBool($hex, $this->Enabled, 0x6);
+        $hex = $this->writeShort($this->X, $hex, 0x0);
+        $hex = $this->writeShort($this->Y, $hex, 0x2);
+        $hex = $this->writeShort($this->Z, $hex, 0x4);
+        $hex = $this->writeBool($this->Enabled, $hex, 0x6);
 
         return $hex;
     }

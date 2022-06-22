@@ -4,36 +4,47 @@ namespace Pyrite\XW\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\XW\Constants;
 
 abstract class FileHeaderBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  FILEHEADERLENGTH INT */
     public const FILEHEADERLENGTH = 206;
-    /** @var integer */
+    /** @var integer 0x00 Version SHORT */
     public $Version;
-    /** @var integer */
+    /** @var integer 0x02 TimeLimit SHORT */
     public $TimeLimit; //in minutes
-    /** @var integer */
+    /** @var integer 0x04 EndState SHORT */
     public $EndState;
-    /** @var integer */
+    /** @var integer 0x06 Reserved SHORT */
     public const Reserved = 0;
-    /** @var integer */
+    /** @var integer 0x08 MissionLocation SHORT */
     public $MissionLocation;
-    /** @var string[] */
+    /** @var string[] 0x0A CompletionMessage STR */
     public $CompletionMessage;
-    /** @var integer */
+    /** @var integer 0xCA NumFGs SHORT */
     public $NumFGs;
-    /** @var integer */
+    /** @var integer 0xCC NumObj SHORT */
     public $NumObj;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->Version = $this->getShort($hex, 0x00);
@@ -51,6 +62,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $this->NumFGs = $this->getShort($hex, 0xCA);
         $this->NumObj = $this->getShort($hex, 0xCC);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -66,33 +78,35 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeShort($hex, $this->Version, 0x00);
-        $this->writeShort($hex, $this->TimeLimit, 0x02);
-        $this->writeShort($hex, $this->EndState, 0x04);
-        $this->writeShort($hex, 0, 0x06);
-        $this->writeShort($hex, $this->MissionLocation, 0x08);
+        $hex = $this->writeShort($this->Version, $hex, 0x00);
+        $hex = $this->writeShort($this->TimeLimit, $hex, 0x02);
+        $hex = $this->writeShort($this->EndState, $hex, 0x04);
+        $hex = $this->writeShort(0, $hex, 0x06);
+        $hex = $this->writeShort($this->MissionLocation, $hex, 0x08);
         $offset = 0x0A;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->CompletionMessage[$i];
-            $this->writeString($hex, $t, $offset);
+            $hex = $this->writeString($t, $hex, $offset);
             $offset += strlen($t);
         }
-        $this->writeShort($hex, $this->NumFGs, 0xCA);
-        $this->writeShort($hex, $this->NumObj, 0xCC);
+        $hex = $this->writeShort($this->NumFGs, $hex, 0xCA);
+        $hex = $this->writeShort($this->NumObj, $hex, 0xCC);
 
         return $hex;
     }
     
-    public function getEndStateLabel() {
+    public function getEndStateLabel() 
+    {
         return isset($this->EndState) && isset(Constants::$ENDSTATE[$this->EndState]) ? Constants::$ENDSTATE[$this->EndState] : "Unknown";
     }
 
-    public function getMissionLocationLabel() {
+    public function getMissionLocationLabel() 
+    {
         return isset($this->MissionLocation) && isset(Constants::$MISSIONLOCATION[$this->MissionLocation]) ? Constants::$MISSIONLOCATION[$this->MissionLocation] : "Unknown";
     }
     

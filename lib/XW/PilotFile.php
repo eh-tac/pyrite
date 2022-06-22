@@ -14,6 +14,11 @@ class PilotFile extends Base\PilotFileBase
         return '';
     }
 
+    public static function fromHex($hex, $tie = null)
+    {
+        return (new PilotFile($hex, $tie))->loadHex();
+    }
+
     public function getCompletedTrainingMissionScores()
     {
         $scores = array_merge($this->XWingHistoricalScore, $this->YWingHistoricalScore, $this->AWingHistoricalScore);

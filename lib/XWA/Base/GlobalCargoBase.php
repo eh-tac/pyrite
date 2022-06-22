@@ -4,31 +4,42 @@ namespace Pyrite\XWA\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 
 abstract class GlobalCargoBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  GLOBALCARGOLENGTH INT */
     public const GLOBALCARGOLENGTH = 140;
-    /** @var string */
+    /** @var string 0x00 Cargo STR */
     public $Cargo;
-    /** @var boolean */
+    /** @var boolean 0x44 Unknown1 BOOL */
     public $Unknown1;
-    /** @var integer */
+    /** @var integer 0x48 Unknown2 BYTE */
     public $Unknown2;
-    /** @var integer */
+    /** @var integer 0x49 Unknown3 BYTE */
     public $Unknown3;
-    /** @var integer */
+    /** @var integer 0x4A Unknown4 BYTE */
     public $Unknown4;
-    /** @var integer */
+    /** @var integer 0x4B Unknown5 BYTE */
     public $Unknown5;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->Cargo = $this->getString($hex, 0x00);
@@ -38,6 +49,7 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
         $this->Unknown4 = $this->getByte($hex, 0x4A);
         $this->Unknown5 = $this->getByte($hex, 0x4B);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -52,17 +64,17 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeString($hex, $this->Cargo, 0x00);
-        $this->writeBool($hex, $this->Unknown1, 0x44);
-        $this->writeByte($hex, $this->Unknown2, 0x48);
-        $this->writeByte($hex, $this->Unknown3, 0x49);
-        $this->writeByte($hex, $this->Unknown4, 0x4A);
-        $this->writeByte($hex, $this->Unknown5, 0x4B);
+        $hex = $this->writeString($this->Cargo, $hex, 0x00);
+        $hex = $this->writeBool($this->Unknown1, $hex, 0x44);
+        $hex = $this->writeByte($this->Unknown2, $hex, 0x48);
+        $hex = $this->writeByte($this->Unknown3, $hex, 0x49);
+        $hex = $this->writeByte($this->Unknown4, $hex, 0x4A);
+        $hex = $this->writeByte($this->Unknown5, $hex, 0x4B);
 
         return $hex;
     }

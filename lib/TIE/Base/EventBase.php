@@ -4,26 +4,37 @@ namespace Pyrite\TIE\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\TIE\Constants;
 
 abstract class EventBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  EventLength INT */
     public $EventLength;
-    /** @var integer */
+    /** @var integer 0x0 Time SHORT */
     public $Time;
-    /** @var integer */
+    /** @var integer 0x2 EventType SHORT */
     public $EventType;
-    /** @var integer[] */
+    /** @var integer[] 0x4 Variables SHORT */
     public $Variables;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->Time = $this->getShort($hex, 0x0);
@@ -36,6 +47,7 @@ abstract class EventBase extends PyriteBase implements Byteable
             $offset += 2;
         }
         $this->EventLength = $offset;
+        return $this;
     }
     
     public function __debugInfo()
@@ -47,17 +59,17 @@ abstract class EventBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeShort($hex, $this->Time, 0x0);
-        $this->writeShort($hex, $this->EventType, 0x2);
+        $hex = $this->writeShort($this->Time, $hex, 0x0);
+        $hex = $this->writeShort($this->EventType, $hex, 0x2);
         $offset = 0x4;
         for ($i = 0; $i < $this->VariableCount(); $i++) {
             $t = $this->Variables[$i];
-            $this->writeShort($hex, $t, $offset);
+            $hex = $this->writeShort($t, $hex, $offset);
             $offset += 2;
         }
 

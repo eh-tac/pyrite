@@ -1,7 +1,10 @@
-struct PilotFile (size 0)
+struct PilotFile (size 0x2520C)
 {
-  0x000 CHAR<14> Name
+  0x00 CHAR<14> Name
   0x0E INT TotalScore
+  0x4A CHAR<32> MPName
+  0x6A CHAR<32> MPGameName
+  0x9A INT ToNextRanking
   0x9E INT TourOfDutyScore
   0xA2 INT AzzameenScore
   0xA6 INT SimulatorScore
@@ -15,7 +18,7 @@ struct PilotFile (size 0)
   0x4d42 INT LasersFired
   0x4d4e INT WarheadsHit
   0x4d5a INT WarheadsFired
-  0x4d6e INT CraftLosses
+  0x4d66 INT CraftLosses
   0xacfa MissionData[100] MissionData
   0x10EA2 INT CurrentRank
   0x10EA6 INT CurrentMedal
@@ -68,7 +71,7 @@ struct FileHeader (size 0x23F0)
 	0x000B	BOOL	Unknown2
 	0x0014	STR<20>[4]	IffNames
 	0x0064	STR<132>[4]	RegionNames
-	0x0274	GlobalCargo[16]
+	0x0274	GlobalCargo[16] GlobalCargo
 	0x0B34	STR<87>[16]	GlobalGroupNames
 	0x23AC	BYTE	Hangar (enum)
 	0x23AE	BYTE	TimeLimitMinutes
@@ -156,9 +159,9 @@ struct FlightGroup (size 0xE3E)
 	0x0C7	BOOL	AlternateArriveViaMothership
 	0x0C8	BYTE	AlternateDepartureMothership
 	0x0C9	BOOL	AlternateDepartViaMothership
-	0x0CA	Order[16]
-	0xA0A	Skip[16]
-	0xB0A	GoalFG[8]
+	0x0CA	Order[16] Orders
+	0xA0A	Skip[16] Skips
+	0xB0A	GoalFG[8] Goals
 	0xD8A	Waypt[3] StartPoints
 	0xDA2	Waypt	HyperPoint
 	0xDAA	BYTE[3]	StartPointRegions
@@ -234,7 +237,7 @@ struct Order (size 0x95)
 	0x0F	BYTE	Target2
 	0x10	BOOL	Target1OrTarget2
 	0x12	BYTE	Speed
-	0x14	Waypt[8]
+	0x14	Waypt[8] Waypoints
 	0x72	BYTE	Unknown10
 	0x73	BOOL	Unknown11
 	0x74	BOOL	Unknown12
@@ -298,7 +301,7 @@ struct Message (size 0xA2)
 struct GlobalGoal (size 0x170)
 {
 	0x00	SHORT	Reserved (3)
-	0x02	GoalGlobal[3]
+	0x02	GoalGlobal[3] Goal
 }
 
 struct GoalGlobal (size 0x7A)
@@ -336,10 +339,10 @@ struct Briefing (size 0)
 	0x0002	SHORT	Unknown1
 	0x0004	SHORT	StartLength
 	0x0006	INT	EventsLength
-	0x000A	Event[]
+	0x000A	Event[] Events
 	0x440A	BOOL[10] ShowToTeams
-	0x4414	Tag[128]
-	PV    	LengthString[128]
+	0x4414	Tag[128] Tags
+	PV    	LengthString[128] Strings
 }
 
 struct Event (size 0)
@@ -352,13 +355,13 @@ struct Event (size 0)
 struct Tag (size 0)
 {
 	0x0	SHORT	Length
-	0x2	CHAR[Length]
+	0x2	CHAR[Length] Text
 }
 
 struct LengthString (size 0)
 {
 	0x0	SHORT	Length
-	0x2	CHAR[Length]
+	0x2	CHAR[Length] Text
 }
 
 struct XWAString (size 0)

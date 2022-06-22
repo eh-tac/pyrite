@@ -4,27 +4,38 @@ namespace Pyrite\XvT\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 
 abstract class TeamBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  TEAMLENGTH INT */
     public const TEAMLENGTH = 487;
-    /** @var integer */
+    /** @var integer 0x000 Reserved SHORT */
     public $Reserved; //(1)
-    /** @var string */
+    /** @var string 0x002 Name STR */
     public $Name;
-    /** @var boolean[] */
+    /** @var boolean[] 0x01A Allegiances BOOL */
     public $Allegiances;
-    /** @var string[] */
+    /** @var string[] 0x024 EndOfMissionMessages CHAR */
     public $EndOfMissionMessages;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->Reserved = $this->getShort($hex, 0x000);
@@ -44,6 +55,7 @@ abstract class TeamBase extends PyriteBase implements Byteable
             $offset += 64;
         }
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -56,23 +68,23 @@ abstract class TeamBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeShort($hex, $this->Reserved, 0x000);
-        $this->writeString($hex, $this->Name, 0x002);
+        $hex = $this->writeShort($this->Reserved, $hex, 0x000);
+        $hex = $this->writeString($this->Name, $hex, 0x002);
         $offset = 0x01A;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->Allegiances[$i];
-            $this->writeBool($hex, $t, $offset);
+            $hex = $this->writeBool($t, $hex, $offset);
             $offset += 1;
         }
         $offset = 0x024;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->EndOfMissionMessages[$i];
-            $this->writeChar($hex, $t, $offset);
+            $hex = $this->writeChar($t, $hex, $offset);
             $offset += 64;
         }
 

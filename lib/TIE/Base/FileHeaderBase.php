@@ -4,40 +4,51 @@ namespace Pyrite\TIE\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\TIE\Constants;
 
 abstract class FileHeaderBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  FILEHEADERLENGTH INT */
     public const FILEHEADERLENGTH = 458;
-    /** @var integer */
+    /** @var integer 0x000 PlatformID SHORT */
     public const PlatformID = -1;
-    /** @var integer */
+    /** @var integer 0x002 NumFGs SHORT */
     public $NumFGs;
-    /** @var integer */
+    /** @var integer 0x004 NumMessages SHORT */
     public $NumMessages;
-    /** @var integer */
+    /** @var integer 0x006 NumGGs SHORT */
     public const NumGGs = 3; //might be # of GlobalGoals
-    /** @var integer */
+    /** @var integer 0x008 Unknown1 BYTE */
     public $Unknown1;
-    /** @var boolean */
+    /** @var boolean 0x009 Unknown2 BOOL */
     public $Unknown2;
-    /** @var integer */
+    /** @var integer 0x00A BriefingOfficers BYTE */
     public $BriefingOfficers;
-    /** @var boolean */
+    /** @var boolean 0x00D CapturedOnEject BOOL */
     public $CapturedOnEject;
-    /** @var string[] */
+    /** @var string[] 0x018 EndOfMissionMessages CHAR */
     public $EndOfMissionMessages;
-    /** @var string[] */
+    /** @var string[] 0x19A OtherIffNames CHAR */
     public $OtherIffNames;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         // static SHORT value PlatformID = -1
@@ -63,6 +74,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
             $offset += 12;
         }
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -79,29 +91,29 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeShort($hex, -1, 0x000);
-        $this->writeShort($hex, $this->NumFGs, 0x002);
-        $this->writeShort($hex, $this->NumMessages, 0x004);
-        $this->writeShort($hex, 3, 0x006);
-        $this->writeByte($hex, $this->Unknown1, 0x008);
-        $this->writeBool($hex, $this->Unknown2, 0x009);
-        $this->writeByte($hex, $this->BriefingOfficers, 0x00A);
-        $this->writeBool($hex, $this->CapturedOnEject, 0x00D);
+        $hex = $this->writeShort(-1, $hex, 0x000);
+        $hex = $this->writeShort($this->NumFGs, $hex, 0x002);
+        $hex = $this->writeShort($this->NumMessages, $hex, 0x004);
+        $hex = $this->writeShort(3, $hex, 0x006);
+        $hex = $this->writeByte($this->Unknown1, $hex, 0x008);
+        $hex = $this->writeBool($this->Unknown2, $hex, 0x009);
+        $hex = $this->writeByte($this->BriefingOfficers, $hex, 0x00A);
+        $hex = $this->writeBool($this->CapturedOnEject, $hex, 0x00D);
         $offset = 0x018;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->EndOfMissionMessages[$i];
-            $this->writeChar($hex, $t, $offset);
+            $hex = $this->writeChar($t, $hex, $offset);
             $offset += 64;
         }
         $offset = 0x19A;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->OtherIffNames[$i];
-            $this->writeChar($hex, $t, $offset);
+            $hex = $this->writeChar($t, $hex, $offset);
             $offset += 12;
         }
 

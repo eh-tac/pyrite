@@ -15,7 +15,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public Unknown2: boolean;
   public IffNames: string[];
   public RegionNames: string[];
-  public Unnamed: GlobalCargo[];
+  public GlobalCargo: GlobalCargo[];
   public GlobalGroupNames: string[];
   public Hangar: number;
   public TimeLimitMinutes: number;
@@ -50,11 +50,11 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
       this.RegionNames.push(t);
       offset += t.length + 1;
     }
-    this.Unnamed = [];
+    this.GlobalCargo = [];
     offset = 0x0274;
     for (let i = 0; i < 16; i++) {
       const t = new GlobalCargo(hex.slice(offset), this.TIE);
-      this.Unnamed.push(t);
+      this.GlobalCargo.push(t);
       offset += t.getLength();
     }
     this.GlobalGroupNames = [];
@@ -84,7 +84,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
       Unknown2: this.Unknown2,
       IffNames: this.IffNames,
       RegionNames: this.RegionNames,
-      Unnamed: this.Unnamed,
+      GlobalCargo: this.GlobalCargo,
       GlobalGroupNames: this.GlobalGroupNames,
       Hangar: this.HangarLabel,
       TimeLimitMinutes: this.TimeLimitMinutes,
@@ -120,7 +120,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     }
     offset = 0x0274;
     for (let i = 0; i < 16; i++) {
-      const t = this.Unnamed[i];
+      const t = this.GlobalCargo[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }

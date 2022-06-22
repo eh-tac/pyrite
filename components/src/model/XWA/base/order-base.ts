@@ -25,7 +25,7 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
   public Target2: number;
   public Target1OrTarget2: boolean;
   public Speed: number;
-  public Unnamed: Waypt[];
+  public Waypoints: Waypt[];
   public Unknown10: number;
   public Unknown11: boolean;
   public Unknown12: boolean;
@@ -54,11 +54,11 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
     this.Target2 = getByte(hex, 0x0F);
     this.Target1OrTarget2 = getBool(hex, 0x10);
     this.Speed = getByte(hex, 0x12);
-    this.Unnamed = [];
+    this.Waypoints = [];
     offset = 0x14;
     for (let i = 0; i < 8; i++) {
       const t = new Waypt(hex.slice(offset), this.TIE);
-      this.Unnamed.push(t);
+      this.Waypoints.push(t);
       offset += t.getLength();
     }
     this.Unknown10 = getByte(hex, 0x72);
@@ -88,7 +88,7 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
       Target2: this.Target2,
       Target1OrTarget2: this.Target1OrTarget2,
       Speed: this.Speed,
-      Unnamed: this.Unnamed,
+      Waypoints: this.Waypoints,
       Unknown10: this.Unknown10,
       Unknown11: this.Unknown11,
       Unknown12: this.Unknown12,
@@ -120,7 +120,7 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
     writeByte(hex, this.Speed, 0x12);
     offset = 0x14;
     for (let i = 0; i < 8; i++) {
-      const t = this.Unnamed[i];
+      const t = this.Waypoints[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }

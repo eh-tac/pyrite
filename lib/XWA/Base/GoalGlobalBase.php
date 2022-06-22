@@ -4,58 +4,69 @@ namespace Pyrite\XWA\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\XWA\Trigger;
 
 abstract class GoalGlobalBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  GOALGLOBALLENGTH INT */
     public const GOALGLOBALLENGTH = 122;
-    /** @var Trigger */
+    /** @var Trigger 0x0000 Trigger1 Trigger */
     public $Trigger1;
-    /** @var Trigger */
+    /** @var Trigger 0x0006 Trigger2 Trigger */
     public $Trigger2;
-    /** @var boolean */
+    /** @var boolean 0x000E Trigger1OrTrigger2 BOOL */
     public $Trigger1OrTrigger2;
-    /** @var boolean */
+    /** @var boolean 0x000F Unknown1 BOOL */
     public $Unknown1;
-    /** @var Trigger */
+    /** @var Trigger 0x0010 Trigger3 Trigger */
     public $Trigger3;
-    /** @var Trigger */
+    /** @var Trigger 0x0016 Trigger4 Trigger */
     public $Trigger4;
-    /** @var boolean */
+    /** @var boolean 0x001E Trigger3OrTrigger4 BOOL */
     public $Trigger3OrTrigger4;
-    /** @var boolean */
+    /** @var boolean 0x0027 Unknown2 BOOL */
     public $Unknown2;
-    /** @var boolean */
+    /** @var boolean 0x0031 Triggers12OrTriggers34 BOOL */
     public $Triggers12OrTriggers34;
-    /** @var integer */
+    /** @var integer 0x0032 Unknown3 BYTE */
     public $Unknown3;
-    /** @var integer */
+    /** @var integer 0x0033 Points SBYTE */
     public $Points;
-    /** @var integer */
+    /** @var integer 0x0034 Unknown4 BYTE */
     public $Unknown4;
-    /** @var integer */
+    /** @var integer 0x0035 Unknown5 BYTE */
     public $Unknown5;
-    /** @var integer */
+    /** @var integer 0x0036 Unknown6 BYTE */
     public $Unknown6;
-    /** @var integer */
+    /** @var integer 0x0038 ActiveSquence BYTE */
     public $ActiveSquence;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
-        $this->Trigger1 = new Trigger(substr($hex, 0x0000), $this->TIE);
-        $this->Trigger2 = new Trigger(substr($hex, 0x0006), $this->TIE);
+        $this->Trigger1 = (new Trigger(substr($hex, 0x0000), $this->TIE))->loadHex();
+        $this->Trigger2 = (new Trigger(substr($hex, 0x0006), $this->TIE))->loadHex();
         $this->Trigger1OrTrigger2 = $this->getBool($hex, 0x000E);
         $this->Unknown1 = $this->getBool($hex, 0x000F);
-        $this->Trigger3 = new Trigger(substr($hex, 0x0010), $this->TIE);
-        $this->Trigger4 = new Trigger(substr($hex, 0x0016), $this->TIE);
+        $this->Trigger3 = (new Trigger(substr($hex, 0x0010), $this->TIE))->loadHex();
+        $this->Trigger4 = (new Trigger(substr($hex, 0x0016), $this->TIE))->loadHex();
         $this->Trigger3OrTrigger4 = $this->getBool($hex, 0x001E);
         $this->Unknown2 = $this->getBool($hex, 0x0027);
         $this->Triggers12OrTriggers34 = $this->getBool($hex, 0x0031);
@@ -66,6 +77,7 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         $this->Unknown6 = $this->getByte($hex, 0x0036);
         $this->ActiveSquence = $this->getByte($hex, 0x0038);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -89,26 +101,26 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeObject($hex, $this->Trigger1, 0x0000);
-        $this->writeObject($hex, $this->Trigger2, 0x0006);
-        $this->writeBool($hex, $this->Trigger1OrTrigger2, 0x000E);
-        $this->writeBool($hex, $this->Unknown1, 0x000F);
-        $this->writeObject($hex, $this->Trigger3, 0x0010);
-        $this->writeObject($hex, $this->Trigger4, 0x0016);
-        $this->writeBool($hex, $this->Trigger3OrTrigger4, 0x001E);
-        $this->writeBool($hex, $this->Unknown2, 0x0027);
-        $this->writeBool($hex, $this->Triggers12OrTriggers34, 0x0031);
-        $this->writeByte($hex, $this->Unknown3, 0x0032);
-        $this->writeSByte($hex, $this->Points, 0x0033);
-        $this->writeByte($hex, $this->Unknown4, 0x0034);
-        $this->writeByte($hex, $this->Unknown5, 0x0035);
-        $this->writeByte($hex, $this->Unknown6, 0x0036);
-        $this->writeByte($hex, $this->ActiveSquence, 0x0038);
+        $hex = $this->writeObject($this->Trigger1, $hex, 0x0000);
+        $hex = $this->writeObject($this->Trigger2, $hex, 0x0006);
+        $hex = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x000E);
+        $hex = $this->writeBool($this->Unknown1, $hex, 0x000F);
+        $hex = $this->writeObject($this->Trigger3, $hex, 0x0010);
+        $hex = $this->writeObject($this->Trigger4, $hex, 0x0016);
+        $hex = $this->writeBool($this->Trigger3OrTrigger4, $hex, 0x001E);
+        $hex = $this->writeBool($this->Unknown2, $hex, 0x0027);
+        $hex = $this->writeBool($this->Triggers12OrTriggers34, $hex, 0x0031);
+        $hex = $this->writeByte($this->Unknown3, $hex, 0x0032);
+        $hex = $this->writeSByte($this->Points, $hex, 0x0033);
+        $hex = $this->writeByte($this->Unknown4, $hex, 0x0034);
+        $hex = $this->writeByte($this->Unknown5, $hex, 0x0035);
+        $hex = $this->writeByte($this->Unknown6, $hex, 0x0036);
+        $hex = $this->writeByte($this->ActiveSquence, $hex, 0x0038);
 
         return $hex;
     }

@@ -4,39 +4,50 @@ namespace Pyrite\XWA\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 
 abstract class GoalFGBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  GOALFGLENGTH INT */
     public const GOALFGLENGTH = 80;
-    /** @var integer */
+    /** @var integer 0x00 Argument BYTE */
     public $Argument;
-    /** @var integer */
+    /** @var integer 0x01 Condition BYTE */
     public $Condition;
-    /** @var integer */
+    /** @var integer 0x02 Amount BYTE */
     public $Amount;
-    /** @var integer */
+    /** @var integer 0x03 Points SBYTE */
     public $Points;
-    /** @var boolean */
+    /** @var boolean 0x04 Enabled BOOL */
     public $Enabled;
-    /** @var integer */
+    /** @var integer 0x05 Team BYTE */
     public $Team;
-    /** @var integer */
+    /** @var integer 0x0D Unknown42 BYTE */
     public $Unknown42;
-    /** @var integer */
+    /** @var integer 0x0E Parameter BYTE */
     public $Parameter; //or Goal time limit depending on order
-    /** @var integer */
+    /** @var integer 0x0F ActiveSequence BYTE */
     public $ActiveSequence;
-    /** @var boolean */
+    /** @var boolean 0x4F Unknown15 BOOL */
     public $Unknown15; //** retains FG Unknown numbering
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->Argument = $this->getByte($hex, 0x00);
@@ -50,6 +61,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         $this->ActiveSequence = $this->getByte($hex, 0x0F);
         $this->Unknown15 = $this->getBool($hex, 0x4F);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -68,21 +80,21 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeByte($hex, $this->Argument, 0x00);
-        $this->writeByte($hex, $this->Condition, 0x01);
-        $this->writeByte($hex, $this->Amount, 0x02);
-        $this->writeSByte($hex, $this->Points, 0x03);
-        $this->writeBool($hex, $this->Enabled, 0x04);
-        $this->writeByte($hex, $this->Team, 0x05);
-        $this->writeByte($hex, $this->Unknown42, 0x0D);
-        $this->writeByte($hex, $this->Parameter, 0x0E);
-        $this->writeByte($hex, $this->ActiveSequence, 0x0F);
-        $this->writeBool($hex, $this->Unknown15, 0x4F);
+        $hex = $this->writeByte($this->Argument, $hex, 0x00);
+        $hex = $this->writeByte($this->Condition, $hex, 0x01);
+        $hex = $this->writeByte($this->Amount, $hex, 0x02);
+        $hex = $this->writeSByte($this->Points, $hex, 0x03);
+        $hex = $this->writeBool($this->Enabled, $hex, 0x04);
+        $hex = $this->writeByte($this->Team, $hex, 0x05);
+        $hex = $this->writeByte($this->Unknown42, $hex, 0x0D);
+        $hex = $this->writeByte($this->Parameter, $hex, 0x0E);
+        $hex = $this->writeByte($this->ActiveSequence, $hex, 0x0F);
+        $hex = $this->writeBool($this->Unknown15, $hex, 0x4F);
 
         return $hex;
     }

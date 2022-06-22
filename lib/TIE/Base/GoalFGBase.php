@@ -4,29 +4,41 @@ namespace Pyrite\TIE\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\TIE\Constants;
 
 abstract class GoalFGBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  GOALFGLENGTH INT */
     public const GOALFGLENGTH = 2;
-    /** @var integer */
+    /** @var integer 0x0 Condition BYTE */
     public $Condition;
-    /** @var integer */
+    /** @var integer 0x1 GoalAmount BYTE */
     public $GoalAmount;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->Condition = $this->getByte($hex, 0x0);
         $this->GoalAmount = $this->getByte($hex, 0x1);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -37,13 +49,13 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeByte($hex, $this->Condition, 0x0);
-        $this->writeByte($hex, $this->GoalAmount, 0x1);
+        $hex = $this->writeByte($this->Condition, $hex, 0x0);
+        $hex = $this->writeByte($this->GoalAmount, $hex, 0x1);
 
         return $hex;
     }

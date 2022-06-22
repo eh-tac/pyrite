@@ -7,7 +7,7 @@ import { getChar, getShort, writeChar, writeShort } from "../../../hex";
 export abstract class LengthStringBase extends PyriteBase implements Byteable {
   public LengthStringLength: number;
   public Length: number;
-  public Unnamed: string[];
+  public Text: string[];
   
   constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
@@ -15,11 +15,11 @@ export abstract class LengthStringBase extends PyriteBase implements Byteable {
     let offset = 0;
 
     this.Length = getShort(hex, 0x0);
-    this.Unnamed = [];
+    this.Text = [];
     offset = 0x2;
     for (let i = 0; i < this.Length; i++) {
       const t = getChar(hex, offset, 1);
-      this.Unnamed.push(t);
+      this.Text.push(t);
       offset += 1;
     }
     this.LengthStringLength = offset;
@@ -28,7 +28,7 @@ export abstract class LengthStringBase extends PyriteBase implements Byteable {
   public toJSON(): object {
     return {
       Length: this.Length,
-      Unnamed: this.Unnamed
+      Text: this.Text
     };
   }
   
@@ -39,7 +39,7 @@ export abstract class LengthStringBase extends PyriteBase implements Byteable {
     writeShort(hex, this.Length, 0x0);
     offset = 0x2;
     for (let i = 0; i < this.Length; i++) {
-      const t = this.Unnamed[i];
+      const t = this.Text[i];
       writeChar(hex, t, offset);
       offset += 1;
     }

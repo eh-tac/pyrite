@@ -4,70 +4,81 @@ namespace Pyrite\TIE\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\TIE\Constants;
 
 abstract class PilotFileBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  PilotFileLength INT */
     public $PilotFileLength;
-    /** @var integer */
+    /** @var integer 0x00 Start BYTE */
     public const Start = 0;
-    /** @var integer */
+    /** @var integer 0x01 PilotStatus BYTE */
     public $PilotStatus;
-    /** @var integer */
+    /** @var integer 0x02 PilotRank BYTE */
     public $PilotRank;
-    /** @var integer */
+    /** @var integer 0x03 PilotDifficulty BYTE */
     public $PilotDifficulty;
-    /** @var integer */
+    /** @var integer 0x04 Score INT */
     public $Score;
-    /** @var integer */
+    /** @var integer 0x08 SkillScore USHORT */
     public $SkillScore;
-    /** @var integer */
+    /** @var integer 0x0A SecretOrder BYTE */
     public $SecretOrder;
-    /** @var integer[] */
+    /** @var integer[] 0x2A TrainingScores INT */
     public $TrainingScores;
-    /** @var integer[] */
+    /** @var integer[] 0x5A TrainingLevels BYTE */
     public $TrainingLevels;
-    /** @var integer[] */
+    /** @var integer[] 0x88 CombatScores INT */
     public $CombatScores;
-    /** @var boolean[] */
+    /** @var boolean[] 0x208 CombatCompletes BOOL */
     public $CombatCompletes;
-    /** @var integer[] */
+    /** @var integer[] 0x269 BattleStatuses BYTE */
     public $BattleStatuses;
-    /** @var integer[] */
+    /** @var integer[] 0x27D BattleLastMissions BYTE */
     public $BattleLastMissions;
-    /** @var integer[] */
+    /** @var integer[] 0x291 Persistence BYTE */
     public $Persistence;
-    /** @var integer[] */
+    /** @var integer[] 0x391 SecretObjectives BYTE */
     public $SecretObjectives;
-    /** @var integer[] */
+    /** @var integer[] 0x3A5 BonusObjectives BYTE */
     public $BonusObjectives;
-    /** @var integer[] */
+    /** @var integer[] 0x3DA BattleScores INT */
     public $BattleScores;
-    /** @var integer */
+    /** @var integer 0x65A TotalKills SHORT */
     public $TotalKills;
-    /** @var integer */
+    /** @var integer 0x65C TotalCaptures SHORT */
     public $TotalCaptures;
-    /** @var integer[] */
+    /** @var integer[] 0x660 KillsByType SHORT */
     public $KillsByType;
-    /** @var integer */
+    /** @var integer 0x774 LasersFired INT */
     public $LasersFired;
-    /** @var integer */
+    /** @var integer 0x778 LasersHit INT */
     public $LasersHit;
-    /** @var integer */
+    /** @var integer 0x780 WarheadsFired USHORT */
     public $WarheadsFired;
-    /** @var integer */
+    /** @var integer 0x782 WarheadsHit USHORT */
     public $WarheadsHit;
-    /** @var integer */
+    /** @var integer 0x786 CraftLost SHORT */
     public $CraftLost;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         // static BYTE value Start = 0
@@ -162,6 +173,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->WarheadsHit = $this->getUShort($hex, 0x782);
         $this->CraftLost = $this->getShort($hex, 0x786);
         $this->PilotFileLength = $offset;
+        return $this;
     }
     
     public function __debugInfo()
@@ -194,91 +206,91 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeByte($hex, 0, 0x00);
-        $this->writeByte($hex, $this->PilotStatus, 0x01);
-        $this->writeByte($hex, $this->PilotRank, 0x02);
-        $this->writeByte($hex, $this->PilotDifficulty, 0x03);
-        $this->writeInt($hex, $this->Score, 0x04);
-        $this->writeUShort($hex, $this->SkillScore, 0x08);
-        $this->writeByte($hex, $this->SecretOrder, 0x0A);
+        $hex = $this->writeByte(0, $hex, 0x00);
+        $hex = $this->writeByte($this->PilotStatus, $hex, 0x01);
+        $hex = $this->writeByte($this->PilotRank, $hex, 0x02);
+        $hex = $this->writeByte($this->PilotDifficulty, $hex, 0x03);
+        $hex = $this->writeInt($this->Score, $hex, 0x04);
+        $hex = $this->writeUShort($this->SkillScore, $hex, 0x08);
+        $hex = $this->writeByte($this->SecretOrder, $hex, 0x0A);
         $offset = 0x2A;
         for ($i = 0; $i < 7; $i++) {
             $t = $this->TrainingScores[$i];
-            $this->writeInt($hex, $t, $offset);
+            $hex = $this->writeInt($t, $hex, $offset);
             $offset += 4;
         }
         $offset = 0x5A;
         for ($i = 0; $i < 7; $i++) {
             $t = $this->TrainingLevels[$i];
-            $this->writeByte($hex, $t, $offset);
+            $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }
         $offset = 0x88;
         for ($i = 0; $i < 56; $i++) {
             $t = $this->CombatScores[$i];
-            $this->writeInt($hex, $t, $offset);
+            $hex = $this->writeInt($t, $hex, $offset);
             $offset += 4;
         }
         $offset = 0x208;
         for ($i = 0; $i < 56; $i++) {
             $t = $this->CombatCompletes[$i];
-            $this->writeBool($hex, $t, $offset);
+            $hex = $this->writeBool($t, $hex, $offset);
             $offset += 1;
         }
         $offset = 0x269;
         for ($i = 0; $i < 20; $i++) {
             $t = $this->BattleStatuses[$i];
-            $this->writeByte($hex, $t, $offset);
+            $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }
         $offset = 0x27D;
         for ($i = 0; $i < 20; $i++) {
             $t = $this->BattleLastMissions[$i];
-            $this->writeByte($hex, $t, $offset);
+            $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }
         $offset = 0x291;
         for ($i = 0; $i < 256; $i++) {
             $t = $this->Persistence[$i];
-            $this->writeByte($hex, $t, $offset);
+            $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }
         $offset = 0x391;
         for ($i = 0; $i < 20; $i++) {
             $t = $this->SecretObjectives[$i];
-            $this->writeByte($hex, $t, $offset);
+            $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }
         $offset = 0x3A5;
         for ($i = 0; $i < 20; $i++) {
             $t = $this->BonusObjectives[$i];
-            $this->writeByte($hex, $t, $offset);
+            $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }
         $offset = 0x3DA;
         for ($i = 0; $i < 160; $i++) {
             $t = $this->BattleScores[$i];
-            $this->writeInt($hex, $t, $offset);
+            $hex = $this->writeInt($t, $hex, $offset);
             $offset += 4;
         }
-        $this->writeShort($hex, $this->TotalKills, 0x65A);
-        $this->writeShort($hex, $this->TotalCaptures, 0x65C);
+        $hex = $this->writeShort($this->TotalKills, $hex, 0x65A);
+        $hex = $this->writeShort($this->TotalCaptures, $hex, 0x65C);
         $offset = 0x660;
         for ($i = 0; $i < 69; $i++) {
             $t = $this->KillsByType[$i];
-            $this->writeShort($hex, $t, $offset);
+            $hex = $this->writeShort($t, $hex, $offset);
             $offset += 2;
         }
-        $this->writeInt($hex, $this->LasersFired, 0x774);
-        $this->writeInt($hex, $this->LasersHit, 0x778);
-        $this->writeUShort($hex, $this->WarheadsFired, 0x780);
-        $this->writeUShort($hex, $this->WarheadsHit, 0x782);
-        $this->writeShort($hex, $this->CraftLost, 0x786);
+        $hex = $this->writeInt($this->LasersFired, $hex, 0x774);
+        $hex = $this->writeInt($this->LasersHit, $hex, 0x778);
+        $hex = $this->writeUShort($this->WarheadsFired, $hex, 0x780);
+        $hex = $this->writeUShort($this->WarheadsHit, $hex, 0x782);
+        $hex = $this->writeShort($this->CraftLost, $hex, 0x786);
 
         return $hex;
     }

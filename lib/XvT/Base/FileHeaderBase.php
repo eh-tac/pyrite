@@ -4,43 +4,54 @@ namespace Pyrite\XvT\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 
 abstract class FileHeaderBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  FILEHEADERLENGTH INT */
     public const FILEHEADERLENGTH = 164;
-    /** @var integer */
+    /** @var integer 0x00 PlatformID SHORT */
     public $PlatformID;
-    /** @var integer */
+    /** @var integer 0x02 NumFGs SHORT */
     public $NumFGs;
-    /** @var integer */
+    /** @var integer 0x04 NumMessages SHORT */
     public $NumMessages;
-    /** @var integer */
+    /** @var integer 0x06 Unknown1 BYTE */
     public $Unknown1;
-    /** @var integer */
+    /** @var integer 0x08 Unknown2 BYTE */
     public $Unknown2;
-    /** @var boolean */
+    /** @var boolean 0x0B Unknown3 BOOL */
     public $Unknown3;
-    /** @var string */
+    /** @var string 0x28 Unknown4 CHAR */
     public $Unknown4;
-    /** @var string */
+    /** @var string 0x50 Unknown5 CHAR */
     public $Unknown5;
-    /** @var integer */
+    /** @var integer 0x64 MissionType BYTE */
     public $MissionType;
-    /** @var boolean */
+    /** @var boolean 0x65 Unknown6 BOOL */
     public $Unknown6;
-    /** @var integer */
+    /** @var integer 0x66 TimeLimitMinutes BYTE */
     public $TimeLimitMinutes;
-    /** @var integer */
+    /** @var integer 0x67 TimeLimitSeconds BYTE */
     public $TimeLimitSeconds;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
         $this->PlatformID = $this->getShort($hex, 0x00);
@@ -56,6 +67,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $this->TimeLimitMinutes = $this->getByte($hex, 0x66);
         $this->TimeLimitSeconds = $this->getByte($hex, 0x67);
         
+        return $this;
     }
     
     public function __debugInfo()
@@ -76,23 +88,23 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeShort($hex, $this->PlatformID, 0x00);
-        $this->writeShort($hex, $this->NumFGs, 0x02);
-        $this->writeShort($hex, $this->NumMessages, 0x04);
-        $this->writeByte($hex, $this->Unknown1, 0x06);
-        $this->writeByte($hex, $this->Unknown2, 0x08);
-        $this->writeBool($hex, $this->Unknown3, 0x0B);
-        $this->writeChar($hex, $this->Unknown4, 0x28);
-        $this->writeChar($hex, $this->Unknown5, 0x50);
-        $this->writeByte($hex, $this->MissionType, 0x64);
-        $this->writeBool($hex, $this->Unknown6, 0x65);
-        $this->writeByte($hex, $this->TimeLimitMinutes, 0x66);
-        $this->writeByte($hex, $this->TimeLimitSeconds, 0x67);
+        $hex = $this->writeShort($this->PlatformID, $hex, 0x00);
+        $hex = $this->writeShort($this->NumFGs, $hex, 0x02);
+        $hex = $this->writeShort($this->NumMessages, $hex, 0x04);
+        $hex = $this->writeByte($this->Unknown1, $hex, 0x06);
+        $hex = $this->writeByte($this->Unknown2, $hex, 0x08);
+        $hex = $this->writeBool($this->Unknown3, $hex, 0x0B);
+        $hex = $this->writeChar($this->Unknown4, $hex, 0x28);
+        $hex = $this->writeChar($this->Unknown5, $hex, 0x50);
+        $hex = $this->writeByte($this->MissionType, $hex, 0x64);
+        $hex = $this->writeBool($this->Unknown6, $hex, 0x65);
+        $hex = $this->writeByte($this->TimeLimitMinutes, $hex, 0x66);
+        $hex = $this->writeByte($this->TimeLimitSeconds, $hex, 0x67);
 
         return $hex;
     }

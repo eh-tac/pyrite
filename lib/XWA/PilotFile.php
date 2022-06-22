@@ -4,6 +4,10 @@ namespace Pyrite\XWA;
 
 class PilotFile extends Base\PilotFileBase
 {
+    public static function fromHex($hex, $tie = null)
+    {
+        return (new PilotFile($hex, $tie))->loadHex();
+    }
 
     public function getCompletedMissionScores($resetNumbering = true)
     {
@@ -39,6 +43,16 @@ class PilotFile extends Base\PilotFileBase
         return array_sum($this->TourOfDutyKills);
     }
 
+    public function getTotalPartials()
+    {
+        return array_sum($this->TourOfDutyPartials);
+    }
+
+    public function getTotalBonusScore()
+    {
+        return $this->BonusTen / 10;
+    }
+
     public function getCurrentMissionID()
     {
         $win = 1;
@@ -58,5 +72,20 @@ class PilotFile extends Base\PilotFileBase
         for ($i = $id; $i < count($this->MissionData); $i++) {
             $this->MissionData[$i]->empty();
         }
+    }
+
+    public function getCraftKillArray($useTFTC = false)
+    {
+        $out = [];
+        $lookup = $useTFTC ? Constants::$TFTCCRAFTTYPE : Constants::$CRAFTTYPE;
+        foreach ($this->TourOfDutyKills as $id => $kills) {
+            $partials = $this->TourOfDutyPartials[$id];
+            $cid = $id + 1;
+            $craft = isset($lookup[$cid]) ? $lookup[$cid] : "Unknown $cid";
+            if ($kills || $partials) {
+                $out[$craft] = [$kills, $partials];
+            }
+        }
+        return $out;
     }
 }

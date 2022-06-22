@@ -6,9 +6,12 @@ import { getChar, getInt, writeChar, writeInt, writeObject } from "../../../hex"
 // tslint:disable prefer-const
 
 export abstract class PilotFileBase extends PyriteBase implements Byteable {
-  public PilotFileLength: number;
+  public readonly PILOTFILELENGTH: number = 152076;
   public Name: string;
   public TotalScore: number;
+  public MPName: string;
+  public MPGameName: string;
+  public ToNextRanking: number;
   public TourOfDutyScore: number;
   public AzzameenScore: number;
   public SimulatorScore: number;
@@ -33,8 +36,11 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Name = getChar(hex, 0x000, 14);
+    this.Name = getChar(hex, 0x00, 14);
     this.TotalScore = getInt(hex, 0x0E);
+    this.MPName = getChar(hex, 0x4A, 32);
+    this.MPGameName = getChar(hex, 0x6A, 32);
+    this.ToNextRanking = getInt(hex, 0x9A);
     this.TourOfDutyScore = getInt(hex, 0x9E);
     this.AzzameenScore = getInt(hex, 0xA2);
     this.SimulatorScore = getInt(hex, 0xA6);
@@ -84,7 +90,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.LasersFired = getInt(hex, 0x4d42);
     this.WarheadsHit = getInt(hex, 0x4d4e);
     this.WarheadsFired = getInt(hex, 0x4d5a);
-    this.CraftLosses = getInt(hex, 0x4d6e);
+    this.CraftLosses = getInt(hex, 0x4d66);
     this.MissionData = [];
     offset = 0xacfa;
     for (let i = 0; i < 100; i++) {
@@ -95,13 +101,16 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.CurrentRank = getInt(hex, 0x10EA2);
     this.CurrentMedal = getInt(hex, 0x10EA6);
     this.BonusTen = getInt(hex, 0x1144E);
-    this.PilotFileLength = offset;
+    
   }
   
   public toJSON(): object {
     return {
       Name: this.Name,
       TotalScore: this.TotalScore,
+      MPName: this.MPName,
+      MPGameName: this.MPGameName,
+      ToNextRanking: this.ToNextRanking,
       TourOfDutyScore: this.TourOfDutyScore,
       AzzameenScore: this.AzzameenScore,
       SimulatorScore: this.SimulatorScore,
@@ -127,8 +136,11 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     let hex: string = '';
     let offset = 0;
 
-    writeChar(hex, this.Name, 0x000);
+    writeChar(hex, this.Name, 0x00);
     writeInt(hex, this.TotalScore, 0x0E);
+    writeChar(hex, this.MPName, 0x4A);
+    writeChar(hex, this.MPGameName, 0x6A);
+    writeInt(hex, this.ToNextRanking, 0x9A);
     writeInt(hex, this.TourOfDutyScore, 0x9E);
     writeInt(hex, this.AzzameenScore, 0xA2);
     writeInt(hex, this.SimulatorScore, 0xA6);
@@ -172,7 +184,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     writeInt(hex, this.LasersFired, 0x4d42);
     writeInt(hex, this.WarheadsHit, 0x4d4e);
     writeInt(hex, this.WarheadsFired, 0x4d5a);
-    writeInt(hex, this.CraftLosses, 0x4d6e);
+    writeInt(hex, this.CraftLosses, 0x4d66);
     offset = 0xacfa;
     for (let i = 0; i < 100; i++) {
       const t = this.MissionData[i];
@@ -188,6 +200,6 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   
   
   public getLength(): number {
-    return this.PilotFileLength;
+    return this.PILOTFILELENGTH;
   }
 }

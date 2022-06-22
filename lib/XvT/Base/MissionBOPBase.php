@@ -4,6 +4,7 @@ namespace Pyrite\XvT\Base;
 
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\XvT\Briefing;
 use Pyrite\XvT\FileHeader;
@@ -15,67 +16,77 @@ use Pyrite\XvT\Team;
 abstract class MissionBOPBase extends PyriteBase implements Byteable
 {
     use HexDecoder;
+    use HexEncoder;
 
-    /** @var integer */
+    /** @var integer  MissionBOPLength INT */
     public $MissionBOPLength;
-    /** @var FileHeader */
+    /** @var FileHeader 0x000 FileHeader FileHeader */
     public $FileHeader;
-    /** @var FlightGroup[] */
+    /** @var FlightGroup[] PV FlightGroups FlightGroup */
     public $FlightGroups;
-    /** @var Message[] */
+    /** @var Message[] PV Messages Message */
     public $Messages;
-    /** @var GlobalGoal[] */
+    /** @var GlobalGoal[] PV GlobalGoals GlobalGoal */
     public $GlobalGoals;
-    /** @var Team[] */
+    /** @var Team[] PV Teams Team */
     public $Teams;
-    /** @var Briefing[] */
+    /** @var Briefing[] PV Briefing Briefing */
     public $Briefing;
-    /** @var string[] */
+    /** @var string[] PV FGGoalStrings STR */
     public $FGGoalStrings;
-    /** @var string[] */
+    /** @var string[] PV GlobalGoalStrings STR */
     public $GlobalGoalStrings;
-    /** @var string[] */
+    /** @var string[] PV MissionDescriptions STR */
     public $MissionDescriptions;
     
-    public function __construct($hex, $tie = null)
+    public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
-        $this->beforeConstruct();
+    }
+
+    /**
+     * Process the $hex string provided in the constructor.
+     * Separating the constructor and loading allows for the objects to be made from scratch.
+     * @return $this 
+     */
+    public function loadHex()
+    {
+        $hex = $this->hex;
         $offset = 0;
 
-        $this->FileHeader = new FileHeader(substr($hex, 0x000), $this->TIE);
+        $this->FileHeader = (new FileHeader(substr($hex, 0x000), $this->TIE))->loadHex();
         $this->FlightGroups = [];
         $offset = $offset;
         for ($i = 0; $i < $this->FileHeader->NumFGs; $i++) {
-            $t = new FlightGroup(substr($hex, $offset), $this->TIE);
+            $t = (new FlightGroup(substr($hex, $offset), $this->TIE))->loadHex();
             $this->FlightGroups[] = $t;
             $offset += $t->getLength();
         }
         $this->Messages = [];
         $offset = $offset;
         for ($i = 0; $i < $this->FileHeader->NumMessages; $i++) {
-            $t = new Message(substr($hex, $offset), $this->TIE);
+            $t = (new Message(substr($hex, $offset), $this->TIE))->loadHex();
             $this->Messages[] = $t;
             $offset += $t->getLength();
         }
         $this->GlobalGoals = [];
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
-            $t = new GlobalGoal(substr($hex, $offset), $this->TIE);
+            $t = (new GlobalGoal(substr($hex, $offset), $this->TIE))->loadHex();
             $this->GlobalGoals[] = $t;
             $offset += $t->getLength();
         }
         $this->Teams = [];
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
-            $t = new Team(substr($hex, $offset), $this->TIE);
+            $t = (new Team(substr($hex, $offset), $this->TIE))->loadHex();
             $this->Teams[] = $t;
             $offset += $t->getLength();
         }
         $this->Briefing = [];
         $offset = $offset;
         for ($i = 0; $i < 8; $i++) {
-            $t = new Briefing(substr($hex, $offset), $this->TIE);
+            $t = (new Briefing(substr($hex, $offset), $this->TIE))->loadHex();
             $this->Briefing[] = $t;
             $offset += $t->getLength();
         }
@@ -101,6 +112,7 @@ abstract class MissionBOPBase extends PyriteBase implements Byteable
             $offset += strlen($t);
         }
         $this->MissionBOPLength = $offset;
+        return $this;
     }
     
     public function __debugInfo()
@@ -118,58 +130,58 @@ abstract class MissionBOPBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString()
+    public function toHexString($hex = null)
     {
-        $hex = "";
+        $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $this->writeObject($hex, $this->FileHeader, 0x000);
+        $hex = $this->writeObject($this->FileHeader, $hex, 0x000);
         $offset = $offset;
         for ($i = 0; $i < $this->FileHeader->NumFGs; $i++) {
             $t = $this->FlightGroups[$i];
-            $this->writeObject($hex, $t, $offset);
+            $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
         }
         $offset = $offset;
         for ($i = 0; $i < $this->FileHeader->NumMessages; $i++) {
             $t = $this->Messages[$i];
-            $this->writeObject($hex, $t, $offset);
+            $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
         }
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->GlobalGoals[$i];
-            $this->writeObject($hex, $t, $offset);
+            $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
         }
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->Teams[$i];
-            $this->writeObject($hex, $t, $offset);
+            $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
         }
         $offset = $offset;
         for ($i = 0; $i < 8; $i++) {
             $t = $this->Briefing[$i];
-            $this->writeObject($hex, $t, $offset);
+            $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
         }
         $offset = $offset;
         for ($i = 0; $i < $this->FGGoalStringCount(); $i++) {
             $t = $this->FGGoalStrings[$i];
-            $this->writeString($hex, $t, $offset);
+            $hex = $this->writeString($t, $hex, $offset);
             $offset += strlen($t);
         }
         $offset = $offset;
         for ($i = 0; $i < 360; $i++) {
             $t = $this->GlobalGoalStrings[$i];
-            $this->writeString($hex, $t, $offset);
+            $hex = $this->writeString($t, $hex, $offset);
             $offset += strlen($t);
         }
         $offset = $offset;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->MissionDescriptions[$i];
-            $this->writeString($hex, $t, $offset);
+            $hex = $this->writeString($t, $hex, $offset);
             $offset += strlen($t);
         }
 

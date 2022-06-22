@@ -928,3 +928,236 @@ EventType
 1E	Change Region
 	Var1	Region #
 22	End Briefing
+
+TFTCCraftType
+1 X-Wing
+2 Y-Wing
+3 A-Wing
+4 B-Wing
+5 TIE Fighter
+6 TIE Interceptor
+7 TIE Bomber
+8 TIE Advanced
+9 TIE Defender
+a Authority IRD
+b Toscan Fighter
+c Missile Boat
+d T-Wing
+e Z-95 Headhunter
+f R-41 Starchaser
+10 Assault Gunboat
+11 Lambda Shuttle
+12 Escort Shuttle
+13 System Patrol Craft
+14 Scout Craft
+15 Stormtrooper Transport
+16 Assault Transport
+17 Escort Transport
+18 Utility Tug
+19 Combat Utility Vehicle
+1a CN/A Brick
+1b CN/B Hexbox
+1c CN/C Tube
+1d CN/D Pronged
+1e Heavy Lifter
+1f Mole Miner
+20 Bulk Freighter
+21 Cargo Ferry
+22 Modular Conveyor
+23 Container Transport
+24 Medium Transport
+25 Muurian Transport
+26 YT-1300 Transport
+27 Millennium Falcon
+28 Corellian Corvette
+29 Modified Corvette
+2a Nebulon-B Frigate
+2b Nebulon-B2 Frigate
+2c C-3 Passenger Liner
+2d Carrack Cruiser
+2e Strike Cruiser
+2f Escort Carrier
+30 Dreadnaught
+31 MC80A Chatnoir Star Cruiser
+32 MC40a Light Cruiser
+33 Interdictor
+34 Victory I Star Destroyer
+35 Imperial I Star Destroyer
+36 Super Star Destroyer
+37 CN/E Hemisphere
+38 CN/F Slotted
+39 CN/G Hourglass
+3a CN/H Gem
+3b CN/I Y shaped
+3c Platform 1
+3d Platform 2
+3e Platform 3
+3f Platform 4
+40 Platform 5
+41 Platform 6
+42 Asteroid Hangar
+43 Ast Laser Battery
+44 Ast Warhd Launcher
+45 Deep Space Facility
+46 Satellite1
+47 Satellite2
+48 Satellite3
+49 Satellite4
+4a Satellite5
+4b Mine1
+4c Mine2
+4d Mine3
+4e GunPlatform
+4f Mine5
+50 Probe1
+51 Probe Capsule
+52 Probe3
+53 Type 1 Navigation Buoy
+54 Type 2 Navigation Buoy
+55 Hyper Buoy
+56 Asteroid
+57 Planet
+58 Rendezvous Buoy
+59 Cargo Canister
+5a Shipyard
+5b Repair Yard
+5c Modified Strike Cruiser
+5d Lancer Frigate
+5e Bulk Cruiser
+5f Assault Frigate
+60 Corellian Gunship
+61 Sentinel Landing Craft
+62 Assault Shuttle
+63 Marauder Corvette
+64 Star Galleon
+65 Imperial Research Ship
+66 Luxury Yacht
+67 Ferryboat Liner
+68 Modified Action Transport
+69 Mobquet Transport
+6a Xiytiar Transport
+6b Freight Transport/C
+6c Freight Transport/H
+6d Freight Transport/K
+6e YT-2000 Transport
+6f YT-2400 Transport
+70 Suprosa Bulk Freighter
+71 Skipray Blastboat
+72 TIE X/1 Bizarro
+73 TIE X/2 BigGun
+74 TIE X/3 Warhead
+75 TIE X/4 Bomb
+76 TIE X/5 Booster
+77 Cloakshape Fighter
+78 Razor Fighter
+79 Planetary Fighter
+7a Supa Fighter
+7b Pinook Fighter
+7c TIE Advanced x1
+7d Preybird Fighter
+7e StarViper
+7f Firespray Attack Ship
+80 Pursuer Enforcement Ship
+81 Golan One
+82 Golan Two
+83 Golan Three
+84 Derilyn Platform
+85 Sensor Array
+86 Comm Relay
+87 Space Colony 1
+88 Space Colony 2
+89 Space Colony 3
+8a Casino
+8b Cargo Facility 1
+8c Cargo Facility 2
+8d Asteroid Mining Unit
+8e Processing Plant
+8f Rebel Alliance Platform
+90 Imperial Research Centre
+91 Azzameen Family Base
+92 Family Repair Yard
+93 Pirate Asteroid Base
+94 Industrial Complex
+95 Pirate Junkyd Base
+96 Escape Pod
+97 Pressure Tank
+98 CN/J Grande
+99 CN/K Box
+9a CN/L Sphere
+9b Container Hangar
+9c Large Gun Emplacement
+9d Large G/W Emplacement
+9e Proximity Mine A
+9f Detonator
+a0 Homing Mine A
+a1 Homing Mine B
+a2 Laser Battery
+a3 Ion Battery
+a4 Cargo Freighter
+a5 Connector Rod
+a6 Cargo Freighter Engine
+a7 Cargo Freighter 4
+a8 Cargo Freighter 5
+a9 Cargo Tanker Engine
+aa Cargo Tanker
+ab Cargo Tanker 3
+ac Cargo Tanker 4
+ad Cargo Tanker 5
+ae Escape Pod Deluxe
+af Rebel Pilot
+b0 Imperial Pilot
+b1 Civilian Pilot
+b2 Zero-G Stormtrooper
+b3 Zero-G Utility Worker
+b4 MK-09 Droid
+b5 Astromech Droid
+b6 Worker Droid
+b7 BACKDROP
+b8 V-Wing
+b9 Y-Wing/B
+ba U-Wing
+bb M3-A Scyk
+bc G1-M4-C Dunelizard
+bd M-12 Kimogila
+be M-22 Krayt Gunship
+bf DontUseMe
+c0 DontUseMe
+c1 DontUseMe
+c2 DontUseMe
+c3 VT-49 Decimator
+c4 X4 Gunship
+c5 YE-4 Gunship
+c6 DontUseMe
+c7 YKL-37R Nova Courier
+c8 DontUseMe
+c9 DontUseMe
+ca Naboo Barge
+cb Coruscant Courier
+cc YB-300 Light Transport
+cd DontUseMe
+ce DontUseMe
+cf Arquitens Light Cruiser
+d0 Acclamator Cruiser
+d1 Gladiator Class Star Destroyer
+d2 Venator Star Destroyer
+d3 Ecliptic Star Frigate
+d4 Commerce Guild Destroyer
+d5 MC75 Armored Star Cruiser
+d6 Quasar Escort Carrier
+d7 Sphyrna Corvette
+d8 Gozanti Cruiser
+d9 MC80 Reef Home Star Cruiser
+da MC80 Home One Star Cruiser
+db Backdrop 7
+dc Raider Class Corvette
+dd Orbital Station
+de Asteroid Tunnel
+df Large Asteroid 1
+e0 Asteroid Field
+e1 DontUseMe
+e2 n/a
+e3 Death Star II
+e4 MC80 Liberty Star Cruiser
+e5 Victory II Star Destroyer
+e6 Imperial II Star Destroyer
+e7 Large Asteroid 2

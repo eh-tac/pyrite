@@ -47,7 +47,7 @@ export class PHPPropWriter {
     if (this.prop.comment) {
       p = `${p} //${this.prop.comment}`;
     }
-    return `/** @var ${type} */\n    ${p}`;
+    return `/** @var ${type} ${this.prop.docString} */\n    ${p}`;
   }
 
   public get typeExpr(): string {
@@ -84,7 +84,7 @@ export class PHPPropWriter {
             $offset += ${this.propLength};
         }`;
     } else if (!this.prop.isFixedLength) {
-      // strings and objects have dynamic lengths so the offsets must be adjusted on the fly
+      // strings and objects have dynamic lengths so the offsets must be adjusted on the flyF
       // if this is a string with a defined offset, make sure that is included when incrementing the offset
       // otherwise if already in previous value mode, just += by the current length;
       const op = this.prop.previousValueOffset ? "+=" : `= ${this.prop.offset} +`;
@@ -96,7 +96,7 @@ export class PHPPropWriter {
   public getGetter(inLoop = false): string {
     const off = inLoop ? "$offset" : this.offsetExpr;
     if (this.prop instanceof PropObject) {
-      return `new ${this.prop.structName}(substr($hex, ${off}), $this->TIE)`;
+      return `(new ${this.prop.structName}(substr($hex, ${off}), $this->TIE))->loadHex()`;
     } else if (this.prop instanceof PropAny) {
       return `undefined`;
     }
@@ -161,7 +161,7 @@ export class PHPPropWriter {
 
   public getSetter(propOverride?: string, inLoop = false): string {
     const off = inLoop ? "$offset" : this.offsetExpr;
-    const params = [propOverride || `$this->${this.prop.name}`, off];
-    return `$hex .= $this->${this.prop.hexSetter}(${params.join(", ")})`;
+    const params = [propOverride || `$this->${this.prop.name}`, "$hex", off];
+    return `$hex = $this->${this.prop.hexSetter}(${params.join(", ")})`;
   }
 }

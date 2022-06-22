@@ -4,6 +4,10 @@ namespace Pyrite\XvT;
 
 class PilotFile extends Base\PilotFileBase
 {
+    public static function fromHex($hex, $tie = null)
+    {
+        return (new PilotFile($hex, $tie))->loadHex();
+    }
 
     public function getCompletedTrainingMissions()
     {
@@ -15,7 +19,7 @@ class PilotFile extends Base\PilotFileBase
     public function getCompletedTrainingMissionScores()
     {
         $missions = $this->getCompletedTrainingMissions();
-        return array_map(function (MissionData $mission){
+        return array_map(function (MissionData $mission) {
             return $mission->BestScore;
         }, $missions);
     }
@@ -23,10 +27,8 @@ class PilotFile extends Base\PilotFileBase
     public function getCompletedTrainingMissionTimes()
     {
         $missions = $this->getCompletedTrainingMissions();
-        return array_map(function (MissionData $mission){
+        return array_map(function (MissionData $mission) {
             return $mission->BestTime;
         }, $missions);
     }
-
-
 }
