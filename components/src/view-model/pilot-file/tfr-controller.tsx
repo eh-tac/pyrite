@@ -105,9 +105,7 @@ export class TFRController extends PilotFileController {
       <div class="list-group-item data d-flex justify-content-between">
         <h6 class="">{key}</h6>
         <div class="d-flex flex-column">
-          <span class="d-flex">
-            <span class="text-info">{score}</span>
-          </span>
+          <span class="d-inline text-info text-right">{score.toLocaleString()}</span>
           <small class="text-light text-right">{hs}</small>
         </div>
       </div>
@@ -121,13 +119,13 @@ export class TFRController extends PilotFileController {
       Status: this.tfr.PilotStatusLabel,
       Rank: this.tfr.PilotRankLabel,
       "Secret Order": this.tfr.SecretOrderLabel,
-      Score: this.tfr.Score,
-      Skill: this.tfr.SkillScore === -1 ? "Maximum" : this.tfr.SkillScore,
+      Score: this.tfr.Score.toLocaleString(),
+      Skill: this.tfr.SkillScore === -1 ? "Maximum" : this.tfr.SkillScore.toLocaleString(),
       "Laser hits": this.tfr.LaserLabel,
       "Warhead hits": this.tfr.WarheadLabel,
-      Kills: this.tfr.TotalKills,
-      Captures: this.tfr.TotalCaptures,
-      "Craft lost": this.tfr.CraftLost
+      Kills: this.tfr.TotalKills.toLocaleString(),
+      Captures: this.tfr.TotalCaptures.toLocaleString(),
+      "Craft lost": this.tfr.CraftLost.toLocaleString()
     };
 
     return (

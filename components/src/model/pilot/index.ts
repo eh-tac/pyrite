@@ -30,7 +30,7 @@ export interface MissionScore {
 }
 
 export function shootInfo(hit: number, fired: number): string {
-  return `${hit} / ${fired}`;
+  return `${hit.toLocaleString()} / ${fired.toLocaleString()}`;
 }
 
 export function percent(hit: number, fired: number): string {

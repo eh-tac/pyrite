@@ -56,7 +56,7 @@ export class XvTPltController extends PilotFileController {
       <li class="list-group-item kv heading d-flex justify-content-between">
         <h6 class="my-0">{type} Score</h6>
         <div class="d-flex flex-column">
-          <span class="text-info font-weight-bold">{totalScore}</span>
+          <span class="text-info font-weight-bold">{totalScore.toLocaleString()}</span>
           <small class="text-light text-right">{percent}</small>
         </div>
       </li>
@@ -69,7 +69,7 @@ export class XvTPltController extends PilotFileController {
         missions.push(this.renderXvTMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].BestScore),
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].BestScore.toLocaleString()),
           "Too many missions flown",
           "text-danger"
         );
@@ -101,9 +101,7 @@ export class XvTPltController extends PilotFileController {
       <div class="list-group-item data d-flex justify-content-between">
         <h6 class="">{key}</h6>
         <div class="d-flex flex-column">
-          <span class="d-flex">
-            <span class="text-info">{mission.scoreLabel}</span>
-          </span>
+          <span class="d-inline text-info text-right">{mission.scoreLabel}</span>
           <small class="text-light text-right">{mission.timeLabel}</small>
           <small class="text-light text-right">{hs}</small>
         </div>
@@ -118,10 +116,10 @@ export class XvTPltController extends PilotFileController {
         {this.renderItem("Filename", this.filename)}
         {this.renderItem("Pilot Name", this.plt.Name)}
         {this.renderItem("Rating", this.plt.PilotRatingLabel)}
-        {this.renderItem("Total Score", this.plt.TotalScore)}
+        {this.renderItem("Total Score", this.plt.TotalScore.toLocaleString())}
         {this.renderItem("Lasers", this.plt.LaserLabel, this.plt.LaserPercent)}
         {this.renderItem("Warheads", this.plt.WarheadLabel, this.plt.WarheadPercent)}
-        {this.renderItem("Kills", this.plt.Kills)}
+        {this.renderItem("Kills", this.plt.Kills.toLocaleString())}
         {this.renderItem("Craft Losses", this.plt.CraftLosses)}
       </ul>
     );

@@ -1,4 +1,4 @@
-import { BattleSummary, MissionScore } from "../pilot";
+import { BattleSummary } from "../pilot";
 import { MissionData } from "../XWA";
 import { PilotFileBase } from "./base/pilot-file-base";
 import { Constants } from "./constants";
@@ -113,7 +113,7 @@ export class PilotFile extends PilotFileBase {
   }
 
   private shootInfo(hit: number, fired: number): string {
-    return `${hit} / ${fired}`;
+    return `${hit.toLocaleString()} / ${fired.toLocaleString()}`;
   }
 
   private percent(hit: number, fired: number): string {

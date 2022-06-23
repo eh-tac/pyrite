@@ -8,8 +8,6 @@ import { PilotFile } from "../../model/XW";
 export class XWController extends PilotFileController {
   public constructor(filepath: string, public plt: PilotFile) {
     super(filepath);
-
-    console.log("xw file", plt);
   }
 
   public renderTabs(battleData?: Battle): [string, JSX.Element][] {
@@ -38,7 +36,6 @@ export class XWController extends PilotFileController {
       <li class="list-group-item kv heading d-flex justify-content-between">
         <div class="d-flex flex-column">
           <h6 class="my-0">{type} Score</h6>
-          <small class="text-muted"> (laserless)</small>
         </div>
         <div class="d-flex flex-column">
           <span class="text-info font-weight-bold">{totalScore}</span>
@@ -109,9 +106,7 @@ export class XWController extends PilotFileController {
       <div class="list-group-item data d-flex justify-content-between">
         <h6 class="">{key}</h6>
         <div class="d-flex flex-column">
-          <span class="d-flex">
-            <span class="text-info">{score}</span>
-          </span>
+          <span class="d-inline text-info text-right">{score.toLocaleString()}</span>
           <small class="text-light text-right">{hs}</small>
         </div>
       </div>
@@ -124,7 +119,7 @@ export class XWController extends PilotFileController {
       Status: this.plt.PilotStatusLabel,
       Rank: this.plt.PilotRankLabel,
       "Rookie Number": this.plt.RookieNumber,
-      "Tour Score": this.plt.TotalTODScore,
+      "Tour Score": this.plt.TotalTODScore.toLocaleString(),
       "Laser hits": this.plt.LaserLabel,
       "Warhead hits": this.plt.WarheadLabel,
       Kills: this.plt.TotalKills,

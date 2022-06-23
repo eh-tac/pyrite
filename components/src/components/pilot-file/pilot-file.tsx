@@ -13,7 +13,7 @@ import { XWController } from "../../view-model/pilot-file/xw-controller";
 
 @Component({
   tag: "pyrite-pilot-file",
-  styleUrls: ["../../assets/superhero.css", "pilot-file.scss"],
+  styleUrl: "../../assets/superhero.css",
   shadow: true
 })
 export class PilotViewer {
@@ -76,7 +76,6 @@ export class PilotViewer {
     } else if (!this.allowUpload && this.file) {
       content = <p class="text-center my-3 text-warning">Unable to load file {this.file}</p>;
     }
-    console.log("render", this.controller, this.file, this.allowUpload);
 
     return (
       <div class="component bg-dark">

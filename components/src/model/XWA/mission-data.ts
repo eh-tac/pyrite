@@ -13,7 +13,7 @@ export class MissionData extends MissionDataBase implements MissionScore {
   }
 
   public get scoreLabel(): string {
-    return `${this.Total}`;
+    return `${this.Total.toLocaleString()}`;
   }
 
   public get timeLabel(): string {

@@ -116,7 +116,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
   }
 
   private shootInfo(hit: number, fired: number): string {
-    return `${hit} / ${fired}`;
+    return `${hit.toLocaleString()} / ${fired.toLocaleString()}`;
   }
 
   private percent(hit: number, fired: number): string {

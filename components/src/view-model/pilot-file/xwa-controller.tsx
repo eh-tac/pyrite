@@ -91,12 +91,10 @@ export class XWAPltController extends PilotFileController {
         <h6 class="text">{key}</h6>
 
         <div class="d-flex flex-column">
-          <span class="d-flex">
-            <span class="text-info mr-2">{mission.scoreLabel}</span>
-          </span>
-          <small class="text-light">{mission.timeLabel}</small>
-          <small class="text-muted">{hs}</small>
-          <small class="text-muted">
+          <span class="d-inline text-info text-right">{mission.scoreLabel}</span>
+          <small class="text-light text-right">{mission.timeLabel}</small>
+          <small class="text-muted text-right">{hs}</small>
+          <small class="text-muted text-right">
             {mission.WinCount} wins from {mission.AttemptCount} attempts
           </small>
         </div>
@@ -111,11 +109,11 @@ export class XWAPltController extends PilotFileController {
         {this.renderItem("Filename", this.filename)}
 
         {this.renderItem("Pilot Name", this.plt.Name)}
-        {this.renderItem("Tours of Duty Score", this.plt.TourOfDutyScore)}
-        {this.renderItem("Azzameen Score", this.plt.AzzameenScore)}
-        {this.renderItem("Simulator Score", this.plt.SimulatorScore)}
-        {this.renderItem("Bonus Points", this.plt.BonusScore)}
-        {this.renderItem("Total Score", this.plt.TotalScore)}
+        {this.renderItem("Tours of Duty Score", this.plt.TourOfDutyScore.toLocaleString())}
+        {this.renderItem("Azzameen Score", this.plt.AzzameenScore.toLocaleString())}
+        {this.renderItem("Simulator Score", this.plt.SimulatorScore.toLocaleString())}
+        {this.renderItem("Bonus Points", this.plt.BonusScore.toLocaleString())}
+        {this.renderItem("Total Score", this.plt.TotalScore.toLocaleString())}
         {this.renderItem("Lasers", this.plt.LaserLabel, this.plt.LaserPercent)}
         {this.renderItem("Warheads", this.plt.WarheadLabel, this.plt.WarheadPercent)}
       </ul>
