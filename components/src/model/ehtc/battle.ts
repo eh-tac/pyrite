@@ -31,7 +31,8 @@ export class Battle extends BattleSummary {
     public creators: PilotSummary[],
     public patches: string[],
     public highScores: { missions: Score[]; total: Score },
-    public statistics: Statistics
+    public statistics: Statistics,
+    public offset?: number
   ) {
     super(nr, code, nr, name, missions, ratingAvg, URL);
   }
@@ -55,7 +56,8 @@ export class Battle extends BattleSummary {
       j.creators,
       j.patches,
       j.highScores,
-      j.statistics
+      j.statistics,
+      j.offset
     );
   }
 }

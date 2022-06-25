@@ -31,13 +31,15 @@ export class XWAPltController extends PilotFileController {
     let totalScore: number = 0;
 
     const missionScores: MissionData[] = [];
-    let i = 53;
+    let i = battleData.offset || 53;
+    console.log("xwa bsf from", i, this.plt.MissionData, battleData);
     while (this.plt.MissionData[i].WinCount) {
       const m = this.plt.MissionData[i];
       missionScores.push(m);
       i++;
       totalScore += m.Total;
     }
+    console.log("found scores", missionScores, this);
 
     const type: string = battleData.missions === 1 ? "Mission" : "Battle";
     const percent: string = battleHS ? this.percentage(totalScore, battleHS) : "No High Score found";

@@ -1,4 +1,0 @@
-<?php
-namespace Pyrite\PLATFORM;
-
-class Constants {
