@@ -32,7 +32,6 @@ export class XWAPltController extends PilotFileController {
 
     const missionScores: MissionData[] = [];
     let i = battleData.offset || 53;
-    console.log("xwa bsf from", i, this.plt.MissionData, battleData);
     while (this.plt.MissionData[i].WinCount) {
       const m = this.plt.MissionData[i];
       missionScores.push(m);

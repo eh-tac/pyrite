@@ -238,7 +238,7 @@ class Battle
             }
         }
         $num = (int)$key;
-        if (!$platform || !$type || !$num) {
+        if (!$platform || !$type || !is_numeric($num)) {
             throw new Exception("Unable to parse $key as the battle name. Submissions must be in the format TIETC111");
         }
         return [$platform, $type, $num];
