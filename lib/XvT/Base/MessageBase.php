@@ -80,6 +80,8 @@ abstract class MessageBase extends PyriteBase implements Byteable
         $this->DelaySeconds = $this->getByte($hex, 0x72);
         $this->Trigger12OrTrigger34 = $this->getBool($hex, 0x73);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

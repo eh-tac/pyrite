@@ -38,6 +38,8 @@ abstract class RoleBase extends PyriteBase implements Byteable
         $this->Team = $this->getChar($hex, 0x0, 1);
         $this->Designation = $this->getChar($hex, 0x1, 3);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

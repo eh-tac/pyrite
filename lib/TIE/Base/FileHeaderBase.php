@@ -74,6 +74,8 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
             $offset += 12;
         }
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

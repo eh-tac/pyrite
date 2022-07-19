@@ -15,6 +15,8 @@ class Battle
     public $resourceFiles = [];
     public $readme;
     public $firstMission = '';
+    public $missions = [];
+    public $scores = [];
 
     public function __construct(
         $platform,
@@ -242,5 +244,63 @@ class Battle
             throw new Exception("Unable to parse $key as the battle name. Submissions must be in the format TIETC111");
         }
         return [$platform, $type, $num];
+    }
+
+    public function loadMissions()
+    {
+        foreach ($this->missionFiles as $file) {
+            $path = $this->folder . DS . $file;
+            $contents = file_get_contents($path);
+
+            $tie = $this->loadMission($contents);
+            if ($tie) {
+                $tie->loadHex();
+                $this->missions[$file] = $tie;
+            }
+        }
+    }
+
+    public function loadScores()
+    {
+        // assumes missions is populated
+        foreach ($this->missions as $file => $tie) {
+            $sk = $this->loadScoreKeeper($tie);
+            if ($sk) {
+                $sk->process();
+                $this->scores[$file] = $sk;
+            }
+        }
+    }
+
+    private function loadMission($contents)
+    {
+        switch ($this->platform) {
+            case Platform::TIE:
+                return new \Pyrite\TIE\Mission($contents);
+            case Platform::XvT:
+            case Platform::BoP:
+                return new \Pyrite\XvT\Mission($contents);
+            case Platform::XWA:
+            case Platform::TFTC:
+                return new \Pyrite\XWA\Mission($contents);
+            case Platform::XW:
+                return new \Pyrite\XW\Mission($contents);
+        }
+    }
+
+    private function loadScoreKeeper($tie)
+    {
+        switch ($this->platform) {
+            case Platform::TIE:
+                return new \Pyrite\TIE\ScoreKeeper($tie);
+            case Platform::XvT:
+            case Platform::BoP:
+                return new \Pyrite\XvT\ScoreKeeper($tie);
+            case Platform::XWA:
+            case Platform::TFTC:
+                return new \Pyrite\XWA\ScoreKeeper($tie);
+                // case PLT_XW:
+                // return new \Pyrite\XW\ScoreKeeper($tie);
+        }
     }
 }

@@ -53,6 +53,8 @@ abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable
         $this->Answer = $this->getChar($hex, $offset, $this->AnswerLength());
         $offset += $this->AnswerLength();
         $this->PostMissionQuestionsLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

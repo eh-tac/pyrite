@@ -62,6 +62,8 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         $this->Trigger12OrTrigger34 = $this->getBool($hex, 0x27);
         $this->Points = $this->getSByte($hex, 0x29);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

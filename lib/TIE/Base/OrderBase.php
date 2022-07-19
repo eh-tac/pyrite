@@ -77,6 +77,8 @@ abstract class OrderBase extends PyriteBase implements Byteable
         $this->Target2 = $this->getByte($hex, 0x0F);
         $this->Target1OrTarget2 = $this->getBool($hex, 0x10);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

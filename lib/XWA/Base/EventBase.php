@@ -41,6 +41,8 @@ abstract class EventBase extends PyriteBase implements Byteable
         $this->Type = $this->getShort($hex, 0x2);
         $this->Variables = $this->getShort($hex, 0x4);
         $this->EventLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

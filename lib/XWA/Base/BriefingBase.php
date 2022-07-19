@@ -77,6 +77,8 @@ abstract class BriefingBase extends PyriteBase implements Byteable
             $offset += $t->getLength();
         }
         $this->BriefingLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

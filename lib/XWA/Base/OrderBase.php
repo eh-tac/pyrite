@@ -108,6 +108,8 @@ abstract class OrderBase extends PyriteBase implements Byteable
         $this->Unknown13 = $this->getBool($hex, 0x7B);
         $this->Unknown14 = $this->getBool($hex, 0x81);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

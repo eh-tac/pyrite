@@ -19,7 +19,7 @@ abstract class GlobalGoalBase extends PyriteBase implements Byteable
     public $Reserved; //(3)
     /** @var GoalGlobal[] 0x02 Goal GoalGlobal */
     public $Goal;
-    
+
     public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
@@ -43,10 +43,11 @@ abstract class GlobalGoalBase extends PyriteBase implements Byteable
             $this->Goal[] = $t;
             $offset += $t->getLength();
         }
-        
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
-    
+
     public function __debugInfo()
     {
         return [
@@ -54,7 +55,7 @@ abstract class GlobalGoalBase extends PyriteBase implements Byteable
             "Goal" => $this->Goal
         ];
     }
-    
+
     public function toHexString($hex = null)
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
@@ -70,8 +71,8 @@ abstract class GlobalGoalBase extends PyriteBase implements Byteable
 
         return $hex;
     }
-    
-    
+
+
     public function getLength()
     {
         return self::GLOBALGOALLENGTH;

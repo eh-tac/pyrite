@@ -79,7 +79,7 @@ trait HexDecoder
 		if ($start || $length) {
 			$str = substr($str, $start, $length);
 		}
-		$bits = explode(chr(0), $str);
+		$bits = explode(chr(0), $str, 2);
 		return utf8_encode(trim($bits[0]));
 	}
 

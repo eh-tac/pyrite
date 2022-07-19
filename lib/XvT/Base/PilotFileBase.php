@@ -71,6 +71,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->ImperialStats = (new TeamStats(substr($hex, 0x12716), $this->TIE))->loadHex();
         $offset = 0x12716 + $this->ImperialStats->getLength();
         $this->PilotFileLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

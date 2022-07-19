@@ -1,6 +1,6 @@
 CraftType
-00 None
-01 X-wing
+00  None
+01  X-wing
 02	Y-wing
 03	A-wing
 04	B-wing

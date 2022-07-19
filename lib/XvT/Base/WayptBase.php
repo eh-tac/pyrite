@@ -64,6 +64,8 @@ abstract class WayptBase extends PyriteBase implements Byteable
             $offset += 2;
         }
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

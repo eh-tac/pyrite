@@ -2,53 +2,50 @@
 
 namespace Pyrite\XWA;
 
-use Pyrite\Byteable;
-use Pyrite\HexDecoder;
+class GoalFG extends Base\GoalFGBase
+{
+  const POINT_MULTIPLIER = 25;
 
-class GoalFG implements Byteable {
-	use HexDecoder;
+  public static function fromHex($hex, $tie = null)
+  {
+    return (new GoalFG($hex, $tie))->loadHex();
+  }
 
-	const GOALFG_LENGTH = 0x50;
-	const POINT_MULTIPLIER = 25;
+  public function isActive(): bool
+  {
+    if ($this->Condition === Constants::$CONDITION_NONEFALSE) {
+      return false;
+    }
+    return $this->Enabled;
+  }
 
-	public $Argument;
-	public $Condition;
-	public $Amount;
-	public $Points;
-	public $Enabled;
-	public $Team;
-	public $Unknown42;
-	public $Parameter;
-	public $ActiveSequence;
-	public $Unknown15;
+  public function __toString()
+  {
+    if (!$this->isActive()) {
+      return 'Disabled';
+    }
 
-	public function __construct($hex) {
+    return "{$this->getAmountLabel()} {$this->getArgumentLabel()} {$this->getConditionLabel()} - {$this->getPoints()} points";
+  }
 
-		$this->Argument       = $this->lookup(Constants::$FGGOAL_ARG, $hex, 0x00);
-		$this->Condition      = $this->lookup(Constants::$CONDITION, $hex, 0x01);
-		$this->Amount         = $this->lookup(Constants::$AMOUNT, $hex, 0x02);
-		$this->Points         = $this->getSByte($hex, 0x03);
-		$this->Enabled        = $this->getBool($hex, 0x04);
-		$this->Team           = $this->getByte($hex, 0x05);
-		$this->Unknown42      = $this->getByte($hex, 0x0D);
-		$this->Parameter      = $this->getByte($hex, 0x0E);
-		$this->ActiveSequence = $this->getByte($hex, 0x0F);
-		$this->Unknown15      = $this->getBool($hex, 0x4F);
-	}
+  public function getPoints()
+  {
+    return $this->isActive() && $this->Points ? $this->Points * self::POINT_MULTIPLIER : 0;
+  }
 
-	public function getLength() {
-		return self::GOALFG_LENGTH;
-	}
+  public function getArgumentLabel()
+  {
+    $args = ['must', 'must NOT', 'BONUS must', 'BONUS must NOT'];
+    return isset($this->Argument) && isset($args[$this->Argument]) ? $args[$this->Argument] : "Unknown";
+  }
 
-	public function getPoints() {
-		return $this->Enabled && $this->Points ? $this->Points * self::POINT_MULTIPLIER : 0;
-	}
+  public function getConditionLabel()
+  {
+    return isset($this->Condition) && isset(Constants::$CONDITION[$this->Condition]) ? Constants::$CONDITION[$this->Condition] : "Unknown";
+  }
 
-	public function __toString() {
-		if (!$this->Enabled) {
-			return 'Disabled';
-		}
-
-		return "Goal $this->Argument $this->Condition $this->Amount " . $this->getPoints();
-	}
+  public function getAmountLabel()
+  {
+    return isset($this->Amount) && isset(Constants::$AMOUNT[$this->Amount]) ? Constants::$AMOUNT[$this->Amount] : "Unknown";
+  }
 }

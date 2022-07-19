@@ -568,7 +568,6 @@ export class Constants {
     31: "Flat Hexagon",
     32: "Side Hexagon",
     33: "Front Hexagon",
-    34: "Single Point",
   };
 
   public static ARRIVALDIFFICULTY = {
@@ -1640,7 +1639,6 @@ export enum Formation {
   flatHexagon = 31,
   sideHexagon = 32,
   frontHexagon = 33,
-  singlePoint = 34,
 }
 
 export enum ArrivalDifficulty {

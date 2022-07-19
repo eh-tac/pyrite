@@ -1,24 +1,17 @@
 <?php
 namespace Pyrite\XWA;
+    
+class Event extends Base\EventBase
+{
 
-use Pyrite\Byteable;
-use Pyrite\HexDecoder;
-
-class Event implements Byteable {
-	use HexDecoder;
-
-	const EVENT_LENGTH = 0x0;
-
-	public $Time;
-	public $Type;
-	public $Variables;
-	public function __construct($hex){
-		$this->Time = $this->getShort($hex, 0x0);
-		$this->Type = $this->getShort($hex, 0x2);
-		$this->Variables = $this->getShort($hex, 0x4);
-	}
-
-    public function getLength(){
-        return self::EVENT_LENGTH;
+    public static function fromHex($hex, $tie = null) {
+      return (new Event($hex, $tie))->loadHex();
     }
+
+    public function __toString() 
+    {
+      return '';
+    }
+
+    
 }

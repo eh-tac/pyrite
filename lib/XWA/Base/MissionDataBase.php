@@ -67,6 +67,8 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         $this->UnkG = $this->getInt($hex, 0x28);
         $this->BonusScoreTen = $this->getInt($hex, 0x2C);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

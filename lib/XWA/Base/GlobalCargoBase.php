@@ -49,6 +49,8 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
         $this->Unknown4 = $this->getByte($hex, 0x4A);
         $this->Unknown5 = $this->getByte($hex, 0x4B);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

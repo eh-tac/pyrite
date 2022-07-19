@@ -41,6 +41,8 @@ abstract class SkipBase extends PyriteBase implements Byteable
         $this->Trigger2 = (new Trigger(substr($hex, 0x6), $this->TIE))->loadHex();
         $this->Trigger1OrTrigger2 = $this->getBool($hex, 0xE);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

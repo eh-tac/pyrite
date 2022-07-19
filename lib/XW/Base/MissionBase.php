@@ -55,6 +55,8 @@ abstract class MissionBase extends PyriteBase implements Byteable
             $offset += $t->getLength();
         }
         $this->MissionLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

@@ -77,6 +77,8 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         $this->Unknown6 = $this->getByte($hex, 0x0036);
         $this->ActiveSquence = $this->getByte($hex, 0x0038);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

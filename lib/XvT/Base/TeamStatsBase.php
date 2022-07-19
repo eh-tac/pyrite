@@ -275,6 +275,8 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
             $offset += $t->getLength();
         }
         $this->TeamStatsLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

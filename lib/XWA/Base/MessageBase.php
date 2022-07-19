@@ -98,6 +98,8 @@ abstract class MessageBase extends PyriteBase implements Byteable
         $this->Cancel1OrCancel2 = $this->getBool($hex, 0x9E);
         $this->Unknown3 = $this->getBool($hex, 0xA0);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

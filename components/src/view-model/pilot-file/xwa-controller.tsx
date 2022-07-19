@@ -38,7 +38,6 @@ export class XWAPltController extends PilotFileController {
       i++;
       totalScore += m.Total;
     }
-    console.log("found scores", missionScores, this);
 
     const type: string = battleData.missions === 1 ? "Mission" : "Battle";
     const percent: string = battleHS ? this.percentage(totalScore, battleHS) : "No High Score found";
@@ -93,6 +92,9 @@ export class XWAPltController extends PilotFileController {
 
         <div class="d-flex flex-column">
           <span class="d-inline text-info text-right">{mission.scoreLabel}</span>
+          <small class="text-light text-right">
+            {mission.Score} + {mission.BonusScoreTen / 10}
+          </small>
           <small class="text-light text-right">{mission.timeLabel}</small>
           <small class="text-muted text-right">{hs}</small>
           <small class="text-muted text-right">

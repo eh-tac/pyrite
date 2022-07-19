@@ -94,6 +94,95 @@ class Constants
         87 => "Planet",
     ];
 
+    public static $CRAFTTYPE_NONE = 0;
+    public static $CRAFTTYPE_XWING = 1;
+    public static $CRAFTTYPE_YWING = 2;
+    public static $CRAFTTYPE_AWING = 3;
+    public static $CRAFTTYPE_BWING = 4;
+    public static $CRAFTTYPE_TIEFIGHTER = 5;
+    public static $CRAFTTYPE_TIEINTERCEPTOR = 6;
+    public static $CRAFTTYPE_TIEBOMBER = 7;
+    public static $CRAFTTYPE_TIEADVANCED = 8;
+    public static $CRAFTTYPE_TIEDEFENDER = 9;
+    public static $CRAFTTYPE_PATCHSLOT10 = 10;
+    public static $CRAFTTYPE_PATCHSLOT11 = 11;
+    public static $CRAFTTYPE_MISSILEBOAT = 12;
+    public static $CRAFTTYPE_TWING = 13;
+    public static $CRAFTTYPE_Z95HEADHUNTER = 14;
+    public static $CRAFTTYPE_R41STARCHASER = 15;
+    public static $CRAFTTYPE_ASSAULTGUNBOAT = 16;
+    public static $CRAFTTYPE_SHUTTLE = 17;
+    public static $CRAFTTYPE_ESCORTSHUTTLE = 18;
+    public static $CRAFTTYPE_SYSTEMPATROLCRAFT = 19;
+    public static $CRAFTTYPE_SCOUTCRAFT = 20;
+    public static $CRAFTTYPE_STORMTROOPERTRANSPORT = 21;
+    public static $CRAFTTYPE_ASSAULTTRANSPORT = 22;
+    public static $CRAFTTYPE_ESCORTTRANSPORT = 23;
+    public static $CRAFTTYPE_TUG = 24;
+    public static $CRAFTTYPE_COMBATUTILITYVEHICLE = 25;
+    public static $CRAFTTYPE_CONTAINERA = 26;
+    public static $CRAFTTYPE_CONTAINERB = 27;
+    public static $CRAFTTYPE_CONTAINERC = 28;
+    public static $CRAFTTYPE_CONTAINERD = 29;
+    public static $CRAFTTYPE_HEAVYLIFTER = 30;
+    public static $CRAFTTYPE_UNUSED = 31;
+    public static $CRAFTTYPE_BULKFREIGHTER = 32;
+    public static $CRAFTTYPE_CARGOFERRY = 33;
+    public static $CRAFTTYPE_MODULARCONVEYOR = 34;
+    public static $CRAFTTYPE_CONTAINERTRANSPORT = 35;
+    public static $CRAFTTYPE_UNUSED2 = 36;
+    public static $CRAFTTYPE_MURRIANTRANSPORT = 37;
+    public static $CRAFTTYPE_CORELLIANTRANSPORT = 38;
+    public static $CRAFTTYPE_UNUSED3 = 39;
+    public static $CRAFTTYPE_CORELLIANCORVETTE = 40;
+    public static $CRAFTTYPE_MODIFIEDCORVETTE = 41;
+    public static $CRAFTTYPE_NEBULONBFRIGATE = 42;
+    public static $CRAFTTYPE_MODIFIEDFRIGATE = 43;
+    public static $CRAFTTYPE_C3PASSENGERLINER = 44;
+    public static $CRAFTTYPE_CARRACKCRUISER = 45;
+    public static $CRAFTTYPE_STRIKECRUISER = 46;
+    public static $CRAFTTYPE_ESCORTCARRIER = 47;
+    public static $CRAFTTYPE_DREADNAUGHT = 48;
+    public static $CRAFTTYPE_MONCALAMARICRUISER = 49;
+    public static $CRAFTTYPE_LIGHTMONCALAMARICRUISER = 50;
+    public static $CRAFTTYPE_INTERDICTORCRUISER = 51;
+    public static $CRAFTTYPE_VICTORYCLASSSTARDESTROYER = 52;
+    public static $CRAFTTYPE_IMPERATORCLASSSTARDESTROYER = 53;
+    public static $CRAFTTYPE_UNUSED4 = 54;
+    public static $CRAFTTYPE_CONTAINERE = 55;
+    public static $CRAFTTYPE_CONTAINERF = 56;
+    public static $CRAFTTYPE_CONTAINERG = 57;
+    public static $CRAFTTYPE_CONTAINERH = 58;
+    public static $CRAFTTYPE_CONTAINERI = 59;
+    public static $CRAFTTYPE_PLATFORMA = 60;
+    public static $CRAFTTYPE_PLATFORMB = 61;
+    public static $CRAFTTYPE_PLATFORMC = 62;
+    public static $CRAFTTYPE_PLATFORMD = 63;
+    public static $CRAFTTYPE_PLATFORME = 64;
+    public static $CRAFTTYPE_PLATFORMF = 65;
+    public static $CRAFTTYPE_ASTEROIDRNDSTATION = 66;
+    public static $CRAFTTYPE_ASTEROIDLASERBATTERY = 67;
+    public static $CRAFTTYPE_ASTEROIDWARHEADBATTERY = 68;
+    public static $CRAFTTYPE_X7FACTORY = 69;
+    public static $CRAFTTYPE_SATELLITE1 = 70;
+    public static $CRAFTTYPE_SATELLITE2 = 71;
+    public static $CRAFTTYPE_UNUSED5 = 72;
+    public static $CRAFTTYPE_UNUSED6 = 73;
+    public static $CRAFTTYPE_UNUSED7 = 74;
+    public static $CRAFTTYPE_MINEA = 75;
+    public static $CRAFTTYPE_MINEB = 76;
+    public static $CRAFTTYPE_MINEC = 77;
+    public static $CRAFTTYPE_UNUSED8 = 78;
+    public static $CRAFTTYPE_UNUSED9 = 79;
+    public static $CRAFTTYPE_PROBEA = 80;
+    public static $CRAFTTYPE_PROBEB = 81;
+    public static $CRAFTTYPE_UNUSED10 = 82;
+    public static $CRAFTTYPE_NAVBUOYA = 83;
+    public static $CRAFTTYPE_NAVBUOYB = 84;
+    public static $CRAFTTYPE_UNUSED11 = 85;
+    public static $CRAFTTYPE_ASTEROIDFIELD = 86;
+    public static $CRAFTTYPE_PLANET = 87;
+
     public static $CRAFTABBR = [
         0 => "None",
         1 => "X-W",
@@ -185,6 +274,95 @@ class Constants
         87 => "Planet",
     ];
 
+    public static $CRAFTABBR_NONE = 0;
+    public static $CRAFTABBR_XW = 1;
+    public static $CRAFTABBR_YW = 2;
+    public static $CRAFTABBR_AW = 3;
+    public static $CRAFTABBR_BW = 4;
+    public static $CRAFTABBR_TF = 5;
+    public static $CRAFTABBR_TI = 6;
+    public static $CRAFTABBR_TB = 7;
+    public static $CRAFTABBR_TA = 8;
+    public static $CRAFTABBR_TD = 9;
+    public static $CRAFTABBR_PATCH10 = 10;
+    public static $CRAFTABBR_PATCH11 = 11;
+    public static $CRAFTABBR_MIS = 12;
+    public static $CRAFTABBR_TW = 13;
+    public static $CRAFTABBR_Z95 = 14;
+    public static $CRAFTABBR_R41 = 15;
+    public static $CRAFTABBR_GUN = 16;
+    public static $CRAFTABBR_SHU = 17;
+    public static $CRAFTABBR_ES = 18;
+    public static $CRAFTABBR_SPC = 19;
+    public static $CRAFTABBR_SCT = 20;
+    public static $CRAFTABBR_TRN = 21;
+    public static $CRAFTABBR_ATR = 22;
+    public static $CRAFTABBR_ETR = 23;
+    public static $CRAFTABBR_TUG = 24;
+    public static $CRAFTABBR_CUV = 25;
+    public static $CRAFTABBR_CNA = 26;
+    public static $CRAFTABBR_CNB = 27;
+    public static $CRAFTABBR_CNC = 28;
+    public static $CRAFTABBR_CND = 29;
+    public static $CRAFTABBR_HLF = 30;
+    public static $CRAFTABBR_GPLT = 31;
+    public static $CRAFTABBR_FRT = 32;
+    public static $CRAFTABBR_CARG = 33;
+    public static $CRAFTABBR_CNVYR = 34;
+    public static $CRAFTABBR_CTRNS = 35;
+    public static $CRAFTABBR_MDTRN = 36;
+    public static $CRAFTABBR_MUTR = 37;
+    public static $CRAFTABBR_CORT = 38;
+    public static $CRAFTABBR_MSC = 39;
+    public static $CRAFTABBR_CRV = 40;
+    public static $CRAFTABBR_MCRV = 41;
+    public static $CRAFTABBR_FRG = 42;
+    public static $CRAFTABBR_MFRG = 43;
+    public static $CRAFTABBR_LINER = 44;
+    public static $CRAFTABBR_CRCK = 45;
+    public static $CRAFTABBR_STRCK = 46;
+    public static $CRAFTABBR_ESC = 47;
+    public static $CRAFTABBR_DREAD = 48;
+    public static $CRAFTABBR_CRS = 49;
+    public static $CRAFTABBR_CRL = 50;
+    public static $CRAFTABBR_INT = 51;
+    public static $CRAFTABBR_VSD = 52;
+    public static $CRAFTABBR_ISD = 53;
+    public static $CRAFTABBR_SSD = 54;
+    public static $CRAFTABBR_CNE = 55;
+    public static $CRAFTABBR_CNF = 56;
+    public static $CRAFTABBR_CNG = 57;
+    public static $CRAFTABBR_CNH = 58;
+    public static $CRAFTABBR_CNI = 59;
+    public static $CRAFTABBR_PLT1 = 60;
+    public static $CRAFTABBR_PLT2 = 61;
+    public static $CRAFTABBR_PLT3 = 62;
+    public static $CRAFTABBR_PLT4 = 63;
+    public static $CRAFTABBR_PLT5 = 64;
+    public static $CRAFTABBR_PLT6 = 65;
+    public static $CRAFTABBR_RNDFC = 66;
+    public static $CRAFTABBR_LASBAT = 67;
+    public static $CRAFTABBR_WLNCHR = 68;
+    public static $CRAFTABBR_FAC1 = 69;
+    public static $CRAFTABBR_SAT1 = 70;
+    public static $CRAFTABBR_SAT2 = 71;
+    public static $CRAFTABBR_UNK = 72;
+    public static $CRAFTABBR_UNK2 = 73;
+    public static $CRAFTABBR_UNK3 = 74;
+    public static $CRAFTABBR_MINE1 = 75;
+    public static $CRAFTABBR_MINEB = 76;
+    public static $CRAFTABBR_MINEC = 77;
+    public static $CRAFTABBR_UNK4 = 78;
+    public static $CRAFTABBR_UNK5 = 79;
+    public static $CRAFTABBR_PROBEA = 80;
+    public static $CRAFTABBR_PROBEB = 81;
+    public static $CRAFTABBR_UNK6 = 82;
+    public static $CRAFTABBR_NAV1 = 83;
+    public static $CRAFTABBR_NAV2 = 84;
+    public static $CRAFTABBR_ASTEROID = 85;
+    public static $CRAFTABBR_ASTEROID2 = 86;
+    public static $CRAFTABBR_PLANET = 87;
+
     public static $STATUS = [
         0 => "None",
         1 => "2X Warheads",
@@ -199,6 +377,18 @@ class Constants
         20 => "Invincible",
     ];
 
+    public static $STATUS_NONE = 0;
+    public static $STATUS_N2XWARHEADS = 1;
+    public static $STATUS_N12WARHEADS = 2;
+    public static $STATUS_DISABLED = 3;
+    public static $STATUS_N12SHIELDS = 4;
+    public static $STATUS_NOLASERS = 5;
+    public static $STATUS_NOHYPERDRIVE = 6;
+    public static $STATUS_SHIELDS0PERCENTCHARGING = 7;
+    public static $STATUS_SHIELDSADDEDOR200PERCENT = 8;
+    public static $STATUS_HYPERDRIVEADDED = 9;
+    public static $STATUS_INVINCIBLE = 20;
+
     public static $WARHEAD = [
         0 => "None",
         1 => "Heavy Rocket",
@@ -210,11 +400,24 @@ class Constants
         7 => "Mag Pulse Torpedo",
     ];
 
+    public static $WARHEAD_NONE = 0;
+    public static $WARHEAD_HEAVYROCKET = 1;
+    public static $WARHEAD_SPACEBOMB = 2;
+    public static $WARHEAD_CONCUSSIONMISSILE = 3;
+    public static $WARHEAD_TORPEDO = 4;
+    public static $WARHEAD_ADVANCEDCONCUSSIONMISSILE = 5;
+    public static $WARHEAD_ADVANCEDTORPEDO = 6;
+    public static $WARHEAD_MAGPULSETORPEDO = 7;
+
     public static $BEAM = [
         0 => "None",
         1 => "Tractor Beam",
         2 => "Jamming Beam",
     ];
+
+    public static $BEAM_NONE = 0;
+    public static $BEAM_TRACTORBEAM = 1;
+    public static $BEAM_JAMMINGBEAM = 2;
 
     public static $GROUPAI = [
         0 => "Rookie (None)",
@@ -225,12 +428,24 @@ class Constants
         5 => "Top Ace (Invincible)",
     ];
 
+    public static $GROUPAI_ROOKIENONE = 0;
+    public static $GROUPAI_NOVICE = 1;
+    public static $GROUPAI_VETERAN = 2;
+    public static $GROUPAI_OFFICER = 3;
+    public static $GROUPAI_ACE = 4;
+    public static $GROUPAI_TOPACEINVINCIBLE = 5;
+
     public static $MARKINGS = [
         0 => "Red (TIE - None)",
         1 => "Gold (TIE - Red)",
         2 => "Blue (TIE - Gold)",
         3 => "Green (TIE - Blue)",
     ];
+
+    public static $MARKINGS_REDTIENONE = 0;
+    public static $MARKINGS_GOLDTIERED = 1;
+    public static $MARKINGS_BLUETIEGOLD = 2;
+    public static $MARKINGS_GREENTIEBLUE = 3;
 
     public static $FORMATION = [
         0 => "Vic",
@@ -248,6 +463,20 @@ class Constants
         12 => "Reverse High Vic",
     ];
 
+    public static $FORMATION_VIC = 0;
+    public static $FORMATION_FINGERFOUR = 1;
+    public static $FORMATION_LINEASTERN = 2;
+    public static $FORMATION_LINEABREAST = 3;
+    public static $FORMATION_ECHELONRIGHT = 4;
+    public static $FORMATION_ECHELONLEFT = 5;
+    public static $FORMATION_DOUBLEASTERN = 6;
+    public static $FORMATION_DIAMOND = 7;
+    public static $FORMATION_STACK = 8;
+    public static $FORMATION_HIGHX = 9;
+    public static $FORMATION_VICABREAST = 10;
+    public static $FORMATION_HIGHVIC = 11;
+    public static $FORMATION_REVERSEHIGHVIC = 12;
+
     public static $ARRIVALDIFFICULTY = [
         0 => "All",
         1 => "Easy",
@@ -256,6 +485,13 @@ class Constants
         4 => "Medium, Hard",
         5 => "Easy, Medium",
     ];
+
+    public static $ARRIVALDIFFICULTY_ALL = 0;
+    public static $ARRIVALDIFFICULTY_EASY = 1;
+    public static $ARRIVALDIFFICULTY_MEDIUM = 2;
+    public static $ARRIVALDIFFICULTY_HARD = 3;
+    public static $ARRIVALDIFFICULTY_MEDIUMHARD = 4;
+    public static $ARRIVALDIFFICULTY_EASYMEDIUM = 5;
 
     public static $CONDITION = [
         0 => "Always (true)",
@@ -285,6 +521,32 @@ class Constants
         24 => "Unknown (arrive?)",
     ];
 
+    public static $CONDITION_ALWAYSTRUE = 0;
+    public static $CONDITION_CREATED = 1;
+    public static $CONDITION_DESTROYED = 2;
+    public static $CONDITION_ATTACKED = 3;
+    public static $CONDITION_CAPTURED = 4;
+    public static $CONDITION_INSPECTED = 5;
+    public static $CONDITION_BOARDED = 6;
+    public static $CONDITION_DOCKED = 7;
+    public static $CONDITION_DISABLED = 8;
+    public static $CONDITION_SURVIVEDEXIST = 9;
+    public static $CONDITION_NONEFALSE = 10;
+    public static $CONDITION_UNKNOWN = 11;
+    public static $CONDITION_COMPLETEDMISSION = 12;
+    public static $CONDITION_COMPLETEDPRIMARYGOALS = 13;
+    public static $CONDITION_FAILEDPRIMARYGOALS = 14;
+    public static $CONDITION_COMPLETEDSECONDARYGOALS = 15;
+    public static $CONDITION_FAILEDSECONDARYGOALS = 16;
+    public static $CONDITION_COMPLETEDBONUSGOALS = 17;
+    public static $CONDITION_FAILEDBONUSGOALS = 18;
+    public static $CONDITION_DROPPEDOFF = 19;
+    public static $CONDITION_REINFORCED = 20;
+    public static $CONDITION_N0PERCENTSHIELDS = 21;
+    public static $CONDITION_N50PERCENTHULL = 22;
+    public static $CONDITION_OUTOFWARHEADS = 23;
+    public static $CONDITION_UNKNOWNARRIVE = 24;
+
     public static $VARIABLETYPE = [
         0 => "None",
         1 => "Flight Group",
@@ -299,6 +561,18 @@ class Constants
         10 => "Unknown",
     ];
 
+    public static $VARIABLETYPE_NONE = 0;
+    public static $VARIABLETYPE_FLIGHTGROUP = 1;
+    public static $VARIABLETYPE_CRAFTTYPEENUM = 2;
+    public static $VARIABLETYPE_CRAFTCATEGORYENUM = 3;
+    public static $VARIABLETYPE_OBJECTCATEGORYENUM = 4;
+    public static $VARIABLETYPE_IFF = 5;
+    public static $VARIABLETYPE_ORDERENUM = 6;
+    public static $VARIABLETYPE_CRAFTWHENENUM = 7;
+    public static $VARIABLETYPE_GLOBALGROUP = 8;
+    public static $VARIABLETYPE_MISCENUM = 9;
+    public static $VARIABLETYPE_UNKNOWN = 10;
+
     public static $CRAFTCATEGORY = [
         0 => "Starfighters",
         1 => "Transports",
@@ -309,11 +583,23 @@ class Constants
         6 => "Mines",
     ];
 
+    public static $CRAFTCATEGORY_STARFIGHTERS = 0;
+    public static $CRAFTCATEGORY_TRANSPORTS = 1;
+    public static $CRAFTCATEGORY_FREIGHTERSCONTAINERS = 2;
+    public static $CRAFTCATEGORY_STARSHIPS = 3;
+    public static $CRAFTCATEGORY_UTILITYCRAFT = 4;
+    public static $CRAFTCATEGORY_PLATFORMSFACILITIES = 5;
+    public static $CRAFTCATEGORY_MINES = 6;
+
     public static $OBJECTCATEGORY = [
         0 => "Craft",
         1 => "Weapons",
         2 => "Space Objects",
     ];
+
+    public static $OBJECTCATEGORY_CRAFT = 0;
+    public static $OBJECTCATEGORY_WEAPONS = 1;
+    public static $OBJECTCATEGORY_SPACEOBJECTS = 2;
 
     public static $TRIGGERAMOUNT = [
         0 => "100%",
@@ -334,6 +620,23 @@ class Constants
         15 => "All but one of first wave",
     ];
 
+    public static $TRIGGERAMOUNT_N100PERCENT = 0;
+    public static $TRIGGERAMOUNT_N75PERCENT = 1;
+    public static $TRIGGERAMOUNT_N50PERCENT = 2;
+    public static $TRIGGERAMOUNT_N25PERCENT = 3;
+    public static $TRIGGERAMOUNT_ATLEASTONE = 4;
+    public static $TRIGGERAMOUNT_ALLBUTONE = 5;
+    public static $TRIGGERAMOUNT_SPECIALCRAFT = 6;
+    public static $TRIGGERAMOUNT_ALLNONSPECIALCRAFT = 7;
+    public static $TRIGGERAMOUNT_ALLNONPLAYERCRAFT = 8;
+    public static $TRIGGERAMOUNT_PLAYERSCRAFT = 9;
+    public static $TRIGGERAMOUNT_N100PERCENTOFFIRSTWAVE = 10;
+    public static $TRIGGERAMOUNT_N75PERCENTOFFIRSTWAVE = 11;
+    public static $TRIGGERAMOUNT_N50PERCENTOFFIRSTWAVE = 12;
+    public static $TRIGGERAMOUNT_N25PERCENTOFFIRSTWAVE = 13;
+    public static $TRIGGERAMOUNT_ATLEASTONEOFFIRSTWAVE = 14;
+    public static $TRIGGERAMOUNT_ALLBUTONEOFFIRSTWAVE = 15;
+
     public static $GOALAMOUNT = [
         0 => "100%",
         1 => "50%",
@@ -341,6 +644,12 @@ class Constants
         3 => "All but one",
         4 => "Special craft",
     ];
+
+    public static $GOALAMOUNT_N100PERCENT = 0;
+    public static $GOALAMOUNT_N50PERCENT = 1;
+    public static $GOALAMOUNT_ATLEASTONE = 2;
+    public static $GOALAMOUNT_ALLBUTONE = 3;
+    public static $GOALAMOUNT_SPECIALCRAFT = 4;
 
     public static $ABORTTRIGGER = [
         0 => "None",
@@ -350,6 +659,13 @@ class Constants
         4 => "50% Hull",
         5 => "Attacked",
     ];
+
+    public static $ABORTTRIGGER_NONE = 0;
+    public static $ABORTTRIGGER_N0PERCENTSHIELDS = 1;
+    public static $ABORTTRIGGER_SYSTEMS75PERCENTFIGHTERSANDTRANSPORTSONLY = 2;
+    public static $ABORTTRIGGER_OUTOFWARHEADS = 3;
+    public static $ABORTTRIGGER_N50PERCENTHULL = 4;
+    public static $ABORTTRIGGER_ATTACKED = 5;
 
     public static $ORDER = [
         0 => "Hold Station",
@@ -394,6 +710,47 @@ class Constants
         39 => "SS Disabled",
     ];
 
+    public static $ORDER_HOLDSTATION = 0;
+    public static $ORDER_GOHOME = 1;
+    public static $ORDER_CIRCLE = 2;
+    public static $ORDER_CIRCLEANDEVADE = 3;
+    public static $ORDER_RENDEZVOUS = 4;
+    public static $ORDER_DISABLED = 5;
+    public static $ORDER_AWAITBOARDING = 6;
+    public static $ORDER_ATTACK = 7;
+    public static $ORDER_ATTACKESCORTS = 8;
+    public static $ORDER_PROTECT = 9;
+    public static $ORDER_ESCORT = 10;
+    public static $ORDER_DISABLE = 11;
+    public static $ORDER_BOARDANDGIVECARGO = 12;
+    public static $ORDER_BOARDANDTAKECARGO = 13;
+    public static $ORDER_BOARDANDEXCHANGECARGO = 14;
+    public static $ORDER_BOARDANDCAPTURECARGO = 15;
+    public static $ORDER_BOARDANDDESTROYCARGO = 16;
+    public static $ORDER_PICKUP = 17;
+    public static $ORDER_DROPOFF = 18;
+    public static $ORDER_WAIT = 19;
+    public static $ORDER_SSWAIT = 20;
+    public static $ORDER_SSPATROLLOOP = 21;
+    public static $ORDER_SSAWAITRETURN = 22;
+    public static $ORDER_SSLAUNCH = 23;
+    public static $ORDER_SSPROTECT = 24;
+    public static $ORDER_SSWAITANDPROTECT = 25;
+    public static $ORDER_SSPATROLANDATTACK = 26;
+    public static $ORDER_SSPATROLANDDISABLE = 27;
+    public static $ORDER_SSHOLDSTEADY = 28;
+    public static $ORDER_SSGOHOME = 29;
+    public static $ORDER_SSWAIT2 = 30;
+    public static $ORDER_SSBOARD = 31;
+    public static $ORDER_BOARDTOREPAIR = 32;
+    public static $ORDER_HOLDSTATION2 = 33;
+    public static $ORDER_HOLDSTEADY = 34;
+    public static $ORDER_SSHOLDSTATION = 35;
+    public static $ORDER_SSKAMIKAZE = 36;
+    public static $ORDER_SSKAMIKAZE2 = 37;
+    public static $ORDER_SSDISABLED = 38;
+    public static $ORDER_SSDISABLED2 = 39;
+
     public static $CRAFTWHEN = [
         1 => "Boarding",
         2 => "Boarded",
@@ -404,6 +761,15 @@ class Constants
         9 => "Player's craft",
         10 => "Non-player's craft",
     ];
+
+    public static $CRAFTWHEN_BOARDING = 1;
+    public static $CRAFTWHEN_BOARDED = 2;
+    public static $CRAFTWHEN_DEFENCE = 3;
+    public static $CRAFTWHEN_DISABLED = 4;
+    public static $CRAFTWHEN_SPECIALCRAFT = 7;
+    public static $CRAFTWHEN_NONSPECIALCRAFT = 8;
+    public static $CRAFTWHEN_PLAYERSCRAFT = 9;
+    public static $CRAFTWHEN_NONPLAYERSCRAFT = 10;
 
     public static $MISC = [
         0 => "Rookie craft",
@@ -456,6 +822,55 @@ class Constants
         54 => "Mines",
     ];
 
+    public static $MISC_ROOKIECRAFT = 0;
+    public static $MISC_NOVICECRAFT = 1;
+    public static $MISC_OFFICERCRAFT = 2;
+    public static $MISC_VETERANCRAFT = 3;
+    public static $MISC_ACECRAFT = 4;
+    public static $MISC_TOPACECRAFT = 5;
+    public static $MISC_STATIONARYCRAFT = 6;
+    public static $MISC_CRAFTRETURNINGTOBASE = 7;
+    public static $MISC_NONEVADINGCRAFT = 8;
+    public static $MISC_CRAFTINFORMATION = 9;
+    public static $MISC_RENDEZVOUSINGCRAFT = 10;
+    public static $MISC_DISABLEDCRAFT = 11;
+    public static $MISC_CRAFTAWAITINGBOARDING = 12;
+    public static $MISC_ATTACKINGCRAFT = 13;
+    public static $MISC_CRAFTATATCKINGESCORTS = 14;
+    public static $MISC_PROTECTINGCRAFT = 15;
+    public static $MISC_ESCORTINGCRAFT = 16;
+    public static $MISC_DISABLINGCRAFT = 17;
+    public static $MISC_DELIVERINGCRAFT = 18;
+    public static $MISC_SIEZINGCRAFT = 19;
+    public static $MISC_EXCHANGINGCRAFT = 20;
+    public static $MISC_CAPTURINGCRAFT = 21;
+    public static $MISC_CRAFTDESTROYINGCARGO = 22;
+    public static $MISC_PICKEDUPCRAFT = 23;
+    public static $MISC_DROPPEDOFFCRAFT = 24;
+    public static $MISC_WAITINGFIGHTERS = 25;
+    public static $MISC_WAITINGSTARSHIPS = 26;
+    public static $MISC_PATROLLINGSTARSHIPS = 27;
+    public static $MISC_SSAWAITINGRETURNS = 28;
+    public static $MISC_SSWAITINGTOLAUNCH = 29;
+    public static $MISC_SSWAITINGTOBEBOARDED = 30;
+    public static $MISC_SSWITINGFORBOARDINGCRAFTTOAPPEAR = 31;
+    public static $MISC_SSATTACKING = 32;
+    public static $MISC_SSDISABLING = 33;
+    public static $MISC_SSDISABLING2 = 34;
+    public static $MISC_SSFLYINGHOME = 35;
+    public static $MISC_REBELS = 36;
+    public static $MISC_IMPERIALS = 37;
+    public static $MISC_SPACECRAFT = 39;
+    public static $MISC_WEAPONS = 40;
+    public static $MISC_SPACEOBJECTS = 41;
+    public static $MISC_FIGHTERS = 46;
+    public static $MISC_TRANSPORTS = 47;
+    public static $MISC_FREIGHTERS = 48;
+    public static $MISC_UTILITYCRAFT = 49;
+    public static $MISC_STARTSHIPS = 50;
+    public static $MISC_PLATFORMS = 51;
+    public static $MISC_MINES = 54;
+
     public static $EVENTTYPE = [
         3 => "Page Break",
         4 => "Title Text",
@@ -483,6 +898,31 @@ class Constants
         34 => "End Briefing",
     ];
 
+    public static $EVENTTYPE_PAGEBREAK = 3;
+    public static $EVENTTYPE_TITLETEXT = 4;
+    public static $EVENTTYPE_CAPTIONTEXT = 5;
+    public static $EVENTTYPE_MOVEMAP = 6;
+    public static $EVENTTYPE_ZOOMMAP = 7;
+    public static $EVENTTYPE_CLEARFGTAGS = 8;
+    public static $EVENTTYPE_FGTAG1 = 9;
+    public static $EVENTTYPE_FGTAG2 = 10;
+    public static $EVENTTYPE_FGTAG3 = 11;
+    public static $EVENTTYPE_FGTAG4 = 12;
+    public static $EVENTTYPE_FGTAG5 = 13;
+    public static $EVENTTYPE_FGTAG6 = 14;
+    public static $EVENTTYPE_FGTAG7 = 15;
+    public static $EVENTTYPE_FGTAG8 = 16;
+    public static $EVENTTYPE_CLEARTEXTTAGS = 17;
+    public static $EVENTTYPE_TEXTTAG1 = 18;
+    public static $EVENTTYPE_TEXTTAG2 = 19;
+    public static $EVENTTYPE_TEXTTAG3 = 20;
+    public static $EVENTTYPE_TEXTTAG4 = 21;
+    public static $EVENTTYPE_TEXTTAG5 = 22;
+    public static $EVENTTYPE_TEXTTAG6 = 23;
+    public static $EVENTTYPE_TEXTTAG7 = 24;
+    public static $EVENTTYPE_TEXTTAG8 = 25;
+    public static $EVENTTYPE_ENDBRIEFING = 34;
+
     public static $TEXTTAGCOLOR = [
         0 => "Green",
         1 => "Red",
@@ -494,11 +934,24 @@ class Constants
         7 => "White",
     ];
 
+    public static $TEXTTAGCOLOR_GREEN = 0;
+    public static $TEXTTAGCOLOR_RED = 1;
+    public static $TEXTTAGCOLOR_PURPLE = 2;
+    public static $TEXTTAGCOLOR_BLUE = 3;
+    public static $TEXTTAGCOLOR_RED2 = 4;
+    public static $TEXTTAGCOLOR_LIGHTRED = 5;
+    public static $TEXTTAGCOLOR_GRAY = 6;
+    public static $TEXTTAGCOLOR_WHITE = 7;
+
     public static $BRIEFINGOFFICERS = [
         1 => "Both officers",
         2 => "Flight Officer",
         3 => "Secret Order",
     ];
+
+    public static $BRIEFINGOFFICERS_BOTHOFFICERS = 1;
+    public static $BRIEFINGOFFICERS_FLIGHTOFFICER = 2;
+    public static $BRIEFINGOFFICERS_SECRETORDER = 3;
 
     public static $QUESTIONTYPE = [
         0 => "None",
@@ -506,11 +959,19 @@ class Constants
         2 => "Secondary Goals",
     ];
 
+    public static $QUESTIONTYPE_NONE = 0;
+    public static $QUESTIONTYPE_PRIMARYGOALS = 1;
+    public static $QUESTIONTYPE_SECONDARYGOALS = 2;
+
     public static $QUESTIONCONDITION = [
         0 => "None",
         4 => "Successful",
         5 => "Failed",
     ];
+
+    public static $QUESTIONCONDITION_NONE = 0;
+    public static $QUESTIONCONDITION_SUCCESSFUL = 4;
+    public static $QUESTIONCONDITION_FAILED = 5;
 
     public static $MESSAGECOLOR = [
         0 => "Red",
@@ -519,6 +980,11 @@ class Constants
         3 => "Purple",
     ];
 
+    public static $MESSAGECOLOR_RED = 0;
+    public static $MESSAGECOLOR_GREEN = 1;
+    public static $MESSAGECOLOR_BLUE = 2;
+    public static $MESSAGECOLOR_PURPLE = 3;
+
     public static $IFFCOLOR = [
         0 => "Green",
         1 => "Red",
@@ -526,11 +992,20 @@ class Constants
         3 => "Blue",
     ];
 
+    public static $IFFCOLOR_GREEN = 0;
+    public static $IFFCOLOR_RED = 1;
+    public static $IFFCOLOR_PURPLE = 2;
+    public static $IFFCOLOR_BLUE = 3;
+
     public static $PILOTSTATUS = [
         0 => "Alive",
         1 => "Captured",
         2 => "Killed",
     ];
+
+    public static $PILOTSTATUS_ALIVE = 0;
+    public static $PILOTSTATUS_CAPTURED = 1;
+    public static $PILOTSTATUS_KILLED = 2;
 
     public static $PILOTRANK = [
         0 => "Cadet",
@@ -541,11 +1016,22 @@ class Constants
         5 => "General",
     ];
 
+    public static $PILOTRANK_CADET = 0;
+    public static $PILOTRANK_OFFICER = 1;
+    public static $PILOTRANK_LIEUTENANT = 2;
+    public static $PILOTRANK_CAPTAIN = 3;
+    public static $PILOTRANK_COMMANDER = 4;
+    public static $PILOTRANK_GENERAL = 5;
+
     public static $PILOTDIFFICULTY = [
         0 => "Easy",
         1 => "Medium",
         2 => "Hard",
     ];
+
+    public static $PILOTDIFFICULTY_EASY = 0;
+    public static $PILOTDIFFICULTY_MEDIUM = 1;
+    public static $PILOTDIFFICULTY_HARD = 2;
 
     public static $TRAININGCRAFT = [
         0 => "TIE Fighter",
@@ -557,6 +1043,14 @@ class Constants
         6 => "Missile Boat",
     ];
 
+    public static $TRAININGCRAFT_TIEFIGHTER = 0;
+    public static $TRAININGCRAFT_TIEINTERCEPTOR = 1;
+    public static $TRAININGCRAFT_TIEBOMBER = 2;
+    public static $TRAININGCRAFT_TIEADVANCED = 3;
+    public static $TRAININGCRAFT_ASSAULTGUNBOAT = 4;
+    public static $TRAININGCRAFT_TIEDEFENDER = 5;
+    public static $TRAININGCRAFT_MISSILEBOAT = 6;
+
     public static $TRAININGCRAFTABBR = [
         0 => "T/F",
         1 => "T/I",
@@ -567,12 +1061,25 @@ class Constants
         6 => "MIS",
     ];
 
+    public static $TRAININGCRAFTABBR_TF = 0;
+    public static $TRAININGCRAFTABBR_TI = 1;
+    public static $TRAININGCRAFTABBR_TB = 2;
+    public static $TRAININGCRAFTABBR_TA = 3;
+    public static $TRAININGCRAFTABBR_GUN = 4;
+    public static $TRAININGCRAFTABBR_TD = 5;
+    public static $TRAININGCRAFTABBR_MIS = 6;
+
     public static $BATTLESTATUS = [
         0 => "None",
         1 => "In Progress",
         2 => "Incomplete",
         3 => "Completed",
     ];
+
+    public static $BATTLESTATUS_NONE = 0;
+    public static $BATTLESTATUS_INPROGRESS = 1;
+    public static $BATTLESTATUS_INCOMPLETE = 2;
+    public static $BATTLESTATUS_COMPLETED = 3;
 
     public static $SECRETORDER = [
         0 => "None",
@@ -586,5 +1093,16 @@ class Constants
         8 => "Emperor's Voice",
         9 => "Emperor's Reach",
     ];
+
+    public static $SECRETORDER_NONE = 0;
+    public static $SECRETORDER_FIRSTCIRCLE = 1;
+    public static $SECRETORDER_SECONDCIRCLE = 2;
+    public static $SECRETORDER_THIRDCIRCLE = 3;
+    public static $SECRETORDER_FOURTHCIRCLE = 4;
+    public static $SECRETORDER_INNERCIRCLE = 5;
+    public static $SECRETORDER_EMPERORSHAND = 6;
+    public static $SECRETORDER_EMPERORSEYES = 7;
+    public static $SECRETORDER_EMPERORSVOICE = 8;
+    public static $SECRETORDER_EMPERORSREACH = 9;
 
 }

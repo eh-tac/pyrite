@@ -143,6 +143,8 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $this->PrimaryTarget = $this->getShort($hex, 0x90);
         $this->SecondaryTarget = $this->getShort($hex, 0x92);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

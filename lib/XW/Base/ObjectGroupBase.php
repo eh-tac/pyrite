@@ -74,6 +74,8 @@ abstract class ObjectGroupBase extends PyriteBase implements Byteable
         // static SHORT value Unknown2 = 64
         // static SHORT value Unknown3 = 0
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

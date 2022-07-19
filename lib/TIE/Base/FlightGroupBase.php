@@ -228,6 +228,8 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $this->Unknown20 = $this->getByte($hex, 0x122);
         $this->Unknown21 = $this->getBool($hex, 0x123);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

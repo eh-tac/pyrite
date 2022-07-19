@@ -30,6 +30,18 @@ export class PilotFile extends PilotFileBase {
     return "";
   }
 
+  public get Mode(): "xwa" | "tftc" | "ehcustom" {
+    if (this.hasMissionData(0)) {
+      return "xwa";
+    } else if (!this.hasMissionData(2) && this.hasMissionData(3)) {
+      return "tftc";
+    } else if (!this.hasMissionData(52) && this.hasMissionData(53)) {
+      return "ehcustom";
+    } else {
+      return "xwa";
+    }
+  }
+
   public get BonusScore(): number {
     return this.BonusTen / 10;
   }
@@ -99,10 +111,12 @@ export class PilotFile extends PilotFileBase {
 
   public get BattleVictories(): TriStat[] {
     const victories: TriStat[] = [];
-    for (let i = 1; i < this.TourOfDutyKills.length; i++) {
+
+    const lookup = this.Mode === "tftc" ? Constants.TFTCCRAFTTYPE : Constants.CRAFTTYPE;
+    for (let i = 0; i < this.TourOfDutyKills.length; i++) {
       if (this.hasTypeKills(i)) {
         victories.push({
-          Label: Constants.CRAFTTYPE[i],
+          Label: lookup[i + 1],
           TourOfDuty: `${this.TourOfDutyKills[i]} (${this.TourOfDutyPartials[i]})`,
           Azzameen: `${this.AzzameenKills[i]} (${this.AzzameenPartials[i]})`,
           Simulator: `${this.SimulatorKills[i]} (${this.SimulatorPartials[i]})`

@@ -73,6 +73,8 @@ abstract class TeamBase extends PyriteBase implements Byteable
             $offset += 20;
         }
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

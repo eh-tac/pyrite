@@ -272,6 +272,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->MissileGroundHits = $this->getShort($hex, 0x6A5);
         $this->CraftLost = $this->getShort($hex, 0x6A7);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

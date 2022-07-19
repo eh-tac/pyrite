@@ -43,6 +43,8 @@ abstract class WayptBase extends PyriteBase implements Byteable
         $this->Z = $this->getShort($hex, 0x4);
         $this->Enabled = $this->getBool($hex, 0x6);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

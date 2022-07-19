@@ -108,6 +108,8 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $this->Unknown4 = $this->getByte($hex, 0x23B4);
         $this->Unknown5 = $this->getByte($hex, 0x23B5);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

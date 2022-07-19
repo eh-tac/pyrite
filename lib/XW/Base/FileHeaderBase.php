@@ -62,6 +62,8 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $this->NumFGs = $this->getShort($hex, 0xCA);
         $this->NumObj = $this->getShort($hex, 0xCC);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

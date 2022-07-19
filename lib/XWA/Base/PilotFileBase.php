@@ -143,6 +143,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->CurrentMedal = $this->getInt($hex, 0x10EA6);
         $this->BonusTen = $this->getInt($hex, 0x1144E);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

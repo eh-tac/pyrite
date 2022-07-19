@@ -43,6 +43,8 @@ abstract class TagBase extends PyriteBase implements Byteable
             $offset += 1;
         }
         $this->TagLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

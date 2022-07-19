@@ -71,6 +71,8 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         $this->Reserved = $this->getByte($hex, 0x0D);
         $this->Unknown16 = $this->getByte($hex, 0x0E);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

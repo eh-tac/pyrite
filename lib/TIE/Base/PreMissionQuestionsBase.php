@@ -46,6 +46,8 @@ abstract class PreMissionQuestionsBase extends PyriteBase implements Byteable
         $this->Answer = $this->getChar($hex, $offset, $this->AnswerLength());
         $offset += $this->AnswerLength();
         $this->PreMissionQuestionsLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

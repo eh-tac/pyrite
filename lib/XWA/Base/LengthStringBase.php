@@ -43,6 +43,8 @@ abstract class LengthStringBase extends PyriteBase implements Byteable
             $offset += 1;
         }
         $this->LengthStringLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

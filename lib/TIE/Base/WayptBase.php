@@ -58,6 +58,8 @@ abstract class WayptBase extends PyriteBase implements Byteable
         $this->Hyperspace = $this->getShort($hex, 0x1A);
         $this->Briefing = $this->getShort($hex, 0x1C);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

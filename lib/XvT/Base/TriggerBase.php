@@ -44,6 +44,8 @@ abstract class TriggerBase extends PyriteBase implements Byteable
         $this->Variable = $this->getByte($hex, 0x2);
         $this->Amount = $this->getByte($hex, 0x3);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

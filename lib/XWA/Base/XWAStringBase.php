@@ -34,6 +34,8 @@ abstract class XWAStringBase extends PyriteBase implements Byteable
 
         $this->Magic = $this->getByte($hex, 0x0);
         $this->XWAStringLength = $offset;
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

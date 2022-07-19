@@ -1,4 +1,4 @@
-struct PilotFile (size 0)
+	struct PilotFile (size 0)
 {
   0x0000 CHAR<12> Name
   0x000E INT TotalScore

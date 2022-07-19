@@ -59,6 +59,8 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         $this->Something = $this->getInt($hex, 0x1C);
         $this->Other = $this->getInt($hex, 0x20);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

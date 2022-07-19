@@ -2,31 +2,37 @@
 
 namespace Pyrite\XWA;
 
-use Pyrite\Byteable;
-use Pyrite\HexDecoder;
+class Trigger extends Base\TriggerBase
+{
 
-class Trigger implements Byteable {
-	use HexDecoder;
+  public static function fromHex($hex, $tie = null)
+  {
+    return (new Trigger($hex, $tie))->loadHex();
+  }
 
-	const TRIGGER_LENGTH = 0x6;
+  public function isActive(): bool
+  {
+    if ($this->Condition === Constants::$CONDITION_NONEFALSE || $this->Condition === Constants::$CONDITION_ALWAYSTRUE) {
+      return false;
+    }
+    return true;
+  }
 
-	public $Condition;
-	public $VariableType;
-	public $Variable;
-	public $Amount;
-	public $Parameter;
-	public $Parameter2;
+  public function __toString()
+  {
+    if (!$this->isActive()) {
+      return 'Disabled';
+    }
 
-	public function __construct($hex) {
-		$this->Condition    = $this->lookup(Constants::$CONDITION, $hex, 0x0);
-		$this->VariableType = $this->lookup(Constants::$VARIABLETYPE, $hex, 0x1);
-		$this->Variable     = $this->getByte($hex, 0x2);
-		$this->Amount       = $this->lookup(Constants::$AMOUNT, $hex, 0x3);
-		$this->Parameter    = $this->getByte($hex, 0x4);
-		$this->Parameter2   = $this->getByte($hex, 0x5);
-	}
+    return "{$this->getAmountLabel()} {$this->getVariableTypeLabel()} {$this->getVariableLabel()} is {$this->getConditionLabel()}";
+  }
 
-	public function getLength() {
-		return self::TRIGGER_LENGTH;
-	}
+  public function getVariableLabel()
+  {
+    switch ($this->VariableType) {
+      case Constants::$VARIABLETYPE_CRAFTTYPEENUM:
+        return Constants::$CRAFTTYPE[$this->Variable];
+    }
+    return "?";
+  }
 }

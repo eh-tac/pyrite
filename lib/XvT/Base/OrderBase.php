@@ -92,6 +92,8 @@ abstract class OrderBase extends PyriteBase implements Byteable
         $this->Speed = $this->getByte($hex, 0x12);
         $this->Designation = $this->getString($hex, 0x13);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

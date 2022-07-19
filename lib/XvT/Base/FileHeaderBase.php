@@ -67,6 +67,8 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $this->TimeLimitMinutes = $this->getByte($hex, 0x66);
         $this->TimeLimitSeconds = $this->getByte($hex, 0x67);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

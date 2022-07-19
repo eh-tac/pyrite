@@ -34,7 +34,7 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
     let offset = 0;
 
     this.MessageIndex = getShort(hex, 0x00);
-    this.Message = getString(hex, 0x02, 64);
+    this.Message = getString(hex, 0x02, 68);
     this.SetToTeam = [];
     offset = 0x52;
     for (let i = 0; i < 10; i++) {

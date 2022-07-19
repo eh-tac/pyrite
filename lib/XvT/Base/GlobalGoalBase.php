@@ -44,6 +44,8 @@ abstract class GlobalGoalBase extends PyriteBase implements Byteable
             $offset += $t->getLength();
         }
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

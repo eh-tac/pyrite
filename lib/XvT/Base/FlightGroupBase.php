@@ -358,6 +358,8 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
             $offset += 1;
         }
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     

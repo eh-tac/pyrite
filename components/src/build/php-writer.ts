@@ -36,6 +36,20 @@ class Constants
         lines.push(`        ${value} => "${label}",`);
       }
       lines.push(`    ];\n`);
+
+      const seen = {};
+      for (const [value, label] of constant.values) {
+        let cleanLabel = this.getEnumName(label).toUpperCase();
+        if (seen[cleanLabel]) {
+          seen[cleanLabel]++;
+          cleanLabel = `${cleanLabel}${seen[cleanLabel]}`;
+        } else {
+          seen[cleanLabel] = 1;
+        }
+
+        lines.push(`    public static \$${constant.name.toUpperCase()}_${cleanLabel} = ${value};`);
+      }
+      lines.push(``);
     }
 
     lines.push("}");
@@ -128,6 +142,8 @@ class ${struct.name} extends Base\\${baseClass}
 
         ${props.map((p: PHPPropWriter) => p.getConstructorInit()).join("\n        ")}
         ${struct.isVariableLength ? `$this->${lengthProp.prop.name} = $offset;` : ""}
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }`;
   }

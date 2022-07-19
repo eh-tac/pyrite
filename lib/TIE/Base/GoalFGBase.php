@@ -38,6 +38,8 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         $this->Condition = $this->getByte($hex, 0x0);
         $this->GoalAmount = $this->getByte($hex, 0x1);
         
+
+        $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     
