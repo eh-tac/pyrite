@@ -7,8 +7,13 @@ import * as lodash from "lodash";
 import { PyriteGenerator } from "./generator";
 
 export class PHPWriter extends PyriteWriter {
-  public constructor(rootDir: string, generator: PyriteGenerator, public namespace: string = "Pyrite") {
-    super(rootDir, generator);
+  public constructor(
+    rootDir: string,
+    generator: PyriteGenerator,
+    public namespace: string = "Pyrite",
+    public overwriteIfExists = false
+  ) {
+    super(rootDir, generator, overwriteIfExists);
   }
   public write(): this {
     super.write();
@@ -118,7 +123,7 @@ class ${struct.name} extends Base\\${baseClass}
 `;
 
     const file = this.filename(struct.name);
-    this.writeFile(`PLT/${file}`, content, false);
+    this.writeFile(`PLT/${file}`, content, this.overwriteIfExists);
   }
 
   protected getBaseConstructor(struct: Struct, lengthProp: PHPPropWriter): string {

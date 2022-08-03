@@ -5,7 +5,7 @@ import { PyriteGenerator } from "./generator";
 import { Constants } from "./constants";
 
 export abstract class PyriteWriter {
-  constructor(public rootDir: string, public generator: PyriteGenerator) {}
+  constructor(public rootDir: string, public generator: PyriteGenerator, public overwriteIfExists = false) {}
 
   public buildPath(path: string): string {
     return `${this.rootDir}/${path.replace("PLT", this.generator.platform)}`;

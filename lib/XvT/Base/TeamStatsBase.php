@@ -255,7 +255,7 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
         }
         $this->TrainingMissionData = [];
         $offset = 0x1360;
-        for ($i = 0; $i < 40; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $t = (new MissionData(substr($hex, $offset), $this->TIE))->loadHex();
             $this->TrainingMissionData[] = $t;
             $offset += $t->getLength();
@@ -463,7 +463,7 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
             $offset += 4;
         }
         $offset = 0x1360;
-        for ($i = 0; $i < 40; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $t = $this->TrainingMissionData[$i];
             $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();

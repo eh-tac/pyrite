@@ -34,7 +34,7 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
   public TrainingMissionData: MissionData[];
   public MeleeMissionData: MissionData[];
   public CombatMissionData: MissionData[];
-
+  
   constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
     this.beforeConstruct();
@@ -76,14 +76,14 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
       offset += 4;
     }
     this.TotalKills = [];
-    offset = 0x00a8;
+    offset = 0x00A8;
     for (let i = 0; i < 3; i++) {
       const t = getInt(hex, offset);
       this.TotalKills.push(t);
       offset += 4;
     }
     this.ExerciseKillsByType = [];
-    offset = 0x00c0;
+    offset = 0x00C0;
     for (let i = 0; i < 88; i++) {
       const t = getInt(hex, offset);
       this.ExerciseKillsByType.push(t);
@@ -231,7 +231,7 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
     }
     this.TeamStatsLength = offset;
   }
-
+  
   public toJSON(): object {
     return {
       MeleeMedals: this.MeleeMedals,
@@ -263,9 +263,9 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
       CombatMissionData: this.CombatMissionData
     };
   }
-
+  
   public toHexString(): string {
-    let hex: string = "";
+    let hex: string = '';
     let offset = 0;
 
     offset = 0x0000;
@@ -298,13 +298,13 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
       writeInt(hex, t, offset);
       offset += 4;
     }
-    offset = 0x00a8;
+    offset = 0x00A8;
     for (let i = 0; i < 3; i++) {
       const t = this.TotalKills[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
-    offset = 0x00c0;
+    offset = 0x00C0;
     for (let i = 0; i < 88; i++) {
       const t = this.ExerciseKillsByType[i];
       writeInt(hex, t, offset);
@@ -413,7 +413,7 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
       offset += 4;
     }
     offset = 0x1360;
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 100; i++) {
       const t = this.TrainingMissionData[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
@@ -433,7 +433,8 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-
+  
+  
   public getLength(): number {
     return this.TeamStatsLength;
   }

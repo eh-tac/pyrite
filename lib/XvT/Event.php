@@ -1,28 +1,17 @@
 <?php
-
 namespace Pyrite\XvT;
-
-use Pyrite\Byteable;
-use Pyrite\HexDecoder;
-
-class Event implements Byteable
+    
+class Event extends Base\EventBase
 {
-  use HexDecoder;
 
-  const HEADER_LENGTH = 0;
+    public static function fromHex($hex, $tie = null) {
+      return (new Event($hex, $tie))->loadHex();
+    }
 
-  public $Time;
-  public $Type;
-  public $Variables;
-  public function __construct($hex)
-  {
-    $this->Time = $this->getShort($hex, 0x0);
-    $this->Type = $this->getShort($hex, 0x2);
-    $this->Variables = $this->getShort($hex, 0x4);
-  }
+    public function __toString() 
+    {
+      return '';
+    }
 
-  public function getLength()
-  {
-    return self::HEADER_LENGTH;
-  }
+    
 }

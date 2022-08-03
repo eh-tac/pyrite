@@ -1,15 +1,17 @@
 <?php
+
 namespace Pyrite\XvT;
-    
+
 class TeamStats extends Base\TeamStatsBase
 {
 
-    public function beforeConstruct() {}
+  public static function fromHex($hex, $tie = null)
+  {
+    return (new TeamStats($hex, $tie))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString()
+  {
+    return '';
+  }
 }

@@ -40,7 +40,7 @@ struct TeamStats (size 0)
   0x11c4 INT[3] CollisionLosses
   0x11d0 INT[3] StarshipLosses
   0x11dc INT[3] MineLosses
-  0x1360 MissionData[40] TrainingMissionData
+  0x1360 MissionData[100] TrainingMissionData
   0x2170 MissionData[100] MeleeMissionData
   0x4498 MissionData[100] CombatMissionData
 }
