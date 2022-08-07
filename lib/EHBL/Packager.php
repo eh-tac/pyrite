@@ -26,7 +26,7 @@ class Packager
 	private function loadEHB($ehb)
 	{
 		$this->ehb                 = $ehb;
-		$this->files['Battle.ehb'] = $ehb->toHex();
+		$this->files['Battle.ehb'] = $ehb->toHexString();
 	}
 
 	private function loadMissions($files)

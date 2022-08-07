@@ -49,8 +49,8 @@ class MissionLst
         $missions = array_filter($this->entries, fn ($e) => $e['type'] === 'mission');
         $indexes = array_map(fn ($e) => $e['index'], $missions);
         if (empty($indexes)) {
-            echo "warning - bad lst?" . (string)$this;
-            return 0;
+            // echo "warning - bad lst?" . (string)$this;
+            return -1;
         }
         return max($indexes);
     }

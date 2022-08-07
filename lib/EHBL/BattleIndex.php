@@ -5,22 +5,26 @@ namespace Pyrite\EHBL;
 use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
-use Pyrite\Output;
 use Pyrite\PyriteBase;
 
-class BattleIndex extends PyriteBase implements Byteable, Output {
+class BattleIndex extends PyriteBase implements Byteable
+{
 	use HexDecoder;
+	use HexEncoder;
+
 	public $platform;
 	public $key;
 	public $encryptionOffset;
 	public $title;
 	public $missions = [];
 
-	public function __construct($key = '') {
+	public function __construct($key = '')
+	{
 		$this->key = $key; // TODO
 	}
 
-	public static function fromHex($hex, $key = '') {
+	public static function fromHex($hex, $key = '')
+	{
 		$battle = (new BattleIndex($key))
 			->setHex($hex);
 		$battle = $battle
@@ -37,27 +41,32 @@ class BattleIndex extends PyriteBase implements Byteable, Output {
 		return $battle;
 	}
 
-	public function setHex($hex) {
+	public function setHex($hex)
+	{
 		$this->hex = $hex;
 		return $this;
 	}
 
-	public function setTitle($title) {
+	public function setTitle($title)
+	{
 		$this->title = $title;
 		return $this;
 	}
 
-	public function setOffset($offset) {
+	public function setOffset($offset)
+	{
 		$this->encryptionOffset = $offset;
 		return $this;
 	}
 
-	public function setPlatform($platform) {
+	public function setPlatform($platform)
+	{
 		$this->platform = $platform;
 		return $this;
 	}
 
-	public function addMission($mission) {
+	public function addMission($mission)
+	{
 		$this->missions[] = $mission;
 		return $this;
 	}
@@ -69,7 +78,8 @@ class BattleIndex extends PyriteBase implements Byteable, Output {
 	 * @param null     $offset
 	 * @return BattleIndex
 	 */
-	public static function build($key = '', $title = '', $missions = [], $offset = NULL) {
+	public static function build($key = '', $title = '', $missions = [], $offset = NULL)
+	{
 		if ($offset === NULL) {
 			$offset = rand(1, 255);
 		}
@@ -79,44 +89,48 @@ class BattleIndex extends PyriteBase implements Byteable, Output {
 			->setMissions($missions);
 	}
 
-	public function setMissions($missions) {
+	public function setMissions($missions)
+	{
 		$this->missions = $missions;
 		return $this;
 	}
 
-	public function getLength() {
+	public function getLength()
+	{
 		return count($this->missions) * 21 + 65;
 	}
 
-	public function toHex() {
-		$hex = new HexEncoder();
-		$hex
-			->putByte($this->platform)
-			->putByte($this->encryptionOffset)
-			->putString($this->title, 50)
-			->putByte(count($this->missions))
-			->pad(1);
+	public function toHexString($hex = null)
+	{
+		$hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
+
+		$hex = $this->writeByte($this->platform, $hex, 0);
+		$hex = $this->writeByte($this->encryptionOffset, $hex, 1);
+		$hex = $this->writeString($this->title, $hex, 2);
+		$hex = $this->writeByte(count($this->missions), $hex, 53);
+		$off = 55;
 		foreach ($this->missions as $mission) {
-			$hex->putChar($mission, 21);
+			$hex = $this->writeChar($mission, $hex, $off);
+			$off += 21;
 		}
-		$hex->pad(11);
 
 		return $hex;
 	}
 
-	public function compareHex($otherHex) {
+	public function compareHex($otherHex)
+	{
 		$other = new BattleIndex($otherHex);
-		return (
-			$this->encryptionOffset === $other->encryptionOffset &&
+		return ($this->encryptionOffset === $other->encryptionOffset &&
 			$this->title === $other->title &&
 			$this->missions === $other->missions &&
 			substr($this->hex, -4, 4) === substr($otherHex, -4, 4)
 		);
 	}
 
-	public function __debugInfo() {
+	public function __debugInfo()
+	{
 		return [
-		    "platform" => $this->platform,
+			"platform" => $this->platform,
 			"key"      => $this->key,
 			"offset"   => $this->encryptionOffset,
 			"title"    => $this->title,

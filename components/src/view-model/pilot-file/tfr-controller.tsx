@@ -81,7 +81,7 @@ export class TFRController extends PilotFileController {
   }
 
   protected renderTIEMission(key: string, mission: MissionScore, highScore?: number): JSX.Element {
-    const score = mission.score;
+    const score = mission.score || 0;
     const complete = mission.completed;
     const secret = mission.secret;
     const bonus = mission.bonus;
@@ -90,6 +90,7 @@ export class TFRController extends PilotFileController {
     if (!complete && !score) {
       return "";
     }
+    console.log("render tie mission", key, mission, score);
     // TODO get icons rendering with styles
     const icons: JSX.Element[] = [
       complete ? <span class="complete">{ICON_DONE}</span> : <span class="incomplete">{ICON_CLOSE}</span>
@@ -105,7 +106,7 @@ export class TFRController extends PilotFileController {
       <div class="list-group-item data d-flex justify-content-between">
         <h6 class="">{key}</h6>
         <div class="d-flex flex-column">
-          <span class="d-inline text-info text-right">{score.toLocaleString()}</span>
+          <span class="d-inline text-info text-right">{score?.toLocaleString()}</span>
           <small class="text-light text-right">{hs}</small>
         </div>
       </div>
