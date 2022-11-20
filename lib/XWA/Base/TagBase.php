@@ -42,6 +42,7 @@ abstract class TagBase extends PyriteBase implements Byteable
             $this->Text[] = $t;
             $offset += 1;
         }
+        $offset += 1;
         $this->TagLength = $offset;
         return $this;
     }
@@ -59,12 +60,11 @@ abstract class TagBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->Length, $hex, 0x0);
+        [$hex, $offset] = $this->writeShort($this->Length, $hex, 0x0);
         $offset = 0x2;
         for ($i = 0; $i < $this->Length; $i++) {
             $t = $this->Text[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeChar($t, $hex, $offset);
         }
 
         return $hex;

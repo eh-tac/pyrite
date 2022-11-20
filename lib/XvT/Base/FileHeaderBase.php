@@ -93,18 +93,18 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->PlatformID, $hex, 0x00);
-        $hex = $this->writeShort($this->NumFGs, $hex, 0x02);
-        $hex = $this->writeShort($this->NumMessages, $hex, 0x04);
-        $hex = $this->writeByte($this->Unknown1, $hex, 0x06);
-        $hex = $this->writeByte($this->Unknown2, $hex, 0x08);
-        $hex = $this->writeBool($this->Unknown3, $hex, 0x0B);
-        $hex = $this->writeChar($this->Unknown4, $hex, 0x28);
-        $hex = $this->writeChar($this->Unknown5, $hex, 0x50);
-        $hex = $this->writeByte($this->MissionType, $hex, 0x64);
-        $hex = $this->writeBool($this->Unknown6, $hex, 0x65);
-        $hex = $this->writeByte($this->TimeLimitMinutes, $hex, 0x66);
-        $hex = $this->writeByte($this->TimeLimitSeconds, $hex, 0x67);
+        [$hex, $offset] = $this->writeShort($this->PlatformID, $hex, 0x00);
+        [$hex, $offset] = $this->writeShort($this->NumFGs, $hex, 0x02);
+        [$hex, $offset] = $this->writeShort($this->NumMessages, $hex, 0x04);
+        [$hex, $offset] = $this->writeByte($this->Unknown1, $hex, 0x06);
+        [$hex, $offset] = $this->writeByte($this->Unknown2, $hex, 0x08);
+        [$hex, $offset] = $this->writeBool($this->Unknown3, $hex, 0x0B);
+        [$hex, $offset] = $this->writeChar($this->Unknown4, $hex, 0x28);
+        [$hex, $offset] = $this->writeChar($this->Unknown5, $hex, 0x50);
+        [$hex, $offset] = $this->writeByte($this->MissionType, $hex, 0x64);
+        [$hex, $offset] = $this->writeBool($this->Unknown6, $hex, 0x65);
+        [$hex, $offset] = $this->writeByte($this->TimeLimitMinutes, $hex, 0x66);
+        [$hex, $offset] = $this->writeByte($this->TimeLimitSeconds, $hex, 0x67);
 
         return $hex;
     }

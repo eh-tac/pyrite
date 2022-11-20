@@ -139,43 +139,39 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->PlatformID, $hex, 0x0000);
-        $hex = $this->writeShort($this->NumFGs, $hex, 0x0002);
-        $hex = $this->writeShort($this->NumMessages, $hex, 0x0004);
-        $hex = $this->writeBool($this->Unknown1, $hex, 0x0008);
-        $hex = $this->writeBool($this->Unknown2, $hex, 0x000B);
+        [$hex, $offset] = $this->writeShort($this->PlatformID, $hex, 0x0000);
+        [$hex, $offset] = $this->writeShort($this->NumFGs, $hex, 0x0002);
+        [$hex, $offset] = $this->writeShort($this->NumMessages, $hex, 0x0004);
+        [$hex, $offset] = $this->writeBool($this->Unknown1, $hex, 0x0008);
+        [$hex, $offset] = $this->writeBool($this->Unknown2, $hex, 0x000B);
         $offset = 0x0014;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->IffNames[$i];
-            $hex = $this->writeString($t, $hex, $offset);
-            $offset += strlen($t);
+            [$hex, $offset] = $this->writeString($t, $hex, $offset);
         }
         $offset = 0x0064;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->RegionNames[$i];
-            $hex = $this->writeString($t, $hex, $offset);
-            $offset += strlen($t);
+            [$hex, $offset] = $this->writeString($t, $hex, $offset);
         }
         $offset = 0x0274;
         for ($i = 0; $i < 16; $i++) {
             $t = $this->GlobalCargo[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = 0x0B34;
         for ($i = 0; $i < 16; $i++) {
             $t = $this->GlobalGroupNames[$i];
-            $hex = $this->writeString($t, $hex, $offset);
-            $offset += strlen($t);
+            [$hex, $offset] = $this->writeString($t, $hex, $offset);
         }
-        $hex = $this->writeByte($this->Hangar, $hex, 0x23AC);
-        $hex = $this->writeByte($this->TimeLimitMinutes, $hex, 0x23AE);
-        $hex = $this->writeBool($this->EndMissionWhenComplete, $hex, 0x23AF);
-        $hex = $this->writeByte($this->BriefingOfficer, $hex, 0x23B0);
-        $hex = $this->writeByte($this->BriefingLogo, $hex, 0x23B1);
-        $hex = $this->writeByte($this->Unknown3, $hex, 0x23B3);
-        $hex = $this->writeByte($this->Unknown4, $hex, 0x23B4);
-        $hex = $this->writeByte($this->Unknown5, $hex, 0x23B5);
+        [$hex, $offset] = $this->writeByte($this->Hangar, $hex, 0x23AC);
+        [$hex, $offset] = $this->writeByte($this->TimeLimitMinutes, $hex, 0x23AE);
+        [$hex, $offset] = $this->writeBool($this->EndMissionWhenComplete, $hex, 0x23AF);
+        [$hex, $offset] = $this->writeByte($this->BriefingOfficer, $hex, 0x23B0);
+        [$hex, $offset] = $this->writeByte($this->BriefingLogo, $hex, 0x23B1);
+        [$hex, $offset] = $this->writeByte($this->Unknown3, $hex, 0x23B3);
+        [$hex, $offset] = $this->writeByte($this->Unknown4, $hex, 0x23B4);
+        [$hex, $offset] = $this->writeByte($this->Unknown5, $hex, 0x23B5);
 
         return $hex;
     }

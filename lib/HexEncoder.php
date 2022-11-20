@@ -8,12 +8,13 @@ trait HexEncoder
 {
 	public function write($value, $hex, $off)
 	{
-		return substr_replace(
+		$nuHex = substr_replace(
 			$hex,
 			$value,
 			$off,
 			strlen($value)
 		);
+		return [$nuHex, $off + strlen($value)];
 	}
 
 	public function writeBool($value, $hex, $off)

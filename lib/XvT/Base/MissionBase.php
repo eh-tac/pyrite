@@ -105,6 +105,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
             $offset += strlen($t);
         }
         $this->MissionDescription = $this->getString($hex, $offset);
+        $offset += strlen($this->MissionDescription);
         $this->MissionLength = $offset;
         return $this;
     }
@@ -129,50 +130,43 @@ abstract class MissionBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeObject($this->FileHeader, $hex, 0x000);
+        [$hex, $offset] = $this->writeObject($this->FileHeader, $hex, 0x000);
         $offset = 0x0A4;
         for ($i = 0; $i < $this->FileHeader->NumFGs; $i++) {
             $t = $this->FlightGroups[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < $this->FileHeader->NumMessages; $i++) {
             $t = $this->Messages[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->GlobalGoals[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->Teams[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < 8; $i++) {
             $t = $this->Briefing[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < $this->FGGoalStringCount(); $i++) {
             $t = $this->FGGoalStrings[$i];
-            $hex = $this->writeString($t, $hex, $offset);
-            $offset += strlen($t);
+            [$hex, $offset] = $this->writeString($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < 360; $i++) {
             $t = $this->GlobalGoalStrings[$i];
-            $hex = $this->writeString($t, $hex, $offset);
-            $offset += strlen($t);
+            [$hex, $offset] = $this->writeString($t, $hex, $offset);
         }
-        $hex = $this->writeString($this->MissionDescription, $hex, $offset);
+        [$hex, $offset] = $this->writeString($this->MissionDescription, $hex, $offset);
 
         return $hex;
     }

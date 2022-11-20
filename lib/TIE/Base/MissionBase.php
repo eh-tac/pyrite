@@ -76,7 +76,6 @@ abstract class MissionBase extends PyriteBase implements Byteable
             $offset += $t->getLength();
         }
         $this->Briefing = (new Briefing(substr($hex, $offset), $this->TIE))->loadHex();
-        $offset += $this->Briefing->getLength();
         $this->PreMissionQuestions = [];
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
@@ -115,39 +114,34 @@ abstract class MissionBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeObject($this->FileHeader, $hex, 0x000);
+        [$hex, $offset] = $this->writeObject($this->FileHeader, $hex, 0x000);
         $offset = 0x1CA;
         for ($i = 0; $i < $this->FileHeader->NumFGs; $i++) {
             $t = $this->FlightGroups[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < $this->FileHeader->NumMessages; $i++) {
             $t = $this->Messages[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->GlobalGoals[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
-        $hex = $this->writeObject($this->Briefing, $hex, $offset);
+        [$hex, $offset] = $this->writeObject($this->Briefing, $hex, $offset);
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->PreMissionQuestions[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->PostMissionQuestions[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
-        $hex = $this->writeByte(255, $hex, $offset);
+        [$hex, $offset] = $this->writeByte(255, $hex, $offset);
 
         return $hex;
     }

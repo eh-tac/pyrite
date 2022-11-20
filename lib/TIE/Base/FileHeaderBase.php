@@ -96,25 +96,23 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort(-1, $hex, 0x000);
-        $hex = $this->writeShort($this->NumFGs, $hex, 0x002);
-        $hex = $this->writeShort($this->NumMessages, $hex, 0x004);
-        $hex = $this->writeShort(3, $hex, 0x006);
-        $hex = $this->writeByte($this->Unknown1, $hex, 0x008);
-        $hex = $this->writeBool($this->Unknown2, $hex, 0x009);
-        $hex = $this->writeByte($this->BriefingOfficers, $hex, 0x00A);
-        $hex = $this->writeBool($this->CapturedOnEject, $hex, 0x00D);
+        [$hex, $offset] = $this->writeShort(-1, $hex, 0x000);
+        [$hex, $offset] = $this->writeShort($this->NumFGs, $hex, 0x002);
+        [$hex, $offset] = $this->writeShort($this->NumMessages, $hex, 0x004);
+        [$hex, $offset] = $this->writeShort(3, $hex, 0x006);
+        [$hex, $offset] = $this->writeByte($this->Unknown1, $hex, 0x008);
+        [$hex, $offset] = $this->writeBool($this->Unknown2, $hex, 0x009);
+        [$hex, $offset] = $this->writeByte($this->BriefingOfficers, $hex, 0x00A);
+        [$hex, $offset] = $this->writeBool($this->CapturedOnEject, $hex, 0x00D);
         $offset = 0x018;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->EndOfMissionMessages[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 64;
+            [$hex, $offset] = $this->writeChar($t, $hex, $offset);
         }
         $offset = 0x19A;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->OtherIffNames[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 12;
+            [$hex, $offset] = $this->writeChar($t, $hex, $offset);
         }
 
         return $hex;

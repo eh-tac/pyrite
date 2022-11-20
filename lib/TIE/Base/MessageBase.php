@@ -72,16 +72,15 @@ abstract class MessageBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeString($this->Message, $hex, 0x00);
+        [$hex, $offset] = $this->writeString($this->Message, $hex, 0x00);
         $offset = 0x40;
         for ($i = 0; $i < 2; $i++) {
             $t = $this->Triggers[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
-        $hex = $this->writeString($this->EditorNote, $hex, 0x48);
-        $hex = $this->writeByte($this->DelaySeconds, $hex, 0x58);
-        $hex = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x59);
+        [$hex, $offset] = $this->writeString($this->EditorNote, $hex, 0x48);
+        [$hex, $offset] = $this->writeByte($this->DelaySeconds, $hex, 0x58);
+        [$hex, $offset] = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x59);
 
         return $hex;
     }

@@ -109,6 +109,7 @@ class ${struct.name} extends Base\\${baseClass}
 
   protected getBaseConstructor(struct: Struct, lengthProp: PHPPropWriter): string {
     const props = struct.getProps().map(p => new PHPPropWriter(p));
+    const prevWriter = props[props.length - 1];
 
     return `
     public function __construct($hex = null, $tie = null)
@@ -127,7 +128,11 @@ class ${struct.name} extends Base\\${baseClass}
         $offset = 0;
 
         ${props.map((p: PHPPropWriter) => p.getConstructorInit()).join("\n        ")}
-        ${struct.isVariableLength ? `$this->${lengthProp.prop.name} = $offset;` : ""}
+        ${
+          struct.isVariableLength
+            ? `$offset += ${prevWriter.propLength};\n        $this->${lengthProp.prop.name} = $offset;`
+            : ""
+        }
         return $this;
     }`;
   }

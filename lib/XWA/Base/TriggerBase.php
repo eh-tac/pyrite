@@ -70,12 +70,12 @@ abstract class TriggerBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeByte($this->Condition, $hex, 0x0);
-        $hex = $this->writeByte($this->VariableType, $hex, 0x1);
-        $hex = $this->writeByte($this->Variable, $hex, 0x2);
-        $hex = $this->writeByte($this->Amount, $hex, 0x3);
-        $hex = $this->writeByte($this->Parameter, $hex, 0x4);
-        $hex = $this->writeByte($this->Parameter2, $hex, 0x5);
+        [$hex, $offset] = $this->writeByte($this->Condition, $hex, 0x0);
+        [$hex, $offset] = $this->writeByte($this->VariableType, $hex, 0x1);
+        [$hex, $offset] = $this->writeByte($this->Variable, $hex, 0x2);
+        [$hex, $offset] = $this->writeByte($this->Amount, $hex, 0x3);
+        [$hex, $offset] = $this->writeByte($this->Parameter, $hex, 0x4);
+        [$hex, $offset] = $this->writeByte($this->Parameter2, $hex, 0x5);
 
         return $hex;
     }

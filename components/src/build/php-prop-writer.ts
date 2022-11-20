@@ -65,16 +65,27 @@ export class PHPPropWriter {
 
   public getConstructorInit(): string {
     let offsetExpr = "";
+    let init = "";
+    if (this.prop.previousValueOffset && this.prop.previous) {
+      // this is offset from the previous value, so it must have a dynamic length
+      if (this.prop.previous.isArray) {
+        // arrays always increment the offset. yay arrays.
+      } else {
+        const prevWriter = new PHPPropWriter(this.prop.previous);
+        init = `$offset += ${prevWriter.propLength};\n        `;
+      }
+    }
+
     if (this.prop.isStatic) {
       if (this.prop.previousValueOffset) {
         // ensure the offset is correct if the final prop is statically ignored
-        offsetExpr = `\n        $offset += ${this.propLength};`;
+        // offsetExpr = `\n        $offset += ${this.propLength};`;
       }
-      return `// static ${this.prop.type} value ${this.prop.name} = ${this.prop.reservedValue}${offsetExpr}`;
+      return `${init}// static ${this.prop.type} value ${this.prop.name} = ${this.prop.reservedValue}${offsetExpr}`;
     }
 
     const p = `$this->${this.prop.name}`;
-    let init = `${p} = ${this.getGetter()};`;
+    init = `${init}${p} = ${this.getGetter()};`;
     if (this.prop.isArray) {
       init = `${p} = [];
         $offset = ${this.offsetExpr};
@@ -87,8 +98,8 @@ export class PHPPropWriter {
       // strings and objects have dynamic lengths so the offsets must be adjusted on the flyF
       // if this is a string with a defined offset, make sure that is included when incrementing the offset
       // otherwise if already in previous value mode, just += by the current length;
-      const op = this.prop.previousValueOffset ? "+=" : `= ${this.prop.offset} +`;
-      offsetExpr = `\n        $offset ${op} ${this.propLength};`;
+      // const op = this.prop.previousValueOffset ? "+=" : `= ${this.prop.offset} +`;
+      // offsetExpr = `\n        $offset ${op} ${this.propLength};`;
     }
     return `${init}${offsetExpr}`;
   }
@@ -145,23 +156,20 @@ export class PHPPropWriter {
   }
 
   public getOutputHex(): string {
-    const offsetExpr = "";
     const p = `$this->${this.prop.name}`;
-    let out = `${this.getSetter(this.prop.isStatic ? this.prop.reservedValue.toString() : p)};`;
     if (this.prop.isArray) {
-      out = `$offset = ${this.offsetExpr};
+      return `$offset = ${this.offsetExpr};
         for ($i = 0; $i < ${this.arrayLength}; $i++) {
             $t = ${p}[$i];
             ${this.getSetter("$t", true)};
-            $offset += ${this.propLength};
         }`;
     }
-    return `${offsetExpr}${out}`;
+    return `${this.getSetter(this.prop.isStatic ? this.prop.reservedValue.toString() : p)};`;
   }
 
   public getSetter(propOverride?: string, inLoop = false): string {
     const off = inLoop ? "$offset" : this.offsetExpr;
     const params = [propOverride || `$this->${this.prop.name}`, "$hex", off];
-    return `$hex = $this->${this.prop.hexSetter}(${params.join(", ")})`;
+    return `[$hex, $offset] = $this->${this.prop.hexSetter}(${params.join(", ")})`;
   }
 }

@@ -106,21 +106,21 @@ abstract class OrderBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeByte($this->Order, $hex, 0x00);
-        $hex = $this->writeByte($this->Throttle, $hex, 0x01);
-        $hex = $this->writeByte($this->Variable1, $hex, 0x02);
-        $hex = $this->writeByte($this->Variable2, $hex, 0x03);
-        $hex = $this->writeByte($this->Unknown18, $hex, 0x04);
-        $hex = $this->writeByte($this->Target3Type, $hex, 0x06);
-        $hex = $this->writeByte($this->Target4Type, $hex, 0x07);
-        $hex = $this->writeByte($this->Target3, $hex, 0x08);
-        $hex = $this->writeByte($this->Target4, $hex, 0x09);
-        $hex = $this->writeBool($this->Target3OrTarget4, $hex, 0x0A);
-        $hex = $this->writeByte($this->Target1Type, $hex, 0x0C);
-        $hex = $this->writeByte($this->Target1, $hex, 0x0D);
-        $hex = $this->writeByte($this->Target2Type, $hex, 0x0E);
-        $hex = $this->writeByte($this->Target2, $hex, 0x0F);
-        $hex = $this->writeBool($this->Target1OrTarget2, $hex, 0x10);
+        [$hex, $offset] = $this->writeByte($this->Order, $hex, 0x00);
+        [$hex, $offset] = $this->writeByte($this->Throttle, $hex, 0x01);
+        [$hex, $offset] = $this->writeByte($this->Variable1, $hex, 0x02);
+        [$hex, $offset] = $this->writeByte($this->Variable2, $hex, 0x03);
+        [$hex, $offset] = $this->writeByte($this->Unknown18, $hex, 0x04);
+        [$hex, $offset] = $this->writeByte($this->Target3Type, $hex, 0x06);
+        [$hex, $offset] = $this->writeByte($this->Target4Type, $hex, 0x07);
+        [$hex, $offset] = $this->writeByte($this->Target3, $hex, 0x08);
+        [$hex, $offset] = $this->writeByte($this->Target4, $hex, 0x09);
+        [$hex, $offset] = $this->writeBool($this->Target3OrTarget4, $hex, 0x0A);
+        [$hex, $offset] = $this->writeByte($this->Target1Type, $hex, 0x0C);
+        [$hex, $offset] = $this->writeByte($this->Target1, $hex, 0x0D);
+        [$hex, $offset] = $this->writeByte($this->Target2Type, $hex, 0x0E);
+        [$hex, $offset] = $this->writeByte($this->Target2, $hex, 0x0F);
+        [$hex, $offset] = $this->writeBool($this->Target1OrTarget2, $hex, 0x10);
 
         return $hex;
     }

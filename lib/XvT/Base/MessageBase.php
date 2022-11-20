@@ -104,31 +104,28 @@ abstract class MessageBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->MessageIndex, $hex, 0x00);
-        $hex = $this->writeChar($this->Message, $hex, 0x02);
+        [$hex, $offset] = $this->writeShort($this->MessageIndex, $hex, 0x00);
+        [$hex, $offset] = $this->writeChar($this->Message, $hex, 0x02);
         $offset = 0x42;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->SentToTeams[$i];
-            $hex = $this->writeByte($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeByte($t, $hex, $offset);
         }
         $offset = 0x4C;
         for ($i = 0; $i < 2; $i++) {
             $t = $this->TriggerA[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
-        $hex = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x56);
+        [$hex, $offset] = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x56);
         $offset = 0x57;
         for ($i = 0; $i < 2; $i++) {
             $t = $this->TriggerB[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
-        $hex = $this->writeBool($this->Trigger3OrTrigger4, $hex, 0x61);
-        $hex = $this->writeString($this->EditorNote, $hex, 0x62);
-        $hex = $this->writeByte($this->DelaySeconds, $hex, 0x72);
-        $hex = $this->writeBool($this->Trigger12OrTrigger34, $hex, 0x73);
+        [$hex, $offset] = $this->writeBool($this->Trigger3OrTrigger4, $hex, 0x61);
+        [$hex, $offset] = $this->writeString($this->EditorNote, $hex, 0x62);
+        [$hex, $offset] = $this->writeByte($this->DelaySeconds, $hex, 0x72);
+        [$hex, $offset] = $this->writeBool($this->Trigger12OrTrigger34, $hex, 0x73);
 
         return $hex;
     }

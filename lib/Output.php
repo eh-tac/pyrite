@@ -2,7 +2,8 @@
 
 namespace Pyrite;
 
-interface Output {
-	/** @return hex encoder for this object */
-	public function toHex();
+interface Output
+{
+	/** @return string for this object */
+	public function toHexString();
 }

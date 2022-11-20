@@ -274,6 +274,7 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
             $this->CombatMissionData[] = $t;
             $offset += $t->getLength();
         }
+        $offset += $t->getLength();
         $this->TeamStatsLength = $offset;
         return $this;
     }
@@ -319,164 +320,137 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
         $offset = 0x0000;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->MeleeMedals[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x0018;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->TournamentMedals[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x0030;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->MissionTopRatings[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x0048;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->MissionMedals[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x0090;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->PlayCounts[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x00A8;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->TotalKills[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x00C0;
         for ($i = 0; $i < 88; $i++) {
             $t = $this->ExerciseKillsByType[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x0220;
         for ($i = 0; $i < 88; $i++) {
             $t = $this->MeleeKillsByType[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x0380;
         for ($i = 0; $i < 88; $i++) {
             $t = $this->CombatKillsByType[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x4e0;
         for ($i = 0; $i < 88; $i++) {
             $t = $this->ExercisePartialsByType[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x640;
         for ($i = 0; $i < 88; $i++) {
             $t = $this->MeleePartialsByType[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x7a0;
         for ($i = 0; $i < 88; $i++) {
             $t = $this->CombatPartialsByType[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x900;
         for ($i = 0; $i < 88; $i++) {
             $t = $this->ExerciseAssistsByType[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0xa60;
         for ($i = 0; $i < 88; $i++) {
             $t = $this->MeleeAssistsByType[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0xbc0;
         for ($i = 0; $i < 88; $i++) {
             $t = $this->CombatAssistsByType[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x117c;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->HiddenCargoFound[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x1188;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->LasersHit[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x1194;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->LasersTotal[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x11a0;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->WarheadsHit[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x11ac;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->WarheadsTotal[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x11b8;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->CraftLosses[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x11c4;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->CollisionLosses[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x11d0;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->StarshipLosses[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x11dc;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->MineLosses[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x1360;
         for ($i = 0; $i < 40; $i++) {
             $t = $this->TrainingMissionData[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = 0x2170;
         for ($i = 0; $i < 100; $i++) {
             $t = $this->MeleeMissionData[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = 0x4498;
         for ($i = 0; $i < 100; $i++) {
             $t = $this->CombatMissionData[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
 
         return $hex;

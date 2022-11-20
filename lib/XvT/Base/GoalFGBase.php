@@ -98,19 +98,19 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeByte($this->Argument, $hex, 0x00);
-        $hex = $this->writeByte($this->Condition, $hex, 0x01);
-        $hex = $this->writeByte($this->Amount, $hex, 0x02);
-        $hex = $this->writeSByte($this->Points, $hex, 0x03);
-        $hex = $this->writeBool($this->Enabled, $hex, 0x04);
-        $hex = $this->writeByte($this->Team, $hex, 0x05);
-        $hex = $this->writeBool($this->Unknown10, $hex, 0x06);
-        $hex = $this->writeBool($this->Unknown11, $hex, 0x07);
-        $hex = $this->writeBool($this->Unknown12, $hex, 0x08);
-        $hex = $this->writeByte($this->Unknown13, $hex, 0x0B);
-        $hex = $this->writeBool($this->Unknown14, $hex, 0x0C);
-        $hex = $this->writeByte($this->Reserved, $hex, 0x0D);
-        $hex = $this->writeByte($this->Unknown16, $hex, 0x0E);
+        [$hex, $offset] = $this->writeByte($this->Argument, $hex, 0x00);
+        [$hex, $offset] = $this->writeByte($this->Condition, $hex, 0x01);
+        [$hex, $offset] = $this->writeByte($this->Amount, $hex, 0x02);
+        [$hex, $offset] = $this->writeSByte($this->Points, $hex, 0x03);
+        [$hex, $offset] = $this->writeBool($this->Enabled, $hex, 0x04);
+        [$hex, $offset] = $this->writeByte($this->Team, $hex, 0x05);
+        [$hex, $offset] = $this->writeBool($this->Unknown10, $hex, 0x06);
+        [$hex, $offset] = $this->writeBool($this->Unknown11, $hex, 0x07);
+        [$hex, $offset] = $this->writeBool($this->Unknown12, $hex, 0x08);
+        [$hex, $offset] = $this->writeByte($this->Unknown13, $hex, 0x0B);
+        [$hex, $offset] = $this->writeBool($this->Unknown14, $hex, 0x0C);
+        [$hex, $offset] = $this->writeByte($this->Reserved, $hex, 0x0D);
+        [$hex, $offset] = $this->writeByte($this->Unknown16, $hex, 0x0E);
 
         return $hex;
     }

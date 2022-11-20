@@ -12,7 +12,15 @@ function mg(plt: string): PyriteGenerator {
 }
 
 // make generators
-const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [mg("TIE"), mg("XW"), mg("XvT"), mg("XWA"), mg("LFD"), mg("Puz")];
+const [tieG, xwG, xvtG, xwaG, lfdG, ehblG, puzG] = [
+  mg("TIE"),
+  mg("XW"),
+  mg("XvT"),
+  mg("XWA"),
+  mg("LFD"),
+  mg("EHBL"),
+  mg("Puz")
+];
 
 // make writers
 [
@@ -24,5 +32,7 @@ const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [mg("TIE"), mg("XW"), mg("XvT"), mg(
   new PHPWriter("../lib", xvtG),
   new TypeScriptWriter("src", xwaG),
   new PHPWriter("../lib", xwaG),
-  new TypeScriptWriter("src", lfdG)
+  new TypeScriptWriter("src", lfdG),
+  new PHPWriter("../lib", ehblG),
+  new TypeScriptWriter("src", ehblG)
 ].forEach(writer => writer.write());

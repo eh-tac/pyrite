@@ -69,12 +69,12 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeString($this->Cargo, $hex, 0x00);
-        $hex = $this->writeBool($this->Unknown1, $hex, 0x44);
-        $hex = $this->writeByte($this->Unknown2, $hex, 0x48);
-        $hex = $this->writeByte($this->Unknown3, $hex, 0x49);
-        $hex = $this->writeByte($this->Unknown4, $hex, 0x4A);
-        $hex = $this->writeByte($this->Unknown5, $hex, 0x4B);
+        [$hex, $offset] = $this->writeString($this->Cargo, $hex, 0x00);
+        [$hex, $offset] = $this->writeBool($this->Unknown1, $hex, 0x44);
+        [$hex, $offset] = $this->writeByte($this->Unknown2, $hex, 0x48);
+        [$hex, $offset] = $this->writeByte($this->Unknown3, $hex, 0x49);
+        [$hex, $offset] = $this->writeByte($this->Unknown4, $hex, 0x4A);
+        [$hex, $offset] = $this->writeByte($this->Unknown5, $hex, 0x4B);
 
         return $hex;
     }

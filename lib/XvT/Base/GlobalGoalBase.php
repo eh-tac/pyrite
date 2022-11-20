@@ -60,12 +60,11 @@ abstract class GlobalGoalBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->Reserved, $hex, 0x00);
+        [$hex, $offset] = $this->writeShort($this->Reserved, $hex, 0x00);
         $offset = 0x02;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->Goal[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
 
         return $hex;

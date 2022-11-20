@@ -93,18 +93,18 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeInt($this->UnkA, $hex, 0x00);
-        $hex = $this->writeInt($this->AttemptCount, $hex, 0x04);
-        $hex = $this->writeInt($this->UnkB, $hex, 0x08);
-        $hex = $this->writeInt($this->UnkC, $hex, 0x0C);
-        $hex = $this->writeInt($this->UnkD, $hex, 0x10);
-        $hex = $this->writeInt($this->WinCount, $hex, 0x14);
-        $hex = $this->writeInt($this->UnkE, $hex, 0x18);
-        $hex = $this->writeInt($this->Score, $hex, 0x1C);
-        $hex = $this->writeInt($this->Time, $hex, 0x20);
-        $hex = $this->writeInt($this->UnkF, $hex, 0x24);
-        $hex = $this->writeInt($this->UnkG, $hex, 0x28);
-        $hex = $this->writeInt($this->BonusScoreTen, $hex, 0x2C);
+        [$hex, $offset] = $this->writeInt($this->UnkA, $hex, 0x00);
+        [$hex, $offset] = $this->writeInt($this->AttemptCount, $hex, 0x04);
+        [$hex, $offset] = $this->writeInt($this->UnkB, $hex, 0x08);
+        [$hex, $offset] = $this->writeInt($this->UnkC, $hex, 0x0C);
+        [$hex, $offset] = $this->writeInt($this->UnkD, $hex, 0x10);
+        [$hex, $offset] = $this->writeInt($this->WinCount, $hex, 0x14);
+        [$hex, $offset] = $this->writeInt($this->UnkE, $hex, 0x18);
+        [$hex, $offset] = $this->writeInt($this->Score, $hex, 0x1C);
+        [$hex, $offset] = $this->writeInt($this->Time, $hex, 0x20);
+        [$hex, $offset] = $this->writeInt($this->UnkF, $hex, 0x24);
+        [$hex, $offset] = $this->writeInt($this->UnkG, $hex, 0x28);
+        [$hex, $offset] = $this->writeInt($this->BonusScoreTen, $hex, 0x2C);
 
         return $hex;
     }

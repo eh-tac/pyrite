@@ -1,0 +1,1 @@
+export { EHBLBattleIndexController } from "./battle-index";

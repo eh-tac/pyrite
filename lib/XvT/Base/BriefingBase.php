@@ -72,6 +72,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
             $this->Strings[] = $t;
             $offset += $t->getLength();
         }
+        $offset += $t->getLength();
         $this->BriefingLength = $offset;
         return $this;
     }
@@ -94,27 +95,24 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->RunningTime, $hex, 0x000);
-        $hex = $this->writeShort($this->Unknown1, $hex, 0x002);
-        $hex = $this->writeShort($this->StartEvents, $hex, 0x004);
-        $hex = $this->writeInt($this->EventsLength, $hex, 0x006);
+        [$hex, $offset] = $this->writeShort($this->RunningTime, $hex, 0x000);
+        [$hex, $offset] = $this->writeShort($this->Unknown1, $hex, 0x002);
+        [$hex, $offset] = $this->writeShort($this->StartEvents, $hex, 0x004);
+        [$hex, $offset] = $this->writeInt($this->EventsLength, $hex, 0x006);
         $offset = 0x00A;
         for ($i = 0; $i < $this->EventsLength; $i++) {
             $t = $this->Events[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = 0x334;
         for ($i = 0; $i < 32; $i++) {
             $t = $this->Tags[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < 32; $i++) {
             $t = $this->Strings[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
 
         return $hex;

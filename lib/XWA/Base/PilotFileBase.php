@@ -180,64 +180,57 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeChar($this->Name, $hex, 0x00);
-        $hex = $this->writeInt($this->TotalScore, $hex, 0x0E);
-        $hex = $this->writeChar($this->MPName, $hex, 0x4A);
-        $hex = $this->writeChar($this->MPGameName, $hex, 0x6A);
-        $hex = $this->writeInt($this->ToNextRanking, $hex, 0x9A);
-        $hex = $this->writeInt($this->TourOfDutyScore, $hex, 0x9E);
-        $hex = $this->writeInt($this->AzzameenScore, $hex, 0xA2);
-        $hex = $this->writeInt($this->SimulatorScore, $hex, 0xA6);
+        [$hex, $offset] = $this->writeChar($this->Name, $hex, 0x00);
+        [$hex, $offset] = $this->writeInt($this->TotalScore, $hex, 0x0E);
+        [$hex, $offset] = $this->writeChar($this->MPName, $hex, 0x4A);
+        [$hex, $offset] = $this->writeChar($this->MPGameName, $hex, 0x6A);
+        [$hex, $offset] = $this->writeInt($this->ToNextRanking, $hex, 0x9A);
+        [$hex, $offset] = $this->writeInt($this->TourOfDutyScore, $hex, 0x9E);
+        [$hex, $offset] = $this->writeInt($this->AzzameenScore, $hex, 0xA2);
+        [$hex, $offset] = $this->writeInt($this->SimulatorScore, $hex, 0xA6);
         $offset = 0xD2;
         for ($i = 0; $i < 256; $i++) {
             $t = $this->TourOfDutyKills[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x8CE;
         for ($i = 0; $i < 256; $i++) {
             $t = $this->AzzameenKills[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x10d2;
         for ($i = 0; $i < 256; $i++) {
             $t = $this->SimulatorKills[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x18d2;
         for ($i = 0; $i < 256; $i++) {
             $t = $this->TourOfDutyPartials[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x20ce;
         for ($i = 0; $i < 256; $i++) {
             $t = $this->AzzameenPartials[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x28d2;
         for ($i = 0; $i < 256; $i++) {
             $t = $this->SimulatorPartials[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
-        $hex = $this->writeInt($this->LasersHit, $hex, 0x4d36);
-        $hex = $this->writeInt($this->LasersFired, $hex, 0x4d42);
-        $hex = $this->writeInt($this->WarheadsHit, $hex, 0x4d4e);
-        $hex = $this->writeInt($this->WarheadsFired, $hex, 0x4d5a);
-        $hex = $this->writeInt($this->CraftLosses, $hex, 0x4d66);
+        [$hex, $offset] = $this->writeInt($this->LasersHit, $hex, 0x4d36);
+        [$hex, $offset] = $this->writeInt($this->LasersFired, $hex, 0x4d42);
+        [$hex, $offset] = $this->writeInt($this->WarheadsHit, $hex, 0x4d4e);
+        [$hex, $offset] = $this->writeInt($this->WarheadsFired, $hex, 0x4d5a);
+        [$hex, $offset] = $this->writeInt($this->CraftLosses, $hex, 0x4d66);
         $offset = 0xacfa;
         for ($i = 0; $i < 100; $i++) {
             $t = $this->MissionData[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
-        $hex = $this->writeInt($this->CurrentRank, $hex, 0x10EA2);
-        $hex = $this->writeInt($this->CurrentMedal, $hex, 0x10EA6);
-        $hex = $this->writeInt($this->BonusTen, $hex, 0x1144E);
+        [$hex, $offset] = $this->writeInt($this->CurrentRank, $hex, 0x10EA2);
+        [$hex, $offset] = $this->writeInt($this->CurrentMedal, $hex, 0x10EA6);
+        [$hex, $offset] = $this->writeInt($this->BonusTen, $hex, 0x1144E);
 
         return $hex;
     }

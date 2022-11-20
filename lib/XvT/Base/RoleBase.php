@@ -54,8 +54,8 @@ abstract class RoleBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeChar($this->Team, $hex, 0x0);
-        $hex = $this->writeChar($this->Designation, $hex, 0x1);
+        [$hex, $offset] = $this->writeChar($this->Team, $hex, 0x0);
+        [$hex, $offset] = $this->writeChar($this->Designation, $hex, 0x1);
 
         return $hex;
     }

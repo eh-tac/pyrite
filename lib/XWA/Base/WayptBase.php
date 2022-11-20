@@ -61,10 +61,10 @@ abstract class WayptBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->X, $hex, 0x0);
-        $hex = $this->writeShort($this->Y, $hex, 0x2);
-        $hex = $this->writeShort($this->Z, $hex, 0x4);
-        $hex = $this->writeBool($this->Enabled, $hex, 0x6);
+        [$hex, $offset] = $this->writeShort($this->X, $hex, 0x0);
+        [$hex, $offset] = $this->writeShort($this->Y, $hex, 0x2);
+        [$hex, $offset] = $this->writeShort($this->Z, $hex, 0x4);
+        [$hex, $offset] = $this->writeBool($this->Enabled, $hex, 0x6);
 
         return $hex;
     }

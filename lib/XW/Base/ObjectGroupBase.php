@@ -98,20 +98,20 @@ abstract class ObjectGroupBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeString($this->Name, $hex, 0x00);
-        $hex = $this->writeString($this->Cargo, $hex, 0x10);
-        $hex = $this->writeString($this->SpecialCargo, $hex, 0x20);
-        $hex = $this->writeShort(0, $hex, 0x30);
-        $hex = $this->writeShort($this->ObjectType, $hex, 0x32);
-        $hex = $this->writeShort($this->IFF, $hex, 0x34);
-        $hex = $this->writeShort($this->Objective, $hex, 0x36);
-        $hex = $this->writeShort($this->NumberOfObjects, $hex, 0x38);
-        $hex = $this->writeShort($this->PositionX, $hex, 0x3A);
-        $hex = $this->writeShort($this->PositionY, $hex, 0x3C);
-        $hex = $this->writeShort($this->PositionZ, $hex, 0x3E);
-        $hex = $this->writeShort(0, $hex, 0x40);
-        $hex = $this->writeShort(64, $hex, 0x42);
-        $hex = $this->writeShort(0, $hex, 0x44);
+        [$hex, $offset] = $this->writeString($this->Name, $hex, 0x00);
+        [$hex, $offset] = $this->writeString($this->Cargo, $hex, 0x10);
+        [$hex, $offset] = $this->writeString($this->SpecialCargo, $hex, 0x20);
+        [$hex, $offset] = $this->writeShort(0, $hex, 0x30);
+        [$hex, $offset] = $this->writeShort($this->ObjectType, $hex, 0x32);
+        [$hex, $offset] = $this->writeShort($this->IFF, $hex, 0x34);
+        [$hex, $offset] = $this->writeShort($this->Objective, $hex, 0x36);
+        [$hex, $offset] = $this->writeShort($this->NumberOfObjects, $hex, 0x38);
+        [$hex, $offset] = $this->writeShort($this->PositionX, $hex, 0x3A);
+        [$hex, $offset] = $this->writeShort($this->PositionY, $hex, 0x3C);
+        [$hex, $offset] = $this->writeShort($this->PositionZ, $hex, 0x3E);
+        [$hex, $offset] = $this->writeShort(0, $hex, 0x40);
+        [$hex, $offset] = $this->writeShort(64, $hex, 0x42);
+        [$hex, $offset] = $this->writeShort(0, $hex, 0x44);
 
         return $hex;
     }

@@ -54,7 +54,6 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $this->StartLength = $this->getShort($hex, 0x0004);
         $this->EventsLength = $this->getInt($hex, 0x0006);
         $this->Events = (new Event(substr($hex, 0x000A), $this->TIE))->loadHex();
-        $offset = 0x000A + $this->Events->getLength();
         $this->ShowToTeams = [];
         $offset = 0x440A;
         for ($i = 0; $i < 10; $i++) {
@@ -76,6 +75,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
             $this->Strings[] = $t;
             $offset += $t->getLength();
         }
+        $offset += $t->getLength();
         $this->BriefingLength = $offset;
         return $this;
     }
@@ -99,28 +99,25 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->RunningTime, $hex, 0x0000);
-        $hex = $this->writeShort($this->Unknown1, $hex, 0x0002);
-        $hex = $this->writeShort($this->StartLength, $hex, 0x0004);
-        $hex = $this->writeInt($this->EventsLength, $hex, 0x0006);
-        $hex = $this->writeObject($this->Events, $hex, 0x000A);
+        [$hex, $offset] = $this->writeShort($this->RunningTime, $hex, 0x0000);
+        [$hex, $offset] = $this->writeShort($this->Unknown1, $hex, 0x0002);
+        [$hex, $offset] = $this->writeShort($this->StartLength, $hex, 0x0004);
+        [$hex, $offset] = $this->writeInt($this->EventsLength, $hex, 0x0006);
+        [$hex, $offset] = $this->writeObject($this->Events, $hex, 0x000A);
         $offset = 0x440A;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->ShowToTeams[$i];
-            $hex = $this->writeBool($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeBool($t, $hex, $offset);
         }
         $offset = 0x4414;
         for ($i = 0; $i < 128; $i++) {
             $t = $this->Tags[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < 128; $i++) {
             $t = $this->Strings[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
 
         return $hex;

@@ -132,31 +132,30 @@ abstract class MessageBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->MessageIndex, $hex, 0x00);
-        $hex = $this->writeString($this->Message, $hex, 0x02);
+        [$hex, $offset] = $this->writeShort($this->MessageIndex, $hex, 0x00);
+        [$hex, $offset] = $this->writeString($this->Message, $hex, 0x02);
         $offset = 0x52;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->SetToTeam[$i];
-            $hex = $this->writeByte($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeByte($t, $hex, $offset);
         }
-        $hex = $this->writeObject($this->Trigger1, $hex, 0x5C);
-        $hex = $this->writeObject($this->Trigger2, $hex, 0x62);
-        $hex = $this->writeByte($this->Unknown1, $hex, 0x68);
-        $hex = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x6A);
-        $hex = $this->writeObject($this->Trigger3, $hex, 0x6C);
-        $hex = $this->writeObject($this->Trigger4, $hex, 0x72);
-        $hex = $this->writeBool($this->Trigger3OrTrigger4, $hex, 0x7A);
-        $hex = $this->writeString($this->Voice, $hex, 0x7C);
-        $hex = $this->writeByte($this->OriginatingFG, $hex, 0x84);
-        $hex = $this->writeByte($this->DelaySeconds, $hex, 0x8C);
-        $hex = $this->writeBool($this->Triggers12OrTriggers34, $hex, 0x8D);
-        $hex = $this->writeByte($this->Color, $hex, 0x8E);
-        $hex = $this->writeByte($this->Unknown2, $hex, 0x8F);
-        $hex = $this->writeObject($this->Cancel1, $hex, 0x90);
-        $hex = $this->writeObject($this->Cancel2, $hex, 0x96);
-        $hex = $this->writeBool($this->Cancel1OrCancel2, $hex, 0x9E);
-        $hex = $this->writeBool($this->Unknown3, $hex, 0xA0);
+        [$hex, $offset] = $this->writeObject($this->Trigger1, $hex, 0x5C);
+        [$hex, $offset] = $this->writeObject($this->Trigger2, $hex, 0x62);
+        [$hex, $offset] = $this->writeByte($this->Unknown1, $hex, 0x68);
+        [$hex, $offset] = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x6A);
+        [$hex, $offset] = $this->writeObject($this->Trigger3, $hex, 0x6C);
+        [$hex, $offset] = $this->writeObject($this->Trigger4, $hex, 0x72);
+        [$hex, $offset] = $this->writeBool($this->Trigger3OrTrigger4, $hex, 0x7A);
+        [$hex, $offset] = $this->writeString($this->Voice, $hex, 0x7C);
+        [$hex, $offset] = $this->writeByte($this->OriginatingFG, $hex, 0x84);
+        [$hex, $offset] = $this->writeByte($this->DelaySeconds, $hex, 0x8C);
+        [$hex, $offset] = $this->writeBool($this->Triggers12OrTriggers34, $hex, 0x8D);
+        [$hex, $offset] = $this->writeByte($this->Color, $hex, 0x8E);
+        [$hex, $offset] = $this->writeByte($this->Unknown2, $hex, 0x8F);
+        [$hex, $offset] = $this->writeObject($this->Cancel1, $hex, 0x90);
+        [$hex, $offset] = $this->writeObject($this->Cancel2, $hex, 0x96);
+        [$hex, $offset] = $this->writeBool($this->Cancel1OrCancel2, $hex, 0x9E);
+        [$hex, $offset] = $this->writeBool($this->Unknown3, $hex, 0xA0);
 
         return $hex;
     }

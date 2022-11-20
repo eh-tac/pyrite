@@ -82,15 +82,15 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeInt($this->AttemptCount, $hex, 0x00);
-        $hex = $this->writeInt($this->WinCount, $hex, 0x04);
-        $hex = $this->writeInt($this->LossCount, $hex, 0x08);
-        $hex = $this->writeInt($this->BestScore, $hex, 0x0C);
-        $hex = $this->writeInt($this->BestTime, $hex, 0x10);
-        $hex = $this->writeInt($this->BestTimeSecond, $hex, 0x14);
-        $hex = $this->writeInt($this->BestRating, $hex, 0x18);
-        $hex = $this->writeInt($this->Something, $hex, 0x1C);
-        $hex = $this->writeInt($this->Other, $hex, 0x20);
+        [$hex, $offset] = $this->writeInt($this->AttemptCount, $hex, 0x00);
+        [$hex, $offset] = $this->writeInt($this->WinCount, $hex, 0x04);
+        [$hex, $offset] = $this->writeInt($this->LossCount, $hex, 0x08);
+        [$hex, $offset] = $this->writeInt($this->BestScore, $hex, 0x0C);
+        [$hex, $offset] = $this->writeInt($this->BestTime, $hex, 0x10);
+        [$hex, $offset] = $this->writeInt($this->BestTimeSecond, $hex, 0x14);
+        [$hex, $offset] = $this->writeInt($this->BestRating, $hex, 0x18);
+        [$hex, $offset] = $this->writeInt($this->Something, $hex, 0x1C);
+        [$hex, $offset] = $this->writeInt($this->Other, $hex, 0x20);
 
         return $hex;
     }

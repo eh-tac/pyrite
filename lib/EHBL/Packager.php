@@ -23,10 +23,10 @@ class Packager
 	/**
 	 * @param $ehb BattleIndex
 	 */
-	private function loadEHB($ehb)
+	private function loadEHB(BattleIndex $ehb)
 	{
 		$this->ehb                 = $ehb;
-		$this->files['Battle.ehb'] = $ehb->toHex();
+		$this->files['Battle.ehb'] = $ehb->toHexString();
 	}
 
 	private function loadMissions($files)
@@ -128,7 +128,7 @@ class Packager
 	private function encodeMissions()
 	{
 		// TODO probably this should work based on the Mission objects not the files
-		$offset    = $this->ehb->encryptionOffset;
+		$offset    = $this->ehb->EncryptionOffset;
 		$originals = $this->missionFiles;
 		foreach ($originals as $key => $original) {
 			$enc = '';

@@ -106,21 +106,21 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeObject($this->Trigger1, $hex, 0x0000);
-        $hex = $this->writeObject($this->Trigger2, $hex, 0x0006);
-        $hex = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x000E);
-        $hex = $this->writeBool($this->Unknown1, $hex, 0x000F);
-        $hex = $this->writeObject($this->Trigger3, $hex, 0x0010);
-        $hex = $this->writeObject($this->Trigger4, $hex, 0x0016);
-        $hex = $this->writeBool($this->Trigger3OrTrigger4, $hex, 0x001E);
-        $hex = $this->writeBool($this->Unknown2, $hex, 0x0027);
-        $hex = $this->writeBool($this->Triggers12OrTriggers34, $hex, 0x0031);
-        $hex = $this->writeByte($this->Unknown3, $hex, 0x0032);
-        $hex = $this->writeSByte($this->Points, $hex, 0x0033);
-        $hex = $this->writeByte($this->Unknown4, $hex, 0x0034);
-        $hex = $this->writeByte($this->Unknown5, $hex, 0x0035);
-        $hex = $this->writeByte($this->Unknown6, $hex, 0x0036);
-        $hex = $this->writeByte($this->ActiveSquence, $hex, 0x0038);
+        [$hex, $offset] = $this->writeObject($this->Trigger1, $hex, 0x0000);
+        [$hex, $offset] = $this->writeObject($this->Trigger2, $hex, 0x0006);
+        [$hex, $offset] = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x000E);
+        [$hex, $offset] = $this->writeBool($this->Unknown1, $hex, 0x000F);
+        [$hex, $offset] = $this->writeObject($this->Trigger3, $hex, 0x0010);
+        [$hex, $offset] = $this->writeObject($this->Trigger4, $hex, 0x0016);
+        [$hex, $offset] = $this->writeBool($this->Trigger3OrTrigger4, $hex, 0x001E);
+        [$hex, $offset] = $this->writeBool($this->Unknown2, $hex, 0x0027);
+        [$hex, $offset] = $this->writeBool($this->Triggers12OrTriggers34, $hex, 0x0031);
+        [$hex, $offset] = $this->writeByte($this->Unknown3, $hex, 0x0032);
+        [$hex, $offset] = $this->writeSByte($this->Points, $hex, 0x0033);
+        [$hex, $offset] = $this->writeByte($this->Unknown4, $hex, 0x0034);
+        [$hex, $offset] = $this->writeByte($this->Unknown5, $hex, 0x0035);
+        [$hex, $offset] = $this->writeByte($this->Unknown6, $hex, 0x0036);
+        [$hex, $offset] = $this->writeByte($this->ActiveSquence, $hex, 0x0038);
 
         return $hex;
     }

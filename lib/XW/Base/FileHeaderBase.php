@@ -83,19 +83,18 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->Version, $hex, 0x00);
-        $hex = $this->writeShort($this->TimeLimit, $hex, 0x02);
-        $hex = $this->writeShort($this->EndState, $hex, 0x04);
-        $hex = $this->writeShort(0, $hex, 0x06);
-        $hex = $this->writeShort($this->MissionLocation, $hex, 0x08);
+        [$hex, $offset] = $this->writeShort($this->Version, $hex, 0x00);
+        [$hex, $offset] = $this->writeShort($this->TimeLimit, $hex, 0x02);
+        [$hex, $offset] = $this->writeShort($this->EndState, $hex, 0x04);
+        [$hex, $offset] = $this->writeShort(0, $hex, 0x06);
+        [$hex, $offset] = $this->writeShort($this->MissionLocation, $hex, 0x08);
         $offset = 0x0A;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->CompletionMessage[$i];
-            $hex = $this->writeString($t, $hex, $offset);
-            $offset += strlen($t);
+            [$hex, $offset] = $this->writeString($t, $hex, $offset);
         }
-        $hex = $this->writeShort($this->NumFGs, $hex, 0xCA);
-        $hex = $this->writeShort($this->NumObj, $hex, 0xCC);
+        [$hex, $offset] = $this->writeShort($this->NumFGs, $hex, 0xCA);
+        [$hex, $offset] = $this->writeShort($this->NumObj, $hex, 0xCC);
 
         return $hex;
     }

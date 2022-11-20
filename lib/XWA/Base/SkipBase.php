@@ -58,9 +58,9 @@ abstract class SkipBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeObject($this->Trigger1, $hex, 0x0);
-        $hex = $this->writeObject($this->Trigger2, $hex, 0x6);
-        $hex = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0xE);
+        [$hex, $offset] = $this->writeObject($this->Trigger1, $hex, 0x0);
+        [$hex, $offset] = $this->writeObject($this->Trigger2, $hex, 0x6);
+        [$hex, $offset] = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0xE);
 
         return $hex;
     }

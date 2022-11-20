@@ -322,152 +322,130 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->PlatformID, $hex, 0x000);
-        $hex = $this->writeByte($this->PilotStatus, $hex, 0x002);
-        $hex = $this->writeByte($this->PilotRank, $hex, 0x003);
-        $hex = $this->writeInt($this->TotalTODScore, $hex, 0x004);
-        $hex = $this->writeShort($this->RookieNumber, $hex, 0x008);
+        [$hex, $offset] = $this->writeShort($this->PlatformID, $hex, 0x000);
+        [$hex, $offset] = $this->writeByte($this->PilotStatus, $hex, 0x002);
+        [$hex, $offset] = $this->writeByte($this->PilotRank, $hex, 0x003);
+        [$hex, $offset] = $this->writeInt($this->TotalTODScore, $hex, 0x004);
+        [$hex, $offset] = $this->writeShort($this->RookieNumber, $hex, 0x008);
         $offset = 0x00A;
         for ($i = 0; $i < 5; $i++) {
             $t = $this->TODMedals[$i];
-            $hex = $this->writeBool($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeBool($t, $hex, $offset);
         }
-        $hex = $this->writeByte($this->KalidorCrescent, $hex, 0x011);
+        [$hex, $offset] = $this->writeByte($this->KalidorCrescent, $hex, 0x011);
         $offset = 0x026;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->MazeScore[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x086;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->MazeLevel[$i];
-            $hex = $this->writeByte($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeByte($t, $hex, $offset);
         }
         $offset = 0x0A0;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->XWingHistoricalScore[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x0E0;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->YWingHistoricalScore[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x120;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->AWingHistoricalScore[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x160;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->BWingHistoricalScore[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x1A0;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->BonusHistoricalScore[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x220;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->XWingHistoricalComplete[$i];
-            $hex = $this->writeBool($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeBool($t, $hex, $offset);
         }
         $offset = 0x230;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->YWingHistoricalComplete[$i];
-            $hex = $this->writeBool($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeBool($t, $hex, $offset);
         }
         $offset = 0x240;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->AWingHistoricalComplete[$i];
-            $hex = $this->writeBool($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeBool($t, $hex, $offset);
         }
         $offset = 0x250;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->BWingHistoricalComplete[$i];
-            $hex = $this->writeBool($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeBool($t, $hex, $offset);
         }
         $offset = 0x260;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->BonusHistoricalComplete[$i];
-            $hex = $this->writeBool($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeBool($t, $hex, $offset);
         }
         $offset = 0x2DF;
         for ($i = 0; $i < 5; $i++) {
             $t = $this->TourStatus[$i];
-            $hex = $this->writeByte($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeByte($t, $hex, $offset);
         }
         $offset = 0x2EF;
         for ($i = 0; $i < 5; $i++) {
             $t = $this->TourOperationsComplete[$i];
-            $hex = $this->writeByte($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeByte($t, $hex, $offset);
         }
         $offset = 0x2F7;
         for ($i = 0; $i < 12; $i++) {
             $t = $this->Tour1Scores[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x35B;
         for ($i = 0; $i < 12; $i++) {
             $t = $this->Tour2Scores[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x3BF;
         for ($i = 0; $i < 14; $i++) {
             $t = $this->Tour3Scores[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x423;
         for ($i = 0; $i < 24; $i++) {
             $t = $this->Tour4Scores[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
         $offset = 0x487;
         for ($i = 0; $i < 24; $i++) {
             $t = $this->Tour5Scores[$i];
-            $hex = $this->writeInt($t, $hex, $offset);
-            $offset += 4;
+            [$hex, $offset] = $this->writeInt($t, $hex, $offset);
         }
-        $hex = $this->writeShort($this->SurfaceVictories, $hex, 0x633);
+        [$hex, $offset] = $this->writeShort($this->SurfaceVictories, $hex, 0x633);
         $offset = 0x635;
         for ($i = 0; $i < 24; $i++) {
             $t = $this->TODKills[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
+            [$hex, $offset] = $this->writeShort($t, $hex, $offset);
         }
         $offset = 0x665;
         for ($i = 0; $i < 24; $i++) {
             $t = $this->TODCaptures[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
+            [$hex, $offset] = $this->writeShort($t, $hex, $offset);
         }
-        $hex = $this->writeInt($this->LasersFired, $hex, 0x695);
-        $hex = $this->writeInt($this->LaserCraftHits, $hex, 0x699);
-        $hex = $this->writeInt($this->LaserGroundHits, $hex, 0x69D);
-        $hex = $this->writeShort($this->MissilesFired, $hex, 0x6A1);
-        $hex = $this->writeShort($this->MissileCraftHits, $hex, 0x6A3);
-        $hex = $this->writeShort($this->MissileGroundHits, $hex, 0x6A5);
-        $hex = $this->writeShort($this->CraftLost, $hex, 0x6A7);
+        [$hex, $offset] = $this->writeInt($this->LasersFired, $hex, 0x695);
+        [$hex, $offset] = $this->writeInt($this->LaserCraftHits, $hex, 0x699);
+        [$hex, $offset] = $this->writeInt($this->LaserGroundHits, $hex, 0x69D);
+        [$hex, $offset] = $this->writeShort($this->MissilesFired, $hex, 0x6A1);
+        [$hex, $offset] = $this->writeShort($this->MissileCraftHits, $hex, 0x6A3);
+        [$hex, $offset] = $this->writeShort($this->MissileGroundHits, $hex, 0x6A5);
+        [$hex, $offset] = $this->writeShort($this->CraftLost, $hex, 0x6A7);
 
         return $hex;
     }

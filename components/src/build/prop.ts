@@ -10,6 +10,7 @@ export class Prop {
   public reservedValue?: number;
   public enumName: string = "";
   public comment: string = "";
+  public previous?: Prop;
 
   public hexGetter: string;
   public hexSetter: string;
@@ -18,6 +19,11 @@ export class Prop {
 
   public get docString(): string {
     return `${this.offset} ${this.name} ${this.type}`;
+  }
+
+  public setPrevious(previous?: Prop): this {
+    this.previous = previous;
+    return this;
   }
 
   public handleTypeLength(lengthStr: string): this {

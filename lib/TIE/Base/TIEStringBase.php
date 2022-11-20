@@ -36,7 +36,7 @@ abstract class TIEStringBase extends PyriteBase implements Byteable
 
         $this->Length = $this->getShort($hex, 0x0);
         $this->Text = $this->getChar($hex, 0x2, $this->Length);
-        $offset = 0x2 + $this->Length;
+        $offset += $this->Length;
         $this->TIEStringLength = $offset;
         return $this;
     }
@@ -54,8 +54,8 @@ abstract class TIEStringBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->Length, $hex, 0x0);
-        $hex = $this->writeChar($this->Text, $hex, 0x2);
+        [$hex, $offset] = $this->writeShort($this->Length, $hex, 0x0);
+        [$hex, $offset] = $this->writeChar($this->Text, $hex, 0x2);
 
         return $hex;
     }

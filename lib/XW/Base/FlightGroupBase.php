@@ -185,55 +185,51 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeString($this->Name, $hex, 0x00);
-        $hex = $this->writeString($this->Cargo, $hex, 0x10);
-        $hex = $this->writeString($this->SpecialCargo, $hex, 0x20);
-        $hex = $this->writeShort($this->SpecialCargoCraft, $hex, 0x30);
-        $hex = $this->writeShort($this->CraftType, $hex, 0x32);
-        $hex = $this->writeShort($this->IFF, $hex, 0x34);
-        $hex = $this->writeShort($this->FlightGroupStatus, $hex, 0x36);
-        $hex = $this->writeShort($this->NumberOfCraft, $hex, 0x38);
-        $hex = $this->writeShort($this->NumberOfWaves, $hex, 0x3A);
-        $hex = $this->writeShort($this->ArrivalEvent, $hex, 0x3C);
-        $hex = $this->writeShort($this->ArrivalDelay, $hex, 0x3E);
-        $hex = $this->writeShort($this->ArrivalFlightGroup, $hex, 0x40);
-        $hex = $this->writeShort($this->MothershipFlightGroup, $hex, 0x42);
-        $hex = $this->writeShort($this->ArriveByHyperspace, $hex, 0x44);
-        $hex = $this->writeShort($this->DepartByHyperspace, $hex, 0x46);
+        [$hex, $offset] = $this->writeString($this->Name, $hex, 0x00);
+        [$hex, $offset] = $this->writeString($this->Cargo, $hex, 0x10);
+        [$hex, $offset] = $this->writeString($this->SpecialCargo, $hex, 0x20);
+        [$hex, $offset] = $this->writeShort($this->SpecialCargoCraft, $hex, 0x30);
+        [$hex, $offset] = $this->writeShort($this->CraftType, $hex, 0x32);
+        [$hex, $offset] = $this->writeShort($this->IFF, $hex, 0x34);
+        [$hex, $offset] = $this->writeShort($this->FlightGroupStatus, $hex, 0x36);
+        [$hex, $offset] = $this->writeShort($this->NumberOfCraft, $hex, 0x38);
+        [$hex, $offset] = $this->writeShort($this->NumberOfWaves, $hex, 0x3A);
+        [$hex, $offset] = $this->writeShort($this->ArrivalEvent, $hex, 0x3C);
+        [$hex, $offset] = $this->writeShort($this->ArrivalDelay, $hex, 0x3E);
+        [$hex, $offset] = $this->writeShort($this->ArrivalFlightGroup, $hex, 0x40);
+        [$hex, $offset] = $this->writeShort($this->MothershipFlightGroup, $hex, 0x42);
+        [$hex, $offset] = $this->writeShort($this->ArriveByHyperspace, $hex, 0x44);
+        [$hex, $offset] = $this->writeShort($this->DepartByHyperspace, $hex, 0x46);
         $offset = 0x48;
         for ($i = 0; $i < 7; $i++) {
             $t = $this->XCoordinates[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
+            [$hex, $offset] = $this->writeShort($t, $hex, $offset);
         }
         $offset = 0x56;
         for ($i = 0; $i < 7; $i++) {
             $t = $this->YCoordinates[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
+            [$hex, $offset] = $this->writeShort($t, $hex, $offset);
         }
         $offset = 0x64;
         for ($i = 0; $i < 7; $i++) {
             $t = $this->ZCoordinates[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
+            [$hex, $offset] = $this->writeShort($t, $hex, $offset);
         }
         $offset = 0x72;
         for ($i = 0; $i < 7; $i++) {
             $t = $this->CoordinatesEnabled[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
+            [$hex, $offset] = $this->writeShort($t, $hex, $offset);
         }
-        $hex = $this->writeShort($this->Formation, $hex, 0x80);
-        $hex = $this->writeShort($this->PlayerCraft, $hex, 0x82);
-        $hex = $this->writeShort($this->CraftAI, $hex, 0x84);
-        $hex = $this->writeShort($this->Order, $hex, 0x86);
-        $hex = $this->writeShort($this->OrderVariable, $hex, 0x88);
-        $hex = $this->writeShort($this->CraftColour, $hex, 0x8A);
-        $hex = $this->writeShort(0, $hex, 0x8C);
-        $hex = $this->writeShort($this->CraftObjective, $hex, 0x8E);
-        $hex = $this->writeShort($this->PrimaryTarget, $hex, 0x90);
-        $hex = $this->writeShort($this->SecondaryTarget, $hex, 0x92);
+        [$hex, $offset] = $this->writeShort($this->Formation, $hex, 0x80);
+        [$hex, $offset] = $this->writeShort($this->PlayerCraft, $hex, 0x82);
+        [$hex, $offset] = $this->writeShort($this->CraftAI, $hex, 0x84);
+        [$hex, $offset] = $this->writeShort($this->Order, $hex, 0x86);
+        [$hex, $offset] = $this->writeShort($this->OrderVariable, $hex, 0x88);
+        [$hex, $offset] = $this->writeShort($this->CraftColour, $hex, 0x8A);
+        [$hex, $offset] = $this->writeShort(0, $hex, 0x8C);
+        [$hex, $offset] = $this->writeShort($this->CraftObjective, $hex, 0x8E);
+        [$hex, $offset] = $this->writeShort($this->PrimaryTarget, $hex, 0x90);
+        [$hex, $offset] = $this->writeShort($this->SecondaryTarget, $hex, 0x92);
 
         return $hex;
     }

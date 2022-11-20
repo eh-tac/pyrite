@@ -54,6 +54,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
             $this->ObjectGroups[] = $t;
             $offset += $t->getLength();
         }
+        $offset += $t->getLength();
         $this->MissionLength = $offset;
         return $this;
     }
@@ -72,18 +73,16 @@ abstract class MissionBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeObject($this->FileHeader, $hex, 0x00);
+        [$hex, $offset] = $this->writeObject($this->FileHeader, $hex, 0x00);
         $offset = 0xCE;
         for ($i = 0; $i < $this->FileHeader->NumFGs; $i++) {
             $t = $this->FlightGroups[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
         $offset = $offset;
         for ($i = 0; $i < $this->FileHeader->NumObj; $i++) {
             $t = $this->ObjectGroups[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
 
         return $hex;

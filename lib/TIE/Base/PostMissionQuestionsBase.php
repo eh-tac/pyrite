@@ -47,7 +47,7 @@ abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable
         $this->QuestionCondition = $this->getByte($hex, 0x2);
         $this->QuestionType = $this->getByte($hex, 0x3);
         $this->Question = $this->getChar($hex, 0x4, $this->QuestionLength());
-        $offset = 0x4 + $this->QuestionLength();
+        $offset += $this->QuestionLength();
         // static BYTE value Spacer = 10
         $offset += 1;
         $this->Answer = $this->getChar($hex, $offset, $this->AnswerLength());
@@ -72,12 +72,12 @@ abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->Length, $hex, 0x0);
-        $hex = $this->writeByte($this->QuestionCondition, $hex, 0x2);
-        $hex = $this->writeByte($this->QuestionType, $hex, 0x3);
-        $hex = $this->writeChar($this->Question, $hex, 0x4);
-        $hex = $this->writeByte(10, $hex, $offset);
-        $hex = $this->writeChar($this->Answer, $hex, $offset);
+        [$hex, $offset] = $this->writeShort($this->Length, $hex, 0x0);
+        [$hex, $offset] = $this->writeByte($this->QuestionCondition, $hex, 0x2);
+        [$hex, $offset] = $this->writeByte($this->QuestionType, $hex, 0x3);
+        [$hex, $offset] = $this->writeChar($this->Question, $hex, 0x4);
+        [$hex, $offset] = $this->writeByte(10, $hex, $offset);
+        [$hex, $offset] = $this->writeChar($this->Answer, $hex, $offset);
 
         return $hex;
     }

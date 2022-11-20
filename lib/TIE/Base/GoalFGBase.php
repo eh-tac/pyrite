@@ -54,8 +54,8 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeByte($this->Condition, $hex, 0x0);
-        $hex = $this->writeByte($this->GoalAmount, $hex, 0x1);
+        [$hex, $offset] = $this->writeByte($this->Condition, $hex, 0x0);
+        [$hex, $offset] = $this->writeByte($this->GoalAmount, $hex, 0x1);
 
         return $hex;
     }

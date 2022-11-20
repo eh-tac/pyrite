@@ -148,7 +148,7 @@ class Battle
             return; // already decrypted!
         }
         $ehb = $this->getBattleIndex();
-        $offset = $ehb->encryptionOffset;
+        $offset = $ehb->EncryptionOffset;
         $originals = $this->missionFiles;
         foreach ($originals as $filename) {
             $original = file_get_contents($this->folder . $filename);
@@ -163,20 +163,33 @@ class Battle
         file_put_contents($df, json_encode($ehb));
     }
 
+    /**
+     * 
+     * @return BattleIndex
+     */
     public function getBattleIndex()
     {
         if (in_array('Battle.ehb', $this->resourceFiles)) {
-            return BattleIndex::fromHex(file_get_contents($this->folder . 'Battle.ehb'), $this->name());
+            return BattleIndex::fromHex(file_get_contents($this->folder . 'Battle.ehb'));
         } else {
             return $this->createBattleIndex();
         }
     }
 
+    /**
+     * Create battle index if it doesn't exist.
+     * @return BattleIndex 
+     */
     public function createBattleIndex()
     {
-        $ehb = BattleIndex::build($this->name(), $this->title, $this->missionFiles);
-        $ehb->platform = Platform::battleIndexID($this->platform);
-        return $ehb;
+        return
+            BattleIndex::build(
+                Platform::battleIndexID($this->platform),
+                $this->title,
+                $this->missionFiles,
+                $this->num,
+                0
+            );
     }
 
     public function name()

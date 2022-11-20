@@ -80,18 +80,16 @@ abstract class WayptBase extends PyriteBase implements Byteable
         $offset = 0x00;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->StartPoints[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
+            [$hex, $offset] = $this->writeShort($t, $hex, $offset);
         }
         $offset = 0x08;
         for ($i = 0; $i < 8; $i++) {
             $t = $this->Waypoints[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
+            [$hex, $offset] = $this->writeShort($t, $hex, $offset);
         }
-        $hex = $this->writeShort($this->Rendezvous, $hex, 0x18);
-        $hex = $this->writeShort($this->Hyperspace, $hex, 0x1A);
-        $hex = $this->writeShort($this->Briefing, $hex, 0x1C);
+        [$hex, $offset] = $this->writeShort($this->Rendezvous, $hex, 0x18);
+        [$hex, $offset] = $this->writeShort($this->Hyperspace, $hex, 0x1A);
+        [$hex, $offset] = $this->writeShort($this->Briefing, $hex, 0x1C);
 
         return $hex;
     }

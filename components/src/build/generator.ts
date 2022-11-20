@@ -54,13 +54,13 @@ export class PyriteGenerator {
         currentStruct = undefined; // end of struct, get ready for the next
         currentProp = undefined;
       } else {
-        currentProp = this.parseProp(bits);
+        currentProp = this.parseProp(bits, currentProp);
         currentStruct.addProp(currentProp);
       }
     }
   }
 
-  public parseProp(bits: string[]): Prop {
+  public parseProp(bits: string[], previousProp?: Prop): Prop {
     if (bits.length === 2) {
       bits.push("Unnamed");
     }
@@ -98,6 +98,7 @@ export class PyriteGenerator {
       console.warn("very confused by", bits);
     }
     return prop
+      .setPrevious(previousProp)
       .handleTypeLength(match.groups["typeLen"])
       .handleArrayLength(match.groups["arrayLen"])
       .handleRest(rest);

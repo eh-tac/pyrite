@@ -63,10 +63,9 @@ abstract class GlobalGoalBase extends PyriteBase implements Byteable
         $offset = 0x00;
         for ($i = 0; $i < 2; $i++) {
             $t = $this->Triggers[$i];
-            $hex = $this->writeObject($t, $hex, $offset);
-            $offset += $t->getLength();
+            [$hex, $offset] = $this->writeObject($t, $hex, $offset);
         }
-        $hex = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x19);
+        [$hex, $offset] = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x19);
 
         return $hex;
     }

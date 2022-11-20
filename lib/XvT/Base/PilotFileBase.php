@@ -67,9 +67,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->PilotRating = $this->getInt($hex, 0x2326);
         $this->RatingLabel = $this->getChar($hex, 0x2392, 32);
         $this->RebelStats = (new TeamStats(substr($hex, 0x3ef2), $this->TIE))->loadHex();
-        $offset = 0x3ef2 + $this->RebelStats->getLength();
         $this->ImperialStats = (new TeamStats(substr($hex, 0x12716), $this->TIE))->loadHex();
-        $offset = 0x12716 + $this->ImperialStats->getLength();
+        $offset += $this->ImperialStats->getLength();
         $this->PilotFileLength = $offset;
         return $this;
     }
@@ -97,18 +96,18 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeChar($this->Name, $hex, 0x0000);
-        $hex = $this->writeInt($this->TotalScore, $hex, 0x000E);
-        $hex = $this->writeInt($this->Kills, $hex, 0x035E);
-        $hex = $this->writeInt($this->LasersHit, $hex, 0x143E);
-        $hex = $this->writeInt($this->LasersTotal, $hex, 0x144A);
-        $hex = $this->writeInt($this->WarheadsHit, $hex, 0x1456);
-        $hex = $this->writeInt($this->WarheadsTotal, $hex, 0x1462);
-        $hex = $this->writeInt($this->CraftLosses, $hex, 0x146E);
-        $hex = $this->writeInt($this->PilotRating, $hex, 0x2326);
-        $hex = $this->writeChar($this->RatingLabel, $hex, 0x2392);
-        $hex = $this->writeObject($this->RebelStats, $hex, 0x3ef2);
-        $hex = $this->writeObject($this->ImperialStats, $hex, 0x12716);
+        [$hex, $offset] = $this->writeChar($this->Name, $hex, 0x0000);
+        [$hex, $offset] = $this->writeInt($this->TotalScore, $hex, 0x000E);
+        [$hex, $offset] = $this->writeInt($this->Kills, $hex, 0x035E);
+        [$hex, $offset] = $this->writeInt($this->LasersHit, $hex, 0x143E);
+        [$hex, $offset] = $this->writeInt($this->LasersTotal, $hex, 0x144A);
+        [$hex, $offset] = $this->writeInt($this->WarheadsHit, $hex, 0x1456);
+        [$hex, $offset] = $this->writeInt($this->WarheadsTotal, $hex, 0x1462);
+        [$hex, $offset] = $this->writeInt($this->CraftLosses, $hex, 0x146E);
+        [$hex, $offset] = $this->writeInt($this->PilotRating, $hex, 0x2326);
+        [$hex, $offset] = $this->writeChar($this->RatingLabel, $hex, 0x2392);
+        [$hex, $offset] = $this->writeObject($this->RebelStats, $hex, 0x3ef2);
+        [$hex, $offset] = $this->writeObject($this->ImperialStats, $hex, 0x12716);
 
         return $hex;
     }

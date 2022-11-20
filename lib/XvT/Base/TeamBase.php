@@ -73,19 +73,17 @@ abstract class TeamBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->Reserved, $hex, 0x000);
-        $hex = $this->writeString($this->Name, $hex, 0x002);
+        [$hex, $offset] = $this->writeShort($this->Reserved, $hex, 0x000);
+        [$hex, $offset] = $this->writeString($this->Name, $hex, 0x002);
         $offset = 0x01A;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->Allegiances[$i];
-            $hex = $this->writeBool($t, $hex, $offset);
-            $offset += 1;
+            [$hex, $offset] = $this->writeBool($t, $hex, $offset);
         }
         $offset = 0x024;
         for ($i = 0; $i < 6; $i++) {
             $t = $this->EndOfMissionMessages[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 64;
+            [$hex, $offset] = $this->writeChar($t, $hex, $offset);
         }
 
         return $hex;

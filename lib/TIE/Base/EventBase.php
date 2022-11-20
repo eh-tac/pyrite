@@ -46,6 +46,7 @@ abstract class EventBase extends PyriteBase implements Byteable
             $this->Variables[] = $t;
             $offset += 2;
         }
+        $offset += 2;
         $this->EventLength = $offset;
         return $this;
     }
@@ -64,13 +65,12 @@ abstract class EventBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeShort($this->Time, $hex, 0x0);
-        $hex = $this->writeShort($this->EventType, $hex, 0x2);
+        [$hex, $offset] = $this->writeShort($this->Time, $hex, 0x0);
+        [$hex, $offset] = $this->writeShort($this->EventType, $hex, 0x2);
         $offset = 0x4;
         for ($i = 0; $i < $this->VariableCount(); $i++) {
             $t = $this->Variables[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
+            [$hex, $offset] = $this->writeShort($t, $hex, $offset);
         }
 
         return $hex;

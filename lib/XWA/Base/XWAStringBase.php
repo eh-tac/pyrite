@@ -33,6 +33,7 @@ abstract class XWAStringBase extends PyriteBase implements Byteable
         $offset = 0;
 
         $this->Magic = $this->getByte($hex, 0x0);
+        $offset += 1;
         $this->XWAStringLength = $offset;
         return $this;
     }
@@ -49,7 +50,7 @@ abstract class XWAStringBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeByte($this->Magic, $hex, 0x0);
+        [$hex, $offset] = $this->writeByte($this->Magic, $hex, 0x0);
 
         return $hex;
     }

@@ -1,0 +1,20 @@
+struct BattleIndex (size 0)
+{
+  0x00 BYTE Platform (enum)
+  0x01 BYTE EncryptionOffset
+  0x02 STR<50> Title
+  0x35 BYTE MissionCount
+  0x36 BYTE Unknown1
+  0x37 CHAR<21>[MissionCount] MissionFilenames
+  PV   BYTE Unknown2  
+  PV   BYTE Unknown3
+  PV   BYTE Unknown4
+  PV   BYTE Reserved1 Reserved(1)
+  PV   BYTE Reserved2 Reserved(0)
+  PV   BYTE Unknown5
+  PV   BYTE Unknown6
+  PV   BYTE Reserved3 Reserved(1)
+  PV   BYTE Reserved4 Reserved(0)
+  PV   BYTE BattleNumber
+  PV   BYTE Reserved5 Reserved(0)
+}
