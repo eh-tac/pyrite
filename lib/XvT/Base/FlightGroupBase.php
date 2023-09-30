@@ -3,6 +3,7 @@
 namespace Pyrite\XvT\Base;
 
 use Pyrite\Byteable;
+use Pyrite\Hex;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
@@ -190,7 +191,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
     public $NumberOfOptionalCraft;
     /** @var integer[] 0x557 NumberOfOptionalCraftWaves BYTE */
     public $NumberOfOptionalCraftWaves;
-    
+
     public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
@@ -357,12 +358,12 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
             $this->NumberOfOptionalCraftWaves[] = $t;
             $offset += 1;
         }
-        
+
 
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
-    
+
     public function __debugInfo()
     {
         return [
@@ -453,7 +454,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
             "NumberOfOptionalCraftWaves" => $this->NumberOfOptionalCraftWaves
         ];
     }
-    
+
     public function toHexString($hex = null)
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
@@ -602,62 +603,62 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
 
         return $hex;
     }
-    
-    public function getCraftTypeLabel() 
+
+    public function getCraftTypeLabel()
     {
         return isset($this->CraftType) && isset(Constants::$SHIPS[$this->CraftType]) ? Constants::$SHIPS[$this->CraftType] : "Unknown";
     }
 
-    public function getStatus1Label() 
+    public function getStatus1Label()
     {
         return isset($this->Status1) && isset(Constants::$STATUS[$this->Status1]) ? Constants::$STATUS[$this->Status1] : "Unknown";
     }
 
-    public function getWarheadLabel() 
+    public function getWarheadLabel()
     {
         return isset($this->Warhead) && isset(Constants::$WARHEAD[$this->Warhead]) ? Constants::$WARHEAD[$this->Warhead] : "Unknown";
     }
 
-    public function getBeamLabel() 
+    public function getBeamLabel()
     {
         return isset($this->Beam) && isset(Constants::$BEAM[$this->Beam]) ? Constants::$BEAM[$this->Beam] : "Unknown";
     }
 
-    public function getGroupAILabel() 
+    public function getGroupAILabel()
     {
         return isset($this->GroupAI) && isset(Constants::$GROUPAI[$this->GroupAI]) ? Constants::$GROUPAI[$this->GroupAI] : "Unknown";
     }
 
-    public function getMarkingsLabel() 
+    public function getMarkingsLabel()
     {
         return isset($this->Markings) && isset(Constants::$MARKINGS[$this->Markings]) ? Constants::$MARKINGS[$this->Markings] : "Unknown";
     }
 
-    public function getRadioLabel() 
+    public function getRadioLabel()
     {
         return isset($this->Radio) && isset(Constants::$RADIO[$this->Radio]) ? Constants::$RADIO[$this->Radio] : "Unknown";
     }
 
-    public function getFormationLabel() 
+    public function getFormationLabel()
     {
         return isset($this->Formation) && isset(Constants::$FORMATION[$this->Formation]) ? Constants::$FORMATION[$this->Formation] : "Unknown";
     }
 
-    public function getArrivalDifficultyLabel() 
+    public function getArrivalDifficultyLabel()
     {
         return isset($this->ArrivalDifficulty) && isset(Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty]) ? Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty] : "Unknown";
     }
 
-    public function getAbortTriggerLabel() 
+    public function getAbortTriggerLabel()
     {
         return isset($this->AbortTrigger) && isset(Constants::$ABORTTRIGGER[$this->AbortTrigger]) ? Constants::$ABORTTRIGGER[$this->AbortTrigger] : "Unknown";
     }
 
-    public function getStatus2Label() 
+    public function getStatus2Label()
     {
         return isset($this->Status2) && isset(Constants::$STATUS[$this->Status2]) ? Constants::$STATUS[$this->Status2] : "Unknown";
     }
-    
+
     public function getLength()
     {
         return self::FLIGHTGROUPLENGTH;

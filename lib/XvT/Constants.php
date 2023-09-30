@@ -1,4 +1,5 @@
 <?php
+
 namespace Pyrite\XvT;
 
 class Constants
@@ -534,6 +535,11 @@ class Constants
         3 => "Hard",
         4 => "Medium, Hard",
         5 => "Easy, Medium",
+        6 => "Never",
+        7 => "Never",
+        8 => "Easy",
+        9 => "Medium",
+        10 => "Hard",
     ];
 
     public static $ARRIVALDIFFICULTY_ALL = 0;
@@ -986,5 +992,4 @@ class Constants
     public static $SHIPCATEGORY_ALLREBELFLYABLE = 2;
     public static $SHIPCATEGORY_ALLIMPERIALFLYABLE = 3;
     public static $SHIPCATEGORY_USERDEFINED = 4;
-
 }

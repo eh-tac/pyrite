@@ -2,7 +2,14 @@
 
 namespace Pyrite;
 
-interface Scoring {
+interface FlightGroupScoring
+{
+    /**
+     * @param string $difficulty difficulty level Easy|Medium|Hard
+     * @return bool whether this flight group appears in the given difficulty level
+     */
+    public function IsInDifficultyLevel($difficulty);
+
     /**
      * @param [$difficulty] if required by the platform, the applicable difficulty setting for determining point value
      * @return points for destroying this object
@@ -20,4 +27,4 @@ interface Scoring {
 
     /** @return int the maximum number of warheads the craft may carry */
     public function maxWarheads();
-} 
+}

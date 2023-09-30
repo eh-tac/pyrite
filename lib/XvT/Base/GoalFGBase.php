@@ -41,7 +41,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
     public $Reserved; //(0) Unknown15
     /** @var integer 0x0E Unknown16 BYTE */
     public $Unknown16;
-    
+
     public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
@@ -70,12 +70,12 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         $this->Unknown14 = $this->getBool($hex, 0x0C);
         $this->Reserved = $this->getByte($hex, 0x0D);
         $this->Unknown16 = $this->getByte($hex, 0x0E);
-        
+
 
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
-    
+
     public function __debugInfo()
     {
         return [
@@ -94,7 +94,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
             "Unknown16" => $this->Unknown16
         ];
     }
-    
+
     public function toHexString($hex = null)
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
@@ -116,17 +116,22 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
 
         return $hex;
     }
-    
-    public function getConditionLabel() 
+
+    public function getArgumentLabel()
+    {
+        return isset($this->Argument) && isset(Constants::$GOALARGUMENT[$this->Argument]) ? Constants::$GOALARGUMENT[$this->Argument] : "Unknown";
+    }
+
+    public function getConditionLabel()
     {
         return isset($this->Condition) && isset(Constants::$CONDITION[$this->Condition]) ? Constants::$CONDITION[$this->Condition] : "Unknown";
     }
 
-    public function getAmountLabel() 
+    public function getAmountLabel()
     {
         return isset($this->Amount) && isset(Constants::$AMOUNT[$this->Amount]) ? Constants::$AMOUNT[$this->Amount] : "Unknown";
     }
-    
+
     public function getLength()
     {
         return self::GOALFGLENGTH;

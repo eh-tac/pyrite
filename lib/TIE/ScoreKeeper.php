@@ -2,6 +2,8 @@
 
 namespace Pyrite\TIE;
 
+use Pyrite\ScoreRow;
+
 class ScoreKeeper
 {
     private $TIE;
@@ -20,6 +22,13 @@ class ScoreKeeper
     public $player = null;
     public $warhead = null;
 
+    /** @var ScoreRow[] */
+    public $flightGroups = [];
+    /** @var ScoreRow[] */
+    public $goals = [];
+    /** @var ScoreRow[] */
+    public $craftOptions = [];
+
     public function __construct(Mission $TIE, $difficulty = 'Hard')
     {
         $this->TIE = $TIE;
@@ -29,8 +38,6 @@ class ScoreKeeper
 
     public function process()
     {
-
-
         foreach (['Primary', 'Secondary', 'Bonus'] as $idx => $type) {
             $gg = $this->TIE->GlobalGoals[$idx];
             if ($gg instanceof GlobalGoal && $gg->hasData()) {
@@ -62,6 +69,7 @@ class ScoreKeeper
                 if ($points) {
                     $this->total += $points;
                     $this->fgs[] = $name . ': ' . $points;
+                    $this->flightGroups[] = ScoreRow::create((string)$fg, count($fg), $points);
                 }
             }
 
@@ -91,7 +99,19 @@ class ScoreKeeper
 
             if ($fg->isPlayerCraft()) {
                 $this->playerCraft = $fg;
+                $this->craftOptions = [ScoreRow::create("Player craft: $fg", 1, 0)];
             }
+        }
+
+        $goalPoints = $this->goalPoints[$this->difficultyFilter];
+        if (count($this->goalTypes['Primary'])) {
+            $this->goals[] = ScoreRow::create("Primary goals: ", 1, $goalPoints);
+        }
+        if (count($this->goalTypes['Secondary'])) {
+            $this->goals[] = ScoreRow::create("Secondary goals: ", 1, $goalPoints);
+        }
+        if (count($this->goalTypes['Bonus'])) {
+            $this->goals[] = ScoreRow::create("All Bonus goals: ", 1, 3100);
         }
     }
 
@@ -147,5 +167,23 @@ class ScoreKeeper
             //            'FGGoals' => $this->fgGoals,
             'Total Potential Score' => $this->total . ' pts'
         );
+    }
+
+    public function getData()
+    {
+        return array_merge(
+            [ScoreRow::header("Flight Groups")],
+            $this->flightGroups,
+            [ScoreRow::header("Goals")],
+            $this->goals,
+            [ScoreRow::header("Player Craft")],
+            $this->craftOptions
+        );
+    }
+
+    public function getTotal()
+    {
+        $rows = array_filter($this->getData(), fn ($row) => $row->number > 0);
+        return array_sum(array_map(fn ($row) => $row->points, $rows));
     }
 }

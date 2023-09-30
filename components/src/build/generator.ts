@@ -48,6 +48,9 @@ export class PyriteGenerator {
         // has data and no current struct - this must be the header line
         // 'struct', name, '(size', 0x123)
         const [, heading, , hexSize] = bits;
+        if (!hexSize) {
+          console.warn(`Bad line ${l}`);
+        }
         currentStruct = new Struct(heading, hexSize.replace(")", ""));
         this.structs[heading] = currentStruct;
       } else if (line === "}") {

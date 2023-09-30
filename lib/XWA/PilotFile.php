@@ -9,6 +9,18 @@ class PilotFile extends Base\PilotFileBase
         return (new PilotFile($hex, $tie))->loadHex();
     }
 
+    public static function createBlank($filename, $startMission = 0)
+    {
+        $ehblTemplate = __DIR__ . '/../../assets/xwablank.plt';
+        $data = file_get_contents($ehblTemplate);
+
+        $pilotFile = PilotFile::fromHex($data);
+        $pilotFile->setUpForMissionID($startMission);
+        $pilotFile->Name = $filename;
+
+        return $pilotFile;
+    }
+
     public function getCompletedMissionScores($resetNumbering = true)
     {
         $missions = $this->getCompletedMissions();

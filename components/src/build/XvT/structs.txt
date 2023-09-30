@@ -229,7 +229,7 @@ struct Order (size 0x52)
 
 struct GoalFG (size 0x4E)
 {
-	0x00	BYTE	Argument
+	0x00	BYTE	GoalArgument (enum)
 	0x01	BYTE	Condition (enum)
 	0x02	BYTE	Amount (enum)
 	0x03	SBYTE	Points

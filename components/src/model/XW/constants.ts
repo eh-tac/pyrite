@@ -207,6 +207,12 @@ export class Constants {
     16: "Arrived",
   };
 
+  public static OBJECTOBJECTIVE = {
+    3: "None",
+    4: "Destroy",
+    5: "Survive",
+  };
+
 }
 
 export enum PilotStatus {
@@ -415,4 +421,10 @@ export enum CraftObjective {
   specialCraftIdentified = 14,
   halfIdentified = 15,
   arrived = 16,
+}
+
+export enum ObjectObjective {
+  none = 3,
+  destroy = 4,
+  survive = 5,
 }

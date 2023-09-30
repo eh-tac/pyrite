@@ -29,7 +29,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     this.CompletionMessage = [];
     offset = 0x0A;
     for (let i = 0; i < 3; i++) {
-      const t = getString(hex, offset);
+      const t = getString(hex, offset, 64);
       this.CompletionMessage.push(t);
       offset += t.length + 1;
     }

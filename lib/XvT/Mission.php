@@ -1,20 +1,21 @@
 <?php
+
 namespace Pyrite\XvT;
-    
+
 class Mission extends Base\MissionBase
 {
+  public static function fromHex($hex, $tie = null)
+  {
+    return (new Mission($hex, $tie))->loadHex();
+  }
 
-    public static function fromHex($hex, $tie = null) {
-      return (new Mission($hex, $tie))->loadHex();
-    }
+  public function __toString()
+  {
+    return '';
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    protected function FGGoalStringCount() 
-    {
-      return 0;
-    }
+  protected function FGGoalStringCount()
+  {
+    return 0;
+  }
 }

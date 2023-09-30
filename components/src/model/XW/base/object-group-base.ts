@@ -27,9 +27,9 @@ export abstract class ObjectGroupBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Name = getString(hex, 0x00);
-    this.Cargo = getString(hex, 0x10);
-    this.SpecialCargo = getString(hex, 0x20);
+    this.Name = getString(hex, 0x00, 16);
+    this.Cargo = getString(hex, 0x10, 16);
+    this.SpecialCargo = getString(hex, 0x20, 16);
     // static prop Reserved
     this.ObjectType = getShort(hex, 0x32);
     this.IFF = getShort(hex, 0x34);
@@ -49,9 +49,9 @@ export abstract class ObjectGroupBase extends PyriteBase implements Byteable {
       Name: this.Name,
       Cargo: this.Cargo,
       SpecialCargo: this.SpecialCargo,
-      ObjectType: this.ObjectType,
+      ObjectType: this.ObjectTypeLabel,
       IFF: this.IFFLabel,
-      Objective: this.Objective,
+      Objective: this.ObjectiveLabel,
       NumberOfObjects: this.NumberOfObjects,
       PositionX: this.PositionX,
       PositionY: this.PositionY,
@@ -81,8 +81,16 @@ export abstract class ObjectGroupBase extends PyriteBase implements Byteable {
     return hex;
   }
   
+  public get ObjectTypeLabel(): string {
+    return Constants.OBJECTTYPE[this.ObjectType] || "Unknown";
+  }
+
   public get IFFLabel(): string {
     return Constants.IFF[this.IFF] || "Unknown";
+  }
+
+  public get ObjectiveLabel(): string {
+    return Constants.OBJECTIVE[this.Objective] || "Unknown";
   }
   
   public getLength(): number {

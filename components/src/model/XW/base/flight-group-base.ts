@@ -42,9 +42,9 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Name = getString(hex, 0x00);
-    this.Cargo = getString(hex, 0x10);
-    this.SpecialCargo = getString(hex, 0x20);
+    this.Name = getString(hex, 0x00, 16);
+    this.Cargo = getString(hex, 0x10, 16);
+    this.SpecialCargo = getString(hex, 0x20, 16);
     this.SpecialCargoCraft = getShort(hex, 0x30);
     this.CraftType = getShort(hex, 0x32);
     this.IFF = getShort(hex, 0x34);
