@@ -10,7 +10,7 @@ export abstract class PageBase extends PyriteBase implements Byteable {
   public EventsLength: number;
   public CoordinateSet: number;
   public PageType: number;
-  public Events[EventsLength]: number;
+  public Events: number[];
   
   constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
@@ -21,7 +21,13 @@ export abstract class PageBase extends PyriteBase implements Byteable {
     this.EventsLength = getShort(hex, 0x02);
     this.CoordinateSet = getShort(hex, 0x04);
     this.PageType = getShort(hex, 0x06);
-    this.Events[EventsLength] = getShort(hex, 0x08);
+    this.Events = [];
+    offset = 0x08;
+    for (let i = 0; i < this.EventsLength; i++) {
+      const t = getShort(hex, offset);
+      this.Events.push(t);
+      offset += 2;
+    }
     this.PageLength = offset;
   }
   
@@ -31,7 +37,7 @@ export abstract class PageBase extends PyriteBase implements Byteable {
       EventsLength: this.EventsLength,
       CoordinateSet: this.CoordinateSet,
       PageType: this.PageType,
-      Events[EventsLength]: this.Events[EventsLength]
+      Events: this.Events
     };
   }
   
@@ -43,7 +49,12 @@ export abstract class PageBase extends PyriteBase implements Byteable {
     writeShort(hex, this.EventsLength, 0x02);
     writeShort(hex, this.CoordinateSet, 0x04);
     writeShort(hex, this.PageType, 0x06);
-    writeShort(hex, this.Events[EventsLength], 0x08);
+    offset = 0x08;
+    for (let i = 0; i < this.EventsLength; i++) {
+      const t = this.Events[i];
+      writeShort(hex, t, offset);
+      offset += 2;
+    }
 
     return hex;
   }

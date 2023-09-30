@@ -21,8 +21,8 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
     public $EndEvent;
     /** @var integer 0x04 RndSeed SHORT */
     public $RndSeed; //(unused)
-    /** @var integer 0x06 Location SHORT */
-    public $Location;
+    /** @var integer 0x06 MissionLocation SHORT */
+    public $MissionLocation;
     /** @var string[] 0x08 EndOfMissionMessages CHAR */
     public $EndOfMissionMessages;
     
@@ -44,7 +44,7 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
         $this->TimeLimitMinutes = $this->getShort($hex, 0x00);
         $this->EndEvent = $this->getShort($hex, 0x02);
         $this->RndSeed = $this->getShort($hex, 0x04);
-        $this->Location = $this->getShort($hex, 0x06);
+        $this->MissionLocation = $this->getShort($hex, 0x06);
         $this->EndOfMissionMessages = [];
         $offset = 0x08;
         for ($i = 0; $i < 64; $i++) {
@@ -64,7 +64,7 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
             "TimeLimitMinutes" => $this->TimeLimitMinutes,
             "EndEvent" => $this->getEndEventLabel(),
             "RndSeed" => $this->RndSeed,
-            "Location" => $this->getLocationLabel(),
+            "MissionLocation" => $this->getMissionLocationLabel(),
             "EndOfMissionMessages" => $this->EndOfMissionMessages
         ];
     }
@@ -77,7 +77,7 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
         $hex = $this->writeShort($this->TimeLimitMinutes, $hex, 0x00);
         $hex = $this->writeShort($this->EndEvent, $hex, 0x02);
         $hex = $this->writeShort($this->RndSeed, $hex, 0x04);
-        $hex = $this->writeShort($this->Location, $hex, 0x06);
+        $hex = $this->writeShort($this->MissionLocation, $hex, 0x06);
         $offset = 0x08;
         for ($i = 0; $i < 64; $i++) {
             $t = $this->EndOfMissionMessages[$i];
@@ -93,9 +93,9 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
         return isset($this->EndEvent) && isset(Constants::$ENDEVENT[$this->EndEvent]) ? Constants::$ENDEVENT[$this->EndEvent] : "Unknown";
     }
 
-    public function getLocationLabel() 
+    public function getMissionLocationLabel() 
     {
-        return isset($this->Location) && isset(Constants::$LOCATION[$this->Location]) ? Constants::$LOCATION[$this->Location] : "Unknown";
+        return isset($this->MissionLocation) && isset(Constants::$MISSIONLOCATION[$this->MissionLocation]) ? Constants::$MISSIONLOCATION[$this->MissionLocation] : "Unknown";
     }
     
     public function getLength()

@@ -1,12 +1,12 @@
 import { BriefingHeader } from "../briefing-header";
 import { Byteable } from "../../../byteable";
-import { CoordinateSet } from "../coordinate-set";
+import { Coordinate } from "../coordinate";
 import { IMission, PyriteBase } from "../../../pyrite-base";
-import { IconSet } from "../icon-set";
+import { Icon } from "../icon";
 import { MissionHeader } from "../mission-header";
 import { Page } from "../page";
-import { Strings } from "../strings";
-import { Tags } from "../tags";
+import { String } from "../string";
+import { Tag } from "../tag";
 import { ViewportSetting } from "../viewport-setting";
 import { getByte, getShort, writeByte, writeObject, writeShort } from "../../../hex";
 // tslint:disable member-ordering
@@ -15,16 +15,16 @@ import { getByte, getShort, writeByte, writeObject, writeShort } from "../../../
 export abstract class BriefingBase extends PyriteBase implements Byteable {
   public BriefingLength: number;
   public BriefingHeader: BriefingHeader;
-  public Coordinates: CoordinateSet[];
-  public IconSet: IconSet;
+  public CoordinateSet: Coordinate[];
+  public IconSet: Icon[];
   public WindowSettingsCount: number;
   public Viewports: ViewportSetting[];
   public PageCount: number;
   public Pages: Page[];
   public MissionHeader: MissionHeader;
   public IconExtraData: number[];
-  public Tags: Tags;
-  public Strings: Strings;
+  public Tags: Tag;
+  public Strings: String;
   
   constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
@@ -32,15 +32,20 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     let offset = 0;
 
     this.BriefingHeader = new BriefingHeader(hex.slice(0x00), this.TIE);
-    this.Coordinates = [];
+    this.CoordinateSet = [];
     offset = 0x6;
     for (let i = 0; i < this.CoordinateCount(); i++) {
-      const t = new CoordinateSet(hex.slice(offset), this.TIE);
-      this.Coordinates.push(t);
+      const t = new Coordinate(hex.slice(offset), this.TIE);
+      this.CoordinateSet.push(t);
       offset += t.getLength();
     }
-    this.IconSet = new IconSet(hex.slice(offset), this.TIE);
-    offset += this.IconSet.getLength();
+    this.IconSet = [];
+    offset = offset;
+    for (let i = 0; i < this.BriefingHeader.IconCount; i++) {
+      const t = new Icon(hex.slice(offset), this.TIE);
+      this.IconSet.push(t);
+      offset += t.getLength();
+    }
     this.WindowSettingsCount = getShort(hex, offset);
     this.Viewports = [];
     offset = offset;
@@ -60,14 +65,14 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     this.MissionHeader = new MissionHeader(hex.slice(offset), this.TIE);
     this.IconExtraData = [];
     offset = offset;
-    for (let i = 0; i < this.IconCount; i++) {
+    for (let i = 0; i < this.BriefingHeader.IconCount; i++) {
       const t = getByte(hex, offset);
       this.IconExtraData.push(t);
       offset += 90;
     }
-    this.Tags = new Tags(hex.slice(offset), this.TIE);
+    this.Tags = new Tag(hex.slice(offset), this.TIE);
     offset += this.Tags.getLength();
-    this.Strings = new Strings(hex.slice(offset), this.TIE);
+    this.Strings = new String(hex.slice(offset), this.TIE);
     offset += this.Strings.getLength();
     this.BriefingLength = offset;
   }
@@ -75,7 +80,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
   public toJSON(): object {
     return {
       BriefingHeader: this.BriefingHeader,
-      Coordinates: this.Coordinates,
+      CoordinateSet: this.CoordinateSet,
       IconSet: this.IconSet,
       WindowSettingsCount: this.WindowSettingsCount,
       Viewports: this.Viewports,
@@ -95,11 +100,16 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     writeObject(hex, this.BriefingHeader, 0x00);
     offset = 0x6;
     for (let i = 0; i < this.CoordinateCount(); i++) {
-      const t = this.Coordinates[i];
+      const t = this.CoordinateSet[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    writeObject(hex, this.IconSet, offset);
+    offset = offset;
+    for (let i = 0; i < this.BriefingHeader.IconCount; i++) {
+      const t = this.IconSet[i];
+      writeObject(hex, t, offset);
+      offset += t.getLength();
+    }
     writeShort(hex, this.WindowSettingsCount, offset);
     offset = offset;
     for (let i = 0; i < this.ViewportCount(); i++) {
@@ -116,7 +126,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     }
     writeObject(hex, this.MissionHeader, offset);
     offset = offset;
-    for (let i = 0; i < this.IconCount; i++) {
+    for (let i = 0; i < this.BriefingHeader.IconCount; i++) {
       const t = this.IconExtraData[i];
       writeByte(hex, t, offset);
       offset += 90;

@@ -2,7 +2,7 @@ import { ControllerBase } from "../../controller-base";
 import { ObjectGroup } from "../../model/XW";
 
 export class XWObjectGroupController extends ControllerBase {
-  public readonly fields: object = {"Name":{"name":"Name","type":"STR"},"Cargo":{"name":"Cargo","type":"STR"},"SpecialCargo":{"name":"SpecialCargo","type":"STR"},"Reserved":{"name":"Reserved","type":"SHORT"},"ObjectType":{"name":"ObjectType","type":"SHORT"},"IFF":{"name":"IFF","type":"SHORT","options":"Constants.IFF"},"Objective":{"name":"Objective","type":"SHORT"},"NumberOfObjects":{"name":"NumberOfObjects","type":"SHORT"},"PositionX":{"name":"PositionX","type":"SHORT"},"PositionY":{"name":"PositionY","type":"SHORT"},"PositionZ":{"name":"PositionZ","type":"SHORT"},"Unknown1":{"name":"Unknown1","type":"SHORT"},"Unknown2":{"name":"Unknown2","type":"SHORT"},"Unknown3":{"name":"Unknown3","type":"SHORT"}};
+  public readonly fields: object = {"Name":{"name":"Name","type":"CHAR"},"Cargo":{"name":"Cargo","type":"CHAR"},"SpecialCargo":{"name":"SpecialCargo","type":"CHAR"},"SpecialCargoCraft":{"name":"SpecialCargoCraft","type":"SHORT"},"CraftType":{"name":"CraftType","type":"SHORT","options":"Constants.CRAFTTYPE"},"IFF":{"name":"IFF","type":"SHORT","options":"Constants.IFF"},"ObjectFormation":{"name":"ObjectFormation","type":"SHORT","options":"Constants.OBJECTFORMATION"},"NumberOfCraft":{"name":"NumberOfCraft","type":"SHORT"},"X":{"name":"X","type":"SHORT"},"Y":{"name":"Y","type":"SHORT"},"Z":{"name":"Z","type":"SHORT"},"Yaw":{"name":"Yaw","type":"SHORT"},"Pitch":{"name":"Pitch","type":"SHORT"},"Roll":{"name":"Roll","type":"SHORT"}};
 
   constructor(public model: ObjectGroup){
     super(model);

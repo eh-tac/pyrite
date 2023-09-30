@@ -6,7 +6,6 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
-use Pyrite\XW\Highlight;
 
 abstract class StringBase extends PyriteBase implements Byteable
 {
@@ -19,8 +18,8 @@ abstract class StringBase extends PyriteBase implements Byteable
     public $Length;
     /** @var string[] 0x2 String CHAR */
     public $String;
-    /** @var Highlight BYTE[Length] Unnamed Highlight */
-    public $Unnamed;
+    /** @var integer[] PV Highlight BYTE */
+    public $Highlight;
     
     public function __construct($hex = null, $tie = null)
     {
@@ -45,8 +44,13 @@ abstract class StringBase extends PyriteBase implements Byteable
             $this->String[] = $t;
             $offset += 1;
         }
-        $this->Unnamed = (new Highlight(substr($hex, BYTE[Length]), $this->TIE))->loadHex();
-        $offset = BYTE[Length] + $this->Unnamed->getLength();
+        $this->Highlight = [];
+        $offset = $offset;
+        for ($i = 0; $i < $this->Length; $i++) {
+            $t = $this->getByte($hex, $offset);
+            $this->Highlight[] = $t;
+            $offset += 1;
+        }
         $this->StringLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
@@ -58,7 +62,7 @@ abstract class StringBase extends PyriteBase implements Byteable
         return [
             "Length" => $this->Length,
             "String" => $this->String,
-            "Unnamed" => $this->Unnamed
+            "Highlight" => $this->Highlight
         ];
     }
     
@@ -74,7 +78,12 @@ abstract class StringBase extends PyriteBase implements Byteable
             $hex = $this->writeChar($t, $hex, $offset);
             $offset += 1;
         }
-        $hex = $this->writeObject($this->Unnamed, $hex, BYTE[Length]);
+        $offset = $offset;
+        for ($i = 0; $i < $this->Length; $i++) {
+            $t = $this->Highlight[$i];
+            $hex = $this->writeByte($t, $hex, $offset);
+            $offset += 1;
+        }
 
         return $hex;
     }

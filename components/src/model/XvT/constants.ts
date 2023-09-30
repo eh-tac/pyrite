@@ -280,6 +280,11 @@ export class Constants {
     3: "Hard",
     4: "Medium, Hard",
     5: "Easy, Medium",
+    6: "Never",
+    7: "Never",
+    8: "Easy",
+    9: "Medium",
+    10: "Hard",
   };
 
   public static CONDITION = {
@@ -801,6 +806,11 @@ export enum ArrivalDifficulty {
   hard = 3,
   mediumHard = 4,
   easyMedium = 5,
+  never = 6,
+  // duplicate never = 7,
+  // duplicate easy = 8,
+  // duplicate medium = 9,
+  // duplicate hard = 10,
 }
 
 export enum Condition {

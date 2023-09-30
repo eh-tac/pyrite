@@ -1,7 +1,6 @@
 import { Byteable } from "../../../byteable";
-import { Highlight } from "../highlight";
 import { IMission, PyriteBase } from "../../../pyrite-base";
-import { getChar, getShort, writeChar, writeObject, writeShort } from "../../../hex";
+import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from "../../../hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 
@@ -9,7 +8,7 @@ export abstract class StringBase extends PyriteBase implements Byteable {
   public StringLength: number;
   public Length: number;
   public String: string[];
-  public Unnamed: Highlight;
+  public Highlight: number[];
   
   constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
@@ -24,8 +23,13 @@ export abstract class StringBase extends PyriteBase implements Byteable {
       this.String.push(t);
       offset += 1;
     }
-    this.Unnamed = new Highlight(hex.slice(BYTE[Length]), this.TIE);
-    offset = BYTE[Length] + this.Unnamed.getLength();
+    this.Highlight = [];
+    offset = offset;
+    for (let i = 0; i < this.Length; i++) {
+      const t = getByte(hex, offset);
+      this.Highlight.push(t);
+      offset += 1;
+    }
     this.StringLength = offset;
   }
   
@@ -33,7 +37,7 @@ export abstract class StringBase extends PyriteBase implements Byteable {
     return {
       Length: this.Length,
       String: this.String,
-      Unnamed: this.Unnamed
+      Highlight: this.Highlight
     };
   }
   
@@ -48,7 +52,12 @@ export abstract class StringBase extends PyriteBase implements Byteable {
       writeChar(hex, t, offset);
       offset += 1;
     }
-    writeObject(hex, this.Unnamed, BYTE[Length]);
+    offset = offset;
+    for (let i = 0; i < this.Length; i++) {
+      const t = this.Highlight[i];
+      writeByte(hex, t, offset);
+      offset += 1;
+    }
 
     return hex;
   }

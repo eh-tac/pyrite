@@ -59,7 +59,7 @@ ShipType
 16 CommSat2
 17 Probe
 
-EndState
+EndEvent
 00 Rescued
 01 Captured
 05 Hit Exhaust Port
@@ -94,12 +94,38 @@ IFF
 01 Rebel
 02 Imperial
 03 Neutral
+04	Neutral (also Blue)
 
 FlightGroupStatus
-00 Normal
-01 No Missiles
-02 Half Missiles
-03 No Shields
+00	None
+01	No Warheads
+02	1/2 Warheads
+03	No Shields
+04	1/2 Shields
+0A	Y-wing to B-wing Normal Status
+0B	BW  No warheads
+0C	BW  1/2 Warheads
+0D	BW  No Shields
+0E	BW  1/2 Shields
+
+GroupAI
+00	Novice (None)
+01	Officer
+02	Veteran
+03	Ace
+04	Top Ace
+
+Markings
+00	Red (TIE - None)
+01	Gold (TIE - Red)
+02	Blue (TIE - Gold)
+03	Green (TIE - Blue)
+
+ObjectFormation
+00	Floor (X-Y plane)
+01	Side (Y-Z plane)
+02	Front (X-Z plane)
+03	Scattered	(may be buggy, undefined locations)
 
 ArrivalEvent
 00 Mission Start
@@ -124,12 +150,24 @@ Formation
 10 Hi-Lo
 11 Spiral
 
-CraftAI
-00 Rookie
-01 Officer
-02 Veteran
-03 Ace
-04 Top Ace
+Objective
+00	None
+01	100% be Destroyed
+02	100% must Complete Mission
+03	100% be Captured
+04	100% be Boarded
+05	special craft Destroyed
+06	special craft Complete Mission
+07	special craft Captured
+08	special craft Boarded
+09	50% Destroyed
+0A	50% Complete Mission
+0B	50% Captured
+0C	50% Boarded
+0D	100% identified
+0E	special craft identified
+0F	50% identified
+10	Arrive
 
 Order
 00 Hold Steady
@@ -169,25 +207,6 @@ CraftColour
 00 Red
 01 Gold
 02 Blue
-
-CraftObjective
-00 None
-01 All Destroyed
-02 All Survive
-03 All Captured
-04 All Docked
-05 Special Craft Destroyed
-06 Special Craft Survive
-07 Special Craft Captured
-08 Special Craft Docked
-09 Half Destroyed
-0A Half Survive
-0B Half Captured
-0C Half Docked
-0D All Identified
-0E Special Craft Identified
-0F Half Identified
-10 Arrived
 
 ObjectObjective
 03 None

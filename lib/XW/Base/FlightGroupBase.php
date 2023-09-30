@@ -15,64 +15,56 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
 
     /** @var integer  FLIGHTGROUPLENGTH INT */
     public const FLIGHTGROUPLENGTH = 148;
-    /** @var string 0x00 Name STR */
+    /** @var string[] 0x000 Name CHAR */
     public $Name;
-    /** @var string 0x10 Cargo STR */
+    /** @var string[] 0x010 Cargo CHAR */
     public $Cargo;
-    /** @var string 0x20 SpecialCargo STR */
+    /** @var string[] 0x020 SpecialCargo CHAR */
     public $SpecialCargo;
-    /** @var integer 0x30 SpecialCargoCraft SHORT */
+    /** @var integer 0x030 SpecialCargoCraft SHORT */
     public $SpecialCargoCraft;
-    /** @var integer 0x32 CraftType SHORT */
+    /** @var integer 0x032 CraftType SHORT */
     public $CraftType;
-    /** @var integer 0x34 IFF SHORT */
+    /** @var integer 0x034 IFF SHORT */
     public $IFF;
-    /** @var integer 0x36 FlightGroupStatus SHORT */
-    public $FlightGroupStatus;
-    /** @var integer 0x38 NumberOfCraft SHORT */
+    /** @var integer 0x036 FlightGroupStatus SHORT */
+    public $FlightGroupStatus; //(unusual formatting)
+    /** @var integer 0x038 NumberOfCraft SHORT */
     public $NumberOfCraft;
-    /** @var integer 0x3A NumberOfWaves SHORT */
+    /** @var integer 0x03A NumberOfWaves SHORT */
     public $NumberOfWaves;
-    /** @var integer 0x3C ArrivalEvent SHORT */
+    /** @var integer 0x03C ArrivalEvent SHORT */
     public $ArrivalEvent;
-    /** @var integer 0x3E ArrivalDelay SHORT */
-    public $ArrivalDelay;
-    /** @var integer 0x40 ArrivalFlightGroup SHORT */
-    public $ArrivalFlightGroup;
-    /** @var integer 0x42 MothershipFlightGroup SHORT */
-    public $MothershipFlightGroup;
-    /** @var integer 0x44 ArriveByHyperspace SHORT */
-    public $ArriveByHyperspace;
-    /** @var integer 0x46 DepartByHyperspace SHORT */
-    public $DepartByHyperspace;
-    /** @var integer[] 0x48 XCoordinates SHORT */
-    public $XCoordinates;
-    /** @var integer[] 0x56 YCoordinates SHORT */
-    public $YCoordinates;
-    /** @var integer[] 0x64 ZCoordinates SHORT */
-    public $ZCoordinates;
-    /** @var integer[] 0x72 CoordinatesEnabled SHORT */
-    public $CoordinatesEnabled;
-    /** @var integer 0x80 Formation SHORT */
+    /** @var integer 0x03E ArrivalDelay SHORT */
+    public $ArrivalDelay; //(unusual formatting)
+    /** @var integer 0x040 ArrivalFG SHORT */
+    public $ArrivalFG; //(-1 for none)
+    /** @var integer 0x042 Mothership SHORT */
+    public $Mothership; //(-1 for none)
+    /** @var integer 0x044 ArrivalHyperspace SHORT */
+    public $ArrivalHyperspace;
+    /** @var integer 0x046 DepartureHyperspace SHORT */
+    public $DepartureHyperspace;
+    /** @var integer[] 0x072 Waypoint SHORT */
+    public $Waypoint; //(Enabled)
+    /** @var integer 0x080 Formation SHORT */
     public $Formation;
-    /** @var integer 0x82 PlayerCraft SHORT */
+    /** @var integer 0x082 PlayerCraft SHORT */
     public $PlayerCraft;
-    /** @var integer 0x84 CraftAI SHORT */
-    public $CraftAI;
-    /** @var integer 0x86 Order SHORT */
+    /** @var integer 0x084 GroupAI SHORT */
+    public $GroupAI;
+    /** @var integer 0x086 Order SHORT */
     public $Order;
-    /** @var integer 0x88 OrderVariable SHORT */
-    public $OrderVariable;
-    /** @var integer 0x8A CraftColour SHORT */
-    public $CraftColour;
-    /** @var integer 0x8C Reserved SHORT */
-    public const Reserved = 0;
-    /** @var integer 0x8E CraftObjective SHORT */
-    public $CraftObjective;
-    /** @var integer 0x90 PrimaryTarget SHORT */
-    public $PrimaryTarget;
-    /** @var integer 0x92 SecondaryTarget SHORT */
-    public $SecondaryTarget;
+    /** @var integer 0x088 OrderValue SHORT */
+    public $OrderValue; //(dock time or throttle)
+    /** @var integer 0x08C Markings SHORT */
+    public $Markings;
+    /** @var integer 0x08E Objective SHORT */
+    public $Objective;
+    /** @var integer 0x090 TargetPrimary SHORT */
+    public $TargetPrimary; //(-1 for none)
+    /** @var integer 0x092 TargetSecondary SHORT */
+    public $TargetSecondary; //(-1 for none)
     
     public function __construct($hex = null, $tie = null)
     {
@@ -89,59 +81,55 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $hex = $this->hex;
         $offset = 0;
 
-        $this->Name = $this->getString($hex, 0x00);
-        $this->Cargo = $this->getString($hex, 0x10);
-        $this->SpecialCargo = $this->getString($hex, 0x20);
-        $this->SpecialCargoCraft = $this->getShort($hex, 0x30);
-        $this->CraftType = $this->getShort($hex, 0x32);
-        $this->IFF = $this->getShort($hex, 0x34);
-        $this->FlightGroupStatus = $this->getShort($hex, 0x36);
-        $this->NumberOfCraft = $this->getShort($hex, 0x38);
-        $this->NumberOfWaves = $this->getShort($hex, 0x3A);
-        $this->ArrivalEvent = $this->getShort($hex, 0x3C);
-        $this->ArrivalDelay = $this->getShort($hex, 0x3E);
-        $this->ArrivalFlightGroup = $this->getShort($hex, 0x40);
-        $this->MothershipFlightGroup = $this->getShort($hex, 0x42);
-        $this->ArriveByHyperspace = $this->getShort($hex, 0x44);
-        $this->DepartByHyperspace = $this->getShort($hex, 0x46);
-        $this->XCoordinates = [];
-        $offset = 0x48;
+        $this->Name = [];
+        $offset = 0x000;
+        for ($i = 0; $i < 16; $i++) {
+            $t = $this->getChar($hex, $offset, 1);
+            $this->Name[] = $t;
+            $offset += 1;
+        }
+        $this->Cargo = [];
+        $offset = 0x010;
+        for ($i = 0; $i < 16; $i++) {
+            $t = $this->getChar($hex, $offset, 1);
+            $this->Cargo[] = $t;
+            $offset += 1;
+        }
+        $this->SpecialCargo = [];
+        $offset = 0x020;
+        for ($i = 0; $i < 16; $i++) {
+            $t = $this->getChar($hex, $offset, 1);
+            $this->SpecialCargo[] = $t;
+            $offset += 1;
+        }
+        $this->SpecialCargoCraft = $this->getShort($hex, 0x030);
+        $this->CraftType = $this->getShort($hex, 0x032);
+        $this->IFF = $this->getShort($hex, 0x034);
+        $this->FlightGroupStatus = $this->getShort($hex, 0x036);
+        $this->NumberOfCraft = $this->getShort($hex, 0x038);
+        $this->NumberOfWaves = $this->getShort($hex, 0x03A);
+        $this->ArrivalEvent = $this->getShort($hex, 0x03C);
+        $this->ArrivalDelay = $this->getShort($hex, 0x03E);
+        $this->ArrivalFG = $this->getShort($hex, 0x040);
+        $this->Mothership = $this->getShort($hex, 0x042);
+        $this->ArrivalHyperspace = $this->getShort($hex, 0x044);
+        $this->DepartureHyperspace = $this->getShort($hex, 0x046);
+        $this->Waypoint = [];
+        $offset = 0x072;
         for ($i = 0; $i < 7; $i++) {
             $t = $this->getShort($hex, $offset);
-            $this->XCoordinates[] = $t;
+            $this->Waypoint[] = $t;
             $offset += 2;
         }
-        $this->YCoordinates = [];
-        $offset = 0x56;
-        for ($i = 0; $i < 7; $i++) {
-            $t = $this->getShort($hex, $offset);
-            $this->YCoordinates[] = $t;
-            $offset += 2;
-        }
-        $this->ZCoordinates = [];
-        $offset = 0x64;
-        for ($i = 0; $i < 7; $i++) {
-            $t = $this->getShort($hex, $offset);
-            $this->ZCoordinates[] = $t;
-            $offset += 2;
-        }
-        $this->CoordinatesEnabled = [];
-        $offset = 0x72;
-        for ($i = 0; $i < 7; $i++) {
-            $t = $this->getShort($hex, $offset);
-            $this->CoordinatesEnabled[] = $t;
-            $offset += 2;
-        }
-        $this->Formation = $this->getShort($hex, 0x80);
-        $this->PlayerCraft = $this->getShort($hex, 0x82);
-        $this->CraftAI = $this->getShort($hex, 0x84);
-        $this->Order = $this->getShort($hex, 0x86);
-        $this->OrderVariable = $this->getShort($hex, 0x88);
-        $this->CraftColour = $this->getShort($hex, 0x8A);
-        // static SHORT value Reserved = 0
-        $this->CraftObjective = $this->getShort($hex, 0x8E);
-        $this->PrimaryTarget = $this->getShort($hex, 0x90);
-        $this->SecondaryTarget = $this->getShort($hex, 0x92);
+        $this->Formation = $this->getShort($hex, 0x080);
+        $this->PlayerCraft = $this->getShort($hex, 0x082);
+        $this->GroupAI = $this->getShort($hex, 0x084);
+        $this->Order = $this->getShort($hex, 0x086);
+        $this->OrderValue = $this->getShort($hex, 0x088);
+        $this->Markings = $this->getShort($hex, 0x08C);
+        $this->Objective = $this->getShort($hex, 0x08E);
+        $this->TargetPrimary = $this->getShort($hex, 0x090);
+        $this->TargetSecondary = $this->getShort($hex, 0x092);
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
@@ -162,23 +150,20 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
             "NumberOfWaves" => $this->NumberOfWaves,
             "ArrivalEvent" => $this->getArrivalEventLabel(),
             "ArrivalDelay" => $this->ArrivalDelay,
-            "ArrivalFlightGroup" => $this->ArrivalFlightGroup,
-            "MothershipFlightGroup" => $this->MothershipFlightGroup,
-            "ArriveByHyperspace" => $this->ArriveByHyperspace,
-            "DepartByHyperspace" => $this->DepartByHyperspace,
-            "XCoordinates" => $this->XCoordinates,
-            "YCoordinates" => $this->YCoordinates,
-            "ZCoordinates" => $this->ZCoordinates,
-            "CoordinatesEnabled" => $this->CoordinatesEnabled,
+            "ArrivalFG" => $this->ArrivalFG,
+            "Mothership" => $this->Mothership,
+            "ArrivalHyperspace" => $this->ArrivalHyperspace,
+            "DepartureHyperspace" => $this->DepartureHyperspace,
+            "Waypoint" => $this->Waypoint,
             "Formation" => $this->getFormationLabel(),
             "PlayerCraft" => $this->PlayerCraft,
-            "CraftAI" => $this->getCraftAILabel(),
+            "GroupAI" => $this->getGroupAILabel(),
             "Order" => $this->getOrderLabel(),
-            "OrderVariable" => $this->OrderVariable,
-            "CraftColour" => $this->getCraftColourLabel(),
-            "CraftObjective" => $this->getCraftObjectiveLabel(),
-            "PrimaryTarget" => $this->PrimaryTarget,
-            "SecondaryTarget" => $this->SecondaryTarget
+            "OrderValue" => $this->OrderValue,
+            "Markings" => $this->getMarkingsLabel(),
+            "Objective" => $this->getObjectiveLabel(),
+            "TargetPrimary" => $this->TargetPrimary,
+            "TargetSecondary" => $this->TargetSecondary
         ];
     }
     
@@ -187,55 +172,51 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeString($this->Name, $hex, 0x00);
-        $hex = $this->writeString($this->Cargo, $hex, 0x10);
-        $hex = $this->writeString($this->SpecialCargo, $hex, 0x20);
-        $hex = $this->writeShort($this->SpecialCargoCraft, $hex, 0x30);
-        $hex = $this->writeShort($this->CraftType, $hex, 0x32);
-        $hex = $this->writeShort($this->IFF, $hex, 0x34);
-        $hex = $this->writeShort($this->FlightGroupStatus, $hex, 0x36);
-        $hex = $this->writeShort($this->NumberOfCraft, $hex, 0x38);
-        $hex = $this->writeShort($this->NumberOfWaves, $hex, 0x3A);
-        $hex = $this->writeShort($this->ArrivalEvent, $hex, 0x3C);
-        $hex = $this->writeShort($this->ArrivalDelay, $hex, 0x3E);
-        $hex = $this->writeShort($this->ArrivalFlightGroup, $hex, 0x40);
-        $hex = $this->writeShort($this->MothershipFlightGroup, $hex, 0x42);
-        $hex = $this->writeShort($this->ArriveByHyperspace, $hex, 0x44);
-        $hex = $this->writeShort($this->DepartByHyperspace, $hex, 0x46);
-        $offset = 0x48;
+        $offset = 0x000;
+        for ($i = 0; $i < 16; $i++) {
+            $t = $this->Name[$i];
+            $hex = $this->writeChar($t, $hex, $offset);
+            $offset += 1;
+        }
+        $offset = 0x010;
+        for ($i = 0; $i < 16; $i++) {
+            $t = $this->Cargo[$i];
+            $hex = $this->writeChar($t, $hex, $offset);
+            $offset += 1;
+        }
+        $offset = 0x020;
+        for ($i = 0; $i < 16; $i++) {
+            $t = $this->SpecialCargo[$i];
+            $hex = $this->writeChar($t, $hex, $offset);
+            $offset += 1;
+        }
+        $hex = $this->writeShort($this->SpecialCargoCraft, $hex, 0x030);
+        $hex = $this->writeShort($this->CraftType, $hex, 0x032);
+        $hex = $this->writeShort($this->IFF, $hex, 0x034);
+        $hex = $this->writeShort($this->FlightGroupStatus, $hex, 0x036);
+        $hex = $this->writeShort($this->NumberOfCraft, $hex, 0x038);
+        $hex = $this->writeShort($this->NumberOfWaves, $hex, 0x03A);
+        $hex = $this->writeShort($this->ArrivalEvent, $hex, 0x03C);
+        $hex = $this->writeShort($this->ArrivalDelay, $hex, 0x03E);
+        $hex = $this->writeShort($this->ArrivalFG, $hex, 0x040);
+        $hex = $this->writeShort($this->Mothership, $hex, 0x042);
+        $hex = $this->writeShort($this->ArrivalHyperspace, $hex, 0x044);
+        $hex = $this->writeShort($this->DepartureHyperspace, $hex, 0x046);
+        $offset = 0x072;
         for ($i = 0; $i < 7; $i++) {
-            $t = $this->XCoordinates[$i];
+            $t = $this->Waypoint[$i];
             $hex = $this->writeShort($t, $hex, $offset);
             $offset += 2;
         }
-        $offset = 0x56;
-        for ($i = 0; $i < 7; $i++) {
-            $t = $this->YCoordinates[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
-        }
-        $offset = 0x64;
-        for ($i = 0; $i < 7; $i++) {
-            $t = $this->ZCoordinates[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
-        }
-        $offset = 0x72;
-        for ($i = 0; $i < 7; $i++) {
-            $t = $this->CoordinatesEnabled[$i];
-            $hex = $this->writeShort($t, $hex, $offset);
-            $offset += 2;
-        }
-        $hex = $this->writeShort($this->Formation, $hex, 0x80);
-        $hex = $this->writeShort($this->PlayerCraft, $hex, 0x82);
-        $hex = $this->writeShort($this->CraftAI, $hex, 0x84);
-        $hex = $this->writeShort($this->Order, $hex, 0x86);
-        $hex = $this->writeShort($this->OrderVariable, $hex, 0x88);
-        $hex = $this->writeShort($this->CraftColour, $hex, 0x8A);
-        $hex = $this->writeShort(0, $hex, 0x8C);
-        $hex = $this->writeShort($this->CraftObjective, $hex, 0x8E);
-        $hex = $this->writeShort($this->PrimaryTarget, $hex, 0x90);
-        $hex = $this->writeShort($this->SecondaryTarget, $hex, 0x92);
+        $hex = $this->writeShort($this->Formation, $hex, 0x080);
+        $hex = $this->writeShort($this->PlayerCraft, $hex, 0x082);
+        $hex = $this->writeShort($this->GroupAI, $hex, 0x084);
+        $hex = $this->writeShort($this->Order, $hex, 0x086);
+        $hex = $this->writeShort($this->OrderValue, $hex, 0x088);
+        $hex = $this->writeShort($this->Markings, $hex, 0x08C);
+        $hex = $this->writeShort($this->Objective, $hex, 0x08E);
+        $hex = $this->writeShort($this->TargetPrimary, $hex, 0x090);
+        $hex = $this->writeShort($this->TargetSecondary, $hex, 0x092);
 
         return $hex;
     }
@@ -265,9 +246,9 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         return isset($this->Formation) && isset(Constants::$FORMATION[$this->Formation]) ? Constants::$FORMATION[$this->Formation] : "Unknown";
     }
 
-    public function getCraftAILabel() 
+    public function getGroupAILabel() 
     {
-        return isset($this->CraftAI) && isset(Constants::$CRAFTAI[$this->CraftAI]) ? Constants::$CRAFTAI[$this->CraftAI] : "Unknown";
+        return isset($this->GroupAI) && isset(Constants::$GROUPAI[$this->GroupAI]) ? Constants::$GROUPAI[$this->GroupAI] : "Unknown";
     }
 
     public function getOrderLabel() 
@@ -275,14 +256,14 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         return isset($this->Order) && isset(Constants::$ORDER[$this->Order]) ? Constants::$ORDER[$this->Order] : "Unknown";
     }
 
-    public function getCraftColourLabel() 
+    public function getMarkingsLabel() 
     {
-        return isset($this->CraftColour) && isset(Constants::$CRAFTCOLOUR[$this->CraftColour]) ? Constants::$CRAFTCOLOUR[$this->CraftColour] : "Unknown";
+        return isset($this->Markings) && isset(Constants::$MARKINGS[$this->Markings]) ? Constants::$MARKINGS[$this->Markings] : "Unknown";
     }
 
-    public function getCraftObjectiveLabel() 
+    public function getObjectiveLabel() 
     {
-        return isset($this->CraftObjective) && isset(Constants::$CRAFTOBJECTIVE[$this->CraftObjective]) ? Constants::$CRAFTOBJECTIVE[$this->CraftObjective] : "Unknown";
+        return isset($this->Objective) && isset(Constants::$OBJECTIVE[$this->Objective]) ? Constants::$OBJECTIVE[$this->Objective] : "Unknown";
     }
     
     public function getLength()

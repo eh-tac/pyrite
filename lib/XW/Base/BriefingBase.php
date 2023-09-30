@@ -7,12 +7,12 @@ use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\XW\BriefingHeader;
-use Pyrite\XW\CoordinateSet;
-use Pyrite\XW\IconSet;
+use Pyrite\XW\Coordinate;
+use Pyrite\XW\Icon;
 use Pyrite\XW\MissionHeader;
 use Pyrite\XW\Page;
-use Pyrite\XW\Strings;
-use Pyrite\XW\Tags;
+use Pyrite\XW\String;
+use Pyrite\XW\Tag;
 use Pyrite\XW\ViewportSetting;
 
 abstract class BriefingBase extends PyriteBase implements Byteable
@@ -24,9 +24,9 @@ abstract class BriefingBase extends PyriteBase implements Byteable
     public $BriefingLength;
     /** @var BriefingHeader 0x00 BriefingHeader BriefingHeader */
     public $BriefingHeader;
-    /** @var CoordinateSet[] 0x6 Coordinates CoordinateSet */
-    public $Coordinates;
-    /** @var IconSet PV IconSet IconSet */
+    /** @var Coordinate[] 0x6 CoordinateSet Coordinate */
+    public $CoordinateSet;
+    /** @var Icon[] PV IconSet Icon */
     public $IconSet;
     /** @var integer PV WindowSettingsCount SHORT */
     public $WindowSettingsCount;
@@ -40,9 +40,9 @@ abstract class BriefingBase extends PyriteBase implements Byteable
     public $MissionHeader;
     /** @var integer[] PV IconExtraData BYTE */
     public $IconExtraData;
-    /** @var Tags PV Tags Tags */
+    /** @var Tag PV Tags Tag */
     public $Tags;
-    /** @var Strings PV Strings Strings */
+    /** @var String PV Strings String */
     public $Strings;
     
     public function __construct($hex = null, $tie = null)
@@ -61,15 +61,20 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $offset = 0;
 
         $this->BriefingHeader = (new BriefingHeader(substr($hex, 0x00), $this->TIE))->loadHex();
-        $this->Coordinates = [];
+        $this->CoordinateSet = [];
         $offset = 0x6;
         for ($i = 0; $i < $this->CoordinateCount(); $i++) {
-            $t = (new CoordinateSet(substr($hex, $offset), $this->TIE))->loadHex();
-            $this->Coordinates[] = $t;
+            $t = (new Coordinate(substr($hex, $offset), $this->TIE))->loadHex();
+            $this->CoordinateSet[] = $t;
             $offset += $t->getLength();
         }
-        $this->IconSet = (new IconSet(substr($hex, $offset), $this->TIE))->loadHex();
-        $offset += $this->IconSet->getLength();
+        $this->IconSet = [];
+        $offset = $offset;
+        for ($i = 0; $i < $this->BriefingHeader->IconCount; $i++) {
+            $t = (new Icon(substr($hex, $offset), $this->TIE))->loadHex();
+            $this->IconSet[] = $t;
+            $offset += $t->getLength();
+        }
         $this->WindowSettingsCount = $this->getShort($hex, $offset);
         $this->Viewports = [];
         $offset = $offset;
@@ -89,14 +94,14 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $this->MissionHeader = (new MissionHeader(substr($hex, $offset), $this->TIE))->loadHex();
         $this->IconExtraData = [];
         $offset = $offset;
-        for ($i = 0; $i < $this->IconCount; $i++) {
+        for ($i = 0; $i < $this->BriefingHeader->IconCount; $i++) {
             $t = $this->getByte($hex, $offset);
             $this->IconExtraData[] = $t;
             $offset += 90;
         }
-        $this->Tags = (new Tags(substr($hex, $offset), $this->TIE))->loadHex();
+        $this->Tags = (new Tag(substr($hex, $offset), $this->TIE))->loadHex();
         $offset += $this->Tags->getLength();
-        $this->Strings = (new Strings(substr($hex, $offset), $this->TIE))->loadHex();
+        $this->Strings = (new String(substr($hex, $offset), $this->TIE))->loadHex();
         $offset += $this->Strings->getLength();
         $this->BriefingLength = $offset;
 
@@ -108,7 +113,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
     {
         return [
             "BriefingHeader" => $this->BriefingHeader,
-            "Coordinates" => $this->Coordinates,
+            "CoordinateSet" => $this->CoordinateSet,
             "IconSet" => $this->IconSet,
             "WindowSettingsCount" => $this->WindowSettingsCount,
             "Viewports" => $this->Viewports,
@@ -129,11 +134,16 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $hex = $this->writeObject($this->BriefingHeader, $hex, 0x00);
         $offset = 0x6;
         for ($i = 0; $i < $this->CoordinateCount(); $i++) {
-            $t = $this->Coordinates[$i];
+            $t = $this->CoordinateSet[$i];
             $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
         }
-        $hex = $this->writeObject($this->IconSet, $hex, $offset);
+        $offset = $offset;
+        for ($i = 0; $i < $this->BriefingHeader->IconCount; $i++) {
+            $t = $this->IconSet[$i];
+            $hex = $this->writeObject($t, $hex, $offset);
+            $offset += $t->getLength();
+        }
         $hex = $this->writeShort($this->WindowSettingsCount, $hex, $offset);
         $offset = $offset;
         for ($i = 0; $i < $this->ViewportCount(); $i++) {
@@ -150,7 +160,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         }
         $hex = $this->writeObject($this->MissionHeader, $hex, $offset);
         $offset = $offset;
-        for ($i = 0; $i < $this->IconCount; $i++) {
+        for ($i = 0; $i < $this->BriefingHeader->IconCount; $i++) {
             $t = $this->IconExtraData[$i];
             $hex = $this->writeByte($t, $hex, $offset);
             $offset += 90;

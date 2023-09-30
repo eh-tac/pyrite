@@ -22,8 +22,8 @@ abstract class PageBase extends PyriteBase implements Byteable
     public $CoordinateSet;
     /** @var integer 0x06 PageType SHORT */
     public $PageType;
-    /** @var integer 0x08 Events[EventsLength] SHORT */
-    public $Events[EventsLength];
+    /** @var integer[] 0x08 Events SHORT */
+    public $Events;
     
     public function __construct($hex = null, $tie = null)
     {
@@ -44,7 +44,13 @@ abstract class PageBase extends PyriteBase implements Byteable
         $this->EventsLength = $this->getShort($hex, 0x02);
         $this->CoordinateSet = $this->getShort($hex, 0x04);
         $this->PageType = $this->getShort($hex, 0x06);
-        $this->Events[EventsLength] = $this->getShort($hex, 0x08);
+        $this->Events = [];
+        $offset = 0x08;
+        for ($i = 0; $i < $this->EventsLength; $i++) {
+            $t = $this->getShort($hex, $offset);
+            $this->Events[] = $t;
+            $offset += 2;
+        }
         $this->PageLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
@@ -58,7 +64,7 @@ abstract class PageBase extends PyriteBase implements Byteable
             "EventsLength" => $this->EventsLength,
             "CoordinateSet" => $this->CoordinateSet,
             "PageType" => $this->PageType,
-            "Events[EventsLength]" => $this->Events[EventsLength]
+            "Events" => $this->Events
         ];
     }
     
@@ -71,7 +77,12 @@ abstract class PageBase extends PyriteBase implements Byteable
         $hex = $this->writeShort($this->EventsLength, $hex, 0x02);
         $hex = $this->writeShort($this->CoordinateSet, $hex, 0x04);
         $hex = $this->writeShort($this->PageType, $hex, 0x06);
-        $hex = $this->writeShort($this->Events[EventsLength], $hex, 0x08);
+        $offset = 0x08;
+        for ($i = 0; $i < $this->EventsLength; $i++) {
+            $t = $this->Events[$i];
+            $hex = $this->writeShort($t, $hex, $offset);
+            $offset += 2;
+        }
 
         return $hex;
     }

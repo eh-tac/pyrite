@@ -10,7 +10,7 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
   public TimeLimitMinutes: number;
   public EndEvent: number;
   public RndSeed: number; //(unused)
-  public Location: number;
+  public MissionLocation: number;
   public EndOfMissionMessages: string[];
   
   constructor(hex: ArrayBuffer, tie?: IMission) {
@@ -21,7 +21,7 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
     this.TimeLimitMinutes = getShort(hex, 0x00);
     this.EndEvent = getShort(hex, 0x02);
     this.RndSeed = getShort(hex, 0x04);
-    this.Location = getShort(hex, 0x06);
+    this.MissionLocation = getShort(hex, 0x06);
     this.EndOfMissionMessages = [];
     offset = 0x08;
     for (let i = 0; i < 64; i++) {
@@ -37,7 +37,7 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
       TimeLimitMinutes: this.TimeLimitMinutes,
       EndEvent: this.EndEventLabel,
       RndSeed: this.RndSeed,
-      Location: this.LocationLabel,
+      MissionLocation: this.MissionLocationLabel,
       EndOfMissionMessages: this.EndOfMissionMessages
     };
   }
@@ -49,7 +49,7 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
     writeShort(hex, this.TimeLimitMinutes, 0x00);
     writeShort(hex, this.EndEvent, 0x02);
     writeShort(hex, this.RndSeed, 0x04);
-    writeShort(hex, this.Location, 0x06);
+    writeShort(hex, this.MissionLocation, 0x06);
     offset = 0x08;
     for (let i = 0; i < 64; i++) {
       const t = this.EndOfMissionMessages[i];
@@ -64,8 +64,8 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
     return Constants.ENDEVENT[this.EndEvent] || "Unknown";
   }
 
-  public get LocationLabel(): string {
-    return Constants.LOCATION[this.Location] || "Unknown";
+  public get MissionLocationLabel(): string {
+    return Constants.MISSIONLOCATION[this.MissionLocation] || "Unknown";
   }
   
   public getLength(): number {

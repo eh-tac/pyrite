@@ -9,7 +9,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public readonly FILEHEADERLENGTH: number = 206;
   public Version: number;
   public TimeLimit: number; //in minutes
-  public EndState: number;
+  public EndEvent: number;
   public readonly Reserved: number = 0;
   public MissionLocation: number;
   public CompletionMessage: string[];
@@ -23,7 +23,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
 
     this.Version = getShort(hex, 0x00);
     this.TimeLimit = getShort(hex, 0x02);
-    this.EndState = getShort(hex, 0x04);
+    this.EndEvent = getShort(hex, 0x04);
     // static prop Reserved
     this.MissionLocation = getShort(hex, 0x08);
     this.CompletionMessage = [];
@@ -42,7 +42,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     return {
       Version: this.Version,
       TimeLimit: this.TimeLimit,
-      EndState: this.EndStateLabel,
+      EndEvent: this.EndEventLabel,
       MissionLocation: this.MissionLocationLabel,
       CompletionMessage: this.CompletionMessage,
       NumFGs: this.NumFGs,
@@ -56,7 +56,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
 
     writeShort(hex, this.Version, 0x00);
     writeShort(hex, this.TimeLimit, 0x02);
-    writeShort(hex, this.EndState, 0x04);
+    writeShort(hex, this.EndEvent, 0x04);
     writeShort(hex, 0, 0x06);
     writeShort(hex, this.MissionLocation, 0x08);
     offset = 0x0A;
@@ -71,8 +71,8 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     return hex;
   }
   
-  public get EndStateLabel(): string {
-    return Constants.ENDSTATE[this.EndState] || "Unknown";
+  public get EndEventLabel(): string {
+    return Constants.ENDEVENT[this.EndEvent] || "Unknown";
   }
 
   public get MissionLocationLabel(): string {

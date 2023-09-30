@@ -7,7 +7,7 @@ import { getBool, getByte, getSByte, writeBool, writeByte, writeSByte } from "..
 
 export abstract class GoalFGBase extends PyriteBase implements Byteable {
   public readonly GOALFGLENGTH: number = 78;
-  public Argument: number;
+  public GoalArgument: number;
   public Condition: number;
   public Amount: number;
   public Points: number;
@@ -26,7 +26,7 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Argument = getByte(hex, 0x00);
+    this.GoalArgument = getByte(hex, 0x00);
     this.Condition = getByte(hex, 0x01);
     this.Amount = getByte(hex, 0x02);
     this.Points = getSByte(hex, 0x03);
@@ -44,7 +44,7 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
   
   public toJSON(): object {
     return {
-      Argument: this.Argument,
+      GoalArgument: this.GoalArgumentLabel,
       Condition: this.ConditionLabel,
       Amount: this.AmountLabel,
       Points: this.Points,
@@ -64,7 +64,7 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
     let hex: string = '';
     let offset = 0;
 
-    writeByte(hex, this.Argument, 0x00);
+    writeByte(hex, this.GoalArgument, 0x00);
     writeByte(hex, this.Condition, 0x01);
     writeByte(hex, this.Amount, 0x02);
     writeSByte(hex, this.Points, 0x03);
@@ -81,6 +81,10 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
     return hex;
   }
   
+  public get GoalArgumentLabel(): string {
+    return Constants.GOALARGUMENT[this.GoalArgument] || "Unknown";
+  }
+
   public get ConditionLabel(): string {
     return Constants.CONDITION[this.Condition] || "Unknown";
   }
