@@ -92,14 +92,12 @@ trait HexDecoder
 		return $array[$key];
 	}
 
-	public function getByte($chr, $startPos = NULL)
+	public function getByte($str, $startPos = NULL)
 	{
-		if ($startPos !== NULL) {
-			$chr = substr($chr, $startPos, 1);
-		}
-		if (!$chr) {
+		if ($startPos === NULL || $startPos > strlen($str)) {
 			return 0;
 		}
+		$chr = $str[$startPos];
 		return unpack('Cbyte', $chr)['byte'];
 	}
 

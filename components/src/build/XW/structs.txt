@@ -49,7 +49,7 @@ struct FileHeader (size 0xCE)
 {
   0x00 SHORT Version
   0x02 SHORT TimeLimit in minutes
-  0x04 SHORT EndState (enum)
+  0x04 SHORT EndEvent (enum)
   0x06 SHORT Reserved Reserved(0)
   0x08 SHORT MissionLocation (enum)
   0x0A STR<64>[3] CompletionMessage
@@ -59,50 +59,135 @@ struct FileHeader (size 0xCE)
 
 struct FlightGroup (size 0x94)
 {
-  0x00 STR<16> Name
-  0x10 STR<16> Cargo
-  0x20 STR<16> SpecialCargo
-  0x30 SHORT SpecialCargoCraft
-  0x32 SHORT CraftType (enum)
-  0x34 SHORT IFF (enum)
-  0x36 SHORT FlightGroupStatus (enum)
-  0x38 SHORT NumberOfCraft
-  0x3A SHORT NumberOfWaves
-  0x3C SHORT ArrivalEvent (enum)
-  0x3E SHORT ArrivalDelay
-  0x40 SHORT ArrivalFlightGroup
-  0x42 SHORT MothershipFlightGroup
-  0x44 SHORT ArriveByHyperspace
-  0x46 SHORT DepartByHyperspace
-  0x48 SHORT[7] XCoordinates
-  0x56 SHORT[7] YCoordinates
-  0x64 SHORT[7] ZCoordinates
-  0x72 SHORT[7] CoordinatesEnabled
-  0x80 SHORT Formation (enum)
-  0x82 SHORT PlayerCraft
-  0x84 SHORT CraftAI (enum)
-  0x86 SHORT Order (enum)
-  0x88 SHORT OrderVariable
-  0x8A SHORT CraftColour (enum)
-  0x8C SHORT Reserved Reserved(0)
-  0x8E SHORT CraftObjective (enum)
-  0x90 SHORT PrimaryTarget
-  0x92 SHORT SecondaryTarget
+	0x000	CHAR[16] Name
+	0x010	CHAR[16] Cargo
+	0x020	CHAR[16] SpecialCargo
+	0x030	SHORT	SpecialCargoCraft
+	0x032	SHORT	CraftType (enum)
+	0x034	SHORT	IFF (enum)
+	0x036	SHORT	FlightGroupStatus (enum) (unusual formatting)
+	0x038	SHORT	NumberOfCraft
+	0x03A	SHORT	NumberOfWaves
+	0x03C	SHORT	ArrivalEvent (enum)
+	0x03E	SHORT	ArrivalDelay (unusual formatting)
+	0x040	SHORT	ArrivalFG (-1 for none)
+	0x042	SHORT	Mothership (-1 for none)
+	0x044	SHORT	ArrivalHyperspace
+	0x046	SHORT	DepartureHyperspace
+	0x048	SHORT[7] Waypoint (X)
+	0x056	SHORT[7] Waypoint (Y)
+	0x064	SHORT[7] Waypoint (Z)
+	0x072	SHORT[7] Waypoint (Enabled)
+	0x080	SHORT	Formation (enum)
+	0x082	SHORT	PlayerCraft
+	0x084	SHORT	GroupAI (enum)
+	0x086	SHORT	Order (enum)
+	0x088	SHORT	OrderValue (dock time or throttle)
+	0x08A	SHORT	Markings (enum)
+	0x08C	SHORT	Markings (enum)
+	0x08E	SHORT	Objective (enum)
+	0x090	SHORT	TargetPrimary (-1 for none)
+	0x092	SHORT	TargetSecondary (-1 for none)
 }
 
-struct ObjectGroup (size 0x46) {
-  0x00 STR<16> Name
-  0x10 STR<16> Cargo
-  0x20 STR<16> SpecialCargo
-  0x30 SHORT Reserved Reserved(0)
-  0x32 SHORT ObjectType (enum)
-  0x34 SHORT IFF (enum)
-  0x36 SHORT Objective (enum)
-  0x38 SHORT NumberOfObjects
-  0x3A SHORT PositionX
-  0x3C SHORT PositionY
-  0x3E SHORT PositionZ
-  0x40 SHORT Unknown1 Reserved(0)
-  0x42 SHORT Unknown2 Reserved(0x40)
-  0x44 SHORT Unknown3 Reserved(0)
+struct ObjectGroup (size 0x46)
+{
+	0x000	CHAR[16] Name (ignored?)
+	0x010	CHAR[16] Cargo (ignored?)
+	0x020	CHAR[16] SpecialCargo (ignored?)
+	0x030	SHORT	SpecialCargoCraft (ignored?)
+	0x032	SHORT	CraftType (enum)
+	0x034	SHORT	IFF (enum)
+	0x036	SHORT	ObjectFormation (enum) or values (unusual formatting)
+	0x038	SHORT	NumberOfCraft or values (unusual formatting)
+	0x03A	SHORT	X
+	0x03C	SHORT	Y
+	0x03E	SHORT	Z
+	0x040	SHORT	Yaw
+	0x042	SHORT	Pitch
+	0x044	SHORT	Roll
+}
+
+struct Briefing (size 0)
+{
+  0x00 BriefingHeader BriefingHeader
+  0x6 Coordinate[CoordinateCount()] CoordinateSet
+  PV Icon[BriefingHeader-IconCount] IconSet
+  PV SHORT WindowSettingsCount 
+  PV ViewportSetting[ViewportCount()] Viewports
+  PV SHORT PageCount
+  PV Page[PageCount] Pages
+  PV MissionHeader MissionHeader
+  PV BYTE<90>[BriefingHeader-IconCount] IconExtraData
+  PV Tag Tags
+  PV String Strings
+}
+
+struct BriefingHeader (size 0x6)
+{
+	0x00	SHORT	PlatformID (2)
+	0x02	SHORT	IconCount
+	0x04	SHORT	CoordinateCount
+}
+
+struct Coordinate (size 0x6)
+{
+  0x00	SHORT	X
+  0x02	SHORT	Y
+  0x04	SHORT	Z
+}
+
+struct Icon (size 0x40)
+{
+  0x000	SHORT	CraftType
+  0x002	SHORT	IFF
+  0x004	SHORT	NumberOfCraft
+  0x006	SHORT	NumberOfWaves
+  0x008	CHAR[16] Name
+  0x018	CHAR[16] Cargo
+  0x028	CHAR[16] SpecialCargo
+  0x038	SHORT	SpecialCargoCraft
+  0x03A	SHORT	Yaw
+  0x03C	SHORT	Pitch
+  0x03E	SHORT	Roll
+}
+
+struct ViewportSetting (size 0xA)
+{
+	0x00	SHORT	Top
+	0x02	SHORT	Left
+	0x04	SHORT	Bottom
+	0x06	SHORT	Right
+	0x08	SHORT	Visible (boolean)
+}
+
+struct Page (size 0)
+{	
+  0x00	SHORT	Duration (ticks)
+  0x02	SHORT	EventsLength
+  0x04	SHORT	CoordinateSet
+  0x06	SHORT	PageType
+  0x08	SHORT[EventsLength]	Events	
+}
+
+struct MissionHeader (size 0xC8)
+{
+	0x00	SHORT	TimeLimitMinutes
+	0x02	SHORT	EndEvent (enum)
+	0x04	SHORT	RndSeed (unused)
+	0x06	SHORT	MissionLocation (enum)
+	0x08	CHAR[64][3]	EndOfMissionMessages
+}
+
+struct Tag (size 0)
+{
+	0x0	SHORT	Length
+	0x2	CHAR[Length]
+}
+
+struct String (size 0)
+{
+	0x0	SHORT	Length
+	0x2	CHAR[Length] String
+	PV BYTE[Length] Highlight
 }

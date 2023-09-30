@@ -123,7 +123,7 @@ export class PilotViewer {
     if (ext === "tfr") {
       return new TFRController(filepath, new TIEPilot(file));
     } else if (ext === "plt") {
-      if (file.byteLength === 1705 || file.byteLength === 3410) {
+      if (file.byteLength === 1705 || file.byteLength === 1706 || file.byteLength === 3410) {
         // x-wing
         return new XWController(filepath, new XWingPilot(file));
       } else if (file.byteLength > 200000) {
@@ -133,6 +133,6 @@ export class PilotViewer {
       }
     }
     console.error(filepath, file);
-    throw new Error(`Unknown pilot file: Unrecognised file format: ${filepath}`);
+    throw new Error(`Unknown pilot file: Unrecognised file format: ${filepath}, length ${file.byteLength}`);
   }
 }

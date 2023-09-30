@@ -66,7 +66,7 @@ export class Constants {
     23: "Probe",
   };
 
-  public static ENDSTATE = {
+  public static ENDEVENT = {
     0: "Rescued",
     1: "Captured",
     5: "Hit Exhaust Port",
@@ -104,13 +104,42 @@ export class Constants {
     1: "Rebel",
     2: "Imperial",
     3: "Neutral",
+    4: "Neutral (also Blue)",
   };
 
   public static FLIGHTGROUPSTATUS = {
-    0: "Normal",
-    1: "No Missiles",
-    2: "Half Missiles",
+    0: "None",
+    1: "No Warheads",
+    2: "1/2 Warheads",
     3: "No Shields",
+    4: "1/2 Shields",
+    10: "Y-wing to B-wing Normal Status",
+    11: "BW No warheads",
+    12: "BW 1/2 Warheads",
+    13: "BW No Shields",
+    14: "BW 1/2 Shields",
+  };
+
+  public static GROUPAI = {
+    0: "Novice (None)",
+    1: "Officer",
+    2: "Veteran",
+    3: "Ace",
+    4: "Top Ace",
+  };
+
+  public static MARKINGS = {
+    0: "Red (TIE - None)",
+    1: "Gold (TIE - Red)",
+    2: "Blue (TIE - Gold)",
+    3: "Green (TIE - Blue)",
+  };
+
+  public static OBJECTFORMATION = {
+    0: "Floor (X-Y plane)",
+    1: "Side (Y-Z plane)",
+    2: "Front (X-Z plane)",
+    3: "Scattered (may be buggy, undefined locations)",
   };
 
   public static ARRIVALEVENT = {
@@ -138,12 +167,24 @@ export class Constants {
     17: "Spiral",
   };
 
-  public static CRAFTAI = {
-    0: "Rookie",
-    1: "Officer",
-    2: "Veteran",
-    3: "Ace",
-    4: "Top Ace",
+  public static OBJECTIVE = {
+    0: "None",
+    1: "100% be Destroyed",
+    2: "100% must Complete Mission",
+    3: "100% be Captured",
+    4: "100% be Boarded",
+    5: "special craft Destroyed",
+    6: "special craft Complete Mission",
+    7: "special craft Captured",
+    8: "special craft Boarded",
+    9: "50% Destroyed",
+    10: "50% Complete Mission",
+    11: "50% Captured",
+    12: "50% Boarded",
+    13: "100% identified",
+    14: "special craft identified",
+    15: "50% identified",
+    16: "Arrive",
   };
 
   public static ORDER = {
@@ -187,24 +228,10 @@ export class Constants {
     2: "Blue",
   };
 
-  public static CRAFTOBJECTIVE = {
-    0: "None",
-    1: "All Destroyed",
-    2: "All Survive",
-    3: "All Captured",
-    4: "All Docked",
-    5: "Special Craft Destroyed",
-    6: "Special Craft Survive",
-    7: "Special Craft Captured",
-    8: "Special Craft Docked",
-    9: "Half Destroyed",
-    10: "Half Survive",
-    11: "Half Captured",
-    12: "Half Docked",
-    13: "All Identified",
-    14: "Special Craft Identified",
-    15: "Half Identified",
-    16: "Arrived",
+  public static OBJECTOBJECTIVE = {
+    3: "None",
+    4: "Destroy",
+    5: "Survive",
   };
 
 }
@@ -276,7 +303,7 @@ export enum ShipType {
   probe = 23,
 }
 
-export enum EndState {
+export enum EndEvent {
   rescued = 0,
   captured = 1,
   hitExhaustPort = 5,
@@ -314,13 +341,42 @@ export enum IFF {
   rebel = 1,
   imperial = 2,
   neutral = 3,
+  neutralAlsoBlue = 4,
 }
 
 export enum FlightGroupStatus {
-  normal = 0,
-  noMissiles = 1,
-  halfMissiles = 2,
+  none = 0,
+  noWarheads = 1,
+  n12Warheads = 2,
   noShields = 3,
+  n12Shields = 4,
+  ywingToBwingNormalStatus = 10,
+  bwNoWarheads = 11,
+  bw12Warheads = 12,
+  bwNoShields = 13,
+  bw12Shields = 14,
+}
+
+export enum GroupAI {
+  noviceNone = 0,
+  officer = 1,
+  veteran = 2,
+  ace = 3,
+  topAce = 4,
+}
+
+export enum Markings {
+  redTieNone = 0,
+  goldTieRed = 1,
+  blueTieGold = 2,
+  greenTieBlue = 3,
+}
+
+export enum ObjectFormation {
+  floorXyPlane = 0,
+  sideYzPlane = 1,
+  frontXzPlane = 2,
+  scatteredMayBeBuggyUndefinedLocations = 3,
 }
 
 export enum ArrivalEvent {
@@ -348,12 +404,24 @@ export enum Formation {
   spiral = 17,
 }
 
-export enum CraftAI {
-  rookie = 0,
-  officer = 1,
-  veteran = 2,
-  ace = 3,
-  topAce = 4,
+export enum Objective {
+  none = 0,
+  n100PercentBeDestroyed = 1,
+  n100PercentMustCompleteMission = 2,
+  n100PercentBeCaptured = 3,
+  n100PercentBeBoarded = 4,
+  specialCraftDestroyed = 5,
+  specialCraftCompleteMission = 6,
+  specialCraftCaptured = 7,
+  specialCraftBoarded = 8,
+  n50PercentDestroyed = 9,
+  n50PercentCompleteMission = 10,
+  n50PercentCaptured = 11,
+  n50PercentBoarded = 12,
+  n100PercentIdentified = 13,
+  specialCraftIdentified = 14,
+  n50PercentIdentified = 15,
+  arrive = 16,
 }
 
 export enum Order {
@@ -397,22 +465,8 @@ export enum CraftColour {
   blue = 2,
 }
 
-export enum CraftObjective {
-  none = 0,
-  allDestroyed = 1,
-  allSurvive = 2,
-  allCaptured = 3,
-  allDocked = 4,
-  specialCraftDestroyed = 5,
-  specialCraftSurvive = 6,
-  specialCraftCaptured = 7,
-  specialCraftDocked = 8,
-  halfDestroyed = 9,
-  halfSurvive = 10,
-  halfCaptured = 11,
-  halfDocked = 12,
-  allIdentified = 13,
-  specialCraftIdentified = 14,
-  halfIdentified = 15,
-  arrived = 16,
+export enum ObjectObjective {
+  none = 3,
+  destroy = 4,
+  survive = 5,
 }

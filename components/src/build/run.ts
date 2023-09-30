@@ -18,7 +18,7 @@ const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [mg("TIE"), mg("XW"), mg("XvT"), mg(
 [
   // new TypeScriptWriter("src", tieG),
   new PHPWriter("../lib", tieG),
-  // new TypeScriptWriter("src", xwG),
+  new TypeScriptWriter("src", xwG),
   new PHPWriter("../lib", xwG),
   new TypeScriptWriter("src", xvtG),
   new PHPWriter("../lib", xvtG),

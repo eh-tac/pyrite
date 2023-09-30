@@ -10,7 +10,7 @@ export class FlightGroup extends FlightGroupBase {
 
   public get arrivalLabel(): string {
     const delay = this.ArrivalDelay ? `${this.arrivalDelaySeconds} sec after` : "";
-    const trigger = this.ArrivalFlightGroup > 0 ? this.TIE.FlightGroups[this.ArrivalFlightGroup]?.label : "";
+    const trigger = this.ArrivalFG > 0 ? this.TIE.FlightGroups[this.ArrivalFG]?.label : "";
     const event = this.ArrivalEventLabel.replace("On ", "");
     return `...${delay} ${trigger} ${event}`.trim();
   }
@@ -60,8 +60,8 @@ export class FlightGroup extends FlightGroupBase {
       `${this.NumberOfWaves + 1}x${this.NumberOfCraft}`,
       this.CraftTypeLabel,
       this.Name,
-      this.CraftObjective ? ` - MUST ${this.CraftObjectiveLabel}` : "",
-      this.CraftObjective ? arrival : ""
+      this.Objective ? ` - MUST ${this.ObjectiveLabel}` : "",
+      this.Objective ? arrival : ""
     ].join(" ");
   }
 }

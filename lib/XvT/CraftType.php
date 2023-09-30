@@ -1,17 +1,22 @@
 <?php
+
 namespace Pyrite\XvT;
 
-class CraftType {
+class CraftType
+{
 	public $ID;
 	public $Name;
+	public $Abbr;
 
-	public function __construct($ID){
+	public function __construct($ID)
+	{
 		$this->ID = $ID;
 		$this->Name = $this->getName();
 		$this->Abbr = $this->getAbbr();
 	}
 
-	private function getName(){
+	private function getName()
+	{
 		$names = array(
 			'None',
 			'X-wing',
@@ -110,7 +115,8 @@ class CraftType {
 		return isset($names[$this->ID]) ? $names[$this->ID] : 'Unknown type ' . $this->ID;
 	}
 
-	private function getAbbr(){
+	private function getAbbr()
+	{
 		$names = array(
 			'None',
 			'X-W',
@@ -160,7 +166,7 @@ class CraftType {
 			'*Carrack Cruiser',
 			'Strike Cruiser',
 			'Escort Carrier',
-			'Dreadnaught',
+			'DREAD',
 			'Mon Calamari Cruiser',
 			'Light Mon Calamari Cruiser',
 			'Interdictor Cruiser',
@@ -209,7 +215,8 @@ class CraftType {
 		return isset($names[$this->ID]) ? $names[$this->ID] : 'Unknown type ' . $this->ID;
 	}
 
-	public function getPoints(){
+	public function getPoints()
+	{
 		$points = array(
 			0,
 			600,
@@ -287,7 +294,7 @@ class CraftType {
 			0, //'Unused',
 			0, //'Unused',
 			20,
-			20,
+			40,
 			20,
 			40,
 			0, //'Unused',
@@ -307,4 +314,4 @@ class CraftType {
 		);
 		return isset($points[$this->ID]) ? $points[$this->ID] : 0;
 	}
-} 
+}

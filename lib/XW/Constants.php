@@ -125,15 +125,15 @@ class Constants
     public static $SHIPTYPE_COMMSAT2 = 22;
     public static $SHIPTYPE_PROBE = 23;
 
-    public static $ENDSTATE = [
+    public static $ENDEVENT = [
         0 => "Rescued",
         1 => "Captured",
         5 => "Hit Exhaust Port",
     ];
 
-    public static $ENDSTATE_RESCUED = 0;
-    public static $ENDSTATE_CAPTURED = 1;
-    public static $ENDSTATE_HITEXHAUSTPORT = 5;
+    public static $ENDEVENT_RESCUED = 0;
+    public static $ENDEVENT_CAPTURED = 1;
+    public static $ENDEVENT_HITEXHAUSTPORT = 5;
 
     public static $MISSIONLOCATION = [
         0 => "Deep Space",
@@ -190,24 +190,76 @@ class Constants
         1 => "Rebel",
         2 => "Imperial",
         3 => "Neutral",
+        4 => "Neutral (also Blue)",
     ];
 
     public static $IFF_DEFAULT = 0;
     public static $IFF_REBEL = 1;
     public static $IFF_IMPERIAL = 2;
     public static $IFF_NEUTRAL = 3;
+    public static $IFF_NEUTRALALSOBLUE = 4;
 
     public static $FLIGHTGROUPSTATUS = [
-        0 => "Normal",
-        1 => "No Missiles",
-        2 => "Half Missiles",
+        0 => "None",
+        1 => "No Warheads",
+        2 => "1/2 Warheads",
         3 => "No Shields",
+        4 => "1/2 Shields",
+        10 => "Y-wing to B-wing Normal Status",
+        11 => "BW No warheads",
+        12 => "BW 1/2 Warheads",
+        13 => "BW No Shields",
+        14 => "BW 1/2 Shields",
     ];
 
-    public static $FLIGHTGROUPSTATUS_NORMAL = 0;
-    public static $FLIGHTGROUPSTATUS_NOMISSILES = 1;
-    public static $FLIGHTGROUPSTATUS_HALFMISSILES = 2;
+    public static $FLIGHTGROUPSTATUS_NONE = 0;
+    public static $FLIGHTGROUPSTATUS_NOWARHEADS = 1;
+    public static $FLIGHTGROUPSTATUS_N12WARHEADS = 2;
     public static $FLIGHTGROUPSTATUS_NOSHIELDS = 3;
+    public static $FLIGHTGROUPSTATUS_N12SHIELDS = 4;
+    public static $FLIGHTGROUPSTATUS_YWINGTOBWINGNORMALSTATUS = 10;
+    public static $FLIGHTGROUPSTATUS_BWNOWARHEADS = 11;
+    public static $FLIGHTGROUPSTATUS_BW12WARHEADS = 12;
+    public static $FLIGHTGROUPSTATUS_BWNOSHIELDS = 13;
+    public static $FLIGHTGROUPSTATUS_BW12SHIELDS = 14;
+
+    public static $GROUPAI = [
+        0 => "Novice (None)",
+        1 => "Officer",
+        2 => "Veteran",
+        3 => "Ace",
+        4 => "Top Ace",
+    ];
+
+    public static $GROUPAI_NOVICENONE = 0;
+    public static $GROUPAI_OFFICER = 1;
+    public static $GROUPAI_VETERAN = 2;
+    public static $GROUPAI_ACE = 3;
+    public static $GROUPAI_TOPACE = 4;
+
+    public static $MARKINGS = [
+        0 => "Red (TIE - None)",
+        1 => "Gold (TIE - Red)",
+        2 => "Blue (TIE - Gold)",
+        3 => "Green (TIE - Blue)",
+    ];
+
+    public static $MARKINGS_REDTIENONE = 0;
+    public static $MARKINGS_GOLDTIERED = 1;
+    public static $MARKINGS_BLUETIEGOLD = 2;
+    public static $MARKINGS_GREENTIEBLUE = 3;
+
+    public static $OBJECTFORMATION = [
+        0 => "Floor (X-Y plane)",
+        1 => "Side (Y-Z plane)",
+        2 => "Front (X-Z plane)",
+        3 => "Scattered (may be buggy, undefined locations)",
+    ];
+
+    public static $OBJECTFORMATION_FLOORXYPLANE = 0;
+    public static $OBJECTFORMATION_SIDEYZPLANE = 1;
+    public static $OBJECTFORMATION_FRONTXZPLANE = 2;
+    public static $OBJECTFORMATION_SCATTEREDMAYBEBUGGYUNDEFINEDLOCATIONS = 3;
 
     public static $ARRIVALEVENT = [
         0 => "Mission Start",
@@ -255,19 +307,43 @@ class Constants
     public static $FORMATION_HILO = 16;
     public static $FORMATION_SPIRAL = 17;
 
-    public static $CRAFTAI = [
-        0 => "Rookie",
-        1 => "Officer",
-        2 => "Veteran",
-        3 => "Ace",
-        4 => "Top Ace",
+    public static $OBJECTIVE = [
+        0 => "None",
+        1 => "100% be Destroyed",
+        2 => "100% must Complete Mission",
+        3 => "100% be Captured",
+        4 => "100% be Boarded",
+        5 => "special craft Destroyed",
+        6 => "special craft Complete Mission",
+        7 => "special craft Captured",
+        8 => "special craft Boarded",
+        9 => "50% Destroyed",
+        10 => "50% Complete Mission",
+        11 => "50% Captured",
+        12 => "50% Boarded",
+        13 => "100% identified",
+        14 => "special craft identified",
+        15 => "50% identified",
+        16 => "Arrive",
     ];
 
-    public static $CRAFTAI_ROOKIE = 0;
-    public static $CRAFTAI_OFFICER = 1;
-    public static $CRAFTAI_VETERAN = 2;
-    public static $CRAFTAI_ACE = 3;
-    public static $CRAFTAI_TOPACE = 4;
+    public static $OBJECTIVE_NONE = 0;
+    public static $OBJECTIVE_N100PERCENTBEDESTROYED = 1;
+    public static $OBJECTIVE_N100PERCENTMUSTCOMPLETEMISSION = 2;
+    public static $OBJECTIVE_N100PERCENTBECAPTURED = 3;
+    public static $OBJECTIVE_N100PERCENTBEBOARDED = 4;
+    public static $OBJECTIVE_SPECIALCRAFTDESTROYED = 5;
+    public static $OBJECTIVE_SPECIALCRAFTCOMPLETEMISSION = 6;
+    public static $OBJECTIVE_SPECIALCRAFTCAPTURED = 7;
+    public static $OBJECTIVE_SPECIALCRAFTBOARDED = 8;
+    public static $OBJECTIVE_N50PERCENTDESTROYED = 9;
+    public static $OBJECTIVE_N50PERCENTCOMPLETEMISSION = 10;
+    public static $OBJECTIVE_N50PERCENTCAPTURED = 11;
+    public static $OBJECTIVE_N50PERCENTBOARDED = 12;
+    public static $OBJECTIVE_N100PERCENTIDENTIFIED = 13;
+    public static $OBJECTIVE_SPECIALCRAFTIDENTIFIED = 14;
+    public static $OBJECTIVE_N50PERCENTIDENTIFIED = 15;
+    public static $OBJECTIVE_ARRIVE = 16;
 
     public static $ORDER = [
         0 => "Hold Steady",
@@ -346,44 +422,6 @@ class Constants
     public static $CRAFTCOLOUR_RED = 0;
     public static $CRAFTCOLOUR_GOLD = 1;
     public static $CRAFTCOLOUR_BLUE = 2;
-
-    public static $CRAFTOBJECTIVE = [
-        0 => "None",
-        1 => "All Destroyed",
-        2 => "All Survive",
-        3 => "All Captured",
-        4 => "All Docked",
-        5 => "Special Craft Destroyed",
-        6 => "Special Craft Survive",
-        7 => "Special Craft Captured",
-        8 => "Special Craft Docked",
-        9 => "Half Destroyed",
-        10 => "Half Survive",
-        11 => "Half Captured",
-        12 => "Half Docked",
-        13 => "All Identified",
-        14 => "Special Craft Identified",
-        15 => "Half Identified",
-        16 => "Arrived",
-    ];
-
-    public static $CRAFTOBJECTIVE_NONE = 0;
-    public static $CRAFTOBJECTIVE_ALLDESTROYED = 1;
-    public static $CRAFTOBJECTIVE_ALLSURVIVE = 2;
-    public static $CRAFTOBJECTIVE_ALLCAPTURED = 3;
-    public static $CRAFTOBJECTIVE_ALLDOCKED = 4;
-    public static $CRAFTOBJECTIVE_SPECIALCRAFTDESTROYED = 5;
-    public static $CRAFTOBJECTIVE_SPECIALCRAFTSURVIVE = 6;
-    public static $CRAFTOBJECTIVE_SPECIALCRAFTCAPTURED = 7;
-    public static $CRAFTOBJECTIVE_SPECIALCRAFTDOCKED = 8;
-    public static $CRAFTOBJECTIVE_HALFDESTROYED = 9;
-    public static $CRAFTOBJECTIVE_HALFSURVIVE = 10;
-    public static $CRAFTOBJECTIVE_HALFCAPTURED = 11;
-    public static $CRAFTOBJECTIVE_HALFDOCKED = 12;
-    public static $CRAFTOBJECTIVE_ALLIDENTIFIED = 13;
-    public static $CRAFTOBJECTIVE_SPECIALCRAFTIDENTIFIED = 14;
-    public static $CRAFTOBJECTIVE_HALFIDENTIFIED = 15;
-    public static $CRAFTOBJECTIVE_ARRIVED = 16;
 
     public static $OBJECTOBJECTIVE = [
         3 => "None",

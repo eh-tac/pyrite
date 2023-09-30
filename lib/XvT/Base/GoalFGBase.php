@@ -15,8 +15,8 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
 
     /** @var integer  GOALFGLENGTH INT */
     public const GOALFGLENGTH = 78;
-    /** @var integer 0x00 Argument BYTE */
-    public $Argument;
+    /** @var integer 0x00 GoalArgument BYTE */
+    public $GoalArgument;
     /** @var integer 0x01 Condition BYTE */
     public $Condition;
     /** @var integer 0x02 Amount BYTE */
@@ -57,7 +57,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         $hex = $this->hex;
         $offset = 0;
 
-        $this->Argument = $this->getByte($hex, 0x00);
+        $this->GoalArgument = $this->getByte($hex, 0x00);
         $this->Condition = $this->getByte($hex, 0x01);
         $this->Amount = $this->getByte($hex, 0x02);
         $this->Points = $this->getSByte($hex, 0x03);
@@ -79,7 +79,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
     public function __debugInfo()
     {
         return [
-            "Argument" => $this->Argument,
+            "GoalArgument" => $this->getGoalArgumentLabel(),
             "Condition" => $this->getConditionLabel(),
             "Amount" => $this->getAmountLabel(),
             "Points" => $this->Points,
@@ -100,7 +100,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $hex = $this->writeByte($this->Argument, $hex, 0x00);
+        $hex = $this->writeByte($this->GoalArgument, $hex, 0x00);
         $hex = $this->writeByte($this->Condition, $hex, 0x01);
         $hex = $this->writeByte($this->Amount, $hex, 0x02);
         $hex = $this->writeSByte($this->Points, $hex, 0x03);
@@ -117,6 +117,11 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         return $hex;
     }
     
+    public function getGoalArgumentLabel() 
+    {
+        return isset($this->GoalArgument) && isset(Constants::$GOALARGUMENT[$this->GoalArgument]) ? Constants::$GOALARGUMENT[$this->GoalArgument] : "Unknown";
+    }
+
     public function getConditionLabel() 
     {
         return isset($this->Condition) && isset(Constants::$CONDITION[$this->Condition]) ? Constants::$CONDITION[$this->Condition] : "Unknown";

@@ -534,6 +534,11 @@ class Constants
         3 => "Hard",
         4 => "Medium, Hard",
         5 => "Easy, Medium",
+        6 => "Never",
+        7 => "Never",
+        8 => "Easy",
+        9 => "Medium",
+        10 => "Hard",
     ];
 
     public static $ARRIVALDIFFICULTY_ALL = 0;
@@ -542,6 +547,11 @@ class Constants
     public static $ARRIVALDIFFICULTY_HARD = 3;
     public static $ARRIVALDIFFICULTY_MEDIUMHARD = 4;
     public static $ARRIVALDIFFICULTY_EASYMEDIUM = 5;
+    public static $ARRIVALDIFFICULTY_NEVER = 6;
+    public static $ARRIVALDIFFICULTY_NEVER2 = 7;
+    public static $ARRIVALDIFFICULTY_EASY2 = 8;
+    public static $ARRIVALDIFFICULTY_MEDIUM2 = 9;
+    public static $ARRIVALDIFFICULTY_HARD2 = 10;
 
     public static $CONDITION = [
         0 => "Always (true)",

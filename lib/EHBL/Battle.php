@@ -101,11 +101,16 @@ class Battle
     public static function fromFolder($name, $dir)
     {
         list($platform, $type, $num) = self::parseKey($name);
-        $dirContents = array_filter(scandir($dir), function ($f) {
+        $dirContents = array_values(array_filter(scandir($dir), function ($f) {
             return strlen($f) > 2;
-        });
+        }));
         if (!count($dirContents)) {
             return null;
+        }
+
+        if (count($dirContents) === 1 && is_dir($dir . $dirContents[0])) {
+            // this is a zip where everything is inside a folder. jump into that folder before looking for more stuff.
+            return self::fromFolder($name, $dir . $dirContents[0] . '/');
         }
 
         $manifests = [];
@@ -256,6 +261,8 @@ class Battle
             if ($tie) {
                 $tie->loadHex();
                 $this->missions[$file] = $tie;
+            } else {
+                $this->missions[$file] = $path;
             }
         }
     }
@@ -266,10 +273,64 @@ class Battle
         foreach ($this->missions as $file => $tie) {
             $sk = $this->loadScoreKeeper($tie);
             if ($sk) {
-                $sk->process();
                 $this->scores[$file] = $sk;
             }
         }
+    }
+
+    public function getScoreKeepers()
+    {
+        if (empty($this->missions)) {
+            $this->loadMissions();
+        }
+        if (empty($this->scores)) {
+            $this->loadScores();
+        }
+        return $this->scores;
+    }
+
+    public function getDiffs($originalPyrite)
+    {
+        $diffs = [];
+        if (empty($this->missions)) {
+            $this->loadMissions();
+        }
+        if (empty($originalPyrite->missions)) {
+            $originalPyrite->loadMissions();
+        }
+
+        foreach ($this->missions as $file => $changed) {
+            $original = $originalPyrite->missions[$file];
+
+            $diffs[$file] = [
+                'original' => json_encode($original->jsonSerialize(), JSON_PRETTY_PRINT),
+                'changed' => json_encode($changed->jsonSerialize(), JSON_PRETTY_PRINT)
+            ];
+        }
+        return $diffs;
+    }
+
+    private function arrayRecursiveDiff($aArray1, $aArray2)
+    {
+        $aReturn = array();
+
+        foreach ($aArray1 as $mKey => $mValue) {
+            if (array_key_exists($mKey, $aArray2)) {
+                if (is_array($mValue)) {
+                    $aRecursiveDiff = $this->arrayRecursiveDiff($mValue, $aArray2[$mKey]);
+                    if (count($aRecursiveDiff)) {
+                        $aReturn[$mKey] = $aRecursiveDiff;
+                    }
+                } else {
+                    if ($mValue != $aArray2[$mKey]) {
+                        $aReturn[$mKey] = $mValue;
+                    }
+                }
+            } else {
+                $aReturn[$mKey] = $mValue;
+            }
+        }
+        return $aReturn;
     }
 
     private function loadMission($contents)

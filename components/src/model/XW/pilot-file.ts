@@ -107,6 +107,40 @@ export class PilotFile extends PilotFileBase implements PilotData {
     });
   }
 
+  public get YWingHistoricalMissions(): MissionScore[] {
+    return this.YWingHistoricalScore.map((score, index) => {
+      return {
+        completed: this.YWingHistoricalComplete[index],
+        score
+      };
+    });
+  }
+
+  public get AWingHistoricalMissions(): MissionScore[] {
+    return this.AWingHistoricalScore.map((score, index) => {
+      return {
+        completed: this.AWingHistoricalComplete[index],
+        score
+      };
+    });
+  }
+
+  public get Tour1Missions(): MissionScore[] {
+    return this.Tour1Scores.map((score, index) => {
+      return {
+        completed: index < this.TourOperationsComplete[0],
+        score
+      };
+    });
+  }
+
+  public get BSFMissions(): MissionScore[] {
+    if (this.TourOperationsComplete[0]) {
+      return this.Tour1Missions;
+    }
+    return [...this.XWingHistoricalMissions, ...this.YWingHistoricalMissions, ...this.AWingHistoricalMissions];
+  }
+
   public get TotalKills(): number {
     return this.TODKills.reduce((a, b) => a + b, 0);
   }

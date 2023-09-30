@@ -19,8 +19,8 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
     public $Version;
     /** @var integer 0x02 TimeLimit SHORT */
     public $TimeLimit; //in minutes
-    /** @var integer 0x04 EndState SHORT */
-    public $EndState;
+    /** @var integer 0x04 EndEvent SHORT */
+    public $EndEvent;
     /** @var integer 0x06 Reserved SHORT */
     public const Reserved = 0;
     /** @var integer 0x08 MissionLocation SHORT */
@@ -49,7 +49,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
 
         $this->Version = $this->getShort($hex, 0x00);
         $this->TimeLimit = $this->getShort($hex, 0x02);
-        $this->EndState = $this->getShort($hex, 0x04);
+        $this->EndEvent = $this->getShort($hex, 0x04);
         // static SHORT value Reserved = 0
         $this->MissionLocation = $this->getShort($hex, 0x08);
         $this->CompletionMessage = [];
@@ -72,7 +72,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         return [
             "Version" => $this->Version,
             "TimeLimit" => $this->TimeLimit,
-            "EndState" => $this->getEndStateLabel(),
+            "EndEvent" => $this->getEndEventLabel(),
             "MissionLocation" => $this->getMissionLocationLabel(),
             "CompletionMessage" => $this->CompletionMessage,
             "NumFGs" => $this->NumFGs,
@@ -87,7 +87,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
 
         $hex = $this->writeShort($this->Version, $hex, 0x00);
         $hex = $this->writeShort($this->TimeLimit, $hex, 0x02);
-        $hex = $this->writeShort($this->EndState, $hex, 0x04);
+        $hex = $this->writeShort($this->EndEvent, $hex, 0x04);
         $hex = $this->writeShort(0, $hex, 0x06);
         $hex = $this->writeShort($this->MissionLocation, $hex, 0x08);
         $offset = 0x0A;
@@ -102,9 +102,9 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getEndStateLabel() 
+    public function getEndEventLabel() 
     {
-        return isset($this->EndState) && isset(Constants::$ENDSTATE[$this->EndState]) ? Constants::$ENDSTATE[$this->EndState] : "Unknown";
+        return isset($this->EndEvent) && isset(Constants::$ENDEVENT[$this->EndEvent]) ? Constants::$ENDEVENT[$this->EndEvent] : "Unknown";
     }
 
     public function getMissionLocationLabel() 

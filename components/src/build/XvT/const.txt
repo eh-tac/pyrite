@@ -267,6 +267,11 @@ ArrivalDifficulty
 03	Hard
 04	Medium, Hard
 05	Easy, Medium
+06  Never
+07  Never
+08  Easy
+09  Medium
+0A  Hard
 
 Condition
 00	Always (true)

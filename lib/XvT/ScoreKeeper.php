@@ -1,12 +1,17 @@
 <?php
+
 namespace Pyrite\XvT;
 
-class ScoreKeeper {
-	private $TIE;
+use Pyrite\ScoreRow;
+
+class ScoreKeeper
+{
+    /** @var Mission */
+    private $TIE;
 
     /** @var FlightGroup */
-	private $playerCraft = array();
-	private $globalGoals = array();
+    private $playerCraft = array();
+    private $globalGoals = array();
     private $fgGoals = array();
     private $fgs = array();
     private $oths = array();
@@ -16,132 +21,111 @@ class ScoreKeeper {
     private $invincible = array();
     private $difficultyFilter;
 
-	public $total = 0;
-	public $player = null;
-	public $warhead = null;
+    public $total = 0;
+    public $player = null;
+    public $warhead = null;
     public $bonus = 0;
 
-	public function __construct(Mission $TIE, $difficulty = 'Hard'){
-		$this->TIE = $TIE;
+    /** @var ScoreRow[] */
+    public $flightGroups = [];
+    /** @var ScoreRow[] */
+    public $goals = [];
+    /** @var ScoreRow[] */
+    public $craftOptions = [];
+
+    public function __construct(Mission $TIE, $difficulty = 'Hard')
+    {
+        $this->TIE = $TIE;
         $this->difficultyFilter = $difficulty;
-        if ($this->TIE->valid()){
-            $this->process();
-        }
-	}
+        $this->process();
+    }
 
-	public function process(){
-        /** @var $team1GG GlobalGoal */
-        $team1GG = $this->TIE->globalGoals[0];
-        $types = array(0 => 'Primary', 1=> 'Prevent', 2 => 'Bonus');
+    public function process()
+    {
+        // XvT has 10000 points for victory regardless of difficulty level
+        $this->goals = [
+            ScoreRow::create("Mission Victory {$this->difficultyFilter}", 1, 10000)
+        ];
 
-        foreach ($types as $idx => $type){
-            /** @var $gg GoalGlobal */
-            $gg = $team1GG->Goals[$idx];
-            if ($p = $gg->getPoints()){
-                $this->globalGoals[$type] = strval($gg);
-                if ($p > 0){
-                $this->total += $p;
-                $this->bonus += $p;
+        $flightGroups = array_filter($this->TIE->FlightGroups, fn ($fg) => $fg->isInDifficultyLevel($this->difficultyFilter));
+        $playerCraft = array_filter($flightGroups, fn ($fg) => $fg->isPlayerCraft());
+
+        $hasBonusGoals = FALSe;
+
+        /** @var GlobalGoal */
+        $team1GG = $this->TIE->GlobalGoals[0];
+        // TODO improve trigger string lookup so it can handle conditions and vairablets things
+        // TODO open question - if the prevent goals award points, do you get them? on mission completion?
+        foreach ([0 => 'Primary', 1 => 'Prevent', 2 => 'Bonus'] as $idx => $type) {
+            /** @var GoalGlobal */
+            $gg = $team1GG->Goal[$idx];
+            if ($gg->getPoints() > 0) {
+                $goal = ScoreRow::create("$type goal: " . $gg, 1, $gg->getPoints());
+                $this->goals[] = $goal;
+                if ($type === 'Bonus') {
+                    $hasBonusGoals = TRUE;
+                }
+                if ($type === 'Prevent') {
+                    $goal->label .= '(PREVENT??)';
+                    $goal->disable();
                 }
             }
         }
 
-		/** @var $fg FlightGroup */
-		foreach ($this->TIE->flightGroups as $idx => $fg){
-			if (!$fg->isInDifficultyLevel($this->difficultyFilter)) continue;
-
-            $name = (string)$fg;
-            $points = $fg->pointValue($this->difficultyFilter);
-
-            if ($points > 0){
-                $this->total += $points;
-                $this->fgs[] = $name . ': ' . $points;
-            } else {
-               $this->oths[] = $name . ' - no points';
+        foreach ($flightGroups as $fg) {
+            $pointValue = $fg->pointValue($this->difficultyFilter);
+            if ($pointValue > 0) {
+                $this->flightGroups[] = ScoreRow::create((string) $fg, count($fg), $pointValue);
             }
 
-			/** @var $goal GoalFG */
-			foreach ($fg->Goals as $goal){
-				if ($goal->getPoints()){
-					$this->fgGoals[] = $fg . " - " . $goal;
-					$this->total += $goal->getPoints();
-                    $this->bonus += $goal->getPoints();
-				}
-			}
-
-//            $win = $fg->goals;
-//            foreach ($this->goalTypes as $type => &$goals){
-//                if ($win[$type . 'What'] !== 'None' && $win[$type . 'What'] !== 'Always'){
-//                    $goal = $win[$type . 'Who'] . ' Flight Group ' . $fg . ' must be ' . $win[$type . 'What'];
-//                    if (isset($win[$type . 'Pts'])){
-//                        $goal .= ' (' . $win[$type . 'Pts'] . ' pts)';
-//                        $pts = (int)$win[$type. 'Pts'];
-//                        if ($pts < 0){
-//                            $this->badBonus = TRUE;
-//                        } else {
-//                            $this->total += $pts;
-//                        }
-//                    }
-//                    $goals[] = $goal;
-//                }
-//            }
-
-            if ($fg->isPlayerCraft()){
-                $this->playerCraft[] = $fg;
+            /** @var GoalFG $goal */
+            foreach ($fg->Goals as $goal) {
+                if ($goal->getPoints() > 0 && $goal->enabledForTeam1()) {
+                    $this->goals[] = ScoreRow::create("$fg - $goal", 1, $goal->getPoints());
+                    if ($goal->isBonus()) {
+                        $hasBonusGoals = TRUE;
+                    }
+                }
             }
-		}
-	}
-
-	public function printDump(){
-        $goals = array("Primary" =>  "{$this->goalPoints} pts");
-        $this->total += $this->goalPoints; //primary goals
-//        if (count($this->goalTypes['Secondary'])){
-//            $this->total += $goalPoints;
-//            $goals[] = "Secondary goals: $goalPoints pts";
-//        } else {
-//            unset($this->goalTypes['Secondary']);
-//        }
-//        if ($c = count($this->goalTypes['Bonus'])){
-//            $this->total += 3100;
-//            if ($this->badBonus){
-//                $goals[] = 'Some bonus goals have negative points and should not be completed';
-//                $goals[] = "All positive bonus goals: 3100 pts";
-//            } else {
-//                $goals[] = "All $c bonus goals: 3100 pts";
-//            }
-//        } else {
-//            unset($this->goalTypes['Bonus']);
-//        }
-        $craft = array();
-        $pcMax = array();
-        if (!empty($this->playerCraft)){
-            foreach ($this->playerCraft as $pc) {
-                $craft[] = $pc->label();
-                $hangarPoints = $pc->pointValue('Medium', FALSE) * -1; //ignore friendly filter //always just get medium points
-//
-                $pcMax[] = $hangarPoints;
-                $craft[] = 'Hanger/hyper points: ' . $hangarPoints . ' pts';
-                $this->player = $pc->label();
-            }
-//            $this->warhead = $this->playerCraft->general['Warheads'];
-        } else {
-            $craft[] = 'Player craft not found';
         }
-        $this->total += max($pcMax);
 
-        return array(
-            'Difficulty' => $this->difficultyFilter,
-            'Others' => $this->oths,
-			'Enemies' => $this->fgs,
-			'Craft options' => $craft,
-			'Goals' => array_merge($goals, $this->globalGoals),
-			'FGGoals' => $this->fgGoals,
-			'Total Potential Score' => $this->total . ' pts',
-		);
-	}
+        if ($hasBonusGoals) {
+            $this->goals[] = ScoreRow::create("All bonus goals", 1, 2500);
+        }
 
-	public function bonus(){
-		return array_merge($this->globalGoals, $this->fgGoals);
-	}
+        // TODO need to account for double wave points.
+        foreach ($playerCraft as $fg) {
+            $this->craftOptions[] = ScoreRow::create("$fg hangar/hyper points", count($fg), $fg->getHangarHyperPoints());
+            foreach ($fg->getWaveOptions() as $wave) {
+                $this->craftOptions[] = ScoreRow::create("Wave option {$wave['label']} hangar/hyper points", 1, $wave['maxPoints']);
+            }
+        }
+        usort($this->craftOptions, fn ($a, $b) => $b->points - $a->points);
+        for ($i = 1; $i < count($this->craftOptions); $i++) {
+            $this->craftOptions[$i]->disable();
+        }
+    }
 
-} 
+    public function getData()
+    {
+        return array_merge(
+            [ScoreRow::header("Flight Groups")],
+            $this->flightGroups,
+            [ScoreRow::header("Goals")],
+            $this->goals,
+            [ScoreRow::header("Player Craft")],
+            $this->craftOptions
+        );
+    }
+
+    public function printDump()
+    {
+        return $this->getData();
+    }
+
+    public function getTotal()
+    {
+        $rows = array_filter($this->getData(), fn ($row) => $row->number > 0);
+        return array_sum(array_map(fn ($row) => $row->points, $rows));
+    }
+}
