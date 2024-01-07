@@ -47,7 +47,7 @@ class FlightGroup implements Byteable, \Countable, FlightGroupScoring
         return count($this) . 'x ' . $this->general['ShipType']->Name . ' ' . $this->general['Name'];
     }
 
-    public function count()
+    public function count(): int
     {
         return (int)$this->general['Ships'] * ((int)$this->general['Waves'] + 1);
     }

@@ -12,7 +12,7 @@ class GoalFG extends Base\GoalFGBase
 
   public function __toString()
   {
-    return "{$this->getArgumentLabel()} {$this->getAmountLabel()} {$this->getConditionLabel()}";
+    return "{$this->getGoalArgumentLabel()} {$this->getAmountLabel()} {$this->getConditionLabel()}";
   }
 
   public function getPoints()
@@ -22,7 +22,7 @@ class GoalFG extends Base\GoalFGBase
 
   public function isBonus()
   {
-    return $this->Argument == Constants::$GOALARGUMENT_BONUSMUST || $this->Argument == Constants::$GOALARGUMENT_BONUSMUSTNOT;
+    return $this->GoalArgument == Constants::$GOALARGUMENT_BONUSMUST || $this->GoalArgument == Constants::$GOALARGUMENT_BONUSMUSTNOT;
   }
 
   public function enabledForTeam1()

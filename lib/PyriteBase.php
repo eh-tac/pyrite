@@ -15,7 +15,7 @@ class PyriteBase implements \JsonSerializable
 		$this->TIE = $tie;
 	}
 
-	public function jsonSerialize()
+	public function jsonSerialize(): mixed
 	{
 		return $this->__debugInfo();
 	}

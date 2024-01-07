@@ -16,7 +16,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
     /** @var integer  MESSAGELENGTH INT */
     public const MESSAGELENGTH = 90;
     /** @var string 0x00 Message STR */
-    public $Message;
+    public string $Message;
     /** @var Trigger[] 0x40 Triggers Trigger */
     public $Triggers;
     /** @var string 0x48 EditorNote STR */
@@ -25,7 +25,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
     public $DelaySeconds;
     /** @var boolean 0x59 Trigger1OrTrigger2 BOOL */
     public $Trigger1OrTrigger2;
-    
+
     public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
@@ -36,7 +36,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): self
     {
         $hex = $this->hex;
         $offset = 0;
@@ -52,12 +52,12 @@ abstract class MessageBase extends PyriteBase implements Byteable
         $this->EditorNote = $this->getString($hex, 0x48);
         $this->DelaySeconds = $this->getByte($hex, 0x58);
         $this->Trigger1OrTrigger2 = $this->getBool($hex, 0x59);
-        
+
 
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
-    
+
     public function __debugInfo()
     {
         return [
@@ -68,7 +68,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
             "Trigger1OrTrigger2" => $this->Trigger1OrTrigger2
         ];
     }
-    
+
     public function toHexString($hex = null)
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
@@ -87,8 +87,8 @@ abstract class MessageBase extends PyriteBase implements Byteable
 
         return $hex;
     }
-    
-    
+
+
     public function getLength()
     {
         return self::MESSAGELENGTH;

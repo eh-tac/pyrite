@@ -96,9 +96,13 @@ class FlightGroup extends Base\FlightGroupBase implements Summary, Countable
         return 1; // TODO
     }
 
-    public function count()
+    public function count(): int
     {
-        return ($this->NumberOfWaves + 1) * $this->NumberOfCraft;
+        $craft = $this->NumberOfCraft;
+        if ($this->getShipType()->isMine()) {
+            $craft = $craft * $craft;
+        }
+        return ($this->NumberOfWaves + 1) * $craft;
     }
 
     public function destroyable()

@@ -1,7 +1,7 @@
 {
     "name": "eh-tac/pyrite",
     "description": "Library for reading .TIE files and related things",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "type": "library",
     "authors": [
         {

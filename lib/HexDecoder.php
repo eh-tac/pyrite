@@ -94,7 +94,7 @@ trait HexDecoder
 
 	public function getByte($str, $startPos = NULL)
 	{
-		if ($startPos === NULL || $startPos > strlen($str)) {
+		if ($startPos === NULL || $startPos >= strlen($str)) {
 			return 0;
 		}
 		$chr = $str[$startPos];

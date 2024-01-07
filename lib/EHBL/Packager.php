@@ -58,7 +58,7 @@ class Packager
 
 	public function __toString()
 	{
-		$f = implode(", ", array_keys($this->files));
+		$f = implode(", ", array_merge(array_keys($this->files), array_keys($this->missionFiles)));
 		return "{$this->dir} with files {$f}";
 	}
 
@@ -111,6 +111,7 @@ class Packager
 			$zip->addFromString($name, $data);
 		}
 		foreach ($this->files as $name => $data) {
+			if ($name === '.decrypted') continue;
 			if (!$makeEHM && $name === 'Battle.ehb') continue;
 			$zip->addFromString($name, $data);
 		}
