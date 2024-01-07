@@ -11,9 +11,15 @@ class Message extends Base\MessageBase implements Summary
     public function __construct($hex, $tie)
     {
         parent::__construct($hex, $tie);
+    }
+
+    public function loadHex(): self
+    {
+        parent::loadHex();
         if (strlen($this->Message) && is_numeric($this->Message[0])) {
             $this->messageColour = (int) $this->Message[0];
         }
+        return $this;
     }
 
     public function getMessageColourLabel()

@@ -72,6 +72,9 @@ class Battle
 
     public static function fromZip($path, $name = null, $dir = null)
     {
+        if (!$path) {
+            return false;
+        }
         $name = $name ? $name : basename($path);
         $rand = date("Ymd") . rand(1, 999);
         $dir = $dir ? $dir : "/tmp/$rand$name/";

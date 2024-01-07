@@ -46,6 +46,13 @@ class ShipType
         return $this->ID < 25;
     }
 
+    public function isMine()
+    {
+        return $this->ID == Constants::$CRAFTTYPE_MINEA ||
+            $this->ID == Constants::$CRAFTTYPE_MINEB ||
+            $this->ID == Constants::$CRAFTTYPE_MINEC;
+    }
+
     private function getName()
     {
         $names = Constants::$CRAFTTYPE;
@@ -63,8 +70,8 @@ class ShipType
         $points = array(
             0, 600, 400, 800, 800, 400, 600, 600, 1000, 1600, 400, //patch slot 10
             400, //patch slot 11
-            1000, 400, 320, 480, 800, 800, 1600, 2400, 2400,
-            600, 960, 1200, 200, 240, 800, 800, 800, 800,
+            1000, 400, 320, 480, 800, 800, 1600, 2400, 2400, // 20 SCT
+            600, 960, 1200, 200, 240, 800, 600, 600, 600, // 29 CND
             600, 1200, 1200, 1600, 1200, 1600, 2400, 2000, 2000, 2200, //'Millenium Falcon/ slot 39',
             1600,
             2000, 4400, 4000, 4000, 4400, 4000, 4000, 5000, 6000, 5000,

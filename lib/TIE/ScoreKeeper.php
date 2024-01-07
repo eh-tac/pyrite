@@ -84,6 +84,7 @@ class ScoreKeeper
                 $goal = $fg->FlightGroupGoals[$idx];
                 if ($goal->hasData()) {
                     $label = "$fg must be $goal";
+                    $pts = 0;
                     if ($type === 'Bonus' && $fg->getBonusPoints()) {
                         $label .= " ({$fg->getBonusPoints()} pts)";
                         $pts = (int)$fg->getBonusPoints();
@@ -93,7 +94,7 @@ class ScoreKeeper
                             $this->total += $pts;
                         }
                     }
-                    $goals[] = $label;
+                    $goals[] = [$label, $pts];
                 }
             }
 
@@ -111,6 +112,10 @@ class ScoreKeeper
             $this->goals[] = ScoreRow::create("Secondary goals: ", 1, $goalPoints);
         }
         if (count($this->goalTypes['Bonus'])) {
+            foreach ($this->goalTypes['Bonus'] as $bonusGoal) {
+                list($label, $points) = $bonusGoal;
+                $this->goals[] = ScoreRow::create("Bonus: $label", $points < 0 ? 0 : 1, $points);
+            }
             $this->goals[] = ScoreRow::create("All Bonus goals: ", 1, 3100);
         }
     }
