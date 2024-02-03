@@ -135,7 +135,7 @@ export namespace Components {
     interface PyriteResources {
     }
     interface PyriteTieBriefing {
-        "mission"?: Mission;
+        "mission"?: Mission1;
     }
     interface PyriteTieChecklist {
         "lfdUrl": string;
@@ -202,28 +202,28 @@ export namespace Components {
         "briefing": Briefing;
     }
     interface PyriteXvtEvent {
-        "event": Event;
+        "event": Event1;
     }
     interface PyriteXvtFileHeader {
-        "fileheader": FileHeader;
+        "fileheader": FileHeader1;
     }
     interface PyriteXvtFlightGroup {
-        "flightgroup": FlightGroup;
+        "flightgroup": FlightGroup1;
     }
     interface PyriteXvtGlobalGoal {
-        "globalgoal": GlobalGoal;
+        "globalgoal": GlobalGoal1;
     }
     interface PyriteXvtGoalFg {
-        "goalfg": GoalFG;
+        "goalfg": GoalFG1;
     }
     interface PyriteXvtGoalGlobal {
         "goalglobal": GoalGlobal;
     }
     interface PyriteXvtMessage {
-        "message": Message;
+        "message": Message1;
     }
     interface PyriteXvtMission {
-        "mission": Mission;
+        "mission": Mission2;
     }
     interface PyriteXvtMissionBop {
         "missionbop": MissionBOP;
@@ -232,16 +232,16 @@ export namespace Components {
         "missiondata": MissionData;
     }
     interface PyriteXvtOrder {
-        "order": Order;
+        "order": Order1;
     }
     interface PyriteXvtPilotFile {
-        "pilotfile": PilotFile;
+        "pilotfile": PilotFile1;
     }
     interface PyriteXvtRole {
-        "role": Role;
+        "xvtrole": Role;
     }
     interface PyriteXvtTag {
-        "tag": Tag;
+        "tag": Tag1;
     }
     interface PyriteXvtTeam {
         "team": Team;
@@ -250,16 +250,16 @@ export namespace Components {
         "teamstats": TeamStats;
     }
     interface PyriteXvtTrigger {
-        "trigger": Trigger;
+        "trigger": Trigger1;
     }
     interface PyriteXvtWaypt {
-        "waypt": Waypt;
+        "waypt": Waypt1;
     }
     interface PyriteXvtXvTString {
         "xvtstring": XvTString;
     }
     interface PyriteXwBriefing {
-        "briefing": Briefing;
+        "briefing": Briefing1;
     }
     interface PyriteXwBriefingHeader {
         "briefingheader": BriefingHeader;
@@ -268,16 +268,16 @@ export namespace Components {
         "coordinate": Coordinate;
     }
     interface PyriteXwFileHeader {
-        "fileheader": FileHeader;
+        "fileheader": FileHeader2;
     }
     interface PyriteXwFlightGroup {
-        "flightgroup": FlightGroup;
+        "flightgroup": FlightGroup2;
     }
     interface PyriteXwIcon {
         "icon": Icon;
     }
     interface PyriteXwMission {
-        "mission": Mission;
+        "mission": Mission3;
     }
     interface PyriteXwMissionHeader {
         "missionheader": MissionHeader;
@@ -289,77 +289,97 @@ export namespace Components {
         "page": Page;
     }
     interface PyriteXwPilotFile {
-        "pilotfile": PilotFile;
+        "pilotfile": PilotFile2;
     }
     interface PyriteXwString {
         "string": String;
     }
     interface PyriteXwTag {
-        "tag": Tag;
+        "tag": Tag2;
     }
     interface PyriteXwViewportSetting {
         "viewportsetting": ViewportSetting;
     }
     interface PyriteXwaBriefing {
-        "briefing": Briefing;
+        "briefing": Briefing2;
     }
     interface PyriteXwaEvent {
-        "event": Event;
+        "event": Event2;
     }
     interface PyriteXwaFileHeader {
-        "fileheader": FileHeader;
+        "fileheader": FileHeader3;
     }
     interface PyriteXwaFlightGroup {
-        "flightgroup": FlightGroup;
+        "flightgroup": FlightGroup3;
     }
     interface PyriteXwaGlobalCargo {
         "globalcargo": GlobalCargo;
     }
     interface PyriteXwaGlobalGoal {
-        "globalgoal": GlobalGoal;
+        "globalgoal": GlobalGoal2;
     }
     interface PyriteXwaGoalFg {
-        "goalfg": GoalFG;
+        "goalfg": GoalFG2;
     }
     interface PyriteXwaGoalGlobal {
-        "goalglobal": GoalGlobal;
+        "goalglobal": GoalGlobal1;
     }
     interface PyriteXwaLengthString {
         "lengthstring": LengthString;
     }
     interface PyriteXwaMessage {
-        "message": Message;
+        "message": Message2;
     }
     interface PyriteXwaMission {
-        "mission": Mission;
+        "mission": Mission4;
     }
     interface PyriteXwaMissionData {
-        "missiondata": MissionData;
+        "missiondata": MissionData1;
     }
     interface PyriteXwaOrder {
-        "order": Order;
+        "order": Order2;
     }
     interface PyriteXwaPilotFile {
-        "pilotfile": PilotFile;
+        "pilotfile": PilotFile3;
     }
     interface PyriteXwaSkip {
         "skip": Skip;
     }
     interface PyriteXwaTag {
-        "tag": Tag;
+        "tag": Tag3;
     }
     interface PyriteXwaTeam {
-        "team": Team;
+        "team": Team1;
     }
     interface PyriteXwaTrigger {
-        "trigger": Trigger;
+        "trigger": Trigger2;
     }
     interface PyriteXwaWaypt {
-        "waypt": Waypt;
+        "waypt": Waypt2;
     }
     interface PyriteXwaXwaString {
         "xwastring": XWAString;
     }
+}
+export interface EhtcApiSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLEhtcApiSelectElement;
+}
+export interface EhtcBattleCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLEhtcBattleElement;
+}
+export interface EhtcBattleSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLEhtcBattleSelectElement;
+}
+export interface EhtcMemberSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLEhtcMemberSelectElement;
+}
+export interface EhtcWrapSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLEhtcWrapSelectElement;
 }
 declare global {
     interface HTMLEhtcApiSelectElement extends Components.EhtcApiSelect, HTMLStencilElement {
@@ -1084,7 +1104,7 @@ declare namespace LocalJSX {
         "domain"?: string;
         "item"?: ApiSummary;
         "name"?: string;
-        "onApiSelect"?: (event: CustomEvent<ApiSummary>) => void;
+        "onApiSelect"?: (event: EhtcApiSelectCustomEvent<ApiSummary>) => void;
         "url"?: string;
         "value"?: string;
     }
@@ -1095,7 +1115,7 @@ declare namespace LocalJSX {
     interface EhtcBattle {
         "battle"?: Battle;
         "code"?: string;
-        "onDownloadBattle"?: (event: CustomEvent<Battle>) => void;
+        "onDownloadBattle"?: (event: EhtcBattleCustomEvent<Battle>) => void;
     }
     interface EhtcBattleCenter {
     }
@@ -1105,7 +1125,7 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         "domain"?: string;
         "name"?: string;
-        "onBattleSelect"?: (event: CustomEvent<BattleSummary>) => void;
+        "onBattleSelect"?: (event: EhtcBattleSelectCustomEvent<BattleSummary>) => void;
         "readonly"?: boolean;
         "value"?: string;
     }
@@ -1115,7 +1135,7 @@ declare namespace LocalJSX {
         "filter"?: string;
         "mode"?: "character" | "pilot";
         "name"?: string;
-        "onMemberSelect"?: (event: CustomEvent<PilotSummary | CharacterSummary>) => void;
+        "onMemberSelect"?: (event: EhtcMemberSelectCustomEvent<PilotSummary | CharacterSummary>) => void;
         "readonly"?: boolean;
         "status"?: "active" | "all";
         "value"?: string;
@@ -1128,7 +1148,7 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         "item"?: ItemSummary;
         "name"?: string;
-        "onItemSelect"?: (event: CustomEvent<ItemSummary>) => void;
+        "onItemSelect"?: (event: EhtcWrapSelectCustomEvent<ItemSummary>) => void;
         "readonly"?: boolean;
         "value"?: string;
     }
@@ -1195,7 +1215,7 @@ declare namespace LocalJSX {
     interface PyriteResources {
     }
     interface PyriteTieBriefing {
-        "mission"?: Mission;
+        "mission"?: Mission1;
     }
     interface PyriteTieChecklist {
         "lfdUrl"?: string;
@@ -1262,28 +1282,28 @@ declare namespace LocalJSX {
         "briefing"?: Briefing;
     }
     interface PyriteXvtEvent {
-        "event"?: Event;
+        "event"?: Event1;
     }
     interface PyriteXvtFileHeader {
-        "fileheader"?: FileHeader;
+        "fileheader"?: FileHeader1;
     }
     interface PyriteXvtFlightGroup {
-        "flightgroup"?: FlightGroup;
+        "flightgroup"?: FlightGroup1;
     }
     interface PyriteXvtGlobalGoal {
-        "globalgoal"?: GlobalGoal;
+        "globalgoal"?: GlobalGoal1;
     }
     interface PyriteXvtGoalFg {
-        "goalfg"?: GoalFG;
+        "goalfg"?: GoalFG1;
     }
     interface PyriteXvtGoalGlobal {
         "goalglobal"?: GoalGlobal;
     }
     interface PyriteXvtMessage {
-        "message"?: Message;
+        "message"?: Message1;
     }
     interface PyriteXvtMission {
-        "mission"?: Mission;
+        "mission"?: Mission2;
     }
     interface PyriteXvtMissionBop {
         "missionbop"?: MissionBOP;
@@ -1292,16 +1312,16 @@ declare namespace LocalJSX {
         "missiondata"?: MissionData;
     }
     interface PyriteXvtOrder {
-        "order"?: Order;
+        "order"?: Order1;
     }
     interface PyriteXvtPilotFile {
-        "pilotfile"?: PilotFile;
+        "pilotfile"?: PilotFile1;
     }
     interface PyriteXvtRole {
-        "role"?: Role;
+        "xvtrole"?: Role;
     }
     interface PyriteXvtTag {
-        "tag"?: Tag;
+        "tag"?: Tag1;
     }
     interface PyriteXvtTeam {
         "team"?: Team;
@@ -1310,16 +1330,16 @@ declare namespace LocalJSX {
         "teamstats"?: TeamStats;
     }
     interface PyriteXvtTrigger {
-        "trigger"?: Trigger;
+        "trigger"?: Trigger1;
     }
     interface PyriteXvtWaypt {
-        "waypt"?: Waypt;
+        "waypt"?: Waypt1;
     }
     interface PyriteXvtXvTString {
         "xvtstring"?: XvTString;
     }
     interface PyriteXwBriefing {
-        "briefing"?: Briefing;
+        "briefing"?: Briefing1;
     }
     interface PyriteXwBriefingHeader {
         "briefingheader"?: BriefingHeader;
@@ -1328,16 +1348,16 @@ declare namespace LocalJSX {
         "coordinate"?: Coordinate;
     }
     interface PyriteXwFileHeader {
-        "fileheader"?: FileHeader;
+        "fileheader"?: FileHeader2;
     }
     interface PyriteXwFlightGroup {
-        "flightgroup"?: FlightGroup;
+        "flightgroup"?: FlightGroup2;
     }
     interface PyriteXwIcon {
         "icon"?: Icon;
     }
     interface PyriteXwMission {
-        "mission"?: Mission;
+        "mission"?: Mission3;
     }
     interface PyriteXwMissionHeader {
         "missionheader"?: MissionHeader;
@@ -1349,73 +1369,73 @@ declare namespace LocalJSX {
         "page"?: Page;
     }
     interface PyriteXwPilotFile {
-        "pilotfile"?: PilotFile;
+        "pilotfile"?: PilotFile2;
     }
     interface PyriteXwString {
         "string"?: String;
     }
     interface PyriteXwTag {
-        "tag"?: Tag;
+        "tag"?: Tag2;
     }
     interface PyriteXwViewportSetting {
         "viewportsetting"?: ViewportSetting;
     }
     interface PyriteXwaBriefing {
-        "briefing"?: Briefing;
+        "briefing"?: Briefing2;
     }
     interface PyriteXwaEvent {
-        "event"?: Event;
+        "event"?: Event2;
     }
     interface PyriteXwaFileHeader {
-        "fileheader"?: FileHeader;
+        "fileheader"?: FileHeader3;
     }
     interface PyriteXwaFlightGroup {
-        "flightgroup"?: FlightGroup;
+        "flightgroup"?: FlightGroup3;
     }
     interface PyriteXwaGlobalCargo {
         "globalcargo"?: GlobalCargo;
     }
     interface PyriteXwaGlobalGoal {
-        "globalgoal"?: GlobalGoal;
+        "globalgoal"?: GlobalGoal2;
     }
     interface PyriteXwaGoalFg {
-        "goalfg"?: GoalFG;
+        "goalfg"?: GoalFG2;
     }
     interface PyriteXwaGoalGlobal {
-        "goalglobal"?: GoalGlobal;
+        "goalglobal"?: GoalGlobal1;
     }
     interface PyriteXwaLengthString {
         "lengthstring"?: LengthString;
     }
     interface PyriteXwaMessage {
-        "message"?: Message;
+        "message"?: Message2;
     }
     interface PyriteXwaMission {
-        "mission"?: Mission;
+        "mission"?: Mission4;
     }
     interface PyriteXwaMissionData {
-        "missiondata"?: MissionData;
+        "missiondata"?: MissionData1;
     }
     interface PyriteXwaOrder {
-        "order"?: Order;
+        "order"?: Order2;
     }
     interface PyriteXwaPilotFile {
-        "pilotfile"?: PilotFile;
+        "pilotfile"?: PilotFile3;
     }
     interface PyriteXwaSkip {
         "skip"?: Skip;
     }
     interface PyriteXwaTag {
-        "tag"?: Tag;
+        "tag"?: Tag3;
     }
     interface PyriteXwaTeam {
-        "team"?: Team;
+        "team"?: Team1;
     }
     interface PyriteXwaTrigger {
-        "trigger"?: Trigger;
+        "trigger"?: Trigger2;
     }
     interface PyriteXwaWaypt {
-        "waypt"?: Waypt;
+        "waypt"?: Waypt2;
     }
     interface PyriteXwaXwaString {
         "xwastring"?: XWAString;

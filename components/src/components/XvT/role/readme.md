@@ -7,9 +7,9 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type   | Default     |
-| -------- | --------- | ----------- | ------ | ----------- |
-| `role`   | --        |             | `Role` | `undefined` |
+| Property  | Attribute | Description | Type   | Default     |
+| --------- | --------- | ----------- | ------ | ----------- |
+| `xvtrole` | --        |             | `Role` | `undefined` |
 
 
 ----------------------------------------------

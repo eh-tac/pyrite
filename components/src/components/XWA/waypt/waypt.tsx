@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { Waypt } from "../../../model/XWA";
 import { XWAWayptController } from "../../../controllers/XWA";
 import { Field } from "../../fields/field";
@@ -21,12 +21,11 @@ export class XWAWayptComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('X')} />
-        <Field {...this.controller.getProps('Y')} />
-        <Field {...this.controller.getProps('Z')} />
-        <Field {...this.controller.getProps('Enabled')} />
+        <Field {...this.controller.getProps("X")} />
+        <Field {...this.controller.getProps("Y")} />
+        <Field {...this.controller.getProps("Z")} />
+        <Field {...this.controller.getProps("Enabled")} />
       </Host>
-    )
+    );
   }
 }
-  

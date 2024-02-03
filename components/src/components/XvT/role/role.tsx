@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { Role } from "../../../model/XvT";
 import { XvTRoleController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
@@ -10,21 +10,20 @@ import { Field } from "../../fields/field";
 })
 export class XvTRoleComponent {
   @Element() public el: HTMLElement;
-  @Prop() public role: Role;
+  @Prop() public xvtrole: Role;
 
   private controller: XvTRoleController;
 
   public componentWillLoad(): void {
-    this.controller = new XvTRoleController(this.role);
+    this.controller = new XvTRoleController(this.xvtrole);
   }
 
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Team')} />
-        <Field {...this.controller.getProps('Designation')} />
+        <Field {...this.controller.getProps("Team")} />
+        <Field {...this.controller.getProps("Designation")} />
       </Host>
-    )
+    );
   }
 }
-  
