@@ -2,9 +2,10 @@
 
 namespace Pyrite\XvT;
 
+use Pyrite\IScoreKeeper;
 use Pyrite\ScoreRow;
 
-class ScoreKeeper
+class ScoreKeeper implements IScoreKeeper
 {
     /** @var Mission */
     private $TIE;
@@ -106,7 +107,7 @@ class ScoreKeeper
         }
     }
 
-    public function getData()
+    public function getData(): array
     {
         return array_merge(
             [ScoreRow::header("Flight Groups")],
@@ -123,7 +124,7 @@ class ScoreKeeper
         return $this->getData();
     }
 
-    public function getTotal()
+    public function getTotal(): int
     {
         $rows = array_filter($this->getData(), fn ($row) => $row->number > 0);
         return array_sum(array_map(fn ($row) => $row->points, $rows));

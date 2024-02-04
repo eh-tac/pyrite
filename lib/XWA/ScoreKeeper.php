@@ -2,7 +2,10 @@
 
 namespace Pyrite\XWA;
 
-class ScoreKeeper
+use Pyrite\IScoreKeeper;
+use Pyrite\ScoreRow;
+
+class ScoreKeeper  implements IScoreKeeper
 {
     private $TIE;
 
@@ -19,6 +22,13 @@ class ScoreKeeper
     public $player = null;
     public $warhead = null;
 
+    /** @var ScoreRow[] */
+    public $flightGroups = [];
+    /** @var ScoreRow[] */
+    public $goals = [];
+    /** @var ScoreRow[] */
+    public $craftOptions = [];
+
     public function __construct(Mission $TIE, $difficulty = 'Hard')
     {
         $this->TIE = $TIE;
@@ -26,6 +36,23 @@ class ScoreKeeper
         if ($this->TIE->valid()) {
             $this->process();
         }
+    }
+
+    public function getData(): array
+    {
+        return array_merge(
+            [ScoreRow::header("Flight Groups")],
+            $this->flightGroups,
+            [ScoreRow::header("Goals")],
+            $this->goals,
+            [ScoreRow::header("Player Craft")],
+            $this->craftOptions
+        );
+    }
+
+    public function getTotal(): int
+    {
+        return 0;
     }
 
     public function process()
