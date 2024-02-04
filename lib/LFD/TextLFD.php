@@ -59,22 +59,22 @@ class LFDString implements Byteable, \ArrayAccess
 		return $this->Length + 2;
 	}
 
-	public function offsetExists(mixed $offset): bool
+	public function offsetExists($offset)
 	{
 		return isset($this->SubStrings[$offset]);
 	}
 
-	public function offsetGet($offset): mixed
+	public function offsetGet($offset)
 	{
 		return isset($this->SubStrings[$offset]) ? $this->SubStrings[$offset] : '';
 	}
 
-	public function offsetSet($offset, $value): void
+	public function offsetSet($offset, $value)
 	{
 		$this->SubStrings[$offset] = $value;
 	}
 
-	public function offsetUnset($offset): void
+	public function offsetUnset($offset)
 	{
 		unset($this->SubStrings[$offset]);
 	}

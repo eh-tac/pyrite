@@ -156,7 +156,7 @@ export class BattleSelectComponent {
     return (
       <div class="battle-summary" onClick={this.selectBattle.bind(this, b)}>
         <div class="topline tags has-addons" style={{ width: "100%" }}>
-          <span class="tag is-info mb-0 is-radiusless">#{b.code}</span>
+          <span class="battle-code tag is-info mb-0 is-radiusless">#{b.code}</span>
           <span class="battle-label tag is-primary mb-0 is-radiusless">{b.name}</span>
         </div>
       </div>

@@ -2,9 +2,10 @@
 
 namespace Pyrite\TIE;
 
+use Pyrite\IScoreKeeper;
 use Pyrite\ScoreRow;
 
-class ScoreKeeper
+class ScoreKeeper implements IScoreKeeper
 {
     private $TIE;
 
@@ -41,7 +42,7 @@ class ScoreKeeper
         foreach (['Primary', 'Secondary', 'Bonus'] as $idx => $type) {
             $gg = $this->TIE->GlobalGoals[$idx];
             if ($gg instanceof GlobalGoal && $gg->hasData()) {
-                $this->goalTypes[$type][] = (string) $gg;
+                $this->goalTypes[$type][] = [(string) $gg, 0];
             }
         }
 
@@ -174,7 +175,7 @@ class ScoreKeeper
         );
     }
 
-    public function getData()
+    public function getData(): array
     {
         return array_merge(
             [ScoreRow::header("Flight Groups")],
@@ -186,7 +187,7 @@ class ScoreKeeper
         );
     }
 
-    public function getTotal()
+    public function getTotal(): int
     {
         $rows = array_filter($this->getData(), fn ($row) => $row->number > 0);
         return array_sum(array_map(fn ($row) => $row->points, $rows));
