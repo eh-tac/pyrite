@@ -61,7 +61,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     public $CurrentMedal;
     /** @var integer 0x1144E BonusTen INT */
     public $BonusTen;
-    
+
     public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
@@ -134,7 +134,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->CraftLosses = $this->getInt($hex, 0x4d66);
         $this->MissionData = [];
         $offset = 0xacfa;
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 150; $i++) {
             $t = (new MissionData(substr($hex, $offset), $this->TIE))->loadHex();
             $this->MissionData[] = $t;
             $offset += $t->getLength();
@@ -142,12 +142,12 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $this->CurrentRank = $this->getInt($hex, 0x10EA2);
         $this->CurrentMedal = $this->getInt($hex, 0x10EA6);
         $this->BonusTen = $this->getInt($hex, 0x1144E);
-        
+
 
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
-    
+
     public function __debugInfo()
     {
         return [
@@ -176,7 +176,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             "BonusTen" => $this->BonusTen
         ];
     }
-    
+
     public function toHexString($hex = null)
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
@@ -243,8 +243,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
 
         return $hex;
     }
-    
-    
+
+
     public function getLength()
     {
         return self::PILOTFILELENGTH;
