@@ -7,16 +7,16 @@
 
 ## Properties
 
-| Property   | Attribute  | Description | Type                     | Default       |
-| ---------- | ---------- | ----------- | ------------------------ | ------------- |
-| `disabled` | `disabled` |             | `boolean`                | `undefined`   |
-| `domain`   | `domain`   |             | `string`                 | `undefined`   |
-| `filter`   | `filter`   |             | `string`                 | `""`          |
-| `mode`     | `mode`     |             | `"character" \| "pilot"` | `"character"` |
-| `name`     | `name`     |             | `string`                 | `undefined`   |
-| `readonly` | `readonly` |             | `boolean`                | `undefined`   |
-| `status`   | `status`   |             | `"active" \| "all"`      | `"active"`    |
-| `value`    | `value`    |             | `string`                 | `undefined`   |
+| Property   | Attribute  | Description | Type                                           | Default       |
+| ---------- | ---------- | ----------- | ---------------------------------------------- | ------------- |
+| `disabled` | `disabled` |             | `boolean`                                      | `undefined`   |
+| `domain`   | `domain`   |             | `string`                                       | `undefined`   |
+| `filter`   | `filter`   |             | `string`                                       | `""`          |
+| `mode`     | `mode`     |             | `"character" \| "group-characters" \| "pilot"` | `"character"` |
+| `name`     | `name`     |             | `string`                                       | `undefined`   |
+| `readonly` | `readonly` |             | `boolean`                                      | `undefined`   |
+| `status`   | `status`   |             | `"active" \| "all"`                            | `"active"`    |
+| `value`    | `value`    |             | `string`                                       | `undefined`   |
 
 
 ## Events
@@ -32,6 +32,12 @@
 
 
 
+#### Parameters
+
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `query` | `string` |             |
+
 #### Returns
 
 Type: `Promise<void>`
@@ -41,6 +47,12 @@ Type: `Promise<void>`
 ### `setValue(val: string | number) => Promise<void>`
 
 
+
+#### Parameters
+
+| Name  | Type               | Description |
+| ----- | ------------------ | ----------- |
+| `val` | `string \| number` |             |
 
 #### Returns
 

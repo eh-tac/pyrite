@@ -18,6 +18,12 @@
 
 
 
+#### Parameters
+
+| Name    | Type          | Description |
+| ------- | ------------- | ----------- |
+| `value` | `ArrayBuffer` |             |
+
 #### Returns
 
 Type: `Promise<void>`

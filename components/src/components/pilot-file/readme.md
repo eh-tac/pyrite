@@ -20,6 +20,12 @@
 
 
 
+#### Parameters
+
+| Name   | Type   | Description |
+| ------ | ------ | ----------- |
+| `file` | `File` |             |
+
 #### Returns
 
 Type: `Promise<void>`

@@ -257,7 +257,7 @@ class Battle
     public function loadMissions()
     {
         foreach ($this->missionFiles as $file) {
-            $path = $this->folder . DS . $file;
+            $path = $this->folder . DIRECTORY_SEPARATOR . $file;
             $contents = file_get_contents($path);
 
             $tie = $this->loadMission($contents);
@@ -363,8 +363,8 @@ class Battle
             case Platform::XWA:
             case Platform::TFTC:
                 return new \Pyrite\XWA\ScoreKeeper($tie);
-                // case PLT_XW:
-                // return new \Pyrite\XW\ScoreKeeper($tie);
+            case Platform::XW:
+                return new \Pyrite\XW\ScoreKeeper($tie);
         }
     }
 }

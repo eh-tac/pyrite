@@ -19,7 +19,7 @@ struct PilotFile (size 0x2520C)
   0x4d4e INT WarheadsHit
   0x4d5a INT WarheadsFired
   0x4d66 INT CraftLosses
-  0xacfa MissionData[100] MissionData
+  0xACFA MissionData[200] MissionData
   0x10EA2 INT CurrentRank
   0x10EA6 INT CurrentMedal
   0x1144E INT BonusTen

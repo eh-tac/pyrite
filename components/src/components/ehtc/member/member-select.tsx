@@ -17,7 +17,7 @@ export class MemberSelectComponent {
   // domain override. defaults to empty for same domain requests
   @Prop() domain: string;
   @Prop() name: string;
-  @Prop() mode: "character" | "pilot" = "character";
+  @Prop() mode: "character" | "pilot" | "group-characters" = "character";
   @Prop() status: "active" | "all" = "active";
   @Prop() filter: string = "";
   @Prop() disabled: boolean;
@@ -91,7 +91,7 @@ export class MemberSelectComponent {
       if (this.filterArray.length) {
         this.memberList = d.filter(
           (m: CharacterSummary) =>
-            (this.mode === "pilot" && this.filterArray.includes(m.PIN)) ||
+            (this.mode !== "character" && this.filterArray.includes(m.PIN)) ||
             (this.mode === "character" && this.filterArray.includes(m.characterId))
         );
       }
@@ -120,7 +120,7 @@ export class MemberSelectComponent {
     this.selectMember(
       this.memberList.find(
         (m: CharacterSummary) =>
-          (this.mode === "pilot" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
+          (this.mode !== "character" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
       )
     );
     return Promise.resolve();
@@ -128,6 +128,11 @@ export class MemberSelectComponent {
 
   private get listURL(): string {
     const d = this.domain || "";
+
+    if (this.mode === "group-characters") {
+      return `${d}/api/member/characters/${this.status}`;
+    }
+
     return `${d}/api/${this.mode}/list/${this.status}`;
   }
 

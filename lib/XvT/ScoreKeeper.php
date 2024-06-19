@@ -10,16 +10,6 @@ class ScoreKeeper implements IScoreKeeper
     /** @var Mission */
     private $TIE;
 
-    /** @var FlightGroup */
-    private $playerCraft = array();
-    private $globalGoals = array();
-    private $fgGoals = array();
-    private $fgs = array();
-    private $oths = array();
-    private $goalTypes = array('Primary' => array(), 'Secondary' => array(), 'Bonus' => array());
-    private $goalPoints = 10000;
-    private $badBonus = FALSE;
-    private $invincible = array();
     private $difficultyFilter;
 
     public $total = 0;

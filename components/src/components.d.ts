@@ -15,6 +15,16 @@ import { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as
 import { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
 import { Briefing as Briefing1, BriefingHeader, Coordinate, FileHeader as FileHeader2, FlightGroup as FlightGroup2, Icon, Mission as Mission3, MissionHeader, ObjectGroup, Page, PilotFile as PilotFile2, String, Tag as Tag2, ViewportSetting } from "./model/XW";
 import { Briefing as Briefing2, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, LengthString, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Skip, Tag as Tag3, Team as Team1, Trigger as Trigger2, Waypt as Waypt2, XWAString } from "./model/XWA";
+export { ApiSummary } from "./components/ehtc/api-select/api-select";
+export { Battle } from "./model/ehtc/battle";
+export { BattleSummary, CharacterSummary, PilotSummary } from "./model/ehtc";
+export { ItemSummary } from "./components/ehtc/wrap-select/wrap-select";
+export { Mission } from "./model/TIE/mission";
+export { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic, VoicData } from "./model/LFD";
+export { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
+export { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
+export { Briefing as Briefing1, BriefingHeader, Coordinate, FileHeader as FileHeader2, FlightGroup as FlightGroup2, Icon, Mission as Mission3, MissionHeader, ObjectGroup, Page, PilotFile as PilotFile2, String, Tag as Tag2, ViewportSetting } from "./model/XW";
+export { Briefing as Briefing2, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, LengthString, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Skip, Tag as Tag3, Team as Team1, Trigger as Trigger2, Waypt as Waypt2, XWAString } from "./model/XWA";
 export namespace Components {
     interface EhtcApiSelect {
         "domain": string;
@@ -49,7 +59,7 @@ export namespace Components {
         "disabled": boolean;
         "domain": string;
         "filter": string;
-        "mode": "character" | "pilot";
+        "mode": "character" | "pilot" | "group-characters";
         "name": string;
         "readonly": boolean;
         "search": (query: string) => Promise<void>;
@@ -382,7 +392,18 @@ export interface EhtcWrapSelectCustomEvent<T> extends CustomEvent<T> {
     target: HTMLEhtcWrapSelectElement;
 }
 declare global {
+    interface HTMLEhtcApiSelectElementEventMap {
+        "apiSelect": ApiSummary;
+    }
     interface HTMLEhtcApiSelectElement extends Components.EhtcApiSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLEhtcApiSelectElementEventMap>(type: K, listener: (this: HTMLEhtcApiSelectElement, ev: EhtcApiSelectCustomEvent<HTMLEhtcApiSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLEhtcApiSelectElementEventMap>(type: K, listener: (this: HTMLEhtcApiSelectElement, ev: EhtcApiSelectCustomEvent<HTMLEhtcApiSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLEhtcApiSelectElement: {
         prototype: HTMLEhtcApiSelectElement;
@@ -394,7 +415,18 @@ declare global {
         prototype: HTMLEhtcApiStoreElement;
         new (): HTMLEhtcApiStoreElement;
     };
+    interface HTMLEhtcBattleElementEventMap {
+        "downloadBattle": Battle;
+    }
     interface HTMLEhtcBattleElement extends Components.EhtcBattle, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLEhtcBattleElementEventMap>(type: K, listener: (this: HTMLEhtcBattleElement, ev: EhtcBattleCustomEvent<HTMLEhtcBattleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLEhtcBattleElementEventMap>(type: K, listener: (this: HTMLEhtcBattleElement, ev: EhtcBattleCustomEvent<HTMLEhtcBattleElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLEhtcBattleElement: {
         prototype: HTMLEhtcBattleElement;
@@ -406,13 +438,35 @@ declare global {
         prototype: HTMLEhtcBattleCenterElement;
         new (): HTMLEhtcBattleCenterElement;
     };
+    interface HTMLEhtcBattleSelectElementEventMap {
+        "battleSelect": BattleSummary;
+    }
     interface HTMLEhtcBattleSelectElement extends Components.EhtcBattleSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLEhtcBattleSelectElementEventMap>(type: K, listener: (this: HTMLEhtcBattleSelectElement, ev: EhtcBattleSelectCustomEvent<HTMLEhtcBattleSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLEhtcBattleSelectElementEventMap>(type: K, listener: (this: HTMLEhtcBattleSelectElement, ev: EhtcBattleSelectCustomEvent<HTMLEhtcBattleSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLEhtcBattleSelectElement: {
         prototype: HTMLEhtcBattleSelectElement;
         new (): HTMLEhtcBattleSelectElement;
     };
+    interface HTMLEhtcMemberSelectElementEventMap {
+        "memberSelect": PilotSummary | CharacterSummary;
+    }
     interface HTMLEhtcMemberSelectElement extends Components.EhtcMemberSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLEhtcMemberSelectElementEventMap>(type: K, listener: (this: HTMLEhtcMemberSelectElement, ev: EhtcMemberSelectCustomEvent<HTMLEhtcMemberSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLEhtcMemberSelectElementEventMap>(type: K, listener: (this: HTMLEhtcMemberSelectElement, ev: EhtcMemberSelectCustomEvent<HTMLEhtcMemberSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLEhtcMemberSelectElement: {
         prototype: HTMLEhtcMemberSelectElement;
@@ -424,7 +478,18 @@ declare global {
         prototype: HTMLEhtcPilotElement;
         new (): HTMLEhtcPilotElement;
     };
+    interface HTMLEhtcWrapSelectElementEventMap {
+        "itemSelect": ItemSummary;
+    }
     interface HTMLEhtcWrapSelectElement extends Components.EhtcWrapSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLEhtcWrapSelectElementEventMap>(type: K, listener: (this: HTMLEhtcWrapSelectElement, ev: EhtcWrapSelectCustomEvent<HTMLEhtcWrapSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLEhtcWrapSelectElementEventMap>(type: K, listener: (this: HTMLEhtcWrapSelectElement, ev: EhtcWrapSelectCustomEvent<HTMLEhtcWrapSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLEhtcWrapSelectElement: {
         prototype: HTMLEhtcWrapSelectElement;
@@ -1133,7 +1198,7 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         "domain"?: string;
         "filter"?: string;
-        "mode"?: "character" | "pilot";
+        "mode"?: "character" | "pilot" | "group-characters";
         "name"?: string;
         "onMemberSelect"?: (event: EhtcMemberSelectCustomEvent<PilotSummary | CharacterSummary>) => void;
         "readonly"?: boolean;

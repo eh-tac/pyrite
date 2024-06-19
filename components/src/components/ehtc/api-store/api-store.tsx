@@ -17,8 +17,9 @@ export class ApiSelectComponent {
   private verifiedUrls: Set<string> = new Set<string>();
   private processing = false;
 
-  private get cacheKey(): string {
-    return `${this.cachePrefix}-api-cache`;
+  private getCacheKey(suffix?: string): string {
+    const suff = suffix ? `-${suffix}` : "";
+    return `${this.cachePrefix}-api-cache${suff}`;
   }
 
   @Method()
@@ -72,7 +73,7 @@ export class ApiSelectComponent {
             if (responseTag) {
               this.etagCache[nextUrl] = responseTag;
               this.responseCache[nextUrl] = d;
-              this.saveCache();
+              this.saveCache(nextUrl, responseTag, d);
             }
             nextPromiseResolve(d);
             return Promise.resolve(d);
@@ -92,19 +93,26 @@ export class ApiSelectComponent {
   private loadCache(): void {
     this.etagCache = {};
     this.responseCache = {};
-    const ls = localStorage.getItem(this.cacheKey);
-    if (ls) {
-      const data = JSON.parse(ls);
-      this.etagCache = data.etag || {};
-      this.responseCache = data.response || {};
+
+    // init
+    const baseKey = this.getCacheKey();
+    localStorage.removeItem(baseKey);
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k.startsWith(baseKey)) {
+        const ls = localStorage.getItem(k);
+        if (ls) {
+          const data = JSON.parse(ls);
+          this.etagCache[data.url] = data.etag;
+          this.responseCache[data.url] = data.response;
+        }
+      }
     }
   }
 
-  private saveCache(): void {
-    const data = JSON.stringify({
-      etag: this.etagCache,
-      response: this.responseCache
-    });
-    localStorage.setItem(this.cacheKey, data);
+  private saveCache(url: string, etag: string, response: string): void {
+    const key = this.getCacheKey(url);
+    const data = JSON.stringify({ url, etag, response });
+    localStorage.setItem(key, data);
   }
 }

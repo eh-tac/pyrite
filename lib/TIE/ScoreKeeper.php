@@ -10,8 +10,6 @@ class ScoreKeeper implements IScoreKeeper
     private $TIE;
 
     private $playerCraft = null;
-    private $globalGoals = array();
-    private $fgGoals = array();
     private $fgs = array();
     private $goalTypes = array('Primary' => array(), 'Secondary' => array(), 'Bonus' => array());
     private $goalPoints = array('Hard' => 7750, 'Medium' => 5000, 'Easy' => 2250);

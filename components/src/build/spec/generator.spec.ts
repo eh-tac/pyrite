@@ -11,10 +11,10 @@ describe("generator test", () => {
     };
 
     const expectProp = (prop: Prop, offset: string, name: string, isArray: boolean, pv: boolean): void => {
-      expect(prop.offset).toBe(offset, "Offset check failed");
-      expect(prop.name).toBe(name, "Name check failed");
-      expect(prop.isArray).toBe(isArray, "isArray check failed");
-      expect(prop.previousValueOffset).toBe(pv, "prevVal check failed");
+      expect(prop.offset).toBe(offset); // "Offset check failed");
+      expect(prop.name).toBe(name);
+      expect(prop.isArray).toBe(isArray);
+      expect(prop.previousValueOffset).toBe(pv);
     };
 
     beforeEach(() => {
@@ -26,7 +26,7 @@ describe("generator test", () => {
 
       expectProp(prop, "0x000", "FileHeader", false, false);
 
-      expect(prop instanceof PropObject).toBeTrue();
+      expect(prop instanceof PropObject).toBe(true);
       expect((prop as PropObject).structName).toBe("FileHeader");
     });
 
@@ -35,7 +35,7 @@ describe("generator test", () => {
 
       expectProp(prop, "PV", "GlobalGoals", true, true);
       expect(prop.arrayLengthValue).toBe(3);
-      expect(prop instanceof PropObject).toBeTrue();
+      expect(prop instanceof PropObject).toBe(true);
       expect((prop as PropObject).structName).toBe("GlobalGoal");
     });
 
@@ -44,7 +44,7 @@ describe("generator test", () => {
       expectProp(prop, "PV", "FlightGroups", true, true);
       expect(prop.arrayLengthExpression).toBe("FileHeader-NumFGs");
       expect(prop.getFunctionStubs().length).toBe(0);
-      expect(prop instanceof PropObject).toBeTrue();
+      expect(prop instanceof PropObject).toBe(true);
       expect((prop as PropObject).structName).toBe("FlightGroup");
     });
 
@@ -52,7 +52,7 @@ describe("generator test", () => {
       const prop = getProp("PV BYTE End Reserved(0xFF)");
 
       expectProp(prop, "PV", "End", false, true);
-      expect(prop instanceof PropByte).toBeTrue();
+      expect(prop instanceof PropByte).toBe(true);
       expect(prop.reservedValue).toBe(255);
     });
 
@@ -60,8 +60,8 @@ describe("generator test", () => {
       const prop = getProp("0x00A	BYTE	BriefingOfficers (enum)");
 
       expectProp(prop, "0x00A", "BriefingOfficers", false, false);
-      expect(prop instanceof PropByte).toBeTrue();
-      expect(prop.isEnum).toBeTrue();
+      expect(prop instanceof PropByte).toBe(true);
+      expect(prop.isEnum).toBe(true);
       expect(prop.enumName).toBe("BriefingOfficers");
     });
 
@@ -79,7 +79,7 @@ describe("generator test", () => {
       const prop = getProp("0x2	CHAR<QuestionLength()> Question");
 
       expectProp(prop, "0x2", "Question", false, false);
-      expect(prop instanceof PropChar).toBeTrue();
+      expect(prop instanceof PropChar).toBe(true);
       expect(prop.typeLengthExpression).toBe("QuestionLength()");
       expect(prop.getFunctionStubs().length).toBe(1);
       expect(prop.getFunctionStubs()[0]).toBe("QuestionLength()");
@@ -89,7 +89,7 @@ describe("generator test", () => {
       const prop = getProp("0x03B	BYTE	Reserved1 Reserved(0)			Unknown1 in TFW");
 
       expectProp(prop, "0x03B", "Reserved1", false, false);
-      expect(prop instanceof PropByte).toBeTrue();
+      expect(prop instanceof PropByte).toBe(true);
       expect(prop.comment).toBe("Unknown1 in TFW");
     });
 
@@ -97,7 +97,7 @@ describe("generator test", () => {
       const prop = getProp("0x4	SHORT[VariableCount()]	Variables");
 
       expectProp(prop, "0x4", "Variables", true, false);
-      expect(prop instanceof PropShort).toBeTrue();
+      expect(prop instanceof PropShort).toBe(true);
       expect(prop.arrayLengthExpression).toBe("VariableCount()");
       expect(prop.getFunctionStubs().length).toBe(1);
       expect(prop.getFunctionStubs()[0]).toBe("VariableCount()");
@@ -107,14 +107,14 @@ describe("generator test", () => {
       const prop = getProp("0x0A6	SBYTE	BonusGoalPoints");
 
       expectProp(prop, "0x0A6", "BonusGoalPoints", false, false);
-      expect(prop instanceof PropSByte).toBeTrue();
+      expect(prop instanceof PropSByte).toBe(true);
     });
 
     it("int", () => {
       const prop = getProp("0x006	INT	EventsLength Number of shorts used for events.");
 
       expectProp(prop, "0x006", "EventsLength", false, false);
-      expect(prop instanceof PropInt).toBeTrue();
+      expect(prop instanceof PropInt).toBe(true);
       expect(prop.comment).toBe("Number of shorts used for events.");
     });
 
@@ -122,7 +122,7 @@ describe("generator test", () => {
       const prop = getProp("0x48	STR<12>	EditorNote");
 
       expectProp(prop, "0x48", "EditorNote", false, false);
-      expect(prop instanceof PropStr).toBe(true, "Not a string");
+      expect(prop instanceof PropStr).toBe(true);
       expect(prop.baseSize).toBe(12);
     });
 
@@ -132,7 +132,7 @@ describe("generator test", () => {
       );
 
       expectProp(prop, "0x00A", "Events", true, false);
-      expect(prop instanceof PropObject).toBeTrue();
+      expect(prop instanceof PropObject).toBe(true);
       expect((prop as PropObject).structName).toBe("Event");
     });
   });

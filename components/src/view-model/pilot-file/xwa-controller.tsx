@@ -31,13 +31,12 @@ export class XWAPltController extends PilotFileController {
     let totalScore: number = 0;
 
     const missionScores: MissionData[] = [];
-    let i = battleData.offset || 53;
-    while (this.plt.MissionData[i].WinCount) {
-      const m = this.plt.MissionData[i];
-      missionScores.push(m);
-      i++;
-      totalScore += m.Total;
-    }
+    this.plt.MissionData.forEach(m => {
+      if (m.WinCount && m.AttemptCount) {
+        missionScores.push(m);
+        totalScore += m.Total;
+      }
+    });
 
     const type: string = battleData.missions === 1 ? "Mission" : "Battle";
     const percent: string = battleHS ? this.percentage(totalScore, battleHS) : "No High Score found";
@@ -52,7 +51,7 @@ export class XWAPltController extends PilotFileController {
       </li>
     );
 
-    const mCount = Math.max(missionScores.length, battleData.missions) + 1;
+    const mCount = Math.max(missionScores.length, battleData.missions);
     const missions: JSX.Element[] = [];
     for (let m = 0; m < mCount; m++) {
       if (missionScores[m]) {
@@ -127,25 +126,23 @@ export class XWAPltController extends PilotFileController {
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Tours of Duty</li>
-        {this.plt.BattleSummary.filter((battle: BattleSummary) => battle.missions.length).map(
-          (battle: BattleSummary, b: number) => {
-            if (battle.status === "None") {
-              return "";
-            } else {
-              return (
-                <li class="list-group-item">
-                  <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1 text-muted">Battle {b}</h5>
-                    <small>{battle.status}</small>
-                  </div>
-                  {battle.missions.map((mission: MissionData, m: number) =>
-                    this.renderXWAMission(`Mission ${m + 1}`, mission)
-                  )}
-                </li>
-              );
-            }
+        {this.plt.BattleSummary.map((battle: BattleSummary, b: number) => {
+          if (battle.status === "None" || battle.missions.length === 0) {
+            return "";
+          } else {
+            return (
+              <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1 text-muted">Battle {b}</h5>
+                  <small>{battle.status}</small>
+                </div>
+                {battle.missions.map((mission: MissionData, m: number) =>
+                  mission.AttemptCount ? this.renderXWAMission(`Mission ${m + 1}`, mission) : ""
+                )}
+              </li>
+            );
           }
-        )}
+        })}
       </ul>
     );
   }

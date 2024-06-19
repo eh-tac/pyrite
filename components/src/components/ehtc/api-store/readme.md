@@ -19,6 +19,12 @@
 
 
 
+#### Parameters
+
+| Name  | Type     | Description |
+| ----- | -------- | ----------- |
+| `url` | `string` |             |
+
 #### Returns
 
 Type: `Promise<any>`

@@ -30,13 +30,15 @@ export class PilotFile extends PilotFileBase {
     return "";
   }
 
-  public get Mode(): "xwa" | "tftc" | "ehcustom" {
+  public get Mode(): "xwa" | "tftc" | "xwa-ehcustom" | "tftc-ehcustom" {
     if (this.hasMissionData(0)) {
       return "xwa";
     } else if (!this.hasMissionData(2) && this.hasMissionData(3)) {
       return "tftc";
     } else if (!this.hasMissionData(52) && this.hasMissionData(53)) {
-      return "ehcustom";
+      return "xwa-ehcustom";
+    } else if (!this.hasMissionData(99) && this.hasMissionData(100)) {
+      return "tftc-ehcustom";
     } else {
       return "xwa";
     }
@@ -67,7 +69,7 @@ export class PilotFile extends PilotFileBase {
     let mIdx = 0;
 
     function processMissions(missions: MissionData[], expectedCount: number = 0) {
-      const won = missions.filter(m => m.WinCount && m.AttemptCount).length;
+      const won = missions.filter(m => m && m.WinCount && m.AttemptCount).length;
       const completed = won === expectedCount;
       let status = "None";
       if (completed && won === expectedCount) {
@@ -95,13 +97,23 @@ export class PilotFile extends PilotFileBase {
         processMissions(missions, mCount);
       });
     } else if (!this.hasMissionData(52) && this.hasMissionData(53)) {
-      // EH custom missions start at 53 (battle 8)
+      // XWA EH custom missions start at 53 (battle 8)
       for (let i = 0; i < 8; i++) {
         // add empty content for battles 0-7
         battles.push({ completed: false, status: "None", missions: [] });
       }
       mIdx = 53;
       // could be any number of custom missions added, but lets assume its not more than 53
+      const missions = this.MissionData.slice(mIdx, mIdx * 2);
+      processMissions(missions);
+    } else if (!this.hasMissionData(99) && this.hasMissionData(100)) {
+      // TFTC EH custom missions start at 100 (battle 20)
+      for (let i = 0; i < 20; i++) {
+        // add empty content for battles 0-19
+        battles.push({ completed: false, status: "None", missions: [] });
+      }
+      mIdx = 100;
+      // could be any number of custom missions added, but lets assume its not more than 100
       const missions = this.MissionData.slice(mIdx, mIdx * 2);
       processMissions(missions);
     }
@@ -147,6 +159,6 @@ export class PilotFile extends PilotFileBase {
   }
 
   private hasMissionData(idx: number) {
-    return !!this.MissionData[idx].AttemptCount;
+    return !!this.MissionData[idx]?.AttemptCount;
   }
 }

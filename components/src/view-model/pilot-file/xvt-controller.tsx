@@ -40,14 +40,12 @@ export class XvTPltController extends PilotFileController {
     let totalScore: number = 0;
 
     const missionScores: MissionData[] = [];
-    let i = 0;
-    while (this.plt.ImperialStats.TrainingMissionData[i].AttemptCount) {
-      const m = this.plt.ImperialStats.TrainingMissionData[i];
-      missionScores.push(m);
-      i++;
-      totalScore += m.BestScore;
-    }
-
+    this.plt.ImperialStats.TrainingMissionData.forEach(m => {
+      if (m.AttemptCount) {
+        missionScores.push(m);
+        totalScore += m.BestScore;
+      }
+    });
     const percent: string =
       scores && scores.total ? this.percentage(totalScore, scores.total.score) : "No high score found";
     const type = battleData.missions === 1 ? "Mission" : "Battle";

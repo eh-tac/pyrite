@@ -31,6 +31,12 @@
 
 
 
+#### Parameters
+
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `query` | `string` |             |
+
 #### Returns
 
 Type: `Promise<void>`

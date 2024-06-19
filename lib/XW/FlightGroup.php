@@ -2,7 +2,9 @@
 
 namespace Pyrite\XW;
 
-class FlightGroup extends Base\FlightGroupBase
+use Countable;
+
+class FlightGroup extends Base\FlightGroupBase implements Countable
 {
 
     public function beforeConstruct()
@@ -15,9 +17,55 @@ class FlightGroup extends Base\FlightGroupBase
         $c = $this->NumberOfCraft;
 
         $t = $this->getCraftTypeLabel();
-        $n = $this->Name;
+        $n = implode($this->Name);
 
         return "$w x $c $t $n";
+    }
+
+    public function count(): int
+    {
+        return (int)$this->NumberOfCraft * ((int)$this->NumberOfWaves + 1);
+    }
+
+    public function pointValue($difficultyIsIrrelevant = NULL)
+    {
+        $FG_POINTS = array(
+            0, 600, 400, 800, 400, 600, 600, 800, 600, 800,
+            200, 800, 1200, 6000, 4000, 1600, 8000,
+            1800, 1800 //only guessing re: BWing
+        );
+
+        $pts = count($this) * $FG_POINTS[$this->CraftType];
+        return $this->isFriendly() ? -5000 : $pts;
+    }
+
+    public function isFriendly()
+    {
+        return $this->IFF == 1;
+    }
+
+    /** @return bool whether the object is able to be destroyed - whether invincible or mission critical */
+    public function destroyable()
+    {
+        return TRUE;
+    }
+
+    /** @return bool whether the object is invincible */
+    public function invincible()
+    {
+        return FALSE;
+    }
+
+    /** @return bool whether the object is the player craft */
+    public function isPlayerCraft()
+    {
+        return $this->PlayerCraft != 0;
+    }
+
+    /** @return int the maximum number of warheads the craft may carry */
+    public function maxWarheads()
+    {
+        return 6; // XW torps 6 AW miss 12 YW torp 8
     }
 
     public function isGoal()
