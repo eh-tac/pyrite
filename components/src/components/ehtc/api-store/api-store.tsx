@@ -110,9 +110,31 @@ export class ApiSelectComponent {
     }
   }
 
+  private clearCache(): void {
+    const baseKey = this.getCacheKey();
+    localStorage.removeItem(baseKey);
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k.startsWith(baseKey)) {
+        localStorage.removeItem(k);
+      }
+    }
+  }
+
   private saveCache(url: string, etag: string, response: string): void {
     const key = this.getCacheKey(url);
     const data = JSON.stringify({ url, etag, response });
-    localStorage.setItem(key, data);
+    try {
+      localStorage.setItem(key, data);
+    } catch (e) {
+      console.log("Unable to write to EHTC API component cache - clearing and retrying", e);
+      this.clearCache();
+      try {
+        localStorage.setItem(key, data);
+      } catch (e) {
+        this.clearCache();
+        console.warn("Unable to write to EHTC API component cache - aborting", e);
+      }
+    }
   }
 }
