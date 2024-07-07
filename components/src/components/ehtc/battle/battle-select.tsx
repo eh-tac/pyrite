@@ -1,5 +1,6 @@
 import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } from "@stencil/core";
 import { BattleSummary } from "../../../model/ehtc";
+import { ehtcAPI } from "../api-store/util";
 
 @Component({
   tag: "ehtc-battle-select",
@@ -73,10 +74,7 @@ export class BattleSelectComponent {
   }
 
   public componentWillLoad(): void {
-    fetch(this.listURL)
-      .then((r: Response) => {
-        return r.json();
-      })
+    ehtcAPI(this.listURL)
       .then((d: BattleSummary[]) => {
         this.battleList = d;
         if (this.value) {

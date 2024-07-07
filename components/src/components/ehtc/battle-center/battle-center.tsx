@@ -2,6 +2,7 @@ import { Component, h, State } from "@stencil/core";
 import { JSX } from "../../../components";
 import { Config } from "../../../config";
 import { BattleType, BattleSummary, Battle } from "../../../model/ehtc";
+import { ehtcAPI } from "../api-store/util";
 
 @Component({
   tag: "ehtc-battle-center",
@@ -41,10 +42,7 @@ export class BattleCenterComponent {
       title = `${this.type.platform} - ${this.type.subgroup}`;
       content = this.renderList();
     } else if (this.page === "battle-types" && this.platform) {
-      title =
-        this.typeData && this.typeData.length
-          ? this.typeData[0].platform
-          : this.platform;
+      title = this.typeData && this.typeData.length ? this.typeData[0].platform : this.platform;
       content = this.renderTypes();
     } else {
       title = "Game platforms";
@@ -52,11 +50,7 @@ export class BattleCenterComponent {
       back = "";
     }
     const button = back ? (
-      <button
-        type="button"
-        class="btn btn-secondary"
-        onClick={this.navigateBack.bind(this)}
-      >
+      <button type="button" class="btn btn-secondary" onClick={this.navigateBack.bind(this)}>
         {back}
       </button>
     ) : (
@@ -144,12 +138,10 @@ export class BattleCenterComponent {
   private selectPlatform(platform: string, event: MouseEvent): void {
     this.platform = platform;
 
-    fetch(this.typeUrl)
-      .then(res => res.json())
-      .then(data => {
-        this.typeData = data;
-        this.page = "battle-types";
-      });
+    ehtcAPI(this.typeUrl).then(data => {
+      this.typeData = data;
+      this.page = "battle-types";
+    });
   }
 
   private renderTypes(): JSX.IntrinsicElements {
@@ -179,12 +171,10 @@ export class BattleCenterComponent {
     const item = event.target as HTMLElement;
     item.innerHTML = "<ion-spinner name='dots' />";
 
-    fetch(this.listUrl)
-      .then(res => res.json())
-      .then(data => {
-        this.listData = data;
-        this.page = "battle-list";
-      });
+    ehtcAPI(this.listUrl).then(data => {
+      this.listData = data;
+      this.page = "battle-list";
+    });
   }
 
   private renderList(): JSX.IntrinsicElements {
@@ -192,10 +182,7 @@ export class BattleCenterComponent {
       <table class="table table-hover table-striped types">
         <tbody>
           {this.listData.map((battle: BattleSummary) => (
-            <tr
-              key={battle.code}
-              onClick={this.selectBattle.bind(this, battle)}
-            >
+            <tr key={battle.code} onClick={this.selectBattle.bind(this, battle)}>
               <td class="code" slot="start" color="secondary">
                 {battle.code}
               </td>
@@ -219,12 +206,10 @@ export class BattleCenterComponent {
     // const item = event.target as HTMLIonItemElement;
     // item.innerHTML = "<ion-spinner name='dots' />";
 
-    fetch(this.battleUrl)
-      .then(res => res.json())
-      .then(data => {
-        this.fullBattle = data;
-        this.page = "battle";
-      });
+    ehtcAPI(this.battleUrl).then(data => {
+      this.fullBattle = data;
+      this.page = "battle";
+    });
   }
 
   private renderBattle(): JSX.IntrinsicElements {

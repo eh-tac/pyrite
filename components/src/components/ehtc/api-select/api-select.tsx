@@ -1,4 +1,5 @@
 import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } from "@stencil/core";
+import { ehtcAPI } from "../api-store/util";
 
 export interface ApiSummary {
   id: number;
@@ -34,17 +35,13 @@ export class ApiSelectComponent {
       const input = e.target as HTMLInputElement;
       this.updateQuery(input.value);
     };
-    fetch(this.listURL)
-      .then((r: Response) => {
-        return r.json();
-      })
-      .then((d: ApiSummary[]) => {
-        this.fullList = d;
-        if (this.value) {
-          const v = parseInt(this.value, 10);
-          this.selection = this.fullList.find((m: ApiSummary) => m.id === v);
-        }
-      });
+    ehtcAPI(this.listURL).then((d: ApiSummary[]) => {
+      this.fullList = d;
+      if (this.value) {
+        const v = parseInt(this.value, 10);
+        this.selection = this.fullList.find((m: ApiSummary) => m.id === v);
+      }
+    });
     const parent = this.el.parentElement;
     this.externalInputElement = parent.ownerDocument.createElement("input");
     this.externalInputElement.type = "hidden";
