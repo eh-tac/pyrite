@@ -7,12 +7,94 @@ class CraftType
 	public $ID;
 	public $Name;
 	public $Abbr;
+	public $craftPoints = 0;
+	public $missileCount = 0;
+
+	public static $data = [
+		0 => ['name' => 'None', 'abbr' => 'UNK', 'points' => 0, 'missileCount' => 0],
+		1 => ['name' => 'X-wing', 'abbr' => 'X-W', 'points' => 15, 'missileCount' => 4],
+		2 => ['name' => 'Y-wing', 'abbr' => 'Y-W', 'points' => 10, 'missileCount' => 6],
+		3 => ['name' => 'A-wing', 'abbr' => 'A-W', 'points' => 20, 'missileCount' => 6],
+		4 => ['name' => 'B-wing', 'abbr' => 'B-W', 'points' => 20, 'missileCount' => 8],
+		5 => ['name' => 'TIE Fighter', 'abbr' => 'T/F', 'points' => 10, 'missileCount' => 2],
+		6 => ['name' => 'TIE Interceptor', 'abbr' => 'T/I', 'points' => 15, 'missileCount' => 3],
+		7 => ['name' => 'TIE Bomber', 'abbr' => 'T/B', 'points' => 15, 'missileCount' => 4],
+		8 => ['name' => 'TIE Advanced', 'abbr' => 'T/A', 'points' => 25, 'missileCount' => 4],
+		9 => ['name' => 'TIE Defender', 'abbr' => 'T/D', 'points' => 40, 'missileCount' => 4],
+		10 => ['name' => 'TIE Phantom', 'abbr' => 'T/Ph', 'points' => 15, 'missileCount' => 4],
+		11 => ['name' => 'Pursuer', 'abbr' => 'PES', 'points' => 21, 'missileCount' => 4],
+		12 => ['name' => 'Missile Boat', 'abbr' => 'MIS', 'points' => 30, 'missileCount' => 40],
+		13 => ['name' => 'T-wing', 'abbr' => 'T-W', 'points' => 10, 'missileCount' => 4],
+		14 => ['name' => 'Z-95 Headhunter', 'abbr' => 'Z-95', 'points' => 8, 'missileCount' => 3],
+		15 => ['name' => 'R-41 Starchaser', 'abbr' => 'R-41', 'points' => 12, 'missileCount' => 4],
+		16 => ['name' => 'Assault Gunboat', 'abbr' => 'GUN', 'points' => 20, 'missileCount' => 8],
+		17 => ['name' => 'Shuttle', 'abbr' => 'SHU', 'points' => 20, 'missileCount' => 4],
+		18 => ['name' => 'Escort Shuttle', 'abbr' => 'E/S', 'points' => 40, 'missileCount' => 8],
+		19 => ['name' => 'System Patrol Craft', 'abbr' => 'SPC', 'points' => 60, 'missileCount' => 9],
+		20 => ['name' => 'Scout Craft', 'abbr' => 'SCT', 'points' => 60, 'missileCount' => 9],
+		21 => ['name' => 'Stormtrooper Transport', 'abbr' => 'TRN', 'points' => 15, 'missileCount' => 5],
+		22 => ['name' => 'Assault Transport', 'abbr' => 'ATR', 'points' => 24, 'missileCount' => 10],
+		23 => ['name' => 'Escort Transport', 'abbr' => 'ETR', 'points' => 30, 'missileCount' => 10],
+		24 => ['name' => 'Tug', 'abbr' => 'TUG', 'points' => 5, 'missileCount' => 0],
+		25 => ['name' => 'Combat Utility Vehicle', 'abbr' => 'CUV', 'points' => 6, 'missileCount' => 0],
+		26 => ['name' => 'Container A', 'abbr' => 'CN/A', 'points' => 20, 'missileCount' => 0],
+		27 => ['name' => 'Container B', 'abbr' => 'CN/B', 'points' => 15, 'missileCount' => 0],
+		28 => ['name' => 'Container C', 'abbr' => 'CN/C', 'points' => 15, 'missileCount' => 0],
+		29 => ['name' => 'Container D', 'abbr' => 'CN/D', 'points' => 15, 'missileCount' => 0],
+		30 => ['name' => 'Heavy Lifter', 'abbr' => 'HLF', 'points' => 15, 'missileCount' => 0],
+		31 => ['name' => 'Gunship', 'abbr' => 'GSP', 'points' => 55, 'missileCount' => 20],
+		32 => ['name' => 'Bulk Freighter', 'abbr' => 'FRT', 'points' => 30, 'missileCount' => 0],
+		33 => ['name' => 'Cargo Ferry', 'abbr' => 'CARG', 'points' => 40, 'missileCount' => 0],
+		34 => ['name' => 'Modular Conveyor', 'abbr' => 'CNVYR', 'points' => 30, 'missileCount' => 0],
+		35 => ['name' => 'Container Transport', 'abbr' => 'CTRNS', 'points' => 40, 'missileCount' => 0],
+		36 => ['name' => 'Medium Transport', 'abbr' => 'MTRNS', 'points' => 60, 'missileCount' => 0],
+		37 => ['name' => 'Murrian Transport', 'abbr' => 'MUTR', 'points' => 50, 'missileCount' => 0],
+		38 => ['name' => 'Corellian Transport', 'abbr' => 'CORT', 'points' => 50, 'missileCount' => 0],
+		39 => ['name' => 'Assault Frigate', 'abbr' => 'A/FRG', 'points' => 90, 'missileCount' => 40],
+		40 => ['name' => 'Corellian Corvette', 'abbr' => 'CRV', 'points' => 40, 'missileCount' => 10],
+		41 => ['name' => 'Modified Corvette', 'abbr' => 'M/CRV', 'points' => 50, 'missileCount' => 10],
+		42 => ['name' => 'Nebulon-B Frigate', 'abbr' => 'FRG', 'points' => 110, 'missileCount' => 10],
+		43 => ['name' => 'Modified Frigate', 'abbr' => 'M/FRG', 'points' => 100, 'missileCount' => 10],
+		44 => ['name' => 'C-3 Passenger Liner', 'abbr' => 'LINER', 'points' => 100, 'missileCount' => 10],
+		45 => ['name' => 'Carrack Cruiser', 'abbr' => 'CRCK', 'points' => 110, 'missileCount' => 10],
+		46 => ['name' => 'Strike Cruiser', 'abbr' => 'STRKC', 'points' => 100, 'missileCount' => 0],
+		47 => ['name' => 'Escort Carrier', 'abbr' => 'ESC', 'points' => 100, 'missileCount' => 25],
+		48 => ['name' => 'Dreadnaught', 'abbr' => 'DREAD', 'points' => 125, 'missileCount' => 25],
+		49 => ['name' => 'Mon Calamari Cruiser', 'abbr' => 'CRS', 'points' => 150, 'missileCount' => 100],
+		50 => ['name' => 'Light Mon Calamari Cruiser', 'abbr' => 'CRL', 'points' => 125, 'missileCount' => 25],
+		51 => ['name' => 'Interdictor Cruiser', 'abbr' => 'INT', 'points' => 140, 'missileCount' => 50],
+		52 => ['name' => 'Victory Star Destroyer', 'abbr' => 'VSD', 'points' => 125, 'missileCount' => 100],
+		53 => ['name' => 'Imperial Star Destroyer', 'abbr' => 'ISD', 'points' => 200, 'missileCount' => 100],
+		54 => ['name' => 'Super Star Destroyer', 'abbr' => 'SSD', 'points' => 255, 'missileCount' => 0],
+		55 => ['name' => 'Container E', 'abbr' => 'CN/E', 'points' => 20, 'missileCount' => 0],
+		56 => ['name' => 'Container F', 'abbr' => 'CN/F', 'points' => 20, 'missileCount' => 0],
+		57 => ['name' => 'Container G', 'abbr' => 'CN/G', 'points' => 20, 'missileCount' => 0],
+		58 => ['name' => 'Container H', 'abbr' => 'CN/H', 'points' => 20, 'missileCount' => 0],
+		59 => ['name' => 'Container I', 'abbr' => 'CN/I', 'points' => 20, 'missileCount' => 0],
+		60 => ['name' => 'XQ1 Platform', 'abbr' => 'PLT/1', 'points' => 130, 'missileCount' => 50],
+		61 => ['name' => 'XQ2 Platform', 'abbr' => 'PLT/2', 'points' => 130, 'missileCount' => 50],
+		62 => ['name' => 'XQ3 Platform', 'abbr' => 'PLT/3', 'points' => 130, 'missileCount' => 50],
+		63 => ['name' => 'XQ4 Platform', 'abbr' => 'PLT/4', 'points' => 130, 'missileCount' => 50],
+		64 => ['name' => 'XQ5 Platform', 'abbr' => 'PLT/5', 'points' => 130, 'missileCount' => 50],
+		65 => ['name' => 'XQ6 Platform', 'abbr' => 'PLT/6', 'points' => 130, 'missileCount' => 50],
+		66 => ['name' => 'Asteroid R&D Station', 'abbr' => 'R&D FC', 'points' => 130, 'missileCount' => 50],
+		67 => ['name' => 'Asteroid Laser Battery', 'abbr' => 'LAS BAT', 'points' => 130, 'missileCount' => 50],
+		68 => ['name' => 'Asteroid Warhead Battery', 'abbr' => 'W LNCHR', 'points' => 130, 'missileCount' => 50],
+		69 => ['name' => 'X/7 Factory', 'abbr' => 'FAC/1', 'points' => 130, 'missileCount' => 50],
+		70 => ['name' => 'Ship Yard', 'abbr' => 'SHPYD', 'points' => 165, 'missileCount' => 50],
+		71 => ['name' => 'Repair Yard', 'abbr' => 'REPYD', 'points' => 150, 'missileCount' => 50],
+		72 => ['name' => 'Gun Emplacement', 'abbr' => 'GPLT', 'points' => 20, 'missileCount' => 4],
+		73 => ['name' => 'Modified Strike Cruiser', 'abbr' => 'M/SC', 'points' => 125, 'missileCount' => 0]
+	];
 
 	public function __construct($ID)
 	{
 		$this->ID = $ID;
-		$this->Name = $this->getName();
-		$this->Abbr = $this->getAbbr();
+		$data = self::$data[$ID];
+		$this->Name = $data['name'];
+		$this->Abbr = $data['abbr'];
+		$this->craftPoints = $data['points'] * 40;
+		$this->missileCount = max($data['missileCount'], 1); // for point scoring it appears nothing is empty handed
 	}
 
 	private function getName()

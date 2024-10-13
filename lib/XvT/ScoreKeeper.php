@@ -38,8 +38,8 @@ class ScoreKeeper implements IScoreKeeper
             ScoreRow::create("Mission Victory {$this->difficultyFilter}", 1, 10000)
         ];
 
-        $flightGroups = array_filter($this->TIE->FlightGroups, fn ($fg) => $fg->isInDifficultyLevel($this->difficultyFilter));
-        $playerCraft = array_filter($flightGroups, fn ($fg) => $fg->isPlayerCraft());
+        $flightGroups = array_filter($this->TIE->FlightGroups, fn($fg) => $fg->isInDifficultyLevel($this->difficultyFilter));
+        $playerCraft = array_filter($flightGroups, fn($fg) => $fg->isPlayerCraft());
 
         $hasBonusGoals = FALSe;
 
@@ -64,14 +64,14 @@ class ScoreKeeper implements IScoreKeeper
         }
 
         foreach ($flightGroups as $fg) {
-            $pointValue = $fg->pointValue($this->difficultyFilter);
+            $pointValue = $fg->killPointValue($this->difficultyFilter);
             if ($pointValue > 0) {
                 $this->flightGroups[] = ScoreRow::create((string) $fg, count($fg), $pointValue);
             }
 
             /** @var GoalFG $goal */
             foreach ($fg->Goals as $goal) {
-                if ($goal->getPoints() > 0 && $goal->enabledForTeam1()) {
+                if (($goal->getPoints() > 0 || $goal->isBonus()) && $goal->enabledForTeam1()) {
                     $this->goals[] = ScoreRow::create("$fg - $goal", 1, $goal->getPoints());
                     if ($goal->isBonus()) {
                         $hasBonusGoals = TRUE;
@@ -84,15 +84,57 @@ class ScoreKeeper implements IScoreKeeper
             $this->goals[] = ScoreRow::create("All bonus goals", 1, 2500);
         }
 
-        // TODO need to account for double wave points.
+        $this->handlePlayerCraft($playerCraft);
+    }
+
+    /**
+     * 
+     * @param FlightGroup[] $playerCraft 
+     * @return void 
+     */
+    private function handlePlayerCraft($playerCraft)
+    {
+        // [$fg, total points, first wave, unused waves]
+
+        $options = [];
         foreach ($playerCraft as $fg) {
-            $this->craftOptions[] = ScoreRow::create("$fg hangar/hyper points", count($fg), $fg->getHangarHyperPoints());
-            foreach ($fg->getWaveOptions() as $wave) {
-                $this->craftOptions[] = ScoreRow::create("Wave option {$wave['label']} hangar/hyper points", 1, $wave['maxPoints']);
+            // foreach ($fg->getWaveOptions() as $wave) {
+            //     $this->craftOptions[] = ScoreRow::create("Wave option {$wave['label']} hangar/hyper points", 1, $wave['maxPoints']);
+            // }
+
+            // if there are multiple waves, you get double points when they are unused
+            $unusedWave = 0;
+
+            $craftPoints = $fg->getCraftPoints();
+            $firstWaveCount = $fg->NumberOfCraft;
+
+            if ($fg->hasMultipleWaves()) {
+                $firstWaveCount--;
+                $unusedWave = 2 * $craftPoints * $fg->NumberOfCraft * $fg->NumberOfWaves;
+            }
+            $firstWave = $firstWaveCount * $craftPoints;
+            $options[] = [
+                'fg' => $fg,
+                'total' => $firstWave + $unusedWave,
+                'first' => $firstWave,
+                'firstCount' => $firstWaveCount,
+                'unusedWave' => $unusedWave
+            ];
+        }
+        usort($options, fn($a, $b) => $b['total'] - $a['total']);
+
+        $disableIndex = 1;
+        foreach ($options as $o => $option) {
+            $fg = $option['fg'];
+
+            $this->craftOptions[] = ScoreRow::create("$fg hangar/hyper points", $option['firstCount'], $option['first']);
+            if ($option['unusedWave'] > 0) {
+                if ($o === 0) $disableIndex = 2;
+                $this->craftOptions[] = ScoreRow::create("$fg unused wave points", 1, $option['unusedWave']);
             }
         }
-        usort($this->craftOptions, fn ($a, $b) => $b->points - $a->points);
-        for ($i = 1; $i < count($this->craftOptions); $i++) {
+
+        for ($i = $disableIndex; $i < count($this->craftOptions); $i++) {
             $this->craftOptions[$i]->disable();
         }
     }
@@ -116,7 +158,7 @@ class ScoreKeeper implements IScoreKeeper
 
     public function getTotal(): int
     {
-        $rows = array_filter($this->getData(), fn ($row) => $row->number > 0);
-        return array_sum(array_map(fn ($row) => $row->points, $rows));
+        $rows = array_filter($this->getData(), fn($row) => $row->number > 0);
+        return array_sum(array_map(fn($row) => $row->points, $rows));
     }
 }

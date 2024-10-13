@@ -14,13 +14,13 @@ interface FlightGroupScoring
      * @param [$difficulty] if required by the platform, the applicable difficulty setting for determining point value
      * @return points for destroying this object
      */
-    public function pointValue($difficulty = NULL);
+    public function killPointValue($difficulty = NULL);
 
     /** @return bool whether the object is able to be destroyed - whether invincible or mission critical*/
     public function destroyable();
 
     /** @return bool whether the object is invincible */
-    public function invincible();
+    public function isInvincible();
 
     /** @return bool whether the object is the player craft */
     public function isPlayerCraft();

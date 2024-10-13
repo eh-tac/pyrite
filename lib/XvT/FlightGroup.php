@@ -32,52 +32,100 @@ class FlightGroup extends Base\FlightGroupBase implements FlightGroupScoring, Co
    * @param mixed $level 
    * @return int Pyrite\points 
    */
-  public function pointValue($level = NULL)
+  public function killPointValue($level = NULL)
   {
     $ct = $this->getCraftType();
     $perShip = $ct->getPoints();
-    $perShip += $this->getWarheadPoints();
+    $perShip += $this->getWarheadPoints($ct->missileCount);
+    $perShip += $this->getBeamPoints();
+    $perShip += $this->getCountermeasurePoints();
     $total = count($this) * $perShip;
 
     if ($level == 'Easy')     $total *= 0.5;
     if ($level == 'Hard')     $total *=   2;
 
-    if ($this->isFriendly())   $total *=  -1;
+    if ($this->isFriendly() || $this->isInvincible())   $total *=  -1;
 
     return $total;
   }
-
-  public function getWarheadPoints()
+  public function getBeamPoints()
   {
-    $wh = 0;
-    if ($this->Warhead === Constants::$WARHEAD_CONCUSSIONMISSILE) {
-      $wh = 80;
-    } else if ($this->Warhead === Constants::$WARHEAD_ADVANCEDCONCUSSIONMISSILE) {
-      $wh = 200;
-    } else if ($this->Warhead === Constants::$WARHEAD_TORPEDO) {
-      $wh = 90;
-    } else if ($this->Warhead === Constants::$WARHEAD_ADVANCEDTORPEDO) {
-      $wh = 120;
-    } else if ($this->Warhead === Constants::$WARHEAD_HEAVYROCKET) {
-      $wh = 120;
-    } else if ($this->Warhead === Constants::$WARHEAD_SPACEBOMB) {
-      $wh = 80;
-    } else if ($this->Warhead === Constants::$WARHEAD_MAGPULSETORPEDO) {
-      $wh = 80;
+    if ($this->Beam === Constants::$BEAM_DECOYBEAM) {
+      return 250;
+    } else if ($this->Beam === Constants::$BEAM_TRACTORBEAM) {
+      return 150;
+    } else if ($this->Beam === Constants::$BEAM_JAMMINGBEAM) {
+      return 150;
+    } else if ($this->Beam === Constants::$BEAM_ENERGYBEAM) {
+      return 50;
     }
-    if ($this->Status1 == Constants::$STATUS_N12WARHEADS || $this->Status2 === Constants::$STATUS_N12WARHEADS) {
-      $wh *= 0.5;
-    }
-    if ($this->Status1 == Constants::$STATUS_N2XWARHEADS || $this->Status2 === Constants::$STATUS_N2XWARHEADS) {
-      $wh *= 2;
-    }
-    return $wh;
   }
 
-  public function getHangarHyperPoints()
+  public function getCounterMeasurePoints()
+  {
+    if ($this->Countermeasures === Constants::$COUNTERMEASURES_CHAFF) {
+      return 150;
+    } else if ($this->Countermeasures === Constants::$COUNTERMEASURES_FLARE) {
+      return 100;
+    } else if ($this->Countermeasures === Constants::$COUNTERMEASURES_CLUSTERMINE) {
+      return 150;
+    }
+  }
+
+  public function getWarheadPoints($singleLauncherMissileCount = 0)
+  {
+    $pointPerWarhead = 0;
+    $warheadCount = 0;
+    if ($this->Warhead === Constants::$WARHEAD_CONCUSSIONMISSILE) {
+      $pointPerWarhead = 10;
+      $warheadCount = $singleLauncherMissileCount;
+    } else if ($this->Warhead === Constants::$WARHEAD_ADVANCEDCONCUSSIONMISSILE) {
+      $pointPerWarhead = 25;
+      $warheadCount = $singleLauncherMissileCount;
+    } else if ($this->Warhead === Constants::$WARHEAD_TORPEDO) {
+      $pointPerWarhead = 15;
+      $warheadCount = ceil($singleLauncherMissileCount * .75);
+    } else if ($this->Warhead === Constants::$WARHEAD_ADVANCEDTORPEDO) {
+      $pointPerWarhead = 25;
+      $warheadCount = ceil($singleLauncherMissileCount * .75);
+    } else if ($this->Warhead === Constants::$WARHEAD_HEAVYROCKET) {
+      $pointPerWarhead = 30;
+      $warheadCount = ceil($singleLauncherMissileCount * .50);
+    } else if ($this->Warhead === Constants::$WARHEAD_SPACEBOMB) {
+      $pointPerWarhead = 40;
+      $warheadCount = ceil($singleLauncherMissileCount * .25);
+    } else if ($this->Warhead === Constants::$WARHEAD_MAGPULSETORPEDO) {
+      $pointPerWarhead = 10;
+      $warheadCount = $singleLauncherMissileCount;
+    } else if ($this->Warhead === Constants::$WARHEAD_IONPULSE) {
+      $pointPerWarhead = 25;
+      $warheadCount = $singleLauncherMissileCount;
+    }
+    if ($this->Status1 === Constants::$STATUS_N12WARHEADS || $this->Status2 === Constants::$STATUS_N12WARHEADS) {
+      $warheadCount *= 0.5;
+    }
+    if ($this->Status1 === Constants::$STATUS_N2XWARHEADS || $this->Status2 === Constants::$STATUS_N2XWARHEADS) {
+      $warheadCount *= 2;
+    }
+
+
+    // special handling for Missile Boat. 
+    // If it has warheads, it will have 2x20 adv missiles in the second launcher and 2x the points per warhead count
+    if ($this->CraftType === Constants::$SHIPS_MISSILEBOAT) {
+      // warhead count is correct because has the second launcher so it was already x2
+      if ($pointPerWarhead > 0) {
+        return $pointPerWarhead * $warheadCount + 25 * 40;
+      }
+    } else {
+      $warheadCount *= 2; // everyone has two launchers
+      return $pointPerWarhead * $warheadCount;
+    }
+  }
+
+  public function getCraftPoints()
   {
     $ct = $this->getCraftType();
-    return $this->maxHangarHyperPoints($ct, $this->NumberOfWaves, $this->NumberOfCraft);
+    return $ct->craftPoints;
   }
 
   public function getWaveOptions()
@@ -106,6 +154,11 @@ class FlightGroup extends Base\FlightGroupBase implements FlightGroupScoring, Co
     return ($extraWaves * $perWave * 2 * $perShip) + ($perWave - 1) * $perShip;
   }
 
+  public function hasMultipleWaves()
+  {
+    return $this->NumberOfWaves > 0;
+  }
+
   public function isFriendly()
   {
     return $this->Team == 0;
@@ -113,12 +166,12 @@ class FlightGroup extends Base\FlightGroupBase implements FlightGroupScoring, Co
 
   public function destroyable()
   {
-    return !$this->invincible();
+    return !$this->isInvincible();
   }
 
-  public function invincible()
+  public function isInvincible()
   {
-    return $this->GroupAI !== Constants::$GROUPAI_JEDIINVINCIBLE;
+    return $this->GroupAI === Constants::$GROUPAI_JEDIINVINCIBLE || $this->Status1 === Constants::$STATUS_INVINCIBLE || $this->Status2 === Constants::$STATUS_INVINCIBLE;
   }
 
   public function maxWarheads()
