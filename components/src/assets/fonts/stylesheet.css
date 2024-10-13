@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Aurek-Besh';
+    src: url('Aurek-Besh.woff2') format('woff2'),
+        url('Aurek-Besh.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

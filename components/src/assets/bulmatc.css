@@ -11073,3 +11073,12 @@ a.has-text-danger-dark:focus {
 .modal .modal-card-body {
   background-color: #272b30;
 }
+
+@font-face {
+  font-family: 'Aurek-Besh';
+  src: url('/assets/fonts/Aurek-Besh.woff2') format('woff2'),
+      url('/assets/fonts/Aurek-Besh.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

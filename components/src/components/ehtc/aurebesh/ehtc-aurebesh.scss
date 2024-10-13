@@ -1,0 +1,56 @@
+:host {
+  margin: 1rem;
+
+  .header {
+    .controls .keyboard {
+      margin-bottom: 8px;
+
+      button {
+        font-family: "Aurek-Besh";
+        padding: 4px;
+        font-size: 200%;
+        width: 4rem;
+        text-align: center;
+
+        span.translation {
+          font-size: 80%;
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          text-transform: capitalize;
+          font-variant: small-caps;
+          margin: 2px;
+          display: block;
+        }
+
+        &.selected {
+          background-color: green;
+        }
+      }
+    }
+  }
+
+  .main {
+    width: calc(100% - 2rem);
+
+    padding: 0.5rem;
+    border: 2px dashed grey;
+    min-height: 200px;
+    p {
+      text-align: center;
+    }
+  }
+
+  .dropzone {
+    &.over {
+      border: 3px dashed blue;
+    }
+  }
+
+  .footer {
+    padding: 1rem 0;
+
+    textarea {
+      width: calc(100% - 1rem);
+      display: block;
+    }
+  }
+}

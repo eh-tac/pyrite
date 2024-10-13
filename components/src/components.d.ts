@@ -39,6 +39,8 @@ export namespace Components {
         "cachePrefix": string;
         "domain": string;
     }
+    interface EhtcAurebesh {
+    }
     interface EhtcBattle {
         "battle": Battle;
         "code": string;
@@ -414,6 +416,12 @@ declare global {
     var HTMLEhtcApiStoreElement: {
         prototype: HTMLEhtcApiStoreElement;
         new (): HTMLEhtcApiStoreElement;
+    };
+    interface HTMLEhtcAurebeshElement extends Components.EhtcAurebesh, HTMLStencilElement {
+    }
+    var HTMLEhtcAurebeshElement: {
+        prototype: HTMLEhtcAurebeshElement;
+        new (): HTMLEhtcAurebeshElement;
     };
     interface HTMLEhtcBattleElementEventMap {
         "downloadBattle": Battle;
@@ -1062,6 +1070,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "ehtc-api-select": HTMLEhtcApiSelectElement;
         "ehtc-api-store": HTMLEhtcApiStoreElement;
+        "ehtc-aurebesh": HTMLEhtcAurebeshElement;
         "ehtc-battle": HTMLEhtcBattleElement;
         "ehtc-battle-center": HTMLEhtcBattleCenterElement;
         "ehtc-battle-select": HTMLEhtcBattleSelectElement;
@@ -1176,6 +1185,8 @@ declare namespace LocalJSX {
     interface EhtcApiStore {
         "cachePrefix"?: string;
         "domain"?: string;
+    }
+    interface EhtcAurebesh {
     }
     interface EhtcBattle {
         "battle"?: Battle;
@@ -1508,6 +1519,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "ehtc-api-select": EhtcApiSelect;
         "ehtc-api-store": EhtcApiStore;
+        "ehtc-aurebesh": EhtcAurebesh;
         "ehtc-battle": EhtcBattle;
         "ehtc-battle-center": EhtcBattleCenter;
         "ehtc-battle-select": EhtcBattleSelect;
@@ -1616,6 +1628,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "ehtc-api-select": LocalJSX.EhtcApiSelect & JSXBase.HTMLAttributes<HTMLEhtcApiSelectElement>;
             "ehtc-api-store": LocalJSX.EhtcApiStore & JSXBase.HTMLAttributes<HTMLEhtcApiStoreElement>;
+            "ehtc-aurebesh": LocalJSX.EhtcAurebesh & JSXBase.HTMLAttributes<HTMLEhtcAurebeshElement>;
             "ehtc-battle": LocalJSX.EhtcBattle & JSXBase.HTMLAttributes<HTMLEhtcBattleElement>;
             "ehtc-battle-center": LocalJSX.EhtcBattleCenter & JSXBase.HTMLAttributes<HTMLEhtcBattleCenterElement>;
             "ehtc-battle-select": LocalJSX.EhtcBattleSelect & JSXBase.HTMLAttributes<HTMLEhtcBattleSelectElement>;
