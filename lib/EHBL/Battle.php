@@ -70,7 +70,7 @@ class Battle
         return $battle;
     }
 
-    public static function fromZip($path, $name = null, $dir = null)
+    public static function fromZip($path, $name = null, $dir = null, $forceExtract = false)
     {
         if (!$path) {
             return false;
@@ -88,7 +88,7 @@ class Battle
         $dirContents = array_filter(scandir($dir), function ($f) {
             return strlen($f) > 2;
         });
-        if (!count($dirContents) > 0) {
+        if (!count($dirContents) > 0 || $forceExtract) {
             $zip = new \ZipArchive();
             if ($zip->open($path) === true) {
                 for ($f = 0; $f < $zip->numFiles; $f++) {
@@ -226,9 +226,7 @@ class Battle
         return $errors;
     }
 
-    public function validateMission($missionFile, &$errors)
-    {
-    }
+    public function validateMission($missionFile, &$errors) {}
 
     public static function parseKey($key)
     {
