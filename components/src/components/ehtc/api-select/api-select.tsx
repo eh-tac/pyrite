@@ -56,6 +56,15 @@ export class ApiSelectComponent {
     return Promise.resolve();
   }
 
+  @Method()
+  public setValue(val: string | number): Promise<void> {
+    const v = typeof val === "number" ? val : parseInt(val, 10);
+    this.selectItem(
+      this.fullList.find((m: ApiSummary) => m.id === v || m.name.toLowerCase() === val.toString().toLowerCase())
+    );
+    return Promise.resolve();
+  }
+
   private get listURL(): string {
     const d = this.domain || "";
     return `${d}${this.url}`;

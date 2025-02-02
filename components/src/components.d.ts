@@ -31,6 +31,7 @@ export namespace Components {
         "item": ApiSummary;
         "name": string;
         "search": (query: string) => Promise<void>;
+        "setValue": (val: string | number) => Promise<void>;
         "url": string;
         "value": string;
     }
@@ -53,6 +54,7 @@ export namespace Components {
         "name": string;
         "readonly": boolean;
         "search": (query: string) => Promise<void>;
+        "setValue": (val: string | number) => Promise<void>;
         "value": string;
     }
     interface EhtcMemberSelect {

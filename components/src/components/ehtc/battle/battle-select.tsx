@@ -74,14 +74,13 @@ export class BattleSelectComponent {
   }
 
   public componentWillLoad(): void {
-    ehtcAPI(this.listURL)
-      .then((d: BattleSummary[]) => {
-        this.battleList = d;
-        if (this.value) {
-          const v = parseInt(this.value, 10);
-          this.selection = this.battleList.find((m: BattleSummary) => m.id === v);
-        }
-      });
+    ehtcAPI(this.listURL).then((d: BattleSummary[]) => {
+      this.battleList = d;
+      if (this.value) {
+        const v = parseInt(this.value, 10);
+        this.selection = this.battleList.find((m: BattleSummary) => m.id === v);
+      }
+    });
     const parent = this.el.parentElement;
     this.externalInputElement = parent.ownerDocument.createElement("input");
     this.externalInputElement.type = "hidden";
@@ -101,6 +100,13 @@ export class BattleSelectComponent {
   @Method()
   public search(query: string): Promise<void> {
     this.updateQuery(query);
+    return Promise.resolve();
+  }
+
+  @Method()
+  public setValue(val: string | number): Promise<void> {
+    const v = typeof val === "number" ? val : parseInt(val, 10);
+    this.selectBattle(this.battleList.find((m: BattleSummary) => m.id === v || m.code === val));
     return Promise.resolve();
   }
 
