@@ -197,7 +197,7 @@ export class MemberSelectComponent {
           <span class="pilot-label tag is-primary mb-0 is-radiusless">{p.label}</span>
           <span class="tag is-info mb-0 is-radiusless">#{p.PIN}</span>
         </div>
-        <div class="tag is-primary idline is-radiusless has-text-grey-light">{p.description}</div>
+        <div class="tag is-primary idline is-radiusless has-text-light">{p.description}</div>
       </div>
     );
   }

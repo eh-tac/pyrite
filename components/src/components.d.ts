@@ -27,6 +27,8 @@ export { Briefing as Briefing1, BriefingHeader, Coordinate, FileHeader as FileHe
 export { Briefing as Briefing2, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, LengthString, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Skip, Tag as Tag3, Team as Team1, Trigger as Trigger2, Waypt as Waypt2, XWAString } from "./model/XWA";
 export namespace Components {
     interface EhtcApiSelect {
+        "displayDescription"?: "subtitle" | "none";
+        "displayId"?: "left" | "right";
         "domain": string;
         "item": ApiSummary;
         "name": string;
@@ -1168,6 +1170,8 @@ declare global {
 }
 declare namespace LocalJSX {
     interface EhtcApiSelect {
+        "displayDescription"?: "subtitle" | "none";
+        "displayId"?: "left" | "right";
         "domain"?: string;
         "item"?: ApiSummary;
         "name"?: string;
