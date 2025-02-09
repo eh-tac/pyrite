@@ -116,7 +116,7 @@ export class ApiSelectComponent {
     // id and description are conditionally shown based on props
     const id = <span class="tag is-info mb-0 is-radiusless">#{b.id}</span>;
     const desc = b.description && (
-      <div class="tag is-primary description is-radiusless has-text-light">{b.description}</div>
+      <div class="tag is-primary description is-radiusless has-text-grey-lighter">{b.description}</div>
     );
 
     return (
