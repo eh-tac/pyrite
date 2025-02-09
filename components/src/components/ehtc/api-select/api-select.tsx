@@ -4,6 +4,7 @@ import { ehtcAPI } from "../api-store/util";
 export interface ApiSummary {
   id: number;
   name: string;
+  description?: string;
 }
 
 @Component({
@@ -21,6 +22,8 @@ export class ApiSelectComponent {
   @Prop() domain: string;
   @Prop() name: string;
   @Prop() url: string;
+  @Prop() displayId?: "left" | "right";
+  @Prop() displayDescription?: "subtitle" | "none";
 
   @State() selection?: ApiSummary;
   @State() suggestions?: ApiSummary[];
@@ -110,11 +113,20 @@ export class ApiSelectComponent {
   }
 
   private renderItem(b: ApiSummary): JSX.Element {
+    // id and description are conditionally shown based on props
+    const id = <span class="tag is-info mb-0 is-radiusless">#{b.id}</span>;
+    const desc = b.description && (
+      <div class="tag is-primary description is-radiusless has-text-grey-lighter">{b.description}</div>
+    );
+
     return (
       <div class="item-summary" onClick={this.selectItem.bind(this, b)}>
-        <div class="topline tags has-addons" style={{ width: "100%" }}>
+        <div class="topline tags has-addons mb-0" style={{ width: "100%" }}>
+          {this.displayId === "left" && id}
           <span class="item-label tag is-primary mb-0 is-radiusless">{b.name}</span>
+          {this.displayId === "right" && id}
         </div>
+        {this.displayDescription === "subtitle" && desc}
       </div>
     );
   }

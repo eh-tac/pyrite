@@ -24,7 +24,9 @@
 
   .item-summary {
     .tag {
-      height: 2.5em;
+      height: 1rem;
+      line-height: 1;
+      justify-content: start;
     }
 
     .topline.tags {
@@ -35,6 +37,11 @@
         flex: 1;
         justify-content: flex-start;
       }
+    }
+    .description.tag {
+      display: flex;
+      font-size: 0.6rem;
+      overflow: hidden;
     }
   }
 }

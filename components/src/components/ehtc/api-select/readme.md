@@ -7,13 +7,15 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type         | Default     |
-| -------- | --------- | ----------- | ------------ | ----------- |
-| `domain` | `domain`  |             | `string`     | `undefined` |
-| `item`   | --        |             | `ApiSummary` | `undefined` |
-| `name`   | `name`    |             | `string`     | `undefined` |
-| `url`    | `url`     |             | `string`     | `undefined` |
-| `value`  | `value`   |             | `string`     | `undefined` |
+| Property             | Attribute             | Description | Type                   | Default     |
+| -------------------- | --------------------- | ----------- | ---------------------- | ----------- |
+| `displayDescription` | `display-description` |             | `"none" \| "subtitle"` | `undefined` |
+| `displayId`          | `display-id`          |             | `"left" \| "right"`    | `undefined` |
+| `domain`             | `domain`              |             | `string`               | `undefined` |
+| `item`               | --                    |             | `ApiSummary`           | `undefined` |
+| `name`               | `name`                |             | `string`               | `undefined` |
+| `url`                | `url`                 |             | `string`               | `undefined` |
+| `value`              | `value`               |             | `string`               | `undefined` |
 
 
 ## Events
