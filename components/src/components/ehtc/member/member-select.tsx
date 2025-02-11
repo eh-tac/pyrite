@@ -17,7 +17,7 @@ export class MemberSelectComponent {
   // domain override. defaults to empty for same domain requests
   @Prop() domain: string;
   @Prop() name: string;
-  @Prop() mode: "character" | "pilot" | "group-characters" = "character";
+  @Prop() mode: "character" | "member" | "member-aliases" = "character";
   @Prop() status: "active" | "all" = "active";
   @Prop() filter: string = "";
   @Prop() disabled: boolean;
@@ -129,7 +129,7 @@ export class MemberSelectComponent {
   private get listURL(): string {
     const d = this.domain || "";
 
-    if (this.mode === "group-characters") {
+    if (this.mode === "member-aliases") {
       return `${d}/api/member/characters/${this.status}`;
     }
 

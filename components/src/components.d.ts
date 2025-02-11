@@ -63,7 +63,7 @@ export namespace Components {
         "disabled": boolean;
         "domain": string;
         "filter": string;
-        "mode": "character" | "pilot" | "group-characters";
+        "mode": "character" | "member" | "member-aliases";
         "name": string;
         "readonly": boolean;
         "search": (query: string) => Promise<void>;
@@ -1204,7 +1204,7 @@ declare namespace LocalJSX {
         "disabled"?: boolean;
         "domain"?: string;
         "filter"?: string;
-        "mode"?: "character" | "pilot" | "group-characters";
+        "mode"?: "character" | "member" | "member-aliases";
         "name"?: string;
         "onMemberSelect"?: (event: EhtcMemberSelectCustomEvent<PilotSummary | CharacterSummary>) => void;
         "readonly"?: boolean;
