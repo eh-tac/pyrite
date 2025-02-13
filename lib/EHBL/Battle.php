@@ -14,6 +14,7 @@ class Battle
     public $missionFiles = [];
     public $resourceFiles = [];
     public $readme;
+    public $plotline;
     public $firstMission = '';
     public $missions = [];
     public $scores = [];
@@ -39,6 +40,8 @@ class Battle
             $lc = strtolower($file);
             if (strpos($lc, 'readme') !== false && file_exists($path)) {
                 $this->readme = file_get_contents($path);
+            } else if (strpos($lc, 'plotline.txt') !== false && file_exists($path)) {
+                $this->plotline = file_get_contents($path);
             }
         }
         // /downloads/battles/TIE/TC/TIETC1/

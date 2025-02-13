@@ -15,14 +15,12 @@ class PyriteBase implements \JsonSerializable
 		$this->TIE = $tie;
 	}
 
-	public function jsonSerialize(): mixed
+	public function jsonSerialize()
 	{
 		return $this->__debugInfo();
 	}
 
-	public function __debugInfo()
-	{
-	}
+	public function __debugInfo() {}
 
 	public function compareHex($otherHex)
 	{
@@ -34,7 +32,5 @@ class PyriteBase implements \JsonSerializable
 		return $this;
 	}
 
-	protected function beforeConstruct()
-	{
-	}
+	protected function beforeConstruct() {}
 }
