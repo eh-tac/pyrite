@@ -144,8 +144,11 @@ class Battle
             case Platform::TIE:
                 return \Pyrite\TIE\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
             case Platform::XvT:
-            case Platform::BoP:
                 return \Pyrite\XvT\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
+            case Platform::BoP:
+                $battle = \Pyrite\XvT\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
+                $battle->platform = Platform::BoP;
+                return $battle;
             case Platform::XWA:
             case Platform::TFTC:
                 return \Pyrite\XWA\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
