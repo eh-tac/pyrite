@@ -9,7 +9,7 @@ class ScoreKeeper implements IScoreKeeper
 {
     /** @var Mission */
     private $TIE;
-
+    public $lstData;
     private $difficultyFilter;
 
     public $total = 0;
@@ -56,10 +56,10 @@ class ScoreKeeper implements IScoreKeeper
                 if ($type === 'Bonus') {
                     $hasBonusGoals = TRUE;
                 }
-                if ($type === 'Prevent') {
-                    $goal->label .= '(PREVENT??)';
-                    $goal->disable();
-                }
+                // if ($type === 'Prevent') {
+                //     $goal->label .= '(PREVENT??)';
+                //     $goal->disable();
+                // }
             }
         }
 
@@ -71,10 +71,17 @@ class ScoreKeeper implements IScoreKeeper
 
             /** @var GoalFG $goal */
             foreach ($fg->Goals as $goal) {
+                if (!$goal->hasConditionSet()){
+                    continue;
+                }
                 if (($goal->getPoints() > 0 || $goal->isBonus()) && $goal->enabledForTeam1()) {
-                    $this->goals[] = ScoreRow::create("$fg - $goal", 1, $goal->getPoints());
+                    $this->goals[] = $row = ScoreRow::create("$fg - $goal", 1, $goal->getPoints());
                     if ($goal->isBonus()) {
                         $hasBonusGoals = TRUE;
+                    }
+                    if ($row->points < 0) {
+                        $row->label .= ' (NEGATIVE POINTS)';
+                        $row->disable();
                     }
                 }
             }
@@ -142,7 +149,15 @@ class ScoreKeeper implements IScoreKeeper
     public function getData(): array
     {
         return array_merge(
-            [ScoreRow::header("Flight Groups")],
+            $this->lstData ? [
+                ScoreRow::header("imperial.lst data"),
+                new ScoreRow($this->lstData['title'], 1, 0),
+                new ScoreRow($this->lstData['filename'], 1, 0),
+                new ScoreRow("Mission Index: " . $this->lstData['index'], 1, 0),
+                
+                
+            ] : [], 
+             [ScoreRow::header("Flight Groups")],
             $this->flightGroups,
             [ScoreRow::header("Goals")],
             $this->goals,

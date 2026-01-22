@@ -144,10 +144,9 @@ class Battle
             case Platform::TIE:
                 return \Pyrite\TIE\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
             case Platform::XvT:
-                return \Pyrite\XvT\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
             case Platform::BoP:
                 $battle = \Pyrite\XvT\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
-                $battle->platform = Platform::BoP;
+                $battle->platform = $platform;
                 return $battle;
             case Platform::XWA:
             case Platform::TFTC:
@@ -278,7 +277,7 @@ class Battle
     {
         // assumes missions is populated
         foreach ($this->missions as $file => $tie) {
-            $sk = $this->loadScoreKeeper($tie);
+            $sk = $this->loadScoreKeeper($tie, $file);
             if ($sk) {
                 $this->scores[$file] = $sk;
             }
@@ -356,14 +355,14 @@ class Battle
         }
     }
 
-    private function loadScoreKeeper($tie)
+    protected function loadScoreKeeper($tie, $filename)
     {
         switch ($this->platform) {
             case Platform::TIE:
                 return new \Pyrite\TIE\ScoreKeeper($tie);
             case Platform::XvT:
             case Platform::BoP:
-                return new \Pyrite\XvT\ScoreKeeper($tie);
+                return new \Pyrite\XvT\ScoreKeeper($tie, $filename);
             case Platform::XWA:
             case Platform::TFTC:
                 return new \Pyrite\XWA\ScoreKeeper($tie);

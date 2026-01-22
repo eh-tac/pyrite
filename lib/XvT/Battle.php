@@ -22,6 +22,24 @@ class Battle extends \Pyrite\EHBL\Battle
 
 		$b = new Battle($type, $num, $title, $folder, $missionFiles, $resourceFiles);
 		$b->missionLst = MissionLst::fromString($missionLst);
+		$b->sortMissions();
 		return $b;
 	}
+
+	protected function sortMissions(){
+		usort($this->missionFiles, fn($a, $b) =>  $this->missionLst->getMissionIndexForFile($a) <=> $this->missionLst->getMissionIndexForFile($b));
+	}
+
+	protected function loadScoreKeeper($tie, $filename)
+	{
+		$sk = new \Pyrite\XvT\ScoreKeeper($tie);
+		foreach ($this->missionLst->entries as $entry) {
+			if (strtolower(trim($entry['filename'])) === strtolower(trim($filename))) {
+				$sk->lstData = $entry;
+			}
+		}	
+		return $sk;
+	}
+
+
 }

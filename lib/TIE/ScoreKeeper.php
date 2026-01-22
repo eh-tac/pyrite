@@ -187,7 +187,7 @@ class ScoreKeeper implements IScoreKeeper
 
     public function getTotal(): int
     {
-        $rows = array_filter($this->getData(), fn ($row) => $row->number > 0);
-        return array_sum(array_map(fn ($row) => $row->points, $rows));
+        $rows = array_filter($this->getData(), fn($row) => $row->number > 0);
+        return array_sum(array_map(fn($row) => $row->points, $rows));
     }
 }
