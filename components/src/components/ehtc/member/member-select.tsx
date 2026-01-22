@@ -91,7 +91,7 @@ export class MemberSelectComponent {
       if (this.filterArray.length) {
         this.memberList = d.filter(
           (m: CharacterSummary) =>
-            (this.mode !== "character" && this.filterArray.includes(m.PIN)) ||
+            (this.mode !== "character" && this.filterArray.includes(parseInt(m.PIN))) ||
             (this.mode === "character" && this.filterArray.includes(m.characterId))
         );
       }
@@ -120,7 +120,7 @@ export class MemberSelectComponent {
     this.selectMember(
       this.memberList.find(
         (m: CharacterSummary) =>
-          (this.mode !== "character" && m.PIN === v) || (this.mode === "character" && m.characterId === v)
+          (this.mode !== "character" && parseInt(m.PIN, 10) === v) || (this.mode === "character" && m.characterId === v)
       )
     );
     return Promise.resolve();
@@ -154,7 +154,7 @@ export class MemberSelectComponent {
 
     // PIN > 1 excludes the system profile
     const filtered = this.memberList.filter((p: Member): boolean => {
-      return p.PIN > 1 && (match(p.PIN.toString()) || match(p.label) || match(p.description));
+      return parseInt(p.PIN) > 1 && (match(p.PIN.toString()) || match(p.label) || match(p.description));
     });
     const sorted = filtered.sort((a: Member, b: Member): number => {
       if (exact(a.PIN.toString()) || exact(a.label) || exact(a.description)) return -1;

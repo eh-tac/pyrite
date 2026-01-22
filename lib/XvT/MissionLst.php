@@ -55,6 +55,16 @@ class MissionLst
         return max($indexes);
     }
 
+    public function getMissionIndexForFile($filename) {
+        
+        return array_reduce($this->entries, function($carry, $e) use ($filename) {
+            if ($e['type'] === 'mission' && strtolower(trim($e['filename'])) === strtolower(trim($filename))) {
+                return $e['index'];
+            }
+            return $carry;
+        }, PHP_INT_MAX);
+    }
+
     public function __toString()
     {
         $out = [];

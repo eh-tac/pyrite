@@ -20,6 +20,11 @@ class GoalFG extends Base\GoalFGBase
     return $this->Points * 250;
   }
 
+  public function hasConditionSet()
+  {
+    return $this->Enabled && $this->Condition != Constants::$CONDITION_NONEFALSE && $this->Condition != Constants::$CONDITION_ALWAYSTRUE; 
+  }
+
   public function isBonus()
   {
     return $this->GoalArgument == Constants::$GOALARGUMENT_BONUSMUST || $this->GoalArgument == Constants::$GOALARGUMENT_BONUSMUSTNOT;
