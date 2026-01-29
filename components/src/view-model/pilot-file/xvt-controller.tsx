@@ -67,9 +67,9 @@ export class XvTPltController extends PilotFileController {
         missions.push(this.renderXvTMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].BestScore.toLocaleString()),
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].BestScore.toLocaleString(),
           "Too many missions flown",
-          "text-danger"
+          "text-danger")
         );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));

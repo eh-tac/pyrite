@@ -54,9 +54,9 @@ export class TFRController extends PilotFileController {
         missions.push(this.renderTIEMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].score),
-          "Too many missions flown",
-          "text-danger"
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].score,
+          "Too many missionss flown",
+          "text-danger")
         );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
