@@ -52,9 +52,9 @@ export class XWController extends PilotFileController {
         missions.push(this.renderXWMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]?.completed) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].score),
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].score,
           "Too many missions flown",
-          "text-danger"
+          "text-danger")
         );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
@@ -139,9 +139,9 @@ export class XWController extends PilotFileController {
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Tours of Duty</li>
-        {this.plt.BattleSummary.filter((battle: BattleSummary) => battle.missions.length).map(
-          (battle: BattleSummary, b: number) => (
-            <li class="list-group-item">
+        {this.plt.BattleSummary.map(
+          (battle: BattleSummary, b: number) => 
+            battle.missions.length ? (<li class="list-group-item">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 text-muted">Tour {b + 1}</h5>
                 <small>{battle.status}</small>
@@ -150,7 +150,7 @@ export class XWController extends PilotFileController {
                 this.renderXWMission(`Mission ${m + 1}`, mission)
               )}
             </li>
-          )
+          ) : ''
         )}
       </ul>
     );

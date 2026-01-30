@@ -19,8 +19,42 @@ export class PilotFile extends PilotFileBase implements PilotData {
     return this.percent(this.MissileCraftHits + this.MissileGroundHits, this.MissilesFired);
   }
 
+  public get OptionalTour4Scores(): number[] {
+    const optionalMissions = [6, 8, 12, 16];
+    const scores: number[] = [];
+    let index = 0;
+    for (let m = 1; m <= 20; m++) {
+      if (optionalMissions.includes(m)) {
+        // this is an optional mission, so we include the highest of the next two scores (one should be 0)
+        scores.push(Math.max(this.Tour4Scores[index], this.Tour4Scores[index + 1]));
+        index += 2;
+      } else {
+        scores.push(this.Tour4Scores[index]);
+        index++;
+      } 
+    }
+    return scores;
+  }
+
+  public get OptionalTour5Scores(): number[] {
+    const optionalMissions = [11, 14, 17, 20];
+    const scores: number[] = [];
+    let index = 0;
+    for (let m = 1; m <= 20; m++) {
+      if (optionalMissions.includes(m)) {
+        // this is an optional mission, so we include the highest of the next two scores (one should be 0)
+        scores.push(Math.max(this.Tour5Scores[index], this.Tour5Scores[index + 1]));
+        index += 2;
+      } else {
+        scores.push(this.Tour5Scores[index]);
+        index++;
+      } 
+    }
+    return scores;
+  }
+
   public get BattleSummary(): BattleSummary[] {
-    const tods = [this.Tour1Scores, this.Tour2Scores, this.Tour3Scores, this.Tour4Scores, this.Tour5Scores];
+    const tods = [this.Tour1Scores, this.Tour2Scores, this.Tour3Scores, this.OptionalTour4Scores, this.OptionalTour5Scores];
 
     return tods.map((scores: number[], battle: number) => {
       const status = this.TourStatus[battle];

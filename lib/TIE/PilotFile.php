@@ -65,9 +65,25 @@ class PilotFile extends Base\PilotFileBase
         }, $battles, array_keys($battles));
     }
 
-    public function getCompletedMissionScores()
+    public function getAllMissionScores() {
+        $chunks = array_chunk($this->BattleScores, 8);
+        $normalisedChunks = array_map(function ($scores, $battleIdx) {
+            $status = $this->BattleStatuses[$battleIdx];
+            return $status === Constants::$BATTLESTATUS_COMPLETED ? $scores : array_fill(0, 8, 0);
+        }, $chunks, array_keys($chunks));
+        return array_merge(...$normalisedChunks);
+    }
+
+    public function getCompletedMissionScores($campaignMode = false)
     {
-        return array_reduce($this->BattleSummary(), function ($carry, $battleSummary) {
+        $allBattles = $this->BattleSummary();
+        // in campaign mode, we want all scores to be included at a cumulative index position - battle 1 at position 0, battle 2 at position 8, etc
+        // (battles have different lengths but in the pilot file they have room for 8 missions each)
+        if ($campaignMode) {
+            return $this->getAllMissionScores();
+        }
+
+        return array_reduce($allBattles, function ($carry, $battleSummary) {
             return array_merge($carry, array_map(function ($mission) {
                 return $mission['score'];
             }, $battleSummary['missions']));
