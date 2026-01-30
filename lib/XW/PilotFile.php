@@ -87,9 +87,15 @@ class PilotFile extends Base\PilotFileBase
     }
 
     // get the scores for all tour missions in this pilot file.
-    // in order to allow processing with offsets, we include all scores even if the tours are incomplete
+    // in order to allow processing with offsets, we include each tour but fill in 0s if incomplete
     public function getAllTourMissionScores(){
-        return array_merge($this->Tour1Scores, $this->Tour2Scores, $this->Tour3Scores, $this->getTour4Scores(), $this->getTour5Scores());
+        return array_merge(
+            $this->TourOperationsComplete[0] == 12 ? $this->Tour1Scores : array_fill(0, 12, 0), 
+            $this->TourOperationsComplete[1] == 12 ? $this->Tour2Scores : array_fill(0, 12, 0),
+            $this->TourOperationsComplete[2] == 14 ? $this->Tour3Scores : array_fill(0, 14, 0),
+            $this->TourOperationsComplete[3] == 20 ? $this->getTour4Scores() : array_fill(0, 20, 0),
+            $this->TourOperationsComplete[4] == 20 ? $this->getTour5Scores() : array_fill(0, 20, 0)
+        );
     }
 
     /**

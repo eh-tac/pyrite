@@ -55,8 +55,8 @@ export class TFRController extends PilotFileController {
       } else if (missionScores[m]) {
         missions.push(
           this.renderItem(`Mission ${m + 1}`, missionScores[m].score,
-          "Too many missionss flown",
-          "text-danger")
+            "Too many missionss flown",
+            "text-danger")
         );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
@@ -141,17 +141,18 @@ export class TFRController extends PilotFileController {
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Tours of Duty</li>
-        {this.tfr.BattleSummary.filter((battle: BattleSummary) => battle.missions.length).map(
+        {this.tfr.BattleSummary.map(
           (battle: BattleSummary, b: number) => (
-            <li class="list-group-item">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1 text-muted">Battle {b + 1}</h5>
-                <small>{battle.status}</small>
-              </div>
-              {battle.missions.map((mission: MissionScore, m: number) =>
-                this.renderTIEMission(`Mission ${m + 1}`, mission)
-              )}
-            </li>
+            battle.missions.length > 0 && (
+              <li class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1 text-muted">Battle {b + 1}</h5>
+                  <small>{battle.status}</small>
+                </div>
+                {battle.missions.map((mission: MissionScore, m: number) =>
+                  this.renderTIEMission(`Mission ${m + 1}`, mission)
+                )}
+              </li>)
           )
         )}
       </ul>
