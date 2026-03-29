@@ -2,33 +2,16 @@
 
 namespace Pyrite\XvT;
 
-class PilotFile extends Base\PilotFileBase
+use Pyrite\XvT\Base\PL2FileRecordBase;
+
+// Swap between PLTFileRecord and PL2FileRecord depending on the file size.
+class PilotFile
 {
-    public static function fromHex($hex, $tie = null)
+    public static function fromHex($hex, $tie = null): IPilotFileBSF
     {
-        return (new PilotFile($hex, $tie))->loadHex();
-    }
-
-    public function getCompletedTrainingMissions()
-    {
-        return array_filter($this->ImperialStats->TrainingMissionData, function (MissionData $mission) {
-            return $mission->WinCount > 0;
-        });
-    }
-
-    public function getCompletedTrainingMissionScores()
-    {
-        $missions = $this->getCompletedTrainingMissions();
-        return array_map(function (MissionData $mission) {
-            return $mission->BestScore;
-        }, $missions);
-    }
-
-    public function getCompletedTrainingMissionTimes()
-    {
-        $missions = $this->getCompletedTrainingMissions();
-        return array_map(function (MissionData $mission) {
-            return $mission->BestTime;
-        }, $missions);
+        if (strlen($hex) === PL2FileRecordBase::PL2FILERECORDLENGTH) {
+            return PL2FileRecord::fromHex($hex, $tie);
+        }
+        return PLTFileRecord::fromHex($hex, $tie);
     }
 }
