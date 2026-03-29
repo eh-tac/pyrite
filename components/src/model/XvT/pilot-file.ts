@@ -7,6 +7,10 @@ export class PilotFile extends PilotFileBase {
     return "";
   }
 
+  public get TotalScore(): number {
+    return this.totalScore;
+  }
+
   public get LaserLabel(): string {
     return this.shootInfo(this.LasersHit, this.LasersTotal);
   }

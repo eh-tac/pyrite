@@ -25,8 +25,8 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
     public $MissionMedals;
     /** @var integer[] 0x0090 PlayCounts INT */
     public $PlayCounts;
-    /** @var integer[] 0x00A8 TotalKills INT */
-    public $TotalKills;
+    /** @var integer[] 0x00A8 totalKills INT */
+    public $totalKills;
     /** @var integer[] 0x00C0 ExerciseKillsByType INT */
     public $ExerciseKillsByType;
     /** @var integer[] 0x0220 MeleeKillsByType INT */
@@ -120,11 +120,11 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
             $this->PlayCounts[] = $t;
             $offset += 4;
         }
-        $this->TotalKills = [];
+        $this->totalKills = [];
         $offset = 0x00A8;
         for ($i = 0; $i < 3; $i++) {
             $t = $this->getInt($hex, $offset);
-            $this->TotalKills[] = $t;
+            $this->totalKills[] = $t;
             $offset += 4;
         }
         $this->ExerciseKillsByType = [];
@@ -288,7 +288,7 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
             "MissionTopRatings" => $this->MissionTopRatings,
             "MissionMedals" => $this->MissionMedals,
             "PlayCounts" => $this->PlayCounts,
-            "TotalKills" => $this->TotalKills,
+            "totalKills" => $this->totalKills,
             "ExerciseKillsByType" => $this->ExerciseKillsByType,
             "MeleeKillsByType" => $this->MeleeKillsByType,
             "CombatKillsByType" => $this->CombatKillsByType,
@@ -350,7 +350,7 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
         }
         $offset = 0x00A8;
         for ($i = 0; $i < 3; $i++) {
-            $t = $this->TotalKills[$i];
+            $t = $this->totalKills[$i];
             $hex = $this->writeInt($t, $hex, $offset);
             $offset += 4;
         }
