@@ -18,8 +18,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     public $PilotFileLength;
     /** @var string 0x0000 Name CHAR */
     public $Name;
-    /** @var integer 0x000E TotalScore INT */
-    public $TotalScore;
+    /** @var integer 0x000E totalScore INT */
+    public $totalScore;
     /** @var integer 0x035E Kills INT */
     public $Kills;
     /** @var integer 0x143E LasersHit INT */
@@ -56,8 +56,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $hex = $this->hex;
         $offset = 0;
 
-        $this->Name = $this->getChar($hex, 0x0000, 12);
-        $this->TotalScore = $this->getInt($hex, 0x000E);
+        $this->Name = $this->getChar($hex, 0x0000, 14);
+        $this->totalScore = $this->getInt($hex, 0x000E);
         $this->Kills = $this->getInt($hex, 0x035E);
         $this->LasersHit = $this->getInt($hex, 0x143E);
         $this->LasersTotal = $this->getInt($hex, 0x144A);
@@ -80,7 +80,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     {
         return [
             "Name" => $this->Name,
-            "TotalScore" => $this->TotalScore,
+            "totalScore" => $this->totalScore,
             "Kills" => $this->Kills,
             "LasersHit" => $this->LasersHit,
             "LasersTotal" => $this->LasersTotal,
@@ -100,7 +100,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $offset = 0;
 
         $hex = $this->writeChar($this->Name, $hex, 0x0000);
-        $hex = $this->writeInt($this->TotalScore, $hex, 0x000E);
+        $hex = $this->writeInt($this->totalScore, $hex, 0x000E);
         $hex = $this->writeInt($this->Kills, $hex, 0x035E);
         $hex = $this->writeInt($this->LasersHit, $hex, 0x143E);
         $hex = $this->writeInt($this->LasersTotal, $hex, 0x144A);

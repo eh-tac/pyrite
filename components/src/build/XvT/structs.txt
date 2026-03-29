@@ -1,7 +1,7 @@
-	struct PilotFile (size 0)
+struct PilotFile (size 0)
 {
-  0x0000 CHAR<12> Name
-  0x000E INT TotalScore
+  0x0000 CHAR<14> Name
+  0x000E INT totalScore
   0x035E INT Kills  
   0x143E INT LasersHit
   0x144A INT LasersTotal
@@ -14,6 +14,588 @@
   0x12716 TeamStats ImperialStats
 }
 
+struct PLTTournTeamRecord (size 0x0014)
+{
+  0x0000 INT teamParticipationState
+  0x0004 INT totalTeamScore
+  0x0008 INT numberOfMeleeRankingsFirst
+  0x000C INT numberOfMeleeRankingsSecond
+  0x0010 INT numberOfMeleeRankingsThird
+}
+
+struct PLTConnectedPlayerData (size 0x0058)
+{
+  0x0000 CHAR<14> pilotLongNameUnused
+  0x000E CHAR<14> pilotShortName
+  0x001C INT fgIndex
+  0x0020 INT DPPlayerID
+  0x0024 INT pilotRank
+  0x0028 INT playerScore
+  0x002C INT fullKills
+  0x0030 INT sharedKills
+  0x0034 INT unusedInspections
+  0x0038 INT assistKills
+  0x003C INT losses
+  0x0040 INT craftType
+  0x0044 INT optionalCraftIndex
+  0x0048 INT optionalWarhead
+  0x004C INT optionalBeam
+  0x0050 INT optionalCountermeasure
+  0x0054 INT hasDisconnectedFromHostUNK
+}
+
+struct PLTTeamResultRecord (size 0x001C)
+{
+  0x0000 INT totalMissionScore
+  0x0004 INT isMissionComplete
+  0x0008 INT unknown0x8
+  0x000C INT timeMissionComplete
+  0x0010 INT fullKills
+  0x0014 INT sharedKills
+  0x0018 INT losses
+}
+
+struct PLTMissionSPRecord (size 0x0024)
+{
+  0x0000 INT unknown0x0
+  0x0004 INT totalCountFlown
+  0x0008 INT totalCountVictory
+  0x000C INT totalCountFailure
+  0x0010 INT bestScore
+  0x0014 INT bestTimeAsSeconds
+  0x0018 INT bestFinishRank
+  0x001C INT bestEvaluationBadge
+  0x0020 INT bestWinningMargin
+}
+
+struct PLTMissionMPRecord (size 0x0030)
+{
+  0x0000 INT unknown0x0
+  0x0004 INT totalCountFlown
+  0x0008 INT totalCountFinishedFirst
+  0x000C INT totalCountFinishedSecond
+  0x0010 INT totalCountFinishedThird
+  0x0014 INT totalCountVictory
+  0x0018 INT totalCountFailure
+  0x001C INT bestScore
+  0x0020 INT bestTimeAsSeconds
+  0x0024 INT bestFinishPlace
+  0x0028 INT bestEvaluationBadge
+  0x002C INT bestWinningMargin
+}
+
+struct PLTTournSPRecord (size 0x0028)
+{
+  0x0000 INT unknown0x0
+  0x0004 INT totalCountFlown
+  0x0008 INT numberOfFinishesAnyUNK
+  0x000C INT numberOfFinishesFirst
+  0x0010 INT numberOfFinishesSecond
+  0x0014 INT numberOfFinishesThird
+  0x0018 INT bestScore
+  0x001C INT bestFinish
+  0x0020 INT bestEvaluationMedal
+  0x0024 INT bestFinishPointMargin
+}
+
+struct PLTTournMPRecord (size 0x002C)
+{
+  0x0000 INT unknown0x0
+  0x0004 INT totalCountFlown
+  0x0008 INT numberOfFinishesAnyUNK
+  0x000C INT numberOfFinishesFirst
+  0x0010 INT numberOfFinishesSecond
+  0x0014 INT numberOfFinishesThird
+  0x0018 INT bestScore
+  0x001C INT bestFinish
+  0x0020 INT unknown0x20
+  0x0024 INT bestEvaluationMedal
+  0x0028 INT bestFinishPointMargin
+}
+
+struct PLTBattleSPRecord (size 0x0024)
+{
+  0x0000 INT unknown0x0
+  0x0004 INT totalCountFlown
+  0x0008 INT totalCountVictory
+  0x000C INT totalCountFailure
+  0x0010 INT totalCount10MissionMarathonUNK
+  0x0014 INT bestScore
+  0x0018 INT unknown0x18
+  0x001C INT bestEvaluationMedal
+  0x0020 INT bestVictoryMargin
+}
+
+struct PLTBattleMPRecord (size 0x0028)
+{
+  0x0000 INT unknown0x0
+  0x0004 INT totalCountFlown
+  0x0008 INT totalCountVictory
+  0x000C INT totalCountFailure
+  0x0010 INT totalCount10MissionMarathonUNK
+  0x0014 INT bestScore
+  0x0018 INT unknown0x18
+  0x001C INT unknown0x1C
+  0x0020 INT bestEvaluationMedal
+  0x0024 INT bestVictoryMargin
+}
+
+struct PLTEarnedMedalRecord (size 0x0060)
+{
+  0x0000 INT[6] meleePlaqueCount
+  0x0018 INT[6] tournamentPlaqueCount
+  0x0030 INT[6] exerciseBadgeCount
+  0x0048 INT[6] battleMedalCount
+}
+
+struct PLTCategoryTypeRecord (size 0x000C)
+{
+  0x0000 INT exercise
+  0x0004 INT melee
+  0x0008 INT combat
+}
+
+struct PLTPlayerRankCountRecord (size 0x012C)
+{
+  0x0000 INT[25] exercise
+  0x0064 INT[25] melee
+  0x00C8 INT[25] combat
+}
+
+struct PLTAIRankCountRecord (size 0x0048)
+{
+  0x0000 INT[6] exercise
+  0x0018 INT[6] melee
+  0x0030 INT[6] combat
+}
+
+struct PLTFactionRecord (size 0xE824)
+{
+  0x0000 INT totalMissionsFlown
+  0x0004 INT lastMissionTeam
+  0x0008 INT lastMissionType
+  0x000C INT lastMissionTrainingSelected
+  0x0010 INT lastMissionMeleeSelected
+  0x0014 INT lastMissionTournamentSelected
+  0x0018 INT lastMissionCombatSelected
+  0x001C INT lastMissionBattleSelected
+  0x0020 INT[10] unknown0x20
+  0x0048 PLTEarnedMedalRecord earnedMedalCount
+  0x00A8 INT debriefMeleePlaqueType
+  0x00AC INT debriefTournamentTrophyType
+  0x00B0 INT debriefMissionBadgeType
+  0x00B4 INT debriefBattleMedalType
+  0x00B8 INT[4] UnknownRecord4
+  0x00C8 INT totalFactionScore
+  0x00CC PLTCategoryTypeRecord totalCategoryScore
+  0x00D8 PLTCategoryTypeRecord totalCategoryFlown
+  0x00E4 INT totalCampaignExerciseFlown
+  0x00E8 INT totalTournamentMeleeFlown
+  0x00EC INT totalBattleCombatFlown
+  0x00F0 PLTCategoryTypeRecord totalFullKills
+  0x00FC PLTCategoryTypeRecord totalFriendlyFullKills
+  0x0108 INT[88] totalFullKillsByShipExercise
+  0x0268 INT[88] totalFullKillsByShipMelee
+  0x03C8 INT[88] totalFullKillsByShipCombat
+  0x0528 INT[88] totalSharedKillsOfShipExercise
+  0x0688 INT[88] totalSharedKillsOfShipMelee
+  0x07E8 INT[88] totalSharedKillsOfShipCombat
+  0x0948 INT[88] totalAssistKillsOfShipExercise
+  0x0AA8 INT[88] totalAssistKillsOfShipMelee
+  0x0C08 INT[88] totalAssistKillsOfShipCombat
+  0x0D68 PLTPlayerRankCountRecord totalFullKillsOfPlayerRank
+  0x0E94 PLTPlayerRankCountRecord totalSharedKillsOfPlayerRank
+  0x0FC0 PLTPlayerRankCountRecord totalAssistKillsOfPlayerRank
+  0x10EC PLTAIRankCountRecord totalFullKillsOfAIRank
+  0x1134 PLTAIRankCountRecord totalSharedKillsOfAIRank
+  0x117C PLTAIRankCountRecord totalAssistKillsOfAIRank
+  0x11C4 PLTCategoryTypeRecord totalHiddenCargoFound
+  0x11D0 PLTCategoryTypeRecord totalCannonHit
+  0x11DC PLTCategoryTypeRecord totalCannonFired
+  0x11E8 PLTCategoryTypeRecord totalWarheadHit
+  0x11F4 PLTCategoryTypeRecord totalWarheadFired
+  0x1200 PLTCategoryTypeRecord totalLosses
+  0x120C PLTCategoryTypeRecord totalLossesByCollision
+  0x1218 PLTCategoryTypeRecord totalLossesByStarship
+  0x1224 PLTCategoryTypeRecord totalLossesByMines
+  0x1230 PLTPlayerRankCountRecord totalLossesByPlayerRank
+  0x135C PLTAIRankCountRecord totalLossesByAIRank
+  0x13A4 PLTMissionSPRecord[100] missionSPExercise
+  0x21B4 PLTMissionSPRecord[250] missionSPMelee
+  0x44DC PLTMissionSPRecord[250] missionSPCombat
+  0x6804 PLTMissionMPRecord[100] missionMPExercise
+  0x7AC4 PLTMissionMPRecord[250] missionMPMelee
+  0xA9A4 PLTMissionMPRecord[250] missionMPCombat
+  0xD884 PLTTournSPRecord[25] missionSPTourn
+  0xDC6C PLTTournMPRecord[25] missionMPTourn
+  0xE0B8 PLTBattleSPRecord[25] missionSPBattle
+  0xE43C PLTBattleMPRecord[25] missionMPBattle
+}
+
+struct PLTFileRecord (size 0x3DF3A)
+{
+  0x0000 CHAR<14> PilotName
+  0x000E INT totalScore
+  0x0012 INT PlayerID
+  0x0016 INT continuedOrReflownMission
+  0x001A INT isHosting
+  0x001E INT numHumanPlayersInMission
+  0x0022 INT frontFlyMode
+  0x0026 INT[80] unknown0x26
+  0x0166 INT[8] unknown0x166
+  0x0186 INT[80] unknown0x186
+  0x02C6 INT lastTeamNumber
+  0x02CA INT lastSelectedMissionType
+  0x02CE INT lastSelectedTraining
+  0x02D2 INT lastSelectedMelee
+  0x02D6 INT lastSelectedTournament
+  0x02DA INT lastSelectedCombat
+  0x02DE INT lastSelectedBattle
+  0x02E2 CHAR<22> GameNameString
+  0x02F8 BYTE[10] unknown0x2F8
+  0x0302 CHAR<22> GameNameString2
+  0x0318 BYTE[10] unknown0x318
+  0x0322 INT lastMissionWasNonSpecific
+  0x0326 INT unknown0x326
+  0x032A INT PromoPoints
+  0x032E INT WorsePromoPoints
+  0x0332 INT RankAdjustmentApplied
+  0x0336 INT PercentToNextRank
+  0x033A PLTCategoryTypeRecord totalCategoryScore
+  0x0346 PLTCategoryTypeRecord numFlownNonSeries
+  0x0352 PLTCategoryTypeRecord numFlownSeries
+  0x035E PLTCategoryTypeRecord totalKillCount
+  0x036A PLTCategoryTypeRecord numVanillaFriendlyKills
+  0x0376 INT[88] totalCraftFullKillsExercise
+  0x04D6 INT[88] totalCraftFullKillsMelee
+  0x0636 INT[88] totalCraftFullKillsCombat
+  0x0796 INT[88] totalCraftSharedKillsExercise
+  0x08F6 INT[88] totalCraftSharedKillsMelee
+  0x0A56 INT[88] totalCraftSharedKillsCombat
+  0x0BB6 INT[88] totalCraftAssistKillsExercise
+  0x0D16 INT[88] totalCraftAssistKillsMelee
+  0x0E76 INT[88] totalCraftAssistKillsCombat
+  0x0FD6 PLTPlayerRankCountRecord totalFullKillsOnPlayerRank
+  0x1102 PLTPlayerRankCountRecord totalSharedKillsOnPlayerRank
+  0x122E PLTPlayerRankCountRecord totalAssistKillsOnPlayerRank
+  0x135A PLTAIRankCountRecord totalFullKillsOnAIRank
+  0x13A2 PLTAIRankCountRecord totalSharedKillsOnAIRank
+  0x13EA PLTAIRankCountRecord totalAssistKillsOnAIRank
+  0x1432 PLTCategoryTypeRecord totalHiddenCargoFound
+  0x143E PLTCategoryTypeRecord totalLaserHit
+  0x144A PLTCategoryTypeRecord totalLaserFired
+  0x1456 PLTCategoryTypeRecord totalWarheadHit
+  0x1462 PLTCategoryTypeRecord totalWarheadFired
+  0x146E PLTCategoryTypeRecord totalCraftLosses
+  0x147A PLTCategoryTypeRecord totalLossesFromCollision
+  0x1486 PLTCategoryTypeRecord totalLossesFromStarships
+  0x1492 PLTCategoryTypeRecord totalLossesFromMines
+  0x149E PLTPlayerRankCountRecord totalLossesFromPlayerRank
+  0x15CA PLTAIRankCountRecord totalLossesFromAIRank
+  0x1612 BYTE[40] unknown0x1612
+  0x163A INT unknownPlaqueWon
+  0x163E PLTTournTeamRecord[10] TournTeamRecords
+  0x1706 INT numHumanPlayersUNK
+  0x170A INT numTeamsUNK
+  0x170E INT unknown0x170E
+  0x1712 INT unknown0x1712
+  0x1716 INT numCombatFlownInLastBattle
+  0x171A BYTE[2052] unknown0x171A
+  0x1F1E INT[4] battleCombatMissionID
+  0x1F2E BYTE[1012] unknown0x1F2E
+  0x2322 INT totalScoreForCurrentBattleUNK
+  0x2326 INT CurrentRank
+  0x232A INT totalCountMissionsFlown
+  0x232E INT[25] RankAchievedOnMissionCount
+  0x2392 CHAR<32> RankString
+  0x23B2 INT debriefMissionScore
+  0x23B6 INT[8] debriefFullKillsOnPlayer
+  0x23D6 INT[8] debriefSharedKillsOnPlayer
+  0x23F6 INT[48] debriefFullKillsOnFG
+  0x24B6 INT[48] debriefSharedKillsOnFG
+  0x2576 INT[8] debriefFullKillsByPlayer
+  0x2596 INT[8] debriefSharedKillsByPlayer
+  0x25B6 INT[48] debriefFullKillsByFG
+  0x2676 INT[48] debriefSharedKillsByFG
+  0x2736 INT[48] debriefMeleeAIRankFG
+  0x27F6 PLTCategoryTypeRecord UnknownRecord1
+  0x2802 PLTCategoryTypeRecord UnknownRecord2
+  0x280E PLTCategoryTypeRecord UnknownRecord3
+  0x281A PLTCategoryTypeRecord debriefEnemyKills
+  0x2826 PLTCategoryTypeRecord debriefFriendlyKills
+  0x2832 INT[88] debriefFullKillsByShipTypeA
+  0x2992 INT[88] debriefFullKillsByShipTypeB
+  0x2AF2 INT[88] debriefFullKillsByShipTypeC
+  0x2C52 INT[88] debriefSharedKillsByShipTypeA
+  0x2DB2 INT[88] debriefSharedKillsByShipTypeB
+  0x2F12 INT[88] debriefSharedKillsByShipTypeC
+  0x3072 INT[88] debriefAssistKillsByShipTypeA
+  0x31D2 INT[88] debriefAssistKillsByShipTypeB
+  0x3332 INT[88] debriefAssistKillsByShipTypeC
+  0x3492 PLTPlayerRankCountRecord debriefFullKillsOnPlayerRank
+  0x35BE PLTPlayerRankCountRecord debriefSharedKillsOnPlayerRank
+  0x36EA PLTPlayerRankCountRecord debriefAssistKillsOnPlayerRank
+  0x3816 PLTAIRankCountRecord debriefFullKillsOnAIRank
+  0x385E PLTAIRankCountRecord debriefSharedKillsOnAIRank
+  0x38A6 PLTAIRankCountRecord debriefAssistKillsOnAIRank
+  0x38EE PLTCategoryTypeRecord debriefNumHiddenCargoFound
+  0x38FA PLTCategoryTypeRecord debriefNumCannonHits
+  0x3906 PLTCategoryTypeRecord debriefNumCannonFired
+  0x3912 PLTCategoryTypeRecord debriefNumWarheadHits
+  0x391E PLTCategoryTypeRecord debriefNumWarheadFired
+  0x392A PLTCategoryTypeRecord debriefNumCraftLosses
+  0x3936 PLTCategoryTypeRecord debriefCraftLossesFromCollision
+  0x3942 PLTCategoryTypeRecord debriefCraftLossesFromStarship
+  0x394E PLTCategoryTypeRecord debriefCraftLossesFromMine
+  0x395A PLTPlayerRankCountRecord debriefLossesFromPlayerRank
+  0x3A86 PLTAIRankCountRecord debriefLossesFromAIRank
+  0x3ACE PLTConnectedPlayerData[8] connectedPlayerData
+  0x3D8E PLTTeamResultRecord[10] debriefTeamResult
+  0x3EA6 INT lastSelectedFaction
+  0x3EAA PLTFactionRecord rebelSingleplayerData
+  0x126CE PLTFactionRecord imperialSingleplayerData
+  0x20EF2 PLTFactionRecord rebelMultiplayerData
+  0x2F716 PLTFactionRecord imperialMultiplayerData
+}
+
+struct PL2CampaignStatusSPRecord (size 0x0024)
+{
+  0x0000 INT unknown0x0
+  0x0004 INT isStartedUNK
+  0x0008 INT missionNumber
+  0x000C INT isFinished
+  0x0010 INT bestScore
+  0x0014 INT unknown0x14
+  0x0018 INT unknown0x18
+  0x001C INT unknown0x1C
+  0x0020 INT unknown0x20
+}
+
+struct PL2CampaignRecord (size 0x0020)
+{
+  0x0000 INT IDNumber
+  0x0004 INT totalCountFlown
+  0x0008 INT isMissionCompleteWithoutCheat
+  0x000C INT bestScore
+  0x0010 INT bestEvaluationBadge
+  0x0014 INT bestTimeAsSeconds
+  0x0018 INT isMissionComplete
+  0x001C INT UIFrameTimerHelper
+}
+
+struct PL2FactionRecord (size 0x109E0)
+{
+  0x0000 INT totalMissionsFlown
+  0x0004 INT lastKnownTeam
+  0x0008 INT lastKnownFolderIndex
+  0x000C INT[6] selectedMissionIDNum
+  0x0024 INT[8] unknown0x24
+  0x0044 INT isMissionCategorySeries
+  0x0048 INT activeMissionIDNum
+  0x004C PLTEarnedMedalRecord earnedMedalCount
+  0x00AC INT[4] debriefMedalTypeMTEB
+  0x00BC INT[4] UnknownRecord4
+  0x00CC INT totalFactionScore
+  0x00D0 PLTCategoryTypeRecord totalScore
+  0x00DC PLTCategoryTypeRecord totalFlownNonSeries
+  0x00E8 PLTCategoryTypeRecord totalFlownSeries
+  0x00F4 PLTCategoryTypeRecord totalFullKills
+  0x0100 PLTCategoryTypeRecord totalFriendlyFullKills
+  0x010C INT[300] totalFullKillsOnCraftEMC
+  0x05BC INT[300] totalSharedKillsOnCraftEMC
+  0x0A6C INT[300] totalAssistKillsOnCraftEMC
+  0x0F1C PLTPlayerRankCountRecord totalFullKillsOfPlayerRank
+  0x1048 PLTPlayerRankCountRecord totalSharedKillsOfPlayerRank
+  0x1174 PLTPlayerRankCountRecord totalAssistKillsOfPlayerRank
+  0x12A0 PLTAIRankCountRecord totalFullKillsOfAIRank
+  0x12E8 PLTAIRankCountRecord totalSharedKillsOfAIRank
+  0x1330 PLTAIRankCountRecord totalAssistKillsOfAIRank
+  0x1378 PLTCategoryTypeRecord totalHiddenCargoFound
+  0x1384 PLTCategoryTypeRecord totalLaserHit
+  0x1390 PLTCategoryTypeRecord totalLaserFired
+  0x139C PLTCategoryTypeRecord totalWarheadHit
+  0x13A8 PLTCategoryTypeRecord totalWarheadFired
+  0x13B4 PLTCategoryTypeRecord totalLosses
+  0x13C0 PLTCategoryTypeRecord totalLossesByCollision
+  0x13CC PLTCategoryTypeRecord totalLossesByStarship
+  0x13D8 PLTCategoryTypeRecord totalLossesByMines
+  0x13E4 PLTPlayerRankCountRecord totalLossesByPlayerRank
+  0x1510 PLTAIRankCountRecord totalLossesByAIRank
+  0x1558 PLTMissionSPRecord[100] missionSPExercise
+  0x2368 PLTMissionSPRecord[250] missionSPMelee
+  0x4690 PLTMissionSPRecord[250] missionSPCombat
+  0x69B8 PLTMissionMPRecord[100] missionMPExercise
+  0x7C78 PLTMissionMPRecord[250] missionMPMelee
+  0xAB58 PLTMissionMPRecord[250] missionMPCombat
+  0xDA38 PLTTournSPRecord[25] missionSPTourn
+  0xDE20 PLTTournMPRecord[25] missionMPTourn
+  0xE26C PLTBattleSPRecord[25] missionSPBattle
+  0xE5F0 PLTBattleMPRecord[25] missionMPBattle
+  0xE9D8 PL2CampaignStatusSPRecord[25] statusSPCampaign
+  0xED5C PL2CampaignStatusSPRecord[25] statusMPCampaignUNK
+  0xF0E0 PL2CampaignRecord[100] missionSPCampaign
+  0xFD60 PL2CampaignRecord[100] missionMPCampaign
+}
+
+struct PLTTournamentProgressState (size 0x0100)
+{
+  0x0000 CHAR<36> unknown1
+  0x0024 INT completedMissionCount
+  0x0028 INT totalMissionCount
+  0x002C PLTTournTeamRecord[10] teamRecord
+  0x00F4 INT playersActive
+  0x00F8 INT teamsActive
+  0x00FC INT unknown2
+}
+
+struct PLTBattleProgressState (size 0x008C)
+{
+  0x0000 INT MissionsFlown
+  0x0004 INT CombatMissionID
+  0x0008 INT totalMissionCount
+  0x000C INT[10] Outcome
+  0x0034 INT[10] BattleListIndex
+  0x005C INT[10] CombatMissionListIndex
+  0x0084 INT NumPlayers
+  0x0088 INT totalScore
+}
+
+struct PL2DebriefRecord (size 0x1488)
+{
+  0x0000 PLTCategoryTypeRecord UnknownRecord1
+  0x000C PLTCategoryTypeRecord UnknownRecord2
+  0x0018 PLTCategoryTypeRecord UnknownRecord3
+  0x0024 PLTCategoryTypeRecord enemyKillsEXX
+  0x0030 PLTCategoryTypeRecord friendlyKillsEXX
+  0x003C INT[900] totalKillCountByCraftType
+  0x0E4C PLTPlayerRankCountRecord FullKillsOnPlayerRank
+  0x0F78 PLTPlayerRankCountRecord SharedKillsOnPlayerRank
+  0x10A4 PLTPlayerRankCountRecord AssistKillsOnPlayerRank
+  0x11D0 PLTAIRankCountRecord FullKillsOnAIRank
+  0x1218 PLTAIRankCountRecord SharedKillsOnAIRank
+  0x1260 PLTAIRankCountRecord AssistKillsOnAIRank
+  0x12A8 PLTCategoryTypeRecord NumHiddenCargoFoundEXX
+  0x12B4 PLTCategoryTypeRecord NumCannonHitsEXX
+  0x12C0 PLTCategoryTypeRecord NumCannonFiredEXX
+  0x12CC PLTCategoryTypeRecord NumWarheadHitsEXX
+  0x12D8 PLTCategoryTypeRecord NumWarheadFiredEXX
+  0x12E4 PLTCategoryTypeRecord NumCraftLossesEXX
+  0x12F0 PLTCategoryTypeRecord CraftLossesFromCollisionEXX
+  0x12FC PLTCategoryTypeRecord CraftLossesFromStarshipEXX
+  0x1308 PLTCategoryTypeRecord CraftLossesFromMineEXX
+  0x1314 PLTPlayerRankCountRecord LossesFromPlayerRank
+  0x1440 PLTAIRankCountRecord LossesFromAIRank
+}
+
+struct PL2CampaignProgressState (size 0x0018)
+{
+  0x0000 INT unknown1
+  0x0004 INT CurrentMissionNumber
+  0x0008 INT totalMissionCount
+  0x000C INT CurrentMissionComplete
+  0x0010 INT PlayerCount
+  0x0014 INT totalScore
+}
+
+struct PLTBattleState (size 0x00A0)
+{
+  0x0000 INT ConfigRandomSeed
+  0x0004 INT IsInProgressUNK
+  0x0008 INT ConfigBattleLength
+  0x000C INT ConfigGameRandomizeLevel
+  0x0010 PLTBattleProgressState saveState
+  0x009C INT unknown2
+}
+
+struct PL2CampaignState (size 0x0028)
+{
+  0x0000 INT ConfigRandomSeed
+  0x0004 INT IsInProgressUNK
+  0x0008 INT ConfigGameRandomizeLevel
+  0x000C PL2CampaignProgressState saveState
+  0x0024 INT unknown2
+}
+
+struct PL2FileRecord (size 0x4852E)
+{
+  0x0000 CHAR<14> PilotName
+  0x000E INT totalScore
+  0x0012 INT PlayerID
+  0x0016 INT continuedOrReflownMission
+  0x001A INT isHosting
+  0x001E INT numHumanPlayersInMission
+  0x0022 INT frontFlyMode
+  0x0026 INT[80] unknown0x26
+  0x0166 INT[8] unknown0x166
+  0x0186 INT[80] unknown0x186
+  0x02C6 INT activeMissionTeam
+  0x02CA INT MissionFolderIndex
+  0x02CE INT[6] SelectedIDNumOfMissionCategory
+  0x02E6 CHAR<32> GameName
+  0x0306 CHAR<32> LastGameName
+  0x0326 INT isMissionCategorySeries
+  0x032A INT activeMissionIDNum
+  0x032E INT PromoPoints
+  0x0332 INT WorsePromoPoints
+  0x0336 INT RankAdjustmentApplied
+  0x033A INT PercentToNextRank
+  0x033E PLTCategoryTypeRecord totalScore
+  0x034A PLTCategoryTypeRecord numFlownNonSeries
+  0x0356 PLTCategoryTypeRecord numFlownSeries
+  0x0362 PLTCategoryTypeRecord totalKillCount
+  0x036E PLTCategoryTypeRecord totalFriendlyKillCount
+  0x037A INT[900] totalKillCountByCraftType
+  0x118A PLTPlayerRankCountRecord totalFullKillsOnPlayerRank
+  0x12B6 PLTPlayerRankCountRecord totalSharedKillsOnPlayerRank
+  0x13E2 PLTPlayerRankCountRecord totalAssistKillsOnPlayerRank
+  0x150E PLTAIRankCountRecord totalFullKillsOnAIRank
+  0x1556 PLTAIRankCountRecord totalSharedKillsOnAIRank
+  0x159E PLTAIRankCountRecord totalAssistKillsOnAIRank
+  0x15E6 PLTCategoryTypeRecord totalHiddenCargoFound
+  0x15F2 PLTCategoryTypeRecord totalLaserHit
+  0x15FE PLTCategoryTypeRecord totalLaserFired
+  0x160A PLTCategoryTypeRecord totalWarheadHit
+  0x1616 PLTCategoryTypeRecord totalWarheadFired
+  0x1622 PLTCategoryTypeRecord totalCraftLosses
+  0x162E PLTCategoryTypeRecord totalLossesFromCollision
+  0x163A PLTCategoryTypeRecord totalLossesFromStarships
+  0x1646 PLTCategoryTypeRecord totalLossesFromMines
+  0x1652 PLTPlayerRankCountRecord totalLossesFromPlayerRank
+  0x177E PLTAIRankCountRecord totalLossesFromAIRank
+  0x17C6 PLTTournamentProgressState activeTournament
+  0x18C6 PLTBattleProgressState activeBattle
+  0x1952 INT CurrentRank
+  0x1956 INT totalCountMissionsFlown
+  0x195A INT[25] RankAchievedOnMissionCount
+  0x19BE CHAR<32> RankString
+  0x19DE INT debriefMissionScore
+  0x19E2 INT[8] debriefFullKillsOnPlayer
+  0x1A02 INT[8] debriefSharedKillsOnPlayer
+  0x1A22 INT[48] debriefFullKillsOnFG
+  0x1AE2 INT[48] debriefSharedKillsOnFG
+  0x1BA2 INT[8] debriefFullKillsByPlayer
+  0x1BC2 INT[8] debriefSharedKillsByPlayer
+  0x1BE2 INT[48] debriefFullKillsByFG
+  0x1CA2 INT[48] debriefSharedKillsByFG
+  0x1D62 INT[48] debriefMeleeAIRankFG
+  0x1E22 PL2DebriefRecord debrief
+  0x32AA PLTConnectedPlayerData[8] connectedPlayerData
+  0x356A PLTTeamResultRecord[10] debriefTeamResult
+  0x3682 INT SelectedFaction
+  0x3686 PL2FactionRecord[4] faction
+  0x45E06 PL2CampaignProgressState activeCampaign
+  0x45E1E BYTE[4] gap45E1E
+  0x45E22 PLTBattleState[25] spBattleState
+  0x46DC2 PLTBattleState[25] mpBattleState
+  0x47D62 PL2CampaignState[25] spCampaignState
+  0x4814A PL2CampaignState[12] mpCampaignHostState
+  0x4832A PL2CampaignState[12] mpCampaignClientState
+  0x4850A INT[8] anonymous_259
+  0x4852A SHORT anonymous_260
+  0x4852C SHORT anonymous_261
+}
+
+
 struct TeamStats (size 0)
 {
   0x0000 INT[6] MeleeMedals
@@ -21,7 +603,7 @@ struct TeamStats (size 0)
   0x0030 INT[6] MissionTopRatings
   0x0048 INT[6] MissionMedals
   0x0090 INT[3] PlayCounts
-  0x00A8 INT[3] TotalKills
+  0x00A8 INT[3] totalKills
   0x00C0 INT[88] ExerciseKillsByType
   0x0220 INT[88] MeleeKillsByType
   0x0380 INT[88] CombatKillsByType

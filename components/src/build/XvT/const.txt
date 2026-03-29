@@ -569,3 +569,22 @@ ShipCategory
 02	All Rebel Flyable
 03	All Imperial Flyable
 04	User Defined
+
+MissionPerformance
+00 None
+01 Top
+02 Excellent
+03 Good
+04 Fair
+05 Adequate
+06 Reprimand
+
+BattleOutcome
+00 ImperialVictory
+01 RebelVictory
+02 Draw
+
+PilotFaction
+00 Rebel
+01 Imperial
+02 Multiplayer

@@ -82,9 +82,9 @@ export class TeamStats extends TeamStatsBase {
   public get Kills(): TriStat {
     return {
       Label: "Kills",
-      Exercise: this.TotalKills[0],
-      Melee: this.TotalKills[1],
-      Combat: this.TotalKills[2]
+      Exercise: this.totalKills[0],
+      Melee: this.totalKills[1],
+      Combat: this.totalKills[2]
     };
   }
 

@@ -12,7 +12,7 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
   public MissionTopRatings: number[];
   public MissionMedals: number[];
   public PlayCounts: number[];
-  public TotalKills: number[];
+  public totalKills: number[];
   public ExerciseKillsByType: number[];
   public MeleeKillsByType: number[];
   public CombatKillsByType: number[];
@@ -75,11 +75,11 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
       this.PlayCounts.push(t);
       offset += 4;
     }
-    this.TotalKills = [];
+    this.totalKills = [];
     offset = 0x00A8;
     for (let i = 0; i < 3; i++) {
       const t = getInt(hex, offset);
-      this.TotalKills.push(t);
+      this.totalKills.push(t);
       offset += 4;
     }
     this.ExerciseKillsByType = [];
@@ -239,7 +239,7 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
       MissionTopRatings: this.MissionTopRatings,
       MissionMedals: this.MissionMedals,
       PlayCounts: this.PlayCounts,
-      TotalKills: this.TotalKills,
+      totalKills: this.totalKills,
       ExerciseKillsByType: this.ExerciseKillsByType,
       MeleeKillsByType: this.MeleeKillsByType,
       CombatKillsByType: this.CombatKillsByType,
@@ -300,7 +300,7 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
     }
     offset = 0x00A8;
     for (let i = 0; i < 3; i++) {
-      const t = this.TotalKills[i];
+      const t = this.totalKills[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
