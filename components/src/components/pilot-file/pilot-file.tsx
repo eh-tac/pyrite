@@ -3,11 +3,12 @@ import { tabPanes } from "../../view-model/bootstrap";
 import { PilotFileController } from "../../view-model/pilot-file/controller";
 import { TFRController } from "../../view-model/pilot-file/tfr-controller";
 import { XvTPltController } from "../../view-model/pilot-file/xvt-controller";
+import { BoPPltController } from "../../view-model/pilot-file/bop-controller";
 import { Battle } from "../../model/ehtc";
 import { XWAPltController } from "../../view-model/pilot-file/xwa-controller";
 import { PilotFile as XWingPilot } from "../../model/XW";
 import { PilotFile as TIEPilot } from "../../model/TIE";
-import { PilotFile as XvTPilot } from "../../model/XvT";
+import { PilotFile as XvTPilot, PL2FileRecord as BoPPilot } from "../../model/XvT";
 import { PilotFile as XWAPilot } from "../../model/XWA";
 import { XWController } from "../../view-model/pilot-file/xw-controller";
 
@@ -126,11 +127,12 @@ export class PilotViewer {
       if (file.byteLength === 1705 || file.byteLength === 1706 || file.byteLength === 3410) {
         // x-wing
         return new XWController(filepath, new XWingPilot(file));
-      } else if (file.byteLength > 200000) {
-        return new XvTPltController(filepath, new XvTPilot(file));
       } else if (file.byteLength === 152076) {
         return new XWAPltController(filepath, new XWAPilot(file));
       }
+      return new XvTPltController(filepath, new XvTPilot(file));
+    } else if (ext === "pl2") {
+      return new BoPPltController(filepath, new BoPPilot(file));
     }
     console.error(filepath, file);
     throw new Error(`Unknown pilot file: Unrecognised file format: ${filepath}, length ${file.byteLength}`);
