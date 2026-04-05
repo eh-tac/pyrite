@@ -9,7 +9,7 @@ import { getChar, getInt, writeChar, writeInt, writeObject } from "../../../hex"
 export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public PilotFileLength: number;
   public Name: string;
-  public TotalScore: number;
+  public totalScore: number;
   public Kills: number;
   public LasersHit: number;
   public LasersTotal: number;
@@ -26,8 +26,8 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Name = getChar(hex, 0x0000, 12);
-    this.TotalScore = getInt(hex, 0x000E);
+    this.Name = getChar(hex, 0x0000, 14);
+    this.totalScore = getInt(hex, 0x000E);
     this.Kills = getInt(hex, 0x035E);
     this.LasersHit = getInt(hex, 0x143E);
     this.LasersTotal = getInt(hex, 0x144A);
@@ -46,7 +46,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public toJSON(): object {
     return {
       Name: this.Name,
-      TotalScore: this.TotalScore,
+      totalScore: this.totalScore,
       Kills: this.Kills,
       LasersHit: this.LasersHit,
       LasersTotal: this.LasersTotal,
@@ -65,7 +65,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     let offset = 0;
 
     writeChar(hex, this.Name, 0x0000);
-    writeInt(hex, this.TotalScore, 0x000E);
+    writeInt(hex, this.totalScore, 0x000E);
     writeInt(hex, this.Kills, 0x035E);
     writeInt(hex, this.LasersHit, 0x143E);
     writeInt(hex, this.LasersTotal, 0x144A);

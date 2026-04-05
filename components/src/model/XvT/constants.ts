@@ -523,6 +523,28 @@ export class Constants {
     4: "User Defined",
   };
 
+  public static MISSIONPERFORMANCE = {
+    0: "None",
+    1: "Top",
+    2: "Excellent",
+    3: "Good",
+    4: "Fair",
+    5: "Adequate",
+    6: "Reprimand",
+  };
+
+  public static BATTLEOUTCOME = {
+    0: "ImperialVictory",
+    1: "RebelVictory",
+    2: "Draw",
+  };
+
+  public static PILOTFACTION = {
+    0: "Rebel",
+    1: "Imperial",
+    2: "Multiplayer",
+  };
+
 }
 
 export enum Designation {
@@ -1047,4 +1069,26 @@ export enum ShipCategory {
   allRebelFlyable = 2,
   allImperialFlyable = 3,
   userDefined = 4,
+}
+
+export enum MissionPerformance {
+  none = 0,
+  top = 1,
+  excellent = 2,
+  good = 3,
+  fair = 4,
+  adequate = 5,
+  reprimand = 6,
+}
+
+export enum BattleOutcome {
+  imperialVictory = 0,
+  rebelVictory = 1,
+  draw = 2,
+}
+
+export enum PilotFaction {
+  rebel = 0,
+  imperial = 1,
+  multiplayer = 2,
 }

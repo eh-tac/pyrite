@@ -1,5 +1,4 @@
 <?php
-
 namespace Pyrite\XvT;
 
 class Constants
@@ -280,8 +279,8 @@ class Constants
 
     public static $WARHEAD = [
         0 => "None",
-        1 => "Space Bomb",
-        2 => "Heavy Rocket",
+        1 => "Heavy Rocket",
+        2 => "Space Bomb",
         3 => "Concussion Missile",
         4 => "Torpedo",
         5 => "Advanced Concussion Missile",
@@ -291,8 +290,8 @@ class Constants
     ];
 
     public static $WARHEAD_NONE = 0;
-    public static $WARHEAD_SPACEBOMB = 1;
-    public static $WARHEAD_HEAVYROCKET = 2;
+    public static $WARHEAD_HEAVYROCKET = 1;
+    public static $WARHEAD_SPACEBOMB = 2;
     public static $WARHEAD_CONCUSSIONMISSILE = 3;
     public static $WARHEAD_TORPEDO = 4;
     public static $WARHEAD_ADVANCEDCONCUSSIONMISSILE = 5;
@@ -305,14 +304,12 @@ class Constants
         1 => "Tractor Beam",
         2 => "Jamming Beam",
         3 => "Decoy Beam",
-        4 => "Energy Beam"
     ];
 
     public static $BEAM_NONE = 0;
     public static $BEAM_TRACTORBEAM = 1;
     public static $BEAM_JAMMINGBEAM = 2;
     public static $BEAM_DECOYBEAM = 3;
-    public static $BEAM_ENERGYBEAM = 4;
 
     public static $COUNTERMEASURES = [
         0 => "None",
@@ -999,4 +996,43 @@ class Constants
     public static $SHIPCATEGORY_ALLREBELFLYABLE = 2;
     public static $SHIPCATEGORY_ALLIMPERIALFLYABLE = 3;
     public static $SHIPCATEGORY_USERDEFINED = 4;
+
+    public static $MISSIONPERFORMANCE = [
+        0 => "None",
+        1 => "Top",
+        2 => "Excellent",
+        3 => "Good",
+        4 => "Fair",
+        5 => "Adequate",
+        6 => "Reprimand",
+    ];
+
+    public static $MISSIONPERFORMANCE_NONE = 0;
+    public static $MISSIONPERFORMANCE_TOP = 1;
+    public static $MISSIONPERFORMANCE_EXCELLENT = 2;
+    public static $MISSIONPERFORMANCE_GOOD = 3;
+    public static $MISSIONPERFORMANCE_FAIR = 4;
+    public static $MISSIONPERFORMANCE_ADEQUATE = 5;
+    public static $MISSIONPERFORMANCE_REPRIMAND = 6;
+
+    public static $BATTLEOUTCOME = [
+        0 => "ImperialVictory",
+        1 => "RebelVictory",
+        2 => "Draw",
+    ];
+
+    public static $BATTLEOUTCOME_IMPERIALVICTORY = 0;
+    public static $BATTLEOUTCOME_REBELVICTORY = 1;
+    public static $BATTLEOUTCOME_DRAW = 2;
+
+    public static $PILOTFACTION = [
+        0 => "Rebel",
+        1 => "Imperial",
+        2 => "Multiplayer",
+    ];
+
+    public static $PILOTFACTION_REBEL = 0;
+    public static $PILOTFACTION_IMPERIAL = 1;
+    public static $PILOTFACTION_MULTIPLAYER = 2;
+
 }

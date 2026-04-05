@@ -31,7 +31,7 @@ export class MissionData extends MissionDataBase {
       return "";
     }
     const min = Math.floor(this.BestTime / 60);
-    const sec = this.BestTime % 60;
-    return `${min}:${sec < 10 ? "0" + sec : sec} min`;
+    const sec = `${this.BestTime % 60}`.padStart(2, "0");
+    return `${min}:${sec} min`;
   }
 }

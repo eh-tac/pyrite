@@ -12,7 +12,7 @@ import { ItemSummary } from "./components/ehtc/wrap-select/wrap-select";
 import { Mission } from "./model/TIE/mission";
 import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic, VoicData } from "./model/LFD";
 import { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
-import { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
+import { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, PL2CampaignProgressState, PL2CampaignRecord, PL2CampaignState, PL2CampaignStatusSPRecord, PL2DebriefRecord, PL2FactionRecord, PL2FileRecord, PLTAIRankCountRecord, PLTBattleMPRecord, PLTBattleProgressState, PLTBattleSPRecord, PLTBattleState, PLTCategoryTypeRecord, PLTConnectedPlayerData, PLTEarnedMedalRecord, PLTFactionRecord, PLTFileRecord, PLTMissionMPRecord, PLTMissionSPRecord, PLTPlayerRankCountRecord, PLTTeamResultRecord, PLTTournamentProgressState, PLTTournMPRecord, PLTTournSPRecord, PLTTournTeamRecord, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
 import { Briefing as Briefing1, BriefingHeader, Coordinate, FileHeader as FileHeader2, FlightGroup as FlightGroup2, Icon, Mission as Mission3, MissionHeader, ObjectGroup, Page, PilotFile as PilotFile2, String, Tag as Tag2, ViewportSetting } from "./model/XW";
 import { Briefing as Briefing2, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, LengthString, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Skip, Tag as Tag3, Team as Team1, Trigger as Trigger2, Waypt as Waypt2, XWAString } from "./model/XWA";
 export { ApiSummary } from "./components/ehtc/api-select/api-select";
@@ -22,7 +22,7 @@ export { ItemSummary } from "./components/ehtc/wrap-select/wrap-select";
 export { Mission } from "./model/TIE/mission";
 export { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic, VoicData } from "./model/LFD";
 export { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
-export { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
+export { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, PL2CampaignProgressState, PL2CampaignRecord, PL2CampaignState, PL2CampaignStatusSPRecord, PL2DebriefRecord, PL2FactionRecord, PL2FileRecord, PLTAIRankCountRecord, PLTBattleMPRecord, PLTBattleProgressState, PLTBattleSPRecord, PLTBattleState, PLTCategoryTypeRecord, PLTConnectedPlayerData, PLTEarnedMedalRecord, PLTFactionRecord, PLTFileRecord, PLTMissionMPRecord, PLTMissionSPRecord, PLTPlayerRankCountRecord, PLTTeamResultRecord, PLTTournamentProgressState, PLTTournMPRecord, PLTTournSPRecord, PLTTournTeamRecord, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
 export { Briefing as Briefing1, BriefingHeader, Coordinate, FileHeader as FileHeader2, FlightGroup as FlightGroup2, Icon, Mission as Mission3, MissionHeader, ObjectGroup, Page, PilotFile as PilotFile2, String, Tag as Tag2, ViewportSetting } from "./model/XW";
 export { Briefing as Briefing2, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, LengthString, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Skip, Tag as Tag3, Team as Team1, Trigger as Trigger2, Waypt as Waypt2, XWAString } from "./model/XWA";
 export namespace Components {
@@ -250,6 +250,81 @@ export namespace Components {
     }
     interface PyriteXvtPilotFile {
         "pilotfile": PilotFile1;
+    }
+    interface PyriteXvtPl2CampaignProgressState {
+        "pl2campaignprogressstate": PL2CampaignProgressState;
+    }
+    interface PyriteXvtPl2CampaignRecord {
+        "pl2campaignrecord": PL2CampaignRecord;
+    }
+    interface PyriteXvtPl2CampaignState {
+        "pl2campaignstate": PL2CampaignState;
+    }
+    interface PyriteXvtPl2CampaignStatusSpRecord {
+        "pl2campaignstatussprecord": PL2CampaignStatusSPRecord;
+    }
+    interface PyriteXvtPl2DebriefRecord {
+        "pl2debriefrecord": PL2DebriefRecord;
+    }
+    interface PyriteXvtPl2FactionRecord {
+        "pl2factionrecord": PL2FactionRecord;
+    }
+    interface PyriteXvtPl2FileRecord {
+        "pl2filerecord": PL2FileRecord;
+    }
+    interface PyriteXvtPltBattleMpRecord {
+        "pltbattlemprecord": PLTBattleMPRecord;
+    }
+    interface PyriteXvtPltBattleProgressState {
+        "pltbattleprogressstate": PLTBattleProgressState;
+    }
+    interface PyriteXvtPltBattleSpRecord {
+        "pltbattlesprecord": PLTBattleSPRecord;
+    }
+    interface PyriteXvtPltBattleState {
+        "pltbattlestate": PLTBattleState;
+    }
+    interface PyriteXvtPltCategoryTypeRecord {
+        "pltcategorytyperecord": PLTCategoryTypeRecord;
+    }
+    interface PyriteXvtPltConnectedPlayerData {
+        "pltconnectedplayerdata": PLTConnectedPlayerData;
+    }
+    interface PyriteXvtPltEarnedMedalRecord {
+        "pltearnedmedalrecord": PLTEarnedMedalRecord;
+    }
+    interface PyriteXvtPltFactionRecord {
+        "pltfactionrecord": PLTFactionRecord;
+    }
+    interface PyriteXvtPltFileRecord {
+        "pltfilerecord": PLTFileRecord;
+    }
+    interface PyriteXvtPltMissionMpRecord {
+        "pltmissionmprecord": PLTMissionMPRecord;
+    }
+    interface PyriteXvtPltMissionSpRecord {
+        "pltmissionsprecord": PLTMissionSPRecord;
+    }
+    interface PyriteXvtPltPlayerRankCountRecord {
+        "pltplayerrankcountrecord": PLTPlayerRankCountRecord;
+    }
+    interface PyriteXvtPltTeamResultRecord {
+        "pltteamresultrecord": PLTTeamResultRecord;
+    }
+    interface PyriteXvtPltTournMpRecord {
+        "plttournmprecord": PLTTournMPRecord;
+    }
+    interface PyriteXvtPltTournSpRecord {
+        "plttournsprecord": PLTTournSPRecord;
+    }
+    interface PyriteXvtPltTournTeamRecord {
+        "plttournteamrecord": PLTTournTeamRecord;
+    }
+    interface PyriteXvtPltTournamentProgressState {
+        "plttournamentprogressstate": PLTTournamentProgressState;
+    }
+    interface PyriteXvtPltaiRankCountRecord {
+        "pltairankcountrecord": PLTAIRankCountRecord;
     }
     interface PyriteXvtRole {
         "xvtrole": Role;
@@ -817,6 +892,156 @@ declare global {
         prototype: HTMLPyriteXvtPilotFileElement;
         new (): HTMLPyriteXvtPilotFileElement;
     };
+    interface HTMLPyriteXvtPl2CampaignProgressStateElement extends Components.PyriteXvtPl2CampaignProgressState, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPl2CampaignProgressStateElement: {
+        prototype: HTMLPyriteXvtPl2CampaignProgressStateElement;
+        new (): HTMLPyriteXvtPl2CampaignProgressStateElement;
+    };
+    interface HTMLPyriteXvtPl2CampaignRecordElement extends Components.PyriteXvtPl2CampaignRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPl2CampaignRecordElement: {
+        prototype: HTMLPyriteXvtPl2CampaignRecordElement;
+        new (): HTMLPyriteXvtPl2CampaignRecordElement;
+    };
+    interface HTMLPyriteXvtPl2CampaignStateElement extends Components.PyriteXvtPl2CampaignState, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPl2CampaignStateElement: {
+        prototype: HTMLPyriteXvtPl2CampaignStateElement;
+        new (): HTMLPyriteXvtPl2CampaignStateElement;
+    };
+    interface HTMLPyriteXvtPl2CampaignStatusSpRecordElement extends Components.PyriteXvtPl2CampaignStatusSpRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPl2CampaignStatusSpRecordElement: {
+        prototype: HTMLPyriteXvtPl2CampaignStatusSpRecordElement;
+        new (): HTMLPyriteXvtPl2CampaignStatusSpRecordElement;
+    };
+    interface HTMLPyriteXvtPl2DebriefRecordElement extends Components.PyriteXvtPl2DebriefRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPl2DebriefRecordElement: {
+        prototype: HTMLPyriteXvtPl2DebriefRecordElement;
+        new (): HTMLPyriteXvtPl2DebriefRecordElement;
+    };
+    interface HTMLPyriteXvtPl2FactionRecordElement extends Components.PyriteXvtPl2FactionRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPl2FactionRecordElement: {
+        prototype: HTMLPyriteXvtPl2FactionRecordElement;
+        new (): HTMLPyriteXvtPl2FactionRecordElement;
+    };
+    interface HTMLPyriteXvtPl2FileRecordElement extends Components.PyriteXvtPl2FileRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPl2FileRecordElement: {
+        prototype: HTMLPyriteXvtPl2FileRecordElement;
+        new (): HTMLPyriteXvtPl2FileRecordElement;
+    };
+    interface HTMLPyriteXvtPltBattleMpRecordElement extends Components.PyriteXvtPltBattleMpRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltBattleMpRecordElement: {
+        prototype: HTMLPyriteXvtPltBattleMpRecordElement;
+        new (): HTMLPyriteXvtPltBattleMpRecordElement;
+    };
+    interface HTMLPyriteXvtPltBattleProgressStateElement extends Components.PyriteXvtPltBattleProgressState, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltBattleProgressStateElement: {
+        prototype: HTMLPyriteXvtPltBattleProgressStateElement;
+        new (): HTMLPyriteXvtPltBattleProgressStateElement;
+    };
+    interface HTMLPyriteXvtPltBattleSpRecordElement extends Components.PyriteXvtPltBattleSpRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltBattleSpRecordElement: {
+        prototype: HTMLPyriteXvtPltBattleSpRecordElement;
+        new (): HTMLPyriteXvtPltBattleSpRecordElement;
+    };
+    interface HTMLPyriteXvtPltBattleStateElement extends Components.PyriteXvtPltBattleState, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltBattleStateElement: {
+        prototype: HTMLPyriteXvtPltBattleStateElement;
+        new (): HTMLPyriteXvtPltBattleStateElement;
+    };
+    interface HTMLPyriteXvtPltCategoryTypeRecordElement extends Components.PyriteXvtPltCategoryTypeRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltCategoryTypeRecordElement: {
+        prototype: HTMLPyriteXvtPltCategoryTypeRecordElement;
+        new (): HTMLPyriteXvtPltCategoryTypeRecordElement;
+    };
+    interface HTMLPyriteXvtPltConnectedPlayerDataElement extends Components.PyriteXvtPltConnectedPlayerData, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltConnectedPlayerDataElement: {
+        prototype: HTMLPyriteXvtPltConnectedPlayerDataElement;
+        new (): HTMLPyriteXvtPltConnectedPlayerDataElement;
+    };
+    interface HTMLPyriteXvtPltEarnedMedalRecordElement extends Components.PyriteXvtPltEarnedMedalRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltEarnedMedalRecordElement: {
+        prototype: HTMLPyriteXvtPltEarnedMedalRecordElement;
+        new (): HTMLPyriteXvtPltEarnedMedalRecordElement;
+    };
+    interface HTMLPyriteXvtPltFactionRecordElement extends Components.PyriteXvtPltFactionRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltFactionRecordElement: {
+        prototype: HTMLPyriteXvtPltFactionRecordElement;
+        new (): HTMLPyriteXvtPltFactionRecordElement;
+    };
+    interface HTMLPyriteXvtPltFileRecordElement extends Components.PyriteXvtPltFileRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltFileRecordElement: {
+        prototype: HTMLPyriteXvtPltFileRecordElement;
+        new (): HTMLPyriteXvtPltFileRecordElement;
+    };
+    interface HTMLPyriteXvtPltMissionMpRecordElement extends Components.PyriteXvtPltMissionMpRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltMissionMpRecordElement: {
+        prototype: HTMLPyriteXvtPltMissionMpRecordElement;
+        new (): HTMLPyriteXvtPltMissionMpRecordElement;
+    };
+    interface HTMLPyriteXvtPltMissionSpRecordElement extends Components.PyriteXvtPltMissionSpRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltMissionSpRecordElement: {
+        prototype: HTMLPyriteXvtPltMissionSpRecordElement;
+        new (): HTMLPyriteXvtPltMissionSpRecordElement;
+    };
+    interface HTMLPyriteXvtPltPlayerRankCountRecordElement extends Components.PyriteXvtPltPlayerRankCountRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltPlayerRankCountRecordElement: {
+        prototype: HTMLPyriteXvtPltPlayerRankCountRecordElement;
+        new (): HTMLPyriteXvtPltPlayerRankCountRecordElement;
+    };
+    interface HTMLPyriteXvtPltTeamResultRecordElement extends Components.PyriteXvtPltTeamResultRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltTeamResultRecordElement: {
+        prototype: HTMLPyriteXvtPltTeamResultRecordElement;
+        new (): HTMLPyriteXvtPltTeamResultRecordElement;
+    };
+    interface HTMLPyriteXvtPltTournMpRecordElement extends Components.PyriteXvtPltTournMpRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltTournMpRecordElement: {
+        prototype: HTMLPyriteXvtPltTournMpRecordElement;
+        new (): HTMLPyriteXvtPltTournMpRecordElement;
+    };
+    interface HTMLPyriteXvtPltTournSpRecordElement extends Components.PyriteXvtPltTournSpRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltTournSpRecordElement: {
+        prototype: HTMLPyriteXvtPltTournSpRecordElement;
+        new (): HTMLPyriteXvtPltTournSpRecordElement;
+    };
+    interface HTMLPyriteXvtPltTournTeamRecordElement extends Components.PyriteXvtPltTournTeamRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltTournTeamRecordElement: {
+        prototype: HTMLPyriteXvtPltTournTeamRecordElement;
+        new (): HTMLPyriteXvtPltTournTeamRecordElement;
+    };
+    interface HTMLPyriteXvtPltTournamentProgressStateElement extends Components.PyriteXvtPltTournamentProgressState, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltTournamentProgressStateElement: {
+        prototype: HTMLPyriteXvtPltTournamentProgressStateElement;
+        new (): HTMLPyriteXvtPltTournamentProgressStateElement;
+    };
+    interface HTMLPyriteXvtPltaiRankCountRecordElement extends Components.PyriteXvtPltaiRankCountRecord, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPltaiRankCountRecordElement: {
+        prototype: HTMLPyriteXvtPltaiRankCountRecordElement;
+        new (): HTMLPyriteXvtPltaiRankCountRecordElement;
+    };
     interface HTMLPyriteXvtRoleElement extends Components.PyriteXvtRole, HTMLStencilElement {
     }
     var HTMLPyriteXvtRoleElement: {
@@ -1125,6 +1350,31 @@ declare global {
         "pyrite-xvt-mission-data": HTMLPyriteXvtMissionDataElement;
         "pyrite-xvt-order": HTMLPyriteXvtOrderElement;
         "pyrite-xvt-pilot-file": HTMLPyriteXvtPilotFileElement;
+        "pyrite-xvt-pl-2-campaign-progress-state": HTMLPyriteXvtPl2CampaignProgressStateElement;
+        "pyrite-xvt-pl-2-campaign-record": HTMLPyriteXvtPl2CampaignRecordElement;
+        "pyrite-xvt-pl-2-campaign-state": HTMLPyriteXvtPl2CampaignStateElement;
+        "pyrite-xvt-pl-2-campaign-status-sp-record": HTMLPyriteXvtPl2CampaignStatusSpRecordElement;
+        "pyrite-xvt-pl-2-debrief-record": HTMLPyriteXvtPl2DebriefRecordElement;
+        "pyrite-xvt-pl-2-faction-record": HTMLPyriteXvtPl2FactionRecordElement;
+        "pyrite-xvt-pl-2-file-record": HTMLPyriteXvtPl2FileRecordElement;
+        "pyrite-xvt-plt-battle-mp-record": HTMLPyriteXvtPltBattleMpRecordElement;
+        "pyrite-xvt-plt-battle-progress-state": HTMLPyriteXvtPltBattleProgressStateElement;
+        "pyrite-xvt-plt-battle-sp-record": HTMLPyriteXvtPltBattleSpRecordElement;
+        "pyrite-xvt-plt-battle-state": HTMLPyriteXvtPltBattleStateElement;
+        "pyrite-xvt-plt-category-type-record": HTMLPyriteXvtPltCategoryTypeRecordElement;
+        "pyrite-xvt-plt-connected-player-data": HTMLPyriteXvtPltConnectedPlayerDataElement;
+        "pyrite-xvt-plt-earned-medal-record": HTMLPyriteXvtPltEarnedMedalRecordElement;
+        "pyrite-xvt-plt-faction-record": HTMLPyriteXvtPltFactionRecordElement;
+        "pyrite-xvt-plt-file-record": HTMLPyriteXvtPltFileRecordElement;
+        "pyrite-xvt-plt-mission-mp-record": HTMLPyriteXvtPltMissionMpRecordElement;
+        "pyrite-xvt-plt-mission-sp-record": HTMLPyriteXvtPltMissionSpRecordElement;
+        "pyrite-xvt-plt-player-rank-count-record": HTMLPyriteXvtPltPlayerRankCountRecordElement;
+        "pyrite-xvt-plt-team-result-record": HTMLPyriteXvtPltTeamResultRecordElement;
+        "pyrite-xvt-plt-tourn-mp-record": HTMLPyriteXvtPltTournMpRecordElement;
+        "pyrite-xvt-plt-tourn-sp-record": HTMLPyriteXvtPltTournSpRecordElement;
+        "pyrite-xvt-plt-tourn-team-record": HTMLPyriteXvtPltTournTeamRecordElement;
+        "pyrite-xvt-plt-tournament-progress-state": HTMLPyriteXvtPltTournamentProgressStateElement;
+        "pyrite-xvt-pltai-rank-count-record": HTMLPyriteXvtPltaiRankCountRecordElement;
         "pyrite-xvt-role": HTMLPyriteXvtRoleElement;
         "pyrite-xvt-tag": HTMLPyriteXvtTagElement;
         "pyrite-xvt-team": HTMLPyriteXvtTeamElement;
@@ -1388,6 +1638,81 @@ declare namespace LocalJSX {
     interface PyriteXvtPilotFile {
         "pilotfile"?: PilotFile1;
     }
+    interface PyriteXvtPl2CampaignProgressState {
+        "pl2campaignprogressstate"?: PL2CampaignProgressState;
+    }
+    interface PyriteXvtPl2CampaignRecord {
+        "pl2campaignrecord"?: PL2CampaignRecord;
+    }
+    interface PyriteXvtPl2CampaignState {
+        "pl2campaignstate"?: PL2CampaignState;
+    }
+    interface PyriteXvtPl2CampaignStatusSpRecord {
+        "pl2campaignstatussprecord"?: PL2CampaignStatusSPRecord;
+    }
+    interface PyriteXvtPl2DebriefRecord {
+        "pl2debriefrecord"?: PL2DebriefRecord;
+    }
+    interface PyriteXvtPl2FactionRecord {
+        "pl2factionrecord"?: PL2FactionRecord;
+    }
+    interface PyriteXvtPl2FileRecord {
+        "pl2filerecord"?: PL2FileRecord;
+    }
+    interface PyriteXvtPltBattleMpRecord {
+        "pltbattlemprecord"?: PLTBattleMPRecord;
+    }
+    interface PyriteXvtPltBattleProgressState {
+        "pltbattleprogressstate"?: PLTBattleProgressState;
+    }
+    interface PyriteXvtPltBattleSpRecord {
+        "pltbattlesprecord"?: PLTBattleSPRecord;
+    }
+    interface PyriteXvtPltBattleState {
+        "pltbattlestate"?: PLTBattleState;
+    }
+    interface PyriteXvtPltCategoryTypeRecord {
+        "pltcategorytyperecord"?: PLTCategoryTypeRecord;
+    }
+    interface PyriteXvtPltConnectedPlayerData {
+        "pltconnectedplayerdata"?: PLTConnectedPlayerData;
+    }
+    interface PyriteXvtPltEarnedMedalRecord {
+        "pltearnedmedalrecord"?: PLTEarnedMedalRecord;
+    }
+    interface PyriteXvtPltFactionRecord {
+        "pltfactionrecord"?: PLTFactionRecord;
+    }
+    interface PyriteXvtPltFileRecord {
+        "pltfilerecord"?: PLTFileRecord;
+    }
+    interface PyriteXvtPltMissionMpRecord {
+        "pltmissionmprecord"?: PLTMissionMPRecord;
+    }
+    interface PyriteXvtPltMissionSpRecord {
+        "pltmissionsprecord"?: PLTMissionSPRecord;
+    }
+    interface PyriteXvtPltPlayerRankCountRecord {
+        "pltplayerrankcountrecord"?: PLTPlayerRankCountRecord;
+    }
+    interface PyriteXvtPltTeamResultRecord {
+        "pltteamresultrecord"?: PLTTeamResultRecord;
+    }
+    interface PyriteXvtPltTournMpRecord {
+        "plttournmprecord"?: PLTTournMPRecord;
+    }
+    interface PyriteXvtPltTournSpRecord {
+        "plttournsprecord"?: PLTTournSPRecord;
+    }
+    interface PyriteXvtPltTournTeamRecord {
+        "plttournteamrecord"?: PLTTournTeamRecord;
+    }
+    interface PyriteXvtPltTournamentProgressState {
+        "plttournamentprogressstate"?: PLTTournamentProgressState;
+    }
+    interface PyriteXvtPltaiRankCountRecord {
+        "pltairankcountrecord"?: PLTAIRankCountRecord;
+    }
     interface PyriteXvtRole {
         "xvtrole"?: Role;
     }
@@ -1573,6 +1898,31 @@ declare namespace LocalJSX {
         "pyrite-xvt-mission-data": PyriteXvtMissionData;
         "pyrite-xvt-order": PyriteXvtOrder;
         "pyrite-xvt-pilot-file": PyriteXvtPilotFile;
+        "pyrite-xvt-pl-2-campaign-progress-state": PyriteXvtPl2CampaignProgressState;
+        "pyrite-xvt-pl-2-campaign-record": PyriteXvtPl2CampaignRecord;
+        "pyrite-xvt-pl-2-campaign-state": PyriteXvtPl2CampaignState;
+        "pyrite-xvt-pl-2-campaign-status-sp-record": PyriteXvtPl2CampaignStatusSpRecord;
+        "pyrite-xvt-pl-2-debrief-record": PyriteXvtPl2DebriefRecord;
+        "pyrite-xvt-pl-2-faction-record": PyriteXvtPl2FactionRecord;
+        "pyrite-xvt-pl-2-file-record": PyriteXvtPl2FileRecord;
+        "pyrite-xvt-plt-battle-mp-record": PyriteXvtPltBattleMpRecord;
+        "pyrite-xvt-plt-battle-progress-state": PyriteXvtPltBattleProgressState;
+        "pyrite-xvt-plt-battle-sp-record": PyriteXvtPltBattleSpRecord;
+        "pyrite-xvt-plt-battle-state": PyriteXvtPltBattleState;
+        "pyrite-xvt-plt-category-type-record": PyriteXvtPltCategoryTypeRecord;
+        "pyrite-xvt-plt-connected-player-data": PyriteXvtPltConnectedPlayerData;
+        "pyrite-xvt-plt-earned-medal-record": PyriteXvtPltEarnedMedalRecord;
+        "pyrite-xvt-plt-faction-record": PyriteXvtPltFactionRecord;
+        "pyrite-xvt-plt-file-record": PyriteXvtPltFileRecord;
+        "pyrite-xvt-plt-mission-mp-record": PyriteXvtPltMissionMpRecord;
+        "pyrite-xvt-plt-mission-sp-record": PyriteXvtPltMissionSpRecord;
+        "pyrite-xvt-plt-player-rank-count-record": PyriteXvtPltPlayerRankCountRecord;
+        "pyrite-xvt-plt-team-result-record": PyriteXvtPltTeamResultRecord;
+        "pyrite-xvt-plt-tourn-mp-record": PyriteXvtPltTournMpRecord;
+        "pyrite-xvt-plt-tourn-sp-record": PyriteXvtPltTournSpRecord;
+        "pyrite-xvt-plt-tourn-team-record": PyriteXvtPltTournTeamRecord;
+        "pyrite-xvt-plt-tournament-progress-state": PyriteXvtPltTournamentProgressState;
+        "pyrite-xvt-pltai-rank-count-record": PyriteXvtPltaiRankCountRecord;
         "pyrite-xvt-role": PyriteXvtRole;
         "pyrite-xvt-tag": PyriteXvtTag;
         "pyrite-xvt-team": PyriteXvtTeam;
@@ -1681,6 +2031,31 @@ declare module "@stencil/core" {
             "pyrite-xvt-mission-data": LocalJSX.PyriteXvtMissionData & JSXBase.HTMLAttributes<HTMLPyriteXvtMissionDataElement>;
             "pyrite-xvt-order": LocalJSX.PyriteXvtOrder & JSXBase.HTMLAttributes<HTMLPyriteXvtOrderElement>;
             "pyrite-xvt-pilot-file": LocalJSX.PyriteXvtPilotFile & JSXBase.HTMLAttributes<HTMLPyriteXvtPilotFileElement>;
+            "pyrite-xvt-pl-2-campaign-progress-state": LocalJSX.PyriteXvtPl2CampaignProgressState & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2CampaignProgressStateElement>;
+            "pyrite-xvt-pl-2-campaign-record": LocalJSX.PyriteXvtPl2CampaignRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2CampaignRecordElement>;
+            "pyrite-xvt-pl-2-campaign-state": LocalJSX.PyriteXvtPl2CampaignState & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2CampaignStateElement>;
+            "pyrite-xvt-pl-2-campaign-status-sp-record": LocalJSX.PyriteXvtPl2CampaignStatusSpRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2CampaignStatusSpRecordElement>;
+            "pyrite-xvt-pl-2-debrief-record": LocalJSX.PyriteXvtPl2DebriefRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2DebriefRecordElement>;
+            "pyrite-xvt-pl-2-faction-record": LocalJSX.PyriteXvtPl2FactionRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2FactionRecordElement>;
+            "pyrite-xvt-pl-2-file-record": LocalJSX.PyriteXvtPl2FileRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2FileRecordElement>;
+            "pyrite-xvt-plt-battle-mp-record": LocalJSX.PyriteXvtPltBattleMpRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltBattleMpRecordElement>;
+            "pyrite-xvt-plt-battle-progress-state": LocalJSX.PyriteXvtPltBattleProgressState & JSXBase.HTMLAttributes<HTMLPyriteXvtPltBattleProgressStateElement>;
+            "pyrite-xvt-plt-battle-sp-record": LocalJSX.PyriteXvtPltBattleSpRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltBattleSpRecordElement>;
+            "pyrite-xvt-plt-battle-state": LocalJSX.PyriteXvtPltBattleState & JSXBase.HTMLAttributes<HTMLPyriteXvtPltBattleStateElement>;
+            "pyrite-xvt-plt-category-type-record": LocalJSX.PyriteXvtPltCategoryTypeRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltCategoryTypeRecordElement>;
+            "pyrite-xvt-plt-connected-player-data": LocalJSX.PyriteXvtPltConnectedPlayerData & JSXBase.HTMLAttributes<HTMLPyriteXvtPltConnectedPlayerDataElement>;
+            "pyrite-xvt-plt-earned-medal-record": LocalJSX.PyriteXvtPltEarnedMedalRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltEarnedMedalRecordElement>;
+            "pyrite-xvt-plt-faction-record": LocalJSX.PyriteXvtPltFactionRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltFactionRecordElement>;
+            "pyrite-xvt-plt-file-record": LocalJSX.PyriteXvtPltFileRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltFileRecordElement>;
+            "pyrite-xvt-plt-mission-mp-record": LocalJSX.PyriteXvtPltMissionMpRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltMissionMpRecordElement>;
+            "pyrite-xvt-plt-mission-sp-record": LocalJSX.PyriteXvtPltMissionSpRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltMissionSpRecordElement>;
+            "pyrite-xvt-plt-player-rank-count-record": LocalJSX.PyriteXvtPltPlayerRankCountRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltPlayerRankCountRecordElement>;
+            "pyrite-xvt-plt-team-result-record": LocalJSX.PyriteXvtPltTeamResultRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltTeamResultRecordElement>;
+            "pyrite-xvt-plt-tourn-mp-record": LocalJSX.PyriteXvtPltTournMpRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltTournMpRecordElement>;
+            "pyrite-xvt-plt-tourn-sp-record": LocalJSX.PyriteXvtPltTournSpRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltTournSpRecordElement>;
+            "pyrite-xvt-plt-tourn-team-record": LocalJSX.PyriteXvtPltTournTeamRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltTournTeamRecordElement>;
+            "pyrite-xvt-plt-tournament-progress-state": LocalJSX.PyriteXvtPltTournamentProgressState & JSXBase.HTMLAttributes<HTMLPyriteXvtPltTournamentProgressStateElement>;
+            "pyrite-xvt-pltai-rank-count-record": LocalJSX.PyriteXvtPltaiRankCountRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltaiRankCountRecordElement>;
             "pyrite-xvt-role": LocalJSX.PyriteXvtRole & JSXBase.HTMLAttributes<HTMLPyriteXvtRoleElement>;
             "pyrite-xvt-tag": LocalJSX.PyriteXvtTag & JSXBase.HTMLAttributes<HTMLPyriteXvtTagElement>;
             "pyrite-xvt-team": LocalJSX.PyriteXvtTeam & JSXBase.HTMLAttributes<HTMLPyriteXvtTeamElement>;
