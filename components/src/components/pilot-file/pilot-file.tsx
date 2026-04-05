@@ -130,6 +130,7 @@ export class PilotViewer {
       } else if (file.byteLength === 152076) {
         return new XWAPltController(filepath, new XWAPilot(file));
       }
+      return new XvTPltController(filepath, new XvTPilot(file));
     } else if (ext === "pl2") {
       return new BoPPltController(filepath, new BoPPilot(file));
     }
