@@ -189,9 +189,12 @@ export class ${compName} {
   }
 
   protected getBaseClassImports(props: TypeScriptPropWriter[]): string {
+    const sharedRoot = ["TIE", "XW", "XvT", "XWA"].includes(this.generator.platform)
+      ? "../../../core/src"
+      : "../../..";
     const importLines: [string[], string][] = [
-      [["Byteable"], "../../../byteable"],
-      [["IMission", "PyriteBase"], "../../../pyrite-base"]
+      [["Byteable"], `${sharedRoot}/byteable`],
+      [["IMission", "PyriteBase"], `${sharedRoot}/pyrite-base`]
     ];
 
     const usedHexImports = [];
@@ -208,7 +211,7 @@ export class ${compName} {
     }
 
     const hex = Array.from(new Set(usedHexImports));
-    importLines.push([hex, "../../../hex"]);
+    importLines.push([hex, `${sharedRoot}/hex`]);
 
     const classes = Array.from(new Set(usedClassImports));
     classes.forEach((c: string) => {

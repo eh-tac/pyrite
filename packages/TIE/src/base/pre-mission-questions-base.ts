@@ -1,6 +1,6 @@
-import { Byteable } from "@pickledyoda/pyrite-core/byteable";
-import { IMission, PyriteBase } from "@pickledyoda/pyrite-core/pyrite-base";
-import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from "@pickledyoda/pyrite-core/hex";
+import { Byteable } from "../../../core/src/byteable";
+import { IMission, PyriteBase } from "../../../core/src/pyrite-base";
+import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from "../../../core/src/hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 
@@ -47,7 +47,7 @@ export abstract class PreMissionQuestionsBase extends PyriteBase implements Byte
   }
   
   protected abstract QuestionLength();
-protected abstract AnswerLength();
+  protected abstract AnswerLength();
   public getLength(): number {
     return this.PreMissionQuestionsLength;
   }

@@ -1,5 +1,5 @@
-import { Byteable } from "@pickledyoda/pyrite-core/byteable";
-import { IMission, PyriteBase } from "@pickledyoda/pyrite-core/pyrite-base";
+import { Byteable } from "../../../core/src/byteable";
+import { IMission, PyriteBase } from "../../../core/src/pyrite-base";
 import { PL2CampaignProgressState } from "../pl-2-campaign-progress-state";
 import { PL2CampaignState } from "../pl-2-campaign-state";
 import { PL2DebriefRecord } from "../pl-2-debrief-record";
@@ -12,7 +12,7 @@ import { PLTConnectedPlayerData } from "../plt-connected-player-data";
 import { PLTPlayerRankCountRecord } from "../plt-player-rank-count-record";
 import { PLTTeamResultRecord } from "../plt-team-result-record";
 import { PLTTournamentProgressState } from "../plt-tournament-progress-state";
-import { getByte, getChar, getInt, getShort, writeByte, writeChar, writeInt, writeObject, writeShort } from "@pickledyoda/pyrite-core/hex";
+import { getByte, getChar, getInt, getShort, writeByte, writeChar, writeInt, writeObject, writeShort } from "../../../core/src/hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 

@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xwa/constants";
+export * from "../../../../XWA/src/constants";

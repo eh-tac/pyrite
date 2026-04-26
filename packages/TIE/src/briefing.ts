@@ -1,7 +1,7 @@
 import { BriefingBase } from "./base/briefing-base";
 
-import { getInt, getShort } from "@pickledyoda/pyrite-core/hex";
-import { IMission } from "@pickledyoda/pyrite-core/pyrite-base";
+import { getInt, getShort } from "../../core/src/hex";
+import { IMission } from "../../core/src/pyrite-base";
 import { Event } from "./event";
 import { Tag } from "./tag";
 import { TIEString } from "./tie-string";

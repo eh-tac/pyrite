@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xw/coordinate";
+export * from "../../../../XW/src/coordinate";

@@ -1,5 +1,5 @@
 import { TagBase } from "./base/tag-base";
-import { IMission } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IMission } from "../../core/src/pyrite-base";
 
 export class Tag extends TagBase {
   public toString() {

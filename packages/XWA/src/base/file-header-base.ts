@@ -1,8 +1,8 @@
-import { Byteable } from "@pickledyoda/pyrite-core/byteable";
+import { Byteable } from "../../../core/src/byteable";
 import { Constants } from "../constants";
 import { GlobalCargo } from "../global-cargo";
-import { IMission, PyriteBase } from "@pickledyoda/pyrite-core/pyrite-base";
-import { getBool, getByte, getShort, getString, writeBool, writeByte, writeObject, writeShort, writeString } from "@pickledyoda/pyrite-core/hex";
+import { IMission, PyriteBase } from "../../../core/src/pyrite-base";
+import { getBool, getByte, getShort, getString, writeBool, writeByte, writeObject, writeShort, writeString } from "../../../core/src/hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 

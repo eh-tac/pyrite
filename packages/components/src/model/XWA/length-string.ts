@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xwa/length-string";
+export * from "../../../../XWA/src/length-string";

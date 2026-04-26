@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xw/object-group";
+export * from "../../../../XW/src/object-group";

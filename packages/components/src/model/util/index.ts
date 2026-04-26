@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-core/model/util";
+export * from "../../../../core/src/model/util/index";

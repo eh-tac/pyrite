@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xwa/event";
+export * from "../../../../XWA/src/event";

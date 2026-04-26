@@ -1,14 +1,14 @@
 import { BriefingHeader } from "../briefing-header";
-import { Byteable } from "@pickledyoda/pyrite-core/byteable";
+import { Byteable } from "../../../core/src/byteable";
 import { Coordinate } from "../coordinate";
-import { IMission, PyriteBase } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IMission, PyriteBase } from "../../../core/src/pyrite-base";
 import { Icon } from "../icon";
 import { MissionHeader } from "../mission-header";
 import { Page } from "../page";
 import { String } from "../string";
 import { Tag } from "../tag";
 import { ViewportSetting } from "../viewport-setting";
-import { getByte, getShort, writeByte, writeObject, writeShort } from "@pickledyoda/pyrite-core/hex";
+import { getByte, getShort, writeByte, writeObject, writeShort } from "../../../core/src/hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 

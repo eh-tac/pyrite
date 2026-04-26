@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-core/pyrite-base";
+export * from "../../core/src/pyrite-base";

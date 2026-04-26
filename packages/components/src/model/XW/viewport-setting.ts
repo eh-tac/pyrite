@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xw/viewport-setting";
+export * from "../../../../XW/src/viewport-setting";

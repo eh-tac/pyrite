@@ -1,7 +1,7 @@
-import { Byteable } from "@pickledyoda/pyrite-core/byteable";
-import { IMission, PyriteBase } from "@pickledyoda/pyrite-core/pyrite-base";
+import { Byteable } from "../../../core/src/byteable";
+import { IMission, PyriteBase } from "../../../core/src/pyrite-base";
 import { Trigger } from "../trigger";
-import { getBool, writeBool, writeObject } from "@pickledyoda/pyrite-core/hex";
+import { getBool, writeBool, writeObject } from "../../../core/src/hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 

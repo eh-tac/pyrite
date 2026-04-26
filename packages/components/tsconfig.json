@@ -1,20 +1,25 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
     "declaration": false,
-    "experimentalDecorators": true,
-    "lib": ["dom", "es2017"],
-    "moduleResolution": "node",
     "module": "esnext",
-    "target": "es2017",
     "outDir": "dist",
-    "sourceMap": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
     "jsx": "react",
     "jsxFactory": "h",
-    "esModuleInterop": true
+    "paths": {
+      "@pickledyoda/pyrite-core": ["../../packages/core/src/index.ts"],
+      "@pickledyoda/pyrite-core/*": ["../../packages/core/src/*"],
+      "@pickledyoda/pyrite-tie": ["../../packages/TIE/src/index.ts"],
+      "@pickledyoda/pyrite-tie/*": ["../../packages/TIE/src/*"],
+      "@pickledyoda/pyrite-xw": ["../../packages/XW/src/index.ts"],
+      "@pickledyoda/pyrite-xw/*": ["../../packages/XW/src/*"],
+      "@pickledyoda/pyrite-xvt": ["../../packages/XvT/src/index.ts"],
+      "@pickledyoda/pyrite-xvt/*": ["../../packages/XvT/src/*"],
+      "@pickledyoda/pyrite-bop": ["../../packages/BoP/src/index.ts"],
+      "@pickledyoda/pyrite-bop/*": ["../../packages/BoP/src/*"],
+      "@pickledyoda/pyrite-xwa": ["../../packages/XWA/src/index.ts"],
+      "@pickledyoda/pyrite-xwa/*": ["../../packages/XWA/src/*"]
+    }
   },
   "include": ["src", "types/jsx.d.ts"],
   "exclude": ["node_modules"]

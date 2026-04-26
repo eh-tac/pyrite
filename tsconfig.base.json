@@ -2,15 +2,31 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
+    "baseUrl": ".",
     "declaration": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "lib": ["dom", "es2017"],
+    "lib": ["dom", "es2018"],
     "moduleResolution": "node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
+    "paths": {
+      "@pickledyoda/pyrite-core": ["packages/core/src/index.ts"],
+      "@pickledyoda/pyrite-core/*": ["packages/core/src/*"],
+      "@pickledyoda/pyrite-tie": ["packages/TIE/src/index.ts"],
+      "@pickledyoda/pyrite-tie/*": ["packages/TIE/src/*"],
+      "@pickledyoda/pyrite-xw": ["packages/XW/src/index.ts"],
+      "@pickledyoda/pyrite-xw/*": ["packages/XW/src/*"],
+      "@pickledyoda/pyrite-xvt": ["packages/XvT/src/index.ts"],
+      "@pickledyoda/pyrite-xvt/*": ["packages/XvT/src/*"],
+      "@pickledyoda/pyrite-bop": ["packages/BoP/src/index.ts"],
+      "@pickledyoda/pyrite-bop/*": ["packages/BoP/src/*"],
+      "@pickledyoda/pyrite-xwa": ["packages/XWA/src/index.ts"],
+      "@pickledyoda/pyrite-xwa/*": ["packages/XWA/src/*"]
+    },
+    "skipLibCheck": true,
     "sourceMap": true,
     "strict": false,
-    "target": "es2017"
+    "target": "es2018"
   }
 }

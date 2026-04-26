@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-core/hex";
+export * from "../../../core/src/hex";

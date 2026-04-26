@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-tie/event";
+export * from "../../../../TIE/src/event";

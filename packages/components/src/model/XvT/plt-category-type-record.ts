@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xvt/plt-category-type-record";
+export * from "../../../../XvT/src/plt-category-type-record";

@@ -1,4 +1,4 @@
-import { IMission } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IMission } from "../../core/src/pyrite-base";
 import { PL2FactionRecordBase } from "./base/pl-2-faction-record-base";
 import { Constants } from "./constants";
 import { PLTCategoryTypeRecord } from "./plt-category-type-record";

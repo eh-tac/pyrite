@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xwa/file-header";
+export * from "../../../../XWA/src/file-header";

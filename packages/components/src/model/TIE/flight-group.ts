@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-tie/flight-group";
+export * from "../../../../TIE/src/flight-group";

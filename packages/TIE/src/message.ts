@@ -1,6 +1,6 @@
 import { MessageBase } from "./base/message-base";
 import { Constants } from "./constants";
-import { IMission } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IMission } from "../../core/src/pyrite-base";
 
 export class Message extends MessageBase {
   public get MessageColourLabel(): string {

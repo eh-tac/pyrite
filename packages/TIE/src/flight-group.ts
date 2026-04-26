@@ -3,8 +3,8 @@ import { Difficulty } from "./mission";
 import { Craft } from "./craft";
 import { GoalFG } from "./goal-fg";
 import { Constants } from "./constants";
-import { IFielder, FieldProp, DataType } from "@pickledyoda/pyrite-core/pyrite-base";
-import { IMission } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IFielder, FieldProp, DataType } from "../../core/src/pyrite-base";
+import { IMission } from "../../core/src/pyrite-base";
 
 export class FlightGroup extends FlightGroupBase implements IFielder {
   public craft: Craft;

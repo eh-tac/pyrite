@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-core/model/util/font";
+export * from "../../../../../core/src/model/util/font/index";

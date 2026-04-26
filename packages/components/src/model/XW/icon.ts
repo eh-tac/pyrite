@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xw/icon";
+export * from "../../../../XW/src/icon";

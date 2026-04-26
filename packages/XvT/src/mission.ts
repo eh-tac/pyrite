@@ -1,4 +1,4 @@
-import { IFlightGroup, IMission } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IFlightGroup, IMission } from "../../core/src/pyrite-base";
 import { MissionBase } from "./base/mission-base";
 
 export class Mission extends MissionBase implements IMission {

@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xw";
+export * from "../../../../XW/src/index";

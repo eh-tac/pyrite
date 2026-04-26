@@ -1,4 +1,4 @@
-import { MissionScore } from "@pickledyoda/pyrite-core/model/pilot";
+import { MissionScore } from "../../core/src/model/pilot";
 import { MissionDataBase } from "./base/mission-data-base";
 
 export class MissionData extends MissionDataBase implements MissionScore {

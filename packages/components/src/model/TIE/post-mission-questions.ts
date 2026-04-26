@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-tie/post-mission-questions";
+export * from "../../../../TIE/src/post-mission-questions";

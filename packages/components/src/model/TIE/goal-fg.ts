@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-tie/goal-fg";
+export * from "../../../../TIE/src/goal-fg";

@@ -1,5 +1,5 @@
 import { PilotFileBase } from "./base/pilot-file-base";
-import { PilotData, MissionScore, BattleSummary, KillSummary } from "@pickledyoda/pyrite-core/model/pilot";
+import { PilotData, MissionScore, BattleSummary, KillSummary } from "../../core/src/model/pilot";
 import { Constants, TourStatus } from "./constants";
 
 export class PilotFile extends PilotFileBase implements PilotData {

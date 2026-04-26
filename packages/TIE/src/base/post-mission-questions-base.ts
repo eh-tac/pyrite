@@ -1,7 +1,7 @@
-import { Byteable } from "@pickledyoda/pyrite-core/byteable";
+import { Byteable } from "../../../core/src/byteable";
 import { Constants } from "../constants";
-import { IMission, PyriteBase } from "@pickledyoda/pyrite-core/pyrite-base";
-import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from "@pickledyoda/pyrite-core/hex";
+import { IMission, PyriteBase } from "../../../core/src/pyrite-base";
+import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from "../../../core/src/hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 
@@ -63,7 +63,7 @@ export abstract class PostMissionQuestionsBase extends PyriteBase implements Byt
     return Constants.QUESTIONTYPE[this.QuestionType] || "Unknown";
   }
   protected abstract QuestionLength();
-protected abstract AnswerLength();
+  protected abstract AnswerLength();
   public getLength(): number {
     return this.PostMissionQuestionsLength;
   }

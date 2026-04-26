@@ -18,6 +18,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@pickledyoda/pyrite-core": "workspace:*"
+    "@pickledyoda/pyrite-core": "file:../core",
+    "@pickledyoda/pyrite-xvt": "file:../XvT"
   }
 }

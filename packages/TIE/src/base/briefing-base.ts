@@ -1,9 +1,9 @@
-import { Byteable } from "@pickledyoda/pyrite-core/byteable";
+import { Byteable } from "../../../core/src/byteable";
 import { Event } from "../event";
-import { IMission, PyriteBase } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IMission, PyriteBase } from "../../../core/src/pyrite-base";
 import { TIEString } from "../tie-string";
 import { Tag } from "../tag";
-import { getInt, getShort, writeInt, writeObject, writeShort } from "@pickledyoda/pyrite-core/hex";
+import { getInt, getShort, writeInt, writeObject, writeShort } from "../../../core/src/hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 

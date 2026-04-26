@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xwa/flight-group";
+export * from "../../../../XWA/src/flight-group";

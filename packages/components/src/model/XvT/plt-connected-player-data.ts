@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xvt/plt-connected-player-data";
+export * from "../../../../XvT/src/plt-connected-player-data";

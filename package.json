@@ -17,5 +17,9 @@
     "lint": "npm run lint --workspace @pickledyoda/pyrite",
     "test": "npm run test --workspace @pickledyoda/pyrite -- --spec --e2e=false",
     "gencode": "npm run gencode --workspace @pickledyoda/pyrite-generator"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   }
 }

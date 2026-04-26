@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xwa/trigger";
+export * from "../../../../XWA/src/trigger";

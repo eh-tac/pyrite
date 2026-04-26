@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-core/byteable";
+export * from "../../core/src/byteable";

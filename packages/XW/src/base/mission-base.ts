@@ -1,9 +1,9 @@
-import { Byteable } from "@pickledyoda/pyrite-core/byteable";
+import { Byteable } from "../../../core/src/byteable";
 import { FileHeader } from "../file-header";
 import { FlightGroup } from "../flight-group";
-import { IMission, PyriteBase } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IMission, PyriteBase } from "../../../core/src/pyrite-base";
 import { ObjectGroup } from "../object-group";
-import { writeObject } from "@pickledyoda/pyrite-core/hex";
+import { writeObject } from "../../../core/src/hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 

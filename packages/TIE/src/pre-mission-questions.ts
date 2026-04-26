@@ -1,5 +1,5 @@
 import { PreMissionQuestionsBase } from "./base/pre-mission-questions-base";
-import { IMission } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IMission } from "../../core/src/pyrite-base";
 
 export enum QuestionType {
   Officer = "Officer",

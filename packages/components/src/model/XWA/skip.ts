@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xwa/skip";
+export * from "../../../../XWA/src/skip";

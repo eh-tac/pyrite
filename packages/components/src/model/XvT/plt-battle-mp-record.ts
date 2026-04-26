@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xvt/plt-battle-mp-record";
+export * from "../../../../XvT/src/plt-battle-mp-record";

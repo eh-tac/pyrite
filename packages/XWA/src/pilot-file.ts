@@ -1,5 +1,5 @@
-import { BattleSummary } from "@pickledyoda/pyrite-core/model/pilot";
-import { MissionData } from "../XWA";
+import { BattleSummary } from "../../core/src/model/pilot";
+import { MissionData } from "./mission-data";
 import { PilotFileBase } from "./base/pilot-file-base";
 import { Constants } from "./constants";
 

@@ -1,6 +1,6 @@
 import { PilotFileBase } from "./base/pilot-file-base";
-import { BattleSummary, PilotData, shootInfo, percent, KillSummary, MissionScore, TrainingSummary } from "@pickledyoda/pyrite-core/model/pilot";
-import { getByteString } from "@pickledyoda/pyrite-core/hex";
+import { BattleSummary, PilotData, shootInfo, percent, KillSummary, MissionScore, TrainingSummary } from "../../core/src/model/pilot";
+import { getByteString } from "../../core/src/hex";
 import { Constants, BattleStatus } from "./constants";
 import * as lodash from "lodash";
 

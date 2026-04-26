@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-tie/constants";
+export * from "../../../../TIE/src/constants";

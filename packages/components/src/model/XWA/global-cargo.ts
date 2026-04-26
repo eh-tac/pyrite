@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xwa/global-cargo";
+export * from "../../../../XWA/src/global-cargo";

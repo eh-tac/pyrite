@@ -1,13 +1,13 @@
 import { Briefing } from "../briefing";
-import { Byteable } from "@pickledyoda/pyrite-core/byteable";
+import { Byteable } from "../../../core/src/byteable";
 import { FileHeader } from "../file-header";
 import { FlightGroup } from "../flight-group";
 import { GlobalGoal } from "../global-goal";
-import { IMission, PyriteBase } from "@pickledyoda/pyrite-core/pyrite-base";
+import { IMission, PyriteBase } from "../../../core/src/pyrite-base";
 import { Message } from "../message";
 import { PostMissionQuestions } from "../post-mission-questions";
 import { PreMissionQuestions } from "../pre-mission-questions";
-import { getByte, writeByte, writeObject } from "@pickledyoda/pyrite-core/hex";
+import { getByte, writeByte, writeObject } from "../../../core/src/hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 

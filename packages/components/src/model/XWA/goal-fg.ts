@@ -1,1 +1,1 @@
-export * from "@pickledyoda/pyrite-xwa/goal-fg";
+export * from "../../../../XWA/src/goal-fg";
