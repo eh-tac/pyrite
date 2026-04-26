@@ -1,0 +1,26 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "declaration": false,
+    "module": "commonjs",
+    "outDir": "dist",
+    "jsx": "react",
+    "jsxFactory": "h",
+    "paths": {
+      "@pickledyoda/pyrite-core": ["../../packages/core/src/index.ts"],
+      "@pickledyoda/pyrite-core/*": ["../../packages/core/src/*"],
+      "@pickledyoda/pyrite-tie": ["../../packages/TIE/src/index.ts"],
+      "@pickledyoda/pyrite-tie/*": ["../../packages/TIE/src/*"],
+      "@pickledyoda/pyrite-xw": ["../../packages/XW/src/index.ts"],
+      "@pickledyoda/pyrite-xw/*": ["../../packages/XW/src/*"],
+      "@pickledyoda/pyrite-xvt": ["../../packages/XvT/src/index.ts"],
+      "@pickledyoda/pyrite-xvt/*": ["../../packages/XvT/src/*"],
+      "@pickledyoda/pyrite-bop": ["../../packages/BoP/src/index.ts"],
+      "@pickledyoda/pyrite-bop/*": ["../../packages/BoP/src/*"],
+      "@pickledyoda/pyrite-xwa": ["../../packages/XWA/src/index.ts"],
+      "@pickledyoda/pyrite-xwa/*": ["../../packages/XWA/src/*"]
+    }
+  },
+  "include": ["src", "types/jsx.d.ts"],
+  "exclude": ["node_modules"]
+}

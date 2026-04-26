@@ -1,0 +1,61 @@
+{
+  "name": "@pickledyoda/pyrite",
+  "version": "1.4.0",
+  "description": "Pyrite Web Components",
+  "main": "../../../../../pages/js/pyrite/index.cjs.js",
+  "module": "../../../../../pages/js/pyrite/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "types": "dist/types/components.d.ts",
+  "collection": "../../../../../pages/js/pyrite/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/pyrite/pyrite.js",
+  "files": [
+    "dist/",
+    "loader/",
+    "../../../../../pages/js/pyrite/"
+  ],
+  "scripts": {
+    "build": "stencil build --docs",
+    "prepublish": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate",
+    "lint": "eslint src --ext ts,tsx",
+    "puz": "ts-node -P tsconfig.commonjs.json src/scripts/puz.ts",
+    "css-watch": "npm run css-build -- --watch"
+  },
+  "author": "Pickled Yoda",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^13.13.49",
+    "@types/puppeteer": "^3.0.5",
+    "bulma": "^0.9.3",
+    "jest": "^29.7.0",
+    "jest-cli": "^29.7.0",
+    "prettier": "^1.19.1",
+    "ts-node": "^10.9.2",
+    "tslint-ionic-rules": "0.0.21",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@stencil/core": "4.18.3",
+    "@stencil/sass": "^1.4.1",
+    "cli-progress": "^3.9.0",
+    "extract-zip": "^1.7.0",
+    "lodash": "^4.17.21",
+    "sass": "^1.83.1",
+    "@pickledyoda/pyrite-core": "file:../core",
+    "@pickledyoda/pyrite-tie": "file:../TIE",
+    "@pickledyoda/pyrite-xw": "file:../XW",
+    "@pickledyoda/pyrite-xvt": "file:../XvT",
+    "@pickledyoda/pyrite-bop": "file:../BoP",
+    "@pickledyoda/pyrite-xwa": "file:../XWA"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@pickledyoda/pyrite-generator",
+  "version": "1.4.0",
+  "main": "dist/run.js",
+  "types": "dist/run.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "gencode": "ts-node -P tsconfig.json src/run.ts"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.168",
+    "@types/node": "^13.13.49",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  }
+}
