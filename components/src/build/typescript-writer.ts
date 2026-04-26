@@ -33,7 +33,7 @@ export class TypeScriptWriter extends PyriteWriter {
     const enums: string[] = [];
 
     for (const constant of constants) {
-      lines.push(`  public static ${constant.name.toUpperCase()} = {`);
+      lines.push(`  public static ${constant.name.toUpperCase()}: Record<${constant.name}, string>  = {`);
       enums.push(`export enum ${constant.name} {`);
       let used = new Set<string>();
       for (const [value, label] of constant.values) {
@@ -58,7 +58,7 @@ export class TypeScriptWriter extends PyriteWriter {
 
   public writeStruct(struct: Struct): void {
     super.writeStruct(struct);
-    const props = struct.getProps().map(p => new TypeScriptPropWriter(p));
+    const props = struct.getProps().map((p) => new TypeScriptPropWriter(p));
     this.writeComponent(struct, props);
     this.writeController(struct, props);
   }
@@ -66,7 +66,7 @@ export class TypeScriptWriter extends PyriteWriter {
   public writeBaseModel(struct: Struct): void {
     const baseName = this.baseClass(struct.name);
 
-    const props = struct.getProps().map(p => new TypeScriptPropWriter(p));
+    const props = struct.getProps().map((p) => new TypeScriptPropWriter(p));
     const enums = props.filter((p: TypeScriptPropWriter) => p.prop.isEnum);
     let lengthProp = new TypeScriptPropWriter(new PropInt("", `${struct.name}Length`, "INT"));
     if (!struct.isVariableLength) {
@@ -83,7 +83,7 @@ export abstract class ${baseName} extends PyriteBase implements Byteable {
   ${props.map((p: TypeScriptPropWriter): string => p.propertyDeclaration).join("\n  ")}
   ${this.getBaseConstructor(struct, lengthProp)}
   ${this.baseJSON(props)}
-  ${this.baseHexString(props)}
+  ${this.baseHexOutput(props)}
   ${enums.map((p: TypeScriptPropWriter): string => p.enumLookupFunction).join("\n")}
   ${struct.functionStubs.map((f: string): string => this.abstractFunction(f)).join("\n  ")}
   public getLength(): number {
@@ -116,7 +116,7 @@ export class ${struct.name} extends ${baseClass} {
   }
 
   public writeController(struct: Struct, props: TypeScriptPropWriter[]): void {
-    const fields: object = {};
+    const fields: Record<string, unknown> = {};
     props.forEach((p: TypeScriptPropWriter) => {
       fields[p.prop.name] = p.getFieldProps(this.generator.constants, this.generator.platform);
     });
@@ -186,20 +186,22 @@ export class ${compName} {
   protected getBaseClassImports(props: TypeScriptPropWriter[]): string {
     const importLines: [string[], string][] = [
       [["Byteable"], "../../../byteable"],
-      [["IMission", "PyriteBase"], "../../../pyrite-base"]
+      [["IMission", "PyriteBase"], "../../../pyrite-base"],
     ];
 
-    const usedHexImports = [];
-    const usedClassImports = [];
-    let useConstants: boolean = false;
+    const usedHexImports: string[] = [];
+    const usedClassImports: string[] = [];
+    const usedConstants: Set<string> = new Set<string>();
     props.forEach((p: TypeScriptPropWriter): void => {
       usedHexImports.push(...p.hexImports);
       usedClassImports.push(...p.classImports);
-      useConstants = useConstants || !!p.prop.enumName;
+      if (p.prop.enumName) {
+        usedConstants.add(p.prop.enumName);
+      }
     });
 
-    if (useConstants) {
-      importLines.push([["Constants"], "../constants"]);
+    if (usedConstants.size) {
+      importLines.push([["Constants", ...Array.from(usedConstants)], "../constants"]);
     }
 
     const hex = Array.from(new Set(usedHexImports));
@@ -217,11 +219,11 @@ export class ${compName} {
   }
 
   protected getBaseConstructor(struct: Struct, lengthProp: TypeScriptPropWriter): string {
-    const props = struct.getProps().map(p => new TypeScriptPropWriter(p));
+    const props = struct.getProps().map((p) => new TypeScriptPropWriter(p));
 
     return `
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -231,19 +233,19 @@ export class ${compName} {
   }
 
   protected baseJSON(props: TypeScriptPropWriter[]): string {
-    const nonStatics = props.filter(p => !p.prop.isStatic);
+    const nonStatics = props.filter((p) => !p.prop.isStatic);
     return `
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
-      ${nonStatics.map((p: TypeScriptPropWriter) => `${p.prop.name}: this.${p.labelExpr}`).join(",\n      ")}
+      ${nonStatics.map((p: TypeScriptPropWriter) => `${p.prop.name}: this.${p.toJSONExpr}`).join(",\n      ")}
     };
   }`;
   }
 
-  protected baseHexString(props: TypeScriptPropWriter[]): string {
+  protected baseHexOutput(props: TypeScriptPropWriter[]): string {
     return `
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     ${props.map((p: TypeScriptPropWriter) => p.getOutputHex()).join("\n    ")}
@@ -253,7 +255,7 @@ export class ${compName} {
   }
 
   protected abstractFunction(name: string): string {
-    return `protected abstract ${name.replace("()", "")}();`;
+    return `protected abstract ${name.replace("()", "")}(): number;`;
   }
 
   protected functionStub(name: string): string {

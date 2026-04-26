@@ -1,10 +1,14 @@
+import { FieldAttr } from "./controller-base";
 import { Prop, PropObject, PropAny, PropBool, PropChar, PropStr } from "./prop";
 import * as lodash from "lodash";
 
 export class TypeScriptPropWriter {
   public constructor(public prop: Prop) {}
 
-  public get labelExpr(): string {
+  public get toJSONExpr(): string {
+    if (this.prop instanceof PropObject) {
+      return this.prop.isArray ? `${this.prop.name}.map(t => t.toJSON())` : `${this.prop.name}.toJSON()`;
+    }
     return this.prop.enumName ? `${this.prop.name}Label` : this.prop.name;
   }
 
@@ -24,7 +28,7 @@ export class TypeScriptPropWriter {
   // output for saving
 
   public get hexImports(): string[] {
-    return [this.prop.hexGetter, this.prop.hexSetter].filter(s => !!s);
+    return [this.prop.hexGetter, this.prop.hexSetter].filter((s) => !!s);
   }
 
   public get classImports(): string[] {
@@ -60,6 +64,8 @@ export class TypeScriptPropWriter {
       return "string";
     } else if (this.prop instanceof PropAny) {
       return "any";
+    } else if (this.prop.enumName) {
+      return this.prop.enumName;
     }
     return "number";
   }
@@ -105,15 +111,19 @@ export class TypeScriptPropWriter {
     if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
       params.push(this.typeLength);
     }
+    let cast = "";
+    if (this.prop.enumName) {
+      cast = ` as ${this.typeExpr}`;
+    }
 
-    return `${this.prop.hexGetter}(${params.join(", ")})`;
+    return `${this.prop.hexGetter}(${params.join(", ")})${cast}`;
   }
 
   public get arrayLength(): string {
     if (this.prop.arrayLengthExpression) {
       return `this.${this.prop.arrayLengthExpression.replace("-", ".")}`;
     }
-    return this.prop.arrayLengthValue.toString(10);
+    return this.prop.arrayLengthValue!.toString(10);
   }
 
   public get typeLength(): string {
@@ -127,6 +137,9 @@ export class TypeScriptPropWriter {
   public get propLength(): string {
     const obj = this.prop.isArray ? "t" : `this.${this.prop.name}`;
     if (this.prop instanceof PropStr) {
+      if (this.prop.isFixedLength) {
+        return this.prop.baseSize.toString(10);
+      }
       return `${obj}.length + 1`;
     } else if (this.prop instanceof PropObject) {
       return `${obj}.getLength()`;
@@ -147,7 +160,9 @@ export class TypeScriptPropWriter {
   public getOutputHex(): string {
     const offsetExpr = "";
     const p = `this.${this.prop.name}`;
-    let out = `${this.getSetter(this.prop.isStatic ? this.prop.reservedValue.toString() : p)};`;
+    let out = `${this.getSetter(
+      this.prop.isStatic && this.prop.reservedValue ? this.prop.reservedValue.toString() : p,
+    )};`;
     if (this.prop.isArray) {
       out = `offset = ${this.offsetExpr};
     for (let i = 0; i < ${this.arrayLength}; i++) {
@@ -161,14 +176,18 @@ export class TypeScriptPropWriter {
 
   public getSetter(propOverride?: string, inLoop = false): string {
     const off = inLoop ? "offset" : this.offsetExpr;
-    const params = ["hex", propOverride || `this.${this.prop.name}`, off];
+    const params = ["hex", propOverride || `this.${this.prop.name}`];
+    if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
+      params.push(this.typeLength);
+    }
+    params.push(off);
     return `${this.prop.hexSetter}(${params.join(", ")})`;
   }
 
-  public getFieldProps(constantLookup: object, plt: string): object {
-    const props = {
+  public getFieldProps(constantLookup: Record<string, any>, plt: string): FieldAttr {
+    const props: FieldAttr = {
       name: this.prop.name,
-      type: this.prop.type
+      type: this.prop.type,
     };
     if (this.prop.enumName && constantLookup[this.prop.enumName]) {
       props["options"] = `Constants.${this.prop.enumName.toUpperCase()}`;

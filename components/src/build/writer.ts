@@ -51,7 +51,7 @@ export abstract class PyriteWriter {
   public copyFile(path: string): void {
     const from = nodePath.join(__dirname, path);
     if (fs.existsSync(from)) {
-      this.writeFile(path, fs.readFileSync(from, { encoding: "UTF8" }));
+      this.writeFile(path, fs.readFileSync(from, { encoding: "utf8" }));
     }
   }
 

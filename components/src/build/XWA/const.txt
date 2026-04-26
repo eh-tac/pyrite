@@ -122,7 +122,7 @@ CraftType
 79	Planetary Fighter
 7A	Supa Fighter
 7B	Pinook Fighter
-7C	*Booster Pack
+7C	Booster Pack
 7D	Preybird Fighter
 7E	*StarViper
 7F	Firespray
@@ -173,9 +173,9 @@ AB	*Cargo Tanker 3
 AC	*Cargo Tanker 4
 AD	*Cargo Tanker 5
 AE	Escape Pod 2
-AF	*Rebel Pilot
-B0	*Imperial Pilot
-B1	*Civilian Pilot
+AF	Rebel Pilot
+B0	Imperial Pilot
+B1	Civilian Pilot
 B2	Spacetrooper
 B3	Zero-G Utility Suit
 B4	Emkay
@@ -190,19 +190,19 @@ BC	*Kothlis
 BD	*Hoth
 BE	*DeathStar II backdrop
 BF	*Nar Shadda
-C0	*Planet
-C5	*Planet
-C6	*Moon
-CA	*Moon
-CB	*Sun
-D4	*Sun
-D5	*Backdrop
-E2	*Backdrop
+C0	*Planet2
+C5	*Planet3
+C6	*Moon1
+CA	*Moon2
+CB	*Sun1
+D4	*Sun2
+D5	*Backdrop1
+E2	*Backdrop2
 E3	Death Star II
 E4	MC80 Liberty-class Cruiser
 E5	Victory-class Star Destroyer II
 E6	Imperator-class Star Destroyer II
-E7	*Planet
+E7	*Planet4
 
 CraftAbbr
 01	X-W
@@ -393,10 +393,10 @@ E5	VSD-II
 E6	ISD-II
 
 Hangar
-00	Junkyard
-01	Quick Start 1
-02	Quick Start 2
-03	Quick Start 3
+00	Tutorial
+01	Obstacle
+02	Melee
+03	Exercise
 04	Skirmish
 05	Death Star run
 06	Calamari Cruiser
@@ -406,7 +406,17 @@ BriefingOfficer
 00	Devers
 01	Kupalo
 02	Zaletta
+03	Wedge
+04	Nammo
+05	Yamarus
+06	Ackbar
+07	Aeron
 08	Emkay
+09	Antan
+0A	Emon
+0B	Galin
+0C	Tomaas
+0D	Dunari
 
 BriefingLogo
 04	Defiance
@@ -414,6 +424,26 @@ BriefingLogo
 06	Independence
 07	Family
 08	Phantom Squadron
+09	Vector Squadron
+0A	Rogue Squadron
+0B	Family Transport
+
+DesignationTeam
+00	Team1
+01	Team2
+02	Team3
+03	Team4
+04	Team5
+05	Team6
+06	Team7
+07	Team8
+08	All
+09	Others
+0A	Hostile
+0B	Friendly
+0C	Rebel
+0D	Imperial
+FF	None
 
 Designation
 00	Command Ship
@@ -426,8 +456,8 @@ Designation
 07	Primary Target
 08	Secondary Target
 09	Tertiary Target
-0A	Resource Center
-0B	Facility
+0A	Research Facility
+0B	Manufacturing Facility
 0C	HYP from Region 1
 0D	HYP from Region 2
 0E	HYP from Region 3
@@ -436,39 +466,38 @@ Designation
 11	HYP to Region 2
 12	HYP to Region 3
 13	HYP to Region 4
-14	Unknown
-15  Unknown
+14	HYP from Any Region
+15  HYP to Any Region
 
 Status
 00	None
 01	2X Warheads
 02	1/2 Warheads
 03	No Shields
-04	1/2 Shields
-05	No Lasers
-06	No Hyperdrive
+04	1/2 Shields, Damaged
+05	Lasers Damaged
+06	Hyperdrive Damaged
 07	Shields 0%, charging
 08	Shields added or 200%
 09	Hyperdrive added
 0A	2x Countermeasure
 0B	1/2 Countermeasures
-0C	(200% Shields)
-0D	Shields 50%, Charging
-0E	(No Lasers)
+0C	200% Shields, Charging
+0D	50% Shields, Charging
+0E	No Lasers
 0F	Engines Damaged
 10	Shields + Hyperdrive added
 11	All Systems Damaged
 12	200% Shields
-13	(50% Shields)
+13	50% Shields
 14	Invincible
 15	Infinite Warheads
 16	No Escape Pods / Ejected Pilot
 17	No Cargo Pods
 18	Not Inspected
-19	Not ID'ed
-1A	Inspected
-1B	ID'ed
-1C	Limited Targetability
+19	Inspected
+1A	ID'ed
+1B	Hangar Object
 
 Warhead
 00	None
@@ -480,12 +509,15 @@ Warhead
 06	Advanced Torpedo
 07	Mag Pulse Torpedo
 08	Ion Pulse Torpedo
+09	*Adv Mag Pulse
+0A	Cluster Bomb
 
 Beam
 00	None
 01	Tractor Beam
 02	Jamming Beam
 03	Decoy Beam
+04  Energy Beam
 
 GroupAI
 00	Novice (None)
@@ -531,30 +563,49 @@ Formation
 07	Diamond
 08	Stack
 09	High X
-0A	Vic Abreast
-0B	High Vic
-0C	Reverse High Vic
-0D	Reverse Line Astern
-0E	Stacked Low
-0F	Abreast Right
-10	Abreast Left
-11	Wing Forward
-12	Wing Back
-13	Line Astern Up
-14	Line Astern Down
-15	Abreast V
-16	Abreast Inverted V
+0A	Reverse Vic
+0B	Side Vic
+0C	Reverse Side Vic
+0D	Line Ahead
+0E	Line Down
+0F	Line Right
+10	Line Left
+11	Echelon Forward
+12	Echelon Astern
+13	Echelon Up
+14	Echelon Down
+15	Vic Up
+16	Vic Down
 17	Double Astern Mirror
-18	Double Stacked Astern
-19	Double Stacked High
-1A	Diamond 1
-1B	Diamond 2
-1C	Flat Pentagon
-1D	Side Pentagon
-1E	Front Pentagon
+18	Double Side
+19	Double Down
+1A	Side Diamond
+1B	Front Diamond
+1C	Flat Star
+1D	Side Star
+1E	Front Star
 1F	Flat Hexagon
 20	Side Hexagon
 21	Front Hexagon
+
+FormationSpacing
+00	Too Tight
+01	Very Tight
+02	Tight
+03	Comfy
+04	Close
+05	Moderate
+06	Standard
+07	Safe
+08	Loose
+09	Very Loose
+0A	Distant
+
+StopArrivingWhen
+00	Never (always arrives)
+01	Mission Complete
+02	Team wins
+03	Team loses
 
 ArrivalDifficulty
 00	All
@@ -590,42 +641,42 @@ Condition
 15	0% Shields
 16	50% Hull
 17	Out of Warheads
-18	Unknown (arrive?)
-19	Be dropped off
-1A	Unharmed?
+18	Lasers Down
+19	NOT created
+1A	NOT be attacked
 1B	NOT be disabled
-1C	NOT be picked up
-1D	Destroyed w/o Inspection
-1E	Be docked with
-1F	NOT be docked with
-20	Begin boarding
-21	NOT begin boarding
+1C	NOT be captured
+1D	NOT be inspected
+1E	Being boarded
+1F	NOT boarded
+20	Begun docking
+21	NOT docked
 22	50% Shields
 23	25% Shields
 24	75% Hull
 25	25% Hull
-26	Unknown
-27	Unknown
-28	Unknown
-29	Be all Player Craft
-2A	Reinforced by AI?
+26	Time less than
+27	Be picked up for team
+28	NOT be picked up by team
+29	Have Player craft
+2A	Not have Player craft
 2B	Come and go
-2C	Be picked up
+2C	Captured and gone
 2D	Withdraw
 2E	Be carried away
 2F	Arrived in Region
 30	Departed Region
 31	Be in proximity of
 32	NOT be in proxmity of
-33	Unknown
+33	Carried
 34	Defect
 35	Be in convoy
-36	Be delivered?
-37	Unknown
+36	Be delivered
+37	Parked
 38	Be shown (message)
 39	Be ID'ed
-3A	Unknown
-3B	Exist?
+3A	NOT be ID'ed
+3B	Support
 
 VariableType
 00	None
@@ -634,12 +685,12 @@ VariableType
 03	CraftCategory (enum)
 04	ObjectCategory (enum)
 05	IFF
-06	Order (enum)
+06	Order (enum) (maps to None)
 07	CraftWhen (enum)
 08	Global Group
-09	Rating
-0A	Craft with Status1
-0B	All
+09	Rating (maps to None)
+0A	Craft with Status1 (maps to None)
+0B	All (maps to None)
 0C	Team
 0D	Player
 0E	Delay
@@ -652,7 +703,7 @@ VariableType
 15	All Teams except
 16	All players except
 17	Global Unit
-18	All Global Units except?
+18	All Global Units except
 19	Craft with Global Cargo
 1A	Craft without Global Cargo
 1B	Message #
@@ -665,11 +716,16 @@ CraftCategory
 04	Utility Craft
 05	Platforms/Facilities
 06	Mines
+07	Buoys
+08	Containers
+09	Weapon Emplacements
+0A	Droids
 
 ObjectCategory
 00	Craft
 01	Weapons
 02	Space Objects
+03	Space Defenses
 
 Amount
 00	100%
@@ -699,6 +755,7 @@ AbortTrigger
 07	25% Shields
 08	75% Hull
 09	25% Hull
+0A	Inspected
 
 Order
 00	Hold Station
@@ -715,14 +772,16 @@ Order
 	Var1	Number of Dockings
 07	Attack
 	Var1	Component
+	Var2	ComponentAlt
+	Var3	Warheads {Normal, All, None}
 08	Attack Escorts
 09	Protect
 0A	Escort
 	Var1	Position (to be expanded on at a later date)
-	Var2	Attack Player (0/1)
+	Var2	Spacing	{Loose, Close, Tight, Far}
 0B	Disable
-	Var1	Meaningless?		[Might be weapon restriction]
-	Var2	Meaningless?		[Might be weapon restriction]
+	Var1	Component
+	Var2	ComponentAlt
 0C	Board and Give Cargo
 	Var1	Docking Time ( 0-14 = seconds, 15 = 25s, 16 = 30s, etc)
 	Var2	Number of Dockings
@@ -738,11 +797,12 @@ Order
 10	Board and Destroy Cargo
 	Var1	Docking Time
 	Var2	Number of Dockings
+	Var3	Delay
 11	Pick up
 	Var1	Docking Time
 	Var2	Number of Dockings
 12	Drop off
-	Var1	Deploy Time?
+	Var1	Deploy Time
 	Var2	Flight Group
 13	Wait
 	Var1	Wait time
@@ -751,14 +811,20 @@ Order
 15	SS Patrol Loop
 	Var1	Number of Loops
 16	SS Await Return
+	Var1	Delay (unused?)
 17	SS Launch
+	Var1	Delay (unused?)
 18	SS Protect
-19	SS Wait and Protect
+	Var1	Delay (unused?)
+19	*SS Wait and Protect (maps to Stationary)
+	Var1	Delay
 1A	SS Patrol and Attack
 1B	SS Patrol and Disable
-1C	SS Hold Steady
+1C	*SS Hold Steady (maps to Stationary)
+	Var1	Capture count
 1D	SS Go Home
-1E	SS Wait
+	Var1	Delay
+1E	*SS Wait (maps to Stationary)
 	Var1	Wait time
 1F	SS Board
 	Var1	Docking Time
@@ -766,23 +832,34 @@ Order
 20	Board to Repair
 	Var1	Docking Time
 	Var2	Number of Dockings
-21	Hold Station
-22	Hold Steady
-23	SS Hold Station
+21	*Hold Station (maps to Stationary)
+	Var1	Time
+	Var2	Gronks	(no idea)
+22	*Hold Steady (maps to Stationary)
+	Var1	Time
+	Var2	Gronks
+23	*SS Hold Station (maps to Stationary)
+	Var1	Time
+	Var2	Gronks
 24	Self-destruct
-	Var1	Delay Time
+	Var1	Delay
 25	Kamikaze
-26	(Orbit)/Permanently disabled
-	Var1	# of loops
-27	(Release Carried Cargo)
+26	Orbit
+	Var1	# of loops	(limit 2?)
+	Var2	Direction	{Clockwise, Counter}
+27	Release Carried Cargo
 28	Deliver/Drop Off
 	Var1	Recipient FG
-29	Unknown
-2A	(Attack)
-2B	Load Objects
+29	Load
 	Var1	Objects
-2C	Sit and Fire
+2A	Standoff Attack
 	Var1	Use Missiles (0/1)
+	Var2	Time
+2B	Backup
+	Var1	Time
+	Var2	Distance	[(float)value/10]
+2C	Shutdown
+	Var1	Time
 2D	Repair Self
 	Var1	Repair Time
 2E	Defect
@@ -790,7 +867,7 @@ Order
 	Var2	Team
 2F	Self Capture / Surrender
 	Var1	IFF
-30	*Make
+30	*Build
 	Var1	Craft Type
 31	Beacon
 32	Hyper to Region
@@ -807,12 +884,13 @@ Order
 38	*Construct Train
 	Var1	on Flight Group
 	Var2	From Global Group
-	Var3	# of dockings
+	Var3	Length
 39	Park at
 	Var1	Wait time
-	Var2	Waypoint #
+	Var2	Location	{Outside, Inside}
 3A	*Board to Defuse
 	Var1	Docking Time
+	Var2	Number of Dockings
 3B	Start Over
 	Var1	# of loops
 3C	*Take Apart Train
@@ -821,16 +899,18 @@ Order
 	Var1	Time
 	Var2	Component
 	Var3	# of loops
-3E	(Dock to Load)
+3E	*Dock to Load
 3F	Follow Targets
 	Var1	# of loops
 40	Home In
 	Var1	# of loops
-	Var2	Direction (0 = clockwise, 1  = counter-clockwise)
+	Var2	Direction {Clockwise, Counter}
 
 CraftWhen
+00	Captured
 01	Inspected
-02	Finished docking?
+02	Finished being boarded
+03	Finished docking
 04	Disabled
 05	Attacked
 06	Any hull damage
@@ -838,9 +918,29 @@ CraftWhen
 08	Non-special craft
 09	Player's craft
 0A	Non-player's craft
+0B	not attacked
 0C	not disabled
+0D	not captured
+0E	not inspected
+0F	being boarded
+10	not boarded
+11	is docking
+12	not docked
+13	Shields at 50%
+14	Shields at 25%
+15	Shields down
+16	Hull at 75%
+17	Hull at 50%
+18	Hull at 25%
+19	Missiles spent
+1A	Lasers out
+1B	ID'd
+1C	not ID'd
 
 EventType
+01	Seek
+02	SHIP_INDEX
+	Var1	UNK
 03	Page Break
 04	Title Text
 	Var1	String#
@@ -872,45 +972,45 @@ EventType
 11	Clear Text Tags
 12	Text Tag 1
 	Var1	Tag#
-	Var2	Color
-	Var3	X
-	Var4	Y
+	Var2	X
+	Var3	Y
+	Var4	Color
 13	Text Tag 2
 	Var1	Tag#
-	Var2	Color
-	Var3	X
-	Var4	Y
+	Var2	X
+	Var3	Y
+	Var4	Color
 14	Text Tag 3
 	Var1	Tag#
-	Var2	Color
-	Var3	X
-	Var4	Y
+	Var2	X
+	Var3	Y
+	Var4	Color
 15	Text Tag 4
 	Var1	Tag#
-	Var2	Color
-	Var3	X
-	Var4	Y
+	Var2	X
+	Var3	Y
+	Var4	Color
 16	Text Tag 5
 	Var1	Tag#
-	Var2	Color
-	Var3	X
-	Var4	Y
+	Var2	X
+	Var3	Y
+	Var4	Color
 17	Text Tag 6
 	Var1	Tag#
-	Var2	Color
-	Var3	X
-	Var4	Y
+	Var2	X
+	Var3	Y
+	Var4	Color
 18	Text Tag 7
 	Var1	Tag#
-	Var2	Color
-	Var3	X
-	Var4	Y
+	Var2	X
+	Var3	Y
+	Var4	Color
 19	Text Tag 8
 	Var1	Tag#
-	Var2	Color
-	Var3	X
-	Var4	Y
-1A	New Icon
+	Var2	X
+	Var3	Y
+	Var4	Color
+1A	Set Icon
 	Var1	Icon #
 	Var2	CraftType (enum)
 	Var3	IFF
@@ -926,6 +1026,8 @@ EventType
 	Var2	Rotation (0, 90° CCW, 180º, 90° CW, mirror)
 1E	Change Region
 	Var1	Region #
+*1F	ZOOM_PARAGRAPH
+	Var1	String#
 22	End Briefing
 
 TFTCCraftType
@@ -1119,22 +1221,22 @@ bb M3-A Scyk
 bc G1-M4-C Dunelizard
 bd M-12 Kimogila
 be M-22 Krayt Gunship
-bf DontUseMe
-c0 DontUseMe
-c1 DontUseMe
-c2 DontUseMe
+bf DontUseMe1
+c0 DontUseMe2
+c1 DontUseMe3
+c2 DontUseMe4
 c3 VT-49 Decimator
 c4 X4 Gunship
 c5 YE-4 Gunship
-c6 DontUseMe
+c6 DontUseMe5
 c7 YKL-37R Nova Courier
-c8 DontUseMe
-c9 DontUseMe
+c8 DontUseMe6
+c9 DontUseMe7
 ca Naboo Barge
 cb Coruscant Courier
 cc YB-300 Light Transport
-cd DontUseMe
-ce DontUseMe
+cd DontUseMe8
+ce DontUseMe9
 cf Arquitens Light Cruiser
 d0 Acclamator Cruiser
 d1 Gladiator Class Star Destroyer

@@ -5,16 +5,18 @@
     "declaration": false,
     "experimentalDecorators": true,
     "lib": ["dom", "es2017"],
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "module": "esnext",
     "target": "es2017",
+    "rootDir": "src",
     "outDir": "dist",
     "sourceMap": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "jsx": "react",
     "jsxFactory": "h",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["node", "jest"]
   },
   "include": ["src", "types/jsx.d.ts"],
   "exclude": ["node_modules"]

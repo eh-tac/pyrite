@@ -5,16 +5,20 @@ export type PropType = "SHORT" | "BYTE" | "BOOL" | "SBYTE" | "INT" | "STR" | "CH
 export class Prop {
   public baseSize = 1;
   public typeLengthExpression = "";
-  public arrayLengthValue: number;
+  public arrayLengthValue?: number;
   public arrayLengthExpression = "";
   public reservedValue?: number;
   public enumName: string = "";
   public comment: string = "";
 
-  public hexGetter: string;
-  public hexSetter: string;
+  public hexGetter!: string;
+  public hexSetter!: string;
 
-  constructor(public offset: string, public name: string, public type: PropType) {}
+  constructor(
+    public offset: string,
+    public name: string,
+    public type: PropType,
+  ) {}
 
   public get docString(): string {
     return `${this.offset} ${this.name} ${this.type}`;
@@ -65,7 +69,7 @@ export class Prop {
   }
 
   public get size(): number {
-    const mult = this.isArray ? this.arrayLengthValue : 1;
+    const mult = this.isArray ? this.arrayLengthValue! : 1;
     return this.baseSize * mult;
   }
 
@@ -91,7 +95,7 @@ export class Prop {
 
   public getFunctionStubs(): string[] {
     return [this.typeLengthExpression, this.arrayLengthExpression].filter((expr: string): boolean => {
-      return expr && expr.endsWith("()");
+      return !!expr && expr.endsWith("()");
     });
   }
 
@@ -146,7 +150,7 @@ export class PropStr extends Prop {
 
 export class PropObject extends Prop {
   public baseSize = 0;
-  public structName: string;
+  public structName!: string;
   public hexGetter = "";
   public hexSetter = "writeObject";
 

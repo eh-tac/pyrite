@@ -6,8 +6,8 @@ import { PHPWriter } from "./php-writer";
 function mg(plt: string): PyriteGenerator {
   return new PyriteGenerator(
     plt,
-    fs.readFileSync(`src/build/${plt}/structs.txt`, { encoding: "UTF8" }),
-    fs.readFileSync(`src/build/${plt}/const.txt`, { encoding: "UTF8" })
+    fs.readFileSync(`src/build/${plt}/structs.txt`, { encoding: "utf8" }),
+    fs.readFileSync(`src/build/${plt}/const.txt`, { encoding: "utf8" })
   );
 }
 
@@ -16,7 +16,7 @@ const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [mg("TIE"), mg("XW"), mg("XvT"), mg(
 
 // make writers
 [
-  // new TypeScriptWriter("src", tieG),
+  new TypeScriptWriter("src", tieG),
   new PHPWriter("../lib", tieG),
   new TypeScriptWriter("src", xwG),
   new PHPWriter("../lib", xwG),
