@@ -26,8 +26,8 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
   public Tags: Tag;
   public Strings: String;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -47,6 +47,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
       offset += t.getLength();
     }
     this.WindowSettingsCount = getShort(hex, offset);
+    offset += 2;
     this.Viewports = [];
     offset = offset;
     for (let i = 0; i < this.ViewportCount(); i++) {
@@ -55,6 +56,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
       offset += t.getLength();
     }
     this.PageCount = getShort(hex, offset);
+    offset += 2;
     this.Pages = [];
     offset = offset;
     for (let i = 0; i < this.PageCount; i++) {
@@ -63,6 +65,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
       offset += t.getLength();
     }
     this.MissionHeader = new MissionHeader(hex.slice(offset), this.TIE);
+    offset += this.MissionHeader.getLength();
     this.IconExtraData = [];
     offset = offset;
     for (let i = 0; i < this.BriefingHeader.IconCount; i++) {
@@ -77,68 +80,69 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     this.BriefingLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
-      BriefingHeader: this.BriefingHeader,
-      CoordinateSet: this.CoordinateSet,
-      IconSet: this.IconSet,
+      BriefingHeader: this.BriefingHeader.toJSON(),
+      CoordinateSet: this.CoordinateSet.map((t) => t.toJSON()),
+      IconSet: this.IconSet.map((t) => t.toJSON()),
       WindowSettingsCount: this.WindowSettingsCount,
-      Viewports: this.Viewports,
+      Viewports: this.Viewports.map((t) => t.toJSON()),
       PageCount: this.PageCount,
-      Pages: this.Pages,
-      MissionHeader: this.MissionHeader,
+      Pages: this.Pages.map((t) => t.toJSON()),
+      MissionHeader: this.MissionHeader.toJSON(),
       IconExtraData: this.IconExtraData,
-      Tags: this.Tags,
-      Strings: this.Strings
+      Tags: this.Tags.toJSON(),
+      Strings: this.Strings.toJSON(),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeObject(hex, this.BriefingHeader, 0x00);
     offset = 0x6;
-    for (let i = 0; i < this.CoordinateCount(); i++) {
+    for (let i = 0; i < this.CoordinateSet.length; i++) {
       const t = this.CoordinateSet[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < this.BriefingHeader.IconCount; i++) {
+    for (let i = 0; i < this.IconSet.length; i++) {
       const t = this.IconSet[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeShort(hex, this.WindowSettingsCount, offset);
-    offset = offset;
-    for (let i = 0; i < this.ViewportCount(); i++) {
+    offset += 2;
+    for (let i = 0; i < this.Viewports.length; i++) {
       const t = this.Viewports[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeShort(hex, this.PageCount, offset);
-    offset = offset;
-    for (let i = 0; i < this.PageCount; i++) {
+    offset += 2;
+    for (let i = 0; i < this.Pages.length; i++) {
       const t = this.Pages[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeObject(hex, this.MissionHeader, offset);
-    offset = offset;
-    for (let i = 0; i < this.BriefingHeader.IconCount; i++) {
+    offset += this.MissionHeader.getLength();
+    for (let i = 0; i < this.IconExtraData.length; i++) {
       const t = this.IconExtraData[i];
       writeByte(hex, t, offset);
       offset += 90;
     }
     writeObject(hex, this.Tags, offset);
+    offset += this.Tags.getLength();
     writeObject(hex, this.Strings, offset);
+    offset += this.Strings.getLength();
 
     return hex;
   }
   
-  protected abstract CoordinateCount();
-  protected abstract ViewportCount();
+  protected abstract CoordinateCount(): number;
+  protected abstract ViewportCount(): number;
   public getLength(): number {
     return this.BriefingLength;
   }

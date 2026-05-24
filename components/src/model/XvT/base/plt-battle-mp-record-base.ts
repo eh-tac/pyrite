@@ -17,8 +17,8 @@ export abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteab
   public bestEvaluationMedal: number;
   public bestVictoryMargin: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -35,7 +35,7 @@ export abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteab
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       unknown0x0: this.unknown0x0,
       totalCountFlown: this.totalCountFlown,
@@ -46,12 +46,12 @@ export abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteab
       unknown0x18: this.unknown0x18,
       unknown0x1C: this.unknown0x1C,
       bestEvaluationMedal: this.bestEvaluationMedal,
-      bestVictoryMargin: this.bestVictoryMargin
+      bestVictoryMargin: this.bestVictoryMargin,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.unknown0x0, 0x0000);

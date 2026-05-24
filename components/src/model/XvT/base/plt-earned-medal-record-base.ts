@@ -11,8 +11,8 @@ export abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byt
   public exerciseBadgeCount: number[];
   public battleMedalCount: number[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -47,39 +47,39 @@ export abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byt
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       meleePlaqueCount: this.meleePlaqueCount,
       tournamentPlaqueCount: this.tournamentPlaqueCount,
       exerciseBadgeCount: this.exerciseBadgeCount,
-      battleMedalCount: this.battleMedalCount
+      battleMedalCount: this.battleMedalCount,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     offset = 0x0000;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.meleePlaqueCount.length; i++) {
       const t = this.meleePlaqueCount[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0018;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.tournamentPlaqueCount.length; i++) {
       const t = this.tournamentPlaqueCount[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0030;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.exerciseBadgeCount.length; i++) {
       const t = this.exerciseBadgeCount[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0048;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.battleMedalCount.length; i++) {
       const t = this.battleMedalCount[i];
       writeInt(hex, t, offset);
       offset += 4;

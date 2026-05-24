@@ -1,5 +1,5 @@
 import { Byteable } from "../../../byteable";
-import { Constants } from "../constants";
+import { Constants, PilotRating } from "../constants";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { TeamStats } from "../team-stats";
 import { getChar, getInt, writeChar, writeInt, writeObject } from "../../../hex";
@@ -16,13 +16,13 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public WarheadsHit: number;
   public WarheadsTotal: number;
   public CraftLosses: number;
-  public PilotRating: number;
+  public PilotRating: PilotRating;
   public RatingLabel: string;
   public RebelStats: TeamStats;
   public ImperialStats: TeamStats;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -34,7 +34,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.WarheadsHit = getInt(hex, 0x1456);
     this.WarheadsTotal = getInt(hex, 0x1462);
     this.CraftLosses = getInt(hex, 0x146E);
-    this.PilotRating = getInt(hex, 0x2326);
+    this.PilotRating = getInt(hex, 0x2326) as PilotRating;
     this.RatingLabel = getChar(hex, 0x2392, 32);
     this.RebelStats = new TeamStats(hex.slice(0x3ef2), this.TIE);
     offset = 0x3ef2 + this.RebelStats.getLength();
@@ -43,7 +43,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.PilotFileLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Name: this.Name,
       totalScore: this.totalScore,
@@ -55,16 +55,16 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       CraftLosses: this.CraftLosses,
       PilotRating: this.PilotRatingLabel,
       RatingLabel: this.RatingLabel,
-      RebelStats: this.RebelStats,
-      ImperialStats: this.ImperialStats
+      RebelStats: this.RebelStats.toJSON(),
+      ImperialStats: this.ImperialStats.toJSON(),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
-    writeChar(hex, this.Name, 0x0000);
+    writeChar(hex, this.Name, 0x0000, 14);
     writeInt(hex, this.totalScore, 0x000E);
     writeInt(hex, this.Kills, 0x035E);
     writeInt(hex, this.LasersHit, 0x143E);
@@ -73,7 +73,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     writeInt(hex, this.WarheadsTotal, 0x1462);
     writeInt(hex, this.CraftLosses, 0x146E);
     writeInt(hex, this.PilotRating, 0x2326);
-    writeChar(hex, this.RatingLabel, 0x2392);
+    writeChar(hex, this.RatingLabel, 0x2392, 32);
     writeObject(hex, this.RebelStats, 0x3ef2);
     writeObject(hex, this.ImperialStats, 0x12716);
 

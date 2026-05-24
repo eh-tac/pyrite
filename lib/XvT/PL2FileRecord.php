@@ -36,6 +36,11 @@ class PL2FileRecord extends Base\PL2FileRecordBase implements IPilotFileBSF
     }, $this->getCompletedMissions($isCampaign));
   }
 
+  public function getCampaignTotalScore()
+  {
+    return array_sum($this->getCompletedMissionScores(true));
+  }
+
   public function getCompletedMissionTimes($isCampaign = false)
   {
     return array_map(function (PL2CampaignRecord $mission) {

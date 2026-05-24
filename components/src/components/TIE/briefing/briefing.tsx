@@ -1,6 +1,6 @@
 import { Component, Element, h, Host, JSX, Prop, State, Watch } from "@stencil/core";
 import { Briefing, Event, Mission, Tag, TIEString } from "../../../model/TIE";
-import { EventType } from "../../../model/TIE/event";
+import { EventType } from "../../../model/TIE/constants";
 import { FontFile } from "../../../model/util/font";
 import { DrawingObject } from "../../../view-model/drawing-object";
 import { DrawFGTag } from "./draw-fg-tag";
@@ -9,22 +9,25 @@ import { TIEDrawMap } from "./tie-map";
 
 @Component({
   tag: "pyrite-tie-briefing",
-  styleUrl: "briefing.scss"
+  styleUrl: "briefing.scss",
 })
 export class PyriteTIEBriefing {
   @Prop() public mission?: Mission;
   @State() public time: number = 0;
-  @State() public font: FontFile;
-  @State() public iconBitmap: ImageBitmap;
-  @Element() public dom: HTMLElement;
+  @State()
+  public font!: FontFile;
+  @State()
+  public iconBitmap!: ImageBitmap;
+  @Element()
+  public dom!: HTMLElement;
 
-  protected briefing: Briefing;
+  protected briefing!: Briefing;
   @State() protected timer: any;
-  protected events: Event[];
-  protected drawMap: TIEDrawMap;
-  protected drawObjects: DrawingObject[];
+  protected events!: Event[];
+  protected drawMap!: TIEDrawMap;
+  protected drawObjects!: DrawingObject[];
 
-  private ctx: CanvasRenderingContext2D;
+  private ctx!: CanvasRenderingContext2D;
   private width: number = 586;
   private height: number = 353;
 
@@ -49,7 +52,7 @@ export class PyriteTIEBriefing {
               .then((bmpBlob: Blob) => createImageBitmap(bmpBlob))
               .then((bmp: ImageBitmap) => {
                 this.iconBitmap = bmp;
-                this.ctx = canvas.getContext("2d");
+                this.ctx = canvas.getContext("2d")!;
                 this.init();
                 this.pause();
                 this.tick();
@@ -91,7 +94,7 @@ export class PyriteTIEBriefing {
   }
 
   private skip(): void {
-    const pageBreak = this.events.find((e: Event) => e.EventType === EventType.PageBreak && e.Time > this.time);
+    const pageBreak = this.events.find((e: Event) => e.EventType === EventType.pageBreak && e.Time > this.time);
     // console.log("skip from", this.time, "to", pageBreak);
     if (pageBreak) {
       this.time = pageBreak.Time;
@@ -149,9 +152,9 @@ export class PyriteTIEBriefing {
     this.drawMap = new TIEDrawMap(
       this.ctx,
       this.font,
-      this.mission,
+      this.mission!,
       this.iconBitmap,
-      document.createElement("canvas").getContext("2d")
+      document.createElement("canvas").getContext("2d")!,
     );
     this.drawObjects = [this.drawMap];
     this.draw();
@@ -171,22 +174,22 @@ export class PyriteTIEBriefing {
     }
     for (const event of events) {
       switch (event.EventType) {
-        case EventType.TitleText:
-        case EventType.CaptionText:
-        case EventType.MoveMap:
-        case EventType.ZoomMap:
+        case EventType.titleText:
+        case EventType.captionText:
+        case EventType.moveMap:
+        case EventType.zoomMap:
           this.drawMap.processEvent(event);
           break;
         default:
-          if (event.EventType >= EventType.FGTag1 && event.EventType <= EventType.FGTag8) {
+          if (event.EventType >= EventType.fgTag1 && event.EventType <= EventType.fgTag8) {
             this.drawObjects.push(new DrawFGTag(this.drawMap, event));
-          } else if (event.EventType >= EventType.TextTag1 && event.EventType <= EventType.TextTag8) {
+          } else if (event.EventType >= EventType.textTag1 && event.EventType <= EventType.textTag8) {
             this.drawObjects.push(new DrawTextTag(this.drawMap, event));
-          } else if (event.EventType === EventType.ClearFGTags) {
-            this.drawObjects = this.drawObjects.filter(draw => !(draw instanceof DrawFGTag));
-          } else if (event.EventType === EventType.ClearTextTags) {
-            this.drawObjects = this.drawObjects.filter(draw => !(draw instanceof DrawTextTag));
-          } else if (event.EventType === EventType.PageBreak) {
+          } else if (event.EventType === EventType.clearFgTags) {
+            this.drawObjects = this.drawObjects.filter((draw) => !(draw instanceof DrawFGTag));
+          } else if (event.EventType === EventType.clearTextTags) {
+            this.drawObjects = this.drawObjects.filter((draw) => !(draw instanceof DrawTextTag));
+          } else if (event.EventType === EventType.pageBreak) {
             // page break only matters for navigation (not entirely true but good enough)
           } else {
             console.warn("unhandled event", event);

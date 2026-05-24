@@ -13,8 +13,8 @@ export abstract class PL2CampaignProgressStateBase extends PyriteBase implements
   public PlayerCount: number;
   public totalScore: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -27,19 +27,19 @@ export abstract class PL2CampaignProgressStateBase extends PyriteBase implements
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       unknown1: this.unknown1,
       CurrentMissionNumber: this.CurrentMissionNumber,
       totalMissionCount: this.totalMissionCount,
       CurrentMissionComplete: this.CurrentMissionComplete,
       PlayerCount: this.PlayerCount,
-      totalScore: this.totalScore
+      totalScore: this.totalScore,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.unknown1, 0x0000);

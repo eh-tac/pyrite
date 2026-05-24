@@ -13,8 +13,8 @@ export abstract class RowBase extends PyriteBase implements Byteable {
   public ColorIndexes: number[];
   public Operations: OpCode[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -38,31 +38,31 @@ export abstract class RowBase extends PyriteBase implements Byteable {
     this.RowLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Length: this.Length,
       Left: this.Left,
       Top: this.Top,
       ColorIndexes: this.ColorIndexes,
-      Operations: this.Operations
+      Operations: this.Operations.map((t) => t.toJSON()),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Length, 0x00);
     writeShort(hex, this.Left, 0x02);
     writeShort(hex, this.Top, 0x04);
     offset = 0x06;
-    for (let i = 0; i < this.ColorCount(); i++) {
+    for (let i = 0; i < this.ColorIndexes.length; i++) {
       const t = this.ColorIndexes[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x06;
-    for (let i = 0; i < this.OpCount(); i++) {
+    for (let i = 0; i < this.Operations.length; i++) {
       const t = this.Operations[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
@@ -71,8 +71,8 @@ export abstract class RowBase extends PyriteBase implements Byteable {
     return hex;
   }
   
-  protected abstract ColorCount();
-  protected abstract OpCount();
+  protected abstract ColorCount(): number;
+  protected abstract OpCount(): number;
   public getLength(): number {
     return this.RowLength;
   }

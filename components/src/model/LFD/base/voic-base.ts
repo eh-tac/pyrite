@@ -16,8 +16,8 @@ export abstract class VoicBase extends PyriteBase implements Byteable {
   public Data: VoicData;
   public Terminator: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -47,47 +47,49 @@ export abstract class VoicBase extends PyriteBase implements Byteable {
     this.Data = new VoicData(hex.slice(0x2A), this.TIE);
     offset = 0x2A + this.Data.getLength();
     this.Terminator = getByte(hex, offset);
+    offset += 1;
     this.VoicLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
-      Header: this.Header,
+      Header: this.Header.toJSON(),
       Creative: this.Creative,
       Abort: this.Abort,
       Version: this.Version,
       VersionHash: this.VersionHash,
-      Data: this.Data,
-      Terminator: this.Terminator
+      Data: this.Data.toJSON(),
+      Terminator: this.Terminator,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeObject(hex, this.Header, 0x00);
-    writeChar(hex, this.Creative, 0x10);
+    writeChar(hex, this.Creative, 0x10, 19);
     offset = 0x23;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.Abort.length; i++) {
       const t = this.Abort[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x26;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.Version.length; i++) {
       const t = this.Version[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x28;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.VersionHash.length; i++) {
       const t = this.VersionHash[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     writeObject(hex, this.Data, 0x2A);
     writeByte(hex, this.Terminator, offset);
+    offset += 1;
 
     return hex;
   }

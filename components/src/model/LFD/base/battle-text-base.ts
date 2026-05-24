@@ -16,8 +16,8 @@ export abstract class BattleTextBase extends PyriteBase implements Byteable {
   public MissionFiles: LString;
   public MissionDescriptions: LString[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -41,30 +41,32 @@ export abstract class BattleTextBase extends PyriteBase implements Byteable {
     this.BattleTextLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
-      Header: this.Header,
+      Header: this.Header.toJSON(),
       NumStrings: this.NumStrings,
-      Names: this.Names,
-      Titles: this.Titles,
-      Image: this.Image,
-      MissionFiles: this.MissionFiles,
-      MissionDescriptions: this.MissionDescriptions
+      Names: this.Names.toJSON(),
+      Titles: this.Titles.toJSON(),
+      Image: this.Image.toJSON(),
+      MissionFiles: this.MissionFiles.toJSON(),
+      MissionDescriptions: this.MissionDescriptions.map((t) => t.toJSON()),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeObject(hex, this.Header, 0x00);
     writeShort(hex, this.NumStrings, 0x10);
     writeObject(hex, this.Names, 0x12);
     writeObject(hex, this.Titles, offset);
+    offset += this.Titles.getLength();
     writeObject(hex, this.Image, offset);
+    offset += this.Image.getLength();
     writeObject(hex, this.MissionFiles, offset);
-    offset = offset;
-    for (let i = 0; i < this.NumMissions(); i++) {
+    offset += this.MissionFiles.getLength();
+    for (let i = 0; i < this.MissionDescriptions.length; i++) {
       const t = this.MissionDescriptions[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
@@ -73,7 +75,7 @@ export abstract class BattleTextBase extends PyriteBase implements Byteable {
     return hex;
   }
   
-  protected abstract NumMissions();
+  protected abstract NumMissions(): number;
   public getLength(): number {
     return this.BattleTextLength;
   }

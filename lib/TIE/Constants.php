@@ -40,10 +40,10 @@ class Constants
         33 => "Cargo Ferry",
         34 => "Modular Conveyor",
         35 => "Container Transport",
-        36 => "Unused",
+        36 => "Unused2",
         37 => "Murrian Transport",
         38 => "Corellian Transport",
-        39 => "Unused",
+        39 => "Unused3",
         40 => "Corellian Corvette",
         41 => "Modified Corvette",
         42 => "Nebulon-B Frigate",
@@ -58,7 +58,7 @@ class Constants
         51 => "Interdictor Cruiser",
         52 => "Victory-class Star Destroyer",
         53 => "Imperator-class Star Destroyer",
-        54 => "Unused",
+        54 => "Unused4",
         55 => "Container E",
         56 => "Container F",
         57 => "Container G",
@@ -76,20 +76,20 @@ class Constants
         69 => "X/7 Factory",
         70 => "Satellite 1",
         71 => "Satellite 2",
-        72 => "Unused",
-        73 => "Unused",
-        74 => "Unused",
+        72 => "Unused5",
+        73 => "Unused6",
+        74 => "Unused7",
         75 => "Mine A",
         76 => "Mine B",
         77 => "Mine C",
-        78 => "Unused",
-        79 => "Unused",
+        78 => "Unused9",
+        79 => "UnusedA",
         80 => "Probe A",
         81 => "Probe B",
-        82 => "Unused",
+        82 => "UnusedB",
         83 => "Nav Buoy A",
         84 => "Nav Buoy B",
-        85 => "Unused",
+        85 => "UnusedC",
         86 => "Asteroid Field",
         87 => "Planet",
     ];
@@ -172,14 +172,14 @@ class Constants
     public static $CRAFTTYPE_MINEA = 75;
     public static $CRAFTTYPE_MINEB = 76;
     public static $CRAFTTYPE_MINEC = 77;
-    public static $CRAFTTYPE_UNUSED8 = 78;
-    public static $CRAFTTYPE_UNUSED9 = 79;
+    public static $CRAFTTYPE_UNUSED9 = 78;
+    public static $CRAFTTYPE_UNUSEDA = 79;
     public static $CRAFTTYPE_PROBEA = 80;
     public static $CRAFTTYPE_PROBEB = 81;
-    public static $CRAFTTYPE_UNUSED10 = 82;
+    public static $CRAFTTYPE_UNUSEDB = 82;
     public static $CRAFTTYPE_NAVBUOYA = 83;
     public static $CRAFTTYPE_NAVBUOYB = 84;
-    public static $CRAFTTYPE_UNUSED11 = 85;
+    public static $CRAFTTYPE_UNUSEDC = 85;
     public static $CRAFTTYPE_ASTEROIDFIELD = 86;
     public static $CRAFTTYPE_PLANET = 87;
 
@@ -256,21 +256,21 @@ class Constants
         69 => "FAC/1",
         70 => "SAT 1",
         71 => "SAT/2",
-        72 => "UNK",
-        73 => "UNK",
-        74 => "UNK",
+        72 => "UNK1",
+        73 => "UNK2",
+        74 => "UNK3",
         75 => "MINE 1",
         76 => "MINE B",
         77 => "MINE C",
-        78 => "UNK",
-        79 => "UNK",
+        78 => "UNK4",
+        79 => "UNK5",
         80 => "PROBE A",
         81 => "PROBE B",
-        82 => "UNK",
+        82 => "UNK6",
         83 => "NAV 1",
         84 => "NAV 2",
         85 => "Asteroid",
-        86 => "Asteroid",
+        86 => "Asteroid2",
         87 => "Planet",
     ];
 
@@ -346,7 +346,7 @@ class Constants
     public static $CRAFTABBR_FAC1 = 69;
     public static $CRAFTABBR_SAT1 = 70;
     public static $CRAFTABBR_SAT2 = 71;
-    public static $CRAFTABBR_UNK = 72;
+    public static $CRAFTABBR_UNK1 = 72;
     public static $CRAFTABBR_UNK2 = 73;
     public static $CRAFTABBR_UNK3 = 74;
     public static $CRAFTABBR_MINE1 = 75;
@@ -698,16 +698,16 @@ class Constants
         27 => "SS Patrol and Disable",
         28 => "SS Hold Steady",
         29 => "SS Go Home",
-        30 => "SS Wait",
+        30 => "SS Wait2",
         31 => "SS Board",
         32 => "Board to Repair",
-        33 => "Hold Station",
+        33 => "Hold Station2",
         34 => "Hold Steady",
         35 => "SS Hold Station",
         36 => "SS Kamikaze?",
-        37 => "SS Kamikaze?",
+        37 => "SS Kamikaze2",
         38 => "SS Disabled",
-        39 => "SS Disabled",
+        39 => "SS Disabled2",
     ];
 
     public static $ORDER_HOLDSTATION = 0;
@@ -806,7 +806,7 @@ class Constants
         31 => "SS witing for boarding craft to appear",
         32 => "SS attacking",
         33 => "SS disabling",
-        34 => "SS disabling?",
+        34 => "SS disabling2",
         35 => "SS flying home",
         36 => "Rebels",
         37 => "Imperials",
@@ -928,7 +928,7 @@ class Constants
         1 => "Red",
         2 => "Purple",
         3 => "Blue",
-        4 => "Red",
+        4 => "Red2",
         5 => "Light Red",
         6 => "Gray",
         7 => "White",

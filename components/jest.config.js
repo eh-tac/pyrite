@@ -12,13 +12,13 @@ module.exports = {
           parser: {
             syntax: "typescript",
             tsx: false,
-            decorators: true
-          }
+            decorators: true,
+          },
         },
         module: {
-          type: "commonjs"
-        }
-      }
-    ]
-  }
+          type: "commonjs",
+        },
+      },
+    ],
+  },
 };

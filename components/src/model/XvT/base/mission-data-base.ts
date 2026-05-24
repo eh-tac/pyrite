@@ -1,5 +1,5 @@
 import { Byteable } from "../../../byteable";
-import { Constants } from "../constants";
+import { BestRating, Constants } from "../constants";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { getInt, writeInt } from "../../../hex";
 // tslint:disable member-ordering
@@ -13,12 +13,12 @@ export abstract class MissionDataBase extends PyriteBase implements Byteable {
   public BestScore: number;
   public BestTime: number;
   public BestTimeSecond: number;
-  public BestRating: number;
+  public BestRating: BestRating;
   public Something: number;
   public Other: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -28,13 +28,13 @@ export abstract class MissionDataBase extends PyriteBase implements Byteable {
     this.BestScore = getInt(hex, 0x0C);
     this.BestTime = getInt(hex, 0x10);
     this.BestTimeSecond = getInt(hex, 0x14);
-    this.BestRating = getInt(hex, 0x18);
+    this.BestRating = getInt(hex, 0x18) as BestRating;
     this.Something = getInt(hex, 0x1C);
     this.Other = getInt(hex, 0x20);
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       AttemptCount: this.AttemptCount,
       WinCount: this.WinCount,
@@ -44,12 +44,12 @@ export abstract class MissionDataBase extends PyriteBase implements Byteable {
       BestTimeSecond: this.BestTimeSecond,
       BestRating: this.BestRatingLabel,
       Something: this.Something,
-      Other: this.Other
+      Other: this.Other,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.AttemptCount, 0x00);

@@ -1026,7 +1026,7 @@ EventType
 	Var2	Rotation (0, 90° CCW, 180º, 90° CW, mirror)
 1E	Change Region
 	Var1	Region #
-*1F	ZOOM_PARAGRAPH
+1F	ZOOM_PARAGRAPH
 	Var1	String#
 22	End Briefing
 

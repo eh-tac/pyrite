@@ -1,11 +1,16 @@
+import { IFlightGroup } from "../pyrite-base";
 import { FlightGroupBase } from "./base/flight-group-base";
 import { Constants } from "./constants";
 
-export class FlightGroup extends FlightGroupBase {
+export class FlightGroup extends FlightGroupBase implements IFlightGroup {
   public beforeConstruct(): void {}
 
   public get label(): string {
     return this.toString();
+  }
+
+  public get isPlayer(): boolean {
+    return this.PlayerNumber !== 0;
   }
 
   public get CraftTypeAbbr(): string {

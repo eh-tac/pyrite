@@ -18,8 +18,8 @@ export abstract class IconBase extends PyriteBase implements Byteable {
   public Pitch: number;
   public Roll: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -55,7 +55,7 @@ export abstract class IconBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       CraftType: this.CraftType,
       IFF: this.IFF,
@@ -67,12 +67,12 @@ export abstract class IconBase extends PyriteBase implements Byteable {
       SpecialCargoCraft: this.SpecialCargoCraft,
       Yaw: this.Yaw,
       Pitch: this.Pitch,
-      Roll: this.Roll
+      Roll: this.Roll,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.CraftType, 0x000);
@@ -80,21 +80,21 @@ export abstract class IconBase extends PyriteBase implements Byteable {
     writeShort(hex, this.NumberOfCraft, 0x004);
     writeShort(hex, this.NumberOfWaves, 0x006);
     offset = 0x008;
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < this.Name.length; i++) {
       const t = this.Name[i];
-      writeChar(hex, t, offset);
+      writeChar(hex, t, offset, 1);
       offset += 1;
     }
     offset = 0x018;
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < this.Cargo.length; i++) {
       const t = this.Cargo[i];
-      writeChar(hex, t, offset);
+      writeChar(hex, t, offset, 1);
       offset += 1;
     }
     offset = 0x028;
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < this.SpecialCargo.length; i++) {
       const t = this.SpecialCargo[i];
-      writeChar(hex, t, offset);
+      writeChar(hex, t, offset, 1);
       offset += 1;
     }
     writeShort(hex, this.SpecialCargoCraft, 0x038);

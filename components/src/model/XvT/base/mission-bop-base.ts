@@ -22,8 +22,8 @@ export abstract class MissionBOPBase extends PyriteBase implements Byteable {
   public GlobalGoalStrings: string[];
   public MissionDescriptions: string[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -68,97 +68,89 @@ export abstract class MissionBOPBase extends PyriteBase implements Byteable {
     for (let i = 0; i < this.FGGoalStringCount(); i++) {
       const t = getString(hex, offset, 64);
       this.FGGoalStrings.push(t);
-      offset += t.length + 1;
+      offset += 64;
     }
     this.GlobalGoalStrings = [];
     offset = offset;
     for (let i = 0; i < 360; i++) {
       const t = getString(hex, offset, 64);
       this.GlobalGoalStrings.push(t);
-      offset += t.length + 1;
+      offset += 64;
     }
     this.MissionDescriptions = [];
     offset = offset;
     for (let i = 0; i < 3; i++) {
       const t = getString(hex, offset, 4096);
       this.MissionDescriptions.push(t);
-      offset += t.length + 1;
+      offset += 4096;
     }
     this.MissionBOPLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
-      FileHeader: this.FileHeader,
-      FlightGroups: this.FlightGroups,
-      Messages: this.Messages,
-      GlobalGoals: this.GlobalGoals,
-      Teams: this.Teams,
-      Briefing: this.Briefing,
+      FileHeader: this.FileHeader.toJSON(),
+      FlightGroups: this.FlightGroups.map((t) => t.toJSON()),
+      Messages: this.Messages.map((t) => t.toJSON()),
+      GlobalGoals: this.GlobalGoals.map((t) => t.toJSON()),
+      Teams: this.Teams.map((t) => t.toJSON()),
+      Briefing: this.Briefing.map((t) => t.toJSON()),
       FGGoalStrings: this.FGGoalStrings,
       GlobalGoalStrings: this.GlobalGoalStrings,
-      MissionDescriptions: this.MissionDescriptions
+      MissionDescriptions: this.MissionDescriptions,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeObject(hex, this.FileHeader, 0x000);
-    offset = offset;
-    for (let i = 0; i < this.FileHeader.NumFGs; i++) {
+    for (let i = 0; i < this.FlightGroups.length; i++) {
       const t = this.FlightGroups[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < this.FileHeader.NumMessages; i++) {
+    for (let i = 0; i < this.Messages.length; i++) {
       const t = this.Messages[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.GlobalGoals.length; i++) {
       const t = this.GlobalGoals[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.Teams.length; i++) {
       const t = this.Teams[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.Briefing.length; i++) {
       const t = this.Briefing[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < this.FGGoalStringCount(); i++) {
+    for (let i = 0; i < this.FGGoalStrings.length; i++) {
       const t = this.FGGoalStrings[i];
-      writeString(hex, t, offset);
-      offset += t.length + 1;
+      writeString(hex, t, offset, 64);
+      offset += 64;
     }
-    offset = offset;
-    for (let i = 0; i < 360; i++) {
+    for (let i = 0; i < this.GlobalGoalStrings.length; i++) {
       const t = this.GlobalGoalStrings[i];
-      writeString(hex, t, offset);
-      offset += t.length + 1;
+      writeString(hex, t, offset, 64);
+      offset += 64;
     }
-    offset = offset;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.MissionDescriptions.length; i++) {
       const t = this.MissionDescriptions[i];
-      writeString(hex, t, offset);
-      offset += t.length + 1;
+      writeString(hex, t, offset, 4096);
+      offset += 4096;
     }
 
     return hex;
   }
   
-  protected abstract FGGoalStringCount();
+  protected abstract FGGoalStringCount(): number;
   public getLength(): number {
     return this.MissionBOPLength;
   }

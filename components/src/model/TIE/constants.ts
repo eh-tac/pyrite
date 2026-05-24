@@ -1,5 +1,5 @@
 export class Constants {
-  public static CRAFTTYPE = {
+  public static CRAFTTYPE: Record<CraftType, string>  = {
     0: "None",
     1: "X-wing",
     2: "Y-wing",
@@ -36,10 +36,10 @@ export class Constants {
     33: "Cargo Ferry",
     34: "Modular Conveyor",
     35: "Container Transport",
-    36: "Unused",
+    36: "Unused2",
     37: "Murrian Transport",
     38: "Corellian Transport",
-    39: "Unused",
+    39: "Unused3",
     40: "Corellian Corvette",
     41: "Modified Corvette",
     42: "Nebulon-B Frigate",
@@ -54,7 +54,7 @@ export class Constants {
     51: "Interdictor Cruiser",
     52: "Victory-class Star Destroyer",
     53: "Imperator-class Star Destroyer",
-    54: "Unused",
+    54: "Unused4",
     55: "Container E",
     56: "Container F",
     57: "Container G",
@@ -72,25 +72,25 @@ export class Constants {
     69: "X/7 Factory",
     70: "Satellite 1",
     71: "Satellite 2",
-    72: "Unused",
-    73: "Unused",
-    74: "Unused",
+    72: "Unused5",
+    73: "Unused6",
+    74: "Unused7",
     75: "Mine A",
     76: "Mine B",
     77: "Mine C",
-    78: "Unused",
-    79: "Unused",
+    78: "Unused9",
+    79: "UnusedA",
     80: "Probe A",
     81: "Probe B",
-    82: "Unused",
+    82: "UnusedB",
     83: "Nav Buoy A",
     84: "Nav Buoy B",
-    85: "Unused",
+    85: "UnusedC",
     86: "Asteroid Field",
     87: "Planet",
   };
 
-  public static CRAFTABBR = {
+  public static CRAFTABBR: Record<CraftAbbr, string>  = {
     0: "None",
     1: "X-W",
     2: "Y-W",
@@ -163,25 +163,25 @@ export class Constants {
     69: "FAC/1",
     70: "SAT 1",
     71: "SAT/2",
-    72: "UNK",
-    73: "UNK",
-    74: "UNK",
+    72: "UNK1",
+    73: "UNK2",
+    74: "UNK3",
     75: "MINE 1",
     76: "MINE B",
     77: "MINE C",
-    78: "UNK",
-    79: "UNK",
+    78: "UNK4",
+    79: "UNK5",
     80: "PROBE A",
     81: "PROBE B",
-    82: "UNK",
+    82: "UNK6",
     83: "NAV 1",
     84: "NAV 2",
     85: "Asteroid",
-    86: "Asteroid",
+    86: "Asteroid2",
     87: "Planet",
   };
 
-  public static STATUS = {
+  public static STATUS: Record<Status, string>  = {
     0: "None",
     1: "2X Warheads",
     2: "1/2 Warheads",
@@ -195,7 +195,7 @@ export class Constants {
     20: "Invincible",
   };
 
-  public static WARHEAD = {
+  public static WARHEAD: Record<Warhead, string>  = {
     0: "None",
     1: "Heavy Rocket",
     2: "Space Bomb",
@@ -206,13 +206,13 @@ export class Constants {
     7: "Mag Pulse Torpedo",
   };
 
-  public static BEAM = {
+  public static BEAM: Record<Beam, string>  = {
     0: "None",
     1: "Tractor Beam",
     2: "Jamming Beam",
   };
 
-  public static GROUPAI = {
+  public static GROUPAI: Record<GroupAI, string>  = {
     0: "Rookie (None)",
     1: "Novice",
     2: "Veteran",
@@ -221,14 +221,14 @@ export class Constants {
     5: "Top Ace (Invincible)",
   };
 
-  public static MARKINGS = {
+  public static MARKINGS: Record<Markings, string>  = {
     0: "Red (TIE - None)",
     1: "Gold (TIE - Red)",
     2: "Blue (TIE - Gold)",
     3: "Green (TIE - Blue)",
   };
 
-  public static FORMATION = {
+  public static FORMATION: Record<Formation, string>  = {
     0: "Vic",
     1: "Finger Four",
     2: "Line Astern",
@@ -244,7 +244,7 @@ export class Constants {
     12: "Reverse High Vic",
   };
 
-  public static ARRIVALDIFFICULTY = {
+  public static ARRIVALDIFFICULTY: Record<ArrivalDifficulty, string>  = {
     0: "All",
     1: "Easy",
     2: "Medium",
@@ -253,7 +253,7 @@ export class Constants {
     5: "Easy, Medium",
   };
 
-  public static CONDITION = {
+  public static CONDITION: Record<Condition, string>  = {
     0: "Always (true)",
     1: "Created",
     2: "Destroyed",
@@ -281,7 +281,7 @@ export class Constants {
     24: "Unknown (arrive?)",
   };
 
-  public static VARIABLETYPE = {
+  public static VARIABLETYPE: Record<VariableType, string>  = {
     0: "None",
     1: "Flight Group",
     2: "CraftType (enum)",
@@ -295,7 +295,7 @@ export class Constants {
     10: "Unknown",
   };
 
-  public static CRAFTCATEGORY = {
+  public static CRAFTCATEGORY: Record<CraftCategory, string>  = {
     0: "Starfighters",
     1: "Transports",
     2: "Freighters/Containers",
@@ -305,13 +305,13 @@ export class Constants {
     6: "Mines",
   };
 
-  public static OBJECTCATEGORY = {
+  public static OBJECTCATEGORY: Record<ObjectCategory, string>  = {
     0: "Craft",
     1: "Weapons",
     2: "Space Objects",
   };
 
-  public static TRIGGERAMOUNT = {
+  public static TRIGGERAMOUNT: Record<TriggerAmount, string>  = {
     0: "100%",
     1: "75%",
     2: "50%",
@@ -330,7 +330,7 @@ export class Constants {
     15: "All but one of first wave",
   };
 
-  public static GOALAMOUNT = {
+  public static GOALAMOUNT: Record<GoalAmount, string>  = {
     0: "100%",
     1: "50%",
     2: "At least one",
@@ -338,7 +338,7 @@ export class Constants {
     4: "Special craft",
   };
 
-  public static ABORTTRIGGER = {
+  public static ABORTTRIGGER: Record<AbortTrigger, string>  = {
     0: "None",
     1: "0% Shields",
     2: "Systems 75% (fighters and transports only)",
@@ -347,7 +347,7 @@ export class Constants {
     5: "Attacked",
   };
 
-  public static ORDER = {
+  public static ORDER: Record<Order, string>  = {
     0: "Hold Station",
     1: "Go Home",
     2: "Circle",
@@ -378,19 +378,19 @@ export class Constants {
     27: "SS Patrol and Disable",
     28: "SS Hold Steady",
     29: "SS Go Home",
-    30: "SS Wait",
+    30: "SS Wait2",
     31: "SS Board",
     32: "Board to Repair",
-    33: "Hold Station",
+    33: "Hold Station2",
     34: "Hold Steady",
     35: "SS Hold Station",
     36: "SS Kamikaze?",
-    37: "SS Kamikaze?",
+    37: "SS Kamikaze2",
     38: "SS Disabled",
-    39: "SS Disabled",
+    39: "SS Disabled2",
   };
 
-  public static CRAFTWHEN = {
+  public static CRAFTWHEN: Record<CraftWhen, string>  = {
     1: "Boarding",
     2: "Boarded",
     3: "Defence",
@@ -401,7 +401,7 @@ export class Constants {
     10: "Non-player's craft",
   };
 
-  public static MISC = {
+  public static MISC: Record<Misc, string>  = {
     0: "Rookie craft",
     1: "Novice craft",
     2: "Officer craft",
@@ -436,7 +436,7 @@ export class Constants {
     31: "SS witing for boarding craft to appear",
     32: "SS attacking",
     33: "SS disabling",
-    34: "SS disabling?",
+    34: "SS disabling2",
     35: "SS flying home",
     36: "Rebels",
     37: "Imperials",
@@ -452,7 +452,7 @@ export class Constants {
     54: "Mines",
   };
 
-  public static EVENTTYPE = {
+  public static EVENTTYPE: Record<EventType, string>  = {
     3: "Page Break",
     4: "Title Text",
     5: "Caption Text",
@@ -479,56 +479,56 @@ export class Constants {
     34: "End Briefing",
   };
 
-  public static TEXTTAGCOLOR = {
+  public static TEXTTAGCOLOR: Record<TextTagColor, string>  = {
     0: "Green",
     1: "Red",
     2: "Purple",
     3: "Blue",
-    4: "Red",
+    4: "Red2",
     5: "Light Red",
     6: "Gray",
     7: "White",
   };
 
-  public static BRIEFINGOFFICERS = {
+  public static BRIEFINGOFFICERS: Record<BriefingOfficers, string>  = {
     1: "Both officers",
     2: "Flight Officer",
     3: "Secret Order",
   };
 
-  public static QUESTIONTYPE = {
+  public static QUESTIONTYPE: Record<QuestionType, string>  = {
     0: "None",
     1: "Primary Goals",
     2: "Secondary Goals",
   };
 
-  public static QUESTIONCONDITION = {
+  public static QUESTIONCONDITION: Record<QuestionCondition, string>  = {
     0: "None",
     4: "Successful",
     5: "Failed",
   };
 
-  public static MESSAGECOLOR = {
+  public static MESSAGECOLOR: Record<MessageColor, string>  = {
     0: "Red",
     1: "Green",
     2: "Blue",
     3: "Purple",
   };
 
-  public static IFFCOLOR = {
+  public static IFFCOLOR: Record<IFFColor, string>  = {
     0: "Green",
     1: "Red",
     2: "Purple",
     3: "Blue",
   };
 
-  public static PILOTSTATUS = {
+  public static PILOTSTATUS: Record<PilotStatus, string>  = {
     0: "Alive",
     1: "Captured",
     2: "Killed",
   };
 
-  public static PILOTRANK = {
+  public static PILOTRANK: Record<PilotRank, string>  = {
     0: "Cadet",
     1: "Officer",
     2: "Lieutenant",
@@ -537,13 +537,13 @@ export class Constants {
     5: "General",
   };
 
-  public static PILOTDIFFICULTY = {
+  public static PILOTDIFFICULTY: Record<PilotDifficulty, string>  = {
     0: "Easy",
     1: "Medium",
     2: "Hard",
   };
 
-  public static TRAININGCRAFT = {
+  public static TRAININGCRAFT: Record<TrainingCraft, string>  = {
     0: "TIE Fighter",
     1: "TIE Interceptor",
     2: "TIE Bomber",
@@ -553,7 +553,7 @@ export class Constants {
     6: "Missile Boat",
   };
 
-  public static TRAININGCRAFTABBR = {
+  public static TRAININGCRAFTABBR: Record<TrainingCraftAbbr, string>  = {
     0: "T/F",
     1: "T/I",
     2: "T/B",
@@ -563,14 +563,14 @@ export class Constants {
     6: "MIS",
   };
 
-  public static BATTLESTATUS = {
+  public static BATTLESTATUS: Record<BattleStatus, string>  = {
     0: "None",
     1: "In Progress",
     2: "Incomplete",
     3: "Completed",
   };
 
-  public static SECRETORDER = {
+  public static SECRETORDER: Record<SecretOrder, string>  = {
     0: "None",
     1: "First Circle",
     2: "Second Circle",
@@ -622,10 +622,10 @@ export enum CraftType {
   cargoFerry = 33,
   modularConveyor = 34,
   containerTransport = 35,
-  // duplicate unused = 36,
+  unused2 = 36,
   murrianTransport = 37,
   corellianTransport = 38,
-  // duplicate unused = 39,
+  unused3 = 39,
   corellianCorvette = 40,
   modifiedCorvette = 41,
   nebulonBFrigate = 42,
@@ -640,7 +640,7 @@ export enum CraftType {
   interdictorCruiser = 51,
   victoryclassStarDestroyer = 52,
   imperatorclassStarDestroyer = 53,
-  // duplicate unused = 54,
+  unused4 = 54,
   containerE = 55,
   containerF = 56,
   containerG = 57,
@@ -658,20 +658,20 @@ export enum CraftType {
   x7Factory = 69,
   satellite1 = 70,
   satellite2 = 71,
-  // duplicate unused = 72,
-  // duplicate unused = 73,
-  // duplicate unused = 74,
+  unused5 = 72,
+  unused6 = 73,
+  unused7 = 74,
   mineA = 75,
   mineB = 76,
   mineC = 77,
-  // duplicate unused = 78,
-  // duplicate unused = 79,
+  unused9 = 78,
+  unusedA = 79,
   probeA = 80,
   probeB = 81,
-  // duplicate unused = 82,
+  unusedB = 82,
   navBuoyA = 83,
   navBuoyB = 84,
-  // duplicate unused = 85,
+  unusedC = 85,
   asteroidField = 86,
   planet = 87,
 }
@@ -749,21 +749,21 @@ export enum CraftAbbr {
   fac1 = 69,
   sat1 = 70,
   sat2 = 71,
-  unk = 72,
-  // duplicate unk = 73,
-  // duplicate unk = 74,
+  unk1 = 72,
+  unk2 = 73,
+  unk3 = 74,
   mine1 = 75,
   mineB = 76,
   mineC = 77,
-  // duplicate unk = 78,
-  // duplicate unk = 79,
+  unk4 = 78,
+  unk5 = 79,
   probeA = 80,
   probeB = 81,
-  // duplicate unk = 82,
+  unk6 = 82,
   nav1 = 83,
   nav2 = 84,
   asteroid = 85,
-  // duplicate asteroid = 86,
+  asteroid2 = 86,
   planet = 87,
 }
 
@@ -964,16 +964,16 @@ export enum Order {
   ssPatrolAndDisable = 27,
   ssHoldSteady = 28,
   ssGoHome = 29,
-  // duplicate ssWait = 30,
+  ssWait2 = 30,
   ssBoard = 31,
   boardToRepair = 32,
-  // duplicate holdStation = 33,
+  holdStation2 = 33,
   holdSteady = 34,
   ssHoldStation = 35,
   ssKamikaze = 36,
-  // duplicate ssKamikaze = 37,
+  ssKamikaze2 = 37,
   ssDisabled = 38,
-  // duplicate ssDisabled = 39,
+  ssDisabled2 = 39,
 }
 
 export enum CraftWhen {
@@ -1022,7 +1022,7 @@ export enum Misc {
   ssWitingForBoardingCraftToAppear = 31,
   ssAttacking = 32,
   ssDisabling = 33,
-  // duplicate ssDisabling = 34,
+  ssDisabling2 = 34,
   ssFlyingHome = 35,
   rebels = 36,
   imperials = 37,
@@ -1070,7 +1070,7 @@ export enum TextTagColor {
   red = 1,
   purple = 2,
   blue = 3,
-  // duplicate red = 4,
+  red2 = 4,
   lightRed = 5,
   gray = 6,
   white = 7,

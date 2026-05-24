@@ -14,8 +14,8 @@ export abstract class PLTTeamResultRecordBase extends PyriteBase implements Byte
   public sharedKills: number;
   public losses: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -29,7 +29,7 @@ export abstract class PLTTeamResultRecordBase extends PyriteBase implements Byte
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       totalMissionScore: this.totalMissionScore,
       isMissionComplete: this.isMissionComplete,
@@ -37,12 +37,12 @@ export abstract class PLTTeamResultRecordBase extends PyriteBase implements Byte
       timeMissionComplete: this.timeMissionComplete,
       fullKills: this.fullKills,
       sharedKills: this.sharedKills,
-      losses: this.losses
+      losses: this.losses,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.totalMissionScore, 0x0000);

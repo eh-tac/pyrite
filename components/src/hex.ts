@@ -80,10 +80,6 @@ export function writeChar(hex: ArrayBuffer, value: string, pos: number = 0, leng
   const view = new Uint8Array(hex);
   for (let i = 0; i < length; i++) {
     view[pos + i] = i < value.length ? value.charCodeAt(i) : 0;
-    console.log(
-      "writing char " + (value.length ? value.charAt(i) : 0) + " at position " + (pos + i),
-      "with char code " + (value.length ? value.charCodeAt(i) : 0),
-    );
   }
 }
 

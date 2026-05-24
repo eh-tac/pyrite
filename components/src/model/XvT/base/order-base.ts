@@ -1,5 +1,5 @@
 import { Byteable } from "../../../byteable";
-import { Constants } from "../constants";
+import { Constants, Order, VariableType } from "../constants";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { getBool, getByte, getString, writeBool, writeByte, writeString } from "../../../hex";
 // tslint:disable member-ordering
@@ -7,47 +7,47 @@ import { getBool, getByte, getString, writeBool, writeByte, writeString } from "
 
 export abstract class OrderBase extends PyriteBase implements Byteable {
   public readonly ORDERLENGTH: number = 82;
-  public Order: number;
+  public Order: Order;
   public Throttle: number;
   public Variable1: number;
   public Variable2: number;
   public Unknown6: number;
   public Unknown7: number;
-  public Target3Type: number;
-  public Target4Type: number;
+  public Target3Type: VariableType;
+  public Target4Type: VariableType;
   public Target3: number;
   public Target4: number;
   public Target3OrTarget4: boolean;
   public Unknown8: number;
-  public Target1Type: number;
+  public Target1Type: VariableType;
   public Target1: number;
-  public Target2Type: number;
+  public Target2Type: VariableType;
   public Target2: number;
   public Target1OrTarget2: boolean;
   public Unknown9: number;
   public Speed: number;
   public Designation: string;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
-    this.Order = getByte(hex, 0x00);
+    this.Order = getByte(hex, 0x00) as Order;
     this.Throttle = getByte(hex, 0x01);
     this.Variable1 = getByte(hex, 0x02);
     this.Variable2 = getByte(hex, 0x03);
     this.Unknown6 = getByte(hex, 0x04);
     this.Unknown7 = getByte(hex, 0x05);
-    this.Target3Type = getByte(hex, 0x06);
-    this.Target4Type = getByte(hex, 0x07);
+    this.Target3Type = getByte(hex, 0x06) as VariableType;
+    this.Target4Type = getByte(hex, 0x07) as VariableType;
     this.Target3 = getByte(hex, 0x08);
     this.Target4 = getByte(hex, 0x09);
     this.Target3OrTarget4 = getBool(hex, 0x0A);
     this.Unknown8 = getByte(hex, 0x0B);
-    this.Target1Type = getByte(hex, 0x0C);
+    this.Target1Type = getByte(hex, 0x0C) as VariableType;
     this.Target1 = getByte(hex, 0x0D);
-    this.Target2Type = getByte(hex, 0x0E);
+    this.Target2Type = getByte(hex, 0x0E) as VariableType;
     this.Target2 = getByte(hex, 0x0F);
     this.Target1OrTarget2 = getBool(hex, 0x10);
     this.Unknown9 = getByte(hex, 0x11);
@@ -56,7 +56,7 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Order: this.OrderLabel,
       Throttle: this.Throttle,
@@ -77,12 +77,12 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
       Target1OrTarget2: this.Target1OrTarget2,
       Unknown9: this.Unknown9,
       Speed: this.Speed,
-      Designation: this.Designation
+      Designation: this.Designation,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeByte(hex, this.Order, 0x00);
@@ -104,7 +104,7 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
     writeBool(hex, this.Target1OrTarget2, 0x10);
     writeByte(hex, this.Unknown9, 0x11);
     writeByte(hex, this.Speed, 0x12);
-    writeString(hex, this.Designation, 0x13);
+    writeString(hex, this.Designation, 0x13, 16);
 
     return hex;
   }

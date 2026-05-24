@@ -15,8 +15,8 @@ export abstract class PLTBattleProgressStateBase extends PyriteBase implements B
   public NumPlayers: number;
   public totalScore: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -49,7 +49,7 @@ export abstract class PLTBattleProgressStateBase extends PyriteBase implements B
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       MissionsFlown: this.MissionsFlown,
       CombatMissionID: this.CombatMissionID,
@@ -58,31 +58,31 @@ export abstract class PLTBattleProgressStateBase extends PyriteBase implements B
       BattleListIndex: this.BattleListIndex,
       CombatMissionListIndex: this.CombatMissionListIndex,
       NumPlayers: this.NumPlayers,
-      totalScore: this.totalScore
+      totalScore: this.totalScore,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.MissionsFlown, 0x0000);
     writeInt(hex, this.CombatMissionID, 0x0004);
     writeInt(hex, this.totalMissionCount, 0x0008);
     offset = 0x000C;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.Outcome.length; i++) {
       const t = this.Outcome[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0034;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.BattleListIndex.length; i++) {
       const t = this.BattleListIndex[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x005C;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.CombatMissionListIndex.length; i++) {
       const t = this.CombatMissionListIndex[i];
       writeInt(hex, t, offset);
       offset += 4;

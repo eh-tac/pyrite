@@ -1,5 +1,5 @@
 import { Byteable } from "../../../byteable";
-import { Constants } from "../constants";
+import { Amount, Condition, Constants, VariableType } from "../constants";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { getByte, writeByte } from "../../../hex";
 // tslint:disable member-ordering
@@ -7,40 +7,40 @@ import { getByte, writeByte } from "../../../hex";
 
 export abstract class TriggerBase extends PyriteBase implements Byteable {
   public readonly TRIGGERLENGTH: number = 6;
-  public Condition: number;
-  public VariableType: number;
+  public Condition: Condition;
+  public VariableType: VariableType;
   public Variable: number;
-  public Amount: number;
+  public Amount: Amount;
   public Parameter: number;
   public Parameter2: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
-    this.Condition = getByte(hex, 0x0);
-    this.VariableType = getByte(hex, 0x1);
+    this.Condition = getByte(hex, 0x0) as Condition;
+    this.VariableType = getByte(hex, 0x1) as VariableType;
     this.Variable = getByte(hex, 0x2);
-    this.Amount = getByte(hex, 0x3);
+    this.Amount = getByte(hex, 0x3) as Amount;
     this.Parameter = getByte(hex, 0x4);
     this.Parameter2 = getByte(hex, 0x5);
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Condition: this.ConditionLabel,
       VariableType: this.VariableTypeLabel,
       Variable: this.Variable,
       Amount: this.AmountLabel,
       Parameter: this.Parameter,
-      Parameter2: this.Parameter2
+      Parameter2: this.Parameter2,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeByte(hex, this.Condition, 0x0);

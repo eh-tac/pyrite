@@ -1,5 +1,5 @@
 import { Byteable } from "../../../byteable";
-import { Constants } from "../constants";
+import { AbortTrigger, ArrivalDifficulty, Beam, Constants, Formation, GroupAI, Markings, Radio, Ships, Status, Warhead } from "../constants";
 import { GoalFG } from "../goal-fg";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { Order } from "../order";
@@ -18,17 +18,17 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public SpecialCargo: string;
   public SpecialCargoCraft: number;
   public RandomSpecialCargo: boolean;
-  public CraftType: number;
+  public CraftType: Ships;
   public NumberOfCraft: number;
-  public Status1: number;
-  public Warhead: number;
-  public Beam: number;
+  public Status1: Status;
+  public Warhead: Warhead;
+  public Beam: Beam;
   public IFF: number;
   public Team: number;
-  public GroupAI: number;
-  public Markings: number;
-  public Radio: number;
-  public Formation: number;
+  public GroupAI: GroupAI;
+  public Markings: Markings;
+  public Radio: Radio;
+  public Formation: Formation;
   public FormationSpacing: number;
   public GlobalGroup: number;
   public LeaderSpacing: number;
@@ -41,7 +41,7 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public Yaw: number;
   public Pitch: number;
   public Roll: number;
-  public ArrivalDifficulty: number;
+  public ArrivalDifficulty: ArrivalDifficulty;
   public Arrival1: Trigger;
   public Arrival2: Trigger;
   public Arrival1OrArrival2: boolean;
@@ -57,7 +57,7 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public Departure1OrDeparture2: boolean;
   public DepartureDelayMinutes: number;
   public DepartureDelaySeconds: number;
-  public AbortTrigger: number;
+  public AbortTrigger: AbortTrigger;
   public Unknown4: number;
   public Unknown5: number;
   public ArrivalMothership: number;
@@ -80,7 +80,7 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public Unknown21: number;
   public Countermeasures: number;
   public CraftExplosionTime: number;
-  public Status2: number;
+  public Status2: Status;
   public GlobalUnit: number;
   public Unknown22: boolean;
   public Unknown23: boolean;
@@ -98,8 +98,8 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public NumberOfOptionalCraft: number[];
   public NumberOfOptionalCraftWaves: number[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -115,17 +115,17 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.SpecialCargo = getString(hex, 0x03C, 20);
     this.SpecialCargoCraft = getByte(hex, 0x050);
     this.RandomSpecialCargo = getBool(hex, 0x051);
-    this.CraftType = getByte(hex, 0x052);
+    this.CraftType = getByte(hex, 0x052) as Ships;
     this.NumberOfCraft = getByte(hex, 0x053);
-    this.Status1 = getByte(hex, 0x054);
-    this.Warhead = getByte(hex, 0x055);
-    this.Beam = getByte(hex, 0x056);
+    this.Status1 = getByte(hex, 0x054) as Status;
+    this.Warhead = getByte(hex, 0x055) as Warhead;
+    this.Beam = getByte(hex, 0x056) as Beam;
     this.IFF = getByte(hex, 0x057);
     this.Team = getByte(hex, 0x058);
-    this.GroupAI = getByte(hex, 0x059);
-    this.Markings = getByte(hex, 0x05A);
-    this.Radio = getByte(hex, 0x05B);
-    this.Formation = getByte(hex, 0x05D);
+    this.GroupAI = getByte(hex, 0x059) as GroupAI;
+    this.Markings = getByte(hex, 0x05A) as Markings;
+    this.Radio = getByte(hex, 0x05B) as Radio;
+    this.Formation = getByte(hex, 0x05D) as Formation;
     this.FormationSpacing = getByte(hex, 0x05E);
     this.GlobalGroup = getByte(hex, 0x05F);
     this.LeaderSpacing = getByte(hex, 0x060);
@@ -138,7 +138,7 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.Yaw = getByte(hex, 0x067);
     this.Pitch = getByte(hex, 0x068);
     this.Roll = getByte(hex, 0x069);
-    this.ArrivalDifficulty = getByte(hex, 0x06D);
+    this.ArrivalDifficulty = getByte(hex, 0x06D) as ArrivalDifficulty;
     this.Arrival1 = new Trigger(hex.slice(0x06E), this.TIE);
     this.Arrival2 = new Trigger(hex.slice(0x072), this.TIE);
     this.Arrival1OrArrival2 = getBool(hex, 0x078);
@@ -154,7 +154,7 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.Departure1OrDeparture2 = getBool(hex, 0x092);
     this.DepartureDelayMinutes = getByte(hex, 0x093);
     this.DepartureDelaySeconds = getByte(hex, 0x094);
-    this.AbortTrigger = getByte(hex, 0x095);
+    this.AbortTrigger = getByte(hex, 0x095) as AbortTrigger;
     this.Unknown4 = getByte(hex, 0x096);
     this.Unknown5 = getByte(hex, 0x098);
     this.ArrivalMothership = getByte(hex, 0x09A);
@@ -201,7 +201,7 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.Unknown21 = getByte(hex, 0x522);
     this.Countermeasures = getByte(hex, 0x523);
     this.CraftExplosionTime = getByte(hex, 0x524);
-    this.Status2 = getByte(hex, 0x525);
+    this.Status2 = getByte(hex, 0x525) as Status;
     this.GlobalUnit = getByte(hex, 0x526);
     this.Unknown22 = getBool(hex, 0x527);
     this.Unknown23 = getBool(hex, 0x528);
@@ -257,10 +257,10 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Name: this.Name,
-      Roles: this.Roles,
+      Roles: this.Roles.map((t) => t.toJSON()),
       Cargo: this.Cargo,
       SpecialCargo: this.SpecialCargo,
       SpecialCargoCraft: this.SpecialCargoCraft,
@@ -289,18 +289,18 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
       Pitch: this.Pitch,
       Roll: this.Roll,
       ArrivalDifficulty: this.ArrivalDifficultyLabel,
-      Arrival1: this.Arrival1,
-      Arrival2: this.Arrival2,
+      Arrival1: this.Arrival1.toJSON(),
+      Arrival2: this.Arrival2.toJSON(),
       Arrival1OrArrival2: this.Arrival1OrArrival2,
-      Arrival3: this.Arrival3,
-      Arrival4: this.Arrival4,
+      Arrival3: this.Arrival3.toJSON(),
+      Arrival4: this.Arrival4.toJSON(),
       Arrival3OrArrival4: this.Arrival3OrArrival4,
       Arrival12OrArrival34: this.Arrival12OrArrival34,
       Unknown3: this.Unknown3,
       ArrivalDelayMinutes: this.ArrivalDelayMinutes,
       ArrivalDelaySeconds: this.ArrivalDelaySeconds,
-      Departure1: this.Departure1,
-      Departure2: this.Departure2,
+      Departure1: this.Departure1.toJSON(),
+      Departure2: this.Departure2.toJSON(),
       Departure1OrDeparture2: this.Departure1OrDeparture2,
       DepartureDelayMinutes: this.DepartureDelayMinutes,
       DepartureDelaySeconds: this.DepartureDelaySeconds,
@@ -315,11 +315,11 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
       DepartViaMothership: this.DepartViaMothership,
       AlternateDepartureMothership: this.AlternateDepartureMothership,
       AlternatDepartViaMothership: this.AlternatDepartViaMothership,
-      Orders: this.Orders,
-      SkipToOrder4: this.SkipToOrder4,
+      Orders: this.Orders.map((t) => t.toJSON()),
+      SkipToOrder4: this.SkipToOrder4.map((t) => t.toJSON()),
       Skip1OrSkip2: this.Skip1OrSkip2,
-      Goals: this.Goals,
-      Waypoints: this.Waypoints,
+      Goals: this.Goals.map((t) => t.toJSON()),
+      Waypoints: this.Waypoints.map((t) => t.toJSON()),
       Unknown17: this.Unknown17,
       Unknown18: this.Unknown18,
       Unknown19: this.Unknown19,
@@ -343,23 +343,23 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
       OptionalCraftCategory: this.OptionalCraftCategory,
       OptionalCraft: this.OptionalCraft,
       NumberOfOptionalCraft: this.NumberOfOptionalCraft,
-      NumberOfOptionalCraftWaves: this.NumberOfOptionalCraftWaves
+      NumberOfOptionalCraftWaves: this.NumberOfOptionalCraftWaves,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
-    writeString(hex, this.Name, 0x000);
+    writeString(hex, this.Name, 0x000, 20);
     offset = 0x014;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.Roles.length; i++) {
       const t = this.Roles[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    writeString(hex, this.Cargo, 0x028);
-    writeString(hex, this.SpecialCargo, 0x03C);
+    writeString(hex, this.Cargo, 0x028, 20);
+    writeString(hex, this.SpecialCargo, 0x03C, 20);
     writeByte(hex, this.SpecialCargoCraft, 0x050);
     writeBool(hex, this.RandomSpecialCargo, 0x051);
     writeByte(hex, this.CraftType, 0x052);
@@ -413,26 +413,26 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     writeByte(hex, this.AlternateDepartureMothership, 0x0A0);
     writeByte(hex, this.AlternatDepartViaMothership, 0x0A1);
     offset = 0x0A2;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.Orders.length; i++) {
       const t = this.Orders[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0x1EA;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.SkipToOrder4.length; i++) {
       const t = this.SkipToOrder4[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeBool(hex, this.Skip1OrSkip2, 0x1F4);
     offset = 0x1F5;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.Goals.length; i++) {
       const t = this.Goals[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0x466;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.Waypoints.length; i++) {
       const t = this.Waypoints[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
@@ -455,38 +455,38 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     writeBool(hex, this.Unknown28, 0x52D);
     writeBool(hex, this.Unknown29, 0x52E);
     offset = 0x530;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.OptionalWarheads.length; i++) {
       const t = this.OptionalWarheads[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x538;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.OptionalBeams.length; i++) {
       const t = this.OptionalBeams[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x53E;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.OptionalCountermeasures.length; i++) {
       const t = this.OptionalCountermeasures[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     writeByte(hex, this.OptionalCraftCategory, 0x542);
     offset = 0x543;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.OptionalCraft.length; i++) {
       const t = this.OptionalCraft[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x54D;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.NumberOfOptionalCraft.length; i++) {
       const t = this.NumberOfOptionalCraft[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x557;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.NumberOfOptionalCraftWaves.length; i++) {
       const t = this.NumberOfOptionalCraftWaves[i];
       writeByte(hex, t, offset);
       offset += 1;

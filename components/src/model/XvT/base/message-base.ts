@@ -18,8 +18,8 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
   public DelaySeconds: number;
   public Trigger12OrTrigger34: boolean;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -54,48 +54,48 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       MessageIndex: this.MessageIndex,
       Message: this.Message,
       SentToTeams: this.SentToTeams,
-      TriggerA: this.TriggerA,
+      TriggerA: this.TriggerA.map((t) => t.toJSON()),
       Trigger1OrTrigger2: this.Trigger1OrTrigger2,
-      TriggerB: this.TriggerB,
+      TriggerB: this.TriggerB.map((t) => t.toJSON()),
       Trigger3OrTrigger4: this.Trigger3OrTrigger4,
       EditorNote: this.EditorNote,
       DelaySeconds: this.DelaySeconds,
-      Trigger12OrTrigger34: this.Trigger12OrTrigger34
+      Trigger12OrTrigger34: this.Trigger12OrTrigger34,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.MessageIndex, 0x00);
-    writeChar(hex, this.Message, 0x02);
+    writeChar(hex, this.Message, 0x02, 64);
     offset = 0x42;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.SentToTeams.length; i++) {
       const t = this.SentToTeams[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x4C;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.TriggerA.length; i++) {
       const t = this.TriggerA[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeBool(hex, this.Trigger1OrTrigger2, 0x56);
     offset = 0x57;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.TriggerB.length; i++) {
       const t = this.TriggerB[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeBool(hex, this.Trigger3OrTrigger4, 0x61);
-    writeString(hex, this.EditorNote, 0x62);
+    writeString(hex, this.EditorNote, 0x62, 16);
     writeByte(hex, this.DelaySeconds, 0x72);
     writeBool(hex, this.Trigger12OrTrigger34, 0x73);
 

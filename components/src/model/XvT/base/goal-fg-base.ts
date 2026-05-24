@@ -1,5 +1,5 @@
 import { Byteable } from "../../../byteable";
-import { Constants } from "../constants";
+import { Amount, Condition, Constants, GoalArgument } from "../constants";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { getBool, getByte, getSByte, writeBool, writeByte, writeSByte } from "../../../hex";
 // tslint:disable member-ordering
@@ -7,9 +7,9 @@ import { getBool, getByte, getSByte, writeBool, writeByte, writeSByte } from "..
 
 export abstract class GoalFGBase extends PyriteBase implements Byteable {
   public readonly GOALFGLENGTH: number = 78;
-  public GoalArgument: number;
-  public Condition: number;
-  public Amount: number;
+  public GoalArgument: GoalArgument;
+  public Condition: Condition;
+  public Amount: Amount;
   public Points: number;
   public Enabled: boolean;
   public Team: number;
@@ -21,14 +21,14 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
   public Reserved: number; //(0) Unknown15
   public Unknown16: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
-    this.GoalArgument = getByte(hex, 0x00);
-    this.Condition = getByte(hex, 0x01);
-    this.Amount = getByte(hex, 0x02);
+    this.GoalArgument = getByte(hex, 0x00) as GoalArgument;
+    this.Condition = getByte(hex, 0x01) as Condition;
+    this.Amount = getByte(hex, 0x02) as Amount;
     this.Points = getSByte(hex, 0x03);
     this.Enabled = getBool(hex, 0x04);
     this.Team = getByte(hex, 0x05);
@@ -42,7 +42,7 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       GoalArgument: this.GoalArgumentLabel,
       Condition: this.ConditionLabel,
@@ -56,12 +56,12 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
       Unknown13: this.Unknown13,
       Unknown14: this.Unknown14,
       Reserved: this.Reserved,
-      Unknown16: this.Unknown16
+      Unknown16: this.Unknown16,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeByte(hex, this.GoalArgument, 0x00);

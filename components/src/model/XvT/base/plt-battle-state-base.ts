@@ -14,8 +14,8 @@ export abstract class PLTBattleStateBase extends PyriteBase implements Byteable 
   public saveState: PLTBattleProgressState;
   public unknown2: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -28,19 +28,19 @@ export abstract class PLTBattleStateBase extends PyriteBase implements Byteable 
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       ConfigRandomSeed: this.ConfigRandomSeed,
       IsInProgressUNK: this.IsInProgressUNK,
       ConfigBattleLength: this.ConfigBattleLength,
       ConfigGameRandomizeLevel: this.ConfigGameRandomizeLevel,
-      saveState: this.saveState,
-      unknown2: this.unknown2
+      saveState: this.saveState.toJSON(),
+      unknown2: this.unknown2,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.ConfigRandomSeed, 0x0000);

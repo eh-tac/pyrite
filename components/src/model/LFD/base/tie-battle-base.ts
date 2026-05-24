@@ -13,8 +13,8 @@ export abstract class TIEBattleBase extends PyriteBase implements Byteable {
   public BattleName: BattleText;
   public BattleImage: Delt;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -27,21 +27,22 @@ export abstract class TIEBattleBase extends PyriteBase implements Byteable {
     this.TIEBattleLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
-      HeaderMap: this.HeaderMap,
-      BattleName: this.BattleName,
-      BattleImage: this.BattleImage
+      HeaderMap: this.HeaderMap.toJSON(),
+      BattleName: this.BattleName.toJSON(),
+      BattleImage: this.BattleImage.toJSON(),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeObject(hex, this.HeaderMap, 0x00);
     writeObject(hex, this.BattleName, 0x30);
     writeObject(hex, this.BattleImage, offset);
+    offset += this.BattleImage.getLength();
 
     return hex;
   }

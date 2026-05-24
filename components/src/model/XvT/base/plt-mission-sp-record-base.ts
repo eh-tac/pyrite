@@ -16,8 +16,8 @@ export abstract class PLTMissionSPRecordBase extends PyriteBase implements Bytea
   public bestEvaluationBadge: number;
   public bestWinningMargin: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -33,7 +33,7 @@ export abstract class PLTMissionSPRecordBase extends PyriteBase implements Bytea
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       unknown0x0: this.unknown0x0,
       totalCountFlown: this.totalCountFlown,
@@ -43,12 +43,12 @@ export abstract class PLTMissionSPRecordBase extends PyriteBase implements Bytea
       bestTimeAsSeconds: this.bestTimeAsSeconds,
       bestFinishRank: this.bestFinishRank,
       bestEvaluationBadge: this.bestEvaluationBadge,
-      bestWinningMargin: this.bestWinningMargin
+      bestWinningMargin: this.bestWinningMargin,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.unknown0x0, 0x0000);

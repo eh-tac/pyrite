@@ -17,8 +17,8 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
   public Tags: Tag[];
   public Strings: TIEString[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -50,20 +50,20 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     this.BriefingLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       RunningTime: this.RunningTime,
       Unknown: this.Unknown,
       StartLength: this.StartLength,
       EventsLength: this.EventsLength,
-      Events: this.Events,
-      Tags: this.Tags,
-      Strings: this.Strings
+      Events: this.Events.map((t) => t.toJSON()),
+      Tags: this.Tags.map((t) => t.toJSON()),
+      Strings: this.Strings.map((t) => t.toJSON()),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.RunningTime, 0x000);
@@ -71,19 +71,18 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     writeShort(hex, this.StartLength, 0x004);
     writeInt(hex, this.EventsLength, 0x006);
     offset = 0x00A;
-    for (let i = 0; i < 0; i++) {
+    for (let i = 0; i < this.Events.length; i++) {
       const t = this.Events[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0x32A;
-    for (let i = 0; i < 32; i++) {
+    for (let i = 0; i < this.Tags.length; i++) {
       const t = this.Tags[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < 32; i++) {
+    for (let i = 0; i < this.Strings.length; i++) {
       const t = this.Strings[i];
       writeObject(hex, t, offset);
       offset += t.getLength();

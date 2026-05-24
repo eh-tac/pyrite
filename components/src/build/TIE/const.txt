@@ -35,10 +35,10 @@ CraftType
 21	Cargo Ferry
 22	Modular Conveyor
 23	Container Transport
-24	Unused
+24	Unused2
 25	Murrian Transport
 26	Corellian Transport
-27	Unused
+27	Unused3
 28	Corellian Corvette
 29	Modified Corvette
 2A	Nebulon-B Frigate
@@ -53,7 +53,7 @@ CraftType
 33	Interdictor Cruiser
 34	Victory-class Star Destroyer
 35	Imperator-class Star Destroyer
-36	Unused
+36	Unused4
 37	Container E
 38	Container F
 39	Container G
@@ -71,20 +71,20 @@ CraftType
 45	X/7 Factory
 46	Satellite 1
 47	Satellite 2
-48	Unused
-49	Unused
-4A	Unused
+48	Unused5
+49	Unused6
+4A	Unused7
 4B	Mine A
 4C	Mine B
 4D	Mine C
-4E	Unused
-4F	Unused
+4E	Unused9
+4F	UnusedA
 50	Probe A
 51	Probe B
-52	Unused
+52	UnusedB
 53	Nav Buoy A
 54	Nav Buoy B
-55	Unused
+55	UnusedC
 56	Asteroid Field
 57	Planet
 
@@ -161,21 +161,21 @@ CraftAbbr
 45 FAC/1
 46 SAT 1
 47 SAT/2
-48 UNK
-49 UNK
-4A UNK
+48 UNK1
+49 UNK2
+4A UNK3
 4B MINE 1
 4C MINE B
 4D MINE C
-4E UNK
-4F UNK
+4E UNK4
+4F UNK5
 50 PROBE A
 51 PROBE B
-52 UNK
+52 UNK6
 53 NAV 1
 54 NAV 2
 55 Asteroid
-56 Asteroid
+56 Asteroid2
 57 Planet
 
 Status
@@ -385,7 +385,7 @@ Order
 1C	SS Hold Steady
 	Var1	Wait time (seconds x 5)
 1D	SS Go Home
-1E	SS Wait
+1E	SS Wait2
 	Var1	Wait time (seconds x 5)
 1F	SS Board
 	Var1	Docking Time (seconds x 5)
@@ -393,13 +393,13 @@ Order
 20	Board to Repair
 	Var1	Docking Time (seconds x 5)
 	Var2	Number of Dockings
-21	Hold Station
+21	Hold Station2
 22	Hold Steady
 23	SS Hold Station
 24	SS Kamikaze?
-25	SS Kamikaze?
+25	SS Kamikaze2
 26	SS Disabled
-27	SS Disabled
+27	SS Disabled2
 
 CraftWhen
 01	Boarding
@@ -446,7 +446,7 @@ Misc
 1F	SS witing for boarding craft to appear
 20	SS attacking
 21	SS disabling
-22	SS disabling?
+22	SS disabling2
 23	SS flying home
 24	Rebels
 25	Imperials
@@ -538,7 +538,7 @@ TextTagColor
 01	Red
 02	Purple
 03	Blue
-04	Red
+04	Red2
 05	Light Red
 06	Gray
 07	White

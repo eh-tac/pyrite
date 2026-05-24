@@ -17,8 +17,8 @@ export abstract class PLTTournSPRecordBase extends PyriteBase implements Byteabl
   public bestEvaluationMedal: number;
   public bestFinishPointMargin: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -35,7 +35,7 @@ export abstract class PLTTournSPRecordBase extends PyriteBase implements Byteabl
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       unknown0x0: this.unknown0x0,
       totalCountFlown: this.totalCountFlown,
@@ -46,12 +46,12 @@ export abstract class PLTTournSPRecordBase extends PyriteBase implements Byteabl
       bestScore: this.bestScore,
       bestFinish: this.bestFinish,
       bestEvaluationMedal: this.bestEvaluationMedal,
-      bestFinishPointMargin: this.bestFinishPointMargin
+      bestFinishPointMargin: this.bestFinishPointMargin,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.unknown0x0, 0x0000);

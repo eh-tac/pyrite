@@ -12,8 +12,8 @@ export abstract class ViewportSettingBase extends PyriteBase implements Byteable
   public Right: number;
   public Visible: number; //(boolean)
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -25,18 +25,18 @@ export abstract class ViewportSettingBase extends PyriteBase implements Byteable
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Top: this.Top,
       Left: this.Left,
       Bottom: this.Bottom,
       Right: this.Right,
-      Visible: this.Visible
+      Visible: this.Visible,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Top, 0x00);

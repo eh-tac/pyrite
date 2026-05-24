@@ -19,8 +19,8 @@ export abstract class MissionDataBase extends PyriteBase implements Byteable {
   public UnkG: number;
   public BonusScoreTen: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -39,7 +39,7 @@ export abstract class MissionDataBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       UnkA: this.UnkA,
       AttemptCount: this.AttemptCount,
@@ -52,12 +52,12 @@ export abstract class MissionDataBase extends PyriteBase implements Byteable {
       Time: this.Time,
       UnkF: this.UnkF,
       UnkG: this.UnkG,
-      BonusScoreTen: this.BonusScoreTen
+      BonusScoreTen: this.BonusScoreTen,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.UnkA, 0x00);

@@ -90,7 +90,7 @@ struct FileHeader (size 0x23F0)
 	0x0064	Region[4]	Regions
 	0x0274	GlbCrg[16]	GlobalCargos
 	0x0B34	GlbUn[32]	GlobalGroups
-	0x1C32	GlbUn[40]	GlobalUnits
+	0x1614	GlbUn[40]	GlobalUnits
 	0x23AC	BYTE		Hangar (enum)
 	0x23AD	BOOL		GoalsUnimportant
 	0x23AE	BYTE		TimeLimitMinutes

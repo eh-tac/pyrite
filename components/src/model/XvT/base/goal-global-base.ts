@@ -14,8 +14,8 @@ export abstract class GoalGlobalBase extends PyriteBase implements Byteable {
   public Trigger12OrTrigger34: boolean;
   public Points: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -40,30 +40,30 @@ export abstract class GoalGlobalBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
-      TriggerA: this.TriggerA,
+      TriggerA: this.TriggerA.map((t) => t.toJSON()),
       Trigger1OrTrigger2: this.Trigger1OrTrigger2,
-      TriggerB: this.TriggerB,
+      TriggerB: this.TriggerB.map((t) => t.toJSON()),
       Trigger2OrTrigger3: this.Trigger2OrTrigger3,
       Trigger12OrTrigger34: this.Trigger12OrTrigger34,
-      Points: this.Points
+      Points: this.Points,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     offset = 0x00;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.TriggerA.length; i++) {
       const t = this.TriggerA[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeBool(hex, this.Trigger1OrTrigger2, 0x0A);
     offset = 0x0B;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.TriggerB.length; i++) {
       const t = this.TriggerB[i];
       writeObject(hex, t, offset);
       offset += t.getLength();

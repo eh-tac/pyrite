@@ -1,4 +1,4 @@
-import { getByte, getUInt, getUShort } from "../../hex";
+import { getByte, getUInt, getUShort } from "../../../hex";
 
 export class FontHeader {
   // Width of a character in pixels (for proportional fonts use max width)

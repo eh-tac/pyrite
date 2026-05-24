@@ -105,7 +105,7 @@ class Constants
         68 => "Asteroid War Launcher",
         69 => "X7 Factory",
         70 => "Comm Sat",
-        71 => "Comm Sat",
+        71 => "Comm Sat2",
         72 => "*Sat3",
         73 => "*Sat4",
         74 => "*Sat5",
@@ -118,7 +118,7 @@ class Constants
         81 => "*Probe2",
         82 => "*Probe3",
         83 => "Nav Buoy",
-        84 => "Nav Buoy",
+        84 => "Nav Buoy2",
         85 => "*Pilot",
         86 => "Asteroid",
         87 => "Planet",
@@ -351,13 +351,13 @@ class Constants
         8 => "Shields added or 200%",
         9 => "Hyperdrive added",
         10 => "Unknown",
-        11 => "Unknown",
-        12 => "(200% Shields)",
+        11 => "Unknown2",
+        12 => "(200% Shields2)",
         13 => "Shields 50%, Charging",
-        14 => "(No Lasers)",
-        15 => "Unknown",
+        14 => "(No Lasers2)",
+        15 => "Unknown3",
         16 => "Shields + Hyperdrive added",
-        17 => "Unknown",
+        17 => "Unknown4",
         18 => "200% Shields",
         19 => "(50% Shields)",
         20 => "Invincible",
@@ -376,13 +376,13 @@ class Constants
     public static $STATUS_HYPERDRIVEADDED = 9;
     public static $STATUS_UNKNOWN = 10;
     public static $STATUS_UNKNOWN2 = 11;
-    public static $STATUS_N200PERCENTSHIELDS = 12;
+    public static $STATUS_N200PERCENTSHIELDS2 = 12;
     public static $STATUS_SHIELDS50PERCENTCHARGING = 13;
     public static $STATUS_NOLASERS2 = 14;
     public static $STATUS_UNKNOWN3 = 15;
     public static $STATUS_SHIELDSHYPERDRIVEADDED = 16;
     public static $STATUS_UNKNOWN4 = 17;
-    public static $STATUS_N200PERCENTSHIELDS2 = 18;
+    public static $STATUS_N200PERCENTSHIELDS = 18;
     public static $STATUS_N50PERCENTSHIELDS = 19;
     public static $STATUS_INVINCIBLE = 20;
     public static $STATUS_INFINITEWARHEADS = 21;
@@ -535,10 +535,10 @@ class Constants
         4 => "Medium, Hard",
         5 => "Easy, Medium",
         6 => "Never",
-        7 => "Never",
-        8 => "Easy",
-        9 => "Medium",
-        10 => "Hard",
+        7 => "Never2",
+        8 => "Easy2",
+        9 => "Medium2",
+        10 => "Hard2",
     ];
 
     public static $ARRIVALDIFFICULTY_ALL = 0;
@@ -578,7 +578,7 @@ class Constants
         21 => "0% Shields",
         22 => "50% Hull",
         23 => "Out of Warheads",
-        24 => "Unknown (arrive?)",
+        24 => "Unknown2 (arrive?)",
         25 => "be dropped off",
         26 => "destroyed in 1 hit",
         27 => "NOT be disabled",
@@ -592,9 +592,9 @@ class Constants
         35 => "25% Shields",
         36 => "75% Hull",
         37 => "25% Hull",
-        38 => "Unknown",
-        39 => "Unknown",
-        40 => "Unknown",
+        38 => "Unknown3",
+        39 => "Unknown4",
+        40 => "Unknown5",
         41 => "be all Player Craft",
         42 => "reinforced by AI?",
         43 => "come and go",
@@ -627,7 +627,7 @@ class Constants
     public static $CONDITION_N0PERCENTSHIELDS = 21;
     public static $CONDITION_N50PERCENTHULL = 22;
     public static $CONDITION_OUTOFWARHEADS = 23;
-    public static $CONDITION_UNKNOWNARRIVE = 24;
+    public static $CONDITION_UNKNOWN2ARRIVE = 24;
     public static $CONDITION_BEDROPPEDOFF = 25;
     public static $CONDITION_DESTROYEDIN1HIT = 26;
     public static $CONDITION_NOTBEDISABLED = 27;
@@ -641,9 +641,9 @@ class Constants
     public static $CONDITION_N25PERCENTSHIELDS = 35;
     public static $CONDITION_N75PERCENTHULL = 36;
     public static $CONDITION_N25PERCENTHULL = 37;
-    public static $CONDITION_UNKNOWN2 = 38;
-    public static $CONDITION_UNKNOWN3 = 39;
-    public static $CONDITION_UNKNOWN4 = 40;
+    public static $CONDITION_UNKNOWN3 = 38;
+    public static $CONDITION_UNKNOWN4 = 39;
+    public static $CONDITION_UNKNOWN5 = 40;
     public static $CONDITION_BEALLPLAYERCRAFT = 41;
     public static $CONDITION_REINFORCEDBYAI = 42;
     public static $CONDITION_COMEANDGO = 43;
@@ -804,16 +804,16 @@ class Constants
         27 => "SS Patrol and Disable",
         28 => "SS Hold Steady",
         29 => "SS Go Home",
-        30 => "SS Wait",
+        30 => "SS Wait2",
         31 => "SS Board",
         32 => "Board to Repair",
-        33 => "Hold Station",
+        33 => "Hold Station2",
         34 => "Hold Steady",
         35 => "SS Hold Station",
         36 => "Self-destruct",
         37 => "Kamikaze",
         38 => "SS Disabled",
-        39 => "SS Hold Steady",
+        39 => "SS Hold Steady2",
     ];
 
     public static $ORDER_HOLDSTATION = 0;

@@ -22,8 +22,10 @@ abstract class TeamBase extends PyriteBase implements Byteable
     public $Allegiances;
     /** @var string[] 0x024 EndOfMissionMessages CHAR */
     public $EndOfMissionMessages;
-    /** @var integer[] 0x1A4 Unknowns BYTE */
-    public $Unknowns;
+    /** @var integer[] 0x1A4 EomMessageDelay BYTE */
+    public $EomMessageDelay; //(was Unknowns)
+    /** @var integer[] 0x1A7 EomSourceFG BYTE */
+    public $EomSourceFG; //(was Unknowns)
     /** @var string[] 0x1AA EomVoiceIDs CHAR */
     public $EomVoiceIDs;
     
@@ -58,11 +60,18 @@ abstract class TeamBase extends PyriteBase implements Byteable
             $this->EndOfMissionMessages[] = $t;
             $offset += 64;
         }
-        $this->Unknowns = [];
+        $this->EomMessageDelay = [];
         $offset = 0x1A4;
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $t = $this->getByte($hex, $offset);
-            $this->Unknowns[] = $t;
+            $this->EomMessageDelay[] = $t;
+            $offset += 1;
+        }
+        $this->EomSourceFG = [];
+        $offset = 0x1A7;
+        for ($i = 0; $i < 3; $i++) {
+            $t = $this->getByte($hex, $offset);
+            $this->EomSourceFG[] = $t;
             $offset += 1;
         }
         $this->EomVoiceIDs = [];
@@ -85,7 +94,8 @@ abstract class TeamBase extends PyriteBase implements Byteable
             "Name" => $this->Name,
             "Allegiances" => $this->Allegiances,
             "EndOfMissionMessages" => $this->EndOfMissionMessages,
-            "Unknowns" => $this->Unknowns,
+            "EomMessageDelay" => $this->EomMessageDelay,
+            "EomSourceFG" => $this->EomSourceFG,
             "EomVoiceIDs" => $this->EomVoiceIDs
         ];
     }
@@ -110,8 +120,14 @@ abstract class TeamBase extends PyriteBase implements Byteable
             $offset += 64;
         }
         $offset = 0x1A4;
-        for ($i = 0; $i < 6; $i++) {
-            $t = $this->Unknowns[$i];
+        for ($i = 0; $i < 3; $i++) {
+            $t = $this->EomMessageDelay[$i];
+            $hex = $this->writeByte($t, $hex, $offset);
+            $offset += 1;
+        }
+        $offset = 0x1A7;
+        for ($i = 0; $i < 3; $i++) {
+            $t = $this->EomSourceFG[$i];
             $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }

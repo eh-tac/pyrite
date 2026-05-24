@@ -237,7 +237,7 @@ export class ${compName} {
     return `
   public toJSON(): Record<string, unknown> | string {
     return {
-      ${nonStatics.map((p: TypeScriptPropWriter) => `${p.prop.name}: this.${p.toJSONExpr}`).join(",\n      ")}
+      ${nonStatics.map((p: TypeScriptPropWriter) => `${p.prop.name}: this.${p.toJSONExpr}`).join(",\n      ")},
     };
   }`;
   }

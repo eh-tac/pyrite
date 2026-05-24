@@ -136,8 +136,8 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
   public rebelMultiplayerData: PLTFactionRecord;
   public imperialMultiplayerData: PLTFactionRecord;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -506,7 +506,7 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       PilotName: this.PilotName,
       totalScore: this.totalScore,
@@ -535,11 +535,11 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
       WorsePromoPoints: this.WorsePromoPoints,
       RankAdjustmentApplied: this.RankAdjustmentApplied,
       PercentToNextRank: this.PercentToNextRank,
-      totalCategoryScore: this.totalCategoryScore,
-      numFlownNonSeries: this.numFlownNonSeries,
-      numFlownSeries: this.numFlownSeries,
-      totalKillCount: this.totalKillCount,
-      numVanillaFriendlyKills: this.numVanillaFriendlyKills,
+      totalCategoryScore: this.totalCategoryScore.toJSON(),
+      numFlownNonSeries: this.numFlownNonSeries.toJSON(),
+      numFlownSeries: this.numFlownSeries.toJSON(),
+      totalKillCount: this.totalKillCount.toJSON(),
+      numVanillaFriendlyKills: this.numVanillaFriendlyKills.toJSON(),
       totalCraftFullKillsExercise: this.totalCraftFullKillsExercise,
       totalCraftFullKillsMelee: this.totalCraftFullKillsMelee,
       totalCraftFullKillsCombat: this.totalCraftFullKillsCombat,
@@ -549,26 +549,26 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
       totalCraftAssistKillsExercise: this.totalCraftAssistKillsExercise,
       totalCraftAssistKillsMelee: this.totalCraftAssistKillsMelee,
       totalCraftAssistKillsCombat: this.totalCraftAssistKillsCombat,
-      totalFullKillsOnPlayerRank: this.totalFullKillsOnPlayerRank,
-      totalSharedKillsOnPlayerRank: this.totalSharedKillsOnPlayerRank,
-      totalAssistKillsOnPlayerRank: this.totalAssistKillsOnPlayerRank,
-      totalFullKillsOnAIRank: this.totalFullKillsOnAIRank,
-      totalSharedKillsOnAIRank: this.totalSharedKillsOnAIRank,
-      totalAssistKillsOnAIRank: this.totalAssistKillsOnAIRank,
-      totalHiddenCargoFound: this.totalHiddenCargoFound,
-      totalLaserHit: this.totalLaserHit,
-      totalLaserFired: this.totalLaserFired,
-      totalWarheadHit: this.totalWarheadHit,
-      totalWarheadFired: this.totalWarheadFired,
-      totalCraftLosses: this.totalCraftLosses,
-      totalLossesFromCollision: this.totalLossesFromCollision,
-      totalLossesFromStarships: this.totalLossesFromStarships,
-      totalLossesFromMines: this.totalLossesFromMines,
-      totalLossesFromPlayerRank: this.totalLossesFromPlayerRank,
-      totalLossesFromAIRank: this.totalLossesFromAIRank,
+      totalFullKillsOnPlayerRank: this.totalFullKillsOnPlayerRank.toJSON(),
+      totalSharedKillsOnPlayerRank: this.totalSharedKillsOnPlayerRank.toJSON(),
+      totalAssistKillsOnPlayerRank: this.totalAssistKillsOnPlayerRank.toJSON(),
+      totalFullKillsOnAIRank: this.totalFullKillsOnAIRank.toJSON(),
+      totalSharedKillsOnAIRank: this.totalSharedKillsOnAIRank.toJSON(),
+      totalAssistKillsOnAIRank: this.totalAssistKillsOnAIRank.toJSON(),
+      totalHiddenCargoFound: this.totalHiddenCargoFound.toJSON(),
+      totalLaserHit: this.totalLaserHit.toJSON(),
+      totalLaserFired: this.totalLaserFired.toJSON(),
+      totalWarheadHit: this.totalWarheadHit.toJSON(),
+      totalWarheadFired: this.totalWarheadFired.toJSON(),
+      totalCraftLosses: this.totalCraftLosses.toJSON(),
+      totalLossesFromCollision: this.totalLossesFromCollision.toJSON(),
+      totalLossesFromStarships: this.totalLossesFromStarships.toJSON(),
+      totalLossesFromMines: this.totalLossesFromMines.toJSON(),
+      totalLossesFromPlayerRank: this.totalLossesFromPlayerRank.toJSON(),
+      totalLossesFromAIRank: this.totalLossesFromAIRank.toJSON(),
       unknown0x1612: this.unknown0x1612,
       unknownPlaqueWon: this.unknownPlaqueWon,
-      TournTeamRecords: this.TournTeamRecords,
+      TournTeamRecords: this.TournTeamRecords.map((t) => t.toJSON()),
       numHumanPlayersUNK: this.numHumanPlayersUNK,
       numTeamsUNK: this.numTeamsUNK,
       unknown0x170E: this.unknown0x170E,
@@ -592,11 +592,11 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
       debriefFullKillsByFG: this.debriefFullKillsByFG,
       debriefSharedKillsByFG: this.debriefSharedKillsByFG,
       debriefMeleeAIRankFG: this.debriefMeleeAIRankFG,
-      UnknownRecord1: this.UnknownRecord1,
-      UnknownRecord2: this.UnknownRecord2,
-      UnknownRecord3: this.UnknownRecord3,
-      debriefEnemyKills: this.debriefEnemyKills,
-      debriefFriendlyKills: this.debriefFriendlyKills,
+      UnknownRecord1: this.UnknownRecord1.toJSON(),
+      UnknownRecord2: this.UnknownRecord2.toJSON(),
+      UnknownRecord3: this.UnknownRecord3.toJSON(),
+      debriefEnemyKills: this.debriefEnemyKills.toJSON(),
+      debriefFriendlyKills: this.debriefFriendlyKills.toJSON(),
       debriefFullKillsByShipTypeA: this.debriefFullKillsByShipTypeA,
       debriefFullKillsByShipTypeB: this.debriefFullKillsByShipTypeB,
       debriefFullKillsByShipTypeC: this.debriefFullKillsByShipTypeC,
@@ -606,38 +606,38 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
       debriefAssistKillsByShipTypeA: this.debriefAssistKillsByShipTypeA,
       debriefAssistKillsByShipTypeB: this.debriefAssistKillsByShipTypeB,
       debriefAssistKillsByShipTypeC: this.debriefAssistKillsByShipTypeC,
-      debriefFullKillsOnPlayerRank: this.debriefFullKillsOnPlayerRank,
-      debriefSharedKillsOnPlayerRank: this.debriefSharedKillsOnPlayerRank,
-      debriefAssistKillsOnPlayerRank: this.debriefAssistKillsOnPlayerRank,
-      debriefFullKillsOnAIRank: this.debriefFullKillsOnAIRank,
-      debriefSharedKillsOnAIRank: this.debriefSharedKillsOnAIRank,
-      debriefAssistKillsOnAIRank: this.debriefAssistKillsOnAIRank,
-      debriefNumHiddenCargoFound: this.debriefNumHiddenCargoFound,
-      debriefNumCannonHits: this.debriefNumCannonHits,
-      debriefNumCannonFired: this.debriefNumCannonFired,
-      debriefNumWarheadHits: this.debriefNumWarheadHits,
-      debriefNumWarheadFired: this.debriefNumWarheadFired,
-      debriefNumCraftLosses: this.debriefNumCraftLosses,
-      debriefCraftLossesFromCollision: this.debriefCraftLossesFromCollision,
-      debriefCraftLossesFromStarship: this.debriefCraftLossesFromStarship,
-      debriefCraftLossesFromMine: this.debriefCraftLossesFromMine,
-      debriefLossesFromPlayerRank: this.debriefLossesFromPlayerRank,
-      debriefLossesFromAIRank: this.debriefLossesFromAIRank,
-      connectedPlayerData: this.connectedPlayerData,
-      debriefTeamResult: this.debriefTeamResult,
+      debriefFullKillsOnPlayerRank: this.debriefFullKillsOnPlayerRank.toJSON(),
+      debriefSharedKillsOnPlayerRank: this.debriefSharedKillsOnPlayerRank.toJSON(),
+      debriefAssistKillsOnPlayerRank: this.debriefAssistKillsOnPlayerRank.toJSON(),
+      debriefFullKillsOnAIRank: this.debriefFullKillsOnAIRank.toJSON(),
+      debriefSharedKillsOnAIRank: this.debriefSharedKillsOnAIRank.toJSON(),
+      debriefAssistKillsOnAIRank: this.debriefAssistKillsOnAIRank.toJSON(),
+      debriefNumHiddenCargoFound: this.debriefNumHiddenCargoFound.toJSON(),
+      debriefNumCannonHits: this.debriefNumCannonHits.toJSON(),
+      debriefNumCannonFired: this.debriefNumCannonFired.toJSON(),
+      debriefNumWarheadHits: this.debriefNumWarheadHits.toJSON(),
+      debriefNumWarheadFired: this.debriefNumWarheadFired.toJSON(),
+      debriefNumCraftLosses: this.debriefNumCraftLosses.toJSON(),
+      debriefCraftLossesFromCollision: this.debriefCraftLossesFromCollision.toJSON(),
+      debriefCraftLossesFromStarship: this.debriefCraftLossesFromStarship.toJSON(),
+      debriefCraftLossesFromMine: this.debriefCraftLossesFromMine.toJSON(),
+      debriefLossesFromPlayerRank: this.debriefLossesFromPlayerRank.toJSON(),
+      debriefLossesFromAIRank: this.debriefLossesFromAIRank.toJSON(),
+      connectedPlayerData: this.connectedPlayerData.map((t) => t.toJSON()),
+      debriefTeamResult: this.debriefTeamResult.map((t) => t.toJSON()),
       lastSelectedFaction: this.lastSelectedFaction,
-      rebelSingleplayerData: this.rebelSingleplayerData,
-      imperialSingleplayerData: this.imperialSingleplayerData,
-      rebelMultiplayerData: this.rebelMultiplayerData,
-      imperialMultiplayerData: this.imperialMultiplayerData
+      rebelSingleplayerData: this.rebelSingleplayerData.toJSON(),
+      imperialSingleplayerData: this.imperialSingleplayerData.toJSON(),
+      rebelMultiplayerData: this.rebelMultiplayerData.toJSON(),
+      imperialMultiplayerData: this.imperialMultiplayerData.toJSON(),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
-    writeChar(hex, this.PilotName, 0x0000);
+    writeChar(hex, this.PilotName, 0x0000, 14);
     writeInt(hex, this.totalScore, 0x000E);
     writeInt(hex, this.PlayerID, 0x0012);
     writeInt(hex, this.continuedOrReflownMission, 0x0016);
@@ -645,19 +645,19 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
     writeInt(hex, this.numHumanPlayersInMission, 0x001E);
     writeInt(hex, this.frontFlyMode, 0x0022);
     offset = 0x0026;
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < this.unknown0x26.length; i++) {
       const t = this.unknown0x26[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0166;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.unknown0x166.length; i++) {
       const t = this.unknown0x166[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0186;
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < this.unknown0x186.length; i++) {
       const t = this.unknown0x186[i];
       writeInt(hex, t, offset);
       offset += 4;
@@ -669,16 +669,16 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
     writeInt(hex, this.lastSelectedTournament, 0x02D6);
     writeInt(hex, this.lastSelectedCombat, 0x02DA);
     writeInt(hex, this.lastSelectedBattle, 0x02DE);
-    writeChar(hex, this.GameNameString, 0x02E2);
+    writeChar(hex, this.GameNameString, 0x02E2, 22);
     offset = 0x02F8;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.unknown0x2F8.length; i++) {
       const t = this.unknown0x2F8[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
-    writeChar(hex, this.GameNameString2, 0x0302);
+    writeChar(hex, this.GameNameString2, 0x0302, 22);
     offset = 0x0318;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.unknown0x318.length; i++) {
       const t = this.unknown0x318[i];
       writeByte(hex, t, offset);
       offset += 1;
@@ -695,55 +695,55 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
     writeObject(hex, this.totalKillCount, 0x035E);
     writeObject(hex, this.numVanillaFriendlyKills, 0x036A);
     offset = 0x0376;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.totalCraftFullKillsExercise.length; i++) {
       const t = this.totalCraftFullKillsExercise[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x04D6;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.totalCraftFullKillsMelee.length; i++) {
       const t = this.totalCraftFullKillsMelee[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0636;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.totalCraftFullKillsCombat.length; i++) {
       const t = this.totalCraftFullKillsCombat[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0796;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.totalCraftSharedKillsExercise.length; i++) {
       const t = this.totalCraftSharedKillsExercise[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x08F6;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.totalCraftSharedKillsMelee.length; i++) {
       const t = this.totalCraftSharedKillsMelee[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0A56;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.totalCraftSharedKillsCombat.length; i++) {
       const t = this.totalCraftSharedKillsCombat[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0BB6;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.totalCraftAssistKillsExercise.length; i++) {
       const t = this.totalCraftAssistKillsExercise[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0D16;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.totalCraftAssistKillsMelee.length; i++) {
       const t = this.totalCraftAssistKillsMelee[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0E76;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.totalCraftAssistKillsCombat.length; i++) {
       const t = this.totalCraftAssistKillsCombat[i];
       writeInt(hex, t, offset);
       offset += 4;
@@ -766,14 +766,14 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
     writeObject(hex, this.totalLossesFromPlayerRank, 0x149E);
     writeObject(hex, this.totalLossesFromAIRank, 0x15CA);
     offset = 0x1612;
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < this.unknown0x1612.length; i++) {
       const t = this.unknown0x1612[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     writeInt(hex, this.unknownPlaqueWon, 0x163A);
     offset = 0x163E;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.TournTeamRecords.length; i++) {
       const t = this.TournTeamRecords[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
@@ -784,19 +784,19 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
     writeInt(hex, this.unknown0x1712, 0x1712);
     writeInt(hex, this.numCombatFlownInLastBattle, 0x1716);
     offset = 0x171A;
-    for (let i = 0; i < 2052; i++) {
+    for (let i = 0; i < this.unknown0x171A.length; i++) {
       const t = this.unknown0x171A[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
     offset = 0x1F1E;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.battleCombatMissionID.length; i++) {
       const t = this.battleCombatMissionID[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x1F2E;
-    for (let i = 0; i < 1012; i++) {
+    for (let i = 0; i < this.unknown0x1F2E.length; i++) {
       const t = this.unknown0x1F2E[i];
       writeByte(hex, t, offset);
       offset += 1;
@@ -805,63 +805,63 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
     writeInt(hex, this.CurrentRank, 0x2326);
     writeInt(hex, this.totalCountMissionsFlown, 0x232A);
     offset = 0x232E;
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < this.RankAchievedOnMissionCount.length; i++) {
       const t = this.RankAchievedOnMissionCount[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
-    writeChar(hex, this.RankString, 0x2392);
+    writeChar(hex, this.RankString, 0x2392, 32);
     writeInt(hex, this.debriefMissionScore, 0x23B2);
     offset = 0x23B6;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.debriefFullKillsOnPlayer.length; i++) {
       const t = this.debriefFullKillsOnPlayer[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x23D6;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.debriefSharedKillsOnPlayer.length; i++) {
       const t = this.debriefSharedKillsOnPlayer[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x23F6;
-    for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < this.debriefFullKillsOnFG.length; i++) {
       const t = this.debriefFullKillsOnFG[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x24B6;
-    for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < this.debriefSharedKillsOnFG.length; i++) {
       const t = this.debriefSharedKillsOnFG[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x2576;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.debriefFullKillsByPlayer.length; i++) {
       const t = this.debriefFullKillsByPlayer[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x2596;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.debriefSharedKillsByPlayer.length; i++) {
       const t = this.debriefSharedKillsByPlayer[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x25B6;
-    for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < this.debriefFullKillsByFG.length; i++) {
       const t = this.debriefFullKillsByFG[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x2676;
-    for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < this.debriefSharedKillsByFG.length; i++) {
       const t = this.debriefSharedKillsByFG[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x2736;
-    for (let i = 0; i < 48; i++) {
+    for (let i = 0; i < this.debriefMeleeAIRankFG.length; i++) {
       const t = this.debriefMeleeAIRankFG[i];
       writeInt(hex, t, offset);
       offset += 4;
@@ -872,55 +872,55 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
     writeObject(hex, this.debriefEnemyKills, 0x281A);
     writeObject(hex, this.debriefFriendlyKills, 0x2826);
     offset = 0x2832;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.debriefFullKillsByShipTypeA.length; i++) {
       const t = this.debriefFullKillsByShipTypeA[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x2992;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.debriefFullKillsByShipTypeB.length; i++) {
       const t = this.debriefFullKillsByShipTypeB[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x2AF2;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.debriefFullKillsByShipTypeC.length; i++) {
       const t = this.debriefFullKillsByShipTypeC[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x2C52;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.debriefSharedKillsByShipTypeA.length; i++) {
       const t = this.debriefSharedKillsByShipTypeA[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x2DB2;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.debriefSharedKillsByShipTypeB.length; i++) {
       const t = this.debriefSharedKillsByShipTypeB[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x2F12;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.debriefSharedKillsByShipTypeC.length; i++) {
       const t = this.debriefSharedKillsByShipTypeC[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x3072;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.debriefAssistKillsByShipTypeA.length; i++) {
       const t = this.debriefAssistKillsByShipTypeA[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x31D2;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.debriefAssistKillsByShipTypeB.length; i++) {
       const t = this.debriefAssistKillsByShipTypeB[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x3332;
-    for (let i = 0; i < 88; i++) {
+    for (let i = 0; i < this.debriefAssistKillsByShipTypeC.length; i++) {
       const t = this.debriefAssistKillsByShipTypeC[i];
       writeInt(hex, t, offset);
       offset += 4;
@@ -943,13 +943,13 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
     writeObject(hex, this.debriefLossesFromPlayerRank, 0x395A);
     writeObject(hex, this.debriefLossesFromAIRank, 0x3A86);
     offset = 0x3ACE;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.connectedPlayerData.length; i++) {
       const t = this.connectedPlayerData[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0x3D8E;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.debriefTeamResult.length; i++) {
       const t = this.debriefTeamResult[i];
       writeObject(hex, t, offset);
       offset += t.getLength();

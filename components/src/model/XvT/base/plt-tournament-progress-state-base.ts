@@ -15,8 +15,8 @@ export abstract class PLTTournamentProgressStateBase extends PyriteBase implemen
   public teamsActive: number;
   public unknown2: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -36,27 +36,27 @@ export abstract class PLTTournamentProgressStateBase extends PyriteBase implemen
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       unknown1: this.unknown1,
       completedMissionCount: this.completedMissionCount,
       totalMissionCount: this.totalMissionCount,
-      teamRecord: this.teamRecord,
+      teamRecord: this.teamRecord.map((t) => t.toJSON()),
       playersActive: this.playersActive,
       teamsActive: this.teamsActive,
-      unknown2: this.unknown2
+      unknown2: this.unknown2,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
-    writeChar(hex, this.unknown1, 0x0000);
+    writeChar(hex, this.unknown1, 0x0000, 36);
     writeInt(hex, this.completedMissionCount, 0x0024);
     writeInt(hex, this.totalMissionCount, 0x0028);
     offset = 0x002C;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.teamRecord.length; i++) {
       const t = this.teamRecord[i];
       writeObject(hex, t, offset);
       offset += t.getLength();

@@ -1,4 +1,4 @@
-import { getByte, getSChar, getUInt } from "../../hex";
+import { getByte } from "../../../hex";
 import { Glyph } from "./glyph";
 
 // http://www.descent2.com/ddn/specs/fnt/

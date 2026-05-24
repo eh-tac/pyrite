@@ -16,8 +16,8 @@ export abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implement
   public unknown0x1C: number;
   public unknown0x20: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -33,7 +33,7 @@ export abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implement
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       unknown0x0: this.unknown0x0,
       isStartedUNK: this.isStartedUNK,
@@ -43,12 +43,12 @@ export abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implement
       unknown0x14: this.unknown0x14,
       unknown0x18: this.unknown0x18,
       unknown0x1C: this.unknown0x1C,
-      unknown0x20: this.unknown0x20
+      unknown0x20: this.unknown0x20,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.unknown0x0, 0x0000);

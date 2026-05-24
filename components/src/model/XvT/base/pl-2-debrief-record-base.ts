@@ -33,8 +33,8 @@ export abstract class PL2DebriefRecordBase extends PyriteBase implements Byteabl
   public LossesFromPlayerRank: PLTPlayerRankCountRecord;
   public LossesFromAIRank: PLTAIRankCountRecord;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -70,36 +70,36 @@ export abstract class PL2DebriefRecordBase extends PyriteBase implements Byteabl
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
-      UnknownRecord1: this.UnknownRecord1,
-      UnknownRecord2: this.UnknownRecord2,
-      UnknownRecord3: this.UnknownRecord3,
-      enemyKillsEXX: this.enemyKillsEXX,
-      friendlyKillsEXX: this.friendlyKillsEXX,
+      UnknownRecord1: this.UnknownRecord1.toJSON(),
+      UnknownRecord2: this.UnknownRecord2.toJSON(),
+      UnknownRecord3: this.UnknownRecord3.toJSON(),
+      enemyKillsEXX: this.enemyKillsEXX.toJSON(),
+      friendlyKillsEXX: this.friendlyKillsEXX.toJSON(),
       totalKillCountByCraftType: this.totalKillCountByCraftType,
-      FullKillsOnPlayerRank: this.FullKillsOnPlayerRank,
-      SharedKillsOnPlayerRank: this.SharedKillsOnPlayerRank,
-      AssistKillsOnPlayerRank: this.AssistKillsOnPlayerRank,
-      FullKillsOnAIRank: this.FullKillsOnAIRank,
-      SharedKillsOnAIRank: this.SharedKillsOnAIRank,
-      AssistKillsOnAIRank: this.AssistKillsOnAIRank,
-      NumHiddenCargoFoundEXX: this.NumHiddenCargoFoundEXX,
-      NumCannonHitsEXX: this.NumCannonHitsEXX,
-      NumCannonFiredEXX: this.NumCannonFiredEXX,
-      NumWarheadHitsEXX: this.NumWarheadHitsEXX,
-      NumWarheadFiredEXX: this.NumWarheadFiredEXX,
-      NumCraftLossesEXX: this.NumCraftLossesEXX,
-      CraftLossesFromCollisionEXX: this.CraftLossesFromCollisionEXX,
-      CraftLossesFromStarshipEXX: this.CraftLossesFromStarshipEXX,
-      CraftLossesFromMineEXX: this.CraftLossesFromMineEXX,
-      LossesFromPlayerRank: this.LossesFromPlayerRank,
-      LossesFromAIRank: this.LossesFromAIRank
+      FullKillsOnPlayerRank: this.FullKillsOnPlayerRank.toJSON(),
+      SharedKillsOnPlayerRank: this.SharedKillsOnPlayerRank.toJSON(),
+      AssistKillsOnPlayerRank: this.AssistKillsOnPlayerRank.toJSON(),
+      FullKillsOnAIRank: this.FullKillsOnAIRank.toJSON(),
+      SharedKillsOnAIRank: this.SharedKillsOnAIRank.toJSON(),
+      AssistKillsOnAIRank: this.AssistKillsOnAIRank.toJSON(),
+      NumHiddenCargoFoundEXX: this.NumHiddenCargoFoundEXX.toJSON(),
+      NumCannonHitsEXX: this.NumCannonHitsEXX.toJSON(),
+      NumCannonFiredEXX: this.NumCannonFiredEXX.toJSON(),
+      NumWarheadHitsEXX: this.NumWarheadHitsEXX.toJSON(),
+      NumWarheadFiredEXX: this.NumWarheadFiredEXX.toJSON(),
+      NumCraftLossesEXX: this.NumCraftLossesEXX.toJSON(),
+      CraftLossesFromCollisionEXX: this.CraftLossesFromCollisionEXX.toJSON(),
+      CraftLossesFromStarshipEXX: this.CraftLossesFromStarshipEXX.toJSON(),
+      CraftLossesFromMineEXX: this.CraftLossesFromMineEXX.toJSON(),
+      LossesFromPlayerRank: this.LossesFromPlayerRank.toJSON(),
+      LossesFromAIRank: this.LossesFromAIRank.toJSON(),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeObject(hex, this.UnknownRecord1, 0x0000);
@@ -108,7 +108,7 @@ export abstract class PL2DebriefRecordBase extends PyriteBase implements Byteabl
     writeObject(hex, this.enemyKillsEXX, 0x0024);
     writeObject(hex, this.friendlyKillsEXX, 0x0030);
     offset = 0x003C;
-    for (let i = 0; i < 900; i++) {
+    for (let i = 0; i < this.totalKillCountByCraftType.length; i++) {
       const t = this.totalKillCountByCraftType[i];
       writeInt(hex, t, offset);
       offset += 4;

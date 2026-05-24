@@ -24,8 +24,8 @@ export abstract class PLTConnectedPlayerDataBase extends PyriteBase implements B
   public optionalCountermeasure: number;
   public hasDisconnectedFromHostUNK: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -49,7 +49,7 @@ export abstract class PLTConnectedPlayerDataBase extends PyriteBase implements B
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       pilotLongNameUnused: this.pilotLongNameUnused,
       pilotShortName: this.pilotShortName,
@@ -67,16 +67,16 @@ export abstract class PLTConnectedPlayerDataBase extends PyriteBase implements B
       optionalWarhead: this.optionalWarhead,
       optionalBeam: this.optionalBeam,
       optionalCountermeasure: this.optionalCountermeasure,
-      hasDisconnectedFromHostUNK: this.hasDisconnectedFromHostUNK
+      hasDisconnectedFromHostUNK: this.hasDisconnectedFromHostUNK,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
-    writeChar(hex, this.pilotLongNameUnused, 0x0000);
-    writeChar(hex, this.pilotShortName, 0x000E);
+    writeChar(hex, this.pilotLongNameUnused, 0x0000, 14);
+    writeChar(hex, this.pilotShortName, 0x000E, 14);
     writeInt(hex, this.fgIndex, 0x001C);
     writeInt(hex, this.DPPlayerID, 0x0020);
     writeInt(hex, this.pilotRank, 0x0024);

@@ -10,8 +10,8 @@ export abstract class StringBase extends PyriteBase implements Byteable {
   public String: string[];
   public Highlight: number[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -33,27 +33,26 @@ export abstract class StringBase extends PyriteBase implements Byteable {
     this.StringLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Length: this.Length,
       String: this.String,
-      Highlight: this.Highlight
+      Highlight: this.Highlight,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Length, 0x0);
     offset = 0x2;
-    for (let i = 0; i < this.Length; i++) {
+    for (let i = 0; i < this.String.length; i++) {
       const t = this.String[i];
-      writeChar(hex, t, offset);
+      writeChar(hex, t, offset, 1);
       offset += 1;
     }
-    offset = offset;
-    for (let i = 0; i < this.Length; i++) {
+    for (let i = 0; i < this.Highlight.length; i++) {
       const t = this.Highlight[i];
       writeByte(hex, t, offset);
       offset += 1;

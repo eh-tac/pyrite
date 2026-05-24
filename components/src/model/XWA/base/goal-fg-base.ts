@@ -10,15 +10,12 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
   public Condition: number;
   public Amount: number;
   public Points: number;
-  public Enabled: boolean;
-  public Team: number;
-  public Unknown42: number;
+  public EnabledForTeam: boolean[];
   public Parameter: number; //or Goal time limit depending on order
   public ActiveSequence: number;
-  public Unknown15: boolean; //** retains FG Unknown numbering
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -26,44 +23,46 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
     this.Condition = getByte(hex, 0x01);
     this.Amount = getByte(hex, 0x02);
     this.Points = getSByte(hex, 0x03);
-    this.Enabled = getBool(hex, 0x04);
-    this.Team = getByte(hex, 0x05);
-    this.Unknown42 = getByte(hex, 0x0D);
+    this.EnabledForTeam = [];
+    offset = 0x04;
+    for (let i = 0; i < 10; i++) {
+      const t = getBool(hex, offset);
+      this.EnabledForTeam.push(t);
+      offset += 1;
+    }
     this.Parameter = getByte(hex, 0x0E);
     this.ActiveSequence = getByte(hex, 0x0F);
-    this.Unknown15 = getBool(hex, 0x4F);
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Argument: this.Argument,
       Condition: this.Condition,
       Amount: this.Amount,
       Points: this.Points,
-      Enabled: this.Enabled,
-      Team: this.Team,
-      Unknown42: this.Unknown42,
+      EnabledForTeam: this.EnabledForTeam,
       Parameter: this.Parameter,
       ActiveSequence: this.ActiveSequence,
-      Unknown15: this.Unknown15
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeByte(hex, this.Argument, 0x00);
     writeByte(hex, this.Condition, 0x01);
     writeByte(hex, this.Amount, 0x02);
     writeSByte(hex, this.Points, 0x03);
-    writeBool(hex, this.Enabled, 0x04);
-    writeByte(hex, this.Team, 0x05);
-    writeByte(hex, this.Unknown42, 0x0D);
+    offset = 0x04;
+    for (let i = 0; i < this.EnabledForTeam.length; i++) {
+      const t = this.EnabledForTeam[i];
+      writeBool(hex, t, offset);
+      offset += 1;
+    }
     writeByte(hex, this.Parameter, 0x0E);
     writeByte(hex, this.ActiveSequence, 0x0F);
-    writeBool(hex, this.Unknown15, 0x4F);
 
     return hex;
   }

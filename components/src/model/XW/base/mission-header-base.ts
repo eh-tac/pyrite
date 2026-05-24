@@ -1,5 +1,5 @@
 import { Byteable } from "../../../byteable";
-import { Constants } from "../constants";
+import { Constants, EndEvent, MissionLocation } from "../constants";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { getChar, getShort, writeChar, writeShort } from "../../../hex";
 // tslint:disable member-ordering
@@ -8,20 +8,20 @@ import { getChar, getShort, writeChar, writeShort } from "../../../hex";
 export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
   public readonly MISSIONHEADERLENGTH: number = 200;
   public TimeLimitMinutes: number;
-  public EndEvent: number;
+  public EndEvent: EndEvent;
   public RndSeed: number; //(unused)
-  public MissionLocation: number;
+  public MissionLocation: MissionLocation;
   public EndOfMissionMessages: string[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.TimeLimitMinutes = getShort(hex, 0x00);
-    this.EndEvent = getShort(hex, 0x02);
+    this.EndEvent = getShort(hex, 0x02) as EndEvent;
     this.RndSeed = getShort(hex, 0x04);
-    this.MissionLocation = getShort(hex, 0x06);
+    this.MissionLocation = getShort(hex, 0x06) as MissionLocation;
     this.EndOfMissionMessages = [];
     offset = 0x08;
     for (let i = 0; i < 64; i++) {
@@ -32,18 +32,18 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       TimeLimitMinutes: this.TimeLimitMinutes,
       EndEvent: this.EndEventLabel,
       RndSeed: this.RndSeed,
       MissionLocation: this.MissionLocationLabel,
-      EndOfMissionMessages: this.EndOfMissionMessages
+      EndOfMissionMessages: this.EndOfMissionMessages,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.TimeLimitMinutes, 0x00);
@@ -51,9 +51,9 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
     writeShort(hex, this.RndSeed, 0x04);
     writeShort(hex, this.MissionLocation, 0x06);
     offset = 0x08;
-    for (let i = 0; i < 64; i++) {
+    for (let i = 0; i < this.EndOfMissionMessages.length; i++) {
       const t = this.EndOfMissionMessages[i];
-      writeChar(hex, t, offset);
+      writeChar(hex, t, offset, 1);
       offset += 1;
     }
 

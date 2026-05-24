@@ -41,8 +41,6 @@ abstract class MissionBase extends PyriteBase implements Byteable
     public $MessageNotes;
     /** @var string[] PV EomNotes STR */
     public $EomNotes;
-    /** @var integer[] PV Unknown BYTE */
-    public $Unknown;
     /** @var string[] PV DescriptionNotes STR */
     public $DescriptionNotes;
     /** @var XWAString[] PV FGGoalStrings XWAString */
@@ -122,17 +120,10 @@ abstract class MissionBase extends PyriteBase implements Byteable
         }
         $this->EomNotes = [];
         $offset = $offset;
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 70; $i++) {
             $t = $this->getString($hex, $offset);
             $this->EomNotes[] = $t;
             $offset += strlen($t);
-        }
-        $this->Unknown = [];
-        $offset = $offset;
-        for ($i = 0; $i < 480; $i++) {
-            $t = $this->getByte($hex, $offset);
-            $this->Unknown[] = $t;
-            $offset += 1;
         }
         $this->DescriptionNotes = [];
         $offset = $offset;
@@ -150,7 +141,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
         }
         $this->GlobalGoalStrings = [];
         $offset = $offset;
-        for ($i = 0; $i < 360; $i++) {
+        for ($i = 0; $i < 840; $i++) {
             $t = (new XWAString(substr($hex, $offset), $this->TIE))->loadHex();
             $this->GlobalGoalStrings[] = $t;
             $offset += $t->getLength();
@@ -188,7 +179,6 @@ abstract class MissionBase extends PyriteBase implements Byteable
             "BriefingStringNotes" => $this->BriefingStringNotes,
             "MessageNotes" => $this->MessageNotes,
             "EomNotes" => $this->EomNotes,
-            "Unknown" => $this->Unknown,
             "DescriptionNotes" => $this->DescriptionNotes,
             "FGGoalStrings" => $this->FGGoalStrings,
             "GlobalGoalStrings" => $this->GlobalGoalStrings,
@@ -247,16 +237,10 @@ abstract class MissionBase extends PyriteBase implements Byteable
             $offset += strlen($t);
         }
         $offset = $offset;
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 70; $i++) {
             $t = $this->EomNotes[$i];
             $hex = $this->writeString($t, $hex, $offset);
             $offset += strlen($t);
-        }
-        $offset = $offset;
-        for ($i = 0; $i < 480; $i++) {
-            $t = $this->Unknown[$i];
-            $hex = $this->writeByte($t, $hex, $offset);
-            $offset += 1;
         }
         $offset = $offset;
         for ($i = 0; $i < 3; $i++) {
@@ -271,7 +255,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
             $offset += $t->getLength();
         }
         $offset = $offset;
-        for ($i = 0; $i < 360; $i++) {
+        for ($i = 0; $i < 840; $i++) {
             $t = $this->GlobalGoalStrings[$i];
             $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();

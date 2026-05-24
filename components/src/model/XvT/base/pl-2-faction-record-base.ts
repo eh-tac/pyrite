@@ -69,8 +69,8 @@ export abstract class PL2FactionRecordBase extends PyriteBase implements Byteabl
   public missionSPCampaign: PL2CampaignRecord[];
   public missionMPCampaign: PL2CampaignRecord[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -253,7 +253,7 @@ export abstract class PL2FactionRecordBase extends PyriteBase implements Byteabl
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       totalMissionsFlown: this.totalMissionsFlown,
       lastKnownTeam: this.lastKnownTeam,
@@ -262,67 +262,67 @@ export abstract class PL2FactionRecordBase extends PyriteBase implements Byteabl
       unknown0x24: this.unknown0x24,
       isMissionCategorySeries: this.isMissionCategorySeries,
       activeMissionIDNum: this.activeMissionIDNum,
-      earnedMedalCount: this.earnedMedalCount,
+      earnedMedalCount: this.earnedMedalCount.toJSON(),
       debriefMedalTypeMTEB: this.debriefMedalTypeMTEB,
       UnknownRecord4: this.UnknownRecord4,
       totalFactionScore: this.totalFactionScore,
-      totalScore: this.totalScore,
-      totalFlownNonSeries: this.totalFlownNonSeries,
-      totalFlownSeries: this.totalFlownSeries,
-      totalFullKills: this.totalFullKills,
-      totalFriendlyFullKills: this.totalFriendlyFullKills,
+      totalScore: this.totalScore.toJSON(),
+      totalFlownNonSeries: this.totalFlownNonSeries.toJSON(),
+      totalFlownSeries: this.totalFlownSeries.toJSON(),
+      totalFullKills: this.totalFullKills.toJSON(),
+      totalFriendlyFullKills: this.totalFriendlyFullKills.toJSON(),
       totalFullKillsOnCraftEMC: this.totalFullKillsOnCraftEMC,
       totalSharedKillsOnCraftEMC: this.totalSharedKillsOnCraftEMC,
       totalAssistKillsOnCraftEMC: this.totalAssistKillsOnCraftEMC,
-      totalFullKillsOfPlayerRank: this.totalFullKillsOfPlayerRank,
-      totalSharedKillsOfPlayerRank: this.totalSharedKillsOfPlayerRank,
-      totalAssistKillsOfPlayerRank: this.totalAssistKillsOfPlayerRank,
-      totalFullKillsOfAIRank: this.totalFullKillsOfAIRank,
-      totalSharedKillsOfAIRank: this.totalSharedKillsOfAIRank,
-      totalAssistKillsOfAIRank: this.totalAssistKillsOfAIRank,
-      totalHiddenCargoFound: this.totalHiddenCargoFound,
-      totalLaserHit: this.totalLaserHit,
-      totalLaserFired: this.totalLaserFired,
-      totalWarheadHit: this.totalWarheadHit,
-      totalWarheadFired: this.totalWarheadFired,
-      totalLosses: this.totalLosses,
-      totalLossesByCollision: this.totalLossesByCollision,
-      totalLossesByStarship: this.totalLossesByStarship,
-      totalLossesByMines: this.totalLossesByMines,
-      totalLossesByPlayerRank: this.totalLossesByPlayerRank,
-      totalLossesByAIRank: this.totalLossesByAIRank,
-      missionSPExercise: this.missionSPExercise,
-      missionSPMelee: this.missionSPMelee,
-      missionSPCombat: this.missionSPCombat,
-      missionMPExercise: this.missionMPExercise,
-      missionMPMelee: this.missionMPMelee,
-      missionMPCombat: this.missionMPCombat,
-      missionSPTourn: this.missionSPTourn,
-      missionMPTourn: this.missionMPTourn,
-      missionSPBattle: this.missionSPBattle,
-      missionMPBattle: this.missionMPBattle,
-      statusSPCampaign: this.statusSPCampaign,
-      statusMPCampaignUNK: this.statusMPCampaignUNK,
-      missionSPCampaign: this.missionSPCampaign,
-      missionMPCampaign: this.missionMPCampaign
+      totalFullKillsOfPlayerRank: this.totalFullKillsOfPlayerRank.toJSON(),
+      totalSharedKillsOfPlayerRank: this.totalSharedKillsOfPlayerRank.toJSON(),
+      totalAssistKillsOfPlayerRank: this.totalAssistKillsOfPlayerRank.toJSON(),
+      totalFullKillsOfAIRank: this.totalFullKillsOfAIRank.toJSON(),
+      totalSharedKillsOfAIRank: this.totalSharedKillsOfAIRank.toJSON(),
+      totalAssistKillsOfAIRank: this.totalAssistKillsOfAIRank.toJSON(),
+      totalHiddenCargoFound: this.totalHiddenCargoFound.toJSON(),
+      totalLaserHit: this.totalLaserHit.toJSON(),
+      totalLaserFired: this.totalLaserFired.toJSON(),
+      totalWarheadHit: this.totalWarheadHit.toJSON(),
+      totalWarheadFired: this.totalWarheadFired.toJSON(),
+      totalLosses: this.totalLosses.toJSON(),
+      totalLossesByCollision: this.totalLossesByCollision.toJSON(),
+      totalLossesByStarship: this.totalLossesByStarship.toJSON(),
+      totalLossesByMines: this.totalLossesByMines.toJSON(),
+      totalLossesByPlayerRank: this.totalLossesByPlayerRank.toJSON(),
+      totalLossesByAIRank: this.totalLossesByAIRank.toJSON(),
+      missionSPExercise: this.missionSPExercise.map((t) => t.toJSON()),
+      missionSPMelee: this.missionSPMelee.map((t) => t.toJSON()),
+      missionSPCombat: this.missionSPCombat.map((t) => t.toJSON()),
+      missionMPExercise: this.missionMPExercise.map((t) => t.toJSON()),
+      missionMPMelee: this.missionMPMelee.map((t) => t.toJSON()),
+      missionMPCombat: this.missionMPCombat.map((t) => t.toJSON()),
+      missionSPTourn: this.missionSPTourn.map((t) => t.toJSON()),
+      missionMPTourn: this.missionMPTourn.map((t) => t.toJSON()),
+      missionSPBattle: this.missionSPBattle.map((t) => t.toJSON()),
+      missionMPBattle: this.missionMPBattle.map((t) => t.toJSON()),
+      statusSPCampaign: this.statusSPCampaign.map((t) => t.toJSON()),
+      statusMPCampaignUNK: this.statusMPCampaignUNK.map((t) => t.toJSON()),
+      missionSPCampaign: this.missionSPCampaign.map((t) => t.toJSON()),
+      missionMPCampaign: this.missionMPCampaign.map((t) => t.toJSON()),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.totalMissionsFlown, 0x0000);
     writeInt(hex, this.lastKnownTeam, 0x0004);
     writeInt(hex, this.lastKnownFolderIndex, 0x0008);
     offset = 0x000C;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.selectedMissionIDNum.length; i++) {
       const t = this.selectedMissionIDNum[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0024;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.unknown0x24.length; i++) {
       const t = this.unknown0x24[i];
       writeInt(hex, t, offset);
       offset += 4;
@@ -331,13 +331,13 @@ export abstract class PL2FactionRecordBase extends PyriteBase implements Byteabl
     writeInt(hex, this.activeMissionIDNum, 0x0048);
     writeObject(hex, this.earnedMedalCount, 0x004C);
     offset = 0x00AC;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.debriefMedalTypeMTEB.length; i++) {
       const t = this.debriefMedalTypeMTEB[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x00BC;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.UnknownRecord4.length; i++) {
       const t = this.UnknownRecord4[i];
       writeInt(hex, t, offset);
       offset += 4;
@@ -349,19 +349,19 @@ export abstract class PL2FactionRecordBase extends PyriteBase implements Byteabl
     writeObject(hex, this.totalFullKills, 0x00F4);
     writeObject(hex, this.totalFriendlyFullKills, 0x0100);
     offset = 0x010C;
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < this.totalFullKillsOnCraftEMC.length; i++) {
       const t = this.totalFullKillsOnCraftEMC[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x05BC;
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < this.totalSharedKillsOnCraftEMC.length; i++) {
       const t = this.totalSharedKillsOnCraftEMC[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0A6C;
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < this.totalAssistKillsOnCraftEMC.length; i++) {
       const t = this.totalAssistKillsOnCraftEMC[i];
       writeInt(hex, t, offset);
       offset += 4;
@@ -384,85 +384,85 @@ export abstract class PL2FactionRecordBase extends PyriteBase implements Byteabl
     writeObject(hex, this.totalLossesByPlayerRank, 0x13E4);
     writeObject(hex, this.totalLossesByAIRank, 0x1510);
     offset = 0x1558;
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < this.missionSPExercise.length; i++) {
       const t = this.missionSPExercise[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0x2368;
-    for (let i = 0; i < 250; i++) {
+    for (let i = 0; i < this.missionSPMelee.length; i++) {
       const t = this.missionSPMelee[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0x4690;
-    for (let i = 0; i < 250; i++) {
+    for (let i = 0; i < this.missionSPCombat.length; i++) {
       const t = this.missionSPCombat[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0x69B8;
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < this.missionMPExercise.length; i++) {
       const t = this.missionMPExercise[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0x7C78;
-    for (let i = 0; i < 250; i++) {
+    for (let i = 0; i < this.missionMPMelee.length; i++) {
       const t = this.missionMPMelee[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0xAB58;
-    for (let i = 0; i < 250; i++) {
+    for (let i = 0; i < this.missionMPCombat.length; i++) {
       const t = this.missionMPCombat[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0xDA38;
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < this.missionSPTourn.length; i++) {
       const t = this.missionSPTourn[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0xDE20;
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < this.missionMPTourn.length; i++) {
       const t = this.missionMPTourn[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0xE26C;
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < this.missionSPBattle.length; i++) {
       const t = this.missionSPBattle[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0xE5F0;
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < this.missionMPBattle.length; i++) {
       const t = this.missionMPBattle[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0xE9D8;
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < this.statusSPCampaign.length; i++) {
       const t = this.statusSPCampaign[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0xED5C;
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < this.statusMPCampaignUNK.length; i++) {
       const t = this.statusMPCampaignUNK[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0xF0E0;
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < this.missionSPCampaign.length; i++) {
       const t = this.missionSPCampaign[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     offset = 0xFD60;
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < this.missionMPCampaign.length; i++) {
       const t = this.missionMPCampaign[i];
       writeObject(hex, t, offset);
       offset += t.getLength();

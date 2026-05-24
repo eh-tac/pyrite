@@ -19,7 +19,7 @@ abstract class EventBase extends PyriteBase implements Byteable
     public $Time;
     /** @var integer 0x2 Type SHORT */
     public $Type;
-    /** @var integer 0x4 Variables SHORT */
+    /** @var integer[] 0x4 Variables SHORT */
     public $Variables;
     
     public function __construct($hex = null, $tie = null)
@@ -39,7 +39,13 @@ abstract class EventBase extends PyriteBase implements Byteable
 
         $this->Time = $this->getShort($hex, 0x0);
         $this->Type = $this->getShort($hex, 0x2);
-        $this->Variables = $this->getShort($hex, 0x4);
+        $this->Variables = [];
+        $offset = 0x4;
+        for ($i = 0; $i < $this->VariableCount(); $i++) {
+            $t = $this->getShort($hex, $offset);
+            $this->Variables[] = $t;
+            $offset += 2;
+        }
         $this->EventLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
@@ -62,7 +68,12 @@ abstract class EventBase extends PyriteBase implements Byteable
 
         $hex = $this->writeShort($this->Time, $hex, 0x0);
         $hex = $this->writeShort($this->Type, $hex, 0x2);
-        $hex = $this->writeShort($this->Variables, $hex, 0x4);
+        $offset = 0x4;
+        for ($i = 0; $i < $this->VariableCount(); $i++) {
+            $t = $this->Variables[$i];
+            $hex = $this->writeShort($t, $hex, $offset);
+            $offset += 2;
+        }
 
         return $hex;
     }
@@ -71,7 +82,7 @@ abstract class EventBase extends PyriteBase implements Byteable
     {
         return isset($this->Type) && isset(Constants::$EVENTTYPE[$this->Type]) ? Constants::$EVENTTYPE[$this->Type] : "Unknown";
     }
-    
+    protected abstract function VariableCount();
     public function getLength()
     {
         return $this->EventLength;

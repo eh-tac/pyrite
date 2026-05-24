@@ -15,8 +15,8 @@ export abstract class PL2CampaignRecordBase extends PyriteBase implements Byteab
   public isMissionComplete: number;
   public UIFrameTimerHelper: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -31,7 +31,7 @@ export abstract class PL2CampaignRecordBase extends PyriteBase implements Byteab
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       IDNumber: this.IDNumber,
       totalCountFlown: this.totalCountFlown,
@@ -40,12 +40,12 @@ export abstract class PL2CampaignRecordBase extends PyriteBase implements Byteab
       bestEvaluationBadge: this.bestEvaluationBadge,
       bestTimeAsSeconds: this.bestTimeAsSeconds,
       isMissionComplete: this.isMissionComplete,
-      UIFrameTimerHelper: this.UIFrameTimerHelper
+      UIFrameTimerHelper: this.UIFrameTimerHelper,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.IDNumber, 0x0000);

@@ -10,8 +10,8 @@ export abstract class LTextBase extends PyriteBase implements Byteable {
   public NumStrings: number;
   public Strings: LString[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -26,20 +26,20 @@ export abstract class LTextBase extends PyriteBase implements Byteable {
     this.LTextLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       NumStrings: this.NumStrings,
-      Strings: this.Strings
+      Strings: this.Strings.map((t) => t.toJSON()),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.NumStrings, 0x00);
     offset = 0x02;
-    for (let i = 0; i < this.NumStrings; i++) {
+    for (let i = 0; i < this.Strings.length; i++) {
       const t = this.Strings[i];
       writeObject(hex, t, offset);
       offset += t.getLength();

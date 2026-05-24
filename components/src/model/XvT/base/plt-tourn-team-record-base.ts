@@ -12,8 +12,8 @@ export abstract class PLTTournTeamRecordBase extends PyriteBase implements Bytea
   public numberOfMeleeRankingsSecond: number;
   public numberOfMeleeRankingsThird: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -25,18 +25,18 @@ export abstract class PLTTournTeamRecordBase extends PyriteBase implements Bytea
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       teamParticipationState: this.teamParticipationState,
       totalTeamScore: this.totalTeamScore,
       numberOfMeleeRankingsFirst: this.numberOfMeleeRankingsFirst,
       numberOfMeleeRankingsSecond: this.numberOfMeleeRankingsSecond,
-      numberOfMeleeRankingsThird: this.numberOfMeleeRankingsThird
+      numberOfMeleeRankingsThird: this.numberOfMeleeRankingsThird,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.teamParticipationState, 0x0000);

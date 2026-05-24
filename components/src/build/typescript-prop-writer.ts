@@ -7,7 +7,7 @@ export class TypeScriptPropWriter {
 
   public get toJSONExpr(): string {
     if (this.prop instanceof PropObject) {
-      return this.prop.isArray ? `${this.prop.name}.map(t => t.toJSON())` : `${this.prop.name}.toJSON()`;
+      return this.prop.isArray ? `${this.prop.name}.map((t) => t.toJSON())` : `${this.prop.name}.toJSON()`;
     }
     return this.prop.enumName ? `${this.prop.name}Label` : this.prop.name;
   }
@@ -96,6 +96,9 @@ export class TypeScriptPropWriter {
       // otherwise if already in previous value mode, just += by the current length;
       const op = this.prop.previousValueOffset ? "+=" : `= ${this.prop.offset} +`;
       offsetExpr = `\n    offset ${op} ${this.propLength};`;
+    } else if (this.prop.previousValueOffset) {
+      // this prop is a fixed length but the offset is based on the previous value, so increment the offset by the length of this prop
+      offsetExpr = `\n    offset += ${this.propLength};`;
     }
     return `${init}${offsetExpr}`;
   }
@@ -158,29 +161,31 @@ export class TypeScriptPropWriter {
   }
 
   public getOutputHex(): string {
-    const offsetExpr = "";
+    let offsetExpr = "";
     const p = `this.${this.prop.name}`;
     let out = `${this.getSetter(
       this.prop.isStatic && this.prop.reservedValue ? this.prop.reservedValue.toString() : p,
     )};`;
     if (this.prop.isArray) {
-      out = `offset = ${this.offsetExpr};
-    for (let i = 0; i < ${this.arrayLength}; i++) {
+      const preArray = this.offsetExpr !== "offset" ? `offset = ${this.offsetExpr};\n    ` : "";
+      out = `${preArray}for (let i = 0; i < ${p}.length; i++) {
       const t = ${p}[i];
       ${this.getSetter("t", true)};
       offset += ${this.propLength};
     }`;
+    } else if (this.prop.previousValueOffset) {
+      // this prop is a fixed length but the offset is based on the previous value, so increment the offset by the length of this prop
+      offsetExpr = `\n    offset += ${this.propLength};`;
     }
-    return `${offsetExpr}${out}`;
+    return `${out}${offsetExpr}`;
   }
 
   public getSetter(propOverride?: string, inLoop = false): string {
     const off = inLoop ? "offset" : this.offsetExpr;
-    const params = ["hex", propOverride || `this.${this.prop.name}`];
+    const params = ["hex", propOverride || `this.${this.prop.name}`, off];
     if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
       params.push(this.typeLength);
     }
-    params.push(off);
     return `${this.prop.hexSetter}(${params.join(", ")})`;
   }
 

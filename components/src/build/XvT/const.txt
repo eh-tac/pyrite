@@ -85,7 +85,7 @@ Ships
 44 Asteroid War Launcher
 45 X7 Factory
 46 Comm Sat
-47 Comm Sat
+47 Comm Sat2
 48 *Sat3
 49 *Sat4
 4A *Sat5
@@ -98,7 +98,7 @@ Ships
 51 *Probe2
 52 *Probe3
 53 Nav Buoy
-54 Nav Buoy
+54 Nav Buoy2
 55 *Pilot
 56 Asteroid
 57 Planet
@@ -178,13 +178,13 @@ Status
 08	Shields added or 200%
 09	Hyperdrive added
 0A	Unknown
-0B	Unknown
-0C	(200% Shields)
+0B	Unknown2
+0C	(200% Shields2)
 0D	Shields 50%, Charging
-0E	(No Lasers)
-0F	Unknown
+0E	(No Lasers2)
+0F	Unknown3
 10	Shields + Hyperdrive added
-11	Unknown
+11	Unknown4
 12	200% Shields
 13	(50% Shields)
 14	Invincible
@@ -268,10 +268,10 @@ ArrivalDifficulty
 04	Medium, Hard
 05	Easy, Medium
 06  Never
-07  Never
-08  Easy
-09  Medium
-0A  Hard
+07  Never2
+08  Easy2
+09  Medium2
+0A  Hard2
 
 Condition
 00	Always (true)
@@ -298,7 +298,7 @@ Condition
 15	0% Shields
 16	50% Hull
 17	Out of Warheads
-18	Unknown (arrive?)
+18	Unknown2 (arrive?)
 19	be dropped off
 1A	destroyed in 1 hit
 1B	NOT be disabled
@@ -312,9 +312,9 @@ Condition
 23	25% Shields
 24	75% Hull
 25	25% Hull
-26	Unknown
-27	Unknown
-28	Unknown
+26	Unknown3
+27	Unknown4
+28	Unknown5
 29	be all Player Craft
 2A	reinforced by AI?
 2B	come and go
@@ -437,7 +437,7 @@ Order
 1C	SS Hold Steady
 	Var1	Wait time (seconds / 5)
 1D	SS Go Home
-1E	SS Wait
+1E	SS Wait2
 	Var1	Wait time (seconds / 5)
 1F	SS Board
 	Var1	Docking Time (seconds / 5)
@@ -445,14 +445,14 @@ Order
 20	Board to Repair
 	Var1	Docking Time (seconds / 5)
 	Var2	Number of Dockings
-21	Hold Station
+21	Hold Station2
 22	Hold Steady
 23	SS Hold Station
 24	Self-destruct
 	Var1	Delay Time (seconds / 5)
 25	Kamikaze
 26	SS Disabled
-27	SS Hold Steady
+27	SS Hold Steady2
 
 CraftWhen
 01	Inspected

@@ -73,10 +73,10 @@ struct FileHeader (size 0x23F0)
 	0x000B	BYTE	AllWayShown	(was Unknown2, probably editor only)
 	0x000C	BYTE[8]	Vars
 	0x0014	STR<20>[4]	IffNames
-	0x0064	Region	RegionNames
+	0x0064	Region[4]	Regions
 	0x0274	GlobalCargo[16] GlobalCargo
 	0x0B34	GlobalUnit[32]	GlobalGroups
-	0x1C32	GlobalUnit[40]	GlobalUnits
+	0x1614	GlobalUnit[40]	GlobalUnits
 	0x23AC	BYTE		Hangar (enum)
 	0x23AD	BOOL		GoalsUnimportant
 	0x23AE	BYTE		TimeLimitMinutes
@@ -85,8 +85,8 @@ struct FileHeader (size 0x23F0)
 	0x23B1	BYTE		BriefingLogo (enum)	(also known as CommandOfficer)
 	0x23B2	BYTE		BriefingOfficerEntryLine
 	0x23B3	BYTE		SecondaryVersion (0x62 'b', was Unknown3, might be editor only)
-	0x23B4	BYTE		WinOfficer (enum) (was Unknown4)
-	0x23B5	BYTE		FailOfficer (enum) (was Unknown5)
+	0x23B4	BYTE		WinOfficer (enum BriefingOfficer) (was Unknown4)
+	0x23B5	BYTE		FailOfficer (enum BriefingOfficer) (was Unknown5)
 }
 
 struct Region (size 0x84)
@@ -310,7 +310,7 @@ struct Briefing (size 0)
 	0x0004	SHORT		StartLength
 	0x0006	SHORT		EventsLength
 	0x0008	SHORT		Tile
-	0x000A	Event[]		Events
+	0x000A	Event[0]	Events
 	0x320A	Icon[192]	Icons
 	0x440A	BOOL[10]	ViewedByTeam
 	0x4414	BrfStr[128]	Tags

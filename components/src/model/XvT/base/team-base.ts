@@ -11,8 +11,8 @@ export abstract class TeamBase extends PyriteBase implements Byteable {
   public Allegiances: boolean[];
   public EndOfMissionMessages: string[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -35,31 +35,31 @@ export abstract class TeamBase extends PyriteBase implements Byteable {
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Reserved: this.Reserved,
       Name: this.Name,
       Allegiances: this.Allegiances,
-      EndOfMissionMessages: this.EndOfMissionMessages
+      EndOfMissionMessages: this.EndOfMissionMessages,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Reserved, 0x000);
-    writeString(hex, this.Name, 0x002);
+    writeString(hex, this.Name, 0x002, 16);
     offset = 0x01A;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.Allegiances.length; i++) {
       const t = this.Allegiances[i];
       writeBool(hex, t, offset);
       offset += 1;
     }
     offset = 0x024;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.EndOfMissionMessages.length; i++) {
       const t = this.EndOfMissionMessages[i];
-      writeChar(hex, t, offset);
+      writeChar(hex, t, offset, 64);
       offset += 64;
     }
 

@@ -10,8 +10,8 @@ export abstract class PLTCategoryTypeRecordBase extends PyriteBase implements By
   public melee: number;
   public combat: number;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -21,16 +21,16 @@ export abstract class PLTCategoryTypeRecordBase extends PyriteBase implements By
     
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       exercise: this.exercise,
       melee: this.melee,
-      combat: this.combat
+      combat: this.combat,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.exercise, 0x0000);

@@ -7,7 +7,7 @@ import { QuestionCondition } from "./constants";
 export enum Difficulty {
   Easy = "Easy",
   Medium = "Medium",
-  Hard = "Hard"
+  Hard = "Hard",
 }
 
 const HARD_PTS = 7750;
@@ -23,8 +23,8 @@ export class Mission extends MissionBase {
 
   public get officerBriefing(): PreMissionQuestions[] {
     return this.PreMissionQuestions.slice(0, 4)
-      .filter(q => q.Length)
-      .map(q => {
+      .filter((q) => q.Length)
+      .map((q) => {
         q.Type = QuestionType.Officer;
         return q;
       });
@@ -32,8 +32,8 @@ export class Mission extends MissionBase {
 
   public get secretBriefing(): PreMissionQuestions[] {
     return this.PreMissionQuestions.slice(5, 9)
-      .filter(q => q.Length)
-      .map(q => {
+      .filter((q) => q.Length)
+      .map((q) => {
         q.Type = QuestionType.Secret;
         return q;
       });
@@ -41,25 +41,25 @@ export class Mission extends MissionBase {
 
   public get officerDebriefing(): PostMissionQuestions[] {
     return this.PostMissionQuestions.slice(0, 4).filter(
-      q => q.Length && q.QuestionCondition === QuestionCondition.successful
+      (q) => q.Length && q.QuestionCondition === QuestionCondition.successful,
     );
   }
 
   public get secretDebriefing(): PostMissionQuestions[] {
     return this.PostMissionQuestions.slice(5, 9).filter(
-      q => q.Length && q.QuestionCondition === QuestionCondition.successful
+      (q) => q.Length && q.QuestionCondition === QuestionCondition.successful,
     );
   }
 
   public get officerFailBriefing(): PostMissionQuestions[] {
     return this.PostMissionQuestions.slice(0, 4).filter(
-      q => q.Length && q.QuestionCondition === QuestionCondition.failed
+      (q) => q.Length && q.QuestionCondition === QuestionCondition.failed,
     );
   }
 
   public get secretFailBriefing(): PostMissionQuestions[] {
     return this.PostMissionQuestions.slice(5, 9).filter(
-      q => q.Length && q.QuestionCondition === QuestionCondition.failed
+      (q) => q.Length && q.QuestionCondition === QuestionCondition.failed,
     );
   }
 
@@ -81,7 +81,7 @@ export class Mission extends MissionBase {
   }
 
   public getGlobalGroup(gg: number): FlightGroup[] {
-    return this.FlightGroups.filter(fg => fg.GlobalGroup === gg);
+    return this.FlightGroups.filter((fg) => fg.GlobalGroup === gg);
   }
 
   public goalPoints(diff: Difficulty): number {
@@ -96,7 +96,7 @@ export class Mission extends MissionBase {
   public getPlayerCraft(diff: Difficulty): FlightGroup {
     return this.FlightGroups.find((fg: FlightGroup) => {
       return fg.PlayerCraft && fg.isInDifficulty(diff);
-    });
+    })!;
   }
 
   protected beforeConstruct() {

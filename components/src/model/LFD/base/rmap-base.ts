@@ -10,8 +10,8 @@ export abstract class RmapBase extends PyriteBase implements Byteable {
   public Header: Header;
   public Subheaders: Header[];
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -26,20 +26,20 @@ export abstract class RmapBase extends PyriteBase implements Byteable {
     this.RmapLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
-      Header: this.Header,
-      Subheaders: this.Subheaders
+      Header: this.Header.toJSON(),
+      Subheaders: this.Subheaders.map((t) => t.toJSON()),
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeObject(hex, this.Header, 0x00);
     offset = 0x10;
-    for (let i = 0; i < this.HeaderCount(); i++) {
+    for (let i = 0; i < this.Subheaders.length; i++) {
       const t = this.Subheaders[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
@@ -48,7 +48,7 @@ export abstract class RmapBase extends PyriteBase implements Byteable {
     return hex;
   }
   
-  protected abstract HeaderCount();
+  protected abstract HeaderCount(): number;
   public getLength(): number {
     return this.RmapLength;
   }

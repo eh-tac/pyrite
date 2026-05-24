@@ -1,11 +1,11 @@
 export class Constants {
-  public static PILOTSTATUS = {
+  public static PILOTSTATUS: Record<PilotStatus, string>  = {
     0: "Normal",
     1: "Captured",
     2: "Killed",
   };
 
-  public static PILOTRANK = {
+  public static PILOTRANK: Record<PilotRank, string>  = {
     0: "Cadet",
     1: "Officer",
     2: "Lieutenant",
@@ -14,7 +14,7 @@ export class Constants {
     5: "General",
   };
 
-  public static KALIDORCRESCENT = {
+  public static KALIDORCRESCENT: Record<KalidorCrescent, string>  = {
     0: "None",
     1: "Kalidor Crescent",
     2: "Bronze Cluster",
@@ -24,14 +24,14 @@ export class Constants {
     6: "Diamond Eyes",
   };
 
-  public static TOURSTATUS = {
+  public static TOURSTATUS: Record<TourStatus, string>  = {
     0: "Inactive",
     1: "Active",
     2: "Incomplete",
     3: "Complete",
   };
 
-  public static TOURMEDALS = {
+  public static TOURMEDALS: Record<TourMedals, string>  = {
     1: "Corellian Cross",
     2: "Mantooine Medallion",
     3: "Star Of Alderaan",
@@ -39,7 +39,7 @@ export class Constants {
     5: "Talons Of Hoth",
   };
 
-  public static SHIPTYPE = {
+  public static SHIPTYPE: Record<ShipType, string>  = {
     0: "X-Wing",
     1: "Y-Wing",
     2: "A-Wing",
@@ -66,18 +66,18 @@ export class Constants {
     23: "Probe",
   };
 
-  public static ENDEVENT = {
+  public static ENDEVENT: Record<EndEvent, string>  = {
     0: "Rescued",
     1: "Captured",
     5: "Hit Exhaust Port",
   };
 
-  public static MISSIONLOCATION = {
+  public static MISSIONLOCATION: Record<MissionLocation, string>  = {
     0: "Deep Space",
     1: "Death Star",
   };
 
-  public static CRAFTTYPE = {
+  public static CRAFTTYPE: Record<CraftType, string>  = {
     0: "None",
     1: "X-Wing",
     2: "Y-Wing",
@@ -99,7 +99,7 @@ export class Constants {
     18: "B-Wing",
   };
 
-  public static IFF = {
+  public static IFF: Record<IFF, string>  = {
     0: "Default",
     1: "Rebel",
     2: "Imperial",
@@ -107,7 +107,7 @@ export class Constants {
     4: "Neutral (also Blue)",
   };
 
-  public static FLIGHTGROUPSTATUS = {
+  public static FLIGHTGROUPSTATUS: Record<FlightGroupStatus, string>  = {
     0: "None",
     1: "No Warheads",
     2: "1/2 Warheads",
@@ -120,7 +120,7 @@ export class Constants {
     14: "BW 1/2 Shields",
   };
 
-  public static GROUPAI = {
+  public static GROUPAI: Record<GroupAI, string>  = {
     0: "Novice (None)",
     1: "Officer",
     2: "Veteran",
@@ -128,21 +128,21 @@ export class Constants {
     4: "Top Ace",
   };
 
-  public static MARKINGS = {
+  public static MARKINGS: Record<Markings, string>  = {
     0: "Red (TIE - None)",
     1: "Gold (TIE - Red)",
     2: "Blue (TIE - Gold)",
     3: "Green (TIE - Blue)",
   };
 
-  public static OBJECTFORMATION = {
+  public static OBJECTFORMATION: Record<ObjectFormation, string>  = {
     0: "Floor (X-Y plane)",
     1: "Side (Y-Z plane)",
     2: "Front (X-Z plane)",
     3: "Scattered (may be buggy, undefined locations)",
   };
 
-  public static ARRIVALEVENT = {
+  public static ARRIVALEVENT: Record<ArrivalEvent, string>  = {
     0: "Mission Start",
     1: "On Arrival",
     2: "On Destroyed",
@@ -152,7 +152,7 @@ export class Constants {
     6: "On Disabled",
   };
 
-  public static FORMATION = {
+  public static FORMATION: Record<Formation, string>  = {
     0: "Vic",
     1: "Finger Four",
     2: "Line Astern",
@@ -167,7 +167,7 @@ export class Constants {
     17: "Spiral",
   };
 
-  public static OBJECTIVE = {
+  public static OBJECTIVE: Record<Objective, string>  = {
     0: "None",
     1: "100% be Destroyed",
     2: "100% must Complete Mission",
@@ -187,7 +187,7 @@ export class Constants {
     16: "Arrive",
   };
 
-  public static ORDER = {
+  public static ORDER: Record<Order, string>  = {
     0: "Hold Steady",
     1: "Fly Home",
     2: "Circle and Ignore",
@@ -222,13 +222,13 @@ export class Constants {
     31: "Starship Await Boarding",
   };
 
-  public static CRAFTCOLOUR = {
+  public static CRAFTCOLOUR: Record<CraftColour, string>  = {
     0: "Red",
     1: "Gold",
     2: "Blue",
   };
 
-  public static OBJECTOBJECTIVE = {
+  public static OBJECTOBJECTIVE: Record<ObjectObjective, string>  = {
     3: "None",
     4: "Destroy",
     5: "Survive",

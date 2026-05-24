@@ -14,7 +14,7 @@ import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle,
 import { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
 import { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, PL2CampaignProgressState, PL2CampaignRecord, PL2CampaignState, PL2CampaignStatusSPRecord, PL2DebriefRecord, PL2FactionRecord, PL2FileRecord, PLTAIRankCountRecord, PLTBattleMPRecord, PLTBattleProgressState, PLTBattleSPRecord, PLTBattleState, PLTCategoryTypeRecord, PLTConnectedPlayerData, PLTEarnedMedalRecord, PLTFactionRecord, PLTFileRecord, PLTMissionMPRecord, PLTMissionSPRecord, PLTPlayerRankCountRecord, PLTTeamResultRecord, PLTTournamentProgressState, PLTTournMPRecord, PLTTournSPRecord, PLTTournTeamRecord, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
 import { Briefing as Briefing1, BriefingHeader, Coordinate, FileHeader as FileHeader2, FlightGroup as FlightGroup2, Icon, Mission as Mission3, MissionHeader, ObjectGroup, Page, PilotFile as PilotFile2, String, Tag as Tag2, ViewportSetting } from "./model/XW";
-import { Briefing as Briefing2, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, LengthString, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Skip, Tag as Tag3, Team as Team1, Trigger as Trigger2, Waypt as Waypt2, XWAString } from "./model/XWA";
+import { BrfStr, Briefing as Briefing2, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GlobalUnit, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, Icon as Icon1, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Region, Team as Team1, Trigger as Trigger2, TriggerPair, Waypt as Waypt2, XWAString } from "./model/XWA";
 export { ApiSummary } from "./components/ehtc/api-select/api-select";
 export { Battle } from "./model/ehtc/battle";
 export { BattleSummary, CharacterSummary, PilotSummary } from "./model/ehtc";
@@ -24,7 +24,7 @@ export { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle,
 export { Event, FileHeader, FlightGroup, GlobalGoal, GoalFG, Message, Mission as Mission1, Order, PilotFile, PostMissionQuestions, PreMissionQuestions, Tag, TIEString, Trigger, Waypt } from "./model/TIE";
 export { Briefing, Event as Event1, FileHeader as FileHeader1, FlightGroup as FlightGroup1, GlobalGoal as GlobalGoal1, GoalFG as GoalFG1, GoalGlobal, Message as Message1, Mission as Mission2, MissionBOP, MissionData, Order as Order1, PilotFile as PilotFile1, PL2CampaignProgressState, PL2CampaignRecord, PL2CampaignState, PL2CampaignStatusSPRecord, PL2DebriefRecord, PL2FactionRecord, PL2FileRecord, PLTAIRankCountRecord, PLTBattleMPRecord, PLTBattleProgressState, PLTBattleSPRecord, PLTBattleState, PLTCategoryTypeRecord, PLTConnectedPlayerData, PLTEarnedMedalRecord, PLTFactionRecord, PLTFileRecord, PLTMissionMPRecord, PLTMissionSPRecord, PLTPlayerRankCountRecord, PLTTeamResultRecord, PLTTournamentProgressState, PLTTournMPRecord, PLTTournSPRecord, PLTTournTeamRecord, Role, Tag as Tag1, Team, TeamStats, Trigger as Trigger1, Waypt as Waypt1, XvTString } from "./model/XvT";
 export { Briefing as Briefing1, BriefingHeader, Coordinate, FileHeader as FileHeader2, FlightGroup as FlightGroup2, Icon, Mission as Mission3, MissionHeader, ObjectGroup, Page, PilotFile as PilotFile2, String, Tag as Tag2, ViewportSetting } from "./model/XW";
-export { Briefing as Briefing2, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, LengthString, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Skip, Tag as Tag3, Team as Team1, Trigger as Trigger2, Waypt as Waypt2, XWAString } from "./model/XWA";
+export { BrfStr, Briefing as Briefing2, Event as Event2, FileHeader as FileHeader3, FlightGroup as FlightGroup3, GlobalCargo, GlobalGoal as GlobalGoal2, GlobalUnit, GoalFG as GoalFG2, GoalGlobal as GoalGlobal1, Icon as Icon1, Message as Message2, Mission as Mission4, MissionData as MissionData1, Order as Order2, PilotFile as PilotFile3, Region, Team as Team1, Trigger as Trigger2, TriggerPair, Waypt as Waypt2, XWAString } from "./model/XWA";
 export namespace Components {
     interface EhtcApiSelect {
         "displayDescription"?: "subtitle" | "none";
@@ -269,6 +269,10 @@ export namespace Components {
     interface PyriteXvtPl2FactionRecord {
         "pl2factionrecord": PL2FactionRecord;
     }
+    interface PyriteXvtPl2FileEditor {
+        "file"?: string;
+        "useFileInput": (file: File) => Promise<void>;
+    }
     interface PyriteXvtPl2FileRecord {
         "pl2filerecord": PL2FileRecord;
     }
@@ -389,6 +393,9 @@ export namespace Components {
     interface PyriteXwViewportSetting {
         "viewportsetting": ViewportSetting;
     }
+    interface PyriteXwaBrfStr {
+        "brfstr": BrfStr;
+    }
     interface PyriteXwaBriefing {
         "briefing": Briefing2;
     }
@@ -407,14 +414,17 @@ export namespace Components {
     interface PyriteXwaGlobalGoal {
         "globalgoal": GlobalGoal2;
     }
+    interface PyriteXwaGlobalUnit {
+        "globalunit": GlobalUnit;
+    }
     interface PyriteXwaGoalFg {
         "goalfg": GoalFG2;
     }
     interface PyriteXwaGoalGlobal {
         "goalglobal": GoalGlobal1;
     }
-    interface PyriteXwaLengthString {
-        "lengthstring": LengthString;
+    interface PyriteXwaIcon {
+        "icon": Icon1;
     }
     interface PyriteXwaMessage {
         "message": Message2;
@@ -431,17 +441,17 @@ export namespace Components {
     interface PyriteXwaPilotFile {
         "pilotfile": PilotFile3;
     }
-    interface PyriteXwaSkip {
-        "skip": Skip;
-    }
-    interface PyriteXwaTag {
-        "tag": Tag3;
+    interface PyriteXwaRegion {
+        "region": Region;
     }
     interface PyriteXwaTeam {
         "team": Team1;
     }
     interface PyriteXwaTrigger {
         "trigger": Trigger2;
+    }
+    interface PyriteXwaTriggerPair {
+        "triggerpair": TriggerPair;
     }
     interface PyriteXwaWaypt {
         "waypt": Waypt2;
@@ -928,6 +938,12 @@ declare global {
         prototype: HTMLPyriteXvtPl2FactionRecordElement;
         new (): HTMLPyriteXvtPl2FactionRecordElement;
     };
+    interface HTMLPyriteXvtPl2FileEditorElement extends Components.PyriteXvtPl2FileEditor, HTMLStencilElement {
+    }
+    var HTMLPyriteXvtPl2FileEditorElement: {
+        prototype: HTMLPyriteXvtPl2FileEditorElement;
+        new (): HTMLPyriteXvtPl2FileEditorElement;
+    };
     interface HTMLPyriteXvtPl2FileRecordElement extends Components.PyriteXvtPl2FileRecord, HTMLStencilElement {
     }
     var HTMLPyriteXvtPl2FileRecordElement: {
@@ -1168,6 +1184,12 @@ declare global {
         prototype: HTMLPyriteXwViewportSettingElement;
         new (): HTMLPyriteXwViewportSettingElement;
     };
+    interface HTMLPyriteXwaBrfStrElement extends Components.PyriteXwaBrfStr, HTMLStencilElement {
+    }
+    var HTMLPyriteXwaBrfStrElement: {
+        prototype: HTMLPyriteXwaBrfStrElement;
+        new (): HTMLPyriteXwaBrfStrElement;
+    };
     interface HTMLPyriteXwaBriefingElement extends Components.PyriteXwaBriefing, HTMLStencilElement {
     }
     var HTMLPyriteXwaBriefingElement: {
@@ -1204,6 +1226,12 @@ declare global {
         prototype: HTMLPyriteXwaGlobalGoalElement;
         new (): HTMLPyriteXwaGlobalGoalElement;
     };
+    interface HTMLPyriteXwaGlobalUnitElement extends Components.PyriteXwaGlobalUnit, HTMLStencilElement {
+    }
+    var HTMLPyriteXwaGlobalUnitElement: {
+        prototype: HTMLPyriteXwaGlobalUnitElement;
+        new (): HTMLPyriteXwaGlobalUnitElement;
+    };
     interface HTMLPyriteXwaGoalFgElement extends Components.PyriteXwaGoalFg, HTMLStencilElement {
     }
     var HTMLPyriteXwaGoalFgElement: {
@@ -1216,11 +1244,11 @@ declare global {
         prototype: HTMLPyriteXwaGoalGlobalElement;
         new (): HTMLPyriteXwaGoalGlobalElement;
     };
-    interface HTMLPyriteXwaLengthStringElement extends Components.PyriteXwaLengthString, HTMLStencilElement {
+    interface HTMLPyriteXwaIconElement extends Components.PyriteXwaIcon, HTMLStencilElement {
     }
-    var HTMLPyriteXwaLengthStringElement: {
-        prototype: HTMLPyriteXwaLengthStringElement;
-        new (): HTMLPyriteXwaLengthStringElement;
+    var HTMLPyriteXwaIconElement: {
+        prototype: HTMLPyriteXwaIconElement;
+        new (): HTMLPyriteXwaIconElement;
     };
     interface HTMLPyriteXwaMessageElement extends Components.PyriteXwaMessage, HTMLStencilElement {
     }
@@ -1252,17 +1280,11 @@ declare global {
         prototype: HTMLPyriteXwaPilotFileElement;
         new (): HTMLPyriteXwaPilotFileElement;
     };
-    interface HTMLPyriteXwaSkipElement extends Components.PyriteXwaSkip, HTMLStencilElement {
+    interface HTMLPyriteXwaRegionElement extends Components.PyriteXwaRegion, HTMLStencilElement {
     }
-    var HTMLPyriteXwaSkipElement: {
-        prototype: HTMLPyriteXwaSkipElement;
-        new (): HTMLPyriteXwaSkipElement;
-    };
-    interface HTMLPyriteXwaTagElement extends Components.PyriteXwaTag, HTMLStencilElement {
-    }
-    var HTMLPyriteXwaTagElement: {
-        prototype: HTMLPyriteXwaTagElement;
-        new (): HTMLPyriteXwaTagElement;
+    var HTMLPyriteXwaRegionElement: {
+        prototype: HTMLPyriteXwaRegionElement;
+        new (): HTMLPyriteXwaRegionElement;
     };
     interface HTMLPyriteXwaTeamElement extends Components.PyriteXwaTeam, HTMLStencilElement {
     }
@@ -1275,6 +1297,12 @@ declare global {
     var HTMLPyriteXwaTriggerElement: {
         prototype: HTMLPyriteXwaTriggerElement;
         new (): HTMLPyriteXwaTriggerElement;
+    };
+    interface HTMLPyriteXwaTriggerPairElement extends Components.PyriteXwaTriggerPair, HTMLStencilElement {
+    }
+    var HTMLPyriteXwaTriggerPairElement: {
+        prototype: HTMLPyriteXwaTriggerPairElement;
+        new (): HTMLPyriteXwaTriggerPairElement;
     };
     interface HTMLPyriteXwaWayptElement extends Components.PyriteXwaWaypt, HTMLStencilElement {
     }
@@ -1356,6 +1384,7 @@ declare global {
         "pyrite-xvt-pl-2-campaign-status-sp-record": HTMLPyriteXvtPl2CampaignStatusSpRecordElement;
         "pyrite-xvt-pl-2-debrief-record": HTMLPyriteXvtPl2DebriefRecordElement;
         "pyrite-xvt-pl-2-faction-record": HTMLPyriteXvtPl2FactionRecordElement;
+        "pyrite-xvt-pl-2-file-editor": HTMLPyriteXvtPl2FileEditorElement;
         "pyrite-xvt-pl-2-file-record": HTMLPyriteXvtPl2FileRecordElement;
         "pyrite-xvt-plt-battle-mp-record": HTMLPyriteXvtPltBattleMpRecordElement;
         "pyrite-xvt-plt-battle-progress-state": HTMLPyriteXvtPltBattleProgressStateElement;
@@ -1396,24 +1425,26 @@ declare global {
         "pyrite-xw-string": HTMLPyriteXwStringElement;
         "pyrite-xw-tag": HTMLPyriteXwTagElement;
         "pyrite-xw-viewport-setting": HTMLPyriteXwViewportSettingElement;
+        "pyrite-xwa-brf-str": HTMLPyriteXwaBrfStrElement;
         "pyrite-xwa-briefing": HTMLPyriteXwaBriefingElement;
         "pyrite-xwa-event": HTMLPyriteXwaEventElement;
         "pyrite-xwa-file-header": HTMLPyriteXwaFileHeaderElement;
         "pyrite-xwa-flight-group": HTMLPyriteXwaFlightGroupElement;
         "pyrite-xwa-global-cargo": HTMLPyriteXwaGlobalCargoElement;
         "pyrite-xwa-global-goal": HTMLPyriteXwaGlobalGoalElement;
+        "pyrite-xwa-global-unit": HTMLPyriteXwaGlobalUnitElement;
         "pyrite-xwa-goal-fg": HTMLPyriteXwaGoalFgElement;
         "pyrite-xwa-goal-global": HTMLPyriteXwaGoalGlobalElement;
-        "pyrite-xwa-length-string": HTMLPyriteXwaLengthStringElement;
+        "pyrite-xwa-icon": HTMLPyriteXwaIconElement;
         "pyrite-xwa-message": HTMLPyriteXwaMessageElement;
         "pyrite-xwa-mission": HTMLPyriteXwaMissionElement;
         "pyrite-xwa-mission-data": HTMLPyriteXwaMissionDataElement;
         "pyrite-xwa-order": HTMLPyriteXwaOrderElement;
         "pyrite-xwa-pilot-file": HTMLPyriteXwaPilotFileElement;
-        "pyrite-xwa-skip": HTMLPyriteXwaSkipElement;
-        "pyrite-xwa-tag": HTMLPyriteXwaTagElement;
+        "pyrite-xwa-region": HTMLPyriteXwaRegionElement;
         "pyrite-xwa-team": HTMLPyriteXwaTeamElement;
         "pyrite-xwa-trigger": HTMLPyriteXwaTriggerElement;
+        "pyrite-xwa-trigger-pair": HTMLPyriteXwaTriggerPairElement;
         "pyrite-xwa-waypt": HTMLPyriteXwaWayptElement;
         "pyrite-xwa-xwa-string": HTMLPyriteXwaXwaStringElement;
     }
@@ -1656,6 +1687,9 @@ declare namespace LocalJSX {
     interface PyriteXvtPl2FactionRecord {
         "pl2factionrecord"?: PL2FactionRecord;
     }
+    interface PyriteXvtPl2FileEditor {
+        "file"?: string;
+    }
     interface PyriteXvtPl2FileRecord {
         "pl2filerecord"?: PL2FileRecord;
     }
@@ -1776,6 +1810,9 @@ declare namespace LocalJSX {
     interface PyriteXwViewportSetting {
         "viewportsetting"?: ViewportSetting;
     }
+    interface PyriteXwaBrfStr {
+        "brfstr"?: BrfStr;
+    }
     interface PyriteXwaBriefing {
         "briefing"?: Briefing2;
     }
@@ -1794,14 +1831,17 @@ declare namespace LocalJSX {
     interface PyriteXwaGlobalGoal {
         "globalgoal"?: GlobalGoal2;
     }
+    interface PyriteXwaGlobalUnit {
+        "globalunit"?: GlobalUnit;
+    }
     interface PyriteXwaGoalFg {
         "goalfg"?: GoalFG2;
     }
     interface PyriteXwaGoalGlobal {
         "goalglobal"?: GoalGlobal1;
     }
-    interface PyriteXwaLengthString {
-        "lengthstring"?: LengthString;
+    interface PyriteXwaIcon {
+        "icon"?: Icon1;
     }
     interface PyriteXwaMessage {
         "message"?: Message2;
@@ -1818,17 +1858,17 @@ declare namespace LocalJSX {
     interface PyriteXwaPilotFile {
         "pilotfile"?: PilotFile3;
     }
-    interface PyriteXwaSkip {
-        "skip"?: Skip;
-    }
-    interface PyriteXwaTag {
-        "tag"?: Tag3;
+    interface PyriteXwaRegion {
+        "region"?: Region;
     }
     interface PyriteXwaTeam {
         "team"?: Team1;
     }
     interface PyriteXwaTrigger {
         "trigger"?: Trigger2;
+    }
+    interface PyriteXwaTriggerPair {
+        "triggerpair"?: TriggerPair;
     }
     interface PyriteXwaWaypt {
         "waypt"?: Waypt2;
@@ -1904,6 +1944,7 @@ declare namespace LocalJSX {
         "pyrite-xvt-pl-2-campaign-status-sp-record": PyriteXvtPl2CampaignStatusSpRecord;
         "pyrite-xvt-pl-2-debrief-record": PyriteXvtPl2DebriefRecord;
         "pyrite-xvt-pl-2-faction-record": PyriteXvtPl2FactionRecord;
+        "pyrite-xvt-pl-2-file-editor": PyriteXvtPl2FileEditor;
         "pyrite-xvt-pl-2-file-record": PyriteXvtPl2FileRecord;
         "pyrite-xvt-plt-battle-mp-record": PyriteXvtPltBattleMpRecord;
         "pyrite-xvt-plt-battle-progress-state": PyriteXvtPltBattleProgressState;
@@ -1944,24 +1985,26 @@ declare namespace LocalJSX {
         "pyrite-xw-string": PyriteXwString;
         "pyrite-xw-tag": PyriteXwTag;
         "pyrite-xw-viewport-setting": PyriteXwViewportSetting;
+        "pyrite-xwa-brf-str": PyriteXwaBrfStr;
         "pyrite-xwa-briefing": PyriteXwaBriefing;
         "pyrite-xwa-event": PyriteXwaEvent;
         "pyrite-xwa-file-header": PyriteXwaFileHeader;
         "pyrite-xwa-flight-group": PyriteXwaFlightGroup;
         "pyrite-xwa-global-cargo": PyriteXwaGlobalCargo;
         "pyrite-xwa-global-goal": PyriteXwaGlobalGoal;
+        "pyrite-xwa-global-unit": PyriteXwaGlobalUnit;
         "pyrite-xwa-goal-fg": PyriteXwaGoalFg;
         "pyrite-xwa-goal-global": PyriteXwaGoalGlobal;
-        "pyrite-xwa-length-string": PyriteXwaLengthString;
+        "pyrite-xwa-icon": PyriteXwaIcon;
         "pyrite-xwa-message": PyriteXwaMessage;
         "pyrite-xwa-mission": PyriteXwaMission;
         "pyrite-xwa-mission-data": PyriteXwaMissionData;
         "pyrite-xwa-order": PyriteXwaOrder;
         "pyrite-xwa-pilot-file": PyriteXwaPilotFile;
-        "pyrite-xwa-skip": PyriteXwaSkip;
-        "pyrite-xwa-tag": PyriteXwaTag;
+        "pyrite-xwa-region": PyriteXwaRegion;
         "pyrite-xwa-team": PyriteXwaTeam;
         "pyrite-xwa-trigger": PyriteXwaTrigger;
+        "pyrite-xwa-trigger-pair": PyriteXwaTriggerPair;
         "pyrite-xwa-waypt": PyriteXwaWaypt;
         "pyrite-xwa-xwa-string": PyriteXwaXwaString;
     }
@@ -2037,6 +2080,7 @@ declare module "@stencil/core" {
             "pyrite-xvt-pl-2-campaign-status-sp-record": LocalJSX.PyriteXvtPl2CampaignStatusSpRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2CampaignStatusSpRecordElement>;
             "pyrite-xvt-pl-2-debrief-record": LocalJSX.PyriteXvtPl2DebriefRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2DebriefRecordElement>;
             "pyrite-xvt-pl-2-faction-record": LocalJSX.PyriteXvtPl2FactionRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2FactionRecordElement>;
+            "pyrite-xvt-pl-2-file-editor": LocalJSX.PyriteXvtPl2FileEditor & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2FileEditorElement>;
             "pyrite-xvt-pl-2-file-record": LocalJSX.PyriteXvtPl2FileRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPl2FileRecordElement>;
             "pyrite-xvt-plt-battle-mp-record": LocalJSX.PyriteXvtPltBattleMpRecord & JSXBase.HTMLAttributes<HTMLPyriteXvtPltBattleMpRecordElement>;
             "pyrite-xvt-plt-battle-progress-state": LocalJSX.PyriteXvtPltBattleProgressState & JSXBase.HTMLAttributes<HTMLPyriteXvtPltBattleProgressStateElement>;
@@ -2077,24 +2121,26 @@ declare module "@stencil/core" {
             "pyrite-xw-string": LocalJSX.PyriteXwString & JSXBase.HTMLAttributes<HTMLPyriteXwStringElement>;
             "pyrite-xw-tag": LocalJSX.PyriteXwTag & JSXBase.HTMLAttributes<HTMLPyriteXwTagElement>;
             "pyrite-xw-viewport-setting": LocalJSX.PyriteXwViewportSetting & JSXBase.HTMLAttributes<HTMLPyriteXwViewportSettingElement>;
+            "pyrite-xwa-brf-str": LocalJSX.PyriteXwaBrfStr & JSXBase.HTMLAttributes<HTMLPyriteXwaBrfStrElement>;
             "pyrite-xwa-briefing": LocalJSX.PyriteXwaBriefing & JSXBase.HTMLAttributes<HTMLPyriteXwaBriefingElement>;
             "pyrite-xwa-event": LocalJSX.PyriteXwaEvent & JSXBase.HTMLAttributes<HTMLPyriteXwaEventElement>;
             "pyrite-xwa-file-header": LocalJSX.PyriteXwaFileHeader & JSXBase.HTMLAttributes<HTMLPyriteXwaFileHeaderElement>;
             "pyrite-xwa-flight-group": LocalJSX.PyriteXwaFlightGroup & JSXBase.HTMLAttributes<HTMLPyriteXwaFlightGroupElement>;
             "pyrite-xwa-global-cargo": LocalJSX.PyriteXwaGlobalCargo & JSXBase.HTMLAttributes<HTMLPyriteXwaGlobalCargoElement>;
             "pyrite-xwa-global-goal": LocalJSX.PyriteXwaGlobalGoal & JSXBase.HTMLAttributes<HTMLPyriteXwaGlobalGoalElement>;
+            "pyrite-xwa-global-unit": LocalJSX.PyriteXwaGlobalUnit & JSXBase.HTMLAttributes<HTMLPyriteXwaGlobalUnitElement>;
             "pyrite-xwa-goal-fg": LocalJSX.PyriteXwaGoalFg & JSXBase.HTMLAttributes<HTMLPyriteXwaGoalFgElement>;
             "pyrite-xwa-goal-global": LocalJSX.PyriteXwaGoalGlobal & JSXBase.HTMLAttributes<HTMLPyriteXwaGoalGlobalElement>;
-            "pyrite-xwa-length-string": LocalJSX.PyriteXwaLengthString & JSXBase.HTMLAttributes<HTMLPyriteXwaLengthStringElement>;
+            "pyrite-xwa-icon": LocalJSX.PyriteXwaIcon & JSXBase.HTMLAttributes<HTMLPyriteXwaIconElement>;
             "pyrite-xwa-message": LocalJSX.PyriteXwaMessage & JSXBase.HTMLAttributes<HTMLPyriteXwaMessageElement>;
             "pyrite-xwa-mission": LocalJSX.PyriteXwaMission & JSXBase.HTMLAttributes<HTMLPyriteXwaMissionElement>;
             "pyrite-xwa-mission-data": LocalJSX.PyriteXwaMissionData & JSXBase.HTMLAttributes<HTMLPyriteXwaMissionDataElement>;
             "pyrite-xwa-order": LocalJSX.PyriteXwaOrder & JSXBase.HTMLAttributes<HTMLPyriteXwaOrderElement>;
             "pyrite-xwa-pilot-file": LocalJSX.PyriteXwaPilotFile & JSXBase.HTMLAttributes<HTMLPyriteXwaPilotFileElement>;
-            "pyrite-xwa-skip": LocalJSX.PyriteXwaSkip & JSXBase.HTMLAttributes<HTMLPyriteXwaSkipElement>;
-            "pyrite-xwa-tag": LocalJSX.PyriteXwaTag & JSXBase.HTMLAttributes<HTMLPyriteXwaTagElement>;
+            "pyrite-xwa-region": LocalJSX.PyriteXwaRegion & JSXBase.HTMLAttributes<HTMLPyriteXwaRegionElement>;
             "pyrite-xwa-team": LocalJSX.PyriteXwaTeam & JSXBase.HTMLAttributes<HTMLPyriteXwaTeamElement>;
             "pyrite-xwa-trigger": LocalJSX.PyriteXwaTrigger & JSXBase.HTMLAttributes<HTMLPyriteXwaTriggerElement>;
+            "pyrite-xwa-trigger-pair": LocalJSX.PyriteXwaTriggerPair & JSXBase.HTMLAttributes<HTMLPyriteXwaTriggerPairElement>;
             "pyrite-xwa-waypt": LocalJSX.PyriteXwaWaypt & JSXBase.HTMLAttributes<HTMLPyriteXwaWayptElement>;
             "pyrite-xwa-xwa-string": LocalJSX.PyriteXwaXwaString & JSXBase.HTMLAttributes<HTMLPyriteXwaXwaStringElement>;
         }

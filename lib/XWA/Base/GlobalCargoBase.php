@@ -16,16 +16,18 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
     public const GLOBALCARGOLENGTH = 140;
     /** @var string 0x00 Cargo STR */
     public $Cargo;
-    /** @var boolean 0x44 Unknown1 BOOL */
-    public $Unknown1;
-    /** @var integer 0x48 Unknown2 BYTE */
-    public $Unknown2;
-    /** @var integer 0x49 Unknown3 BYTE */
-    public $Unknown3;
-    /** @var integer 0x4A Unknown4 BYTE */
-    public $Unknown4;
-    /** @var integer 0x4B Unknown5 BYTE */
-    public $Unknown5;
+    /** @var integer 0x40 ID INT */
+    public $ID;
+    /** @var integer 0x44 Count INT */
+    public $Count; //(was Unknown1)
+    /** @var integer 0x48 Type BYTE */
+    public $Type; //(was Unknown2) {solid, liquid, gas}
+    /** @var integer 0x49 Volume BYTE */
+    public $Volume; //(was Unknown3)
+    /** @var integer 0x4A Value BYTE */
+    public $Value; //(was Unknown4)
+    /** @var integer 0x4B Volatility BYTE */
+    public $Volatility; //(was Unknown5) {low, med, high, kaboom!}
     
     public function __construct($hex = null, $tie = null)
     {
@@ -43,11 +45,12 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
         $offset = 0;
 
         $this->Cargo = $this->getString($hex, 0x00);
-        $this->Unknown1 = $this->getBool($hex, 0x44);
-        $this->Unknown2 = $this->getByte($hex, 0x48);
-        $this->Unknown3 = $this->getByte($hex, 0x49);
-        $this->Unknown4 = $this->getByte($hex, 0x4A);
-        $this->Unknown5 = $this->getByte($hex, 0x4B);
+        $this->ID = $this->getInt($hex, 0x40);
+        $this->Count = $this->getInt($hex, 0x44);
+        $this->Type = $this->getByte($hex, 0x48);
+        $this->Volume = $this->getByte($hex, 0x49);
+        $this->Value = $this->getByte($hex, 0x4A);
+        $this->Volatility = $this->getByte($hex, 0x4B);
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
@@ -58,11 +61,12 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
     {
         return [
             "Cargo" => $this->Cargo,
-            "Unknown1" => $this->Unknown1,
-            "Unknown2" => $this->Unknown2,
-            "Unknown3" => $this->Unknown3,
-            "Unknown4" => $this->Unknown4,
-            "Unknown5" => $this->Unknown5
+            "ID" => $this->ID,
+            "Count" => $this->Count,
+            "Type" => $this->Type,
+            "Volume" => $this->Volume,
+            "Value" => $this->Value,
+            "Volatility" => $this->Volatility
         ];
     }
     
@@ -72,11 +76,12 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
         $offset = 0;
 
         $hex = $this->writeString($this->Cargo, $hex, 0x00);
-        $hex = $this->writeBool($this->Unknown1, $hex, 0x44);
-        $hex = $this->writeByte($this->Unknown2, $hex, 0x48);
-        $hex = $this->writeByte($this->Unknown3, $hex, 0x49);
-        $hex = $this->writeByte($this->Unknown4, $hex, 0x4A);
-        $hex = $this->writeByte($this->Unknown5, $hex, 0x4B);
+        $hex = $this->writeInt($this->ID, $hex, 0x40);
+        $hex = $this->writeInt($this->Count, $hex, 0x44);
+        $hex = $this->writeByte($this->Type, $hex, 0x48);
+        $hex = $this->writeByte($this->Volume, $hex, 0x49);
+        $hex = $this->writeByte($this->Value, $hex, 0x4A);
+        $hex = $this->writeByte($this->Volatility, $hex, 0x4B);
 
         return $hex;
     }

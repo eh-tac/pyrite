@@ -10,8 +10,8 @@ export abstract class VoicDataBase extends PyriteBase implements Byteable {
   public Size: number[];
   public Data: any;
   
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -28,21 +28,21 @@ export abstract class VoicDataBase extends PyriteBase implements Byteable {
     this.VoicDataLength = offset;
   }
   
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     return {
       Type: this.Type,
       Size: this.Size,
-      Data: this.Data
+      Data: this.Data,
     };
   }
   
-  public toHexString(): string {
-    let hex: string = '';
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeByte(hex, this.Type, 0x00);
     offset = 0x01;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.Size.length; i++) {
       const t = this.Size[i];
       writeByte(hex, t, offset);
       offset += 1;
@@ -52,8 +52,8 @@ export abstract class VoicDataBase extends PyriteBase implements Byteable {
     return hex;
   }
   
-  protected abstract loadData();
-  protected abstract writeData();
+  protected abstract loadData(): number;
+  protected abstract writeData(): number;
   public getLength(): number {
     return this.VoicDataLength;
   }
