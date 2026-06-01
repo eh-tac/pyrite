@@ -7,7 +7,7 @@ function toArrayBuffer(buffer: Buffer): ArrayBuffer {
 }
 
 describe("pl2-file-record", () => {
-  const fixturePath = resolve(__dirname, "../../../test/data/VanguardBOP0.pl2");
+  const fixturePath = resolve(__dirname, "../../../fixtures/VanguardBOP0.pl2");
   const fixture = readFileSync(fixturePath);
   let pl2 = new PL2FileRecord(toArrayBuffer(fixture));
 
@@ -46,7 +46,7 @@ describe("pl2-file-record", () => {
     const bestScores = rebel.statusSPCampaign.map((camp) => camp.bestScore);
     expect(Math.max(...bestScores)).toBe(scoreSum);
 
-    const editPath = resolve(__dirname, "../../../test/data/edit/VanguardBOP0.pl2");
+    const editPath = resolve(__dirname, "../../../fixtures/edit/VanguardBOP0.pl2");
     const output = Buffer.from(pl2.toHexBuffer());
     writeFileSync(editPath, output);
   });

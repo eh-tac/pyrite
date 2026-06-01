@@ -29,6 +29,34 @@ class PL2FileRecord extends Base\PL2FileRecordBase implements IPilotFileBSF
     return $this->faction[1];
   }
 
+  public function hasValidCampaignData()
+  {
+    $imperial = array_slice($this->getImperialFaction()->missionSPCampaign, 51, 15);
+    $imperialSum = array_sum(array_map(static function (PL2CampaignRecord $mission) {
+      return $mission->bestScore;
+    }, $imperial));
+
+    $imperialStateBest = max(array_map(fn($c) => $c->bestScore, $this->getImperialFaction()->statusSPCampaign));
+
+    if ($imperialSum !== $imperialStateBest) {
+      return false;
+    }
+
+    $rebel = array_slice($this->getRebelFaction()->missionSPCampaign, 71, 15);
+    $rebelSum = array_sum(array_map(static function (PL2CampaignRecord $mission) {
+      return $mission->bestScore;
+    }, $rebel));
+
+    $rebelStateBest = max(array_map(fn($c) => $c->bestScore, $this->getRebelFaction()->statusSPCampaign));
+
+    if ($rebelSum !== $rebelStateBest) {
+      return false;
+    }
+
+
+    return true;
+  }
+
   public function getCompletedMissionScores($isCampaign = false)
   {
     return array_map(function (PL2CampaignRecord $mission) {
