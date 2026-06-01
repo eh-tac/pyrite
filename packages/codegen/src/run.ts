@@ -1,13 +1,18 @@
 import * as fs from 'fs';
 import { PyriteGenerator } from './generator';
-import { TypeScriptWriter } from './typescript-writer';
-import { PHPWriter } from './php-writer';
+import { TypeScriptWriter } from './typescript/typescript-writer';
+import { PHPWriter } from './php/php-writer';
+import path from 'path';
+
+const repoRoot = path.resolve(import.meta.dirname, '..', '..', '..');
+const phpLibPath = path.join(repoRoot, 'lib');
+const packages = path.join(repoRoot, 'packages');
 
 function mg(plt: string): PyriteGenerator {
   return new PyriteGenerator(
     plt,
-    fs.readFileSync(`src/build/${plt}/structs.txt`, { encoding: 'utf8' }),
-    fs.readFileSync(`src/build/${plt}/const.txt`, { encoding: 'utf8' })
+    fs.readFileSync(path.join(repoRoot, 'schema', plt, `structs.txt`), { encoding: 'utf8' }),
+    fs.readFileSync(path.join(repoRoot, 'schema', plt, `const.txt`), { encoding: 'utf8' })
   );
 }
 
@@ -23,13 +28,13 @@ const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [
 
 // make writers
 [
-  new TypeScriptWriter('src', tieG),
-  new PHPWriter('../lib', tieG),
-  new TypeScriptWriter('src', xwG),
-  new PHPWriter('../lib', xwG),
-  new TypeScriptWriter('src', xvtG),
-  new PHPWriter('../lib', xvtG),
-  new TypeScriptWriter('src', xwaG),
-  new PHPWriter('../lib', xwaG),
-  new TypeScriptWriter('src', lfdG)
+  // new TypeScriptWriter(path.join(packages, 'tie', 'src'), tieG),
+  // new PHPWriter(phpLibPath, tieG),
+  new TypeScriptWriter(path.join(packages, 'xw', 'src'), xwG),
+  new PHPWriter(phpLibPath, xwG)
+  // new TypeScriptWriter(path.join(packages, 'xvt', 'src'), xvtG),
+  // new PHPWriter(phpLibPath, xvtG),
+  // new TypeScriptWriter(path.join(packages, 'xwa', 'src'), xwaG),
+  // new PHPWriter(phpLibPath, xwaG),
+  // new TypeScriptWriter(path.join(packages, 'lfd', 'src'), lfdG)
 ].forEach((writer) => writer.write());

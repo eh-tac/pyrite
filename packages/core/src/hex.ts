@@ -1,4 +1,4 @@
-import { Byteable } from "./byteable";
+import { Byteable } from './byteable';
 
 export function getBool(hex: ArrayBuffer, start: number = 0): boolean {
   return new DataView(hex).getUint8(start) !== 0;
@@ -11,7 +11,7 @@ export function getByte(hex: ArrayBuffer, start: number = 0): number {
 export function getByteString(byte: number): string {
   let bin = byte.toString(2);
   while (bin.length < 8) {
-    bin = "0" + bin;
+    bin = '0' + bin;
   }
   return bin;
 }
@@ -76,7 +76,12 @@ export function writeSByte(hex: ArrayBuffer, value: number, pos: number = 0): vo
   new Int8Array(hex)[pos] = value;
 }
 
-export function writeChar(hex: ArrayBuffer, value: string, pos: number = 0, length: number = 1): void {
+export function writeChar(
+  hex: ArrayBuffer,
+  value: string,
+  pos: number = 0,
+  length: number = 1
+): void {
   const view = new Uint8Array(hex);
   for (let i = 0; i < length; i++) {
     view[pos + i] = i < value.length ? value.charCodeAt(i) : 0;
@@ -95,7 +100,12 @@ export function writeInt(hex: ArrayBuffer, value: number, pos: number = 0): void
   new DataView(hex).setInt32(pos, value, true);
 }
 
-export function writeString(hex: ArrayBuffer, value: string, pos: number = 0, length: number = 99999): void {
+export function writeString(
+  hex: ArrayBuffer,
+  value: string,
+  pos: number = 0,
+  length: number = 99999
+): void {
   const view = new Uint8Array(hex);
   const maxLength = Math.min(length, value.length);
   for (let i = 0; i < maxLength; i++) {

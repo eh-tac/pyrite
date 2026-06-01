@@ -1,14 +1,18 @@
-import { Struct } from "./struct";
-import * as fs from "fs";
-import * as nodePath from "path";
-import { PyriteGenerator } from "./generator";
-import { Constants } from "./constants";
+import { Struct } from './struct';
+import * as fs from 'fs';
+import * as nodePath from 'path';
+import { PyriteGenerator } from './generator';
+import { Constants } from './constants';
 
 export abstract class PyriteWriter {
-  constructor(public rootDir: string, public generator: PyriteGenerator, public overwriteIfExists = false) {}
+  constructor(
+    public rootDir: string,
+    public generator: PyriteGenerator,
+    public overwriteIfExists = false
+  ) {}
 
   public buildPath(path: string): string {
-    return `${this.rootDir}/${path.replace("PLT", this.generator.platform)}`;
+    return `${this.rootDir}/${path.replace('PLT', this.generator.platform)}`;
   }
 
   public write(): this {
@@ -24,7 +28,7 @@ export abstract class PyriteWriter {
   public abstract writeConstants(constants: Constants[]): void;
 
   public writeStruct(struct: Struct): void {
-    struct.getProps().forEach(p => p.prepare(this.generator.structs));
+    struct.getProps().forEach((p) => p.prepare(this.generator.structs));
     this.writeBaseModel(struct);
     this.writeImplModel(struct);
   }
@@ -43,7 +47,6 @@ export abstract class PyriteWriter {
     if (fs.existsSync(path) && !overwriteIfExists) {
       return;
     }
-    console.log("writing to", path);
 
     fs.writeFileSync(path, contents, {});
   }
@@ -51,7 +54,7 @@ export abstract class PyriteWriter {
   public copyFile(path: string): void {
     const from = nodePath.join(__dirname, path);
     if (fs.existsSync(from)) {
-      this.writeFile(path, fs.readFileSync(from, { encoding: "utf8" }));
+      this.writeFile(path, fs.readFileSync(from, { encoding: 'utf8' }));
     }
   }
 

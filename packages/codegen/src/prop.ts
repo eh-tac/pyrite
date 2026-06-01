@@ -1,15 +1,24 @@
-import { Struct } from "./struct";
+import { Struct } from './struct';
 
-export type PropType = "SHORT" | "BYTE" | "BOOL" | "SBYTE" | "INT" | "STR" | "CHAR" | "any" | string;
+export type PropType =
+  | 'SHORT'
+  | 'BYTE'
+  | 'BOOL'
+  | 'SBYTE'
+  | 'INT'
+  | 'STR'
+  | 'CHAR'
+  | 'any'
+  | string;
 
 export class Prop {
   public baseSize = 1;
-  public typeLengthExpression = "";
+  public typeLengthExpression = '';
   public arrayLengthValue?: number;
-  public arrayLengthExpression = "";
+  public arrayLengthExpression = '';
   public reservedValue?: number;
-  public enumName: string = "";
-  public comment: string = "";
+  public enumName: string = '';
+  public comment: string = '';
 
   public hexGetter!: string;
   public hexSetter!: string;
@@ -17,7 +26,7 @@ export class Prop {
   constructor(
     public offset: string,
     public name: string,
-    public type: PropType,
+    public type: PropType
   ) {}
 
   public get docString(): string {
@@ -54,13 +63,13 @@ export class Prop {
       const resv = restStr.match(/Reserved\((\-?\w*)\)/);
       if (resv) {
         this.reservedValue = parseInt(resv[1], 16);
-        restStr = restStr.replace(resv[0], "").trim();
+        restStr = restStr.replace(resv[0], '').trim();
       }
 
       const enumMatch = restStr.match(/\(enum\s?(\w*)?\)/);
       if (enumMatch) {
         this.enumName = enumMatch[1] || this.name;
-        restStr = restStr.replace(enumMatch[0], "").trim();
+        restStr = restStr.replace(enumMatch[0], '').trim();
       }
 
       this.comment = restStr;
@@ -78,7 +87,7 @@ export class Prop {
   }
 
   public get previousValueOffset(): boolean {
-    return this.offset === "PV";
+    return this.offset === 'PV';
   }
 
   public get isEnum(): boolean {
@@ -94,9 +103,11 @@ export class Prop {
   }
 
   public getFunctionStubs(): string[] {
-    return [this.typeLengthExpression, this.arrayLengthExpression].filter((expr: string): boolean => {
-      return !!expr && expr.endsWith("()");
-    });
+    return [this.typeLengthExpression, this.arrayLengthExpression].filter(
+      (expr: string): boolean => {
+        return !!expr && expr.endsWith('()');
+      }
+    );
   }
 
   public prepare(_structs: { [key: string]: Struct }): void {
@@ -106,53 +117,53 @@ export class Prop {
 
 export class PropShort extends Prop {
   public baseSize = 2;
-  public hexGetter = "getShort";
-  public hexSetter = "writeShort";
+  public hexGetter = 'getShort';
+  public hexSetter = 'writeShort';
 }
 
 export class PropUShort extends Prop {
   public baseSize = 2;
-  public hexGetter = "getUShort";
-  public hexSetter = "writeUShort";
+  public hexGetter = 'getUShort';
+  public hexSetter = 'writeUShort';
 }
 
 export class PropByte extends Prop {
-  public hexGetter = "getByte";
-  public hexSetter = "writeByte";
+  public hexGetter = 'getByte';
+  public hexSetter = 'writeByte';
 }
 
 export class PropBool extends Prop {
-  public hexGetter = "getBool";
-  public hexSetter = "writeBool";
+  public hexGetter = 'getBool';
+  public hexSetter = 'writeBool';
 }
 
 export class PropSByte extends Prop {
-  public hexGetter = "getSByte";
-  public hexSetter = "writeSByte";
+  public hexGetter = 'getSByte';
+  public hexSetter = 'writeSByte';
 }
 
 export class PropInt extends Prop {
   public baseSize = 4;
-  public hexGetter = "getInt";
-  public hexSetter = "writeInt";
+  public hexGetter = 'getInt';
+  public hexSetter = 'writeInt';
 }
 
 export class PropChar extends Prop {
-  public hexGetter = "getChar";
-  public hexSetter = "writeChar";
+  public hexGetter = 'getChar';
+  public hexSetter = 'writeChar';
 }
 
 export class PropStr extends Prop {
   public baseSize = 0;
-  public hexGetter = "getString";
-  public hexSetter = "writeString";
+  public hexGetter = 'getString';
+  public hexSetter = 'writeString';
 }
 
 export class PropObject extends Prop {
   public baseSize = 0;
   public structName!: string;
-  public hexGetter = "";
-  public hexSetter = "writeObject";
+  public hexGetter = '';
+  public hexSetter = 'writeObject';
 
   public prepare(structs: { [key: string]: Struct }): void {
     // do nothing except if object
@@ -161,14 +172,14 @@ export class PropObject extends Prop {
       this.baseSize = struct.size;
     }
     if (!struct) {
-      console.warn("couldnt load data for type ", this.structName);
+      console.warn('couldnt load data for type ', this.structName);
     }
   }
 }
 
 export class PropAny extends Prop {
   public baseSize = 0;
-  public hexSetter = "writeObject";
+  public hexSetter = 'writeObject';
 
   public getFunctionStubs(): string[] {
     return [`load${this.name}()`, `write${this.name}()`];

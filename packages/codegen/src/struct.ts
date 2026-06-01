@@ -1,10 +1,13 @@
-import { Prop } from "./prop";
+import { Prop } from './prop';
 
 export class Struct {
   public size: number = 0;
   public props: { [key: string]: Prop } = {};
   public functionStubs: string[] = [];
-  constructor(public name: string, hexSize: string) {
+  constructor(
+    public name: string,
+    hexSize: string
+  ) {
     this.size = parseInt(hexSize, 16);
   }
 

@@ -1,4 +1,4 @@
-import { Struct } from "./struct";
+import { Struct } from './struct';
 import {
   Prop,
   PropShort,
@@ -12,16 +12,20 @@ import {
   PropChar,
   PropAny,
   PropUShort
-} from "./prop";
-import { Constants } from "./constants";
+} from './prop';
+import { Constants } from './constants';
 
 export class PyriteGenerator {
   public structs: { [key: string]: Struct } = {};
   public constants: { [key: string]: Constants } = {};
 
-  public constructor(public platform: string, structData: string, constData: string) {
-    this.parseStructs(structData.split("\n"));
-    this.parseConsts(constData.split("\n"));
+  public constructor(
+    public platform: string,
+    structData: string,
+    constData: string
+  ) {
+    this.parseStructs(structData.split('\n'));
+    this.parseConsts(constData.split('\n'));
   }
 
   /**
@@ -42,7 +46,7 @@ export class PyriteGenerator {
     for (const l of lines) {
       const line = l.trim();
       const bits = line.split(/\s+/);
-      if (line === "{" || line === "") {
+      if (line === '{' || line === '') {
         continue; // skip
       } else if (!currentStruct) {
         // has data and no current struct - this must be the header line
@@ -51,9 +55,9 @@ export class PyriteGenerator {
         if (!hexSize) {
           console.warn(`Bad line ${l}`);
         }
-        currentStruct = new Struct(heading, hexSize.replace(")", ""));
+        currentStruct = new Struct(heading, hexSize.replace(')', ''));
         this.structs[heading] = currentStruct;
-      } else if (line === "}") {
+      } else if (line === '}') {
         currentStruct = undefined; // end of struct, get ready for the next
         currentProp = undefined;
       } else {
@@ -65,44 +69,46 @@ export class PyriteGenerator {
 
   public parseProp(bits: string[]): Prop {
     if (bits.length === 2) {
-      bits.push("Unnamed");
+      bits.push('Unnamed');
     }
 
     const [offset, typeStr, name] = bits;
-    const rest = bits.slice(3).join(" ");
+    const rest = bits.slice(3).join(' ');
 
-    let prop: Prop = new Prop(offset, name, "prop");
+    let prop: Prop = new Prop(offset, name, 'prop');
 
-    const match = typeStr.match(/(?<type>\w*)(?:\<(?<typeLen>[\w-\(\)]*)\>)?(?:\[(?<arrayLen>[\w-\(\)]*)\])?/);
-    const type = match.groups["type"] as PropType;
+    const match = typeStr.match(
+      /(?<type>\w*)(?:\<(?<typeLen>[\w-\(\)]*)\>)?(?:\[(?<arrayLen>[\w-\(\)]*)\])?/
+    );
+    const type = match.groups['type'] as PropType;
 
-    if (type === "SHORT") {
+    if (type === 'SHORT') {
       prop = new PropShort(offset, name, type);
-    } else if (type === "USHORT") {
+    } else if (type === 'USHORT') {
       prop = new PropUShort(offset, name, type);
-    } else if (type === "BOOL") {
+    } else if (type === 'BOOL') {
       prop = new PropBool(offset, name, type);
-    } else if (type === "BYTE") {
+    } else if (type === 'BYTE') {
       prop = new PropByte(offset, name, type);
-    } else if (type === "SBYTE") {
+    } else if (type === 'SBYTE') {
       prop = new PropSByte(offset, name, type);
-    } else if (type === "INT") {
+    } else if (type === 'INT') {
       prop = new PropInt(offset, name, type);
-    } else if (type === "STR") {
+    } else if (type === 'STR') {
       prop = new PropStr(offset, name, type);
-    } else if (type === "CHAR") {
+    } else if (type === 'CHAR') {
       prop = new PropChar(offset, name, type);
-    } else if (type === "any") {
+    } else if (type === 'any') {
       prop = new PropAny(offset, name, type);
     } else if (type) {
       prop = new PropObject(offset, name, type);
       (prop as PropObject).structName = type;
     } else {
-      console.warn("very confused by", bits);
+      console.warn('very confused by', bits);
     }
     return prop
-      .handleTypeLength(match.groups["typeLen"])
-      .handleArrayLength(match.groups["arrayLen"])
+      .handleTypeLength(match.groups['typeLen'])
+      .handleArrayLength(match.groups['arrayLen'])
       .handleRest(rest);
   }
 
@@ -127,7 +133,7 @@ export class PyriteGenerator {
       } else {
         const bits = line.split(/\s+/);
         const value = bits[0];
-        const label = bits.slice(1).join(" ");
+        const label = bits.slice(1).join(' ');
         currentConst.add(value, label);
       }
     }
