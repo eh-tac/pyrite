@@ -373,7 +373,7 @@ class Constants
         24 => "Disable Freighters",
         25 => "Disable Starships",
         26 => "Starship Static Fire",
-        27 => "Starship Fly Dance",
+        27 => "Starship Fly Once",
         28 => "Starship Circle",
         29 => "Starship Await Return",
         30 => "Starship Await Launch",
@@ -407,7 +407,7 @@ class Constants
     public static $ORDER_DISABLEFREIGHTERS = 24;
     public static $ORDER_DISABLESTARSHIPS = 25;
     public static $ORDER_STARSHIPSTATICFIRE = 26;
-    public static $ORDER_STARSHIPFLYDANCE = 27;
+    public static $ORDER_STARSHIPFLYONCE = 27;
     public static $ORDER_STARSHIPCIRCLE = 28;
     public static $ORDER_STARSHIPAWAITRETURN = 29;
     public static $ORDER_STARSHIPAWAITLAUNCH = 30;

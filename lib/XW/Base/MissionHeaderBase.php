@@ -47,10 +47,10 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
         $this->MissionLocation = $this->getShort($hex, 0x06);
         $this->EndOfMissionMessages = [];
         $offset = 0x08;
-        for ($i = 0; $i < 64; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
+        for ($i = 0; $i < 3; $i++) {
+            $t = $this->getChar($hex, $offset, 16);
             $this->EndOfMissionMessages[] = $t;
-            $offset += 1;
+            $offset += 16;
         }
         
 
@@ -79,10 +79,10 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
         $hex = $this->writeShort($this->RndSeed, $hex, 0x04);
         $hex = $this->writeShort($this->MissionLocation, $hex, 0x06);
         $offset = 0x08;
-        for ($i = 0; $i < 64; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $t = $this->EndOfMissionMessages[$i];
             $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
+            $offset += 16;
         }
 
         return $hex;

@@ -78,7 +78,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $this->WindowSettingsCount = $this->getShort($hex, $offset);
         $this->Viewports = [];
         $offset = $offset;
-        for ($i = 0; $i < $this->ViewportCount(); $i++) {
+        for ($i = 0; $i < $this->WindowSettingsCount; $i++) {
             $t = (new ViewportSetting(substr($hex, $offset), $this->TIE))->loadHex();
             $this->Viewports[] = $t;
             $offset += $t->getLength();
@@ -146,7 +146,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         }
         $hex = $this->writeShort($this->WindowSettingsCount, $hex, $offset);
         $offset = $offset;
-        for ($i = 0; $i < $this->ViewportCount(); $i++) {
+        for ($i = 0; $i < $this->WindowSettingsCount; $i++) {
             $t = $this->Viewports[$i];
             $hex = $this->writeObject($t, $hex, $offset);
             $offset += $t->getLength();
@@ -172,7 +172,6 @@ abstract class BriefingBase extends PyriteBase implements Byteable
     }
     
     protected abstract function CoordinateCount();
-protected abstract function ViewportCount();
     public function getLength()
     {
         return $this->BriefingLength;

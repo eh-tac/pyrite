@@ -2,7 +2,7 @@ XWING Mission File
 Author: "JB" (Random Starfighter) (randomstarfighter@gmail.com)
 Original Template: Michael Gaisser (mjgaisser@gmail.com)
 Site: https://github.com/MikeG621
-Updated: 2022.01.26
+Updated: 2024.08.30
 =====
 
 This is a definition for the XWING mission file (XWI) and briefing file (BRF)
@@ -39,11 +39,8 @@ NAME	LENGTH	DESC
 ----	------	----
 BOOL	1	0=false, 1=true
 BYTE	1	unsigned 8-bit
-SBYTE	1	signed 8-bit, [-128, +127]
 CHAR	1	ASCII character
 SHORT	2	signed Int16
-INT	4	signed Int32
-STR(*)	*	null-terminated string, * is a decimal number
 
 NOTE: Any byte locations that are between defined values and are not explicitly
 defined are deemed as Reserved(0), and have only been found to have zero
@@ -64,7 +61,7 @@ struct FileHeader (size 0xCE)
 	0x004	SHORT	EndEvent (enum)
 	0x006	SHORT	RndSeed (unused)
 	0x008	SHORT	Location (enum)
-	0x00A	CHAR[64][3]	EndOfMissionMessages
+	0x00A	CHAR[3][64]	EndOfMissionMessages
 	0x0CA	SHORT	NumFGs
 	0x0CC	SHORT	NumOGs
 }
@@ -123,8 +120,8 @@ struct ObjectGroup (size 0x46)
 
 --  BRF FILE FORMAT
 BriefingHeader
-CoordinateSet
-IconSet
+Coordinate[CoordinateCount][IconCount]
+Icon[IconCount]
 WindowUISettings
 Pages
 MissionHeader
@@ -141,35 +138,26 @@ struct BriefingHeader (size 0x6)
 	0x04	SHORT	CoordinateCount
 }
 
-CoordinateSet
+struct Coordinate (size 0x6)
 {
-	foreach(CoordinateCount)
-	{
-		foreach(IconSet)  (size 0x6)
-		{
-			0x00	SHORT	X
-			0x02	SHORT	Y
-			0x04	SHORT	Z
-		}
-	}
+	0x00	SHORT	X
+	0x02	SHORT	Y
+	0x04	SHORT	Z
 }
 
-IconSet
+struct Icon (size 0x40)
 {
-	foreach(IconCount)   (size 0x40)
-	{
-		0x000	SHORT	CraftType
-		0x002	SHORT	IFF
-		0x004	SHORT	NumberOfCraft
-		0x006	SHORT	NumberOfWaves
-		0x008	CHAR[16] Name
-		0x018	CHAR[16] Cargo
-		0x028	CHAR[16] SpecialCargo
-		0x038	SHORT	SpecialCargoCraft
-		0x03A	SHORT	Yaw
-		0x03C	SHORT	Pitch
-		0x03E	SHORT	Roll
-	}
+	0x00	SHORT	CraftType
+	0x02	SHORT	IFF
+	0x04	SHORT	NumberOfCraft
+	0x06	SHORT	NumberOfWaves
+	0x08	CHAR[16] Name
+	0x18	CHAR[16] Cargo
+	0x28	CHAR[16] SpecialCargo
+	0x38	SHORT	SpecialCargoCraft
+	0x3A	SHORT	Yaw
+	0x3C	SHORT	Pitch
+	0x3E	SHORT	Roll
 }
 
 WindowUISettings
@@ -181,7 +169,7 @@ WindowUISettings
 	}
 }
 
-ViewportSetting (size 0xA)
+struct ViewportSetting (size 0xA)
 {
 	0x00	SHORT	Top
 	0x02	SHORT	Left
@@ -209,7 +197,7 @@ struct MissionHeader (size 0xC8)
 	0x02	SHORT	EndEvent (enum)
 	0x04	SHORT	RndSeed (unused)
 	0x06	SHORT	Location (enum)
-	0x08	CHAR[64][3]	EndOfMissionMessages
+	0x08	CHAR[3][64]	EndOfMissionMessages
 }
 
 IconExtraData
@@ -749,7 +737,7 @@ Order
 18	Disable Freighters (and CRV)
 19	Disable Starships
 1A	SS Hold Position
-1B	SS Fly Dance
+1B	SS Fly Once
 1C	SS Circle
 1D	SS Await Return
 1E	SS Await Launch

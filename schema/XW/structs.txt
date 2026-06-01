@@ -59,9 +59,9 @@ struct FileHeader (size 0xCE)
 
 struct FlightGroup (size 0x94)
 {
-	0x000	CHAR[16] Name
-	0x010	CHAR[16] Cargo
-	0x020	CHAR[16] SpecialCargo
+	0x000	CHAR<16> Name
+	0x010	CHAR<16> Cargo
+	0x020	CHAR<16> SpecialCargo
 	0x030	SHORT	SpecialCargoCraft
 	0x032	SHORT	CraftType (enum)
 	0x034	SHORT	IFF (enum)
@@ -74,10 +74,10 @@ struct FlightGroup (size 0x94)
 	0x042	SHORT	Mothership (-1 for none)
 	0x044	SHORT	ArrivalHyperspace
 	0x046	SHORT	DepartureHyperspace
-	0x048	SHORT[7] Waypoint (X)
-	0x056	SHORT[7] Waypoint (Y)
-	0x064	SHORT[7] Waypoint (Z)
-	0x072	SHORT[7] Waypoint (Enabled)
+	0x048	SHORT[7] WaypointX
+	0x056	SHORT[7] WaypointY
+	0x064	SHORT[7] WaypointZ
+	0x072	SHORT[7] WaypointEnabled
 	0x080	SHORT	Formation (enum)
 	0x082	SHORT	PlayerCraft
 	0x084	SHORT	GroupAI (enum)
@@ -89,12 +89,12 @@ struct FlightGroup (size 0x94)
 	0x090	SHORT	TargetPrimary (-1 for none)
 	0x092	SHORT	TargetSecondary (-1 for none)
 }
-
+ 
 struct ObjectGroup (size 0x46)
 {
-	0x000	CHAR[16] Name (ignored?)
-	0x010	CHAR[16] Cargo (ignored?)
-	0x020	CHAR[16] SpecialCargo (ignored?)
+	0x000	CHAR<16> Name (ignored?)
+	0x010	CHAR<16> Cargo (ignored?)
+	0x020	CHAR<16> SpecialCargo (ignored?)
 	0x030	SHORT	SpecialCargoCraft (ignored?)
 	0x032	SHORT	CraftType (enum)
 	0x034	SHORT	IFF (enum)
@@ -114,7 +114,7 @@ struct Briefing (size 0)
   0x6 Coordinate[CoordinateCount()] CoordinateSet
   PV Icon[BriefingHeader-IconCount] IconSet
   PV SHORT WindowSettingsCount 
-  PV ViewportSetting[ViewportCount()] Viewports
+  PV ViewportSetting[WindowSettingsCount] Viewports
   PV SHORT PageCount
   PV Page[PageCount] Pages
   PV MissionHeader MissionHeader
@@ -143,9 +143,9 @@ struct Icon (size 0x40)
   0x002	SHORT	IFF
   0x004	SHORT	NumberOfCraft
   0x006	SHORT	NumberOfWaves
-  0x008	CHAR[16] Name
-  0x018	CHAR[16] Cargo
-  0x028	CHAR[16] SpecialCargo
+  0x008	CHAR<16> Name
+  0x018	CHAR<16> Cargo
+  0x028	CHAR<16> SpecialCargo
   0x038	SHORT	SpecialCargoCraft
   0x03A	SHORT	Yaw
   0x03C	SHORT	Pitch
@@ -176,7 +176,7 @@ struct MissionHeader (size 0xC8)
 	0x02	SHORT	EndEvent (enum)
 	0x04	SHORT	RndSeed (unused)
 	0x06	SHORT	MissionLocation (enum)
-	0x08	CHAR[64][3]	EndOfMissionMessages
+	0x08	CHAR<16>[3]	EndOfMissionMessages
 }
 
 struct Tag (size 0)

@@ -14,9 +14,9 @@ import {
 import { getChar, getShort, writeChar, writeShort } from '@pyrite/core';
 export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public readonly FLIGHTGROUPLENGTH: number = 148;
-  public Name: string[];
-  public Cargo: string[];
-  public SpecialCargo: string[];
+  public Name: string;
+  public Cargo: string;
+  public SpecialCargo: string;
   public SpecialCargoCraft: number;
   public CraftType: CraftType;
   public IFF: IFF;
@@ -29,7 +29,10 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public Mothership: number; //(-1 for none)
   public ArrivalHyperspace: number;
   public DepartureHyperspace: number;
-  public Waypoint: number[]; //(Enabled)
+  public WaypointX: number[];
+  public WaypointY: number[];
+  public WaypointZ: number[];
+  public WaypointEnabled: number[];
   public Formation: Formation;
   public PlayerCraft: number;
   public GroupAI: GroupAI;
@@ -45,27 +48,9 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Name = [];
-    offset = 0x000;
-    for (let i = 0; i < 16; i++) {
-      const t = getChar(hex, offset, 1);
-      this.Name.push(t);
-      offset += 1;
-    }
-    this.Cargo = [];
-    offset = 0x010;
-    for (let i = 0; i < 16; i++) {
-      const t = getChar(hex, offset, 1);
-      this.Cargo.push(t);
-      offset += 1;
-    }
-    this.SpecialCargo = [];
-    offset = 0x020;
-    for (let i = 0; i < 16; i++) {
-      const t = getChar(hex, offset, 1);
-      this.SpecialCargo.push(t);
-      offset += 1;
-    }
+    this.Name = getChar(hex, 0x000, 16);
+    this.Cargo = getChar(hex, 0x010, 16);
+    this.SpecialCargo = getChar(hex, 0x020, 16);
     this.SpecialCargoCraft = getShort(hex, 0x030);
     this.CraftType = getShort(hex, 0x032) as CraftType;
     this.IFF = getShort(hex, 0x034) as IFF;
@@ -78,11 +63,32 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.Mothership = getShort(hex, 0x042);
     this.ArrivalHyperspace = getShort(hex, 0x044);
     this.DepartureHyperspace = getShort(hex, 0x046);
-    this.Waypoint = [];
+    this.WaypointX = [];
+    offset = 0x048;
+    for (let i = 0; i < 7; i++) {
+      const t = getShort(hex, offset);
+      this.WaypointX.push(t);
+      offset += 2;
+    }
+    this.WaypointY = [];
+    offset = 0x056;
+    for (let i = 0; i < 7; i++) {
+      const t = getShort(hex, offset);
+      this.WaypointY.push(t);
+      offset += 2;
+    }
+    this.WaypointZ = [];
+    offset = 0x064;
+    for (let i = 0; i < 7; i++) {
+      const t = getShort(hex, offset);
+      this.WaypointZ.push(t);
+      offset += 2;
+    }
+    this.WaypointEnabled = [];
     offset = 0x072;
     for (let i = 0; i < 7; i++) {
       const t = getShort(hex, offset);
-      this.Waypoint.push(t);
+      this.WaypointEnabled.push(t);
       offset += 2;
     }
     this.Formation = getShort(hex, 0x080) as Formation;
@@ -113,7 +119,10 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
       Mothership: this.Mothership,
       ArrivalHyperspace: this.ArrivalHyperspace,
       DepartureHyperspace: this.DepartureHyperspace,
-      Waypoint: this.Waypoint,
+      WaypointX: this.WaypointX,
+      WaypointY: this.WaypointY,
+      WaypointZ: this.WaypointZ,
+      WaypointEnabled: this.WaypointEnabled,
       Formation: this.FormationLabel,
       PlayerCraft: this.PlayerCraft,
       GroupAI: this.GroupAILabel,
@@ -130,24 +139,9 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
-    offset = 0x000;
-    for (let i = 0; i < this.Name.length; i++) {
-      const t = this.Name[i];
-      writeChar(hex, t, offset, 1);
-      offset += 1;
-    }
-    offset = 0x010;
-    for (let i = 0; i < this.Cargo.length; i++) {
-      const t = this.Cargo[i];
-      writeChar(hex, t, offset, 1);
-      offset += 1;
-    }
-    offset = 0x020;
-    for (let i = 0; i < this.SpecialCargo.length; i++) {
-      const t = this.SpecialCargo[i];
-      writeChar(hex, t, offset, 1);
-      offset += 1;
-    }
+    writeChar(hex, this.Name, 0x000, 16);
+    writeChar(hex, this.Cargo, 0x010, 16);
+    writeChar(hex, this.SpecialCargo, 0x020, 16);
     writeShort(hex, this.SpecialCargoCraft, 0x030);
     writeShort(hex, this.CraftType, 0x032);
     writeShort(hex, this.IFF, 0x034);
@@ -160,9 +154,27 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     writeShort(hex, this.Mothership, 0x042);
     writeShort(hex, this.ArrivalHyperspace, 0x044);
     writeShort(hex, this.DepartureHyperspace, 0x046);
+    offset = 0x048;
+    for (let i = 0; i < this.WaypointX.length; i++) {
+      const t = this.WaypointX[i];
+      writeShort(hex, t, offset);
+      offset += 2;
+    }
+    offset = 0x056;
+    for (let i = 0; i < this.WaypointY.length; i++) {
+      const t = this.WaypointY[i];
+      writeShort(hex, t, offset);
+      offset += 2;
+    }
+    offset = 0x064;
+    for (let i = 0; i < this.WaypointZ.length; i++) {
+      const t = this.WaypointZ[i];
+      writeShort(hex, t, offset);
+      offset += 2;
+    }
     offset = 0x072;
-    for (let i = 0; i < this.Waypoint.length; i++) {
-      const t = this.Waypoint[i];
+    for (let i = 0; i < this.WaypointEnabled.length; i++) {
+      const t = this.WaypointEnabled[i];
       writeShort(hex, t, offset);
       offset += 2;
     }

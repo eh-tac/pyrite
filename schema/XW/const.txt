@@ -197,7 +197,7 @@ Order
 18 Disable Freighters
 19 Disable Starships
 1A Starship Static Fire
-1B Starship Fly Dance
+1B Starship Fly Once
 1C Starship Circle
 1D Starship Await Return
 1E Starship Await Launch

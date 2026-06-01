@@ -20,10 +20,10 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
     this.MissionLocation = getShort(hex, 0x06) as MissionLocation;
     this.EndOfMissionMessages = [];
     offset = 0x08;
-    for (let i = 0; i < 64; i++) {
-      const t = getChar(hex, offset, 1);
+    for (let i = 0; i < 3; i++) {
+      const t = getChar(hex, offset, 16);
       this.EndOfMissionMessages.push(t);
-      offset += 1;
+      offset += 16;
     }
   }
 
@@ -48,8 +48,8 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
     offset = 0x08;
     for (let i = 0; i < this.EndOfMissionMessages.length; i++) {
       const t = this.EndOfMissionMessages[i];
-      writeChar(hex, t, offset, 1);
-      offset += 1;
+      writeChar(hex, t, offset, 16);
+      offset += 16;
     }
 
     return hex;

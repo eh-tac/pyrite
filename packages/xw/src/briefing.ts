@@ -8,9 +8,9 @@ export class Briefing extends BriefingBase {
   }
 
   protected CoordinateCount(): number {
-    return 0;
+    return this.BriefingHeader.CoordinateCount * this.BriefingHeader.IconCount;
   }
   protected ViewportCount(): number {
-    return 0;
+    return this.WindowSettingsCount;
   }
 }

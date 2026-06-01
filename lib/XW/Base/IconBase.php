@@ -22,11 +22,11 @@ abstract class IconBase extends PyriteBase implements Byteable
     public $NumberOfCraft;
     /** @var integer 0x006 NumberOfWaves SHORT */
     public $NumberOfWaves;
-    /** @var string[] 0x008 Name CHAR */
+    /** @var string 0x008 Name CHAR */
     public $Name;
-    /** @var string[] 0x018 Cargo CHAR */
+    /** @var string 0x018 Cargo CHAR */
     public $Cargo;
-    /** @var string[] 0x028 SpecialCargo CHAR */
+    /** @var string 0x028 SpecialCargo CHAR */
     public $SpecialCargo;
     /** @var integer 0x038 SpecialCargoCraft SHORT */
     public $SpecialCargoCraft;
@@ -56,27 +56,9 @@ abstract class IconBase extends PyriteBase implements Byteable
         $this->IFF = $this->getShort($hex, 0x002);
         $this->NumberOfCraft = $this->getShort($hex, 0x004);
         $this->NumberOfWaves = $this->getShort($hex, 0x006);
-        $this->Name = [];
-        $offset = 0x008;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
-            $this->Name[] = $t;
-            $offset += 1;
-        }
-        $this->Cargo = [];
-        $offset = 0x018;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
-            $this->Cargo[] = $t;
-            $offset += 1;
-        }
-        $this->SpecialCargo = [];
-        $offset = 0x028;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
-            $this->SpecialCargo[] = $t;
-            $offset += 1;
-        }
+        $this->Name = $this->getChar($hex, 0x008, 16);
+        $this->Cargo = $this->getChar($hex, 0x018, 16);
+        $this->SpecialCargo = $this->getChar($hex, 0x028, 16);
         $this->SpecialCargoCraft = $this->getShort($hex, 0x038);
         $this->Yaw = $this->getShort($hex, 0x03A);
         $this->Pitch = $this->getShort($hex, 0x03C);
@@ -113,24 +95,9 @@ abstract class IconBase extends PyriteBase implements Byteable
         $hex = $this->writeShort($this->IFF, $hex, 0x002);
         $hex = $this->writeShort($this->NumberOfCraft, $hex, 0x004);
         $hex = $this->writeShort($this->NumberOfWaves, $hex, 0x006);
-        $offset = 0x008;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->Name[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
-        }
-        $offset = 0x018;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->Cargo[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
-        }
-        $offset = 0x028;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->SpecialCargo[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
-        }
+        $hex = $this->writeChar($this->Name, $hex, 0x008);
+        $hex = $this->writeChar($this->Cargo, $hex, 0x018);
+        $hex = $this->writeChar($this->SpecialCargo, $hex, 0x028);
         $hex = $this->writeShort($this->SpecialCargoCraft, $hex, 0x038);
         $hex = $this->writeShort($this->Yaw, $hex, 0x03A);
         $hex = $this->writeShort($this->Pitch, $hex, 0x03C);

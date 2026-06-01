@@ -15,11 +15,11 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
 
     /** @var integer  FLIGHTGROUPLENGTH INT */
     public const FLIGHTGROUPLENGTH = 148;
-    /** @var string[] 0x000 Name CHAR */
+    /** @var string 0x000 Name CHAR */
     public $Name;
-    /** @var string[] 0x010 Cargo CHAR */
+    /** @var string 0x010 Cargo CHAR */
     public $Cargo;
-    /** @var string[] 0x020 SpecialCargo CHAR */
+    /** @var string 0x020 SpecialCargo CHAR */
     public $SpecialCargo;
     /** @var integer 0x030 SpecialCargoCraft SHORT */
     public $SpecialCargoCraft;
@@ -45,8 +45,14 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
     public $ArrivalHyperspace;
     /** @var integer 0x046 DepartureHyperspace SHORT */
     public $DepartureHyperspace;
-    /** @var integer[] 0x072 Waypoint SHORT */
-    public $Waypoint; //(Enabled)
+    /** @var integer[] 0x048 WaypointX SHORT */
+    public $WaypointX;
+    /** @var integer[] 0x056 WaypointY SHORT */
+    public $WaypointY;
+    /** @var integer[] 0x064 WaypointZ SHORT */
+    public $WaypointZ;
+    /** @var integer[] 0x072 WaypointEnabled SHORT */
+    public $WaypointEnabled;
     /** @var integer 0x080 Formation SHORT */
     public $Formation;
     /** @var integer 0x082 PlayerCraft SHORT */
@@ -81,27 +87,9 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $hex = $this->hex;
         $offset = 0;
 
-        $this->Name = [];
-        $offset = 0x000;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
-            $this->Name[] = $t;
-            $offset += 1;
-        }
-        $this->Cargo = [];
-        $offset = 0x010;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
-            $this->Cargo[] = $t;
-            $offset += 1;
-        }
-        $this->SpecialCargo = [];
-        $offset = 0x020;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
-            $this->SpecialCargo[] = $t;
-            $offset += 1;
-        }
+        $this->Name = $this->getChar($hex, 0x000, 16);
+        $this->Cargo = $this->getChar($hex, 0x010, 16);
+        $this->SpecialCargo = $this->getChar($hex, 0x020, 16);
         $this->SpecialCargoCraft = $this->getShort($hex, 0x030);
         $this->CraftType = $this->getShort($hex, 0x032);
         $this->IFF = $this->getShort($hex, 0x034);
@@ -114,11 +102,32 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $this->Mothership = $this->getShort($hex, 0x042);
         $this->ArrivalHyperspace = $this->getShort($hex, 0x044);
         $this->DepartureHyperspace = $this->getShort($hex, 0x046);
-        $this->Waypoint = [];
+        $this->WaypointX = [];
+        $offset = 0x048;
+        for ($i = 0; $i < 7; $i++) {
+            $t = $this->getShort($hex, $offset);
+            $this->WaypointX[] = $t;
+            $offset += 2;
+        }
+        $this->WaypointY = [];
+        $offset = 0x056;
+        for ($i = 0; $i < 7; $i++) {
+            $t = $this->getShort($hex, $offset);
+            $this->WaypointY[] = $t;
+            $offset += 2;
+        }
+        $this->WaypointZ = [];
+        $offset = 0x064;
+        for ($i = 0; $i < 7; $i++) {
+            $t = $this->getShort($hex, $offset);
+            $this->WaypointZ[] = $t;
+            $offset += 2;
+        }
+        $this->WaypointEnabled = [];
         $offset = 0x072;
         for ($i = 0; $i < 7; $i++) {
             $t = $this->getShort($hex, $offset);
-            $this->Waypoint[] = $t;
+            $this->WaypointEnabled[] = $t;
             $offset += 2;
         }
         $this->Formation = $this->getShort($hex, 0x080);
@@ -154,7 +163,10 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
             "Mothership" => $this->Mothership,
             "ArrivalHyperspace" => $this->ArrivalHyperspace,
             "DepartureHyperspace" => $this->DepartureHyperspace,
-            "Waypoint" => $this->Waypoint,
+            "WaypointX" => $this->WaypointX,
+            "WaypointY" => $this->WaypointY,
+            "WaypointZ" => $this->WaypointZ,
+            "WaypointEnabled" => $this->WaypointEnabled,
             "Formation" => $this->getFormationLabel(),
             "PlayerCraft" => $this->PlayerCraft,
             "GroupAI" => $this->getGroupAILabel(),
@@ -172,24 +184,9 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $offset = 0x000;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->Name[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
-        }
-        $offset = 0x010;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->Cargo[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
-        }
-        $offset = 0x020;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->SpecialCargo[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
-        }
+        $hex = $this->writeChar($this->Name, $hex, 0x000);
+        $hex = $this->writeChar($this->Cargo, $hex, 0x010);
+        $hex = $this->writeChar($this->SpecialCargo, $hex, 0x020);
         $hex = $this->writeShort($this->SpecialCargoCraft, $hex, 0x030);
         $hex = $this->writeShort($this->CraftType, $hex, 0x032);
         $hex = $this->writeShort($this->IFF, $hex, 0x034);
@@ -202,9 +199,27 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         $hex = $this->writeShort($this->Mothership, $hex, 0x042);
         $hex = $this->writeShort($this->ArrivalHyperspace, $hex, 0x044);
         $hex = $this->writeShort($this->DepartureHyperspace, $hex, 0x046);
+        $offset = 0x048;
+        for ($i = 0; $i < 7; $i++) {
+            $t = $this->WaypointX[$i];
+            $hex = $this->writeShort($t, $hex, $offset);
+            $offset += 2;
+        }
+        $offset = 0x056;
+        for ($i = 0; $i < 7; $i++) {
+            $t = $this->WaypointY[$i];
+            $hex = $this->writeShort($t, $hex, $offset);
+            $offset += 2;
+        }
+        $offset = 0x064;
+        for ($i = 0; $i < 7; $i++) {
+            $t = $this->WaypointZ[$i];
+            $hex = $this->writeShort($t, $hex, $offset);
+            $offset += 2;
+        }
         $offset = 0x072;
         for ($i = 0; $i < 7; $i++) {
-            $t = $this->Waypoint[$i];
+            $t = $this->WaypointEnabled[$i];
             $hex = $this->writeShort($t, $hex, $offset);
             $offset += 2;
         }

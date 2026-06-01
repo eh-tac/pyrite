@@ -44,7 +44,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     this.WindowSettingsCount = getShort(hex, offset);
     offset += 2;
     this.Viewports = [];
-    for (let i = 0; i < this.ViewportCount(); i++) {
+    for (let i = 0; i < this.WindowSettingsCount; i++) {
       const t = new ViewportSetting(hex.slice(offset), this.TIE);
       this.Viewports.push(t);
       offset += t.getLength();
@@ -134,7 +134,6 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
   }
 
   protected abstract CoordinateCount(): number;
-  protected abstract ViewportCount(): number;
   public getLength(): number {
     return this.BriefingLength;
   }

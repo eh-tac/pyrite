@@ -6,9 +6,9 @@ export abstract class IconBase extends PyriteBase implements Byteable {
   public IFF: number;
   public NumberOfCraft: number;
   public NumberOfWaves: number;
-  public Name: string[];
-  public Cargo: string[];
-  public SpecialCargo: string[];
+  public Name: string;
+  public Cargo: string;
+  public SpecialCargo: string;
   public SpecialCargoCraft: number;
   public Yaw: number;
   public Pitch: number;
@@ -17,33 +17,14 @@ export abstract class IconBase extends PyriteBase implements Byteable {
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
-    let offset = 0;
 
     this.CraftType = getShort(hex, 0x000);
     this.IFF = getShort(hex, 0x002);
     this.NumberOfCraft = getShort(hex, 0x004);
     this.NumberOfWaves = getShort(hex, 0x006);
-    this.Name = [];
-    offset = 0x008;
-    for (let i = 0; i < 16; i++) {
-      const t = getChar(hex, offset, 1);
-      this.Name.push(t);
-      offset += 1;
-    }
-    this.Cargo = [];
-    offset = 0x018;
-    for (let i = 0; i < 16; i++) {
-      const t = getChar(hex, offset, 1);
-      this.Cargo.push(t);
-      offset += 1;
-    }
-    this.SpecialCargo = [];
-    offset = 0x028;
-    for (let i = 0; i < 16; i++) {
-      const t = getChar(hex, offset, 1);
-      this.SpecialCargo.push(t);
-      offset += 1;
-    }
+    this.Name = getChar(hex, 0x008, 16);
+    this.Cargo = getChar(hex, 0x018, 16);
+    this.SpecialCargo = getChar(hex, 0x028, 16);
     this.SpecialCargoCraft = getShort(hex, 0x038);
     this.Yaw = getShort(hex, 0x03a);
     this.Pitch = getShort(hex, 0x03c);
@@ -68,30 +49,14 @@ export abstract class IconBase extends PyriteBase implements Byteable {
 
   public toHexBuffer(): ArrayBuffer {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
-    let offset = 0;
 
     writeShort(hex, this.CraftType, 0x000);
     writeShort(hex, this.IFF, 0x002);
     writeShort(hex, this.NumberOfCraft, 0x004);
     writeShort(hex, this.NumberOfWaves, 0x006);
-    offset = 0x008;
-    for (let i = 0; i < this.Name.length; i++) {
-      const t = this.Name[i];
-      writeChar(hex, t, offset, 1);
-      offset += 1;
-    }
-    offset = 0x018;
-    for (let i = 0; i < this.Cargo.length; i++) {
-      const t = this.Cargo[i];
-      writeChar(hex, t, offset, 1);
-      offset += 1;
-    }
-    offset = 0x028;
-    for (let i = 0; i < this.SpecialCargo.length; i++) {
-      const t = this.SpecialCargo[i];
-      writeChar(hex, t, offset, 1);
-      offset += 1;
-    }
+    writeChar(hex, this.Name, 0x008, 16);
+    writeChar(hex, this.Cargo, 0x018, 16);
+    writeChar(hex, this.SpecialCargo, 0x028, 16);
     writeShort(hex, this.SpecialCargoCraft, 0x038);
     writeShort(hex, this.Yaw, 0x03a);
     writeShort(hex, this.Pitch, 0x03c);
