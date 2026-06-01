@@ -1,0 +1,13 @@
+FileHeader
+FlightGroup[NumFGs]
+Message[NumMessages]
+GlobalGoal[10]
+Team[10]
+Briefing[8]
+STR(64)[NumFGs,8,3]	FGGoalStrings
+STR(64)[10,3,4,3]	GlobalGoalStrings
+#if (PlatformID==12) (XvT)
+STR(1024)		MissionDescription
+#elseif (PlatformID==14) (BoP)
+STR(4096)[3]
+#endif

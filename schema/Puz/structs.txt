@@ -1,0 +1,27 @@
+struct Crossword (size 0)
+{
+  0x00 FileHeader FileHeader
+  0x34 CHAR<GridSize()> SolutionGrid
+  PV   CHAR<GridSize()> ProgressGrid
+  PV   STR Title
+  PV   STR Author
+  PV   STR Copyright
+  PV   STR[FileHeader-NumClues] Clues
+}
+
+struct FileHeader (size 0x34)
+{
+  0x00 SHORT FileChecksum
+  0x02 CHAR<12> Descriptor
+  0x0E SHORT BaseChecksum
+  0x10 SHORT[4] MaskedChecksums
+  0x18 CHAR<4> Version
+  0x1C SHORT Unused
+  0x1E SHORT Unknown
+  0x20 CHAR<12> Reserved
+  0x2C BYTE Width
+  0x2D BYTE Height
+  0x2E SHORT NumClues
+  0x30 SHORT Bitmask1
+  0x32 SHORT Bitmask2
+}
