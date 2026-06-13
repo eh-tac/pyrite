@@ -10,7 +10,9 @@ import { PilotFile as XWingPilot } from "../../model/XW";
 import { PilotFile as TIEPilot } from "../../model/TIE";
 import { PilotFile as XvTPilot, PL2FileRecord as BoPPilot } from "../../model/XvT";
 import { PilotFile as XWAPilot } from "../../model/XWA";
+import { PilotFile as XWVMPilot } from "../../model/XWVM";
 import { XWController } from "../../view-model/pilot-file/xw-controller";
+import { XWVMController } from "../../view-model/pilot-file/xwvm-controller";
 
 @Component({
   tag: "pyrite-pilot-file",
@@ -133,6 +135,8 @@ export class PilotViewer {
       return new XvTPltController(filepath, new XvTPilot(file));
     } else if (ext === "pl2") {
       return new BoPPltController(filepath, new BoPPilot(file));
+    } else if (ext === "vmpilot") {
+      return new XWVMController(filepath, new XWVMPilot(file));
     }
     console.error(filepath, file);
     throw new Error(`Unknown pilot file: Unrecognised file format: ${filepath}, length ${file.byteLength}`);
