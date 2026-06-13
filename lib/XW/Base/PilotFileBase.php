@@ -14,7 +14,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     use HexEncoder;
 
     /** @var integer  PILOTFILELENGTH INT */
-    public const PILOTFILELENGTH = 1704;
+    public const PILOTFILELENGTH = 1705;
     /** @var integer 0x000 PlatformID SHORT */
     public $PlatformID;
     /** @var integer 0x002 PilotStatus BYTE */
@@ -33,6 +33,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     public $MazeScore; //XW YW AW BW
     /** @var integer[] 0x086 MazeLevel BYTE */
     public $MazeLevel;
+    /** @var integer[] 0x09E Unknown5 BYTE */
+    public $Unknown5;
     /** @var integer[] 0x0A0 XWingHistoricalScore INT */
     public $XWingHistoricalScore;
     /** @var integer[] 0x0E0 YWingHistoricalScore INT */
@@ -53,8 +55,20 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     public $BWingHistoricalComplete;
     /** @var boolean[] 0x260 BonusHistoricalComplete BOOL */
     public $BonusHistoricalComplete;
+    /** @var integer 0x280 CurrentTour BYTE */
+    public $CurrentTour;
+    /** @var integer 0x281 Unknown1 SHORT */
+    public $Unknown1;
+    /** @var integer 0x283 CurrentTourOpsComplete SHORT */
+    public $CurrentTourOpsComplete;
+    /** @var integer 0x287 CurrentTourOpsComplete2 SHORT */
+    public $CurrentTourOpsComplete2;
     /** @var integer[] 0x2DF TourStatus BYTE */
     public $TourStatus;
+    /** @var integer[] 0x2E7 TourNextMissionMaybe BYTE */
+    public $TourNextMissionMaybe;
+    /** @var integer 0x2EB Unknown4 INT */
+    public $Unknown4;
     /** @var integer[] 0x2EF TourOperationsComplete BYTE */
     public $TourOperationsComplete;
     /** @var integer[] 0x2F7 Tour1Scores INT */
@@ -67,6 +81,10 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     public $Tour4Scores;
     /** @var integer[] 0x487 Tour5Scores INT */
     public $Tour5Scores;
+    /** @var integer 0x62F Unknown2 BYTE */
+    public $Unknown2;
+    /** @var integer 0x630 Unknown3 BYTE */
+    public $Unknown3;
     /** @var integer 0x633 SurfaceVictories SHORT */
     public $SurfaceVictories;
     /** @var integer[] 0x635 TODKills SHORT */
@@ -128,6 +146,13 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         for ($i = 0; $i < 4; $i++) {
             $t = $this->getByte($hex, $offset);
             $this->MazeLevel[] = $t;
+            $offset += 1;
+        }
+        $this->Unknown5 = [];
+        $offset = 0x09E;
+        for ($i = 0; $i < 2; $i++) {
+            $t = $this->getByte($hex, $offset);
+            $this->Unknown5[] = $t;
             $offset += 1;
         }
         $this->XWingHistoricalScore = [];
@@ -200,6 +225,10 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             $this->BonusHistoricalComplete[] = $t;
             $offset += 1;
         }
+        $this->CurrentTour = $this->getByte($hex, 0x280);
+        $this->Unknown1 = $this->getShort($hex, 0x281);
+        $this->CurrentTourOpsComplete = $this->getShort($hex, 0x283);
+        $this->CurrentTourOpsComplete2 = $this->getShort($hex, 0x287);
         $this->TourStatus = [];
         $offset = 0x2DF;
         for ($i = 0; $i < 5; $i++) {
@@ -207,6 +236,14 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             $this->TourStatus[] = $t;
             $offset += 1;
         }
+        $this->TourNextMissionMaybe = [];
+        $offset = 0x2E7;
+        for ($i = 0; $i < 4; $i++) {
+            $t = $this->getByte($hex, $offset);
+            $this->TourNextMissionMaybe[] = $t;
+            $offset += 1;
+        }
+        $this->Unknown4 = $this->getInt($hex, 0x2EB);
         $this->TourOperationsComplete = [];
         $offset = 0x2EF;
         for ($i = 0; $i < 5; $i++) {
@@ -249,6 +286,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             $this->Tour5Scores[] = $t;
             $offset += 4;
         }
+        $this->Unknown2 = $this->getByte($hex, 0x62F);
+        $this->Unknown3 = $this->getByte($hex, 0x630);
         $this->SurfaceVictories = $this->getShort($hex, 0x633);
         $this->TODKills = [];
         $offset = 0x635;
@@ -289,6 +328,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             "KalidorCrescent" => $this->getKalidorCrescentLabel(),
             "MazeScore" => $this->MazeScore,
             "MazeLevel" => $this->MazeLevel,
+            "Unknown5" => $this->Unknown5,
             "XWingHistoricalScore" => $this->XWingHistoricalScore,
             "YWingHistoricalScore" => $this->YWingHistoricalScore,
             "AWingHistoricalScore" => $this->AWingHistoricalScore,
@@ -299,13 +339,21 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             "AWingHistoricalComplete" => $this->AWingHistoricalComplete,
             "BWingHistoricalComplete" => $this->BWingHistoricalComplete,
             "BonusHistoricalComplete" => $this->BonusHistoricalComplete,
+            "CurrentTour" => $this->CurrentTour,
+            "Unknown1" => $this->Unknown1,
+            "CurrentTourOpsComplete" => $this->CurrentTourOpsComplete,
+            "CurrentTourOpsComplete2" => $this->CurrentTourOpsComplete2,
             "TourStatus" => $this->TourStatus,
+            "TourNextMissionMaybe" => $this->TourNextMissionMaybe,
+            "Unknown4" => $this->Unknown4,
             "TourOperationsComplete" => $this->TourOperationsComplete,
             "Tour1Scores" => $this->Tour1Scores,
             "Tour2Scores" => $this->Tour2Scores,
             "Tour3Scores" => $this->Tour3Scores,
             "Tour4Scores" => $this->Tour4Scores,
             "Tour5Scores" => $this->Tour5Scores,
+            "Unknown2" => $this->Unknown2,
+            "Unknown3" => $this->Unknown3,
             "SurfaceVictories" => $this->SurfaceVictories,
             "TODKills" => $this->TODKills,
             "TODCaptures" => $this->TODCaptures,
@@ -345,6 +393,12 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         $offset = 0x086;
         for ($i = 0; $i < 4; $i++) {
             $t = $this->MazeLevel[$i];
+            $hex = $this->writeByte($t, $hex, $offset);
+            $offset += 1;
+        }
+        $offset = 0x09E;
+        for ($i = 0; $i < 2; $i++) {
+            $t = $this->Unknown5[$i];
             $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }
@@ -408,12 +462,23 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             $hex = $this->writeBool($t, $hex, $offset);
             $offset += 1;
         }
+        $hex = $this->writeByte($this->CurrentTour, $hex, 0x280);
+        $hex = $this->writeShort($this->Unknown1, $hex, 0x281);
+        $hex = $this->writeShort($this->CurrentTourOpsComplete, $hex, 0x283);
+        $hex = $this->writeShort($this->CurrentTourOpsComplete2, $hex, 0x287);
         $offset = 0x2DF;
         for ($i = 0; $i < 5; $i++) {
             $t = $this->TourStatus[$i];
             $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }
+        $offset = 0x2E7;
+        for ($i = 0; $i < 4; $i++) {
+            $t = $this->TourNextMissionMaybe[$i];
+            $hex = $this->writeByte($t, $hex, $offset);
+            $offset += 1;
+        }
+        $hex = $this->writeInt($this->Unknown4, $hex, 0x2EB);
         $offset = 0x2EF;
         for ($i = 0; $i < 5; $i++) {
             $t = $this->TourOperationsComplete[$i];
@@ -450,6 +515,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
             $hex = $this->writeInt($t, $hex, $offset);
             $offset += 4;
         }
+        $hex = $this->writeByte($this->Unknown2, $hex, 0x62F);
+        $hex = $this->writeByte($this->Unknown3, $hex, 0x630);
         $hex = $this->writeShort($this->SurfaceVictories, $hex, 0x633);
         $offset = 0x635;
         for ($i = 0; $i < 24; $i++) {

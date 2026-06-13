@@ -11,7 +11,7 @@ import {
   writeShort
 } from '@pyrite/core';
 export abstract class PilotFileBase extends PyriteBase implements Byteable {
-  public readonly PILOTFILELENGTH: number = 1704;
+  public readonly PILOTFILELENGTH: number = 1705;
   public PlatformID: number;
   public PilotStatus: PilotStatus;
   public PilotRank: PilotRank;
@@ -21,6 +21,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public KalidorCrescent: KalidorCrescent;
   public MazeScore: number[]; //XW YW AW BW
   public MazeLevel: number[];
+  public Unknown5: number[];
   public XWingHistoricalScore: number[];
   public YWingHistoricalScore: number[];
   public AWingHistoricalScore: number[];
@@ -31,13 +32,21 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public AWingHistoricalComplete: boolean[];
   public BWingHistoricalComplete: boolean[];
   public BonusHistoricalComplete: boolean[];
+  public CurrentTour: number;
+  public Unknown1: number;
+  public CurrentTourOpsComplete: number;
+  public CurrentTourOpsComplete2: number;
   public TourStatus: number[];
+  public TourNextMissionMaybe: number[];
+  public Unknown4: number;
   public TourOperationsComplete: number[];
   public Tour1Scores: number[];
   public Tour2Scores: number[];
   public Tour3Scores: number[];
   public Tour4Scores: number[];
   public Tour5Scores: number[];
+  public Unknown2: number;
+  public Unknown3: number;
   public SurfaceVictories: number;
   public TODKills: number[];
   public TODCaptures: number[];
@@ -79,6 +88,13 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     for (let i = 0; i < 4; i++) {
       const t = getByte(hex, offset);
       this.MazeLevel.push(t);
+      offset += 1;
+    }
+    this.Unknown5 = [];
+    offset = 0x09e;
+    for (let i = 0; i < 2; i++) {
+      const t = getByte(hex, offset);
+      this.Unknown5.push(t);
       offset += 1;
     }
     this.XWingHistoricalScore = [];
@@ -151,6 +167,10 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       this.BonusHistoricalComplete.push(t);
       offset += 1;
     }
+    this.CurrentTour = getByte(hex, 0x280);
+    this.Unknown1 = getShort(hex, 0x281);
+    this.CurrentTourOpsComplete = getShort(hex, 0x283);
+    this.CurrentTourOpsComplete2 = getShort(hex, 0x287);
     this.TourStatus = [];
     offset = 0x2df;
     for (let i = 0; i < 5; i++) {
@@ -158,6 +178,14 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       this.TourStatus.push(t);
       offset += 1;
     }
+    this.TourNextMissionMaybe = [];
+    offset = 0x2e7;
+    for (let i = 0; i < 4; i++) {
+      const t = getByte(hex, offset);
+      this.TourNextMissionMaybe.push(t);
+      offset += 1;
+    }
+    this.Unknown4 = getInt(hex, 0x2eb);
     this.TourOperationsComplete = [];
     offset = 0x2ef;
     for (let i = 0; i < 5; i++) {
@@ -200,6 +228,8 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       this.Tour5Scores.push(t);
       offset += 4;
     }
+    this.Unknown2 = getByte(hex, 0x62f);
+    this.Unknown3 = getByte(hex, 0x630);
     this.SurfaceVictories = getShort(hex, 0x633);
     this.TODKills = [];
     offset = 0x635;
@@ -235,6 +265,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       KalidorCrescent: this.KalidorCrescentLabel,
       MazeScore: this.MazeScore,
       MazeLevel: this.MazeLevel,
+      Unknown5: this.Unknown5,
       XWingHistoricalScore: this.XWingHistoricalScore,
       YWingHistoricalScore: this.YWingHistoricalScore,
       AWingHistoricalScore: this.AWingHistoricalScore,
@@ -245,13 +276,21 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       AWingHistoricalComplete: this.AWingHistoricalComplete,
       BWingHistoricalComplete: this.BWingHistoricalComplete,
       BonusHistoricalComplete: this.BonusHistoricalComplete,
+      CurrentTour: this.CurrentTour,
+      Unknown1: this.Unknown1,
+      CurrentTourOpsComplete: this.CurrentTourOpsComplete,
+      CurrentTourOpsComplete2: this.CurrentTourOpsComplete2,
       TourStatus: this.TourStatus,
+      TourNextMissionMaybe: this.TourNextMissionMaybe,
+      Unknown4: this.Unknown4,
       TourOperationsComplete: this.TourOperationsComplete,
       Tour1Scores: this.Tour1Scores,
       Tour2Scores: this.Tour2Scores,
       Tour3Scores: this.Tour3Scores,
       Tour4Scores: this.Tour4Scores,
       Tour5Scores: this.Tour5Scores,
+      Unknown2: this.Unknown2,
+      Unknown3: this.Unknown3,
       SurfaceVictories: this.SurfaceVictories,
       TODKills: this.TODKills,
       TODCaptures: this.TODCaptures,
@@ -290,6 +329,12 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     offset = 0x086;
     for (let i = 0; i < this.MazeLevel.length; i++) {
       const t = this.MazeLevel[i];
+      writeByte(hex, t, offset);
+      offset += 1;
+    }
+    offset = 0x09e;
+    for (let i = 0; i < this.Unknown5.length; i++) {
+      const t = this.Unknown5[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
@@ -353,12 +398,23 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       writeBool(hex, t, offset);
       offset += 1;
     }
+    writeByte(hex, this.CurrentTour, 0x280);
+    writeShort(hex, this.Unknown1, 0x281);
+    writeShort(hex, this.CurrentTourOpsComplete, 0x283);
+    writeShort(hex, this.CurrentTourOpsComplete2, 0x287);
     offset = 0x2df;
     for (let i = 0; i < this.TourStatus.length; i++) {
       const t = this.TourStatus[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
+    offset = 0x2e7;
+    for (let i = 0; i < this.TourNextMissionMaybe.length; i++) {
+      const t = this.TourNextMissionMaybe[i];
+      writeByte(hex, t, offset);
+      offset += 1;
+    }
+    writeInt(hex, this.Unknown4, 0x2eb);
     offset = 0x2ef;
     for (let i = 0; i < this.TourOperationsComplete.length; i++) {
       const t = this.TourOperationsComplete[i];
@@ -395,6 +451,8 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       writeInt(hex, t, offset);
       offset += 4;
     }
+    writeByte(hex, this.Unknown2, 0x62f);
+    writeByte(hex, this.Unknown3, 0x630);
     writeShort(hex, this.SurfaceVictories, 0x633);
     offset = 0x635;
     for (let i = 0; i < this.TODKills.length; i++) {

@@ -87,7 +87,38 @@ CraftType
 0F Corellian Corvette
 10 Imperial Star Destroyer
 11 TIE Advanced
-12 B-Wing 
+12	Mine1
+13	Mine2
+14	Mine3
+15	Mine4
+16	Satellite
+17	Nav Buoy
+18	Probe
+19	B-wing icon  (BRF file only)
+1A	Asteroid1
+1B	Asteroid2
+1C	Asteroid3
+1D	Asteroid4
+1E	Asteroid5
+1F	Asteroid6
+20	Asteroid7
+21	Asteroid8
+22	Rock World	(backdrops)
+23	Gray Ring World
+24	Gray World
+25	Brown World
+26	Gray World II
+27	Planet & Moon
+28	Gray Crescent
+29	Orange Crescent 1
+2A	Orange Crescent 2
+2B	Orange Crescent 3
+2C	Orange Crescent 4
+2D	Orange Crescent 5
+2E	Orange Crescent 6
+2F	Orange Crescent 7
+30	Orange Crescent 8
+31	Death Star
 
 IFF
 00 Default
