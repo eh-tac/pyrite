@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PilotRecord Name="Vanguard717">
+  <PilotGameRecord Id="xwing" Rank="General" Status="Alive" Difficulty="Hard" CurrentScore="6336048" AiScore="6336048" Droid="IDDQD" AvatarPath="file:///C:\Pilot Portraits\Vanguard.png" AvatarIndex="23">
+    <PilotAwardRecord Award="kalidor" Level="5" />
+    <TrainingRecord CraftType="XWing" HighScore="172390" HighestLevelCompleted="10" />
+    <PilotTourRecord TourId="tour1" CurrentTourStep="2147483647">
+      <PilotOperationRecord TourStep="0" Score="37410" />
+      <PilotOperationRecord TourStep="1" Score="237571" />
+      <PilotOperationRecord TourStep="2" Score="190017" />
+      <PilotOperationRecord TourStep="3" Score="23960" />
+      <PilotOperationRecord TourStep="4" Score="189985" />
+      <PilotOperationRecord TourStep="5" Score="15863" />
+      <PilotOperationRecord TourStep="6" Score="104410" />
+      <PilotOperationRecord TourStep="7" Score="176413" />
+      <PilotOperationRecord TourStep="8" Score="39618" />
+      <PilotOperationRecord TourStep="9" Score="157320" />
+      <PilotOperationRecord TourStep="10" Score="35078" />
+      <PilotOperationRecord TourStep="11" Score="5993" />
+    </PilotTourRecord>
+    <PilotTourRecord TourId="tour2" CurrentTourStep="2147483647">
+      <PilotOperationRecord TourStep="0" Score="129924" />
+      <PilotOperationRecord TourStep="1" Score="133539" />
+      <PilotOperationRecord TourStep="2" Score="30418" />
+      <PilotOperationRecord TourStep="3" Score="189718" />
+      <PilotOperationRecord TourStep="4" Score="33013" />
+      <PilotOperationRecord TourStep="5" Score="30160" />
+      <PilotOperationRecord TourStep="6" Score="15288" />
+      <PilotOperationRecord TourStep="7" Score="240181" />
+      <PilotOperationRecord TourStep="8" Score="128948" />
+      <PilotOperationRecord TourStep="9" Score="125925" />
+      <PilotOperationRecord TourStep="10" Score="13604" />
+      <PilotOperationRecord TourStep="11" Score="46854" />
+    </PilotTourRecord>
+    <PilotTourRecord TourId="tour3" CurrentTourStep="2147483647">
+      <PilotOperationRecord TourStep="0" Score="21886" />
+      <PilotOperationRecord TourStep="1" Score="62316" />
+      <PilotOperationRecord TourStep="2" Score="244705" />
+      <PilotOperationRecord TourStep="3" Score="363123" />
+      <PilotOperationRecord TourStep="4" Score="212738" />
+      <PilotOperationRecord TourStep="5" Score="29298" />
+      <PilotOperationRecord TourStep="6" Score="30797" />
+      <PilotOperationRecord TourStep="7" Score="6415" />
+      <PilotOperationRecord TourStep="8" Score="72851" />
+      <PilotOperationRecord TourStep="9" Score="28841" />
+      <PilotOperationRecord TourStep="10" Score="153144" />
+      <PilotOperationRecord TourStep="11" Score="200501" />
+      <PilotOperationRecord TourStep="12" Score="75423" />
+      <PilotOperationRecord TourStep="13" Score="16359" />
+    </PilotTourRecord>
+    <PilotTourRecord TourId="tour4" CurrentTourStep="2147483647">
+      <PilotOperationRecord TourStep="0" Score="35569" />
+      <PilotOperationRecord TourStep="1" Score="104723" />
+      <PilotOperationRecord TourStep="2" Score="40478" />
+      <PilotOperationRecord TourStep="3" Score="31902" />
+      <PilotOperationRecord TourStep="4" Score="42180" />
+      <PilotOperationRecord TourStep="5" Score="39798" />
+      <PilotOperationRecord TourStep="6" Score="158551" />
+      <PilotOperationRecord TourStep="7" Score="24059" />
+      <PilotOperationRecord TourStep="8" Score="32824" />
+      <PilotOperationRecord TourStep="9" Score="71736" />
+      <PilotOperationRecord TourStep="10" Score="44557" />
+      <PilotOperationRecord TourStep="11" Score="117152" Attempts="1" />
+      <PilotOperationRecord TourStep="12" Score="86345" Attempts="1" />
+      <PilotOperationRecord TourStep="13" Score="40871" Attempts="1" />
+      <PilotOperationRecord TourStep="14" Score="34370" Attempts="1" />
+      <PilotOperationRecord TourStep="15" Score="104599" Attempts="1" />
+      <PilotOperationRecord TourStep="16" Score="133030" Attempts="1" />
+      <PilotOperationRecord TourStep="17" Score="40950" Attempts="1" />
+      <PilotOperationRecord TourStep="18" Score="63455" Attempts="2" />
+      <PilotOperationRecord TourStep="19" Score="97974" Attempts="1" />
+    </PilotTourRecord>
+    <PilotTourRecord TourId="tour5" CurrentTourStep="2147483647">
+      <PilotOperationRecord TourStep="0" Score="27482" Attempts="1" />
+      <PilotOperationRecord TourStep="1" Score="48699" Attempts="1" />
+      <PilotOperationRecord TourStep="2" Score="67936" Attempts="1" />
+      <PilotOperationRecord TourStep="3" Score="38693" Attempts="1" />
+      <PilotOperationRecord TourStep="4" Score="28069" Attempts="2" />
+      <PilotOperationRecord TourStep="5" Score="91939" Attempts="1" />
+      <PilotOperationRecord TourStep="6" Score="56831" Attempts="1" />
+      <PilotOperationRecord TourStep="7" Score="45502" Attempts="1" />
+      <PilotOperationRecord TourStep="8" Score="31087" Attempts="1" />
+      <PilotOperationRecord TourStep="9" Score="64238" Attempts="1" />
+      <PilotOperationRecord TourStep="10" Score="48659" Attempts="1" />
+      <PilotOperationRecord TourStep="11" Score="40318" Attempts="1" />
+      <PilotOperationRecord TourStep="12" Score="32775" Attempts="1" />
+      <PilotOperationRecord TourStep="13" Score="86161" Attempts="1" />
+      <PilotOperationRecord TourStep="14" Score="51737" Attempts="1" />
+      <PilotOperationRecord TourStep="15" Score="58443" Attempts="1" />
+      <PilotOperationRecord TourStep="16" Score="137176" Attempts="1" />
+      <PilotOperationRecord TourStep="17" Score="54835" Attempts="1" />
+      <PilotOperationRecord TourStep="18" Score="53972" Attempts="1" />
+      <PilotOperationRecord TourStep="19" Score="95388" Attempts="1" />
+    </PilotTourRecord>
+    <HistoricTourRecord TourId="bonus" CurrentTourStep="0">
+      <PilotOperationRecord TourStep="0" Score="92940" Complete="true" />
+      <PilotOperationRecord TourStep="1" Score="245180" Complete="true" />
+      <PilotOperationRecord TourStep="2" Score="125127" Complete="true" />
+      <PilotOperationRecord TourStep="3" Score="63234" Complete="true" />
+      <PilotOperationRecord TourStep="4" Score="63061" Complete="true" />
+      <PilotOperationRecord TourStep="5" Score="44403" Complete="true" />
+    </HistoricTourRecord>
+    <HistoricTourRecord TourId="xcombat" CurrentTourStep="0">
+      <PilotOperationRecord TourStep="0" Score="24406" Complete="true" />
+      <PilotOperationRecord TourStep="1" Score="5400" Complete="true" />
+      <PilotOperationRecord TourStep="2" Score="4519" Complete="true" />
+      <PilotOperationRecord TourStep="3" Score="7243" Complete="true" />
+      <PilotOperationRecord TourStep="4" Score="44304" Complete="true" />
+      <PilotOperationRecord TourStep="5" Score="11659" Complete="true" />
+    </HistoricTourRecord>
+    <HistoricTourRecord TourId="acombat" CurrentTourStep="0">
+      <PilotOperationRecord TourStep="0" Score="50463" Complete="true" />
+      <PilotOperationRecord TourStep="1" Score="11362" Complete="true" />
+      <PilotOperationRecord TourStep="2" Score="7975" Complete="true" />
+      <PilotOperationRecord TourStep="3" Score="11967" Complete="true" />
+      <PilotOperationRecord TourStep="4" Score="12070" Complete="true" />
+      <PilotOperationRecord TourStep="5" Score="54587" Complete="true" />
+    </HistoricTourRecord>
+    <HistoricTourRecord TourId="bcombat" CurrentTourStep="0">
+      <PilotOperationRecord TourStep="0" Score="15988" Complete="true" />
+      <PilotOperationRecord TourStep="1" Score="40345" Complete="true" />
+      <PilotOperationRecord TourStep="2" Score="16634" Complete="true" />
+      <PilotOperationRecord TourStep="3" Score="23312" Complete="true" />
+      <PilotOperationRecord TourStep="4" Score="105035" Complete="true" />
+      <PilotOperationRecord TourStep="5" Score="18978" Complete="true" />
+    </HistoricTourRecord>
+    <HistoricTourRecord TourId="ycombat" CurrentTourStep="0">
+      <PilotOperationRecord TourStep="0" Score="23625" Complete="true" />
+      <PilotOperationRecord TourStep="1" Score="17472" Complete="true" />
+      <PilotOperationRecord TourStep="2" Score="8064" Complete="true" />
+      <PilotOperationRecord TourStep="3" Score="28571" Complete="true" />
+      <PilotOperationRecord TourStep="4" Score="19434" Complete="true" />
+      <PilotOperationRecord TourStep="5" Score="26862" Complete="true" />
+    </HistoricTourRecord>
+    <EntityVictoryRecord Id="CorellianCorvette" Kills="135" Captures="9" />
+    <EntityVictoryRecord Id="TIEInterceptor" Kills="798" Captures="0" />
+    <EntityVictoryRecord Id="NebulonBFrigate" Kills="31" Captures="2" />
+    <EntityVictoryRecord Id="Transport" Kills="359" Captures="1" />
+    <EntityVictoryRecord Id="Shuttle" Kills="54" Captures="0" />
+    <EntityVictoryRecord Id="TIEAdvanced" Kills="1461" Captures="0" />
+    <EntityVictoryRecord Id="Gunboat" Kills="2251" Captures="3" />
+    <EntityVictoryRecord Id="ImperialStarDestroyer" Kills="30" Captures="0" />
+    <EntityVictoryRecord Id="NavBuoy" Kills="10" Captures="0" />
+    <EntityVictoryRecord Id="YWing" Kills="19" Captures="5" />
+    <EntityVictoryRecord Id="XWing" Kills="0" Captures="3" />
+    <EntityVictoryRecord Id="Mine1" Kills="229" Captures="0" />
+    <EntityVictoryRecord Id="Container" Kills="68" Captures="0" />
+    <EntityVictoryRecord Id="TIEBomber" Kills="184" Captures="0" />
+    <EntityVictoryRecord Id="Satellite" Kills="3" Captures="0" />
+    <EntityVictoryRecord Id="Tug" Kills="2" Captures="0" />
+    <EntityVictoryRecord Id="Probe" Kills="23" Captures="0" />
+    <EntityVictoryRecord Id="Freighter" Kills="3" Captures="0" />
+    <StatRecord Id="LaserShots" Value="177401" />
+    <StatRecord Id="LaserHits" Value="118135" />
+    <StatRecord Id="ProjectileShots" Value="670" />
+    <StatRecord Id="ProjectilesHits" Value="646" />
+    <StatRecord Id="LaserGroundHits" Value="2400" />
+    <StatRecord Id="ProjectilesGroundHits" Value="8" />
+    <StatRecord Id="SurfaceVictories" Value="386" />
+    <CraftConfigurationPreferences>
+      <CraftConfigurationPreference CraftType="BWing" HardpointConfiguration="Chin-mounted lasers" />
+    </CraftConfigurationPreferences>
+  </PilotGameRecord>
+  <PilotGameRecord Id="tf" Rank="FltCadet" Status="Alive" Difficulty="Hard" CurrentScore="0" AiScore="0" AvatarIndex="0" />
+  <PilotGameRecord Id="xvt" Rank="FltCadet" Status="Alive" Difficulty="Hard" CurrentScore="0" AiScore="0" AvatarIndex="0" />
+  <PilotGameRecord Id="xwa" Rank="FltCadet" Status="Alive" Difficulty="Hard" CurrentScore="0" AiScore="0" AvatarIndex="0" />
+</PilotRecord>

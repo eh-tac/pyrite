@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
@@ -55,5 +56,18 @@ final class XWVMPilotFileTest extends TestCase
         $this->assertNotEmpty($pilot->getErrors());
         $this->assertSame([], $pilot->getBattleSummary());
         $this->assertSame([], $pilot->getMissionScores());
+    }
+
+    public function testVanguardCampaign(): void
+    {
+        $pilot = PilotFile::load(__DIR__ . '/../../fixtures/xwvm/Vanguard717.vmpilot');
+
+        $this->assertTrue($pilot->isValid());
+        $this->assertEquals('Vanguard717', $pilot->Name);
+
+        $cmps = $pilot->getTourRecords();
+        $this->assertCount(5, $cmps);
+        $this->assertCount(12, $cmps[0]['missions']);
+        $this->assertEquals([129924, 133539, 30418, 189718, 33013, 30160, 15288, 240181, 128948, 125925, 13604, 46854], array_column($cmps[1]['missions'], 'score'));
     }
 }

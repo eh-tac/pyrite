@@ -19,6 +19,8 @@ class PilotFile
     /** @var array<int, array<string, mixed>> */
     private $missions = [];
 
+    private $tourRecords = [];
+
     public function __construct(string $xml)
     {
         $this->loadXml($xml);
@@ -60,6 +62,11 @@ class PilotFile
         return $this->battles;
     }
 
+    public function getTourRecords(): array
+    {
+        return array_values($this->tourRecords);
+    }
+
     /**
      * @return array<int, array{battle: string, completed: bool, status: string, missions: array<int, array<string, mixed>>}>
      */
@@ -86,6 +93,62 @@ class PilotFile
     public function getBattle(string $code): ?array
     {
         return $this->battles[$code] ?? null;
+    }
+
+    public function getCompletedMissionScoresFromBattle(string $code): array
+    {
+        $battle = $this->getBattle($code);
+        if (!$battle) {
+            return [];
+        }
+
+        return array_values(array_map(function (array $mission): int {
+            return (int) $mission['score'];
+        }, array_filter($battle['missions'], function (array $mission): bool {
+            return (bool) $mission['completed'];
+        })));
+    }
+
+    public function getCompletedMissionHashesFromBattle(string $code): array
+    {
+        $battle = $this->getBattle($code);
+        if (!$battle) {
+            return [];
+        }
+
+        return array_values(array_map(function (array $mission): string {
+            return $mission['hash'];
+        }, array_filter($battle['missions'], function (array $mission): bool {
+            return (bool) $mission['completed'];
+        })));
+    }
+
+    // get the scores for all tour missions in this pilot file.
+    // in order to allow processing with offsets, we include each tour but fill in 0s if incomplete
+    public function getAllTourMissionScores()
+    {
+        $t1 = $this->getScores($this->tourRecords['tour1']['missions'] ?? []);
+        $t2 = $this->getScores($this->tourRecords['tour2']['missions'] ?? []);
+        $t3 = $this->getScores($this->tourRecords['tour3']['missions'] ?? []);
+        $t4 = $this->getScores($this->tourRecords['tour4']['missions'] ?? []);
+        $t5 = $this->getScores($this->tourRecords['tour5']['missions'] ?? []);
+
+        return array_merge(
+            count($t1) == 12 ? $t1 : array_fill(0, 12, 0),
+            count($t2) == 12 ? $t2 : array_fill(0, 12, 0),
+            count($t3) == 14 ? $t3 : array_fill(0, 14, 0),
+            count($t4) == 20 ? $t4 : array_fill(0, 20, 0),
+            count($t5) == 20 ? $t5 : array_fill(0, 20, 0)
+        );
+    }
+
+    private function getScores(array $missions): array
+    {
+        $scores = [];
+        foreach ($missions as $mission) {
+            $scores[] = (int) $mission['score'];
+        }
+        return $scores;
     }
 
     /**
@@ -139,12 +202,49 @@ class PilotFile
         $this->valid = true;
         $this->Name = (string) $record['Name'];
 
-        $operations = $record->xpath('//PilotOperationRecord[@Name]');
-        if ($operations === false) {
-            $operations = [];
+        $xwing = $record->xpath('//PilotGameRecord[@Id="xwing"]');
+
+        $campaigns = $xwing[0]->xpath('//PilotTourRecord');
+        if ($campaigns === false) {
+            $campaigns = [];
         }
 
-        foreach ($operations as $operation) {
+        $this->tourRecords = [];
+
+        foreach ($campaigns as $campaign) {
+            $tour = [];
+            $tourId = (string) $campaign['TourId'];
+
+            $operations = $campaign->xpath('.//PilotOperationRecord');
+            if ($operations === false) {
+                $operations = [];
+            }
+
+            foreach ($operations as $operation) {
+                $mission = $this->tourMissionFromOperation($operation);
+                if ($mission === null) {
+                    continue;
+                }
+                $tour[] = $mission;
+            }
+
+            usort($tour, function (array $a, array $b): int {
+                return $a['tourStep'] <=> $b['tourStep'];
+            });
+
+            $this->tourRecords[$tourId] = [
+                'tourId' => $tourId,
+                'missions' => $tour,
+            ];
+        }
+
+
+        $customOps = $xwing[0]->xpath('//HistoricTourRecord[@TourId="custom"]//PilotOperationRecord[@Name]');
+        if ($customOps === false) {
+            $customOps = [];
+        }
+
+        foreach ($customOps as $operation) {
             $mission = $this->missionFromOperation($operation);
             if ($mission === null) {
                 continue;
@@ -178,6 +278,22 @@ class PilotFile
 
         libxml_clear_errors();
         libxml_use_internal_errors($previous);
+    }
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function tourMissionFromOperation(\SimpleXMLElement $operation): ?array
+    {
+        if (!isset($operation['Score'])) {
+            return null;
+        }
+
+        return [
+            'score' => (int) $operation['Score'],
+            'completed' => true,
+            'tourStep' => isset($operation['TourStep']) ? (int) $operation['TourStep'] : null,
+        ];
     }
 
     /**
