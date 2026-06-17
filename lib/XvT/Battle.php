@@ -16,9 +16,13 @@ class Battle extends \Pyrite\EHBL\Battle
 
 	public static function fromFolder($type = BattleType::UNKNOWN, $num = 0, $folder = '', array $lsts = [], array $missionFiles = [], array $resourceFiles = [])
 	{
-		$missionLst = file_get_contents($folder . $lsts[0]);
-		$bits = explode("\n", $missionLst);
-		$title = str_replace(["[", "]"], "", $bits[1]);
+		$missionLst = "";
+		$title = "";
+		if (count($lsts) > 0) {
+			$missionLst = file_get_contents($folder . $lsts[0]);
+			$bits = explode("\n", $missionLst);
+			$title = str_replace(["[", "]"], "", $bits[1]);
+		}
 
 		$b = new Battle($type, $num, $title, $folder, $missionFiles, $resourceFiles);
 		$b->missionLst = MissionLst::fromString($missionLst);
@@ -26,7 +30,8 @@ class Battle extends \Pyrite\EHBL\Battle
 		return $b;
 	}
 
-	protected function sortMissions(){
+	protected function sortMissions()
+	{
 		usort($this->missionFiles, fn($a, $b) =>  $this->missionLst->getMissionIndexForFile($a) <=> $this->missionLst->getMissionIndexForFile($b));
 	}
 
@@ -37,9 +42,7 @@ class Battle extends \Pyrite\EHBL\Battle
 			if (strtolower(trim($entry['filename'])) === strtolower(trim($filename))) {
 				$sk->lstData = $entry;
 			}
-		}	
+		}
 		return $sk;
 	}
-
-
 }

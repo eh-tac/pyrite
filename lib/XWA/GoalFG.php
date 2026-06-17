@@ -16,7 +16,7 @@ class GoalFG extends Base\GoalFGBase
     if ($this->Condition === Constants::$CONDITION_NONEFALSE) {
       return false;
     }
-    return $this->Enabled;
+    return $this->EnabledForTeam[0];
   }
 
   public function __toString()

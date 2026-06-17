@@ -56,7 +56,8 @@ class FlightGroup extends Base\FlightGroupBase implements FlightGroupScoring, Co
       return 150;
     } else if ($this->Beam === Constants::$BEAM_JAMMINGBEAM) {
       return 150;
-    } else if ($this->Beam === Constants::$BEAM_ENERGYBEAM) {
+    } else if ($this->Beam !== Constants::$BEAM_NONE) {
+      // shouldnt happen?
       return 50;
     }
   }

@@ -13,7 +13,7 @@ class GoalGlobal extends Base\GoalGlobalBase
 
   public function isActive()
   {
-    return $this->Trigger1->isActive();
+    return $this->Triggers[0]->Trigger1->isActive();
   }
 
   public function getPoints()
@@ -23,6 +23,7 @@ class GoalGlobal extends Base\GoalGlobalBase
 
   public function __toString()
   {
+    return 'debug';
     $a = $this->Trigger1->isActive() ? (string)$this->Trigger1 : '';
     $b = $this->Trigger2->isActive() ? (string)$this->Trigger2 : '';
     $c = $this->Trigger3->isActive() ? (string)$this->Trigger3 : '';

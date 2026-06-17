@@ -45,7 +45,9 @@ class Battle
             }
         }
         // /downloads/battles/TIE/TC/TIETC1/
-        $this->firstMission = $this->folder . $this->missionFiles[0];
+        if (count($missionFiles) > 0) {
+            $this->firstMission = $this->folder . $this->missionFiles[0];
+        }
     }
 
     public static function fromZipUpload($fileData)
@@ -117,6 +119,9 @@ class Battle
         if (count($dirContents) === 1 && is_dir($dir . $dirContents[0])) {
             // this is a zip where everything is inside a folder. jump into that folder before looking for more stuff.
             return self::fromFolder($name, $dir . $dirContents[0] . '/');
+        } else if ($platform === Platform::TFTC && is_dir($dir . 'Missions')) {
+            // TFTC zips probably have a missions folder with the mission files inside. jump into that folder before looking for more stuff.
+            return self::fromFolder($name, $dir . 'Missions/');
         }
 
         $manifests = [];
