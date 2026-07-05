@@ -1,9 +1,6 @@
 # pyrite-xvt-pl-2-campaign-state
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------------ | --------- | ----------- | ------------------ | ----------- |
 | `pl2campaignstate` | --        |             | `PL2CampaignState` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

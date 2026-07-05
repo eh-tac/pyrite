@@ -1,9 +1,6 @@
 # pyrite-xvt-plt-tourn-team-record
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | -------------------- | --------- | ----------- | -------------------- | ----------- |
 | `plttournteamrecord` | --        |             | `PLTTournTeamRecord` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

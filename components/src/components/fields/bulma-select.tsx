@@ -16,7 +16,7 @@ export const BulmaSelect: FunctionalComponent<Attr> = (props: Attr) => {
         select: true,
         "is-multiple": props.isMultiple,
         "is-rounded": props.isRounded,
-        ...sizes(props)
+        ...sizes(props),
       }}
     >
       <select multiple={props.isMultiple} onChange={props.onChange}>

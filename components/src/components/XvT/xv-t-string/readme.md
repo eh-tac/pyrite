@@ -1,9 +1,6 @@
 # pyrite-xvt-xv-t-string
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ----------- | --------- | ----------- | ----------- | ----------- |
 | `xvtstring` | --        |             | `XvTString` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

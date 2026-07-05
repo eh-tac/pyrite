@@ -1,9 +1,6 @@
 # pyrite-xvt-trigger
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | --------- | --------- | ----------- | --------- | ----------- |
 | `trigger` | --        |             | `Trigger` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

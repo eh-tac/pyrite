@@ -1,9 +1,6 @@
 # pyrite-xw-object-group
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------- | --------- | ----------- | ------------- | ----------- |
 | `objectgroup` | --        |             | `ObjectGroup` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

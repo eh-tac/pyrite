@@ -2,7 +2,7 @@ import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } 
 
 @Component({
   tag: "ehtc-api-store",
-  shadow: true
+  shadow: true,
 })
 export class ApiSelectComponent {
   @Element() el: HTMLElement;
@@ -66,7 +66,7 @@ export class ApiSelectComponent {
               return r.json();
             }
           })
-          .then(d => {
+          .then((d) => {
             // whether from the cache or API response, we have the right data for this endpoint
             this.verifiedUrls.add(nextUrl);
             // this is new data to us, so save it
@@ -78,7 +78,7 @@ export class ApiSelectComponent {
             nextPromiseResolve(d);
             return Promise.resolve(d);
           })
-          .then(d => {
+          .then((d) => {
             this.processing = false;
             this.processQueue();
           });

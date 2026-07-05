@@ -1,9 +1,6 @@
 # ehtc-wrap-select
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -15,19 +12,15 @@
 | `readonly` | `readonly` |             | `boolean`     | `undefined` |
 | `value`    | `value`    |             | `string`      | `undefined` |
 
-
 ## Events
 
 | Event        | Description | Type                       |
 | ------------ | ----------- | -------------------------- |
 | `itemSelect` |             | `CustomEvent<ItemSummary>` |
 
-
 ## Methods
 
 ### `search(query: string) => Promise<void>`
-
-
 
 #### Parameters
 
@@ -39,9 +32,6 @@
 
 Type: `Promise<void>`
 
+---
 
-
-
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

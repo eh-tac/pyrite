@@ -2,7 +2,7 @@ import { Component, h, JSX, State } from "@stencil/core";
 
 @Component({
   tag: "pyrite-resources",
-  styleUrl: "pyrite-resources.scss"
+  styleUrl: "pyrite-resources.scss",
 })
 export class PyriteResources {
   @State() public resources: Map<string, any>;
@@ -34,7 +34,7 @@ export class PyriteResources {
 
       <ion-content class="ion-padding">
         <ion-list>{listItems}</ion-list>
-      </ion-content>
+      </ion-content>,
     ];
   }
 }

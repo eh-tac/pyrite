@@ -1,9 +1,6 @@
 # pyrite-xvt-plt-connected-player-data
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------------------ | --------- | ----------- | ------------------------ | ----------- |
 | `pltconnectedplayerdata` | --        |             | `PLTConnectedPlayerData` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

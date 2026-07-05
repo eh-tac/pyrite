@@ -1,9 +1,6 @@
 # pyrite-xvt-pl-2-campaign-record
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------------- | --------- | ----------- | ------------------- | ----------- |
 | `pl2campaignrecord` | --        |             | `PL2CampaignRecord` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

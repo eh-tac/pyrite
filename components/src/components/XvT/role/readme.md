@@ -1,9 +1,6 @@
 # pyrite-xvt-role
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | --------- | --------- | ----------- | ------ | ----------- |
 | `xvtrole` | --        |             | `Role` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

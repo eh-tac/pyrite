@@ -1,9 +1,6 @@
 # ehtc-member-select
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -18,19 +15,15 @@
 | `status`   | `status`   |             | `"active" \| "all"`                           | `"active"`    |
 | `value`    | `value`    |             | `string`                                      | `undefined`   |
 
-
 ## Events
 
 | Event          | Description | Type                                            |
 | -------------- | ----------- | ----------------------------------------------- |
 | `memberSelect` |             | `CustomEvent<CharacterSummary \| PilotSummary>` |
 
-
 ## Methods
 
 ### `search(query: string) => Promise<void>`
-
-
 
 #### Parameters
 
@@ -42,11 +35,7 @@
 
 Type: `Promise<void>`
 
-
-
 ### `setValue(val: string | number) => Promise<void>`
-
-
 
 #### Parameters
 
@@ -58,9 +47,6 @@ Type: `Promise<void>`
 
 Type: `Promise<void>`
 
+---
 
-
-
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -1,9 +1,6 @@
 # pyrite-xwa-briefing
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ---------- | --------- | ----------- | ---------- | ----------- |
 | `briefing` | --        |             | `Briefing` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

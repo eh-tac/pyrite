@@ -1,9 +1,6 @@
 # pyrite-tie-post-mission-questions
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ---------------------- | --------- | ----------- | ---------------------- | ----------- |
 | `postmissionquestions` | --        |             | `PostMissionQuestions` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

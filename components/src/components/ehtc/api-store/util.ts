@@ -3,6 +3,6 @@ export const ehtcAPI = (url: string): Promise<any> => {
   if (store) {
     return store.apiFetch(url);
   } else {
-    return fetch(url).then(r => r.json());
+    return fetch(url).then((r) => r.json());
   }
 };

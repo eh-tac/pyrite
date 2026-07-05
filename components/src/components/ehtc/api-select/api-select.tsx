@@ -10,7 +10,7 @@ export interface ApiSummary {
 @Component({
   tag: "ehtc-api-select",
   styleUrl: "api-select.scss",
-  shadow: false
+  shadow: false,
 })
 export class ApiSelectComponent {
   @Element() el: HTMLElement;
@@ -63,7 +63,7 @@ export class ApiSelectComponent {
   public setValue(val: string | number): Promise<void> {
     const v = typeof val === "number" ? val : parseInt(val, 10);
     this.selectItem(
-      this.fullList.find((m: ApiSummary) => m.id === v || m.name.toLowerCase() === val.toString().toLowerCase())
+      this.fullList.find((m: ApiSummary) => m.id === v || m.name.toLowerCase() === val.toString().toLowerCase()),
     );
     return Promise.resolve();
   }
@@ -101,7 +101,7 @@ export class ApiSelectComponent {
       () => {
         this.suggestions = undefined;
       },
-      { once: true }
+      { once: true },
     );
   }
 

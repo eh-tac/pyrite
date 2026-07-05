@@ -8,7 +8,7 @@ export interface ItemSummary {
 @Component({
   tag: "ehtc-wrap-select",
   styleUrl: "wrap-select.scss",
-  shadow: false
+  shadow: false,
 })
 export class WrapSelectComponent {
   @Element() el: HTMLElement;
@@ -76,7 +76,7 @@ export class WrapSelectComponent {
         () => {
           this.suggestions = undefined;
         },
-        { once: true }
+        { once: true },
       );
     }
     e.stopPropagation();
@@ -100,10 +100,10 @@ export class WrapSelectComponent {
     this.externalInputElement.readOnly = this.readonly;
     parent.appendChild(this.externalInputElement);
 
-    this.el.querySelectorAll("option").forEach(optEl => {
+    this.el.querySelectorAll("option").forEach((optEl) => {
       const item = {
         id: optEl.value ? parseInt(optEl.value, 10) : null,
-        name: optEl.textContent
+        name: optEl.textContent,
       };
       if (item.id) {
         // skip blanks
@@ -155,7 +155,7 @@ export class WrapSelectComponent {
       () => {
         this.suggestions = undefined;
       },
-      { once: true }
+      { once: true },
     );
     this.suggestionIdx = undefined;
   }

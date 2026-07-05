@@ -1,9 +1,6 @@
 # pyrite-xw-mission-header
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | --------------- | --------- | ----------- | --------------- | ----------- |
 | `missionheader` | --        |             | `MissionHeader` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

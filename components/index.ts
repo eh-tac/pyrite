@@ -8,7 +8,7 @@ const platforms = fs.readdirSync(battleDir);
 for (const plat of platforms) {
   const subgroups = fs.readdirSync(`${battleDir}${plat}`);
   for (const sg of subgroups) {
-    const zips = fs.readdirSync(`${battleDir}${plat}/${sg}`).filter(f => f.endsWith(".zip"));
+    const zips = fs.readdirSync(`${battleDir}${plat}/${sg}`).filter((f) => f.endsWith(".zip"));
     for (const zip of zips) {
       battles.push(`${plat}/${sg}/${zip}`);
     }

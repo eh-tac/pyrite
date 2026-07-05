@@ -1,9 +1,6 @@
 # pyrite-pilot-file
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -13,12 +10,9 @@
 | `bsf`         | `bsf`          |             | `string`  | `""`        |
 | `file`        | `file`         |             | `string`  | `undefined` |
 
-
 ## Methods
 
 ### `useFileInput(file: File) => Promise<void>`
-
-
 
 #### Parameters
 
@@ -30,9 +24,6 @@
 
 Type: `Promise<void>`
 
+---
 
-
-
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

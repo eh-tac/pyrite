@@ -1,9 +1,6 @@
 # pyrite-xvt-mission-data
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------- | --------- | ----------- | ------------- | ----------- |
 | `missiondata` | --        |             | `MissionData` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -10,7 +10,7 @@ export const BulmaText: FunctionalComponent<Attr> = (props: Attr) => {
     <input
       class={{
         input: true,
-        ...sizes(props)
+        ...sizes(props),
       }}
       placeholder={props.placeholder}
       value={props.value}

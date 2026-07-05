@@ -3,12 +3,12 @@ import { JSX, h } from "@stencil/core";
 export function tabPanes(
   tabs: [string, JSX.Element][],
   activeTab: string,
-  tabClick: (select: string) => void
+  tabClick: (select: string) => void,
 ): JSX.Element {
   return (
     <div class="pyrite-tab-pane">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
-        {tabs.map(tab => {
+        {tabs.map((tab) => {
           const name = tab[0];
           const low = name.toLowerCase();
           const on = low === activeTab;
@@ -32,7 +32,7 @@ export function tabPanes(
         })}
       </ul>
       <div class="tab-content">
-        {tabs.map(tab => {
+        {tabs.map((tab) => {
           const name = tab[0];
           const content = tab[1];
           const low = name.toLowerCase();

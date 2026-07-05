@@ -1,9 +1,6 @@
 # pyrite-xvt-plt-player-rank-count-record
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | -------------------------- | --------- | ----------- | -------------------------- | ----------- |
 | `pltplayerrankcountrecord` | --        |             | `PLTPlayerRankCountRecord` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

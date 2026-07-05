@@ -1,9 +1,6 @@
 # pyrite-xvt-plt-battle-state
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ---------------- | --------- | ----------- | ---------------- | ----------- |
 | `pltbattlestate` | --        |             | `PLTBattleState` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_
