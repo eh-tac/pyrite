@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { PL2DebriefRecord } from "../../../../old-assets/model/XvT";
+import { PL2DebriefRecord } from "../../../model/XvT";
 import { XvTPL2DebriefRecordController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

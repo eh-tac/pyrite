@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Role } from "../../../old-assets/model/XvT";
+import { Role } from "../../model/XvT";
 
 export class XvTRoleController extends ControllerBase {
   public readonly fields: object = {

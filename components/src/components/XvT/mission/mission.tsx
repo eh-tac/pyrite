@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element, Watch } from "@stencil/core";
-import { Mission } from "../../../../old-assets/model/XvT";
+import { Mission } from "../../../model/XvT";
 import { XvTMissionController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

@@ -1,7 +1,7 @@
 import { Component, Element, h, Host, JSX, Prop, State, Watch } from "@stencil/core";
-import { Briefing, Event, Mission, Tag, TIEString } from "../../../../old-assets/model/TIE";
-import { EventType } from "../../../../old-assets/model/TIE/constants";
-import { FontFile } from "../../../../old-assets/model/util/font";
+import { Briefing, Event, Mission, Tag, TIEString } from "../../../model/TIE";
+import { EventType } from "../../../model/TIE/constants";
+import { FontFile } from "../../../model/util/font";
 import { DrawingObject } from "../../../view-model/drawing-object";
 import { DrawFGTag } from "./draw-fg-tag";
 import { DrawTextTag } from "./draw-text-tag";

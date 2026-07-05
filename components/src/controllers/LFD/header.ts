@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Header } from "../../../old-assets/model/LFD";
+import { Header } from "../../model/LFD";
 
 export class LFDHeaderController extends ControllerBase {
   public readonly fields: object = {

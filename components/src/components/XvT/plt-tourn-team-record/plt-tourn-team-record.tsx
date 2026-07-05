@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { PLTTournTeamRecord } from "../../../../old-assets/model/XvT";
+import { PLTTournTeamRecord } from "../../../model/XvT";
 import { XvTPLTTournTeamRecordController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

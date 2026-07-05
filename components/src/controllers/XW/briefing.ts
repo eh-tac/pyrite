@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Briefing } from "../../../old-assets/model/XW";
+import { Briefing } from "../../model/XW";
 
 export class XWBriefingController extends ControllerBase {
   public readonly fields: object = {

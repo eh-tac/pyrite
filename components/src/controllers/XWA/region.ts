@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Region } from "../../../old-assets/model/XWA";
+import { Region } from "../../model/XWA";
 
 export class XWARegionController extends ControllerBase {
   public readonly fields: object = { Name: { name: "Name", type: "STR" }, ID: { name: "ID", type: "INT" } };

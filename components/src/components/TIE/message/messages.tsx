@@ -1,6 +1,6 @@
 import { Component, h, JSX, Prop, State } from "@stencil/core";
-import { Message } from "../../../../old-assets/model/TIE";
-import { Mission } from "../../../../old-assets/model/TIE/mission";
+import { Message } from "../../../model/TIE";
+import { Mission } from "../../../model/TIE/mission";
 
 @Component({
   tag: "pyrite-tie-messages",

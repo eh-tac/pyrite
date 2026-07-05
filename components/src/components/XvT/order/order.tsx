@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Order } from "../../../../old-assets/model/XvT";
+import { Order } from "../../../model/XvT";
 import { XvTOrderController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

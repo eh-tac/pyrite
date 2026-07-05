@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PLTCategoryTypeRecord } from "../../../old-assets/model/XvT";
+import { PLTCategoryTypeRecord } from "../../model/XvT";
 
 export class XvTPLTCategoryTypeRecordController extends ControllerBase {
   public readonly fields: object = {

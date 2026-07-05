@@ -1,4 +1,4 @@
-import { Constants, Event, FlightGroup } from "../../../../old-assets/model/TIE";
+import { Constants, Event, FlightGroup } from "../../../model/TIE";
 import { TIEDrawingObject } from "./tie-drawing-object";
 import { TIEDrawMap } from "./tie-map";
 

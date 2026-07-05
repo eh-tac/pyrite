@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { PLTBattleState } from "../../../../old-assets/model/XvT";
+import { PLTBattleState } from "../../../model/XvT";
 import { XvTPLTBattleStateController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

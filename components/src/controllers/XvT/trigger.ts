@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Trigger } from "../../../old-assets/model/XvT";
+import { Trigger } from "../../model/XvT";
 
 export class XvTTriggerController extends ControllerBase {
   public readonly fields: object = {

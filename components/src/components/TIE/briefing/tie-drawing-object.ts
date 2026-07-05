@@ -1,4 +1,4 @@
-import { Event } from "../../../../old-assets/model/TIE";
+import { Event } from "../../../model/TIE";
 import { DrawingObject } from "../../../view-model/drawing-object";
 import { TIEDrawMap } from "./tie-map";
 

@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Delt } from "../../../../old-assets/model/LFD";
+import { Delt } from "../../../model/LFD";
 import { LFDDeltController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 

@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { PilotFile } from "../../../../old-assets/model/XWA";
+import { PilotFile } from "../../../model/XWA";
 import { XWAPilotFileController } from "../../../controllers/XWA";
 import { Field } from "../../fields/field";
 

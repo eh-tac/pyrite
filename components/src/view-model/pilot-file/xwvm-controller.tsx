@@ -1,8 +1,8 @@
 import { JSX, h } from "@stencil/core";
 
-import { Battle } from "../../../old-assets/model/ehtc";
-import { PilotFile } from "../../../old-assets/model/XWVM";
-import type { XWVMBattleSummary, XWVMMissionScore } from "../../../old-assets/model/XWVM";
+import { Battle } from "../../model/ehtc";
+import { PilotFile } from "../../model/XWVM";
+import type { XWVMBattleSummary, XWVMMissionScore } from "../../model/XWVM";
 import { PilotFileController } from "./controller";
 
 export class XWVMController extends PilotFileController {

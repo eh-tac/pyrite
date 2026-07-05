@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { ObjectGroup } from "../../../old-assets/model/XW";
+import { ObjectGroup } from "../../model/XW";
 
 export class XWObjectGroupController extends ControllerBase {
   public readonly fields: object = {

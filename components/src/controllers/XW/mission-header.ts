@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { MissionHeader } from "../../../old-assets/model/XW";
+import { MissionHeader } from "../../model/XW";
 
 export class XWMissionHeaderController extends ControllerBase {
   public readonly fields: object = {

@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Trigger } from "../../../old-assets/model/TIE";
+import { Trigger } from "../../model/TIE";
 
 export class TIETriggerController extends ControllerBase {
   public readonly fields: object = {

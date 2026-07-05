@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Order } from "../../../old-assets/model/XWA";
+import { Order } from "../../model/XWA";
 
 export class XWAOrderController extends ControllerBase {
   public readonly fields: object = {

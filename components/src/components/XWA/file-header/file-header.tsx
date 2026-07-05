@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { FileHeader } from "../../../../old-assets/model/XWA";
+import { FileHeader } from "../../../model/XWA";
 import { XWAFileHeaderController } from "../../../controllers/XWA";
 import { Field } from "../../fields/field";
 

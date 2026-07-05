@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Tag } from "../../../old-assets/model/TIE";
+import { Tag } from "../../model/TIE";
 
 export class TIETagController extends ControllerBase {
   public readonly fields: object = { Length: { name: "Length", type: "SHORT" }, Text: { name: "Text", type: "CHAR" } };

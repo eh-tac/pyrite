@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Coordinate } from "../../../old-assets/model/XW";
+import { Coordinate } from "../../model/XW";
 
 export class XWCoordinateController extends ControllerBase {
   public readonly fields: object = {

@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PLTTournMPRecord } from "../../../old-assets/model/XvT";
+import { PLTTournMPRecord } from "../../model/XvT";
 
 export class XvTPLTTournMPRecordController extends ControllerBase {
   public readonly fields: object = {

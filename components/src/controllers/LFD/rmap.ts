@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Rmap } from "../../../old-assets/model/LFD";
+import { Rmap } from "../../model/LFD";
 
 export class LFDRmapController extends ControllerBase {
   public readonly fields: object = {

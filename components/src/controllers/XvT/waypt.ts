@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Waypt } from "../../../old-assets/model/XvT";
+import { Waypt } from "../../model/XvT";
 
 export class XvTWayptController extends ControllerBase {
   public readonly fields: object = {

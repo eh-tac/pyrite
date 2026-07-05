@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Tag } from "../../../old-assets/model/XW";
+import { Tag } from "../../model/XW";
 
 export class XWTagController extends ControllerBase {
   public readonly fields: object = {

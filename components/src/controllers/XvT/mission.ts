@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Mission } from "../../../old-assets/model/XvT";
+import { Mission } from "../../model/XvT";
 
 export class XvTMissionController extends ControllerBase {
   public readonly fields: object = {

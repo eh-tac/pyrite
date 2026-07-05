@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { LText } from "../../../old-assets/model/LFD";
+import { LText } from "../../model/LFD";
 
 export class LFDLTextController extends ControllerBase {
   public readonly fields: object = {

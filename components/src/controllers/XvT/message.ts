@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Message } from "../../../old-assets/model/XvT";
+import { Message } from "../../model/XvT";
 
 export class XvTMessageController extends ControllerBase {
   public readonly fields: object = {

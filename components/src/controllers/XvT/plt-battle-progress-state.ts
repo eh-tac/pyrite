@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PLTBattleProgressState } from "../../../old-assets/model/XvT";
+import { PLTBattleProgressState } from "../../model/XvT";
 
 export class XvTPLTBattleProgressStateController extends ControllerBase {
   public readonly fields: object = {

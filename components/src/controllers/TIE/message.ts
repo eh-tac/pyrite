@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Message } from "../../../old-assets/model/TIE";
+import { Message } from "../../model/TIE";
 
 export class TIEMessageController extends ControllerBase {
   public readonly fields: object = {

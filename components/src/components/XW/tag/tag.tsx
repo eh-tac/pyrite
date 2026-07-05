@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Tag } from "../../../../old-assets/model/XW";
+import { Tag } from "../../../model/XW";
 import { XWTagController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 

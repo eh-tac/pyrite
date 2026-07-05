@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Event } from "../../../old-assets/model/XWA";
+import { Event } from "../../model/XWA";
 
 export class XWAEventController extends ControllerBase {
   public readonly fields: object = {

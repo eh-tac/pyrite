@@ -1,5 +1,5 @@
 import { Component, h, JSX, Listen, Prop, State } from "@stencil/core";
-import { Mission } from "../../../old-assets/model/TIE/mission";
+import { Mission } from "../../model/TIE/mission";
 
 enum Tabs {
   ROOT = "root",

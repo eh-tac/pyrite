@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PL2CampaignState } from "../../../old-assets/model/XvT";
+import { PL2CampaignState } from "../../model/XvT";
 
 export class XvTPL2CampaignStateController extends ControllerBase {
   public readonly fields: object = {

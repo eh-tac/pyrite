@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { GoalFG } from "../../../old-assets/model/XvT";
+import { GoalFG } from "../../model/XvT";
 
 export class XvTGoalFGController extends ControllerBase {
   public readonly fields: object = {

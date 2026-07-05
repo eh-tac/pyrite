@@ -1,6 +1,6 @@
 import { Component, Prop, State, h, Host, JSX, Element } from "@stencil/core";
-import { LFD, Rmap, Voic } from "../../../../old-assets/model/LFD";
-import { Mission } from "../../../../old-assets/model/TIE";
+import { LFD, Rmap, Voic } from "../../../model/LFD";
+import { Mission } from "../../../model/TIE";
 
 type Tab = "messages";
 

@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, Listen, Event, EventEmitter } from "@stencil/core";
 import { JSX } from "../../../components";
-import { Battle, Review, Bug, Score } from "../../../../old-assets/model/ehtc/battle";
-import { PilotSummary } from "../../../../old-assets/model/ehtc/pilot";
+import { Battle, Review, Bug, Score } from "../../../model/ehtc/battle";
+import { PilotSummary } from "../../../model/ehtc/pilot";
 
 @Component({
   tag: "ehtc-battle",

@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PL2CampaignRecord } from "../../../old-assets/model/XvT";
+import { PL2CampaignRecord } from "../../model/XvT";
 
 export class XvTPL2CampaignRecordController extends ControllerBase {
   public readonly fields: object = {

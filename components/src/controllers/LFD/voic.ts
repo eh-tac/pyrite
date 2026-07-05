@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Voic } from "../../../old-assets/model/LFD";
+import { Voic } from "../../model/LFD";
 
 export class LFDVoicController extends ControllerBase {
   public readonly fields: object = {

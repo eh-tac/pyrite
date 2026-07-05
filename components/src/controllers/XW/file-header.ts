@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { FileHeader } from "../../../old-assets/model/XW";
+import { FileHeader } from "../../model/XW";
 
 export class XWFileHeaderController extends ControllerBase {
   public readonly fields: object = {

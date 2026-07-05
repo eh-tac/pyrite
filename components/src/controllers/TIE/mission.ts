@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Mission } from "../../../old-assets/model/TIE";
+import { Mission } from "../../model/TIE";
 
 export class TIEMissionController extends ControllerBase {
   public readonly fields: object = {

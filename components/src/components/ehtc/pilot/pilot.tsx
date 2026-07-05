@@ -1,6 +1,6 @@
 import { Component, Prop, h, Watch, State } from "@stencil/core";
 import { Config } from "../../../config";
-import { Pilot } from "../../../../old-assets/model/ehtc";
+import { Pilot } from "../../../model/ehtc";
 
 @Component({
   tag: "ehtc-pilot",

@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { PLTAIRankCountRecord } from "../../../../old-assets/model/XvT";
+import { PLTAIRankCountRecord } from "../../../model/XvT";
 import { XvTPLTAIRankCountRecordController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

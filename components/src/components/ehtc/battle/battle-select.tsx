@@ -1,5 +1,5 @@
 import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } from "@stencil/core";
-import { BattleSummary } from "../../../../old-assets/model/ehtc";
+import { BattleSummary } from "../../../model/ehtc";
 import { ehtcAPI } from "../api-store/util";
 
 @Component({

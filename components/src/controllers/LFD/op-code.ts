@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { OpCode } from "../../../old-assets/model/LFD";
+import { OpCode } from "../../model/LFD";
 
 export class LFDOpCodeController extends ControllerBase {
   public readonly fields: object = {

@@ -1,6 +1,6 @@
 import { Component, h, JSX, Method, Prop, State, Watch } from "@stencil/core";
-import { Mission } from "../../../../old-assets/model/TIE/mission";
-import { PreMissionQuestions } from "../../../../old-assets/model/TIE/pre-mission-questions";
+import { Mission } from "../../../model/TIE/mission";
+import { PreMissionQuestions } from "../../../model/TIE/pre-mission-questions";
 
 type DisplayMode = "Officer" | "Secret" | "Table";
 

@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { PL2FileRecord } from "../../../../old-assets/model/XvT";
+import { PL2FileRecord } from "../../../model/XvT";
 import { XvTPL2FileRecordController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

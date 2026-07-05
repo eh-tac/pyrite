@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { BriefingHeader } from "../../../../old-assets/model/XW";
+import { BriefingHeader } from "../../../model/XW";
 import { XWBriefingHeaderController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 

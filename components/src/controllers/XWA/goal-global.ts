@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { GoalGlobal } from "../../../old-assets/model/XWA";
+import { GoalGlobal } from "../../model/XWA";
 
 export class XWAGoalGlobalController extends ControllerBase {
   public readonly fields: object = {

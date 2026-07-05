@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Waypt } from "../../../old-assets/model/TIE";
+import { Waypt } from "../../model/TIE";
 
 export class TIEWayptController extends ControllerBase {
   public readonly fields: object = {

@@ -1,5 +1,5 @@
 import { Component, Prop, State, h, Host, JSX, Element } from "@stencil/core";
-import { Mission } from "../../../../old-assets/model/TIE";
+import { Mission } from "../../../model/TIE";
 
 enum Tab {
   FG = "fgs",

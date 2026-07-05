@@ -1,5 +1,5 @@
 import { JSX, Component, Prop, h, Element, Event, EventEmitter, State, Method } from "@stencil/core";
-import { PilotSummary, CharacterSummary } from "../../../../old-assets/model/ehtc";
+import { PilotSummary, CharacterSummary } from "../../../model/ehtc";
 import { ehtcAPI } from "../api-store/util";
 
 type Member = PilotSummary | CharacterSummary;

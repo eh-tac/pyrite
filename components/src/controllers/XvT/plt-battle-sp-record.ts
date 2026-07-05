@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PLTBattleSPRecord } from "../../../old-assets/model/XvT";
+import { PLTBattleSPRecord } from "../../model/XvT";
 
 export class XvTPLTBattleSPRecordController extends ControllerBase {
   public readonly fields: object = {

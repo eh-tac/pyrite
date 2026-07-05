@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Briefing } from "../../../old-assets/model/XvT";
+import { Briefing } from "../../model/XvT";
 
 export class XvTBriefingController extends ControllerBase {
   public readonly fields: object = {

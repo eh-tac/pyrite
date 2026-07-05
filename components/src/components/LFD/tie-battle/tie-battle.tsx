@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { TIEBattle } from "../../../../old-assets/model/LFD";
+import { TIEBattle } from "../../../model/LFD";
 import { LFDTIEBattleController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 

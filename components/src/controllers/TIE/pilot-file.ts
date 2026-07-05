@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PilotFile } from "../../../old-assets/model/TIE";
+import { PilotFile } from "../../model/TIE";
 
 export class TIEPilotFileController extends ControllerBase {
   public readonly fields: object = {

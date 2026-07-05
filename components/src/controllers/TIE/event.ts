@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Event } from "../../../old-assets/model/TIE";
+import { Event } from "../../model/TIE";
 
 export class TIEEventController extends ControllerBase {
   public readonly fields: object = {

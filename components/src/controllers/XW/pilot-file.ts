@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PilotFile } from "../../../old-assets/model/XW";
+import { PilotFile } from "../../model/XW";
 
 export class XWPilotFileController extends ControllerBase {
   public readonly fields: object = {

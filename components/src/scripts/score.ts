@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { FlightGroup, Mission } from "../../old-assets/model/XWA";
-import { CraftType } from "../../old-assets/model/XWA/constants";
+import { FlightGroup, Mission } from "../model/XWA";
+import { CraftType } from "../model/XWA/constants";
 
 console.log(__dirname);
 

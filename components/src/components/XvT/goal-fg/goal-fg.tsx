@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { GoalFG } from "../../../../old-assets/model/XvT";
+import { GoalFG } from "../../../model/XvT";
 import { XvTGoalFGController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

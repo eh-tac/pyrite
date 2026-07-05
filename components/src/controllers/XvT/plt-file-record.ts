@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PLTFileRecord } from "../../../old-assets/model/XvT";
+import { PLTFileRecord } from "../../model/XvT";
 
 export class XvTPLTFileRecordController extends ControllerBase {
   public readonly fields: object = {

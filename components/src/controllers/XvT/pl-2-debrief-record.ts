@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PL2DebriefRecord } from "../../../old-assets/model/XvT";
+import { PL2DebriefRecord } from "../../model/XvT";
 
 export class XvTPL2DebriefRecordController extends ControllerBase {
   public readonly fields: object = {

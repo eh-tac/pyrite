@@ -1,7 +1,7 @@
 import { Component, h, State } from "@stencil/core";
 import { JSX } from "../../../components";
 import { Config } from "../../../config";
-import { BattleType, BattleSummary, Battle } from "../../../../old-assets/model/ehtc";
+import { BattleType, BattleSummary, Battle } from "../../../model/ehtc";
 import { ehtcAPI } from "../api-store/util";
 
 @Component({

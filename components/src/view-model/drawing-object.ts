@@ -1,4 +1,4 @@
-import { FontFile, Glyph } from "../../old-assets/model/util/font";
+import { FontFile, Glyph } from "../model/util/font";
 
 export abstract class DrawingObject {
   constructor(

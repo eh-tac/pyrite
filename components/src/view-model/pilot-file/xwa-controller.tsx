@@ -1,10 +1,10 @@
 import { JSX, h } from "@stencil/core";
 
 import { PilotFileController } from "./controller";
-import { Battle } from "../../../old-assets/model/ehtc";
-import { PilotFile, MissionData } from "../../../old-assets/model/XWA";
-import { BattleSummary } from "../../../old-assets/model/pilot";
-import { TriStat } from "../../../old-assets/model/XWA/pilot-file";
+import { Battle } from "../../model/ehtc";
+import { PilotFile, MissionData } from "../../model/XWA";
+import { BattleSummary } from "../../model/pilot";
+import { TriStat } from "../../model/XWA/pilot-file";
 
 export class XWAPltController extends PilotFileController {
   public constructor(

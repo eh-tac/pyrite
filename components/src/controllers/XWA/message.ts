@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Message } from "../../../old-assets/model/XWA";
+import { Message } from "../../model/XWA";
 
 export class XWAMessageController extends ControllerBase {
   public readonly fields: object = {

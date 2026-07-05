@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PostMissionQuestions } from "../../../old-assets/model/TIE";
+import { PostMissionQuestions } from "../../model/TIE";
 
 export class TIEPostMissionQuestionsController extends ControllerBase {
   public readonly fields: object = {

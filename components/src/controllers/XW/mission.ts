@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Mission } from "../../../old-assets/model/XW";
+import { Mission } from "../../model/XW";
 
 export class XWMissionController extends ControllerBase {
   public readonly fields: object = {

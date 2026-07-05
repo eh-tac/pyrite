@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Trigger } from "../../../../old-assets/model/XWA";
+import { Trigger } from "../../../model/XWA";
 import { XWATriggerController } from "../../../controllers/XWA";
 import { Field } from "../../fields/field";
 

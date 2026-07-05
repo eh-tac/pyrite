@@ -1,6 +1,6 @@
 import { Component, h, JSX, Prop, State, Listen } from "@stencil/core";
-import { FlightGroup, Constants, Trigger } from "../../../../old-assets/model/TIE";
-import { Mission, Difficulty } from "../../../../old-assets/model/TIE/mission";
+import { FlightGroup, Constants, Trigger } from "../../../model/TIE";
+import { Mission, Difficulty } from "../../../model/TIE/mission";
 
 interface Score {
   label: string;

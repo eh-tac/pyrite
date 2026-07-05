@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { LFD } from "../../../old-assets/model/LFD";
+import { LFD } from "../../model/LFD";
 
 export class LFDController extends ControllerBase {
   public readonly fields: object = {

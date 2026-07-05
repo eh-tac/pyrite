@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { PLTPlayerRankCountRecord } from "../../../old-assets/model/XvT";
+import { PLTPlayerRankCountRecord } from "../../model/XvT";
 
 export class XvTPLTPlayerRankCountRecordController extends ControllerBase {
   public readonly fields: object = {

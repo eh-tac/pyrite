@@ -1,5 +1,5 @@
 import { Component, h, JSX, Prop, State, Listen } from "@stencil/core";
-import { FlightGroup, GoalFG, Order, Waypt } from "../../../../old-assets/model/TIE";
+import { FlightGroup, GoalFG, Order, Waypt } from "../../../model/TIE";
 import { Field } from "../../fields/field";
 
 enum Tab {

@@ -1,6 +1,6 @@
 import { Component, h, JSX, Prop, State } from "@stencil/core";
-import { FlightGroup } from "../../../../old-assets/model/TIE";
-import { Mission } from "../../../../old-assets/model/TIE/mission";
+import { FlightGroup } from "../../../model/TIE";
+import { Mission } from "../../../model/TIE/mission";
 
 @Component({
   tag: "pyrite-tie-flightgroups",

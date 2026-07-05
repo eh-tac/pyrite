@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { FileHeader } from "../../../../old-assets/model/XvT";
+import { FileHeader } from "../../../model/XvT";
 import { XvTFileHeaderController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

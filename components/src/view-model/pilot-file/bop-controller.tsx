@@ -1,14 +1,14 @@
 import { JSX, h } from "@stencil/core";
 
 import { PilotFileController } from "./controller";
-import { Battle } from "../../../old-assets/model/ehtc";
+import { Battle } from "../../model/ehtc";
 import {
   PL2FileRecord as PilotFile,
   PL2CampaignRecord,
   PL2FactionRecord,
   PLTCategoryTypeRecord,
-} from "../../../old-assets/model/XvT";
-import { TriStat } from "../../../old-assets/model/XvT/pl-2-faction-record";
+} from "../../model/XvT";
+import { TriStat } from "../../model/XvT/pl-2-faction-record";
 
 export class BoPPltController extends PilotFileController {
   public constructor(

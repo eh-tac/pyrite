@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Trigger } from "../../../../old-assets/model/XvT";
+import { Trigger } from "../../../model/XvT";
 import { XvTTriggerController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

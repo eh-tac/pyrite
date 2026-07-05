@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { BattleText } from "../../../../old-assets/model/LFD";
+import { BattleText } from "../../../model/LFD";
 import { LFDBattleTextController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 

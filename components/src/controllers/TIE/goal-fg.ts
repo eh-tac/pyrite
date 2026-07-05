@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { GoalFG } from "../../../old-assets/model/TIE";
+import { GoalFG } from "../../model/TIE";
 
 export class TIEGoalFGController extends ControllerBase {
   public readonly fields: object = {

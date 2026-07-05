@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Order } from "../../../old-assets/model/XvT";
+import { Order } from "../../model/XvT";
 
 export class XvTOrderController extends ControllerBase {
   public readonly fields: object = {

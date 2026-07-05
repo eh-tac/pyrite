@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Event } from "../../../old-assets/model/XvT";
+import { Event } from "../../model/XvT";
 
 export class XvTEventController extends ControllerBase {
   public readonly fields: object = {

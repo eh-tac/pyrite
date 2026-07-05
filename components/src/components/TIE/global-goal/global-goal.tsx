@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { GlobalGoal } from "../../../../old-assets/model/TIE";
+import { GlobalGoal } from "../../../model/TIE";
 import { TIEGlobalGoalController } from "../../../controllers/TIE";
 import { Field } from "../../fields/field";
 

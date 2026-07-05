@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { ViewportSetting } from "../../../old-assets/model/XW";
+import { ViewportSetting } from "../../model/XW";
 
 export class XWViewportSettingController extends ControllerBase {
   public readonly fields: object = {

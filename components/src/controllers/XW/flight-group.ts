@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { FlightGroup } from "../../../old-assets/model/XW";
+import { FlightGroup } from "../../model/XW";
 
 export class XWFlightGroupController extends ControllerBase {
   public readonly fields: object = {

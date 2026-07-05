@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as progress from "cli-progress";
-import { Mission } from "../../old-assets/model/TIE";
+import { Mission } from "../model/TIE";
 
 const root = "../../extracted/";
 let missions = [];

@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { FlightGroup } from "../../../old-assets/model/TIE";
+import { FlightGroup } from "../../model/TIE";
 
 export class TIEFlightGroupController extends ControllerBase {
   public readonly fields: object = {

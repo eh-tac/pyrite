@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { TIEBattle } from "../../../old-assets/model/LFD";
+import { TIEBattle } from "../../model/LFD";
 
 export class LFDTIEBattleController extends ControllerBase {
   public readonly fields: object = {

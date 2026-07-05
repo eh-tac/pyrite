@@ -1,9 +1,9 @@
 import { Component, Prop, State, h, Host, JSX, Element } from "@stencil/core";
 import { getByte } from "../../hex";
-import { Mission as TIEMission } from "../../../old-assets/model/TIE";
-import { Mission as XWMission } from "../../../old-assets/model/XW";
-import { Mission as XvTMission } from "../../../old-assets/model/XvT";
-import { Mission as XWAMission } from "../../../old-assets/model/XWA";
+import { Mission as TIEMission } from "../../model/TIE";
+import { Mission as XWMission } from "../../model/XW";
+import { Mission as XvTMission } from "../../model/XvT";
+import { Mission as XWAMission } from "../../model/XWA";
 
 @Component({
   tag: "pyrite-mission-wrapper",

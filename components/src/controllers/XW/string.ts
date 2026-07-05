@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { String } from "../../../old-assets/model/XW";
+import { String } from "../../model/XW";
 
 export class XWStringController extends ControllerBase {
   public readonly fields: object = {

@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { ObjectGroup } from "../../../../old-assets/model/XW";
+import { ObjectGroup } from "../../../model/XW";
 import { XWObjectGroupController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 

@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { MissionBOP } from "../../../old-assets/model/XvT";
+import { MissionBOP } from "../../model/XvT";
 
 export class XvTMissionBOPController extends ControllerBase {
   public readonly fields: object = {

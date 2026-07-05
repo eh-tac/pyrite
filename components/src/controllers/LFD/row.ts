@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Row } from "../../../old-assets/model/LFD";
+import { Row } from "../../model/LFD";
 
 export class LFDRowController extends ControllerBase {
   public readonly fields: object = {

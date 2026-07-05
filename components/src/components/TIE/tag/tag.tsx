@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Tag } from "../../../../old-assets/model/TIE";
+import { Tag } from "../../../model/TIE";
 import { TIETagController } from "../../../controllers/TIE";
 import { Field } from "../../fields/field";
 

@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { BrfStr } from "../../../../old-assets/model/XWA";
+import { BrfStr } from "../../../model/XWA";
 import { XWABrfStrController } from "../../../controllers/XWA";
 import { Field } from "../../fields/field";
 

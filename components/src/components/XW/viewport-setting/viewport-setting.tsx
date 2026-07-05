@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { ViewportSetting } from "../../../../old-assets/model/XW";
+import { ViewportSetting } from "../../../model/XW";
 import { XWViewportSettingController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 

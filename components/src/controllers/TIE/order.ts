@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Order } from "../../../old-assets/model/TIE";
+import { Order } from "../../model/TIE";
 
 export class TIEOrderController extends ControllerBase {
   public readonly fields: object = {

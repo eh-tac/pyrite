@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { String } from "../../../../old-assets/model/XW";
+import { String } from "../../../model/XW";
 import { XWStringController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 

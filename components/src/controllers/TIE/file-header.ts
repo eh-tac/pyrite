@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { FileHeader } from "../../../old-assets/model/TIE";
+import { FileHeader } from "../../model/TIE";
 
 export class TIEFileHeaderController extends ControllerBase {
   public readonly fields: object = {

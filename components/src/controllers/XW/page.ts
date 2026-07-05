@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Page } from "../../../old-assets/model/XW";
+import { Page } from "../../model/XW";
 
 export class XWPageController extends ControllerBase {
   public readonly fields: object = {

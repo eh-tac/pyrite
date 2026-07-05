@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Coordinate } from "../../../../old-assets/model/XW";
+import { Coordinate } from "../../../model/XW";
 import { XWCoordinateController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 

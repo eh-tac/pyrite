@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Team } from "../../../old-assets/model/XvT";
+import { Team } from "../../model/XvT";
 
 export class XvTTeamController extends ControllerBase {
   public readonly fields: object = {

@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { BattleText } from "../../../old-assets/model/LFD";
+import { BattleText } from "../../model/LFD";
 
 export class LFDBattleTextController extends ControllerBase {
   public readonly fields: object = {

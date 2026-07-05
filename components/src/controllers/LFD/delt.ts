@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Delt } from "../../../old-assets/model/LFD";
+import { Delt } from "../../model/LFD";
 
 export class LFDDeltController extends ControllerBase {
   public readonly fields: object = {

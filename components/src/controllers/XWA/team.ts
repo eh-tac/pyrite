@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Team } from "../../../old-assets/model/XWA";
+import { Team } from "../../model/XWA";
 
 export class XWATeamController extends ControllerBase {
   public readonly fields: object = {

@@ -1,5 +1,5 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { PLTMissionMPRecord } from "../../../../old-assets/model/XvT";
+import { PLTMissionMPRecord } from "../../../model/XvT";
 import { XvTPLTMissionMPRecordController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 

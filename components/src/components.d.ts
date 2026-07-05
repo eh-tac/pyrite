@@ -6,23 +6,11 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ApiSummary } from "./components/ehtc/api-select/api-select";
-import { Battle } from "../old-assets/model/ehtc/battle";
-import { BattleSummary, CharacterSummary, PilotSummary } from "../old-assets/model/ehtc";
+import { Battle } from "./model/ehtc/battle";
+import { BattleSummary, CharacterSummary, PilotSummary } from "./model/ehtc";
 import { ItemSummary } from "./components/ehtc/wrap-select/wrap-select";
-import { Mission } from "../old-assets/model/TIE/mission";
-import {
-  BattleText,
-  Delt,
-  Header,
-  LString,
-  LText,
-  OpCode,
-  Rmap,
-  Row,
-  TIEBattle,
-  Voic,
-  VoicData,
-} from "../old-assets/model/LFD";
+import { Mission } from "./model/TIE/mission";
+import { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic, VoicData } from "./model/LFD";
 import {
   Event,
   FileHeader,
@@ -39,7 +27,7 @@ import {
   TIEString,
   Trigger,
   Waypt,
-} from "../old-assets/model/TIE";
+} from "./model/TIE";
 import {
   Briefing,
   Event as Event1,
@@ -86,7 +74,7 @@ import {
   Trigger as Trigger1,
   Waypt as Waypt1,
   XvTString,
-} from "../old-assets/model/XvT";
+} from "./model/XvT";
 import {
   Briefing as Briefing1,
   BriefingHeader,
@@ -102,7 +90,7 @@ import {
   String,
   Tag as Tag2,
   ViewportSetting,
-} from "../old-assets/model/XW";
+} from "./model/XW";
 import {
   BrfStr,
   Briefing as Briefing2,
@@ -126,25 +114,13 @@ import {
   TriggerPair,
   Waypt as Waypt2,
   XWAString,
-} from "../old-assets/model/XWA";
+} from "./model/XWA";
 export { ApiSummary } from "./components/ehtc/api-select/api-select";
-export { Battle } from "../old-assets/model/ehtc/battle";
-export { BattleSummary, CharacterSummary, PilotSummary } from "../old-assets/model/ehtc";
+export { Battle } from "./model/ehtc/battle";
+export { BattleSummary, CharacterSummary, PilotSummary } from "./model/ehtc";
 export { ItemSummary } from "./components/ehtc/wrap-select/wrap-select";
-export { Mission } from "../old-assets/model/TIE/mission";
-export {
-  BattleText,
-  Delt,
-  Header,
-  LString,
-  LText,
-  OpCode,
-  Rmap,
-  Row,
-  TIEBattle,
-  Voic,
-  VoicData,
-} from "../old-assets/model/LFD";
+export { Mission } from "./model/TIE/mission";
+export { BattleText, Delt, Header, LString, LText, OpCode, Rmap, Row, TIEBattle, Voic, VoicData } from "./model/LFD";
 export {
   Event,
   FileHeader,
@@ -161,7 +137,7 @@ export {
   TIEString,
   Trigger,
   Waypt,
-} from "../old-assets/model/TIE";
+} from "./model/TIE";
 export {
   Briefing,
   Event as Event1,
@@ -208,7 +184,7 @@ export {
   Trigger as Trigger1,
   Waypt as Waypt1,
   XvTString,
-} from "../old-assets/model/XvT";
+} from "./model/XvT";
 export {
   Briefing as Briefing1,
   BriefingHeader,
@@ -224,7 +200,7 @@ export {
   String,
   Tag as Tag2,
   ViewportSetting,
-} from "../old-assets/model/XW";
+} from "./model/XW";
 export {
   BrfStr,
   Briefing as Briefing2,
@@ -248,7 +224,7 @@ export {
   TriggerPair,
   Waypt as Waypt2,
   XWAString,
-} from "../old-assets/model/XWA";
+} from "./model/XWA";
 export namespace Components {
   interface EhtcApiSelect {
     displayDescription?: "subtitle" | "none";

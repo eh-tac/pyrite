@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { BrfStr } from "../../../old-assets/model/XWA";
+import { BrfStr } from "../../model/XWA";
 
 export class XWABrfStrController extends ControllerBase {
   public readonly fields: object = { Length: { name: "Length", type: "SHORT" }, Text: { name: "Text", type: "CHAR" } };

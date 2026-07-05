@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Trigger } from "../../../old-assets/model/XWA";
+import { Trigger } from "../../model/XWA";
 
 export class XWATriggerController extends ControllerBase {
   public readonly fields: object = {

@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Icon } from "../../../old-assets/model/XW";
+import { Icon } from "../../model/XW";
 
 export class XWIconController extends ControllerBase {
   public readonly fields: object = {

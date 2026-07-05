@@ -1,5 +1,5 @@
 import { ControllerBase } from "../../controller-base";
-import { Briefing } from "../../../old-assets/model/TIE";
+import { Briefing } from "../../model/TIE";
 
 export class TIEBriefingController extends ControllerBase {
   public readonly fields: object = {
