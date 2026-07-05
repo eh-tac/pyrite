@@ -1,4 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getChar, getInt, writeChar, writeInt } from '@pyrite/core';
 export abstract class HeaderBase extends PyriteBase implements Byteable {
   public readonly HEADERLENGTH: number = 16;

@@ -1,6 +1,8 @@
-import { FieldAttr } from '../interfaces/controller-base';
-import { Prop, PropObject, PropAny, PropBool, PropChar, PropStr } from '../prop';
 import { kebabCase } from 'lodash-es';
+
+import type { FieldAttr } from '../interfaces/controller-base';
+import type { Prop } from '../prop';
+import { PropAny, PropBool, PropChar, PropObject, PropStr } from '../prop';
 
 export class TypeScriptPropWriter {
   public constructor(public prop: Prop) {}
@@ -35,7 +37,7 @@ export class TypeScriptPropWriter {
   // output for saving
 
   public get hexImports(): string[] {
-    return [!this.prop.isStatic ? this.prop.hexGetter : null, this.prop.hexSetter].filter(Boolean);
+    return [this.prop.isStatic ? null : this.prop.hexGetter, this.prop.hexSetter].filter(Boolean);
   }
 
   public get classImports(): string[] {
@@ -65,13 +67,17 @@ export class TypeScriptPropWriter {
   public get typeExpr(): string {
     if (this.prop instanceof PropObject) {
       return this.prop.structName;
-    } else if (this.prop instanceof PropBool) {
+    }
+    if (this.prop instanceof PropBool) {
       return 'boolean';
-    } else if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
+    }
+    if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
       return 'string';
-    } else if (this.prop instanceof PropAny) {
+    }
+    if (this.prop instanceof PropAny) {
       return 'any';
-    } else if (this.prop.enumName) {
+    }
+    if (this.prop.enumName) {
       return this.prop.enumName;
     }
     return 'number';
@@ -89,7 +95,7 @@ export class TypeScriptPropWriter {
 
     const p = `this.${this.prop.name}`;
     let init = `${p} = ${this.getGetter()};`;
-    const preArray = this.offsetExpr !== 'offset' ? `offset = ${this.offsetExpr};\n    ` : '';
+    const preArray = this.offsetExpr === 'offset' ? '' : `offset = ${this.offsetExpr};\n    `;
     if (this.prop.isArray) {
       init = `${p} = [];
     ${preArray}for (let i = 0; i < ${this.arrayLength}; i++) {
@@ -110,21 +116,19 @@ export class TypeScriptPropWriter {
     return `${init}${offsetExpr}`;
   }
 
-  public getGetter(inLoop = false): string {
-    const off = inLoop ? 'offset' : this.offsetExpr;
+  public getGetter(isInLoop = false): string {
+    const off = isInLoop ? 'offset' : this.offsetExpr;
     if (this.prop instanceof PropObject) {
       return `new ${this.prop.structName}(hex.slice(${off}), this.TIE)`;
-    } else if (this.prop instanceof PropAny) {
+    }
+    if (this.prop instanceof PropAny) {
       return `undefined`;
     }
     const params = ['hex', off];
     if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
       params.push(this.typeLength);
     }
-    let cast = '';
-    if (this.prop.enumName) {
-      cast = ` as ${this.typeExpr}`;
-    }
+    const cast = this.prop.enumName ? ` as ${this.typeExpr}` : '';
 
     return `${this.prop.hexGetter}(${params.join(', ')})${cast}`;
   }
@@ -151,7 +155,8 @@ export class TypeScriptPropWriter {
         return this.prop.baseSize.toString(10);
       }
       return `${obj}.length + 1`;
-    } else if (this.prop instanceof PropObject) {
+    }
+    if (this.prop instanceof PropObject) {
       return `${obj}.getLength()`;
     }
     return this.typeLength;
@@ -174,7 +179,7 @@ export class TypeScriptPropWriter {
       this.prop.isStatic && this.prop.reservedValue ? this.prop.reservedValue.toString() : p
     )};`;
     if (this.prop.isArray) {
-      const preArray = this.offsetExpr !== 'offset' ? `offset = ${this.offsetExpr};\n    ` : '';
+      const preArray = this.offsetExpr === 'offset' ? '' : `offset = ${this.offsetExpr};\n    `;
       out = `${preArray}for (let i = 0; i < ${p}.length; i++) {
       const t = ${p}[i];
       ${this.getSetter('t', true)};
@@ -187,8 +192,8 @@ export class TypeScriptPropWriter {
     return `${out}${offsetExpr}`;
   }
 
-  public getSetter(propOverride?: string, inLoop = false): string {
-    const off = inLoop ? 'offset' : this.offsetExpr;
+  public getSetter(propOverride?: string, isInLoop = false): string {
+    const off = isInLoop ? 'offset' : this.offsetExpr;
     const params = ['hex', propOverride || `this.${this.prop.name}`, off];
     if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
       params.push(this.typeLength);

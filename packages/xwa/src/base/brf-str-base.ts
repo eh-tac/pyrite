@@ -1,4 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getChar, getShort, writeChar, writeShort } from '@pyrite/core';
 export abstract class BrfStrBase extends PyriteBase implements Byteable {
   public BrfStrLength: number;

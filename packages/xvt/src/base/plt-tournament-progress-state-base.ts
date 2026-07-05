@@ -1,6 +1,8 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { PLTTournTeamRecord } from '../plt-tourn-team-record';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getChar, getInt, writeChar, writeInt, writeObject } from '@pyrite/core';
+
+import { PLTTournTeamRecord } from '../plt-tourn-team-record';
 export abstract class PLTTournamentProgressStateBase extends PyriteBase implements Byteable {
   public readonly PLTTOURNAMENTPROGRESSSTATELENGTH: number = 256;
   public unknown1: string;

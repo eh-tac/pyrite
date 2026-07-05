@@ -1,4 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getBool, getByte, getSByte, writeBool, writeByte, writeSByte } from '@pyrite/core';
 export abstract class GoalFGBase extends PyriteBase implements Byteable {
   public readonly GOALFGLENGTH: number = 80;

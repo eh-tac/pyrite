@@ -1,19 +1,21 @@
-import { PyriteWriter } from '../writer';
-import { Constants } from '../constants';
-import { Struct } from '../struct';
-import { PropInt } from '../prop';
-import { TypeScriptPropWriter as PropWriter } from './typescript-prop-writer';
+import { spawnSync } from 'node:child_process';
+
 import { camelCase, kebabCase } from 'lodash-es';
-import { spawnSync } from 'child_process';
-import { PyriteGenerator } from '../generator';
+
+import type { Constants } from '../constants';
+import type { PyriteGenerator } from '../generator';
+import { PropInt } from '../prop';
+import type { Struct } from '../struct';
+import { PyriteWriter } from '../writer';
+import { TypeScriptPropWriter as PropWriter } from './typescript-prop-writer';
 
 export class TypeScriptWriter extends PyriteWriter {
   constructor(
     public rootDir: string,
     public generator: PyriteGenerator,
-    public overwriteIfExists = false
+    public shouldOverwriteIfExists = false
   ) {
-    super(rootDir, generator, overwriteIfExists);
+    super(rootDir, generator, shouldOverwriteIfExists);
     this.language = 'TypeScript';
     this.platformDir = this.generator.platform.toLowerCase();
   }
@@ -59,8 +61,7 @@ export class TypeScriptWriter extends PyriteWriter {
       enums.push('}\n');
     }
 
-    lines.push('}\n');
-    lines.push(...enums);
+    lines.push('}\n', ...enums);
     this.writeFile('PLT/src/constants.ts', lines.join('\n'));
   }
 
@@ -129,14 +130,14 @@ export class ${struct.name} extends ${baseClass} {
       }
     });
 
-    if (usedConstants.size) {
-      importLines.push([['Constants', ...Array.from(usedConstants)], '../constants']);
+    if (usedConstants.size > 0) {
+      importLines.push([['Constants', ...usedConstants], '../constants']);
     }
 
-    const hex = Array.from(new Set(usedHexImports));
+    const hex = [...new Set(usedHexImports)];
     importLines.push([hex, '@pyrite/core']);
 
-    const classes = Array.from(new Set(usedClassImports));
+    const classes = [...new Set(usedClassImports)];
     classes.forEach((c: string) => {
       importLines.push([[c], `../${kebabCase(c)}`]);
     });
@@ -207,8 +208,8 @@ export class ${struct.name} extends ${baseClass} {
     let clean = label
       .replace('%', 'Percent')
       .replace('&', 'n')
-      .replace(/[^\w\s]/g, '');
-    if (!isNaN(parseInt(clean[0], 10))) {
+      .replaceAll(/[^\w\s]/g, '');
+    if (!Number.isNaN(Number(clean[0]))) {
       clean = `n${clean}`;
     }
     return camelCase(clean);

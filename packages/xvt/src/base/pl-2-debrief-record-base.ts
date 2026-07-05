@@ -1,8 +1,10 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { getInt, writeInt, writeObject } from '@pyrite/core';
+
 import { PLTCategoryTypeRecord } from '../plt-category-type-record';
 import { PLTPlayerRankCountRecord } from '../plt-player-rank-count-record';
-import { getInt, writeInt, writeObject } from '@pyrite/core';
+import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
 export abstract class PL2DebriefRecordBase extends PyriteBase implements Byteable {
   public readonly PL2DEBRIEFRECORDLENGTH: number = 5256;
   public UnknownRecord1: PLTCategoryTypeRecord;
@@ -34,7 +36,7 @@ export abstract class PL2DebriefRecordBase extends PyriteBase implements Byteabl
     this.beforeConstruct();
     let offset = 0;
 
-    this.UnknownRecord1 = new PLTCategoryTypeRecord(hex.slice(0x0000), this.TIE);
+    this.UnknownRecord1 = new PLTCategoryTypeRecord([...hex], this.TIE);
     this.UnknownRecord2 = new PLTCategoryTypeRecord(hex.slice(0x000c), this.TIE);
     this.UnknownRecord3 = new PLTCategoryTypeRecord(hex.slice(0x0018), this.TIE);
     this.enemyKillsEXX = new PLTCategoryTypeRecord(hex.slice(0x0024), this.TIE);

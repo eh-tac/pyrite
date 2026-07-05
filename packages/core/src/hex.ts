@@ -1,4 +1,5 @@
-import { Byteable } from './byteable';
+/* eslint-disable unicorn/consistent-boolean-name */
+import type { Byteable } from './byteable';
 
 export function getBool(hex: ArrayBuffer, start: number = 0): boolean {
   return new DataView(hex).getUint8(start) !== 0;
@@ -21,14 +22,16 @@ export function getSByte(hex: ArrayBuffer, start: number = 0): number {
 }
 
 export function getSChar(hex: ArrayBuffer, start: number = 0, length: number = 0): string {
-  return String.fromCharCode.apply(null, Array.from(new Int8Array(hex.slice(start), length)));
+  return Reflect.apply(String.fromCodePoint, null, [...new Int8Array(hex.slice(start), length)]);
 }
 
 export function getChar(hex: ArrayBuffer, start: number = 0, length: number = 0): string {
-  let str: string = String.fromCharCode.apply(null, Array.from(new Uint8Array(hex, start, length)));
-  const end = str.indexOf(String.fromCharCode(0));
+  let str: string = Reflect.apply(String.fromCodePoint, null, [
+    ...new Uint8Array(hex, start, length)
+  ]);
+  const end = str.indexOf(String.fromCodePoint(0));
   if (end !== -1) {
-    str = str.substr(0, end);
+    str = str.slice(0, Math.max(0, end));
   }
   return str.trim();
 }
@@ -56,10 +59,12 @@ export function getUInt(hex: ArrayBuffer, start: number = 0): number {
 
 export function getString(hex: ArrayBuffer, start: number = 0, length: number = 99999): string {
   const actualLength = Math.min(length, hex.byteLength - start);
-  let str = String.fromCharCode.apply(null, Array.from(new Uint8Array(hex, start, actualLength)));
-  const end = str.indexOf(String.fromCharCode(0));
+  let str = Reflect.apply(String.fromCodePoint, null, [
+    ...new Uint8Array(hex, start, actualLength)
+  ]);
+  const end = str.indexOf(String.fromCodePoint(0));
   if (end !== -1) {
-    str = str.substr(0, end);
+    str = str.slice(0, Math.max(0, end));
   }
   return str.trim();
 }

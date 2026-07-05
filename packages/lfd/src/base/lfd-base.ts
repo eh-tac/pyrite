@@ -1,6 +1,8 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { Header } from '../header';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { writeObject } from '@pyrite/core';
+
+import { Header } from '../header';
 export abstract class LFDBase extends PyriteBase implements Byteable {
   public readonly LFDLENGTH: number = 16;
   public Header: Header;
@@ -9,7 +11,7 @@ export abstract class LFDBase extends PyriteBase implements Byteable {
     super(hex, TIE!);
     this.beforeConstruct();
 
-    this.Header = new Header(hex.slice(0x00), this.TIE);
+    this.Header = new Header([...hex], this.TIE);
   }
 
   public toJSON(): Record<string, unknown> | string {

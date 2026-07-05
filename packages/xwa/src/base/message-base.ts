@@ -1,5 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { TriggerPair } from '../trigger-pair';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import {
   getBool,
   getByte,
@@ -13,6 +13,8 @@ import {
   writeShort,
   writeString
 } from '@pyrite/core';
+
+import { TriggerPair } from '../trigger-pair';
 export abstract class MessageBase extends PyriteBase implements Byteable {
   public readonly MESSAGELENGTH: number = 162;
   public MessageIndex: number;

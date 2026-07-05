@@ -52,6 +52,7 @@
     "typescript": "^3.9.9"
   },
   "dependencies": {
+    "@pyrite/xwa": "file:../packages/xwa",
     "@stencil/core": "4.18.3",
     "@stencil/sass": "^1.4.1",
     "cli-progress": "^3.9.0",

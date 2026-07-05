@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
 import { Briefing } from '../briefing';
 import { BriefingHeader } from '../briefing-header';
 import { Coordinate } from '../coordinate';
@@ -22,8 +23,8 @@ function toArrayBuffer(buffer: Buffer): ArrayBuffer {
 function countDifferentBytes(output: Buffer, input: Buffer): number {
   let differentBytes = 0;
 
-  for (let i = 0; i < output.length; i++) {
-    if (output[i] !== input[i]) {
+  for (const [i, element] of output.entries()) {
+    if (element !== input[i]) {
       differentBytes += 1;
     }
   }
@@ -65,7 +66,7 @@ describe('Briefing component classes', () => {
   }
 
   it('parses and outputs BriefingHeader', () => {
-    const header = new BriefingHeader(hex.slice(0x00));
+    const header = new BriefingHeader([...hex]);
 
     expect(header.PlatformID).toBe(briefing.BriefingHeader.PlatformID);
     expect(header.IconCount).toBe(16);

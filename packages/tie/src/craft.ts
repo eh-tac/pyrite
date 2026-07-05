@@ -143,8 +143,9 @@ export class Craft {
       case 'Victory-class Star Destroyer':
       case 'Victory Star Destroyer':
       case 'Star Destroyer':
-      case 'Super Star Destroyer':
+      case 'Super Star Destroyer': {
         return true;
+      }
     }
     return false;
   }

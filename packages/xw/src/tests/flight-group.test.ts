@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
 import { Mission } from '../mission';
 
 const fixturePath = resolve(__dirname, '../../../../fixtures/xw/XWVMTC1M1.XWI');
@@ -29,13 +30,15 @@ describe('Flight Group', () => {
     const input = Buffer.from(hex.slice(0xce, 0xce + g1.getLength()));
     expect(output.length).toBe(input.length);
 
-    for (let i = 0; i < output.length; i++) {
-      if (output[i] !== input[i]) {
-        if (differentBytes < 20) {
-          console.log('different at byte', i, 'expected', input[i], 'got', output[i]);
-        }
-        differentBytes += 1;
+    for (const [i, element] of output.entries()) {
+      if (element === input[i]) {
+      	continue;
       }
+
+      if (differentBytes < 20) {
+        console.log('different at byte', i, 'expected', input[i], 'got', element);
+      }
+      differentBytes += 1;
     }
 
     expect(differentBytes).toBe(0);

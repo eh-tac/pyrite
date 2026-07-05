@@ -1,6 +1,8 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { PLTBattleProgressState } from '../plt-battle-progress-state';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getInt, writeInt, writeObject } from '@pyrite/core';
+
+import { PLTBattleProgressState } from '../plt-battle-progress-state';
 export abstract class PLTBattleStateBase extends PyriteBase implements Byteable {
   public readonly PLTBATTLESTATELENGTH: number = 160;
   public ConfigRandomSeed: number;

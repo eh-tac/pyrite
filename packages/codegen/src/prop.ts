@@ -1,4 +1,4 @@
-import { Struct } from './struct';
+import type { Struct } from './struct';
 
 export type PropType =
   | 'SHORT'
@@ -36,7 +36,7 @@ export class Prop {
   public handleTypeLength(lengthStr: string): this {
     if (lengthStr) {
       const lengthInt = parseInt(lengthStr);
-      if (isNaN(lengthInt)) {
+      if (Number.isNaN(lengthInt)) {
         this.typeLengthExpression = lengthStr;
         this.baseSize = 0;
       } else {
@@ -49,7 +49,7 @@ export class Prop {
   public handleArrayLength(lengthStr: string): this {
     if (lengthStr) {
       const lengthInt = parseInt(lengthStr);
-      if (isNaN(lengthInt)) {
+      if (Number.isNaN(lengthInt)) {
         this.arrayLengthExpression = lengthStr;
       } else {
         this.arrayLengthValue = lengthInt;
@@ -62,7 +62,7 @@ export class Prop {
     if (restStr) {
       const resv = restStr.match(/Reserved\((\-?\w*)\)/);
       if (resv) {
-        this.reservedValue = parseInt(resv[1], 16);
+        this.reservedValue = Number.parseInt(resv[1], 16);
         restStr = restStr.replace(resv[0], '').trim();
       }
 
@@ -168,11 +168,11 @@ export class PropObject extends Prop {
   public prepare(structs: { [key: string]: Struct }): void {
     // do nothing except if object
     const struct = structs[this.structName];
-    if (struct && struct.size) {
+    if (struct && struct.size > 0) {
       this.baseSize = struct.size;
     }
     if (!struct) {
-      console.warn('couldnt load data for type ', this.structName);
+      console.warn('couldnt load data for type', this.structName);
     }
   }
 }

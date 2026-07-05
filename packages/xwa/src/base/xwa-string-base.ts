@@ -1,4 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getByte, writeByte } from '@pyrite/core';
 export abstract class XWAStringBase extends PyriteBase implements Byteable {
   public XWAStringLength: number;

@@ -1,8 +1,10 @@
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { writeObject } from '@pyrite/core';
+
 import { BattleText } from '../battle-text';
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { Delt } from '../delt';
 import { Rmap } from '../rmap';
-import { writeObject } from '@pyrite/core';
 export abstract class TIEBattleBase extends PyriteBase implements Byteable {
   public TIEBattleLength: number;
   public HeaderMap: Rmap;
@@ -14,7 +16,7 @@ export abstract class TIEBattleBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.HeaderMap = new Rmap(hex.slice(0x00), this.TIE);
+    this.HeaderMap = new Rmap([...hex], this.TIE);
     offset = 0x00 + this.HeaderMap.getLength();
     this.BattleName = new BattleText(hex.slice(0x30), this.TIE);
     offset = 0x30 + this.BattleName.getLength();

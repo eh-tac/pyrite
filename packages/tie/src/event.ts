@@ -1,6 +1,6 @@
-import { Briefing } from './briefing';
-import { Constants } from './constants';
 import { EventBase } from './base/event-base';
+import type { Briefing } from './briefing';
+import { Constants } from './constants';
 
 export enum EventType {
   PageBreak = 3,
@@ -61,7 +61,7 @@ export class Event extends EventBase {
       const col = Constants.TEXTTAGCOLOR[v[3]];
 
       extra = `${t} at ${v[1]},${v[2]} ${col}`;
-    } else if (this.Variables.length) {
+    } else if (this.Variables.length > 0) {
       extra = 'Vars ' + this.Variables.join(', ');
     }
     return `${this.EventTypeLabel} ${extra} @ ${this.Time}`;
@@ -70,11 +70,8 @@ export class Event extends EventBase {
   public get Text(): string {
     if (this.EventType === 4 || this.EventType === 5) {
       return this.Briefing.Strings[this.Variables[0]].Text;
-    } else if (this.EventType >= 18 && this.EventType <= 25) {
-      return this.Briefing.Tags[this.Variables[0]].Text;
-    } else {
-      return 'Unknown Text';
     }
+    return this.EventType >= 18 && this.EventType <= 25 ? this.Briefing.Tags[this.Variables[0]].Text : 'Unknown Text';
   }
 
   protected VariableCount(): number {

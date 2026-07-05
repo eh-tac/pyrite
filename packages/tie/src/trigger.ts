@@ -11,8 +11,7 @@ export class Trigger extends TriggerBase {
       const fg = this.TIE.getFlightGroup(this.Variable);
       parts.push(fg + '');
     }
-    parts.push('must');
-    parts.push(this.ConditionLabel);
+    parts.push('must', this.ConditionLabel);
 
     return parts.join(' ');
   }

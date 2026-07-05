@@ -1,19 +1,20 @@
-import { Struct } from './struct';
+import { Constants } from './constants';
+import type {
+  PropType} from './prop';
 import {
   Prop,
-  PropShort,
-  PropByte,
-  PropBool,
-  PropInt,
-  PropSByte,
-  PropStr,
-  PropObject,
-  PropType,
-  PropChar,
   PropAny,
+  PropBool,
+  PropByte,
+  PropChar,
+  PropInt,
+  PropObject,
+  PropSByte,
+  PropShort,
+  PropStr,
   PropUShort
 } from './prop';
-import { Constants } from './constants';
+import { Struct } from './struct';
 
 export class PyriteGenerator {
   public structs: { [key: string]: Struct } = {};
@@ -47,8 +48,9 @@ export class PyriteGenerator {
       const line = l.trim();
       const bits = line.split(/\s+/);
       if (line === '{' || line === '') {
-        continue; // skip
-      } else if (!currentStruct) {
+         // skip
+      }
+      if (!currentStruct) {
         // has data and no current struct - this must be the header line
         // 'struct', name, '(size', 0x123)
         const [, heading, , hexSize] = bits;
@@ -82,29 +84,59 @@ export class PyriteGenerator {
     );
     const type = match.groups['type'] as PropType;
 
-    if (type === 'SHORT') {
+    switch (type) {
+    case 'SHORT': {
       prop = new PropShort(offset, name, type);
-    } else if (type === 'USHORT') {
+    
+    break;
+    }
+    case 'USHORT': {
       prop = new PropUShort(offset, name, type);
-    } else if (type === 'BOOL') {
+    
+    break;
+    }
+    case 'BOOL': {
       prop = new PropBool(offset, name, type);
-    } else if (type === 'BYTE') {
+    
+    break;
+    }
+    case 'BYTE': {
       prop = new PropByte(offset, name, type);
-    } else if (type === 'SBYTE') {
+    
+    break;
+    }
+    case 'SBYTE': {
       prop = new PropSByte(offset, name, type);
-    } else if (type === 'INT') {
+    
+    break;
+    }
+    case 'INT': {
       prop = new PropInt(offset, name, type);
-    } else if (type === 'STR') {
+    
+    break;
+    }
+    case 'STR': {
       prop = new PropStr(offset, name, type);
-    } else if (type === 'CHAR') {
+    
+    break;
+    }
+    case 'CHAR': {
       prop = new PropChar(offset, name, type);
-    } else if (type === 'any') {
+    
+    break;
+    }
+    case 'any': {
       prop = new PropAny(offset, name, type);
-    } else if (type) {
+    
+    break;
+    }
+    default: { if (type) {
       prop = new PropObject(offset, name, type);
       (prop as PropObject).structName = type;
     } else {
       console.warn('very confused by', bits);
+    }
+    }
     }
     return prop
       .handleTypeLength(match.groups['typeLen'])
@@ -127,14 +159,14 @@ export class PyriteGenerator {
       const line = l.trim();
       if (!line) {
         currentConst = undefined;
-      } else if (!currentConst) {
-        currentConst = new Constants(line);
-        this.constants[line] = currentConst;
-      } else {
+      } else if (currentConst) {
         const bits = line.split(/\s+/);
         const value = bits[0];
         const label = bits.slice(1).join(' ');
         currentConst.add(value, label);
+      } else {
+        currentConst = new Constants(line);
+        this.constants[line] = currentConst;
       }
     }
   }

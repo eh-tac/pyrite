@@ -20,9 +20,9 @@ export class PreMissionQuestions extends PreMissionQuestionsBase {
     if (this.Length === 0) {
       return 0;
     }
-    let text: string = String.fromCharCode.apply(null, new Uint8Array(this.hex.slice(2)));
+    let text: string = String.fromCodePoint.apply(null, new Uint8Array(this.hex.slice(2)));
     text = text.substr(0, this.Length);
-    const splitter = String.fromCharCode(10);
+    const splitter = String.fromCodePoint(10);
     if (text.includes(splitter)) {
       const idx = text.indexOf(splitter);
       return idx;
@@ -33,9 +33,9 @@ export class PreMissionQuestions extends PreMissionQuestionsBase {
     if (this.Length === 0) {
       return 0;
     }
-    let text: string = String.fromCharCode.apply(null, new Uint8Array(this.hex.slice(2)));
+    let text: string = String.fromCodePoint.apply(null, new Uint8Array(this.hex.slice(2)));
     text = text.substr(0, this.Length);
-    const splitter = String.fromCharCode(10);
+    const splitter = String.fromCodePoint(10);
     if (text.includes(splitter)) {
       const idx = text.indexOf(splitter);
       return this.Length - idx - 1;

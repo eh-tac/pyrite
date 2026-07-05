@@ -1,8 +1,9 @@
-import * as fs from 'fs';
+import * as fs from 'node:fs';
+import path from 'node:path';
+
 import { PyriteGenerator } from './generator';
-import { TypeScriptWriter } from './typescript/typescript-writer';
 import { PHPWriter } from './php/php-writer';
-import path from 'path';
+import { TypeScriptWriter } from './typescript/typescript-writer';
 
 const repoRoot = path.resolve(import.meta.dirname, '..', '..', '..');
 const phpLibPath = path.join(repoRoot, 'lib');
@@ -27,7 +28,7 @@ const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [
 ];
 
 // make writers
-[
+for (const writer of [
   new TypeScriptWriter(packages, tieG),
   new PHPWriter(phpLibPath, tieG),
 
@@ -42,10 +43,10 @@ const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [
 
   new TypeScriptWriter(packages, lfdG),
   new PHPWriter(phpLibPath, lfdG)
-].forEach((writer) => {
+]) {
   console.log(writer.label);
   console.time(writer.label);
   writer.write();
   console.timeEnd(writer.label);
   console.log('...');
-});
+}

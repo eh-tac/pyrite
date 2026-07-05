@@ -1,11 +1,10 @@
-import { BriefingBase } from './base/briefing-base';
-
 import { getInt, getShort } from '../../hex';
-import { IMission } from '../pyrite-base';
+import type { IMission } from '../pyrite-base';
+import { BriefingBase } from './base/briefing-base';
+import { EventType } from './constants';
 import { Event } from './event';
 import { Tag } from './tag';
 import { TIEString } from './tie-string';
-import { EventType } from './constants';
 
 export class Briefing extends BriefingBase {
   public constructor(hex: ArrayBuffer, tie: IMission) {

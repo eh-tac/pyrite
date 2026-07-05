@@ -39,28 +39,37 @@ export class Order extends OrderBase {
 
   private lookup(type: number, instance: number): string {
     switch (type) {
-      case 0:
+      case 0: {
         return 'None';
-      case 1:
+      }
+      case 1: {
         return this.TIE.getFlightGroup(instance).toString();
-      case 2:
+      }
+      case 2: {
         return Constants.CRAFTTYPE[instance];
-      case 3:
+      }
+      case 3: {
         return Constants.CRAFTCATEGORY[instance];
-      case 4:
+      }
+      case 4: {
         return Constants.OBJECTCATEGORY[instance];
-      case 5:
+      }
+      case 5: {
         return this.TIE.getIFF(instance);
-      case 6:
+      }
+      case 6: {
         return Constants.ORDER[instance];
-      case 7:
+      }
+      case 7: {
         return Constants.CRAFTWHEN[instance];
+      }
       case 8: {
         const fgs = this.TIE.getGlobalGroup(instance);
         return fgs.map((fg) => fg.toString()).join(', ');
       }
-      case 9:
+      case 9: {
         return Constants.MISC[instance];
+      }
     }
     return 'Unknown';
   }

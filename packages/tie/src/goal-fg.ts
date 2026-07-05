@@ -25,15 +25,19 @@ export class GoalFG extends GoalFGBase {
       return 0;
     }
     switch (this.GoalAmount) {
-      case 0: // 100%
+      case 0: { // 100%
         return fgCount;
-      case 1: // 50%
+      }
+      case 1: { // 50%
         return Math.round(fgCount * 0.5);
+      }
       case 2: // at least one
-      case 4: // special craft
+      case 4: { // special craft
         return 1;
-      case 3: // all but one
+      }
+      case 3: { // all but one
         return fgCount - 1;
+      }
     }
     return 0;
   }

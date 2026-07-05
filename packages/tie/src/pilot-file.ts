@@ -1,16 +1,16 @@
-import { PilotFileBase } from './base/pilot-file-base';
-import {
+import * as lodash from 'lodash';
+
+import { getByteString } from '../../hex';
+import type {
   BattleSummary,
-  PilotData,
-  shootInfo,
-  percent,
   KillSummary,
   MissionScore,
+  PilotData,
   TrainingSummary
 } from '../pilot';
-import { getByteString } from '../../hex';
-import { Constants, BattleStatus } from './constants';
-import * as lodash from 'lodash';
+import { percent, shootInfo } from '../pilot';
+import { PilotFileBase } from './base/pilot-file-base';
+import { BattleStatus, Constants } from './constants';
 
 export class PilotFile extends PilotFileBase implements PilotData {
   public beforeConstruct(): void {}
@@ -65,14 +65,14 @@ export class PilotFile extends PilotFileBase implements PilotData {
 
   public get MissionScores(): MissionScore[] {
     return this.BattleSummary.reduce(
-      (carry: MissionScore[], battle: BattleSummary) => carry.concat(battle.missions),
+      (carry: MissionScore[], battle: BattleSummary) => [...carry, ...battle.missions],
       []
     );
   }
 
   public get BattleVictories(): KillSummary[] {
     return this.KillsByType.map((kills: number, i: number) => {
-      const craftLabel = Constants.CRAFTTYPE[i + 1];
+      const craftLabel = Constants.CRAFTTYPE[(i + 1) as keyof typeof Constants.CRAFTTYPE];
       return {
         craftLabel,
         kills
@@ -88,9 +88,9 @@ export class PilotFile extends PilotFileBase implements PilotData {
         scoreLabel: 'Not flown',
         trainingLevel: this.TrainingLevels[idx],
         trainingScore: this.TrainingScores[idx],
-        missions: combatCompletions[idx].map((complete: boolean, mission: number) => {
+        missions: combatCompletions[idx].map((isComplete: boolean, mission: number) => {
           const combatMission: MissionScore = {
-            completed: complete,
+            completed: isComplete,
             score: this.CombatScores[idx][mission]
           };
           return combatMission;

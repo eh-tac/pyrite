@@ -1,8 +1,9 @@
-import { FlightGroup } from './flight-group';
 import { MissionBase } from './base/mission-base';
-import { PreMissionQuestions, QuestionType } from './pre-mission-questions';
-import { PostMissionQuestions } from './post-mission-questions';
 import { QuestionCondition } from './constants';
+import type { FlightGroup } from './flight-group';
+import type { PostMissionQuestions } from './post-mission-questions';
+import type { PreMissionQuestions } from './pre-mission-questions';
+import { QuestionType } from './pre-mission-questions';
 
 export enum Difficulty {
   Easy = 'Easy',
@@ -69,8 +70,8 @@ export class Mission extends MissionBase {
 
     let IFFName = IFFs[iff] && IFFs[iff].trim() ? IFFs[iff] : `Unknown IFF ${iff}`;
 
-    if (!isNaN(parseInt(IFFName[0], 10))) {
-      IFFName = `${IFFName.substr(1)} (hostile)`;
+    if (!Number.isNaN(Number(IFFName[0]))) {
+      IFFName = `${IFFName.slice(1)} (hostile)`;
     }
 
     return IFFName;
@@ -87,7 +88,8 @@ export class Mission extends MissionBase {
   public goalPoints(diff: Difficulty): number {
     if (diff == Difficulty.Hard) {
       return HARD_PTS;
-    } else if (diff === Difficulty.Medium) {
+    }
+    if (diff === Difficulty.Medium) {
       return MED_PTS;
     }
     return EASY_PTS;

@@ -1,4 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getInt, writeInt } from '@pyrite/core';
 export abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byteable {
   public readonly PLTEARNEDMEDALRECORDLENGTH: number = 96;

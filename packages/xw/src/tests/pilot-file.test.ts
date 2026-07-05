@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
 import { PilotFile } from '../pilot-file';
 
 const fixturePath = resolve(__dirname, '../../../../fixtures/VANGUARD717.PLT');
@@ -14,11 +15,13 @@ function toArrayBuffer(buffer: Buffer): ArrayBuffer {
 function countDifferentBytes(output: Buffer, input: Buffer): number {
   let differentBytes = 0;
 
-  for (let i = 0; i < output.length; i++) {
-    if (output[i] !== input[i]) {
-      console.log(`Byte ${i} differs: output=${output[i]} input=${input[i]}`);
-      differentBytes += 1;
+  for (const [i, element] of output.entries()) {
+    if (element === input[i]) {
+    	continue;
     }
+
+    console.log(`Byte ${i} differs: output=${element} input=${input[i]}`);
+    differentBytes += 1;
   }
 
   return differentBytes;

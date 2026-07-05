@@ -1,11 +1,13 @@
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { getString, writeObject, writeString } from '@pyrite/core';
+
 import { Briefing } from '../briefing';
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { FileHeader } from '../file-header';
 import { FlightGroup } from '../flight-group';
 import { GlobalGoal } from '../global-goal';
 import { Message } from '../message';
 import { Team } from '../team';
-import { getString, writeObject, writeString } from '@pyrite/core';
 export abstract class MissionBOPBase extends PyriteBase implements Byteable {
   public MissionBOPLength: number;
   public FileHeader: FileHeader;
@@ -23,7 +25,7 @@ export abstract class MissionBOPBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.FileHeader = new FileHeader(hex.slice(0x000), this.TIE);
+    this.FileHeader = new FileHeader([...hex], this.TIE);
     this.FlightGroups = [];
     for (let i = 0; i < this.FileHeader.NumFGs; i++) {
       const t = new FlightGroup(hex.slice(offset), this.TIE);

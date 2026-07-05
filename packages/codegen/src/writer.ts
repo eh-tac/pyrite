@@ -1,8 +1,9 @@
-import { Struct } from './struct';
-import * as fs from 'fs';
-import * as nodePath from 'path';
-import { PyriteGenerator } from './generator';
-import { Constants } from './constants';
+import * as fs from 'node:fs';
+import * as nodePath from 'node:path';
+
+import type { Constants } from './constants';
+import type { PyriteGenerator } from './generator';
+import type { Struct } from './struct';
 
 export abstract class PyriteWriter {
   protected language: string = 'TypeScript';
@@ -11,7 +12,7 @@ export abstract class PyriteWriter {
   constructor(
     public rootDir: string,
     public generator: PyriteGenerator,
-    public overwriteIfExists = false
+    public shouldOverwriteIfExists = false
   ) {}
 
   public get label(): string {
@@ -19,15 +20,15 @@ export abstract class PyriteWriter {
   }
 
   public buildPath(path: string): string {
-    return `${this.rootDir}/${path.replace('PLT', this.platformDir)}`;
+    return `${this.rootDir}/${path.replace('PLT', () => this.platformDir)}`;
   }
 
   public write(): this {
     this.writeConstants(Object.values(this.generator.constants));
     const structs = Object.values(this.generator.structs);
-    structs.forEach((s: Struct) => {
-      this.writeStruct(s);
-    });
+    for (const struct of structs) {
+      this.writeStruct(struct);
+    }
 
     return this;
   }
@@ -35,7 +36,9 @@ export abstract class PyriteWriter {
   public abstract writeConstants(constants: Constants[]): void;
 
   public writeStruct(struct: Struct): void {
-    struct.getProps().forEach((p) => p.prepare(this.generator.structs));
+    for (const prop of struct.getProps()) {
+      prop.prepare(this.generator.structs);
+    }
     this.writeBaseModel(struct);
     this.writeImplModel(struct);
   }
@@ -44,14 +47,14 @@ export abstract class PyriteWriter {
 
   public abstract writeImplModel(struct: Struct): void;
 
-  public writeFile(path: string, contents: string, overwriteIfExists: boolean = true) {
+  public writeFile(path: string, contents: string, shouldOverwriteIfExists: boolean = true) {
     path = this.buildPath(path);
 
     const dir = nodePath.dirname(path);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    if (fs.existsSync(path) && !overwriteIfExists) {
+    if (fs.existsSync(path) && !shouldOverwriteIfExists) {
       return;
     }
 

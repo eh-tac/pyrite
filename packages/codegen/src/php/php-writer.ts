@@ -1,19 +1,20 @@
-import { PyriteWriter } from '../writer';
-import { Constants } from '../constants';
-import { Struct } from '../struct';
+import { camelCase, startCase } from 'lodash-es';
+
+import type { Constants } from '../constants';
+import type { PyriteGenerator } from '../generator';
 import { PropInt } from '../prop';
+import type { Struct } from '../struct';
+import { PyriteWriter } from '../writer';
 import { PHPPropWriter } from './php-prop-writer';
-import { PyriteGenerator } from '../generator';
-import { startCase, camelCase } from 'lodash-es';
 
 export class PHPWriter extends PyriteWriter {
   public constructor(
     rootDir: string,
     generator: PyriteGenerator,
     public namespace: string = 'Pyrite',
-    public overwriteIfExists = false
+    public shouldOverwriteIfExists = false
   ) {
-    super(rootDir, generator, overwriteIfExists);
+    super(rootDir, generator, shouldOverwriteIfExists);
     this.language = 'PHP';
     this.platformDir = this.generator.platform;
   }
@@ -117,7 +118,7 @@ class ${struct.name} extends Base\\${baseClass}
 `;
 
     const file = this.filename(struct.name);
-    this.writeFile(`PLT/${file}`, content, this.overwriteIfExists);
+    this.writeFile(`PLT/${file}`, content, this.shouldOverwriteIfExists);
   }
 
   protected getBaseConstructor(struct: Struct, lengthProp: PHPPropWriter): string {
@@ -151,17 +152,17 @@ class ${struct.name} extends Base\\${baseClass}
     const imports: string[] = ['Byteable', 'HexDecoder', 'HexEncoder', 'PyriteBase', 'PyriteModel'];
 
     const usedClassImports = [];
-    let useConstants: boolean = false;
+    let isUseConstants: boolean = false;
     props.forEach((p: PHPPropWriter): void => {
       usedClassImports.push(...p.classImports);
-      useConstants = useConstants || !!p.prop.enumName;
+      isUseConstants ||= !!p.prop.enumName;
     });
     const plt = this.generator.platform;
 
-    if (useConstants) {
-      imports.push(`${plt}\\Constants`);
+    if (isUseConstants) {
+      imports.push(String.raw`${plt}\Constants`);
     }
-    Array.from(new Set(usedClassImports)).forEach((c: string) => {
+    [...new Set(usedClassImports)].forEach((c: string) => {
       imports.push(`${plt}\\${c}`);
     });
 
@@ -207,15 +208,15 @@ class ${struct.name} extends Base\\${baseClass}
   }
 
   protected filename(className: string): string {
-    return `${startCase(className).split(' ').join('')}.php`;
+    return `${startCase(className).replaceAll(' ', '')}.php`;
   }
 
   private getEnumName(label: string): string {
     let clean = label
       .replace('%', 'Percent')
       .replace('&', 'n')
-      .replace(/[^\w\s]/g, '');
-    if (!isNaN(parseInt(clean[0], 10))) {
+      .replaceAll(/[^\w\s]/g, '');
+    if (!Number.isNaN(Number(clean[0]))) {
       clean = `n${clean}`;
     }
     return camelCase(clean);

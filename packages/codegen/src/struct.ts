@@ -1,4 +1,4 @@
-import { Prop } from './prop';
+import type { Prop } from './prop';
 
 export class Struct {
   public size: number = 0;
@@ -8,7 +8,7 @@ export class Struct {
     public name: string,
     hexSize: string
   ) {
-    this.size = parseInt(hexSize, 16);
+    this.size = Number.parseInt(hexSize, 16);
   }
 
   public get isVariableLength(): boolean {
@@ -18,7 +18,7 @@ export class Struct {
   public addProp(prop: Prop): void {
     this.props[prop.name] = prop;
     this.functionStubs.push(...prop.getFunctionStubs());
-    this.functionStubs = Array.from(new Set(this.functionStubs));
+    this.functionStubs = [...new Set(this.functionStubs)];
   }
 
   public getProps(): Prop[] {

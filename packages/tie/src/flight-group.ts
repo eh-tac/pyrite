@@ -1,10 +1,11 @@
+import type { IMission } from '../../pyrite-base';
+import type { FieldProp, IFielder } from '../pyrite-base';
+import { DataType } from '../pyrite-base';
 import { FlightGroupBase } from './base/flight-group-base';
-import { Difficulty } from './mission';
-import { Craft } from './craft';
-import { GoalFG } from './goal-fg';
 import { Constants } from './constants';
-import { IFielder, FieldProp, DataType } from '../pyrite-base';
-import { IMission } from '../../pyrite-base';
+import { Craft } from './craft';
+import type { GoalFG } from './goal-fg';
+import { Difficulty } from './mission';
 
 export class FlightGroup extends FlightGroupBase implements IFielder {
   public craft: Craft;
@@ -100,7 +101,9 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
   public get isFriendly(): boolean {
     if (this.PlayerCraft) {
       return true;
-    } else if (this.Iff === 1) {
+    }
+    // eslint-disable-next-line unicorn/prefer-boolean-return
+    if (this.Iff === 1) {
       // TODO constants enum stuff
       return true;
     }
@@ -137,7 +140,7 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
   }
 
   public get capturable(): boolean {
-    return !!this.FlightGroupGoals.find((goal: GoalFG) => goal.isCaptureGoal); // TODO check global goals
+    return this.FlightGroupGoals.some((goal: GoalFG) => goal.isCaptureGoal); // TODO check global goals
   }
 
   public get captureCount(): number {
@@ -146,7 +149,7 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
 
   public get destroyable(): boolean {
     return (
-      this.GroupAI !== 5 || !!this.FlightGroupGoals.find((goal: GoalFG) => goal.isInvincibleGoal)
+      this.GroupAI !== 5 || this.FlightGroupGoals.some((goal: GoalFG) => goal.isInvincibleGoal)
     ); // TODO check global goals
   }
 
@@ -157,13 +160,13 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
         options: Constants.WARHEAD,
         value: this.Warhead
       };
-    } else if (name === 'Name') {
+    }
+    if (name === 'Name') {
       return {
         type: DataType.char,
         value: this.Name
       };
-    } else {
-      console.warn('unknown', name);
     }
+    console.warn('unknown', name);
   }
 }

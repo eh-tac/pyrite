@@ -1,4 +1,5 @@
-import { Prop, PropObject, PropAny, PropBool, PropChar, PropStr } from '../prop';
+import type { Prop } from '../prop';
+import { PropAny, PropBool, PropChar, PropObject, PropStr } from '../prop';
 
 export class PHPPropWriter {
   public constructor(public prop: Prop) {}
@@ -65,11 +66,14 @@ export class PHPPropWriter {
   public get typeExpr(): string {
     if (this.prop instanceof PropObject) {
       return this.prop.structName;
-    } else if (this.prop instanceof PropBool) {
+    }
+    if (this.prop instanceof PropBool) {
       return 'bool';
-    } else if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
+    }
+    if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
       return 'string';
-    } else if (this.prop instanceof PropAny) {
+    }
+    if (this.prop instanceof PropAny) {
       return 'mixed';
     }
     return 'int';
@@ -107,11 +111,12 @@ export class PHPPropWriter {
     return `${init}${offsetExpr}`;
   }
 
-  public getGetter(inLoop = false): string {
-    const off = inLoop ? '$offset' : this.offsetExpr;
+  public getGetter(isInLoop = false): string {
+    const off = isInLoop ? '$offset' : this.offsetExpr;
     if (this.prop instanceof PropObject) {
       return `(new ${this.prop.structName}(substr($hex, ${off}), $this->TIE))->loadHex()`;
-    } else if (this.prop instanceof PropAny) {
+    }
+    if (this.prop instanceof PropAny) {
       return `undefined`;
     }
     const params = ['$hex', off];
@@ -141,7 +146,8 @@ export class PHPPropWriter {
     const obj = this.prop.isArray ? '$t' : `$this->${this.prop.name}`;
     if (this.prop instanceof PropStr) {
       return `strlen(${obj})`;
-    } else if (this.prop instanceof PropObject) {
+    }
+    if (this.prop instanceof PropObject) {
       return `${obj}->getLength()`;
     }
     return this.typeLength;
@@ -175,8 +181,8 @@ export class PHPPropWriter {
     return `${offsetExpr}${out}`;
   }
 
-  public getSetter(propOverride?: string, inLoop = false): string {
-    const off = inLoop ? '$offset' : this.offsetExpr;
+  public getSetter(propOverride?: string, isInLoop = false): string {
+    const off = isInLoop ? '$offset' : this.offsetExpr;
     const params = [propOverride || `$this->${this.prop.name}`, '$hex', off];
     return `$hex = $this->${this.prop.hexSetter}(${params.join(', ')})`;
   }

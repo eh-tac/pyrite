@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
 import { Briefing } from '../briefing';
 
 const fixturePath = resolve(__dirname, '../../../../fixtures/xw/XWVMTC1M1.BRF');
@@ -25,13 +26,15 @@ describe('Briefing', () => {
 
     // expect(output.length).toBe(fixture.length);
 
-    for (let i = 0; i < output.length; i++) {
-      if (output[i] !== fixture[i]) {
-        if (differentBytes < 20) {
-          console.log('different at byte', i, 'expected', fixture[i], 'got', output[i]);
-        }
-        differentBytes += 1;
+    for (const [i, element] of output.entries()) {
+      if (element === fixture[i]) {
+      	continue;
       }
+
+      if (differentBytes < 20) {
+        console.log('different at byte', i, 'expected', fixture[i], 'got', element);
+      }
+      differentBytes += 1;
     }
 
     expect(differentBytes).toBeLessThan(20);

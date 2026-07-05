@@ -1,6 +1,9 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { Constants, QuestionCondition, QuestionType } from '../constants';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from '@pyrite/core';
+
+import type { QuestionCondition, QuestionType } from '../constants';
+import { Constants } from '../constants';
 export abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable {
   public PostMissionQuestionsLength: number;
   public Length: number;

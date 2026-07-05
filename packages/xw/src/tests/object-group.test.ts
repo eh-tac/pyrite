@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+
+import { CraftType } from '../constants';
 import { Mission } from '../mission';
 import { ObjectGroup } from '../object-group';
-import { CraftType } from '../constants';
 
 const fixturePath = resolve(__dirname, '../../../../fixtures/xw/XWVMTC1M1.XWI');
 
@@ -16,8 +17,8 @@ function toArrayBuffer(buffer: Buffer): ArrayBuffer {
 function countDifferentBytes(output: Buffer, input: Buffer): number {
   let differentBytes = 0;
 
-  for (let i = 0; i < output.length; i++) {
-    if (output[i] !== input[i]) {
+  for (const [i, element] of output.entries()) {
+    if (element !== input[i]) {
       differentBytes += 1;
     }
   }

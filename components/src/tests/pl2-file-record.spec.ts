@@ -7,7 +7,7 @@ function toArrayBuffer(buffer: Buffer): ArrayBuffer {
 }
 
 describe("pl2-file-record", () => {
-  const fixturePath = resolve(__dirname, "../../../fixtures/VanguardBOP0.pl2");
+  const fixturePath = resolve(__dirname, "../../../fixtures/VanguardBOP0_corrected.pl2");
   const fixture = readFileSync(fixturePath);
   let pl2 = new PL2FileRecord(toArrayBuffer(fixture));
 
@@ -21,12 +21,12 @@ describe("pl2-file-record", () => {
       return sum + score;
     }, 0);
 
-    const [imperial, rebel] = pl2.spCampaignState;
+    const [rebel, imperial] = pl2.spCampaignState;
 
     expect(scores).toHaveLength(15);
-    expect(scoreSum).toBe(1729938);
+    expect(scoreSum).toBe(2096418);
 
-    const bestScores = pl2.faction[1].statusSPCampaign.map((camp) => camp.bestScore);
+    const bestScores = pl2.faction[0].statusSPCampaign.map((camp) => camp.bestScore);
     expect(Math.max(...bestScores)).toBe(scoreSum);
   });
 

@@ -1,4 +1,4 @@
-import { PyriteBase } from './pyrite-base';
+import type { PyriteBase } from './pyrite-base';
 
 export interface FieldAttr {
   name: string;
@@ -17,7 +17,7 @@ export class ControllerBase {
 
   public getProps(field: string, value?: any): FieldAttr {
     const model = this.model;
-    value = value || model[field];
+    value ||= model[field];
 
     return { ...this.fields[field], value, model };
   }

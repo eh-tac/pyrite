@@ -1,5 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { Constants, KalidorCrescent, PilotRank, PilotStatus } from '../constants';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import {
   getBool,
   getByte,
@@ -10,6 +10,9 @@ import {
   writeInt,
   writeShort
 } from '@pyrite/core';
+
+import type { KalidorCrescent, PilotRank, PilotStatus } from '../constants';
+import { Constants } from '../constants';
 export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public readonly PILOTFILELENGTH: number = 1705;
   public PlatformID: number;
