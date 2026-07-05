@@ -1,29 +1,29 @@
 {
-    "name": "eh-tac/pyrite",
-    "description": "Library for reading .TIE files and related things",
-    "version": "1.5.0",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Pickled Yoda",
-            "email": "pickledyoda@gmail.com"
-        }
-    ],
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.x-dev"
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "Pyrite\\": "lib/"
-        }
-    },
-    "require-dev": {
-        "phpstan/phpstan": "^1.12",
-        "phpunit/phpunit": "^9.5"
-    },
-    "scripts": {
-        "phpstan": "phpstan analyse"
+  "name": "eh-tac/pyrite",
+  "description": "Library for reading .TIE files and related things",
+  "version": "1.5.0",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Pickled Yoda",
+      "email": "pickledyoda@gmail.com"
     }
+  ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.x-dev"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Pyrite\\": "lib/"
+    }
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.12",
+    "phpunit/phpunit": "^9.5"
+  },
+  "scripts": {
+    "phpstan": "phpstan analyse"
+  }
 }

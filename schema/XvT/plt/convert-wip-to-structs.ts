@@ -2,8 +2,8 @@
 
 // copilot generated script to take the c struct definitions from the file from rando and convert them to the struct meta file used in pyrite
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 type Field = {
   rawType: string;
@@ -18,7 +18,7 @@ type StructDef = {
 
 const TYPE_SIZE: Record<string, number> = {
   int: 4,
-  "unsigned int": 4,
+  'unsigned int': 4,
   DWORD: 4,
   DPID: 4,
   WORD: 2,
@@ -30,12 +30,12 @@ const TYPE_SIZE: Record<string, number> = {
 };
 
 function usage(): never {
-  console.error("Usage: node convert-wip-to-structs.ts [inputPath] [outputPath]");
+  console.error('Usage: node convert-wip-to-structs.ts [inputPath] [outputPath]');
   process.exit(1);
 }
 
 function parseStructs(source: string): StructDef[] {
-  const clean = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+  const clean = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
   const structs: StructDef[] = [];
   const structRegex = /struct\s+([A-Za-z_]\w*)\s*\{([\s\S]*?)\}\s*;?/g;
 
@@ -45,12 +45,12 @@ function parseStructs(source: string): StructDef[] {
     const fields: Field[] = [];
 
     const lines = body
-      .split("\n")
-      .map(line => line.trim())
-      .filter(line => line.length > 0);
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
 
     for (const line of lines) {
-      if (!line.endsWith(";")) {
+      if (!line.endsWith(';')) {
         continue;
       }
 
@@ -62,7 +62,7 @@ function parseStructs(source: string): StructDef[] {
 
       const rawType = fieldMatch[1].trim();
       const fieldName = fieldMatch[2].trim();
-      const arrayPart = fieldMatch[3] ?? "";
+      const arrayPart = fieldMatch[3] ?? '';
 
       const dims: number[] = [];
       const dimRegex = /\[\s*([^\]]+?)\s*\]/g;
@@ -93,24 +93,24 @@ function product(values: number[]): number {
 }
 
 function normalizeDisplayType(rawType: string, dims: number[]): string {
-  if (rawType === "char" && dims.length > 0) {
+  if (rawType === 'char' && dims.length > 0) {
     const [first, ...rest] = dims;
     if (rest.length === 0) {
       return `CHAR<${first}>`;
     }
-    return `CHAR<${first}>[${rest.join("][")}]`;
+    return `CHAR<${first}>[${rest.join('][')}]`;
   }
 
   const map: Record<string, string> = {
-    int: "INT",
-    "unsigned int": "INT",
-    DWORD: "INT",
-    DPID: "INT",
-    WORD: "SHORT",
-    short: "SHORT",
-    BYTE: "BYTE",
-    __int8: "BYTE",
-    BOOL: "BOOL"
+    int: 'INT',
+    'unsigned int': 'INT',
+    DWORD: 'INT',
+    DPID: 'INT',
+    WORD: 'SHORT',
+    short: 'SHORT',
+    BYTE: 'BYTE',
+    __int8: 'BYTE',
+    BOOL: 'BOOL'
   };
 
   return map[rawType] ?? rawType;
@@ -118,11 +118,11 @@ function normalizeDisplayType(rawType: string, dims: number[]): string {
 
 function formatHex(value: number): string {
   const hex = value.toString(16).toUpperCase();
-  return `0x${hex.padStart(4, "0")}`;
+  return `0x${hex.padStart(4, '0')}`;
 }
 
 function buildSizeResolver(structs: StructDef[]): (typeName: string) => number {
-  const structByName = new Map(structs.map(entry => [entry.name, entry]));
+  const structByName = new Map(structs.map((entry) => [entry.name, entry]));
   const memo = new Map<string, number>();
   const visiting = new Set<string>();
 
@@ -166,7 +166,7 @@ function renderStructs(structs: StructDef[]): string {
   for (const structDef of structs) {
     const structSize = resolveSize(structDef.name);
     lines.push(`struct ${structDef.name} (size ${formatHex(structSize)})`);
-    lines.push("{");
+    lines.push('{');
 
     let offset = 0;
     for (const field of structDef.fields) {
@@ -175,28 +175,28 @@ function renderStructs(structs: StructDef[]): string {
       const displayType = normalizeDisplayType(field.rawType, field.arrayDims);
 
       const suffix =
-        field.rawType === "char" && field.arrayDims.length > 0
-          ? ""
+        field.rawType === 'char' && field.arrayDims.length > 0
+          ? ''
           : field.arrayDims.length > 0
-          ? `[${field.arrayDims.join("][")}]`
-          : "";
+            ? `[${field.arrayDims.join('][')}]`
+            : '';
 
       lines.push(`  ${formatHex(offset)} ${displayType}${suffix} ${field.name}`);
       offset += baseSize * count;
     }
 
-    lines.push("}");
-    lines.push("");
+    lines.push('}');
+    lines.push('');
   }
 
-  return lines.join("\n").trimEnd() + "\n";
+  return lines.join('\n').trimEnd() + '\n';
 }
 
 function main(): void {
-  const inputArg = process.argv[2] ?? "wip.txt";
+  const inputArg = process.argv[2] ?? 'wip.txt';
   const outputArg = process.argv[3];
 
-  if (inputArg === "-h" || inputArg === "--help") {
+  if (inputArg === '-h' || inputArg === '--help') {
     usage();
   }
 
@@ -205,7 +205,7 @@ function main(): void {
     throw new Error(`Input file not found: ${inputPath}`);
   }
 
-  const source = fs.readFileSync(inputPath, "utf8");
+  const source = fs.readFileSync(inputPath, 'utf8');
   const structs = parseStructs(source);
   if (structs.length === 0) {
     throw new Error(`No structs found in: ${inputPath}`);
@@ -219,7 +219,7 @@ function main(): void {
   }
 
   const outputPath = path.resolve(process.cwd(), outputArg);
-  fs.writeFileSync(outputPath, output, "utf8");
+  fs.writeFileSync(outputPath, output, 'utf8');
   process.stderr.write(`Wrote ${outputPath}\n`);
 }
 

@@ -1,16 +1,31 @@
-import { PyriteGenerator } from "../generator";
-import { PropObject, Prop, PropByte, PropChar, PropShort, PropSByte, PropInt, PropStr } from "../prop";
-import { Struct } from "../struct";
+import { PyriteGenerator } from '../generator';
+import {
+  PropObject,
+  Prop,
+  PropByte,
+  PropChar,
+  PropShort,
+  PropSByte,
+  PropInt,
+  PropStr
+} from '../prop';
+import { Struct } from '../struct';
 
-describe("generator test", () => {
-  describe("props", () => {
+describe('generator test', () => {
+  describe('props', () => {
     let gen: PyriteGenerator;
 
     const getProp = (line: string) => {
       return gen.parseProp(line.trim().split(/\s+/));
     };
 
-    const expectProp = (prop: Prop, offset: string, name: string, isArray: boolean, pv: boolean): void => {
+    const expectProp = (
+      prop: Prop,
+      offset: string,
+      name: string,
+      isArray: boolean,
+      pv: boolean
+    ): void => {
       expect(prop.offset).toBe(offset); // "Offset check failed");
       expect(prop.name).toBe(name);
       expect(prop.isArray).toBe(isArray);
@@ -18,127 +33,127 @@ describe("generator test", () => {
     };
 
     beforeEach(() => {
-      gen = new PyriteGenerator("TIE", "", "");
+      gen = new PyriteGenerator('TIE', '', '');
     });
 
-    it("basic prop object", () => {
-      const prop = getProp("0x000 FileHeader FileHeader");
+    it('basic prop object', () => {
+      const prop = getProp('0x000 FileHeader FileHeader');
 
-      expectProp(prop, "0x000", "FileHeader", false, false);
+      expectProp(prop, '0x000', 'FileHeader', false, false);
 
       expect(prop instanceof PropObject).toBe(true);
-      expect((prop as PropObject).structName).toBe("FileHeader");
+      expect((prop as PropObject).structName).toBe('FileHeader');
     });
 
-    it("simple length array prop object", () => {
-      const prop = getProp("PV GlobalGoal[3] GlobalGoals");
+    it('simple length array prop object', () => {
+      const prop = getProp('PV GlobalGoal[3] GlobalGoals');
 
-      expectProp(prop, "PV", "GlobalGoals", true, true);
+      expectProp(prop, 'PV', 'GlobalGoals', true, true);
       expect(prop.arrayLengthValue).toBe(3);
       expect(prop instanceof PropObject).toBe(true);
-      expect((prop as PropObject).structName).toBe("GlobalGoal");
+      expect((prop as PropObject).structName).toBe('GlobalGoal');
     });
 
-    it("expression length array prop object", () => {
-      const prop = getProp("PV FlightGroup[FileHeader-NumFGs] FlightGroups");
-      expectProp(prop, "PV", "FlightGroups", true, true);
-      expect(prop.arrayLengthExpression).toBe("FileHeader-NumFGs");
+    it('expression length array prop object', () => {
+      const prop = getProp('PV FlightGroup[FileHeader-NumFGs] FlightGroups');
+      expectProp(prop, 'PV', 'FlightGroups', true, true);
+      expect(prop.arrayLengthExpression).toBe('FileHeader-NumFGs');
       expect(prop.getFunctionStubs().length).toBe(0);
       expect(prop instanceof PropObject).toBe(true);
-      expect((prop as PropObject).structName).toBe("FlightGroup");
+      expect((prop as PropObject).structName).toBe('FlightGroup');
     });
 
-    it("reserved byte", () => {
-      const prop = getProp("PV BYTE End Reserved(0xFF)");
+    it('reserved byte', () => {
+      const prop = getProp('PV BYTE End Reserved(0xFF)');
 
-      expectProp(prop, "PV", "End", false, true);
+      expectProp(prop, 'PV', 'End', false, true);
       expect(prop instanceof PropByte).toBe(true);
       expect(prop.reservedValue).toBe(255);
     });
 
-    it("enum", () => {
-      const prop = getProp("0x00A	BYTE	BriefingOfficers (enum)");
+    it('enum', () => {
+      const prop = getProp('0x00A	BYTE	BriefingOfficers (enum)');
 
-      expectProp(prop, "0x00A", "BriefingOfficers", false, false);
+      expectProp(prop, '0x00A', 'BriefingOfficers', false, false);
       expect(prop instanceof PropByte).toBe(true);
       expect(prop.isEnum).toBe(true);
-      expect(prop.enumName).toBe("BriefingOfficers");
+      expect(prop.enumName).toBe('BriefingOfficers');
     });
 
-    it("simple type and array length", () => {
-      const prop = getProp("0x018	CHAR<64>[6]	EndOfMissionMessages");
+    it('simple type and array length', () => {
+      const prop = getProp('0x018	CHAR<64>[6]	EndOfMissionMessages');
 
-      expectProp(prop, "0x018", "EndOfMissionMessages", true, false);
+      expectProp(prop, '0x018', 'EndOfMissionMessages', true, false);
       expect(prop instanceof PropChar).toBe(true);
       expect(prop.baseSize).toBe(64);
       expect(prop.arrayLengthValue).toBe(6);
       expect(prop.size).toBe(64 * 6);
     });
 
-    it("type length expression", () => {
-      const prop = getProp("0x2	CHAR<QuestionLength()> Question");
+    it('type length expression', () => {
+      const prop = getProp('0x2	CHAR<QuestionLength()> Question');
 
-      expectProp(prop, "0x2", "Question", false, false);
+      expectProp(prop, '0x2', 'Question', false, false);
       expect(prop instanceof PropChar).toBe(true);
-      expect(prop.typeLengthExpression).toBe("QuestionLength()");
+      expect(prop.typeLengthExpression).toBe('QuestionLength()');
       expect(prop.getFunctionStubs().length).toBe(1);
-      expect(prop.getFunctionStubs()[0]).toBe("QuestionLength()");
+      expect(prop.getFunctionStubs()[0]).toBe('QuestionLength()');
     });
 
-    it("comment", () => {
-      const prop = getProp("0x03B	BYTE	Reserved1 Reserved(0)			Unknown1 in TFW");
+    it('comment', () => {
+      const prop = getProp('0x03B	BYTE	Reserved1 Reserved(0)			Unknown1 in TFW');
 
-      expectProp(prop, "0x03B", "Reserved1", false, false);
+      expectProp(prop, '0x03B', 'Reserved1', false, false);
       expect(prop instanceof PropByte).toBe(true);
-      expect(prop.comment).toBe("Unknown1 in TFW");
+      expect(prop.comment).toBe('Unknown1 in TFW');
     });
 
-    it("array length expression", () => {
-      const prop = getProp("0x4	SHORT[VariableCount()]	Variables");
+    it('array length expression', () => {
+      const prop = getProp('0x4	SHORT[VariableCount()]	Variables');
 
-      expectProp(prop, "0x4", "Variables", true, false);
+      expectProp(prop, '0x4', 'Variables', true, false);
       expect(prop instanceof PropShort).toBe(true);
-      expect(prop.arrayLengthExpression).toBe("VariableCount()");
+      expect(prop.arrayLengthExpression).toBe('VariableCount()');
       expect(prop.getFunctionStubs().length).toBe(1);
-      expect(prop.getFunctionStubs()[0]).toBe("VariableCount()");
+      expect(prop.getFunctionStubs()[0]).toBe('VariableCount()');
     });
 
-    it("sbyte", () => {
-      const prop = getProp("0x0A6	SBYTE	BonusGoalPoints");
+    it('sbyte', () => {
+      const prop = getProp('0x0A6	SBYTE	BonusGoalPoints');
 
-      expectProp(prop, "0x0A6", "BonusGoalPoints", false, false);
+      expectProp(prop, '0x0A6', 'BonusGoalPoints', false, false);
       expect(prop instanceof PropSByte).toBe(true);
     });
 
-    it("int", () => {
-      const prop = getProp("0x006	INT	EventsLength Number of shorts used for events.");
+    it('int', () => {
+      const prop = getProp('0x006	INT	EventsLength Number of shorts used for events.');
 
-      expectProp(prop, "0x006", "EventsLength", false, false);
+      expectProp(prop, '0x006', 'EventsLength', false, false);
       expect(prop instanceof PropInt).toBe(true);
-      expect(prop.comment).toBe("Number of shorts used for events.");
+      expect(prop.comment).toBe('Number of shorts used for events.');
     });
 
-    it("string", () => {
-      const prop = getProp("0x48	STR<12>	EditorNote");
+    it('string', () => {
+      const prop = getProp('0x48	STR<12>	EditorNote');
 
-      expectProp(prop, "0x48", "EditorNote", false, false);
+      expectProp(prop, '0x48', 'EditorNote', false, false);
       expect(prop instanceof PropStr).toBe(true);
       expect(prop.baseSize).toBe(12);
     });
 
-    it("big comment", () => {
+    it('big comment', () => {
       const prop = getProp(
-        "0x00A	Event[0] Events Set to 0 and impossible to generate in the same way, needs custom implementation"
+        '0x00A	Event[0] Events Set to 0 and impossible to generate in the same way, needs custom implementation'
       );
 
-      expectProp(prop, "0x00A", "Events", true, false);
+      expectProp(prop, '0x00A', 'Events', true, false);
       expect(prop instanceof PropObject).toBe(true);
-      expect((prop as PropObject).structName).toBe("Event");
+      expect((prop as PropObject).structName).toBe('Event');
     });
   });
 
-  describe("structs", () => {
-    it("correctly processes a simple struct", () => {
+  describe('structs', () => {
+    it('correctly processes a simple struct', () => {
       const structData = `struct Mission (size 0)
       {
         0x000 FileHeader FileHeader
@@ -150,15 +165,15 @@ describe("generator test", () => {
         PV PostMissionQuestions[10] PostMissionQuestions
         PV BYTE	End Reserved(0xFF)
       }`;
-      const generator = new PyriteGenerator("TIE", structData, "");
-      const missStruct = generator.structs["Mission"] as Struct;
+      const generator = new PyriteGenerator('TIE', structData, '');
+      const missStruct = generator.structs['Mission'] as Struct;
       expect(missStruct).toBeDefined();
       const missProps = missStruct.getProps();
       expect(missProps.length).toBe(8);
-      expect(missProps[0].name).toBe("FileHeader");
+      expect(missProps[0].name).toBe('FileHeader');
     });
 
-    it("does muliples", () => {
+    it('does muliples', () => {
       const structData = `struct Mission (size 0)
       {
         0x000 FileHeader FileHeader
@@ -185,19 +200,19 @@ describe("generator test", () => {
         0x19A	CHAR<12>[4]	OtherIffNames
       }`;
 
-      const gen = new PyriteGenerator("TIE", structData, "");
-      const mission = gen.structs["Mission"];
+      const gen = new PyriteGenerator('TIE', structData, '');
+      const mission = gen.structs['Mission'];
       expect(mission).toBeDefined();
       expect(mission.getProps().length).toBe(8);
 
-      const fileheader = gen.structs["FileHeader"];
+      const fileheader = gen.structs['FileHeader'];
       expect(fileheader).toBeDefined();
       expect(fileheader.getProps().length).toBe(10);
     });
   });
 
-  describe("constants", () => {
-    it("does basics", () => {
+  describe('constants', () => {
+    it('does basics', () => {
       const constData = `Beam
     00	None
     01	Tractor Beam
@@ -210,17 +225,17 @@ describe("generator test", () => {
     03	Officer
     04	Ace
     05	Top Ace (Invincible)`;
-      const gen = new PyriteGenerator("TIE", "", constData);
-      const beam = gen.constants["Beam"];
+      const gen = new PyriteGenerator('TIE', '', constData);
+      const beam = gen.constants['Beam'];
       expect(beam).toBeDefined();
-      expect(beam.name).toBe("Beam");
+      expect(beam.name).toBe('Beam');
       expect(beam.values.length).toBe(3);
       expect(beam.values[0][0]).toBe(0);
-      expect(beam.values[2][1]).toBe("Jamming Beam");
+      expect(beam.values[2][1]).toBe('Jamming Beam');
 
-      const fgAI = gen.constants["GroupAI"];
+      const fgAI = gen.constants['GroupAI'];
       expect(fgAI).toBeDefined();
-      expect(fgAI.name).toBe("GroupAI");
+      expect(fgAI.name).toBe('GroupAI');
       expect(fgAI.values.length).toBe(6);
     });
   });

@@ -87,5 +87,5 @@ struct Voic (size 0)
 struct VoicData (size 0){
   0x00 BYTE Type
   0x01 BYTE[3] Size
-  0x04 any Data
+  0x04 BYTE Data
 }
