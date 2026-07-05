@@ -19,5 +19,8 @@
     "format": "prettier --check \"src/**/*.ts\"",
     "format:write": "prettier --write \"src/**/*.ts\"",
     "preinstall": "npm run build"
+  },
+  "dependencies": {
+    "@pyrite/core": "file:../core"
   }
 }
