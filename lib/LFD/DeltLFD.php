@@ -82,74 +82,74 @@ class DeltLFD extends LFD
 }
 
 // rows are read from the top down, left to right
-class Row implements Byteable
-{
-    use HexDecoder;
-    use HexEncoder;
-    public int $Length; // number of pixels defined in that row. # pixels = Length >> 1.
-    public int $Left; // used for 'broken' images where there are blank spots e.g. map has gap for officer's head. For images without blanks, this is usally = delt.left
-    public int $Top; // because of broken images, two rows can have the same top value
-    public string $ColorIndexes; // if (Length % 2 == 0) - uncompressed indexed values for the colour palette
-    public OpCode $Operations; // else - operations array. continues until # pixels = length
+// class Row implements Byteable
+// {
+//     use HexDecoder;
+//     use HexEncoder;
+//     public int $Length; // number of pixels defined in that row. # pixels = Length >> 1.
+//     public int $Left; // used for 'broken' images where there are blank spots e.g. map has gap for officer's head. For images without blanks, this is usally = delt.left
+//     public int $Top; // because of broken images, two rows can have the same top value
+//     public string $ColorIndexes; // if (Length % 2 == 0) - uncompressed indexed values for the colour palette
+//     public OpCode $Operations; // else - operations array. continues until # pixels = length
 
-    private bool $IsCompressed;
-    private int $NumPixels;
+//     private bool $IsCompressed;
+//     private int $NumPixels;
 
-    public function __construct(string $hex)
-    {
-        $this->Length = $this->getShort($hex);
-        $this->IsCompressed = $this->Length % 2 === 1;
-        $this->NumPixels = $this->Length >> 1;
+//     public function __construct(string $hex, public ?PyriteModel $TIE = NULL)
+//     {
+//         $this->Length = $this->getShort($hex);
+//         $this->IsCompressed = $this->Length % 2 === 1;
+//         $this->NumPixels = $this->Length >> 1;
 
-        if ($this->Length) {
-            $this->Left = $this->getShort($hex, 2);
-            $this->Top = $this->getShort($hex, 4);
-            if ($this->IsCompressed) {
-                // op code shit
-                $this->Operations = new OpCode($hex);
-            } else {
-                $this->ColorIndexes = substr($hex, 6, $this->NumPixels);
-            }
-        }
-    }
+//         if ($this->Length) {
+//             $this->Left = $this->getShort($hex, 2);
+//             $this->Top = $this->getShort($hex, 4);
+//             if ($this->IsCompressed) {
+//                 // op code shit
+//                 $this->Operations = new OpCode($hex);
+//             } else {
+//                 $this->ColorIndexes = substr($hex, 6, $this->NumPixels);
+//             }
+//         }
+//     }
 
-    public function getLength()
-    {
-        if ($this->Length === 0) {
-            return 2;
-        } elseif ($this->IsCompressed) {
-            return $this->Length + 6;
-        } else {
-            return $this->NumPixels + 6;
-        }
-    }
+//     public function getLength()
+//     {
+//         if ($this->Length === 0) {
+//             return 2;
+//         } elseif ($this->IsCompressed) {
+//             return $this->Length + 6;
+//         } else {
+//             return $this->NumPixels + 6;
+//         }
+//     }
 
-    public function paint($image, $palette = null)
-    {
-        $y = $this->Top;
-        for ($i = 0; $i < $this->NumPixels; $i++) {
-            $x = $this->Left + $i;
-            $color = $this->ColorIndexes[$i];
-            imagesetpixel($image, $x, $y, $this->getByte($color));
-        }
-    }
-}
+//     public function paint(\GdImage $image, $palette = null)
+//     {
+//         $y = $this->Top;
+//         for ($i = 0; $i < $this->NumPixels; $i++) {
+//             $x = $this->Left + $i;
+//             $color = $this->ColorIndexes[$i];
+//             imagesetpixel($image, $x, $y, $this->getByte($color));
+//         }
+//     }
+// }
 
-class OpCode
-{
-    public $Value; // odd is repeat, even is read
-    public $ColorIndexes; // if (Value & 1 == 0) - byte[value / 2]
-    public $ColorIndex; // else (single byte)
+// class OpCode
+// {
+//     public $Value; // odd is repeat, even is read
+//     public $ColorIndexes; // if (Value & 1 == 0) - byte[value / 2]
+//     public $ColorIndex; // else (single byte)
 
-    private $IsRepeat;
+//     private $IsRepeat;
 
-    public function __construct(public string $hex)
-    {
-        $this->IsRepeat = TRUE; // ??
-    }
+//     public function __construct(public string $hex)
+//     {
+//         $this->IsRepeat = TRUE; // ??
+//     }
 
-    public function getLength()
-    {
-        return $this->IsRepeat ? 2 : ($this->Value / 2 + 1);
-    }
-}
+//     public function getLength()
+//     {
+//         return $this->IsRepeat ? 2 : ($this->Value / 2 + 1);
+//     }
+// }
