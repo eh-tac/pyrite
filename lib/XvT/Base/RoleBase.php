@@ -7,7 +7,6 @@ use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
 use Pyrite\PyriteModel;
-use Pyrite\XvT\Constants;
 
 abstract class RoleBase extends PyriteBase implements Byteable, PyriteModel
 {
@@ -48,7 +47,7 @@ abstract class RoleBase extends PyriteBase implements Byteable, PyriteModel
     {
         return [
             "Team" => $this->Team,
-            "Designation" => $this->getDesignationLabel()
+            "Designation" => $this->Designation
         ];
     }
     
@@ -63,10 +62,6 @@ abstract class RoleBase extends PyriteBase implements Byteable, PyriteModel
         return $hex;
     }
     
-    public function getDesignationLabel(): string 
-    {
-        return isset($this->Designation) && isset(Constants::$DESIGNATION[$this->Designation]) ? Constants::$DESIGNATION[$this->Designation] : "Unknown";
-    }
     
     public function getLength(): int
     {

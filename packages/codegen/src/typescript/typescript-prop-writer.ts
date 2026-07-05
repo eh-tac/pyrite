@@ -35,7 +35,7 @@ export class TypeScriptPropWriter {
   // output for saving
 
   public get hexImports(): string[] {
-    return [this.prop.hexGetter, this.prop.hexSetter].filter((s) => !!s);
+    return [!this.prop.isStatic ? this.prop.hexGetter : null, this.prop.hexSetter].filter(Boolean);
   }
 
   public get classImports(): string[] {

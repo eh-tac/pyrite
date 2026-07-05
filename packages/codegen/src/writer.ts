@@ -5,14 +5,21 @@ import { PyriteGenerator } from './generator';
 import { Constants } from './constants';
 
 export abstract class PyriteWriter {
+  protected language: string = 'TypeScript';
+  protected platformDir: string = 'tmp';
+
   constructor(
     public rootDir: string,
     public generator: PyriteGenerator,
     public overwriteIfExists = false
   ) {}
 
+  public get label(): string {
+    return `${this.language}Writer for ${this.buildPath('PLT')}`;
+  }
+
   public buildPath(path: string): string {
-    return `${this.rootDir}/${path.replace('PLT', this.generator.platform)}`;
+    return `${this.rootDir}/${path.replace('PLT', this.platformDir)}`;
   }
 
   public write(): this {

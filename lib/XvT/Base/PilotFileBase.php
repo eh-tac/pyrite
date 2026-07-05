@@ -15,8 +15,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable, PyriteModel
     use HexDecoder;
     use HexEncoder;
 
-    /** @var int PilotFileLength INT */
-	public int $PilotFileLength;
+    /** @var int PILOTFILELENGTH INT */
+	public const PILOTFILELENGTH = 96702;
     /** @var string 0x0000 Name CHAR */
 	public string $Name;
     /** @var int 0x000E totalScore INT */
@@ -68,10 +68,8 @@ abstract class PilotFileBase extends PyriteBase implements Byteable, PyriteModel
         $this->PilotRating = $this->getInt($hex, 0x2326);
         $this->RatingLabel = $this->getChar($hex, 0x2392, 32);
         $this->RebelStats = (new TeamStats(substr($hex, 0x3ef2), $this->TIE))->loadHex();
-        $offset = 0x3ef2 + $this->RebelStats->getLength();
         $this->ImperialStats = (new TeamStats(substr($hex, 0x12716), $this->TIE))->loadHex();
-        $offset = 0x12716 + $this->ImperialStats->getLength();
-        $this->PilotFileLength = $offset;
+        
 
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
@@ -123,6 +121,6 @@ abstract class PilotFileBase extends PyriteBase implements Byteable, PyriteModel
     
     public function getLength(): int
     {
-        return $this->PilotFileLength;
+        return self::PILOTFILELENGTH;
     }
 }

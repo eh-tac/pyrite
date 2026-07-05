@@ -14,6 +14,8 @@ export class PHPWriter extends PyriteWriter {
     public overwriteIfExists = false
   ) {
     super(rootDir, generator, overwriteIfExists);
+    this.language = 'PHP';
+    this.platformDir = this.generator.platform;
   }
 
   public writeConstants(constants: Constants[]): void {

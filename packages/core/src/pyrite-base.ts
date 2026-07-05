@@ -11,13 +11,13 @@ export interface IFlightGroup {
 }
 
 export interface IFGScore {
-  isInDifficultyLevel(level: "Easy" | "Medium" | "Hard"): boolean;
-  pointValue(level: "Easy" | "Medium" | "Hard"): number;
+  isInDifficultyLevel(level: 'Easy' | 'Medium' | 'Hard'): boolean;
+  pointValue(level: 'Easy' | 'Medium' | 'Hard'): number;
 }
 
 export enum DataType {
   char,
-  SELECT,
+  SELECT
 }
 
 export interface FieldProp {
@@ -33,7 +33,7 @@ export interface IFielder {
 export abstract class PyriteBase {
   public constructor(
     public hex: ArrayBuffer,
-    public TIE: IMission,
+    public TIE: IMission
   ) {}
 
   // public compareHex(other: string): boolean {

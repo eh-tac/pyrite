@@ -14,8 +14,8 @@ abstract class LFDBase extends PyriteBase implements Byteable, PyriteModel
     use HexDecoder;
     use HexEncoder;
 
-    /** @var int LFDLength INT */
-	public int $LFDLength;
+    /** @var int LFDLENGTH INT */
+	public const LFDLENGTH = 16;
     /** @var Header 0x00 Header Header */
 	public Header $Header;
     
@@ -35,7 +35,7 @@ abstract class LFDBase extends PyriteBase implements Byteable, PyriteModel
         $offset = 0;
 
         $this->Header = (new Header(substr($hex, 0x00), $this->TIE))->loadHex();
-        $this->LFDLength = $offset;
+        
 
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
@@ -61,6 +61,6 @@ abstract class LFDBase extends PyriteBase implements Byteable, PyriteModel
     
     public function getLength(): int
     {
-        return $this->LFDLength;
+        return self::LFDLENGTH;
     }
 }

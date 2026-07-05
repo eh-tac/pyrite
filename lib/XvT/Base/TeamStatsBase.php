@@ -14,8 +14,8 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable, PyriteModel
     use HexDecoder;
     use HexEncoder;
 
-    /** @var int TeamStatsLength INT */
-	public int $TeamStatsLength;
+    /** @var int TEAMSTATSLENGTH INT */
+	public const TEAMSTATSLENGTH = 21160;
     /** @var array<int> 0x0000 MeleeMedals INT */
 	public array $MeleeMedals;
     /** @var array<int> 0x0018 TournamentMedals INT */
@@ -275,7 +275,7 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable, PyriteModel
             $this->CombatMissionData[] = $t;
             $offset += $t->getLength();
         }
-        $this->TeamStatsLength = $offset;
+        
 
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
@@ -488,6 +488,6 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable, PyriteModel
     
     public function getLength(): int
     {
-        return $this->TeamStatsLength;
+        return self::TEAMSTATSLENGTH;
     }
 }

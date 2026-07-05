@@ -4,9 +4,20 @@ import { Struct } from '../struct';
 import { PropInt } from '../prop';
 import { TypeScriptPropWriter as PropWriter } from './typescript-prop-writer';
 import { camelCase, kebabCase } from 'lodash-es';
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
+import { PyriteGenerator } from '../generator';
 
 export class TypeScriptWriter extends PyriteWriter {
+  constructor(
+    public rootDir: string,
+    public generator: PyriteGenerator,
+    public overwriteIfExists = false
+  ) {
+    super(rootDir, generator, overwriteIfExists);
+    this.language = 'TypeScript';
+    this.platformDir = this.generator.platform.toLowerCase();
+  }
+
   public write(): this {
     super.write();
 
@@ -16,9 +27,9 @@ export class TypeScriptWriter extends PyriteWriter {
       modelIndex.push(`export { ${s.name} } from "./${kebab}";`);
     });
 
-    this.writeFile('index.ts', modelIndex.join('\n'));
+    this.writeFile('PLT/src/index.ts', modelIndex.join('\n'));
 
-    execSync('npm run format:write', { cwd: this.rootDir });
+    spawnSync('npm', ['run', 'format:write'], { cwd: this.buildPath('PLT') });
 
     return this;
   }
@@ -139,7 +150,9 @@ export class ${struct.name} extends ${baseClass} {
   protected getBaseConstructor(struct: Struct, lengthProp: PropWriter): string {
     const props = struct.getProps().map((p) => new PropWriter(p));
 
-    const needsOffset = props.some((p) => p.needsOffset);
+    // in the constructor we also need to get the offset for the final length prop,
+    // so we also check if its not fixed length to catch when the last property is dynamic
+    const needsOffset = props.some((p) => p.needsOffset || !p.prop.isFixedLength);
 
     return `
   constructor(hex: ArrayBuffer, TIE?: IMission) {
@@ -148,7 +161,7 @@ export class ${struct.name} extends ${baseClass} {
     ${needsOffset ? 'let offset = 0;' : ''}    
 
     ${props.map((p: PropWriter) => p.getConstructorInit()).join('\n    ')}
-    ${struct.isVariableLength ? `this.${lengthProp.prop.name} = offset;` : ''}
+    ${struct.isVariableLength ? `this.${lengthProp.prop.name} = ${needsOffset ? 'offset;' : '0; // implement in child class'};` : ''}
   }`;
   }
 

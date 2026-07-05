@@ -30,12 +30,22 @@ const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [
 [
   new TypeScriptWriter(packages, tieG),
   new PHPWriter(phpLibPath, tieG),
+
   new TypeScriptWriter(packages, xwG),
   new PHPWriter(phpLibPath, xwG),
+
   new TypeScriptWriter(packages, xvtG),
   new PHPWriter(phpLibPath, xvtG),
+
   new TypeScriptWriter(packages, xwaG),
   new PHPWriter(phpLibPath, xwaG),
+
   new TypeScriptWriter(packages, lfdG),
   new PHPWriter(phpLibPath, lfdG)
-].forEach((writer) => writer.write());
+].forEach((writer) => {
+  console.log(writer.label);
+  console.time(writer.label);
+  writer.write();
+  console.timeEnd(writer.label);
+  console.log('...');
+});
