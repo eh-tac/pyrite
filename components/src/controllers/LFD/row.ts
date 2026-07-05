@@ -1,10 +1,16 @@
 import { ControllerBase } from "../../controller-base";
-import { Row } from "../../model/LFD";
+import { Row } from "../../../old-assets/model/LFD";
 
 export class LFDRowController extends ControllerBase {
-  public readonly fields: object = {"Length":{"name":"Length","type":"SHORT"},"Left":{"name":"Left","type":"SHORT"},"Top":{"name":"Top","type":"SHORT"},"ColorIndexes":{"name":"ColorIndexes","type":"BYTE"},"Operations":{"name":"Operations","type":"OpCode","componentTag":"pyrite-lfd-op-code","componentProp":"opcode"}};
+  public readonly fields: object = {
+    Length: { name: "Length", type: "SHORT" },
+    Left: { name: "Left", type: "SHORT" },
+    Top: { name: "Top", type: "SHORT" },
+    ColorIndexes: { name: "ColorIndexes", type: "BYTE" },
+    Operations: { name: "Operations", type: "OpCode", componentTag: "pyrite-lfd-op-code", componentProp: "opcode" },
+  };
 
-  constructor(public model: Row){
+  constructor(public model: Row) {
     super(model);
   }
 }

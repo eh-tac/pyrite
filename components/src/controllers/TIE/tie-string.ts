@@ -1,10 +1,10 @@
 import { ControllerBase } from "../../controller-base";
-import { TIEString } from "../../model/TIE";
+import { TIEString } from "../../../old-assets/model/TIE";
 
 export class TIEStringController extends ControllerBase {
-  public readonly fields: object = {"Length":{"name":"Length","type":"SHORT"},"Text":{"name":"Text","type":"CHAR"}};
+  public readonly fields: object = { Length: { name: "Length", type: "SHORT" }, Text: { name: "Text", type: "CHAR" } };
 
-  constructor(public model: TIEString){
+  constructor(public model: TIEString) {
     super(model);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, h, JSX, Listen, Prop, State } from "@stencil/core";
-import { Mission } from "../../model/TIE/mission";
+import { Mission } from "../../../old-assets/model/TIE/mission";
 
 enum Tabs {
   ROOT = "root",
@@ -9,13 +9,13 @@ enum Tabs {
   BRIEF = "briefing",
   PREQ = "pre-questions",
   POST = "post-questions",
-  SCORE = "score"
+  SCORE = "score",
 }
 
 @Component({
   tag: "pyrite-mission",
   styleUrl: "mission.scss",
-  shadow: true
+  shadow: true,
 })
 export class PyriteMission {
   @Prop() public plt: string;
@@ -81,7 +81,7 @@ export class PyriteMission {
         <pyrite-tie-briefing mission={this.tie} class={this.tabClass(Tabs.BRIEF)} />
         <pyrite-tie-pre-mission-questions class={this.tabClass(Tabs.PREQ)} />
         <pyrite-tie-score mission={this.tie} class={this.tabClass(Tabs.SCORE)} />
-      </ion-content>
+      </ion-content>,
     ];
   }
 

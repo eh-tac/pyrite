@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { BattleText } from "../../../model/LFD";
+import { BattleText } from "../../../../old-assets/model/LFD";
 import { LFDBattleTextController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-lfd-battle-text",
   styleUrl: "battle-text.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDBattleTextComponent {
   @Element() public el: HTMLElement;

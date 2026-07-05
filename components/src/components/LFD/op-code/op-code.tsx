@@ -1,12 +1,12 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
-import { OpCode } from "../../../model/LFD";
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
+import { OpCode } from "../../../../old-assets/model/LFD";
 import { LFDOpCodeController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-lfd-op-code",
   styleUrl: "op-code.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDOpCodeComponent {
   @Element() public el: HTMLElement;
@@ -21,10 +21,9 @@ export class LFDOpCodeComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Value')} />
-        <Field {...this.controller.getProps('ColorIndex')} />
+        <Field {...this.controller.getProps("Value")} />
+        <Field {...this.controller.getProps("ColorIndex")} />
       </Host>
-    )
+    );
   }
 }
-  

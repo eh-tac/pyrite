@@ -2,8 +2,6 @@
 
 namespace Pyrite\XvT;
 
-use PHPUnit\Framework\Constraint\StringContains;
-
 class PLTBattleState extends Base\PLTBattleStateBase
 {
 
@@ -12,7 +10,7 @@ class PLTBattleState extends Base\PLTBattleStateBase
     return (new PLTBattleState($hex, $TIE))->loadHex();
   }
 
-  public function __toString(): StringContains
+  public function __toString(): string
   {
     return '';
   }

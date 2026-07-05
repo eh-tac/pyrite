@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element, Watch } from "@stencil/core";
-import { Mission } from "../../../model/XvT";
+import { Mission } from "../../../../old-assets/model/XvT";
 import { XvTMissionController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xvt-mission",
   styleUrl: "mission.scss",
-  shadow: false
+  shadow: false,
 })
 export class XvTMissionComponent {
   @Element() public el: HTMLElement;

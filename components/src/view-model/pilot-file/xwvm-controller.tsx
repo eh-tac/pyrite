@@ -1,19 +1,22 @@
 import { JSX, h } from "@stencil/core";
 
-import { Battle } from "../../model/ehtc";
-import { PilotFile } from "../../model/XWVM";
-import type { XWVMBattleSummary, XWVMMissionScore } from "../../model/XWVM";
+import { Battle } from "../../../old-assets/model/ehtc";
+import { PilotFile } from "../../../old-assets/model/XWVM";
+import type { XWVMBattleSummary, XWVMMissionScore } from "../../../old-assets/model/XWVM";
 import { PilotFileController } from "./controller";
 
 export class XWVMController extends PilotFileController {
-  public constructor(filepath: string, public pilot: PilotFile) {
+  public constructor(
+    filepath: string,
+    public pilot: PilotFile,
+  ) {
     super(filepath);
   }
 
   public renderTabs(battleData?: Battle): [string, JSX.Element][] {
     const tabs: [string, JSX.Element][] = [
       ["Summary", this.renderPilotInformation()],
-      ["Battles", this.renderBattles()]
+      ["Battles", this.renderBattles()],
     ];
 
     if (battleData) {
@@ -35,7 +38,9 @@ export class XWVMController extends PilotFileController {
       if (missionScores[m] && scores.missions[m]) {
         missions.push(this.renderMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
-        missions.push(this.renderItem(`Mission ${m + 1}`, missionScores[m].score, "Too many missions flown", "text-danger"));
+        missions.push(
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].score, "Too many missions flown", "text-danger"),
+        );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
       }
@@ -75,7 +80,7 @@ export class XWVMController extends PilotFileController {
               <small>{battle.status}</small>
             </div>
             {battle.missions.map((mission: XWVMMissionScore) =>
-              this.renderMission(`Mission ${mission.mission}`, mission)
+              this.renderMission(`Mission ${mission.mission}`, mission),
             )}
           </li>
         ))}

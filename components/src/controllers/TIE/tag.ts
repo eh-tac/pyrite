@@ -1,10 +1,10 @@
 import { ControllerBase } from "../../controller-base";
-import { Tag } from "../../model/TIE";
+import { Tag } from "../../../old-assets/model/TIE";
 
 export class TIETagController extends ControllerBase {
-  public readonly fields: object = {"Length":{"name":"Length","type":"SHORT"},"Text":{"name":"Text","type":"CHAR"}};
+  public readonly fields: object = { Length: { name: "Length", type: "SHORT" }, Text: { name: "Text", type: "CHAR" } };
 
-  constructor(public model: Tag){
+  constructor(public model: Tag) {
     super(model);
   }
 }

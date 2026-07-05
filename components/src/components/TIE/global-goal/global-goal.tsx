@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { GlobalGoal } from "../../../model/TIE";
+import { GlobalGoal } from "../../../../old-assets/model/TIE";
 import { TIEGlobalGoalController } from "../../../controllers/TIE";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-tie-global-goal",
   styleUrl: "global-goal.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEGlobalGoalComponent {
   @Element() public el: HTMLElement;

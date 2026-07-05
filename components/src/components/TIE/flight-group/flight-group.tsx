@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { FlightGroup } from "../../../model/TIE";
+import { FlightGroup } from "../../../../old-assets/model/TIE";
 import { TIEFlightGroupController } from "../../../controllers/TIE";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-tie-flight-group",
   styleUrl: "flight-group.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEFlightGroupComponent {
   @Element() public el: HTMLElement;

@@ -1,12 +1,12 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
-import { PLTEarnedMedalRecord } from "../../../model/XvT";
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
+import { PLTEarnedMedalRecord } from "../../../../old-assets/model/XvT";
 import { XvTPLTEarnedMedalRecordController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xvt-plt-earned-medal-record",
   styleUrl: "plt-earned-medal-record.scss",
-  shadow: false
+  shadow: false,
 })
 export class XvTPLTEarnedMedalRecordComponent {
   @Element() public el: HTMLElement;
@@ -21,12 +21,11 @@ export class XvTPLTEarnedMedalRecordComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('meleePlaqueCount')} />
-        <Field {...this.controller.getProps('tournamentPlaqueCount')} />
-        <Field {...this.controller.getProps('exerciseBadgeCount')} />
-        <Field {...this.controller.getProps('battleMedalCount')} />
+        <Field {...this.controller.getProps("meleePlaqueCount")} />
+        <Field {...this.controller.getProps("tournamentPlaqueCount")} />
+        <Field {...this.controller.getProps("exerciseBadgeCount")} />
+        <Field {...this.controller.getProps("battleMedalCount")} />
       </Host>
-    )
+    );
   }
 }
-  

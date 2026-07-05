@@ -1,7 +1,10 @@
-import { FontFile, Glyph } from "../model/util/font";
+import { FontFile, Glyph } from "../../old-assets/model/util/font";
 
 export abstract class DrawingObject {
-  constructor(public ctx: CanvasRenderingContext2D, public font: FontFile) {}
+  constructor(
+    public ctx: CanvasRenderingContext2D,
+    public font: FontFile,
+  ) {}
   public abstract draw(tick: number): void;
   protected rect(x: number, y: number, width: number, height: number, fill: string) {
     this.ctx.clearRect(x, y, width, height);
@@ -65,13 +68,13 @@ export abstract class DrawingObject {
 
   protected getColour(name: string): [number, number, number] {
     const lookup = {
-      "green": [0, 170, 0],
-      "red": [174, 0, 0],
-      "purple": [255, 0, 255],
-      "blue": [0, 121, 227],
+      green: [0, 170, 0],
+      red: [174, 0, 0],
+      purple: [255, 0, 255],
+      blue: [0, 121, 227],
       "light red": [255, 160, 122],
-      "gray": [128, 128, 128],
-      "white": [255, 255, 255]
+      gray: [128, 128, 128],
+      white: [255, 255, 255],
     };
     if (lookup[name]) {
       return lookup[name];
@@ -82,13 +85,13 @@ export abstract class DrawingObject {
 
   protected getHex(name: string): string {
     const lookup = {
-      "green": "#00aa00",
-      "red": "#ae0000",
-      "purple": "#FF00FF",
-      "blue": "#0079E3",
+      green: "#00aa00",
+      red: "#ae0000",
+      purple: "#FF00FF",
+      blue: "#0079E3",
       "light red": "#FFA07A",
-      "gray": "#808080",
-      "white": "#FFFFFF"
+      gray: "#808080",
+      white: "#FFFFFF",
     };
     if (lookup[name]) {
       return lookup[name];

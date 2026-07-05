@@ -1,12 +1,15 @@
 import { JSX, h } from "@stencil/core";
 
 import { PilotFileController } from "./controller";
-import { Battle } from "../../model/ehtc";
-import { PilotFile, MissionData, TeamStats } from "../../model/XvT";
-import { TriStat } from "../../model/XvT/team-stats";
+import { Battle } from "../../../old-assets/model/ehtc";
+import { PilotFile, MissionData, TeamStats } from "../../../old-assets/model/XvT";
+import { TriStat } from "../../../old-assets/model/XvT/team-stats";
 
 export class XvTPltController extends PilotFileController {
-  public constructor(filepath: string, public plt: PilotFile) {
+  public constructor(
+    filepath: string,
+    public plt: PilotFile,
+  ) {
     super(filepath);
   }
 
@@ -17,14 +20,14 @@ export class XvTPltController extends PilotFileController {
     if (rebel.hasData()) {
       tabs.push(
         ["Stats (R)", this.renderTeamStats("Rebel", rebel)],
-        ["Missions (R)", this.renderTeamMissions("Rebel", rebel)]
+        ["Missions (R)", this.renderTeamMissions("Rebel", rebel)],
       );
     }
     const imprl = this.plt.ImperialStats;
     if (imprl.hasData()) {
       tabs.push(
         ["Stats (I)", this.renderTeamStats("Imperial", imprl)],
-        ["Missions (I)", this.renderTeamMissions("Imperial", imprl)]
+        ["Missions (I)", this.renderTeamMissions("Imperial", imprl)],
       );
     }
 
@@ -40,7 +43,7 @@ export class XvTPltController extends PilotFileController {
     let totalScore: number = 0;
 
     const missionScores: MissionData[] = [];
-    this.plt.ImperialStats.TrainingMissionData.forEach(m => {
+    this.plt.ImperialStats.TrainingMissionData.forEach((m) => {
       if (m.AttemptCount) {
         missionScores.push(m);
         totalScore += m.BestScore;
@@ -67,9 +70,12 @@ export class XvTPltController extends PilotFileController {
         missions.push(this.renderXvTMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].BestScore.toLocaleString(),
-          "Too many missions flown",
-          "text-danger")
+          this.renderItem(
+            `Mission ${m + 1}`,
+            missionScores[m].BestScore.toLocaleString(),
+            "Too many missions flown",
+            "text-danger",
+          ),
         );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
@@ -153,7 +159,7 @@ export class XvTPltController extends PilotFileController {
                 Kills By Type
               </td>
             </tr>
-            {stats.BattleVictories.map(s => this.renderTriRow(s))}
+            {stats.BattleVictories.map((s) => this.renderTriRow(s))}
           </tbody>
         </table>
       </div>

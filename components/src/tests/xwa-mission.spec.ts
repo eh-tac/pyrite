@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { Mission } from "../model/XWA";
+import { Mission } from "../../old-assets/model/XWA";
 
 describe("xwa-serialization", () => {
   const scoreHex = readFileSync(`${__dirname}/../assets/xwascore.tie`);

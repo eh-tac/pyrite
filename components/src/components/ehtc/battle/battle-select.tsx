@@ -1,11 +1,11 @@
 import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } from "@stencil/core";
-import { BattleSummary } from "../../../model/ehtc";
+import { BattleSummary } from "../../../../old-assets/model/ehtc";
 import { ehtcAPI } from "../api-store/util";
 
 @Component({
   tag: "ehtc-battle-select",
   styleUrl: "battle-select.scss",
-  shadow: false
+  shadow: false,
 })
 export class BattleSelectComponent {
   @Element() el: HTMLElement;
@@ -144,7 +144,7 @@ export class BattleSelectComponent {
       () => {
         this.suggestions = undefined;
       },
-      { once: true }
+      { once: true },
     );
     this.suggestionIdx = undefined;
   }

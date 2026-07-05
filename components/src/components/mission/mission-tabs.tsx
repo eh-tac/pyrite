@@ -1,8 +1,8 @@
 import { Component, h, JSX, Prop, State } from "@stencil/core";
-import { Mission } from "../../model/TIE/mission";
+import { Mission } from "../../../old-assets/model/TIE/mission";
 
 @Component({
-  tag: "pyrite-mission-tabs"
+  tag: "pyrite-mission-tabs",
 })
 export class PyriteMissionTabs {
   @State() protected tie: Mission;

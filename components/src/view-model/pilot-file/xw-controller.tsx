@@ -1,12 +1,15 @@
 import { JSX, h } from "@stencil/core";
 
 import { PilotFileController } from "./controller";
-import { TrainingSummary, MissionScore, KillSummary, BattleSummary } from "../../model/pilot";
-import { Battle } from "../../model/ehtc";
-import { PilotFile } from "../../model/XW";
+import { TrainingSummary, MissionScore, KillSummary, BattleSummary } from "../../../old-assets/model/pilot";
+import { Battle } from "../../../old-assets/model/ehtc";
+import { PilotFile } from "../../../old-assets/model/XW";
 
 export class XWController extends PilotFileController {
-  public constructor(filepath: string, public plt: PilotFile) {
+  public constructor(
+    filepath: string,
+    public plt: PilotFile,
+  ) {
     super(filepath);
   }
 
@@ -15,7 +18,7 @@ export class XWController extends PilotFileController {
       ["Summary", this.renderPilotInformation()],
       ["Battles", this.renderBattles()],
       ["Kills", this.renderKills()],
-      ["Training", this.renderTraining()]
+      ["Training", this.renderTraining()],
     ];
 
     if (battleData) {
@@ -52,9 +55,7 @@ export class XWController extends PilotFileController {
         missions.push(this.renderXWMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]?.completed) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].score,
-          "Too many missions flown",
-          "text-danger")
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].score, "Too many missions flown", "text-danger"),
         );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
@@ -94,7 +95,7 @@ export class XWController extends PilotFileController {
         aria-label={complete ? "Mission complete" : "Mission failed"}
       >
         {complete ? "done" : "close"}
-      </i>
+      </i>,
     ];
     if (secret) {
       icons.push(<i class="material-icons secret">check_circle</i>);
@@ -124,7 +125,7 @@ export class XWController extends PilotFileController {
       "Warhead hits": this.plt.WarheadLabel,
       Kills: this.plt.TotalKills,
       Captures: this.plt.TotalCaptures,
-      "Craft lost": this.plt.CraftLost
+      "Craft lost": this.plt.CraftLost,
     };
 
     return (
@@ -139,18 +140,20 @@ export class XWController extends PilotFileController {
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Tours of Duty</li>
-        {this.plt.BattleSummary.map(
-          (battle: BattleSummary, b: number) => 
-            battle.missions.length ? (<li class="list-group-item">
+        {this.plt.BattleSummary.map((battle: BattleSummary, b: number) =>
+          battle.missions.length ? (
+            <li class="list-group-item">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 text-muted">Tour {b + 1}</h5>
                 <small>{battle.status}</small>
               </div>
               {battle.missions.map((mission: MissionScore, m: number) =>
-                this.renderXWMission(`Mission ${m + 1}`, mission)
+                this.renderXWMission(`Mission ${m + 1}`, mission),
               )}
             </li>
-          ) : ''
+          ) : (
+            ""
+          ),
         )}
       </ul>
     );
@@ -161,7 +164,7 @@ export class XWController extends PilotFileController {
       <ul class="list-group">
         <li class="list-group-item heading">Player Battle Victories</li>
         {this.plt.BattleVictories.filter((bv: KillSummary) => bv.kills).map((bv: KillSummary) =>
-          this.renderItem(bv.craftLabel, bv.kills)
+          this.renderItem(bv.craftLabel, bv.kills),
         )}
         <li class="list-group-item no-data">
           <small class="text-muted">No kills recorded</small>
@@ -179,7 +182,7 @@ export class XWController extends PilotFileController {
             <h5 class="mb-1">{train.craftLabel}</h5>
             {this.renderItem("Obstacle Course", train.scoreLabel, "", "py-0")}
             {train.missions.map((mission: MissionScore, m: number) =>
-              this.renderXWMission(`Mission ${m + 1}`, mission)
+              this.renderXWMission(`Mission ${m + 1}`, mission),
             )}
             <li class="list-group-item no-data py-0">
               <span class="text-muted">No training missions flown</span>

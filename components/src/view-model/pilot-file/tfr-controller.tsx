@@ -1,13 +1,16 @@
 import { JSX, h } from "@stencil/core";
 
 import { PilotFileController } from "./controller";
-import { TrainingSummary, MissionScore, KillSummary, BattleSummary } from "../../model/pilot";
-import { Battle } from "../../model/ehtc";
-import { PilotFile } from "../../model/TIE";
+import { TrainingSummary, MissionScore, KillSummary, BattleSummary } from "../../../old-assets/model/pilot";
+import { Battle } from "../../../old-assets/model/ehtc";
+import { PilotFile } from "../../../old-assets/model/TIE";
 import { ICON_CHECK_CIRCLE, ICON_CLOSE, ICON_DONE } from "../../global/icons";
 
 export class TFRController extends PilotFileController {
-  public constructor(filepath: string, public tfr: PilotFile) {
+  public constructor(
+    filepath: string,
+    public tfr: PilotFile,
+  ) {
     super(filepath);
   }
 
@@ -16,7 +19,7 @@ export class TFRController extends PilotFileController {
       ["Summary", this.renderPilotInformation()],
       ["Battles", this.renderBattles()],
       ["Kills", this.renderKills()],
-      ["Training", this.renderTraining()]
+      ["Training", this.renderTraining()],
     ];
 
     if (battleData) {
@@ -54,9 +57,7 @@ export class TFRController extends PilotFileController {
         missions.push(this.renderTIEMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].score,
-            "Too many missionss flown",
-            "text-danger")
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].score, "Too many missionss flown", "text-danger"),
         );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
@@ -93,7 +94,7 @@ export class TFRController extends PilotFileController {
     console.log("render tie mission", key, mission, score);
     // TODO get icons rendering with styles
     const icons: JSX.Element[] = [
-      complete ? <span class="complete">{ICON_DONE}</span> : <span class="incomplete">{ICON_CLOSE}</span>
+      complete ? <span class="complete">{ICON_DONE}</span> : <span class="incomplete">{ICON_CLOSE}</span>,
     ];
     if (secret) {
       icons.push(<span class="secret">{ICON_CHECK_CIRCLE}</span>);
@@ -126,7 +127,7 @@ export class TFRController extends PilotFileController {
       "Warhead hits": this.tfr.WarheadLabel,
       Kills: this.tfr.TotalKills.toLocaleString(),
       Captures: this.tfr.TotalCaptures.toLocaleString(),
-      "Craft lost": this.tfr.CraftLost.toLocaleString()
+      "Craft lost": this.tfr.CraftLost.toLocaleString(),
     };
 
     return (
@@ -142,7 +143,7 @@ export class TFRController extends PilotFileController {
       <ul class="list-group">
         <li class="list-group-item heading">Tours of Duty</li>
         {this.tfr.BattleSummary.map(
-          (battle: BattleSummary, b: number) => (
+          (battle: BattleSummary, b: number) =>
             battle.missions.length > 0 && (
               <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
@@ -150,10 +151,10 @@ export class TFRController extends PilotFileController {
                   <small>{battle.status}</small>
                 </div>
                 {battle.missions.map((mission: MissionScore, m: number) =>
-                  this.renderTIEMission(`Mission ${m + 1}`, mission)
+                  this.renderTIEMission(`Mission ${m + 1}`, mission),
                 )}
-              </li>)
-          )
+              </li>
+            ),
         )}
       </ul>
     );
@@ -164,7 +165,7 @@ export class TFRController extends PilotFileController {
       <ul class="list-group">
         <li class="list-group-item heading">Player Battle Victories</li>
         {this.tfr.BattleVictories.filter((bv: KillSummary) => bv.kills).map((bv: KillSummary) =>
-          this.renderItem(bv.craftLabel, bv.kills)
+          this.renderItem(bv.craftLabel, bv.kills),
         )}
         <li class="list-group-item no-data">
           <small class="text-muted">No kills recorded</small>
@@ -182,7 +183,7 @@ export class TFRController extends PilotFileController {
             <h5 class="mb-1">{train.craftLabel}</h5>
             {this.renderItem("Obstacle Course", train.scoreLabel, "", "py-0")}
             {train.missions.map((mission: MissionScore, m: number) =>
-              this.renderTIEMission(`Mission ${m + 1}`, mission)
+              this.renderTIEMission(`Mission ${m + 1}`, mission),
             )}
             <li class="list-group-item no-data py-0">
               <span class="text-muted">No training missions flown</span>

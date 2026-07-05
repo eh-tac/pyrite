@@ -1,12 +1,12 @@
 import { Component, Prop, State, h, Host, JSX, Element } from "@stencil/core";
-import { Mission } from "../../../model/TIE";
+import { Mission } from "../../../../old-assets/model/TIE";
 
 enum Tab {
   FG = "fgs",
   MESS = "messages",
   GLOBALS = "globals",
   BRIEF = "briefing",
-  INFO = "overview"
+  INFO = "overview",
 }
 
 const tabs: { [K in Tab]: string } = {
@@ -14,13 +14,13 @@ const tabs: { [K in Tab]: string } = {
   messages: "Messages",
   globals: "Globals",
   briefing: "Briefing",
-  overview: "Overview"
+  overview: "Overview",
 };
 
 @Component({
   tag: "pyrite-tie-mission",
   styleUrl: "mission.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEMissionComponent {
   @Element() public el: HTMLElement;

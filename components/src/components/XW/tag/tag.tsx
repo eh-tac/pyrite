@@ -1,12 +1,12 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
-import { Tag } from "../../../model/XW";
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
+import { Tag } from "../../../../old-assets/model/XW";
 import { XWTagController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xw-tag",
   styleUrl: "tag.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWTagComponent {
   @Element() public el: HTMLElement;
@@ -21,10 +21,9 @@ export class XWTagComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Length')} />
-        <Field {...this.controller.getProps('Unnamed')} />
+        <Field {...this.controller.getProps("Length")} />
+        <Field {...this.controller.getProps("Unnamed")} />
       </Host>
-    )
+    );
   }
 }
-  

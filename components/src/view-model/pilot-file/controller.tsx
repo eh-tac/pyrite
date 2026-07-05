@@ -1,5 +1,5 @@
 import { JSX, h } from "@stencil/core";
-import { Battle } from "../../model/ehtc";
+import { Battle } from "../../../old-assets/model/ehtc";
 
 export abstract class PilotFileController {
   public tabs: [string, JSX.Element][] = [];

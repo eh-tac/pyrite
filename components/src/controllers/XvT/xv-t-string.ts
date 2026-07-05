@@ -1,10 +1,10 @@
 import { ControllerBase } from "../../controller-base";
-import { XvTString } from "../../model/XvT";
+import { XvTString } from "../../../old-assets/model/XvT";
 
 export class XvTStringController extends ControllerBase {
-  public readonly fields: object = {"Length":{"name":"Length","type":"SHORT"},"Text":{"name":"Text","type":"CHAR"}};
+  public readonly fields: object = { Length: { name: "Length", type: "SHORT" }, Text: { name: "Text", type: "CHAR" } };
 
-  constructor(public model: XvTString){
+  constructor(public model: XvTString) {
     super(model);
   }
 }

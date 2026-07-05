@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { FlightGroup } from "../../../model/XW";
+import { FlightGroup } from "../../../../old-assets/model/XW";
 import { XWFlightGroupController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xw-flight-group",
   styleUrl: "flight-group.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWFlightGroupComponent {
   @Element() public el: HTMLElement;

@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { PilotFile } from "../../../model/XW";
+import { PilotFile } from "../../../../old-assets/model/XW";
 import { XWPilotFileController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xw-pilot-file",
   styleUrl: "pilot-file.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWPilotFileComponent {
   @Element() public el: HTMLElement;

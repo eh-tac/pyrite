@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Header } from "../../../model/LFD";
+import { Header } from "../../../../old-assets/model/LFD";
 import { LFDHeaderController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-lfd-header",
   styleUrl: "header.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDHeaderComponent {
   @Element() public el: HTMLElement;

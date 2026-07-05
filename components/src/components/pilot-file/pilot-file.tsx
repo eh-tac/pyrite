@@ -4,20 +4,20 @@ import { PilotFileController } from "../../view-model/pilot-file/controller";
 import { TFRController } from "../../view-model/pilot-file/tfr-controller";
 import { XvTPltController } from "../../view-model/pilot-file/xvt-controller";
 import { BoPPltController } from "../../view-model/pilot-file/bop-controller";
-import { Battle } from "../../model/ehtc";
+import { Battle } from "../../../old-assets/model/ehtc";
 import { XWAPltController } from "../../view-model/pilot-file/xwa-controller";
-import { PilotFile as XWingPilot } from "../../model/XW";
-import { PilotFile as TIEPilot } from "../../model/TIE";
-import { PilotFile as XvTPilot, PL2FileRecord as BoPPilot } from "../../model/XvT";
-import { PilotFile as XWAPilot } from "../../model/XWA";
-import { PilotFile as XWVMPilot } from "../../model/XWVM";
+import { PilotFile as XWingPilot } from "../../../old-assets/model/XW";
+import { PilotFile as TIEPilot } from "../../../old-assets/model/TIE";
+import { PilotFile as XvTPilot, PL2FileRecord as BoPPilot } from "../../../old-assets/model/XvT";
+import { PilotFile as XWAPilot } from "../../../old-assets/model/XWA";
+import { PilotFile as XWVMPilot } from "../../../old-assets/model/XWVM";
 import { XWController } from "../../view-model/pilot-file/xw-controller";
 import { XWVMController } from "../../view-model/pilot-file/xwvm-controller";
 
 @Component({
   tag: "pyrite-pilot-file",
   styleUrl: "../../assets/superhero.css",
-  shadow: true
+  shadow: true,
 })
 export class PilotViewer {
   @Element() private el: HTMLElement;
@@ -119,10 +119,7 @@ export class PilotViewer {
   }
 
   private controllerFromFile(filepath: string, file: ArrayBuffer): PilotFileController {
-    const ext = filepath
-      .toLowerCase()
-      .split(".")
-      .pop();
+    const ext = filepath.toLowerCase().split(".").pop();
     if (ext === "tfr") {
       return new TFRController(filepath, new TIEPilot(file));
     } else if (ext === "plt") {

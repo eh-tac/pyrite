@@ -1,5 +1,5 @@
 import { Component, Element, h, JSX, Method, Prop, State, Watch } from "@stencil/core";
-import { PL2CampaignProgressState, PL2CampaignState, PL2FileRecord } from "../../../model/XvT";
+import { PL2CampaignProgressState, PL2CampaignState, PL2FileRecord } from "../../../../old-assets/model/XvT";
 
 type FactionCampaignState = {
   label: string;

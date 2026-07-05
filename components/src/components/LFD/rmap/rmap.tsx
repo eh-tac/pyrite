@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Rmap, BattleText, Delt, Voic } from "../../../model/LFD";
+import { Rmap, BattleText, Delt, Voic } from "../../../../old-assets/model/LFD";
 import { LFDRmapController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-lfd-rmap",
   styleUrl: "rmap.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDRmapComponent {
   @Element() public el: HTMLElement;
@@ -23,7 +23,7 @@ export class LFDRmapComponent {
     return (
       <Host>
         <Field {...this.controller.getProps("Header")} />
-        {this.rmap.Subheaders.map(s => (
+        {this.rmap.Subheaders.map((s) => (
           <Field {...this.controller.getProps("Subheaders", s)} />
         ))}
         {this.rmap.RawData.map((r, i) => {

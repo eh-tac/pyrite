@@ -1,12 +1,12 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
-import { Event } from "../../../model/XvT";
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
+import { Event } from "../../../../old-assets/model/XvT";
 import { XvTEventController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xvt-event",
   styleUrl: "event.scss",
-  shadow: false
+  shadow: false,
 })
 export class XvTEventComponent {
   @Element() public el: HTMLElement;
@@ -21,11 +21,10 @@ export class XvTEventComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Time')} />
-        <Field {...this.controller.getProps('Type')} />
-        <Field {...this.controller.getProps('Variables')} />
+        <Field {...this.controller.getProps("Time")} />
+        <Field {...this.controller.getProps("Type")} />
+        <Field {...this.controller.getProps("Variables")} />
       </Host>
-    )
+    );
   }
 }
-  

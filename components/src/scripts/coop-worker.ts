@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
-import { Mission as MissionXWA } from "../model/XWA/mission";
-import { Mission as MissionXvT } from "../model/XvT/mission";
+import { Mission as MissionXWA } from "../../old-assets/model/XWA/mission";
+import { Mission as MissionXvT } from "../../old-assets/model/XvT/mission";
 import { IMission } from "../pyrite-base";
 
 interface ChildResult {

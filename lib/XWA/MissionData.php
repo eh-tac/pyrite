@@ -14,7 +14,7 @@ class MissionData extends Base\MissionDataBase
 
   public function getTotal(): int
   {
-    return $this->Score + $this->BonusScoreTen / 10;
+    return (int)floor($this->Score + $this->BonusScoreTen / 10);
   }
 
   public function getTimeDisplay(): string

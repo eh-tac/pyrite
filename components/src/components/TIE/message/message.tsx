@@ -1,10 +1,10 @@
 import { Component, h, JSX, Prop, State } from "@stencil/core";
-import { Message } from "../../../model/TIE";
+import { Message } from "../../../../old-assets/model/TIE";
 
 @Component({
   tag: "pyrite-tie-message",
   styleUrl: "message.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEMessageComponent {
   @Prop() public message: Message;

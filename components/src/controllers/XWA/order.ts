@@ -1,10 +1,26 @@
 import { ControllerBase } from "../../controller-base";
-import { Order } from "../../model/XWA";
+import { Order } from "../../../old-assets/model/XWA";
 
 export class XWAOrderController extends ControllerBase {
-  public readonly fields: object = {"Order":{"name":"Order","type":"BYTE","options":"Constants.ORDER"},"Throttle":{"name":"Throttle","type":"BYTE"},"Variables":{"name":"Variables","type":"BYTE"},"Target3Type":{"name":"Target3Type","type":"BYTE","options":"Constants.VARIABLETYPE"},"Target4Type":{"name":"Target4Type","type":"BYTE","options":"Constants.VARIABLETYPE"},"Target3":{"name":"Target3","type":"BYTE"},"Target4":{"name":"Target4","type":"BYTE"},"Target3OrTarget4":{"name":"Target3OrTarget4","type":"BOOL"},"Target1Type":{"name":"Target1Type","type":"BYTE","options":"Constants.VARIABLETYPE"},"Target1":{"name":"Target1","type":"BYTE"},"Target2Type":{"name":"Target2Type","type":"BYTE","options":"Constants.VARIABLETYPE"},"Target2":{"name":"Target2","type":"BYTE"},"Target1OrTarget2":{"name":"Target1OrTarget2","type":"BOOL"},"Speed":{"name":"Speed","type":"BYTE"},"Waypoints":{"name":"Waypoints","type":"Waypt","componentTag":"pyrite-xwa-waypt","componentProp":"waypt"}};
+  public readonly fields: object = {
+    Order: { name: "Order", type: "BYTE", options: "Constants.ORDER" },
+    Throttle: { name: "Throttle", type: "BYTE" },
+    Variables: { name: "Variables", type: "BYTE" },
+    Target3Type: { name: "Target3Type", type: "BYTE", options: "Constants.VARIABLETYPE" },
+    Target4Type: { name: "Target4Type", type: "BYTE", options: "Constants.VARIABLETYPE" },
+    Target3: { name: "Target3", type: "BYTE" },
+    Target4: { name: "Target4", type: "BYTE" },
+    Target3OrTarget4: { name: "Target3OrTarget4", type: "BOOL" },
+    Target1Type: { name: "Target1Type", type: "BYTE", options: "Constants.VARIABLETYPE" },
+    Target1: { name: "Target1", type: "BYTE" },
+    Target2Type: { name: "Target2Type", type: "BYTE", options: "Constants.VARIABLETYPE" },
+    Target2: { name: "Target2", type: "BYTE" },
+    Target1OrTarget2: { name: "Target1OrTarget2", type: "BOOL" },
+    Speed: { name: "Speed", type: "BYTE" },
+    Waypoints: { name: "Waypoints", type: "Waypt", componentTag: "pyrite-xwa-waypt", componentProp: "waypt" },
+  };
 
-  constructor(public model: Order){
+  constructor(public model: Order) {
     super(model);
   }
 }

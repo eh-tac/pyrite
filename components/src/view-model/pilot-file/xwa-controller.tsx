@@ -1,13 +1,16 @@
 import { JSX, h } from "@stencil/core";
 
 import { PilotFileController } from "./controller";
-import { Battle } from "../../model/ehtc";
-import { PilotFile, MissionData } from "../../model/XWA";
-import { BattleSummary } from "../../model/pilot";
-import { TriStat } from "../../model/XWA/pilot-file";
+import { Battle } from "../../../old-assets/model/ehtc";
+import { PilotFile, MissionData } from "../../../old-assets/model/XWA";
+import { BattleSummary } from "../../../old-assets/model/pilot";
+import { TriStat } from "../../../old-assets/model/XWA/pilot-file";
 
 export class XWAPltController extends PilotFileController {
-  public constructor(filepath: string, public plt: PilotFile) {
+  public constructor(
+    filepath: string,
+    public plt: PilotFile,
+  ) {
     super(filepath);
   }
 
@@ -15,7 +18,7 @@ export class XWAPltController extends PilotFileController {
     const tabs: [string, JSX.Element][] = [
       ["Summary", this.renderPilotInformation()],
       ["Battles", this.renderBattles()],
-      ["Kills", this.renderKills()]
+      ["Kills", this.renderKills()],
     ];
 
     if (battleData) {
@@ -31,7 +34,7 @@ export class XWAPltController extends PilotFileController {
     let totalScore: number = 0;
 
     const missionScores: MissionData[] = [];
-    this.plt.MissionData.forEach(m => {
+    this.plt.MissionData.forEach((m) => {
       if (m.WinCount && m.AttemptCount) {
         missionScores.push(m);
         totalScore += m.Total;
@@ -59,7 +62,7 @@ export class XWAPltController extends PilotFileController {
         missions.push(this.renderXWAMission(`Mission ${m + 1}`, missionScores[m], score));
       } else if (missionScores[m] && m >= battleData.missions) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].Total, "Too many missions flown", "text-danger")
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].Total, "Too many missions flown", "text-danger"),
         );
       } else if (!missionScores[m] && m < battleData.missions) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
@@ -137,7 +140,7 @@ export class XWAPltController extends PilotFileController {
                   <small>{battle.status}</small>
                 </div>
                 {battle.missions.map((mission: MissionData, m: number) =>
-                  mission.AttemptCount ? this.renderXWAMission(`Mission ${m + 1}`, mission) : ""
+                  mission.AttemptCount ? this.renderXWAMission(`Mission ${m + 1}`, mission) : "",
                 )}
               </li>
             );
@@ -162,7 +165,7 @@ export class XWAPltController extends PilotFileController {
               <th>Combat Sim</th>
             </tr>
           </thead>
-          <tbody>{this.plt.BattleVictories.map(s => this.renderTriRow(s))}</tbody>
+          <tbody>{this.plt.BattleVictories.map((s) => this.renderTriRow(s))}</tbody>
         </table>
       </div>
     );

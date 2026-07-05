@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { FileHeader } from "../../../model/XW";
+import { FileHeader } from "../../../../old-assets/model/XW";
 import { XWFileHeaderController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xw-file-header",
   styleUrl: "file-header.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWFileHeaderComponent {
   @Element() public el: HTMLElement;

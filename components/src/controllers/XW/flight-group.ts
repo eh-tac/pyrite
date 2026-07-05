@@ -1,10 +1,36 @@
 import { ControllerBase } from "../../controller-base";
-import { FlightGroup } from "../../model/XW";
+import { FlightGroup } from "../../../old-assets/model/XW";
 
 export class XWFlightGroupController extends ControllerBase {
-  public readonly fields: object = {"Name":{"name":"Name","type":"CHAR"},"Cargo":{"name":"Cargo","type":"CHAR"},"SpecialCargo":{"name":"SpecialCargo","type":"CHAR"},"SpecialCargoCraft":{"name":"SpecialCargoCraft","type":"SHORT"},"CraftType":{"name":"CraftType","type":"SHORT","options":"Constants.CRAFTTYPE"},"IFF":{"name":"IFF","type":"SHORT","options":"Constants.IFF"},"FlightGroupStatus":{"name":"FlightGroupStatus","type":"SHORT","options":"Constants.FLIGHTGROUPSTATUS"},"NumberOfCraft":{"name":"NumberOfCraft","type":"SHORT"},"NumberOfWaves":{"name":"NumberOfWaves","type":"SHORT"},"ArrivalEvent":{"name":"ArrivalEvent","type":"SHORT","options":"Constants.ARRIVALEVENT"},"ArrivalDelay":{"name":"ArrivalDelay","type":"SHORT"},"ArrivalFG":{"name":"ArrivalFG","type":"SHORT"},"Mothership":{"name":"Mothership","type":"SHORT"},"ArrivalHyperspace":{"name":"ArrivalHyperspace","type":"SHORT"},"DepartureHyperspace":{"name":"DepartureHyperspace","type":"SHORT"},"Waypoint":{"name":"Waypoint","type":"SHORT"},"Formation":{"name":"Formation","type":"SHORT","options":"Constants.FORMATION"},"PlayerCraft":{"name":"PlayerCraft","type":"SHORT"},"GroupAI":{"name":"GroupAI","type":"SHORT","options":"Constants.GROUPAI"},"Order":{"name":"Order","type":"SHORT","options":"Constants.ORDER"},"OrderValue":{"name":"OrderValue","type":"SHORT"},"Markings":{"name":"Markings","type":"SHORT","options":"Constants.MARKINGS"},"Objective":{"name":"Objective","type":"SHORT","options":"Constants.OBJECTIVE"},"TargetPrimary":{"name":"TargetPrimary","type":"SHORT"},"TargetSecondary":{"name":"TargetSecondary","type":"SHORT"}};
+  public readonly fields: object = {
+    Name: { name: "Name", type: "CHAR" },
+    Cargo: { name: "Cargo", type: "CHAR" },
+    SpecialCargo: { name: "SpecialCargo", type: "CHAR" },
+    SpecialCargoCraft: { name: "SpecialCargoCraft", type: "SHORT" },
+    CraftType: { name: "CraftType", type: "SHORT", options: "Constants.CRAFTTYPE" },
+    IFF: { name: "IFF", type: "SHORT", options: "Constants.IFF" },
+    FlightGroupStatus: { name: "FlightGroupStatus", type: "SHORT", options: "Constants.FLIGHTGROUPSTATUS" },
+    NumberOfCraft: { name: "NumberOfCraft", type: "SHORT" },
+    NumberOfWaves: { name: "NumberOfWaves", type: "SHORT" },
+    ArrivalEvent: { name: "ArrivalEvent", type: "SHORT", options: "Constants.ARRIVALEVENT" },
+    ArrivalDelay: { name: "ArrivalDelay", type: "SHORT" },
+    ArrivalFG: { name: "ArrivalFG", type: "SHORT" },
+    Mothership: { name: "Mothership", type: "SHORT" },
+    ArrivalHyperspace: { name: "ArrivalHyperspace", type: "SHORT" },
+    DepartureHyperspace: { name: "DepartureHyperspace", type: "SHORT" },
+    Waypoint: { name: "Waypoint", type: "SHORT" },
+    Formation: { name: "Formation", type: "SHORT", options: "Constants.FORMATION" },
+    PlayerCraft: { name: "PlayerCraft", type: "SHORT" },
+    GroupAI: { name: "GroupAI", type: "SHORT", options: "Constants.GROUPAI" },
+    Order: { name: "Order", type: "SHORT", options: "Constants.ORDER" },
+    OrderValue: { name: "OrderValue", type: "SHORT" },
+    Markings: { name: "Markings", type: "SHORT", options: "Constants.MARKINGS" },
+    Objective: { name: "Objective", type: "SHORT", options: "Constants.OBJECTIVE" },
+    TargetPrimary: { name: "TargetPrimary", type: "SHORT" },
+    TargetSecondary: { name: "TargetSecondary", type: "SHORT" },
+  };
 
-  constructor(public model: FlightGroup){
+  constructor(public model: FlightGroup) {
     super(model);
   }
 }

@@ -1,12 +1,12 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
-import { PLTPlayerRankCountRecord } from "../../../model/XvT";
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
+import { PLTPlayerRankCountRecord } from "../../../../old-assets/model/XvT";
 import { XvTPLTPlayerRankCountRecordController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xvt-plt-player-rank-count-record",
   styleUrl: "plt-player-rank-count-record.scss",
-  shadow: false
+  shadow: false,
 })
 export class XvTPLTPlayerRankCountRecordComponent {
   @Element() public el: HTMLElement;
@@ -21,11 +21,10 @@ export class XvTPLTPlayerRankCountRecordComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('exercise')} />
-        <Field {...this.controller.getProps('melee')} />
-        <Field {...this.controller.getProps('combat')} />
+        <Field {...this.controller.getProps("exercise")} />
+        <Field {...this.controller.getProps("melee")} />
+        <Field {...this.controller.getProps("combat")} />
       </Host>
-    )
+    );
   }
 }
-  

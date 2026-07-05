@@ -1,12 +1,12 @@
 import { Component, h, Prop, State, Listen, Event, EventEmitter } from "@stencil/core";
 import { JSX } from "../../../components";
-import { Battle, Review, Bug, Score } from "../../../model/ehtc/battle";
-import { PilotSummary } from "../../../model/ehtc/pilot";
+import { Battle, Review, Bug, Score } from "../../../../old-assets/model/ehtc/battle";
+import { PilotSummary } from "../../../../old-assets/model/ehtc/pilot";
 
 @Component({
   tag: "ehtc-battle",
   styleUrl: "battle.scss",
-  shadow: true
+  shadow: true,
 })
 export class BattleComponent {
   @Prop({ mutable: true }) battle: Battle;
@@ -85,7 +85,7 @@ export class BattleComponent {
     const fields: { [key: string]: string | number } = {
       Missions: this.battle.missions,
       "Date added": this.battle.added,
-      "Date updated": this.battle.updated
+      "Date updated": this.battle.updated,
     };
 
     return (

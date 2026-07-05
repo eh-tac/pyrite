@@ -1,5 +1,5 @@
 import { Component, h, JSX, Prop, State, Listen } from "@stencil/core";
-import { FlightGroup, GoalFG, Order, Waypt } from "../../../model/TIE";
+import { FlightGroup, GoalFG, Order, Waypt } from "../../../../old-assets/model/TIE";
 import { Field } from "../../fields/field";
 
 enum Tab {
@@ -9,7 +9,7 @@ enum Tab {
   WAY = "waypoints",
   ORDERS = "orders",
   OPT = "options",
-  UNK = "unknown"
+  UNK = "unknown",
 }
 
 const tabs: { [K in Tab]: string } = {
@@ -19,13 +19,13 @@ const tabs: { [K in Tab]: string } = {
   orders: "Orders",
   waypoints: "Waypoints",
   options: "Options",
-  unknown: "Unknown"
+  unknown: "Unknown",
 };
 
 @Component({
   tag: "pyrite-tie-flightgroup",
   styleUrl: "flightgroup.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEFlightGroupComponent {
   @Prop() public flightGroup: FlightGroup;
@@ -78,7 +78,7 @@ export class TIEFlightGroupComponent {
       IFF: this.flightGroup.IFFLabel,
       AI: this.flightGroup.GroupAILabel,
       Difficulty: this.flightGroup.ArrivalDifficultyLabel,
-      Player: this.flightGroup.PlayerCraft ? "Yes" : "No"
+      Player: this.flightGroup.PlayerCraft ? "Yes" : "No",
     };
     return (
       <div class={`tab-content ${this.selectedTab === Tab.INFO && "show"}`}>
@@ -100,7 +100,7 @@ export class TIEFlightGroupComponent {
       "Or Via": this.flightGroup.AlternateArriveViaMothership
         ? this.flightGroup.TIE.getFlightGroup(this.flightGroup.AlternateArrivalMothership).toString()
         : "Hyperspace",
-      When: this.flightGroup.Arrival1.toString()
+      When: this.flightGroup.Arrival1.toString(),
     };
     arrival[`${andOr} When`] = this.flightGroup.Arrival2.toString();
 
@@ -112,7 +112,7 @@ export class TIEFlightGroupComponent {
       "Or Via": this.flightGroup.AlternateDepartViaMothership
         ? this.flightGroup.TIE.getFlightGroup(this.flightGroup.AlternateDepartureMothership).toString()
         : "Hyperspace",
-      "Abort when": this.flightGroup.AbortTriggerLabel
+      "Abort when": this.flightGroup.AbortTriggerLabel,
     };
 
     if (arrival.Via === arrival["Or Via"]) {
@@ -152,7 +152,7 @@ export class TIEFlightGroupComponent {
       <div class={`tab-content ${this.selectedTab === Tab.GOALS && "show"}`}>
         <h3>Goals</h3>
         {this.flightGroup.FlightGroupGoals.map((goal: GoalFG, idx: number) =>
-          this.renderItem(types[idx], goal.toString())
+          this.renderItem(types[idx], goal.toString()),
         )}
         {this.renderItem("Bonus Points", this.flightGroup.BonusGoalPoints * 50)}
       </div>
@@ -221,7 +221,7 @@ export class TIEFlightGroupComponent {
       Yaw: this.flightGroup.Yaw,
       Pitch: this.flightGroup.Pitch,
       Roll: this.flightGroup.Roll,
-      "Global Group": this.flightGroup.GlobalGroup
+      "Global Group": this.flightGroup.GlobalGroup,
     };
     return (
       <div class={`tab-content ${this.selectedTab === Tab.OPT && "show"}`}>

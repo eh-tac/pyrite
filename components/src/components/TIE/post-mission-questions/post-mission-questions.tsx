@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { PostMissionQuestions } from "../../../model/TIE";
+import { PostMissionQuestions } from "../../../../old-assets/model/TIE";
 import { TIEPostMissionQuestionsController } from "../../../controllers/TIE";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-tie-post-mission-questions",
   styleUrl: "post-mission-questions.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEPostMissionQuestionsComponent {
   @Element() public el: HTMLElement;

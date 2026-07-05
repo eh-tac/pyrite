@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Trigger } from "../../../model/TIE";
+import { Trigger } from "../../../../old-assets/model/TIE";
 import { TIETriggerController } from "../../../controllers/TIE";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-tie-trigger",
   styleUrl: "trigger.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIETriggerComponent {
   @Element() public el: HTMLElement;

@@ -1,12 +1,12 @@
 import { Component, Prop, Host, State, h, JSX, Element, Method } from "@stencil/core";
-import { LFD, Rmap } from "../../../model/LFD";
+import { LFD, Rmap } from "../../../../old-assets/model/LFD";
 import { LFDController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-lfd",
   styleUrl: "lfd.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDComponent {
   @Element() public el: HTMLElement;

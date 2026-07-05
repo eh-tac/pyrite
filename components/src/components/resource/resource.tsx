@@ -1,9 +1,9 @@
 import { Component, h, JSX, Prop, State } from "@stencil/core";
-import { Mission } from "../../model/TIE/mission";
+import { Mission } from "../../../old-assets/model/TIE/mission";
 
 @Component({
   tag: "pyrite-resource",
-  styleUrl: "resource.scss"
+  styleUrl: "resource.scss",
 })
 export class PyriteMission {
   @Prop() public name: string;
@@ -28,7 +28,7 @@ export class PyriteMission {
       </ion-header>,
       <ion-content class="ion-padding">
         <p>{this.name}</p>
-      </ion-content>
+      </ion-content>,
     ];
   }
 }

@@ -1,6 +1,6 @@
-import { Constants, Event, EventType, FlightGroup, Mission } from "../../../model/TIE";
-import { IFFColor } from "../../../model/TIE/constants";
-import { FontFile } from "../../../model/util/font";
+import { Constants, Event, EventType, FlightGroup, Mission } from "../../../../old-assets/model/TIE";
+import { IFFColor } from "../../../../old-assets/model/TIE/constants";
+import { FontFile } from "../../../../old-assets/model/util/font";
 import { DrawingObject } from "../../../view-model/drawing-object";
 
 export class TIEDrawMap extends DrawingObject {

@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { LString } from "../../../model/LFD";
+import { LString } from "../../../../old-assets/model/LFD";
 import { LFDLStringController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-lfd-l-string",
   styleUrl: "l-string.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDLStringComponent {
   @Element() public el: HTMLElement;

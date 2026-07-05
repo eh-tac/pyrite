@@ -1,12 +1,12 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
-import { Page } from "../../../model/XW";
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
+import { Page } from "../../../../old-assets/model/XW";
 import { XWPageController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xw-page",
   styleUrl: "page.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWPageComponent {
   @Element() public el: HTMLElement;
@@ -21,13 +21,12 @@ export class XWPageComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Duration')} />
-        <Field {...this.controller.getProps('EventsLength')} />
-        <Field {...this.controller.getProps('CoordinateSet')} />
-        <Field {...this.controller.getProps('PageType')} />
-        <Field {...this.controller.getProps('Events[EventsLength]')} />
+        <Field {...this.controller.getProps("Duration")} />
+        <Field {...this.controller.getProps("EventsLength")} />
+        <Field {...this.controller.getProps("CoordinateSet")} />
+        <Field {...this.controller.getProps("PageType")} />
+        <Field {...this.controller.getProps("Events[EventsLength]")} />
       </Host>
-    )
+    );
   }
 }
-  

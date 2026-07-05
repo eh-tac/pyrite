@@ -50,7 +50,7 @@ export class TypeScriptWriter extends PyriteWriter {
 
     lines.push('}\n');
     lines.push(...enums);
-    this.writeFile('constants.ts', lines.join('\n'));
+    this.writeFile('PLT/src/constants.ts', lines.join('\n'));
   }
 
   public writeBaseModel(struct: Struct): void {
@@ -77,7 +77,7 @@ export abstract class ${baseName} extends PyriteBase implements Byteable {
     return this.${lengthProp.prop.name};
   }
 }`;
-    this.writeFile(`base/${this.filename(baseName)}`, content);
+    this.writeFile(`PLT/src/base/${this.filename(baseName)}`, content);
   }
 
   public writeImplModel(struct: Struct): void {
@@ -99,7 +99,7 @@ export class ${struct.name} extends ${baseClass} {
 `;
 
     const file = this.filename(struct.name);
-    this.writeFile(`${file}`, content, false);
+    this.writeFile(`PLT/src/${file}`, content, false);
   }
 
   protected getBaseClassImports(props: PropWriter[]): string {

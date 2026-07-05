@@ -1,12 +1,12 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
-import { Coordinate } from "../../../model/XW";
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
+import { Coordinate } from "../../../../old-assets/model/XW";
 import { XWCoordinateController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xw-coordinate",
   styleUrl: "coordinate.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWCoordinateComponent {
   @Element() public el: HTMLElement;
@@ -21,11 +21,10 @@ export class XWCoordinateComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('X')} />
-        <Field {...this.controller.getProps('Y')} />
-        <Field {...this.controller.getProps('Z')} />
+        <Field {...this.controller.getProps("X")} />
+        <Field {...this.controller.getProps("Y")} />
+        <Field {...this.controller.getProps("Z")} />
       </Host>
-    )
+    );
   }
 }
-  

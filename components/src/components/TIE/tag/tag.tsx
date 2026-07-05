@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Tag } from "../../../model/TIE";
+import { Tag } from "../../../../old-assets/model/TIE";
 import { TIETagController } from "../../../controllers/TIE";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-tie-tag",
   styleUrl: "tag.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIETagComponent {
   @Element() public el: HTMLElement;

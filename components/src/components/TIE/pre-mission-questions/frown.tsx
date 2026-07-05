@@ -1,13 +1,13 @@
 import { Component, h, JSX, Method, Prop, State, Watch } from "@stencil/core";
-import { Mission } from "../../../model/TIE/mission";
-import { PreMissionQuestions } from "../../../model/TIE/pre-mission-questions";
+import { Mission } from "../../../../old-assets/model/TIE/mission";
+import { PreMissionQuestions } from "../../../../old-assets/model/TIE/pre-mission-questions";
 
 type DisplayMode = "Officer" | "Secret" | "Table";
 
 @Component({
   tag: "pyrite-frown",
   styleUrl: "frown.scss",
-  shadow: true
+  shadow: true,
 })
 export class PreMissionQuestionsComponent {
   @Prop() public mission: Mission;
@@ -42,7 +42,7 @@ export class PreMissionQuestionsComponent {
       <div class="wrapper">
         <div class="btn-group" role="group" aria-label="Pre Mission Question Mode Selector">
           {this.showButtons &&
-            this.modes.map(mode => (
+            this.modes.map((mode) => (
               <button type="button" class="btn btn-info" onClick={this.modeSelect.bind(this, mode)}>
                 {mode}
               </button>
@@ -96,7 +96,7 @@ export class PreMissionQuestionsComponent {
               </tr>
             </thead>
             <tbody>
-              {questions.map(question => (
+              {questions.map((question) => (
                 <tr>
                   <td class="type">{question.Type}</td>
                   <td class="question">{question.Question}</td>

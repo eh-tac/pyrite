@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { ObjectGroup } from "../../../model/XW";
+import { ObjectGroup } from "../../../../old-assets/model/XW";
 import { XWObjectGroupController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-xw-object-group",
   styleUrl: "object-group.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWObjectGroupComponent {
   @Element() public el: HTMLElement;

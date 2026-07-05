@@ -1,12 +1,12 @@
 import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
-import { Waypt } from "../../../model/TIE";
+import { Waypt } from "../../../../old-assets/model/TIE";
 import { TIEWayptController } from "../../../controllers/TIE";
 import { Field } from "../../fields/field";
 
 @Component({
   tag: "pyrite-tie-waypt",
   styleUrl: "waypt.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEWayptComponent {
   @Element() public el: HTMLElement;
