@@ -1,22 +1,46 @@
 {
   "name": "@pyrite/components",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "version": "0.0.1",
+  "description": "Pyrite Component Library",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/components/components.esm.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/components/components.esm.js",
+      "require": "./dist/components/components.cjs.js"
+    },
+    "./loader": {
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs",
+      "types": "./loader/index.d.ts"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eh-tac/pyrite.git"
+  },
+  "files": [
+    "dist/",
+    "loader/"
+  ],
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts --clean",
-    "dev": "tsx watch src/index.ts",
-    "lint": "eslint src --ext .ts",
-    "test": "jest --config ./jest.config.cjs",
-    "format": "prettier --check \"src/**/*.ts\"",
-    "format:write": "prettier --write \"src/**/*.ts\""
-  }
+    "build": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil-test --prod",
+    "test:watch": "stencil-test --prod --watch",
+    "generate": "stencil generate"
+  },
+  "devDependencies": {
+    "@stencil/core": "^4.27.1 || ^5.0.0-0",
+    "@stencil/vitest": "^1.8.3",
+    "@types/node": "^22.13.5",
+    "@vitest/browser-playwright": "^4.0.0",
+    "playwright": "^1.52.0",
+    "vitest": "^4.0.0"
+  },
+  "license": "MIT"
 }
