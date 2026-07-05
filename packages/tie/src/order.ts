@@ -1,8 +1,13 @@
 import { OrderBase } from './base/order-base';
 import { Constants } from './constants';
+import { Mission } from './mission';
 
 export class Order extends OrderBase {
-  public diffLimit = true;
+  public mission: Mission;
+  public constructor(hex: ArrayBuffer, TIE?: Mission) {
+    super(hex, TIE);
+    this.mission = TIE as Mission;
+  }
 
   public get isSet(): boolean {
     return !!this.Order;
@@ -43,7 +48,7 @@ export class Order extends OrderBase {
         return 'None';
       }
       case 1: {
-        return this.TIE.getFlightGroup(instance).toString();
+        return this.mission.getFlightGroup(instance).toString();
       }
       case 2: {
         return Constants.CRAFTTYPE[instance as keyof typeof Constants.CRAFTTYPE];
@@ -55,7 +60,7 @@ export class Order extends OrderBase {
         return Constants.OBJECTCATEGORY[instance as keyof typeof Constants.OBJECTCATEGORY];
       }
       case 5: {
-        return this.TIE.getIFF(instance);
+        return this.mission.getIFF(instance);
       }
       case 6: {
         return Constants.ORDER[instance as keyof typeof Constants.ORDER];
@@ -64,7 +69,7 @@ export class Order extends OrderBase {
         return Constants.CRAFTWHEN[instance as keyof typeof Constants.CRAFTWHEN];
       }
       case 8: {
-        const fgs = this.TIE.getGlobalGroup(instance);
+        const fgs = this.mission.getGlobalGroup(instance);
         return fgs.map((fg) => fg.toString()).join(', ');
       }
       case 9: {

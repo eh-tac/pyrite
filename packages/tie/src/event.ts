@@ -47,10 +47,12 @@ export class Event extends EventBase {
   };
 
   public Briefing: Briefing;
+  public Mission: Mission;
 
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.Briefing = (TIE! as Mission).Briefing;
+    this.Mission = TIE! as Mission;
   }
 
   public toString(): string {
@@ -60,7 +62,7 @@ export class Event extends EventBase {
       // title or captions
       extra = this.Briefing.Strings[this.Variables[0]].Text;
     } else if (this.EventType >= 9 && this.EventType <= 16) {
-      const fg = this.TIE.getFlightGroup(this.Variables[0]);
+      const fg = this.Mission.getFlightGroup(this.Variables[0]);
       extra = `FG lookup ${fg.toString()}`;
     } else if (this.EventType >= 18 && this.EventType <= 25) {
       const v = this.Variables;

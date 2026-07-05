@@ -3,14 +3,16 @@ import { FlightGroupBase } from './base/flight-group-base';
 import { Constants } from './constants';
 import { Craft } from './craft';
 import type { GoalFG } from './goal-fg';
-import { Difficulty } from './mission';
+import { Difficulty, Mission } from './mission';
 
 export class FlightGroup extends FlightGroupBase {
   public craft: Craft;
+  public mission: Mission;
 
   public constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
     this.craft = new Craft(this.CraftType);
+    this.mission = tie as Mission;
   }
 
   public get isPlayer(): boolean {
@@ -32,10 +34,10 @@ export class FlightGroup extends FlightGroupBase {
   public get mothershipFG(): FlightGroup[] {
     const ms = [];
     if (this.ArriveViaMothership) {
-      ms.push(this.TIE.getFlightGroup(this.ArrivalMothership));
+      ms.push(this.mission.getFlightGroup(this.ArrivalMothership));
     }
     if (this.AlternateArriveViaMothership) {
-      ms.push(this.TIE.getFlightGroup(this.AlternateArrivalMothership));
+      ms.push(this.mission.getFlightGroup(this.AlternateArrivalMothership));
     }
     return ms as unknown as FlightGroup[];
   }
@@ -45,7 +47,7 @@ export class FlightGroup extends FlightGroupBase {
   }
 
   public get IFFLabel(): string {
-    return this.TIE.getIFF(this.Iff);
+    return this.mission.getIFF(this.Iff);
   }
 
   public get showOnBriefing(): boolean {
