@@ -6,7 +6,10 @@ export abstract class HeaderBase extends PyriteBase implements Byteable {
   public Name: string;
   public Length: number; //little endian
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

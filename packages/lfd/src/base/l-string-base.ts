@@ -6,7 +6,10 @@ export abstract class LStringBase extends PyriteBase implements Byteable {
   public Substrings: string[];
   public readonly Reserved: number = 0;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

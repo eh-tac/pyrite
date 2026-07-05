@@ -10,7 +10,10 @@ export abstract class GlobalCargoBase extends PyriteBase implements Byteable {
   public Value: number; //(was Unknown4)
   public Volatility: number; //(was Unknown5) {low, med, high, kaboom!}
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

@@ -19,7 +19,10 @@ export abstract class TeamBase extends PyriteBase implements Byteable {
   public EomSourceFG: number[]; //(was Unknowns)
   public EomVoiceIDs: string[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

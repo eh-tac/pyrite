@@ -4,7 +4,10 @@ export abstract class XWAStringBase extends PyriteBase implements Byteable {
   public XWAStringLength: number;
   public Magic: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

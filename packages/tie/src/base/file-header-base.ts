@@ -23,7 +23,10 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public EndOfMissionMessages: string[];
   public OtherIffNames: string[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

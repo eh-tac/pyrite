@@ -42,7 +42,10 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public WinOfficer: BriefingOfficer; //(was Unknown4)
   public FailOfficer: BriefingOfficer; //(was Unknown5)
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

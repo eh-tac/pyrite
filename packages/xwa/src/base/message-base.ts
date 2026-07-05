@@ -29,7 +29,10 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
   public Special: TriggerPair;
   public SpecialMeaning: number; //(was Unknown3) {Ignore, Stop, Finished, Both}
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

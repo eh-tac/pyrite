@@ -5,7 +5,10 @@ export abstract class BrfStrBase extends PyriteBase implements Byteable {
   public Length: number;
   public Text: string[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

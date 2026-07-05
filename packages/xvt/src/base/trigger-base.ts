@@ -8,7 +8,10 @@ export abstract class TriggerBase extends PyriteBase implements Byteable {
   public Variable: number;
   public Amount: Amount;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

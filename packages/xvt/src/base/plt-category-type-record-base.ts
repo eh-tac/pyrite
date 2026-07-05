@@ -6,7 +6,10 @@ export abstract class PLTCategoryTypeRecordBase extends PyriteBase implements By
   public melee: number;
   public combat: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

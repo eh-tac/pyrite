@@ -10,7 +10,10 @@ export abstract class PLTBattleStateBase extends PyriteBase implements Byteable 
   public saveState: PLTBattleProgressState;
   public unknown2: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

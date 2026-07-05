@@ -8,7 +8,10 @@ export abstract class GlobalUnitBase extends PyriteBase implements Byteable {
   public SpecialCargo: string;
   public RandSpecCraft: boolean;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

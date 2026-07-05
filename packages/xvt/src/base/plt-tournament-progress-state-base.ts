@@ -11,7 +11,10 @@ export abstract class PLTTournamentProgressStateBase extends PyriteBase implemen
   public teamsActive: number;
   public unknown2: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

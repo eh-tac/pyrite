@@ -24,7 +24,10 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public TimeLimitMinutes: number;
   public TimeLimitSeconds: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

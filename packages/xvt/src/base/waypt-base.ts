@@ -8,7 +8,10 @@ export abstract class WayptBase extends PyriteBase implements Byteable {
   public Hyperspace: number;
   public Briefings: number[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

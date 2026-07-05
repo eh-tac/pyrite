@@ -72,7 +72,10 @@ export abstract class PLTFactionRecordBase extends PyriteBase implements Byteabl
   public missionSPBattle: PLTBattleSPRecord[];
   public missionMPBattle: PLTBattleMPRecord[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

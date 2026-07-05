@@ -17,7 +17,10 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public RebelStats: TeamStats;
   public ImperialStats: TeamStats;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

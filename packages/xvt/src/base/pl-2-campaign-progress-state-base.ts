@@ -9,7 +9,10 @@ export abstract class PL2CampaignProgressStateBase extends PyriteBase implements
   public PlayerCount: number;
   public totalScore: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

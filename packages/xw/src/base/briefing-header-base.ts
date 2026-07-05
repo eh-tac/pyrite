@@ -6,7 +6,10 @@ export abstract class BriefingHeaderBase extends PyriteBase implements Byteable 
   public IconCount: number;
   public CoordinateCount: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

@@ -18,7 +18,10 @@ export abstract class MissionBOPBase extends PyriteBase implements Byteable {
   public GlobalGoalStrings: string[];
   public MissionDescriptions: string[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

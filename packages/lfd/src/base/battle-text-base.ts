@@ -12,7 +12,10 @@ export abstract class BattleTextBase extends PyriteBase implements Byteable {
   public MissionFiles: LString;
   public MissionDescriptions: LString[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

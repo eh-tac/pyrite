@@ -8,7 +8,10 @@ export abstract class ViewportSettingBase extends PyriteBase implements Byteable
   public Right: number;
   public Visible: number; //(boolean)
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

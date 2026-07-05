@@ -58,7 +58,10 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public MissileGroundHits: number;
   public CraftLost: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

@@ -8,7 +8,10 @@ export abstract class PLTTournTeamRecordBase extends PyriteBase implements Bytea
   public numberOfMeleeRankingsSecond: number;
   public numberOfMeleeRankingsThird: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

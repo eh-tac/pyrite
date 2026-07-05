@@ -5,7 +5,10 @@ export abstract class RoleBase extends PyriteBase implements Byteable {
   public Team: string;
   public Designation: string;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

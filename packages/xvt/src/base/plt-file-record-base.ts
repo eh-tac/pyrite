@@ -140,7 +140,10 @@ export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
   public rebelMultiplayerData: PLTFactionRecord;
   public imperialMultiplayerData: PLTFactionRecord;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

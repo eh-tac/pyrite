@@ -19,7 +19,10 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
   public Target2: number;
   public Target1OrTarget2: boolean;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

@@ -13,7 +13,10 @@ export abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteab
   public bestEvaluationMedal: number;
   public bestVictoryMargin: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

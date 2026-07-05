@@ -65,7 +65,10 @@ export abstract class PL2FactionRecordBase extends PyriteBase implements Byteabl
   public missionSPCampaign: PL2CampaignRecord[];
   public missionMPCampaign: PL2CampaignRecord[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

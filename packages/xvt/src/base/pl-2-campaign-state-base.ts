@@ -9,7 +9,10 @@ export abstract class PL2CampaignStateBase extends PyriteBase implements Byteabl
   public saveState: PL2CampaignProgressState;
   public unknown2: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

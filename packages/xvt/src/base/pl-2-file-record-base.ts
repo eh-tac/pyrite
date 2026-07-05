@@ -99,7 +99,10 @@ export abstract class PL2FileRecordBase extends PyriteBase implements Byteable {
   public anonymous_260: number;
   public anonymous_261: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

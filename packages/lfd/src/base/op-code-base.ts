@@ -5,7 +5,10 @@ export abstract class OpCodeBase extends PyriteBase implements Byteable {
   public Value: number;
   public ColorIndex: number[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

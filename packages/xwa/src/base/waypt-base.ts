@@ -7,7 +7,10 @@ export abstract class WayptBase extends PyriteBase implements Byteable {
   public Z: number;
   public Enabled: boolean;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

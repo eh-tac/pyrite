@@ -9,7 +9,10 @@ export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
   public MissionLocation: MissionLocation;
   public EndOfMissionMessages: string[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

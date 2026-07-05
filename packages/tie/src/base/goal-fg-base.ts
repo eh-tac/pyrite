@@ -6,7 +6,10 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
   public Condition: Condition;
   public GoalAmount: GoalAmount;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

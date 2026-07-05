@@ -12,7 +12,10 @@ export abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implement
   public unknown0x1C: number;
   public unknown0x20: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

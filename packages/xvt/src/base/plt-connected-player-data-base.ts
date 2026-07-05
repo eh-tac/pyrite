@@ -20,7 +20,10 @@ export abstract class PLTConnectedPlayerDataBase extends PyriteBase implements B
   public optionalCountermeasure: number;
   public hasDisconnectedFromHostUNK: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

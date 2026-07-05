@@ -5,7 +5,10 @@ export abstract class RegionBase extends PyriteBase implements Byteable {
   public Name: string;
   public ID: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

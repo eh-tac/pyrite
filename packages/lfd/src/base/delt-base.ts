@@ -12,7 +12,10 @@ export abstract class DeltBase extends PyriteBase implements Byteable {
   public Rows: Row[];
   public readonly Reserved: number = 0;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

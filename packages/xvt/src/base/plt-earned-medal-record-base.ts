@@ -7,7 +7,10 @@ export abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byt
   public exerciseBadgeCount: number[];
   public battleMedalCount: number[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

@@ -29,7 +29,10 @@ export abstract class PL2DebriefRecordBase extends PyriteBase implements Byteabl
   public LossesFromPlayerRank: PLTPlayerRankCountRecord;
   public LossesFromAIRank: PLTAIRankCountRecord;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

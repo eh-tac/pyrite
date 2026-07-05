@@ -11,7 +11,10 @@ export abstract class PLTBattleProgressStateBase extends PyriteBase implements B
   public NumPlayers: number;
   public totalScore: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

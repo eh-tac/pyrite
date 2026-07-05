@@ -16,7 +16,10 @@ export abstract class TeamBase extends PyriteBase implements Byteable {
   public Allegiances: boolean[];
   public EndOfMissionMessages: string[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

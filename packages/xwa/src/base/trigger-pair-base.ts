@@ -7,7 +7,10 @@ export abstract class TriggerPairBase extends PyriteBase implements Byteable {
   public Trigger2: Trigger;
   public T1OrT2: boolean;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

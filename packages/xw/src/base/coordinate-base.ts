@@ -6,7 +6,10 @@ export abstract class CoordinateBase extends PyriteBase implements Byteable {
   public Y: number;
   public Z: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

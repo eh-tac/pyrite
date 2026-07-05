@@ -14,7 +14,10 @@ export abstract class IconBase extends PyriteBase implements Byteable {
   public Pitch: number;
   public Roll: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

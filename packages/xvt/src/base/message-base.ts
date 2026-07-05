@@ -26,7 +26,10 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
   public DelaySeconds: number;
   public Trigger12OrTrigger34: boolean;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

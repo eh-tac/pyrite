@@ -17,7 +17,10 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
   public Reserved: number; //(0) Unknown15
   public Unknown16: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

@@ -15,7 +15,10 @@ export abstract class MissionDataBase extends PyriteBase implements Byteable {
   public UnkG: number;
   public BonusScoreTen: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

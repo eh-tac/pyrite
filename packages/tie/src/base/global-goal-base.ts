@@ -6,7 +6,10 @@ export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
   public Triggers: Trigger[];
   public Trigger1OrTrigger2: boolean;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

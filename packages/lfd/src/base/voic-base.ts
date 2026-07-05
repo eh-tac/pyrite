@@ -12,7 +12,10 @@ export abstract class VoicBase extends PyriteBase implements Byteable {
   public Data: VoicData;
   public Terminator: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

@@ -31,7 +31,10 @@ export abstract class TeamStatsBase extends PyriteBase implements Byteable {
   public MeleeMissionData: MissionData[];
   public CombatMissionData: MissionData[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

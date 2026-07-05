@@ -6,7 +6,10 @@ export abstract class PLTAIRankCountRecordBase extends PyriteBase implements Byt
   public melee: number[];
   public combat: number[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

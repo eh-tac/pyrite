@@ -14,7 +14,10 @@ export abstract class PLTTournMPRecordBase extends PyriteBase implements Byteabl
   public bestEvaluationMedal: number;
   public bestFinishPointMargin: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

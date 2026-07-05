@@ -11,7 +11,10 @@ export abstract class PL2CampaignRecordBase extends PyriteBase implements Byteab
   public isMissionComplete: number;
   public UIFrameTimerHelper: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

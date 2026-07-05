@@ -157,7 +157,7 @@ export class ${struct.name} extends ${baseClass} {
     const needsOffset = props.some((p) => p.needsOffset || !p.prop.isFixedLength);
 
     return `
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(public hex: ArrayBuffer, public TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
     ${needsOffset ? 'let offset = 0;' : ''}    

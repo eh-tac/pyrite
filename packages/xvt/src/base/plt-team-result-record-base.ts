@@ -10,7 +10,10 @@ export abstract class PLTTeamResultRecordBase extends PyriteBase implements Byte
   public sharedKills: number;
   public losses: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 

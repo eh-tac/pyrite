@@ -9,7 +9,10 @@ export abstract class RowBase extends PyriteBase implements Byteable {
   public ColorIndexes: number[];
   public Operations: OpCode[];
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

@@ -10,7 +10,10 @@ export abstract class GoalFGBase extends PyriteBase implements Byteable {
   public Parameter: number; //or Goal time limit depending on order
   public ActiveSequence: number;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

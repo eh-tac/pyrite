@@ -87,7 +87,10 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public Unknown20: number;
   public Unknown21: boolean;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;

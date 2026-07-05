@@ -5,7 +5,10 @@ export abstract class LFDBase extends PyriteBase implements Byteable {
   public readonly LFDLENGTH: number = 16;
   public Header: Header;
 
-  constructor(hex: ArrayBuffer, TIE?: IMission) {
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
     super(hex, TIE!);
     this.beforeConstruct();
 
