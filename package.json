@@ -15,8 +15,10 @@
   "scripts": {
     "build": "npm run build --workspaces --if-present",
     "lint": "eslint packages --ext .ts",
+    "typecheck": "node ./scripts/typecheck-all.mjs",
     "stan": "composer phpstan",
     "test": "jest --projects packages/*/jest.config.cjs",
+    "test:types": "npm run typecheck",
     "test:php": "sh -c 'if [ -x vendor/bin/phpunit ]; then exec vendor/bin/phpunit --configuration phpunit.xml \"$@\"; else exec phpunit --configuration phpunit.xml \"$@\"; fi' --",
     "format": "prettier --check .",
     "format:write": "prettier --write .",

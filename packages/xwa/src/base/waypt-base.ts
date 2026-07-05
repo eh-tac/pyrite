@@ -1,5 +1,4 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { getBool, getShort, writeBool, writeShort } from '@pyrite/core';
 export abstract class WayptBase extends PyriteBase implements Byteable {
   public readonly WAYPTLENGTH: number = 8;

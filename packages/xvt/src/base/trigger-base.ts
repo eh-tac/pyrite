@@ -1,9 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Amount, Condition, Constants, VariableType } from '../constants';
 import { getByte, writeByte } from '@pyrite/core';
-
-import type { Amount, Condition, VariableType } from '../constants';
-import { Constants } from '../constants';
 export abstract class TriggerBase extends PyriteBase implements Byteable {
   public readonly TRIGGERLENGTH: number = 4;
   public Condition: Condition;

@@ -1,9 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Constants, EndEvent, MissionLocation } from '../constants';
 import { getShort, getString, writeShort, writeString } from '@pyrite/core';
-
-import type { EndEvent, MissionLocation } from '../constants';
-import { Constants } from '../constants';
 export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public readonly FILEHEADERLENGTH: number = 206;
   public Version: number;

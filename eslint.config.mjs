@@ -68,6 +68,7 @@ export default [
       'unicorn/no-array-reduce': 'warn',
       'unicorn/require-array-sort-compare': 'warn',
       'unicorn/prefer-code-point': 'warn',
+      'unicorn/prefer-spread': 'off',
       'unicorn/no-computed-property-existence-check': 'warn'
     }
   },

@@ -1,8 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { getInt, writeInt, writeObject } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { MissionData } from '../mission-data';
+import { getInt, writeInt, writeObject } from '@pyrite/core';
 export abstract class TeamStatsBase extends PyriteBase implements Byteable {
   public readonly TEAMSTATSLENGTH: number = 21160;
   public MeleeMedals: number[];

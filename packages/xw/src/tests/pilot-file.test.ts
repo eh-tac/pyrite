@@ -17,7 +17,7 @@ function countDifferentBytes(output: Buffer, input: Buffer): number {
 
   for (const [i, element] of output.entries()) {
     if (element === input[i]) {
-    	continue;
+      continue;
     }
 
     console.log(`Byte ${i} differs: output=${element} input=${input[i]}`);

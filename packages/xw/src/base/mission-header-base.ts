@@ -1,9 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Constants, EndEvent, MissionLocation } from '../constants';
 import { getChar, getShort, writeChar, writeShort } from '@pyrite/core';
-
-import type { EndEvent, MissionLocation } from '../constants';
-import { Constants } from '../constants';
 export abstract class MissionHeaderBase extends PyriteBase implements Byteable {
   public readonly MISSIONHEADERLENGTH: number = 200;
   public TimeLimitMinutes: number;

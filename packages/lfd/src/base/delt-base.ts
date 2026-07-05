@@ -1,9 +1,7 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { getShort, writeObject, writeShort } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { Header } from '../header';
 import { Row } from '../row';
+import { getShort, writeObject, writeShort } from '@pyrite/core';
 export abstract class DeltBase extends PyriteBase implements Byteable {
   public DeltLength: number;
   public Header: Header;
@@ -19,7 +17,7 @@ export abstract class DeltBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Header = new Header([...hex], this.TIE);
+    this.Header = new Header(hex.slice(0x00), this.TIE);
     this.Left = getShort(hex, 0x10);
     this.Top = getShort(hex, 0x12);
     this.Right = getShort(hex, 0x14);

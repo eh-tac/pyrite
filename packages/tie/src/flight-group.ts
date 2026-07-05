@@ -1,13 +1,11 @@
-import type { IMission } from '../../pyrite-base';
-import type { FieldProp, IFielder } from '../pyrite-base';
-import { DataType } from '../pyrite-base';
+import type { IMission } from '@pyrite/core';
 import { FlightGroupBase } from './base/flight-group-base';
 import { Constants } from './constants';
 import { Craft } from './craft';
 import type { GoalFG } from './goal-fg';
 import { Difficulty } from './mission';
 
-export class FlightGroup extends FlightGroupBase implements IFielder {
+export class FlightGroup extends FlightGroupBase {
   public craft: Craft;
 
   public constructor(hex: ArrayBuffer, tie?: IMission) {
@@ -151,22 +149,5 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
     return (
       this.GroupAI !== 5 || this.FlightGroupGoals.some((goal: GoalFG) => goal.isInvincibleGoal)
     ); // TODO check global goals
-  }
-
-  public field(name: string): FieldProp {
-    if (name === 'Warhead') {
-      return {
-        type: DataType.SELECT,
-        options: Constants.WARHEAD,
-        value: this.Warhead
-      };
-    }
-    if (name === 'Name') {
-      return {
-        type: DataType.char,
-        value: this.Name
-      };
-    }
-    console.warn('unknown', name);
   }
 }

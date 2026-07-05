@@ -5,64 +5,328 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { ApiSummary } from "./ehtc/api-select/api-select";
+import { BattleSummary, CharacterSummary, PilotSummary } from "./ehtc/model";
+import { ItemSummary } from "./ehtc/wrap-select/wrap-select";
+export { ApiSummary } from "./ehtc/api-select/api-select";
+export { BattleSummary, CharacterSummary, PilotSummary } from "./ehtc/model";
+export { ItemSummary } from "./ehtc/wrap-select/wrap-select";
 export namespace Components {
-    interface MyComponent {
+    interface EhtcApiSelect {
+        "displayDescription"?: "subtitle" | "none";
+        "displayId"?: "left" | "right";
+        "domain": string;
+        "item": ApiSummary;
+        "name": string;
+        "search": (query: string) => Promise<void>;
+        "setValue": (val: string | number) => Promise<void>;
+        "url": string;
+        "value": string;
+    }
+    interface EhtcApiStore {
+        "apiFetch": (url: string) => Promise<any>;
         /**
-          * The first name
+          * @default "pyrite"
          */
-        "first": string;
+        "cachePrefix": string;
         /**
-          * The last name
+          * @default ""
          */
-        "last": string;
+        "domain": string;
+    }
+    interface EhtcBattleSelect {
+        "battle": BattleSummary;
+        "category": string;
+        "disabled": boolean;
+        "domain": string;
+        "name": string;
+        "readonly": boolean;
+        "search": (query: string) => Promise<void>;
+        "setValue": (val: string | number) => Promise<void>;
+        "value": string;
+    }
+    interface EhtcMemberSelect {
+        "disabled": boolean;
+        "domain": string;
         /**
-          * The middle name
+          * @default ''
          */
-        "middle": string;
+        "filter": string;
+        /**
+          * @default 'character'
+         */
+        "mode": 'character' | 'member' | 'member-aliases';
+        "name": string;
+        "readonly": boolean;
+        "search": (query: string) => Promise<void>;
+        "setValue": (val: string | number) => Promise<void>;
+        /**
+          * @default 'active'
+         */
+        "status": 'active' | 'all';
+        "value": string;
+    }
+    interface EhtcWrapSelect {
+        "disabled": boolean;
+        "item": ItemSummary;
+        "name": string;
+        "readonly": boolean;
+        "search": (query: string) => Promise<void>;
+        "value": string;
+    }
+    interface PyritePilotFile {
+        /**
+          * @default false
+         */
+        "allowUpload": boolean;
+        /**
+          * @default ''
+         */
+        "bsf": string;
+        "file": string;
+        "useFileInput": (file: File) => Promise<void>;
     }
 }
+export interface EhtcApiSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLEhtcApiSelectElement;
+}
+export interface EhtcBattleSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLEhtcBattleSelectElement;
+}
+export interface EhtcMemberSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLEhtcMemberSelectElement;
+}
+export interface EhtcWrapSelectCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLEhtcWrapSelectElement;
+}
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLEhtcApiSelectElementEventMap {
+        "apiSelect": ApiSummary;
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    interface HTMLEhtcApiSelectElement extends Components.EhtcApiSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLEhtcApiSelectElementEventMap>(type: K, listener: (this: HTMLEhtcApiSelectElement, ev: EhtcApiSelectCustomEvent<HTMLEhtcApiSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLEhtcApiSelectElementEventMap>(type: K, listener: (this: HTMLEhtcApiSelectElement, ev: EhtcApiSelectCustomEvent<HTMLEhtcApiSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLEhtcApiSelectElement: {
+        prototype: HTMLEhtcApiSelectElement;
+        new (): HTMLEhtcApiSelectElement;
+    };
+    interface HTMLEhtcApiStoreElement extends Components.EhtcApiStore, HTMLStencilElement {
+    }
+    var HTMLEhtcApiStoreElement: {
+        prototype: HTMLEhtcApiStoreElement;
+        new (): HTMLEhtcApiStoreElement;
+    };
+    interface HTMLEhtcBattleSelectElementEventMap {
+        "battleSelect": BattleSummary;
+    }
+    interface HTMLEhtcBattleSelectElement extends Components.EhtcBattleSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLEhtcBattleSelectElementEventMap>(type: K, listener: (this: HTMLEhtcBattleSelectElement, ev: EhtcBattleSelectCustomEvent<HTMLEhtcBattleSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLEhtcBattleSelectElementEventMap>(type: K, listener: (this: HTMLEhtcBattleSelectElement, ev: EhtcBattleSelectCustomEvent<HTMLEhtcBattleSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLEhtcBattleSelectElement: {
+        prototype: HTMLEhtcBattleSelectElement;
+        new (): HTMLEhtcBattleSelectElement;
+    };
+    interface HTMLEhtcMemberSelectElementEventMap {
+        "memberSelect": PilotSummary | CharacterSummary;
+    }
+    interface HTMLEhtcMemberSelectElement extends Components.EhtcMemberSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLEhtcMemberSelectElementEventMap>(type: K, listener: (this: HTMLEhtcMemberSelectElement, ev: EhtcMemberSelectCustomEvent<HTMLEhtcMemberSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLEhtcMemberSelectElementEventMap>(type: K, listener: (this: HTMLEhtcMemberSelectElement, ev: EhtcMemberSelectCustomEvent<HTMLEhtcMemberSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLEhtcMemberSelectElement: {
+        prototype: HTMLEhtcMemberSelectElement;
+        new (): HTMLEhtcMemberSelectElement;
+    };
+    interface HTMLEhtcWrapSelectElementEventMap {
+        "itemSelect": ItemSummary;
+    }
+    interface HTMLEhtcWrapSelectElement extends Components.EhtcWrapSelect, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLEhtcWrapSelectElementEventMap>(type: K, listener: (this: HTMLEhtcWrapSelectElement, ev: EhtcWrapSelectCustomEvent<HTMLEhtcWrapSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLEhtcWrapSelectElementEventMap>(type: K, listener: (this: HTMLEhtcWrapSelectElement, ev: EhtcWrapSelectCustomEvent<HTMLEhtcWrapSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLEhtcWrapSelectElement: {
+        prototype: HTMLEhtcWrapSelectElement;
+        new (): HTMLEhtcWrapSelectElement;
+    };
+    interface HTMLPyritePilotFileElement extends Components.PyritePilotFile, HTMLStencilElement {
+    }
+    var HTMLPyritePilotFileElement: {
+        prototype: HTMLPyritePilotFileElement;
+        new (): HTMLPyritePilotFileElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "ehtc-api-select": HTMLEhtcApiSelectElement;
+        "ehtc-api-store": HTMLEhtcApiStoreElement;
+        "ehtc-battle-select": HTMLEhtcBattleSelectElement;
+        "ehtc-member-select": HTMLEhtcMemberSelectElement;
+        "ehtc-wrap-select": HTMLEhtcWrapSelectElement;
+        "pyrite-pilot-file": HTMLPyritePilotFileElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
+    type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
+
+    interface EhtcApiSelect {
+        "displayDescription"?: "subtitle" | "none";
+        "displayId"?: "left" | "right";
+        "domain"?: string;
+        "item"?: ApiSummary;
+        "name"?: string;
+        "onApiSelect"?: (event: EhtcApiSelectCustomEvent<ApiSummary>) => void;
+        "url"?: string;
+        "value"?: string;
+    }
+    interface EhtcApiStore {
         /**
-          * The first name
+          * @default "pyrite"
          */
-        "first"?: string;
+        "cachePrefix"?: string;
         /**
-          * The last name
+          * @default ""
          */
-        "last"?: string;
+        "domain"?: string;
+    }
+    interface EhtcBattleSelect {
+        "battle"?: BattleSummary;
+        "category"?: string;
+        "disabled"?: boolean;
+        "domain"?: string;
+        "name"?: string;
+        "onBattleSelect"?: (event: EhtcBattleSelectCustomEvent<BattleSummary>) => void;
+        "readonly"?: boolean;
+        "value"?: string;
+    }
+    interface EhtcMemberSelect {
+        "disabled"?: boolean;
+        "domain"?: string;
         /**
-          * The middle name
+          * @default ''
          */
-        "middle"?: string;
+        "filter"?: string;
+        /**
+          * @default 'character'
+         */
+        "mode"?: 'character' | 'member' | 'member-aliases';
+        "name"?: string;
+        "onMemberSelect"?: (event: EhtcMemberSelectCustomEvent<PilotSummary | CharacterSummary>) => void;
+        "readonly"?: boolean;
+        /**
+          * @default 'active'
+         */
+        "status"?: 'active' | 'all';
+        "value"?: string;
+    }
+    interface EhtcWrapSelect {
+        "disabled"?: boolean;
+        "item"?: ItemSummary;
+        "name"?: string;
+        "onItemSelect"?: (event: EhtcWrapSelectCustomEvent<ItemSummary>) => void;
+        "readonly"?: boolean;
+        "value"?: string;
+    }
+    interface PyritePilotFile {
+        /**
+          * @default false
+         */
+        "allowUpload"?: boolean;
+        /**
+          * @default ''
+         */
+        "bsf"?: string;
+        "file": string;
     }
 
-    interface MyComponentAttributes {
-        "first": string;
-        "middle": string;
-        "last": string;
+    interface EhtcApiSelectAttributes {
+        "value": string;
+        "domain": string;
+        "name": string;
+        "url": string;
+        "displayId": "left" | "right";
+        "displayDescription": "subtitle" | "none";
+    }
+    interface EhtcApiStoreAttributes {
+        "domain": string;
+        "cachePrefix": string;
+    }
+    interface EhtcBattleSelectAttributes {
+        "value": string;
+        "category": string;
+        "domain": string;
+        "name": string;
+        "disabled": boolean;
+        "readonly": boolean;
+    }
+    interface EhtcMemberSelectAttributes {
+        "value": string;
+        "domain": string;
+        "name": string;
+        "mode": 'character' | 'member' | 'member-aliases';
+        "status": 'active' | 'all';
+        "filter": string;
+        "disabled": boolean;
+        "readonly": boolean;
+    }
+    interface EhtcWrapSelectAttributes {
+        "value": string;
+        "name": string;
+        "disabled": boolean;
+        "readonly": boolean;
+    }
+    interface PyritePilotFileAttributes {
+        "file": string;
+        "bsf": string;
+        "allowUpload": boolean;
     }
 
     interface IntrinsicElements {
-        "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
+        "ehtc-api-select": Omit<EhtcApiSelect, keyof EhtcApiSelectAttributes> & { [K in keyof EhtcApiSelect & keyof EhtcApiSelectAttributes]?: EhtcApiSelect[K] } & { [K in keyof EhtcApiSelect & keyof EhtcApiSelectAttributes as `attr:${K}`]?: EhtcApiSelectAttributes[K] } & { [K in keyof EhtcApiSelect & keyof EhtcApiSelectAttributes as `prop:${K}`]?: EhtcApiSelect[K] };
+        "ehtc-api-store": Omit<EhtcApiStore, keyof EhtcApiStoreAttributes> & { [K in keyof EhtcApiStore & keyof EhtcApiStoreAttributes]?: EhtcApiStore[K] } & { [K in keyof EhtcApiStore & keyof EhtcApiStoreAttributes as `attr:${K}`]?: EhtcApiStoreAttributes[K] } & { [K in keyof EhtcApiStore & keyof EhtcApiStoreAttributes as `prop:${K}`]?: EhtcApiStore[K] };
+        "ehtc-battle-select": Omit<EhtcBattleSelect, keyof EhtcBattleSelectAttributes> & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes]?: EhtcBattleSelect[K] } & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes as `attr:${K}`]?: EhtcBattleSelectAttributes[K] } & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes as `prop:${K}`]?: EhtcBattleSelect[K] };
+        "ehtc-member-select": Omit<EhtcMemberSelect, keyof EhtcMemberSelectAttributes> & { [K in keyof EhtcMemberSelect & keyof EhtcMemberSelectAttributes]?: EhtcMemberSelect[K] } & { [K in keyof EhtcMemberSelect & keyof EhtcMemberSelectAttributes as `attr:${K}`]?: EhtcMemberSelectAttributes[K] } & { [K in keyof EhtcMemberSelect & keyof EhtcMemberSelectAttributes as `prop:${K}`]?: EhtcMemberSelect[K] };
+        "ehtc-wrap-select": Omit<EhtcWrapSelect, keyof EhtcWrapSelectAttributes> & { [K in keyof EhtcWrapSelect & keyof EhtcWrapSelectAttributes]?: EhtcWrapSelect[K] } & { [K in keyof EhtcWrapSelect & keyof EhtcWrapSelectAttributes as `attr:${K}`]?: EhtcWrapSelectAttributes[K] } & { [K in keyof EhtcWrapSelect & keyof EhtcWrapSelectAttributes as `prop:${K}`]?: EhtcWrapSelect[K] };
+        "pyrite-pilot-file": Omit<PyritePilotFile, keyof PyritePilotFileAttributes> & { [K in keyof PyritePilotFile & keyof PyritePilotFileAttributes]?: PyritePilotFile[K] } & { [K in keyof PyritePilotFile & keyof PyritePilotFileAttributes as `attr:${K}`]?: PyritePilotFileAttributes[K] } & { [K in keyof PyritePilotFile & keyof PyritePilotFileAttributes as `prop:${K}`]?: PyritePilotFile[K] } & OneOf<"file", PyritePilotFile["file"], PyritePilotFileAttributes["file"]>;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.IntrinsicElements["my-component"] & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "ehtc-api-select": LocalJSX.IntrinsicElements["ehtc-api-select"] & JSXBase.HTMLAttributes<HTMLEhtcApiSelectElement>;
+            "ehtc-api-store": LocalJSX.IntrinsicElements["ehtc-api-store"] & JSXBase.HTMLAttributes<HTMLEhtcApiStoreElement>;
+            "ehtc-battle-select": LocalJSX.IntrinsicElements["ehtc-battle-select"] & JSXBase.HTMLAttributes<HTMLEhtcBattleSelectElement>;
+            "ehtc-member-select": LocalJSX.IntrinsicElements["ehtc-member-select"] & JSXBase.HTMLAttributes<HTMLEhtcMemberSelectElement>;
+            "ehtc-wrap-select": LocalJSX.IntrinsicElements["ehtc-wrap-select"] & JSXBase.HTMLAttributes<HTMLEhtcWrapSelectElement>;
+            "pyrite-pilot-file": LocalJSX.IntrinsicElements["pyrite-pilot-file"] & JSXBase.HTMLAttributes<HTMLPyritePilotFileElement>;
         }
     }
 }

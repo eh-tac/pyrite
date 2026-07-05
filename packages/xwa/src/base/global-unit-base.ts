@@ -1,5 +1,4 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { getBool, getByte, getString, writeBool, writeByte, writeString } from '@pyrite/core';
 export abstract class GlobalUnitBase extends PyriteBase implements Byteable {
   public readonly GLOBALUNITLENGTH: number = 87;

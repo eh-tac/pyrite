@@ -1,9 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Constants, EventType } from '../constants';
 import { getShort, writeShort } from '@pyrite/core';
-
-import type { EventType } from '../constants';
-import { Constants } from '../constants';
 export abstract class EventBase extends PyriteBase implements Byteable {
   public EventLength: number;
   public Time: number;

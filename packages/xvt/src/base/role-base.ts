@@ -1,5 +1,4 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { getChar, writeChar } from '@pyrite/core';
 export abstract class RoleBase extends PyriteBase implements Byteable {
   public readonly ROLELENGTH: number = 4;

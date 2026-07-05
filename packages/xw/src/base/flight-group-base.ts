@@ -1,9 +1,7 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { getChar, getShort, writeChar, writeShort } from '@pyrite/core';
-
-import type {
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import {
   ArrivalEvent,
+  Constants,
   CraftType,
   FlightGroupStatus,
   Formation,
@@ -13,9 +11,7 @@ import type {
   Objective,
   Order
 } from '../constants';
-import {
-  Constants
-} from '../constants';
+import { getChar, getShort, writeChar, writeShort } from '@pyrite/core';
 export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public readonly FLIGHTGROUPLENGTH: number = 148;
   public Name: string;

@@ -1,10 +1,8 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { getInt, getShort, writeInt, writeObject, writeShort } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { Event } from '../event';
-import { Tag } from '../tag';
 import { TIEString } from '../tie-string';
+import { Tag } from '../tag';
+import { getInt, getShort, writeInt, writeObject, writeShort } from '@pyrite/core';
 export abstract class BriefingBase extends PyriteBase implements Byteable {
   public BriefingLength: number;
   public RunningTime: number;

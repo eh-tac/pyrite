@@ -118,7 +118,7 @@ export class Craft {
   }
 
   public get label(): string {
-    return Constants.CRAFTTYPE[this.typeID];
+    return Constants.CRAFTTYPE[this.typeID as keyof typeof Constants.CRAFTTYPE];
   }
 
   public get isFighter(): boolean {

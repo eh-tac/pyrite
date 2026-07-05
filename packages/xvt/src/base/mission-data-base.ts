@@ -1,9 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { BestRating, Constants } from '../constants';
 import { getInt, writeInt } from '@pyrite/core';
-
-import type { BestRating} from '../constants';
-import { Constants } from '../constants';
 export abstract class MissionDataBase extends PyriteBase implements Byteable {
   public readonly MISSIONDATALENGTH: number = 36;
   public AttemptCount: number;

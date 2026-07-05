@@ -1,9 +1,7 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { getInt, writeInt, writeObject } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { PL2CampaignRecord } from '../pl-2-campaign-record';
 import { PL2CampaignStatusSPRecord } from '../pl-2-campaign-status-sp-record';
+import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
 import { PLTBattleMPRecord } from '../plt-battle-mp-record';
 import { PLTBattleSPRecord } from '../plt-battle-sp-record';
 import { PLTCategoryTypeRecord } from '../plt-category-type-record';
@@ -13,7 +11,7 @@ import { PLTMissionSPRecord } from '../plt-mission-sp-record';
 import { PLTPlayerRankCountRecord } from '../plt-player-rank-count-record';
 import { PLTTournMPRecord } from '../plt-tourn-mp-record';
 import { PLTTournSPRecord } from '../plt-tourn-sp-record';
-import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
+import { getInt, writeInt, writeObject } from '@pyrite/core';
 export abstract class PL2FactionRecordBase extends PyriteBase implements Byteable {
   public readonly PL2FACTIONRECORDLENGTH: number = 68064;
   public totalMissionsFlown: number;

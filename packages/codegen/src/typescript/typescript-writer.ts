@@ -80,6 +80,7 @@ export class TypeScriptWriter extends PyriteWriter {
 export abstract class ${baseName} extends PyriteBase implements Byteable {
   ${lengthProp.propertyDeclaration}
   ${props.map((p: PropWriter): string => p.propertyDeclaration).join('\n  ')}
+
   ${this.getBaseConstructor(struct, lengthProp)}
   ${this.baseJSON(props)}
   ${this.baseHexOutput(props)}

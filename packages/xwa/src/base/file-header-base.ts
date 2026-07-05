@@ -1,5 +1,8 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { BriefingLogo, BriefingOfficer, Constants, Hangar } from '../constants';
+import { GlobalCargo } from '../global-cargo';
+import { GlobalUnit } from '../global-unit';
+import { Region } from '../region';
 import {
   getBool,
   getByte,
@@ -11,12 +14,6 @@ import {
   writeShort,
   writeString
 } from '@pyrite/core';
-
-import type { BriefingLogo, BriefingOfficer, Hangar } from '../constants';
-import { Constants } from '../constants';
-import { GlobalCargo } from '../global-cargo';
-import { GlobalUnit } from '../global-unit';
-import { Region } from '../region';
 export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public readonly FILEHEADERLENGTH: number = 9200;
   public PlatformID: number; //(0x20)

@@ -1,4 +1,4 @@
-import type { PyriteBase } from './pyrite-base';
+type PyriteBase = unknown; // Placeholder for the actual PyriteBase type
 
 export interface FieldAttr {
   name: string;

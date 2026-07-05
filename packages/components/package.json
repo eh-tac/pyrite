@@ -42,5 +42,13 @@
     "playwright": "^1.52.0",
     "vitest": "^4.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@pyrite/core": "file:../core",
+    "@pyrite/tie": "file:../tie",
+    "@pyrite/xvt": "file:../xvt",
+    "@pyrite/xw": "file:../xw",
+    "@pyrite/xwa": "file:../xwa",
+    "@pyrite/xwvm": "file:../xwvm"
+  }
 }

@@ -1,6 +1,5 @@
 import { Constants } from './constants';
-import type {
-  PropType} from './prop';
+import type { PropType } from './prop';
 import {
   Prop,
   PropAny,
@@ -48,7 +47,7 @@ export class PyriteGenerator {
       const line = l.trim();
       const bits = line.split(/\s+/);
       if (line === '{' || line === '') {
-         // skip
+        continue; // skip
       }
       if (!currentStruct) {
         // has data and no current struct - this must be the header line
@@ -72,6 +71,8 @@ export class PyriteGenerator {
   public parseProp(bits: string[]): Prop {
     if (bits.length === 2) {
       bits.push('Unnamed');
+    } else if (bits.length === 1) {
+      console.warn(`Bad line ${bits.join(' ')}`);
     }
 
     const [offset, typeStr, name] = bits;
@@ -85,58 +86,59 @@ export class PyriteGenerator {
     const type = match.groups['type'] as PropType;
 
     switch (type) {
-    case 'SHORT': {
-      prop = new PropShort(offset, name, type);
-    
-    break;
-    }
-    case 'USHORT': {
-      prop = new PropUShort(offset, name, type);
-    
-    break;
-    }
-    case 'BOOL': {
-      prop = new PropBool(offset, name, type);
-    
-    break;
-    }
-    case 'BYTE': {
-      prop = new PropByte(offset, name, type);
-    
-    break;
-    }
-    case 'SBYTE': {
-      prop = new PropSByte(offset, name, type);
-    
-    break;
-    }
-    case 'INT': {
-      prop = new PropInt(offset, name, type);
-    
-    break;
-    }
-    case 'STR': {
-      prop = new PropStr(offset, name, type);
-    
-    break;
-    }
-    case 'CHAR': {
-      prop = new PropChar(offset, name, type);
-    
-    break;
-    }
-    case 'any': {
-      prop = new PropAny(offset, name, type);
-    
-    break;
-    }
-    default: { if (type) {
-      prop = new PropObject(offset, name, type);
-      (prop as PropObject).structName = type;
-    } else {
-      console.warn('very confused by', bits);
-    }
-    }
+      case 'SHORT': {
+        prop = new PropShort(offset, name, type);
+
+        break;
+      }
+      case 'USHORT': {
+        prop = new PropUShort(offset, name, type);
+
+        break;
+      }
+      case 'BOOL': {
+        prop = new PropBool(offset, name, type);
+
+        break;
+      }
+      case 'BYTE': {
+        prop = new PropByte(offset, name, type);
+
+        break;
+      }
+      case 'SBYTE': {
+        prop = new PropSByte(offset, name, type);
+
+        break;
+      }
+      case 'INT': {
+        prop = new PropInt(offset, name, type);
+
+        break;
+      }
+      case 'STR': {
+        prop = new PropStr(offset, name, type);
+
+        break;
+      }
+      case 'CHAR': {
+        prop = new PropChar(offset, name, type);
+
+        break;
+      }
+      case 'any': {
+        prop = new PropAny(offset, name, type);
+
+        break;
+      }
+      default: {
+        if (type) {
+          prop = new PropObject(offset, name, type);
+          (prop as PropObject).structName = type;
+        } else {
+          console.warn('very confused by', bits);
+        }
+      }
     }
     return prop
       .handleTypeLength(match.groups['typeLen'])

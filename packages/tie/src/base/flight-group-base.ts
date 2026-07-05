@@ -1,5 +1,20 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import {
+  AbortTrigger,
+  ArrivalDifficulty,
+  Beam,
+  Constants,
+  CraftType,
+  Formation,
+  GroupAI,
+  Markings,
+  Status,
+  Warhead
+} from '../constants';
+import { GoalFG } from '../goal-fg';
+import { Order } from '../order';
+import { Trigger } from '../trigger';
+import { Waypt } from '../waypt';
 import {
   getBool,
   getByte,
@@ -11,25 +26,6 @@ import {
   writeObject,
   writeSByte
 } from '@pyrite/core';
-
-import type {
-  AbortTrigger,
-  ArrivalDifficulty,
-  Beam,
-  CraftType,
-  Formation,
-  GroupAI,
-  Markings,
-  Status,
-  Warhead
-} from '../constants';
-import {
-  Constants
-} from '../constants';
-import { GoalFG } from '../goal-fg';
-import { Order } from '../order';
-import { Trigger } from '../trigger';
-import { Waypt } from '../waypt';
 export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public readonly FLIGHTGROUPLENGTH: number = 292;
   public Name: string;

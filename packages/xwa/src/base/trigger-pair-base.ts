@@ -1,8 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { getBool, writeBool, writeObject } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { Trigger } from '../trigger';
+import { getBool, writeBool, writeObject } from '@pyrite/core';
 export abstract class TriggerPairBase extends PyriteBase implements Byteable {
   public readonly TRIGGERPAIRLENGTH: number = 16;
   public Trigger1: Trigger;
@@ -13,7 +11,7 @@ export abstract class TriggerPairBase extends PyriteBase implements Byteable {
     super(hex, TIE!);
     this.beforeConstruct();
 
-    this.Trigger1 = new Trigger([...hex], this.TIE);
+    this.Trigger1 = new Trigger(hex.slice(0x00), this.TIE);
     this.Trigger2 = new Trigger(hex.slice(0x06), this.TIE);
     this.T1OrT2 = getBool(hex, 0x0e);
   }

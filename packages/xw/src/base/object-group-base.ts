@@ -1,9 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Constants, CraftType, IFF, ObjectFormation } from '../constants';
 import { getChar, getShort, writeChar, writeShort } from '@pyrite/core';
-
-import type { CraftType, IFF, ObjectFormation } from '../constants';
-import { Constants } from '../constants';
 export abstract class ObjectGroupBase extends PyriteBase implements Byteable {
   public readonly OBJECTGROUPLENGTH: number = 70;
   public Name: string; //(ignored?)

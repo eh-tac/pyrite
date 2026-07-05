@@ -1,10 +1,8 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { writeObject } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { FileHeader } from '../file-header';
 import { FlightGroup } from '../flight-group';
 import { ObjectGroup } from '../object-group';
+import { writeObject } from '@pyrite/core';
 export abstract class MissionBase extends PyriteBase implements Byteable {
   public MissionLength: number;
   public FileHeader: FileHeader;
@@ -16,7 +14,7 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.FileHeader = new FileHeader([...hex], this.TIE);
+    this.FileHeader = new FileHeader(hex.slice(0x00), this.TIE);
     this.FlightGroups = [];
     offset = 0xce;
     for (let i = 0; i < this.FileHeader.NumFGs; i++) {

@@ -1,5 +1,4 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { getInt, writeInt } from '@pyrite/core';
 export abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implements Byteable {
   public readonly PL2CAMPAIGNSTATUSSPRECORDLENGTH: number = 36;

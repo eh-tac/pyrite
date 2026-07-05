@@ -1,5 +1,5 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { TriggerPair } from '../trigger-pair';
 import {
   getBool,
   getByte,
@@ -11,8 +11,6 @@ import {
   writeSByte,
   writeString
 } from '@pyrite/core';
-
-import { TriggerPair } from '../trigger-pair';
 export abstract class GoalGlobalBase extends PyriteBase implements Byteable {
   public readonly GOALGLOBALLENGTH: number = 122;
   public Triggers: TriggerPair[]; //(contained Unknown1)

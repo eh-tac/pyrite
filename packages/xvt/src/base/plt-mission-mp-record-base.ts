@@ -1,5 +1,4 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { getInt, writeInt } from '@pyrite/core';
 export abstract class PLTMissionMPRecordBase extends PyriteBase implements Byteable {
   public readonly PLTMISSIONMPRECORDLENGTH: number = 48;

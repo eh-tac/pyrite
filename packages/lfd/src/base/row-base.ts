@@ -1,8 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { getByte, getShort, writeByte, writeObject, writeShort } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { OpCode } from '../op-code';
+import { getByte, getShort, writeByte, writeObject, writeShort } from '@pyrite/core';
 export abstract class RowBase extends PyriteBase implements Byteable {
   public RowLength: number;
   public Length: number;

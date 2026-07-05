@@ -66,7 +66,7 @@ describe('Briefing component classes', () => {
   }
 
   it('parses and outputs BriefingHeader', () => {
-    const header = new BriefingHeader([...hex]);
+    const header = new BriefingHeader(hex.slice(0x00));
 
     expect(header.PlatformID).toBe(briefing.BriefingHeader.PlatformID);
     expect(header.IconCount).toBe(16);
@@ -148,7 +148,7 @@ describe('Briefing component classes', () => {
     const strings = new XwString(hex.slice(stringOffset));
 
     expect(strings.Length).toBe(briefing.Strings.Length);
-    expect(strings.String.slice(0, 20)).toEqual(briefing.Strings.String.slice(0, 20));
+    expect(strings.String.slice(0, 20)).toEqual(briefing.Strings.Content.slice(0, 20));
     expect(strings.Highlight.slice(0, 20)).toEqual(briefing.Strings.Highlight.slice(0, 20));
 
     expectRoundTrip(stringOffset, strings.getLength(), strings.toHexBuffer());

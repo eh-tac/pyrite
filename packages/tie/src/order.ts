@@ -46,29 +46,29 @@ export class Order extends OrderBase {
         return this.TIE.getFlightGroup(instance).toString();
       }
       case 2: {
-        return Constants.CRAFTTYPE[instance];
+        return Constants.CRAFTTYPE[instance as keyof typeof Constants.CRAFTTYPE];
       }
       case 3: {
-        return Constants.CRAFTCATEGORY[instance];
+        return Constants.CRAFTCATEGORY[instance as keyof typeof Constants.CRAFTCATEGORY];
       }
       case 4: {
-        return Constants.OBJECTCATEGORY[instance];
+        return Constants.OBJECTCATEGORY[instance as keyof typeof Constants.OBJECTCATEGORY];
       }
       case 5: {
         return this.TIE.getIFF(instance);
       }
       case 6: {
-        return Constants.ORDER[instance];
+        return Constants.ORDER[instance as keyof typeof Constants.ORDER];
       }
       case 7: {
-        return Constants.CRAFTWHEN[instance];
+        return Constants.CRAFTWHEN[instance as keyof typeof Constants.CRAFTWHEN];
       }
       case 8: {
         const fgs = this.TIE.getGlobalGroup(instance);
         return fgs.map((fg) => fg.toString()).join(', ');
       }
       case 9: {
-        return Constants.MISC[instance];
+        return Constants.MISC[instance as keyof typeof Constants.MISC];
       }
     }
     return 'Unknown';

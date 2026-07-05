@@ -1,8 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { getChar, getInt, writeChar, writeInt, writeObject } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { MissionData } from '../mission-data';
+import { getChar, getInt, writeChar, writeInt, writeObject } from '@pyrite/core';
 export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public readonly PILOTFILELENGTH: number = 152076;
   public Name: string;

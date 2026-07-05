@@ -1,5 +1,11 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
+import { PLTCategoryTypeRecord } from '../plt-category-type-record';
+import { PLTConnectedPlayerData } from '../plt-connected-player-data';
+import { PLTFactionRecord } from '../plt-faction-record';
+import { PLTPlayerRankCountRecord } from '../plt-player-rank-count-record';
+import { PLTTeamResultRecord } from '../plt-team-result-record';
+import { PLTTournTeamRecord } from '../plt-tourn-team-record';
 import {
   getByte,
   getChar,
@@ -9,14 +15,6 @@ import {
   writeInt,
   writeObject
 } from '@pyrite/core';
-
-import { PLTCategoryTypeRecord } from '../plt-category-type-record';
-import { PLTConnectedPlayerData } from '../plt-connected-player-data';
-import { PLTFactionRecord } from '../plt-faction-record';
-import { PLTPlayerRankCountRecord } from '../plt-player-rank-count-record';
-import { PLTTeamResultRecord } from '../plt-team-result-record';
-import { PLTTournTeamRecord } from '../plt-tourn-team-record';
-import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
 export abstract class PLTFileRecordBase extends PyriteBase implements Byteable {
   public readonly PLTFILERECORDLENGTH: number = 253754;
   public PilotName: string;

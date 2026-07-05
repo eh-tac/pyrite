@@ -1,9 +1,7 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { getByte, getChar, writeByte, writeChar, writeObject } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { Header } from '../header';
 import { VoicData } from '../voic-data';
+import { getByte, getChar, writeByte, writeChar, writeObject } from '@pyrite/core';
 export abstract class VoicBase extends PyriteBase implements Byteable {
   public VoicLength: number;
   public Header: Header;
@@ -19,7 +17,7 @@ export abstract class VoicBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Header = new Header([...hex], this.TIE);
+    this.Header = new Header(hex.slice(0x00), this.TIE);
     this.Creative = getChar(hex, 0x10, 19);
     this.Abort = [];
     offset = 0x23;

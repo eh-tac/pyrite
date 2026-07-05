@@ -32,7 +32,7 @@ describe('Mission', () => {
 
     for (const [i, element] of output.entries()) {
       if (element === fixture[i]) {
-      	continue;
+        continue;
       }
 
       if (differentBytes < 20) {

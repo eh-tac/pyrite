@@ -1,16 +1,22 @@
-import * as lodash from 'lodash';
-
-import { getByteString } from '../../hex';
 import type {
   BattleSummary,
   KillSummary,
   MissionScore,
   PilotData,
   TrainingSummary
-} from '../pilot';
-import { percent, shootInfo } from '../pilot';
+} from '@pyrite/core';
+import { getByteString, percent, shootInfo } from '@pyrite/core';
+
 import { PilotFileBase } from './base/pilot-file-base';
 import { BattleStatus, Constants } from './constants';
+
+function chunkArray<T>(array: T[], chunkSize: number): T[][] {
+  const chunks: T[][] = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    chunks.push(array.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
 
 export class PilotFile extends PilotFileBase implements PilotData {
   public beforeConstruct(): void {}
@@ -40,9 +46,9 @@ export class PilotFile extends PilotFileBase implements PilotData {
   }
 
   public get BattleSummary(): BattleSummary[] {
-    const battles = lodash.chunk(this.BattleScores, 8);
+    const battles = chunkArray(this.BattleScores, 8);
     return battles.map((scores: number[], battle: number) => {
-      const status = this.BattleStatuses[battle];
+      const status = this.BattleStatuses[battle] as BattleStatus;
       const last = this.BattleLastMissions[battle];
       const secret = getByteString(this.SecretObjectives[battle]);
       const bonus = getByteString(this.BonusObjectives[battle]);
@@ -81,7 +87,8 @@ export class PilotFile extends PilotFileBase implements PilotData {
   }
 
   public get TrainingSummary(): TrainingSummary[] {
-    const combatCompletions = lodash.chunk(this.CombatCompletes, 8);
+    const combatCompletions = chunkArray(this.CombatCompletes, 8);
+    const combatScores = chunkArray(this.CombatScores, 8);
     return Object.values(Constants.TRAININGCRAFT).map((craft: string, idx: number) => {
       const summary: TrainingSummary = {
         craftLabel: craft,
@@ -91,7 +98,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
         missions: combatCompletions[idx].map((isComplete: boolean, mission: number) => {
           const combatMission: MissionScore = {
             completed: isComplete,
-            score: this.CombatScores[idx][mission]
+            score: combatScores[idx][mission]
           };
           return combatMission;
         })

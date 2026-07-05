@@ -8,7 +8,7 @@ export enum QuestionType {
 }
 
 export class PreMissionQuestions extends PreMissionQuestionsBase {
-  public Type: QuestionType;
+  public Type?: QuestionType;
 
   public constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);

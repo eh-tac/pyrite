@@ -1,5 +1,4 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { getInt, getString, writeInt, writeString } from '@pyrite/core';
 export abstract class RegionBase extends PyriteBase implements Byteable {
   public readonly REGIONLENGTH: number = 132;

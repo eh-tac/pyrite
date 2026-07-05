@@ -1,8 +1,6 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
-import { writeObject } from '@pyrite/core';
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { Header } from '../header';
+import { writeObject } from '@pyrite/core';
 export abstract class RmapBase extends PyriteBase implements Byteable {
   public RmapLength: number;
   public Header: Header;
@@ -13,7 +11,7 @@ export abstract class RmapBase extends PyriteBase implements Byteable {
     this.beforeConstruct();
     let offset = 0;
 
-    this.Header = new Header([...hex], this.TIE);
+    this.Header = new Header(hex.slice(0x00), this.TIE);
     this.Subheaders = [];
     offset = 0x10;
     for (let i = 0; i < this.HeaderCount(); i++) {

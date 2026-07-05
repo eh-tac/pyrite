@@ -1,5 +1,4 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { getShort, writeShort } from '@pyrite/core';
 export abstract class CoordinateBase extends PyriteBase implements Byteable {
   public readonly COORDINATELENGTH: number = 6;

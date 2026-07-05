@@ -1,5 +1,4 @@
-import type { Byteable, IMission} from '@pyrite/core';
-import { PyriteBase } from '@pyrite/core';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { getChar, getShort, writeChar, writeShort } from '@pyrite/core';
 export abstract class XvTStringBase extends PyriteBase implements Byteable {
   public XvTStringLength: number;

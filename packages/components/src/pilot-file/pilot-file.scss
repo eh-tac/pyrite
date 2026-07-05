@@ -1,0 +1,56 @@
+input[type="file"] {
+  display: none;
+}
+
+.container.card,
+.list-group-item {
+  background-color: #2b3e50;
+}
+
+.nav-link.active {
+  background-color: #4e5d6c;
+}
+.list-group-item {
+  &.heading {
+    background-color: #4e5d6c;
+  }
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.5;
+  }
+}
+.data + .no-data {
+  display: none;
+}
+
+.icons {
+  svg {
+    height: 12px;
+    vertical-align: inherit;
+  }
+  .complete svg {
+    fill: #4e5d6c;
+  }
+  .incomplete svg {
+    fill: red;
+  }
+  .secret svg {
+    fill: silver;
+  }
+  .bonus svg {
+    fill: gold;
+  }
+}
+
+@media (max-width: 1200px) {
+  .pyrite-tab-pane {
+    .nav-tabs {
+      margin: 0 -1rem;
+      .nav-link {
+        padding: 0.25rem 0.5rem;
+      }
+    }
+  }
+}

@@ -32,7 +32,7 @@ describe('Flight Group', () => {
 
     for (const [i, element] of output.entries()) {
       if (element === input[i]) {
-      	continue;
+        continue;
       }
 
       if (differentBytes < 20) {

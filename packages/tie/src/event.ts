@@ -1,6 +1,8 @@
+import { IMission } from '@pyrite/core';
 import { EventBase } from './base/event-base';
 import type { Briefing } from './briefing';
 import { Constants } from './constants';
+import { Mission } from './mission';
 
 export enum EventType {
   PageBreak = 3,
@@ -46,6 +48,11 @@ export class Event extends EventBase {
 
   public Briefing: Briefing;
 
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
+    this.Briefing = (TIE! as Mission).Briefing;
+  }
+
   public toString(): string {
     let extra: string = '';
 
@@ -58,7 +65,7 @@ export class Event extends EventBase {
     } else if (this.EventType >= 18 && this.EventType <= 25) {
       const v = this.Variables;
       const t = this.Briefing.Tags[v[0]].Text;
-      const col = Constants.TEXTTAGCOLOR[v[3]];
+      const col = Constants.TEXTTAGCOLOR[v[3] as keyof typeof Constants.TEXTTAGCOLOR];
 
       extra = `${t} at ${v[1]},${v[2]} ${col}`;
     } else if (this.Variables.length > 0) {
@@ -71,12 +78,14 @@ export class Event extends EventBase {
     if (this.EventType === 4 || this.EventType === 5) {
       return this.Briefing.Strings[this.Variables[0]].Text;
     }
-    return this.EventType >= 18 && this.EventType <= 25 ? this.Briefing.Tags[this.Variables[0]].Text : 'Unknown Text';
+    return this.EventType >= 18 && this.EventType <= 25
+      ? this.Briefing.Tags[this.Variables[0]].Text
+      : 'Unknown Text';
   }
 
   protected VariableCount(): number {
     if (Object.prototype.hasOwnProperty.call(Event.countData, this.EventType)) {
-      return Event.countData[this.EventType];
+      return Event.countData[this.EventType as keyof typeof Event.countData];
     }
     throw new Error(`Event.VariableCount - Unknown for ${this.EventType}`);
   }
