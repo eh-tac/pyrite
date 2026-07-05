@@ -4,6 +4,7 @@ namespace Pyrite\XvT;
 
 use Countable;
 use Pyrite\FlightGroupScoring;
+use Pyrite\PyriteModel;
 
 class FlightGroup extends Base\FlightGroupBase implements FlightGroupScoring, Countable
 {
@@ -28,11 +29,7 @@ class FlightGroup extends Base\FlightGroupBase implements FlightGroupScoring, Co
     return TRUE;
   }
 
-  /**
-   * @param mixed $level 
-   * @return int Pyrite\points 
-   */
-  public function killPointValue($level = NULL)
+  public function killPointValue(string $level = NULL): int
   {
     $ct = $this->getCraftType();
     $perShip = $ct->getPoints();
@@ -149,45 +146,45 @@ class FlightGroup extends Base\FlightGroupBase implements FlightGroupScoring, Co
     return $options;
   }
 
-  private function maxHangarHyperPoints($craftType, $extraWaves, $perWave)
+  private function maxHangarHyperPoints(CraftType $craftType, int $extraWaves, int $perWave)
   {
     $perShip = $craftType->getPoints();
     return ($extraWaves * $perWave * 2 * $perShip) + ($perWave - 1) * $perShip;
   }
 
-  public function hasMultipleWaves()
+  public function hasMultipleWaves(): bool
   {
     return $this->NumberOfWaves > 0;
   }
 
-  public function isFriendly()
+  public function isFriendly(): bool
   {
     return $this->Team == 0;
   }
 
-  public function destroyable()
+  public function destroyable(): bool
   {
     return !$this->isInvincible();
   }
 
-  public function isInvincible()
+  public function isInvincible(): bool
   {
     return $this->GroupAI === Constants::$GROUPAI_JEDIINVINCIBLE || $this->Status1 === Constants::$STATUS_INVINCIBLE || $this->Status2 === Constants::$STATUS_INVINCIBLE;
   }
 
-  public function maxWarheads()
+  public function maxWarheads(): int
   {
     return 0;
   }
 
-  public function isPlayerCraft()
+  public function isPlayerCraft(): bool
   {
     return (bool) $this->PlayerNumber;
   }
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?PyriteModel $TIE = null): FlightGroup
   {
-    return (new FlightGroup($hex, $tie))->loadHex();
+    return (new FlightGroup($hex, $TIE))->loadHex();
   }
 
   public function __toString()

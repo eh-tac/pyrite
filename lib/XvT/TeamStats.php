@@ -5,9 +5,9 @@ namespace Pyrite\XvT;
 class TeamStats extends Base\TeamStatsBase
 {
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): TeamStats
   {
-    return (new TeamStats($hex, $tie))->loadHex();
+    return (new TeamStats($hex, $TIE))->loadHex();
   }
 
   public function __toString()

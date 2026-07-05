@@ -4,13 +4,12 @@ namespace Pyrite\XvT;
 
 class CraftType
 {
-	public $ID;
-	public $Name;
-	public $Abbr;
+	public string $Name;
+	public string $Abbr;
 	public $craftPoints = 0;
 	public $missileCount = 0;
 
-	public static $data = [
+	public static array $data = [
 		0 => ['name' => 'None', 'abbr' => 'UNK', 'points' => 0, 'missileCount' => 0],
 		1 => ['name' => 'X-wing', 'abbr' => 'X-W', 'points' => 15, 'missileCount' => 4],
 		2 => ['name' => 'Y-wing', 'abbr' => 'Y-W', 'points' => 10, 'missileCount' => 6],
@@ -87,9 +86,8 @@ class CraftType
 		73 => ['name' => 'Modified Strike Cruiser', 'abbr' => 'M/SC', 'points' => 125, 'missileCount' => 0]
 	];
 
-	public function __construct($ID)
+	public function __construct(public int $ID)
 	{
-		$this->ID = $ID;
 		$data = self::$data[$ID];
 		$this->Name = $data['name'];
 		$this->Abbr = $data['abbr'];
@@ -97,7 +95,7 @@ class CraftType
 		$this->missileCount = max($data['missileCount'], 1); // for point scoring it appears nothing is empty handed
 	}
 
-	private function getName()
+	public function getName(): string
 	{
 		$names = array(
 			'None',
@@ -197,7 +195,7 @@ class CraftType
 		return isset($names[$this->ID]) ? $names[$this->ID] : 'Unknown type ' . $this->ID;
 	}
 
-	private function getAbbr()
+	public function getAbbr(): string
 	{
 		$names = array(
 			'None',

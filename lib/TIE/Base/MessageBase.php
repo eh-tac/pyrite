@@ -6,29 +6,30 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\TIE\Trigger;
 
-abstract class MessageBase extends PyriteBase implements Byteable
+abstract class MessageBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MESSAGELENGTH INT */
-    public const MESSAGELENGTH = 90;
+    /** @var int MESSAGELENGTH INT */
+	public const MESSAGELENGTH = 90;
     /** @var string 0x00 Message STR */
-    public $Message;
-    /** @var Trigger[] 0x40 Triggers Trigger */
-    public $Triggers;
+	public string $Message;
+    /** @var array<Trigger> 0x40 Triggers Trigger */
+	public array $Triggers;
     /** @var string 0x48 EditorNote STR */
-    public $EditorNote;
-    /** @var integer 0x58 DelaySeconds BYTE */
-    public $DelaySeconds;
-    /** @var boolean 0x59 Trigger1OrTrigger2 BOOL */
-    public $Trigger1OrTrigger2;
+	public string $EditorNote;
+    /** @var int 0x58 DelaySeconds BYTE */
+	public int $DelaySeconds;
+    /** @var bool 0x59 Trigger1OrTrigger2 BOOL */
+	public bool $Trigger1OrTrigger2;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -36,7 +37,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -58,7 +59,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Message" => $this->Message,
@@ -69,7 +70,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -89,7 +90,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::MESSAGELENGTH;
     }

@@ -6,32 +6,33 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTTeamResultRecordBase extends PyriteBase implements Byteable
+abstract class PLTTeamResultRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTTEAMRESULTRECORDLENGTH INT */
-    public const PLTTEAMRESULTRECORDLENGTH = 28;
-    /** @var integer 0x0000 totalMissionScore INT */
-    public $totalMissionScore;
-    /** @var integer 0x0004 isMissionComplete INT */
-    public $isMissionComplete;
-    /** @var integer 0x0008 unknown0x8 INT */
-    public $unknown0x8;
-    /** @var integer 0x000C timeMissionComplete INT */
-    public $timeMissionComplete;
-    /** @var integer 0x0010 fullKills INT */
-    public $fullKills;
-    /** @var integer 0x0014 sharedKills INT */
-    public $sharedKills;
-    /** @var integer 0x0018 losses INT */
-    public $losses;
+    /** @var int PLTTEAMRESULTRECORDLENGTH INT */
+	public const PLTTEAMRESULTRECORDLENGTH = 28;
+    /** @var int 0x0000 totalMissionScore INT */
+	public int $totalMissionScore;
+    /** @var int 0x0004 isMissionComplete INT */
+	public int $isMissionComplete;
+    /** @var int 0x0008 unknown0x8 INT */
+	public int $unknown0x8;
+    /** @var int 0x000C timeMissionComplete INT */
+	public int $timeMissionComplete;
+    /** @var int 0x0010 fullKills INT */
+	public int $fullKills;
+    /** @var int 0x0014 sharedKills INT */
+	public int $sharedKills;
+    /** @var int 0x0018 losses INT */
+	public int $losses;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -39,7 +40,7 @@ abstract class PLTTeamResultRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -57,7 +58,7 @@ abstract class PLTTeamResultRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "totalMissionScore" => $this->totalMissionScore,
@@ -70,7 +71,7 @@ abstract class PLTTeamResultRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -87,7 +88,7 @@ abstract class PLTTeamResultRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTTEAMRESULTRECORDLENGTH;
     }

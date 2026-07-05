@@ -6,6 +6,7 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XWA\Briefing;
 use Pyrite\XWA\FileHeader;
 use Pyrite\XWA\FlightGroup;
@@ -14,47 +15,47 @@ use Pyrite\XWA\Message;
 use Pyrite\XWA\Team;
 use Pyrite\XWA\XWAString;
 
-abstract class MissionBase extends PyriteBase implements Byteable
+abstract class MissionBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MissionLength INT */
-    public $MissionLength;
+    /** @var int MissionLength INT */
+	public int $MissionLength;
     /** @var FileHeader 0x0000 FileHeader FileHeader */
-    public $FileHeader;
-    /** @var FlightGroup[] 0x23F0 FlightGroups FlightGroup */
-    public $FlightGroups;
-    /** @var Message[] PV Messages Message */
-    public $Messages;
-    /** @var GlobalGoal[] PV GlobalGoals GlobalGoal */
-    public $GlobalGoals;
-    /** @var Team[] PV Teams Team */
-    public $Teams;
-    /** @var Briefing[] PV Briefings Briefing */
-    public $Briefings;
+	public FileHeader $FileHeader;
+    /** @var array<FlightGroup> 0x23F0 FlightGroups FlightGroup */
+	public array $FlightGroups;
+    /** @var array<Message> PV Messages Message */
+	public array $Messages;
+    /** @var array<GlobalGoal> PV GlobalGoals GlobalGoal */
+	public array $GlobalGoals;
+    /** @var array<Team> PV Teams Team */
+	public array $Teams;
+    /** @var array<Briefing> PV Briefings Briefing */
+	public array $Briefings;
     /** @var string PV EditorNotes STR */
-    public $EditorNotes;
-    /** @var string[] PV BriefingStringNotes STR */
-    public $BriefingStringNotes;
-    /** @var string[] PV MessageNotes STR */
-    public $MessageNotes;
-    /** @var string[] PV EomNotes STR */
-    public $EomNotes;
-    /** @var string[] PV DescriptionNotes STR */
-    public $DescriptionNotes;
-    /** @var XWAString[] PV FGGoalStrings XWAString */
-    public $FGGoalStrings;
-    /** @var XWAString[] PV GlobalGoalStrings XWAString */
-    public $GlobalGoalStrings;
-    /** @var XWAString[] PV OrderStrings XWAString */
-    public $OrderStrings;
-    /** @var string[] PV Descriptions STR */
-    public $Descriptions;
+	public string $EditorNotes;
+    /** @var array<string> PV BriefingStringNotes STR */
+	public array $BriefingStringNotes;
+    /** @var array<string> PV MessageNotes STR */
+	public array $MessageNotes;
+    /** @var array<string> PV EomNotes STR */
+	public array $EomNotes;
+    /** @var array<string> PV DescriptionNotes STR */
+	public array $DescriptionNotes;
+    /** @var array<XWAString> PV FGGoalStrings XWAString */
+	public array $FGGoalStrings;
+    /** @var array<XWAString> PV GlobalGoalStrings XWAString */
+	public array $GlobalGoalStrings;
+    /** @var array<XWAString> PV OrderStrings XWAString */
+	public array $OrderStrings;
+    /** @var array<string> PV Descriptions STR */
+	public array $Descriptions;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -62,7 +63,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -166,7 +167,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "FileHeader" => $this->FileHeader,
@@ -187,7 +188,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -277,7 +278,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
     }
     
     protected abstract function FGGoalStringCount();
-    public function getLength()
+    public function getLength(): int
     {
         return $this->MissionLength;
     }

@@ -6,32 +6,33 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class TeamBase extends PyriteBase implements Byteable
+abstract class TeamBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  TEAMLENGTH INT */
-    public const TEAMLENGTH = 487;
-    /** @var integer 0x000 Reserved SHORT */
-    public $Reserved; //(1)
+    /** @var int TEAMLENGTH INT */
+	public const TEAMLENGTH = 487;
+    /** @var int 0x000 Reserved SHORT */
+	public int $Reserved; // (1)
     /** @var string 0x002 Name STR */
-    public $Name;
-    /** @var integer[] 0x01A Allegiances BYTE */
-    public $Allegiances;
-    /** @var string[] 0x024 EndOfMissionMessages CHAR */
-    public $EndOfMissionMessages;
-    /** @var integer[] 0x1A4 EomMessageDelay BYTE */
-    public $EomMessageDelay; //(was Unknowns)
-    /** @var integer[] 0x1A7 EomSourceFG BYTE */
-    public $EomSourceFG; //(was Unknowns)
-    /** @var string[] 0x1AA EomVoiceIDs CHAR */
-    public $EomVoiceIDs;
+	public string $Name;
+    /** @var array<int> 0x01A Allegiances BYTE */
+	public array $Allegiances;
+    /** @var array<string> 0x024 EndOfMissionMessages CHAR */
+	public array $EndOfMissionMessages;
+    /** @var array<int> 0x1A4 EomMessageDelay BYTE */
+	public array $EomMessageDelay; // (was Unknowns)
+    /** @var array<int> 0x1A7 EomSourceFG BYTE */
+	public array $EomSourceFG; // (was Unknowns)
+    /** @var array<string> 0x1AA EomVoiceIDs CHAR */
+	public array $EomVoiceIDs;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -39,7 +40,7 @@ abstract class TeamBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -87,7 +88,7 @@ abstract class TeamBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Reserved" => $this->Reserved,
@@ -100,7 +101,7 @@ abstract class TeamBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -142,7 +143,7 @@ abstract class TeamBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::TEAMLENGTH;
     }

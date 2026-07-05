@@ -4,9 +4,9 @@ namespace Pyrite\TIE;
 
 class Briefing extends Base\BriefingBase
 {
-    public function __construct($hex)
+    public function __construct(string $hex = null, ?\Pyrite\PyriteModel $TIE = null)
     {
-        $this->hex = $hex;
+        parent::__construct($hex, $TIE);
         $offset = 0;
         $this->RunningTime = $this->getShort($hex, 0x000);
         $this->Unknown = $this->getShort($hex, 0x002);

@@ -6,42 +6,43 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class MissionDataBase extends PyriteBase implements Byteable
+abstract class MissionDataBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MISSIONDATALENGTH INT */
-    public const MISSIONDATALENGTH = 48;
-    /** @var integer 0x00 UnkA INT */
-    public $UnkA;
-    /** @var integer 0x04 AttemptCount INT */
-    public $AttemptCount;
-    /** @var integer 0x08 UnkB INT */
-    public $UnkB;
-    /** @var integer 0x0C UnkC INT */
-    public $UnkC;
-    /** @var integer 0x10 UnkD INT */
-    public $UnkD;
-    /** @var integer 0x14 WinCount INT */
-    public $WinCount;
-    /** @var integer 0x18 UnkE INT */
-    public $UnkE;
-    /** @var integer 0x1C Score INT */
-    public $Score;
-    /** @var integer 0x20 Time INT */
-    public $Time;
-    /** @var integer 0x24 UnkF INT */
-    public $UnkF;
-    /** @var integer 0x28 UnkG INT */
-    public $UnkG;
-    /** @var integer 0x2C BonusScoreTen INT */
-    public $BonusScoreTen;
+    /** @var int MISSIONDATALENGTH INT */
+	public const MISSIONDATALENGTH = 48;
+    /** @var int 0x00 UnkA INT */
+	public int $UnkA;
+    /** @var int 0x04 AttemptCount INT */
+	public int $AttemptCount;
+    /** @var int 0x08 UnkB INT */
+	public int $UnkB;
+    /** @var int 0x0C UnkC INT */
+	public int $UnkC;
+    /** @var int 0x10 UnkD INT */
+	public int $UnkD;
+    /** @var int 0x14 WinCount INT */
+	public int $WinCount;
+    /** @var int 0x18 UnkE INT */
+	public int $UnkE;
+    /** @var int 0x1C Score INT */
+	public int $Score;
+    /** @var int 0x20 Time INT */
+	public int $Time;
+    /** @var int 0x24 UnkF INT */
+	public int $UnkF;
+    /** @var int 0x28 UnkG INT */
+	public int $UnkG;
+    /** @var int 0x2C BonusScoreTen INT */
+	public int $BonusScoreTen;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -49,7 +50,7 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -72,7 +73,7 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "UnkA" => $this->UnkA,
@@ -90,7 +91,7 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -112,7 +113,7 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::MISSIONDATALENGTH;
     }

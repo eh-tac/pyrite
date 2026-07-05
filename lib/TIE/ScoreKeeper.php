@@ -126,6 +126,7 @@ class ScoreKeeper implements IScoreKeeper
 
     public function printDump()
     {
+        $goals = [];
         $goalPoints = $this->goalPoints[$this->difficultyFilter];
         if (count($this->goalTypes['Primary'])) {
             $this->total += $goalPoints;

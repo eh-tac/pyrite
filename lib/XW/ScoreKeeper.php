@@ -9,15 +9,11 @@ class ScoreKeeper
     /** @var Mission */
     private $TIE;
 
-    private $playerCraft = null;
+    private ?FlightGroup $playerCraft = null;
     private $fgs = array();
     private $victoryPoints = 1500;
-    private $invincible = array();
-    private $difficultyFilter;
 
     public $total = 0;
-    public $player = null;
-    public $warhead = null;
 
     /** @var ScoreRow[] */
     public $flightGroups = [];
@@ -32,14 +28,14 @@ class ScoreKeeper
         $this->process();
     }
 
-    public function process()
+    public function process(): void
     {
         $this->goals = [
             ScoreRow::create("Mission Victory", 1, $this->victoryPoints)
         ];
         foreach ($this->TIE->FlightGroups as $idx => $fg) {
             $name = (string)$fg;
-            $points = $fg->pointValue($this->difficultyFilter);
+            $points = $fg->pointValue();
 
             if ($points > 0) {
                 if (!$fg->destroyable()) {
@@ -49,11 +45,6 @@ class ScoreKeeper
                 $this->total += $points;
                 $this->fgs[] = $name . ': ' . $points;
                 $this->flightGroups[] = ScoreRow::create((string)$fg, count($fg), $points);
-                //                $this->fgs[] = $fg;
-            }
-
-            if ($fg->invincible()) {
-                $this->invincible[] = 'Invincible: ' . $fg;
             }
 
             if ($fg->getObjectiveLabel() !== 'None') {
@@ -69,7 +60,7 @@ class ScoreKeeper
         }
     }
 
-    public function printDump()
+    public function printDump(): array
     {
         $goalPoints = $this->victoryPoints;
         $this->total += $goalPoints; //primary goals
@@ -103,7 +94,7 @@ class ScoreKeeper
 
     public function getTotal(): int
     {
-        $rows = array_filter($this->getData(), fn ($row) => $row->number > 0);
-        return array_sum(array_map(fn ($row) => $row->points, $rows));
+        $rows = array_filter($this->getData(), fn($row) => $row->number > 0);
+        return array_sum(array_map(fn($row) => $row->points, $rows));
     }
 }

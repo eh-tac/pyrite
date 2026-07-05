@@ -6,41 +6,42 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XWA\BrfStr;
 use Pyrite\XWA\Event;
 use Pyrite\XWA\Icon;
 
-abstract class BriefingBase extends PyriteBase implements Byteable
+abstract class BriefingBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  BriefingLength INT */
-    public $BriefingLength;
-    /** @var integer 0x0000 RunningTime SHORT */
-    public $RunningTime;
-    /** @var integer 0x0002 CurrentTime SHORT */
-    public $CurrentTime; //(was Unknown1)
-    /** @var integer 0x0004 StartLength SHORT */
-    public $StartLength;
-    /** @var integer 0x0006 EventsLength SHORT */
-    public $EventsLength;
-    /** @var integer 0x0008 Tile SHORT */
-    public $Tile;
-    /** @var Event[] 0x000A Events Event */
-    public $Events;
-    /** @var Icon[] 0x320A Icons Icon */
-    public $Icons;
-    /** @var boolean[] 0x440A ViewedByTeam BOOL */
-    public $ViewedByTeam;
-    /** @var BrfStr[] 0x4414 Tags BrfStr */
-    public $Tags;
-    /** @var BrfStr[] PV Strings BrfStr */
-    public $Strings;
+    /** @var int BriefingLength INT */
+	public int $BriefingLength;
+    /** @var int 0x0000 RunningTime SHORT */
+	public int $RunningTime;
+    /** @var int 0x0002 CurrentTime SHORT */
+	public int $CurrentTime; // (was Unknown1)
+    /** @var int 0x0004 StartLength SHORT */
+	public int $StartLength;
+    /** @var int 0x0006 EventsLength SHORT */
+	public int $EventsLength;
+    /** @var int 0x0008 Tile SHORT */
+	public int $Tile;
+    /** @var array<Event> 0x000A Events Event */
+	public array $Events;
+    /** @var array<Icon> 0x320A Icons Icon */
+	public array $Icons;
+    /** @var array<bool> 0x440A ViewedByTeam BOOL */
+	public array $ViewedByTeam;
+    /** @var array<BrfStr> 0x4414 Tags BrfStr */
+	public array $Tags;
+    /** @var array<BrfStr> PV Strings BrfStr */
+	public array $Strings;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -48,7 +49,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -60,6 +61,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $this->Tile = $this->getShort($hex, 0x0008);
         $this->Events = [];
         $offset = 0x000A;
+		// @phpstan-ignore smaller.alwaysFalse
         for ($i = 0; $i < 0; $i++) {
             $t = (new Event(substr($hex, $offset), $this->TIE))->loadHex();
             $this->Events[] = $t;
@@ -99,7 +101,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "RunningTime" => $this->RunningTime,
@@ -115,7 +117,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -126,6 +128,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $hex = $this->writeShort($this->EventsLength, $hex, 0x0006);
         $hex = $this->writeShort($this->Tile, $hex, 0x0008);
         $offset = 0x000A;
+		// @phpstan-ignore smaller.alwaysFalse
         for ($i = 0; $i < 0; $i++) {
             $t = $this->Events[$i];
             $hex = $this->writeObject($t, $hex, $offset);
@@ -160,7 +163,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return $this->BriefingLength;
     }

@@ -6,14 +6,19 @@ use Pyrite\Summary;
 
 class Message extends Base\MessageBase implements Summary
 {
-    public $messageColour = 0;
+    public int $messageColour = 0;
 
-    public function __construct($hex, $tie)
+    public Mission $mission;
+
+    public function __construct(string $hex = null, ?\Pyrite\PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
+        if ($TIE instanceof Mission) {
+            $this->mission = $TIE;
+        }
     }
 
-    public function loadHex(): self
+    public function loadHex(): static
     {
         parent::loadHex();
         if (strlen($this->Message) && is_numeric($this->Message[0])) {
@@ -22,14 +27,14 @@ class Message extends Base\MessageBase implements Summary
         return $this;
     }
 
-    public function getMessageColourLabel()
+    public function getMessageColourLabel(): string
     {
         return Constants::$MESSAGECOLOR[$this->messageColour];
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
-        $start = $this->messageColour !== 0;
+        $start = $this->messageColour !== 0 ? 1 : 0;
         return [
             'Message' => substr($this->Message, $start),
             'MessageColour' => $this->getMessageColourLabel(),
@@ -39,12 +44,9 @@ class Message extends Base\MessageBase implements Summary
         ];
     }
 
-    public function summaryHash()
+    public function summaryHash(): array
     {
-        $start = $this->messageColour !== 0;
-        foreach ($this->Triggers as $trig) {
-            $trig->TIE = $this->TIE;
-        }
+        $start = $this->messageColour !== 0 ? 1 : 0;
         $triggas = [(string)$this->Triggers[0]];
         $two = (string)$this->Triggers[1];
         if ($two !== 'Always') {

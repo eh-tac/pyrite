@@ -4,9 +4,9 @@ import { Coordinate } from '../coordinate';
 import { Icon } from '../icon';
 import { MissionHeader } from '../mission-header';
 import { Page } from '../page';
-import { String } from '../string';
 import { Tag } from '../tag';
 import { ViewportSetting } from '../viewport-setting';
+import { XWString } from '../xw-string';
 import { getByte, getShort, writeByte, writeObject, writeShort } from '@pyrite/core';
 export abstract class BriefingBase extends PyriteBase implements Byteable {
   public BriefingLength: number;
@@ -20,7 +20,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
   public MissionHeader: MissionHeader;
   public IconExtraData: number[];
   public Tags: Tag;
-  public Strings: String;
+  public Strings: XWString;
 
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
@@ -67,7 +67,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     }
     this.Tags = new Tag(hex.slice(offset), this.TIE);
     offset += this.Tags.getLength();
-    this.Strings = new String(hex.slice(offset), this.TIE);
+    this.Strings = new XWString(hex.slice(offset), this.TIE);
     offset += this.Strings.getLength();
     this.BriefingLength = offset;
   }

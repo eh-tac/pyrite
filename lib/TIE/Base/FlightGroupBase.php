@@ -6,139 +6,140 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\TIE\Constants;
 use Pyrite\TIE\GoalFG;
 use Pyrite\TIE\Order;
 use Pyrite\TIE\Trigger;
 use Pyrite\TIE\Waypt;
 
-abstract class FlightGroupBase extends PyriteBase implements Byteable
+abstract class FlightGroupBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  FLIGHTGROUPLENGTH INT */
-    public const FLIGHTGROUPLENGTH = 292;
+    /** @var int FLIGHTGROUPLENGTH INT */
+	public const FLIGHTGROUPLENGTH = 292;
     /** @var string 0x000 Name CHAR */
-    public $Name;
+	public string $Name;
     /** @var string 0x00C Pilot CHAR */
-    public $Pilot;
+	public string $Pilot;
     /** @var string 0x018 Cargo CHAR */
-    public $Cargo;
+	public string $Cargo;
     /** @var string 0x024 SpecialCargo CHAR */
-    public $SpecialCargo;
-    /** @var integer 0x030 SpecialCargoCraft BYTE */
-    public $SpecialCargoCraft;
-    /** @var boolean 0x031 RandomSpecialCargoCraft BOOL */
-    public $RandomSpecialCargoCraft;
-    /** @var integer 0x032 CraftType BYTE */
-    public $CraftType;
-    /** @var integer 0x033 NumberOfCraft BYTE */
-    public $NumberOfCraft;
-    /** @var integer 0x034 Status BYTE */
-    public $Status;
-    /** @var integer 0x035 Warhead BYTE */
-    public $Warhead;
-    /** @var integer 0x036 Beam BYTE */
-    public $Beam;
-    /** @var integer 0x037 Iff BYTE */
-    public $Iff;
-    /** @var integer 0x038 GroupAI BYTE */
-    public $GroupAI;
-    /** @var integer 0x039 Markings BYTE */
-    public $Markings;
-    /** @var boolean 0x03A ObeyPlayerOrders BOOL */
-    public $ObeyPlayerOrders;
-    /** @var integer 0x03B Reserved1 BYTE */
-    public const Reserved1 = 0; //Unknown1 in TFW
-    /** @var integer 0x03C Formation BYTE */
-    public $Formation;
-    /** @var integer 0x03D FormationSpacing BYTE */
-    public $FormationSpacing; //Unknown2
-    /** @var integer 0x03E GlobalGroup BYTE */
-    public $GlobalGroup; //Unknown3
-    /** @var integer 0x03F LeaderSpacing BYTE */
-    public $LeaderSpacing; //Unknown4
-    /** @var integer 0x040 NumberOfWaves BYTE */
-    public $NumberOfWaves;
-    /** @var integer 0x041 Unknown5 BYTE */
-    public $Unknown5;
-    /** @var integer 0x042 PlayerCraft BYTE */
-    public $PlayerCraft;
-    /** @var integer 0x043 Yaw BYTE */
-    public $Yaw; //Unknown6
-    /** @var integer 0x044 Pitch BYTE */
-    public $Pitch; //Unknown7
-    /** @var integer 0x045 Roll BYTE */
-    public $Roll; //Unknown8
-    /** @var boolean 0x046 Unknown9 BOOL */
-    public $Unknown9;
-    /** @var integer 0x047 Unknown10 BYTE */
-    public $Unknown10;
-    /** @var integer 0x048 Reserved2 BYTE */
-    public const Reserved2 = 0; //Unknown11
-    /** @var integer 0x049 ArrivalDifficulty BYTE */
-    public $ArrivalDifficulty;
+	public string $SpecialCargo;
+    /** @var int 0x030 SpecialCargoCraft BYTE */
+	public int $SpecialCargoCraft;
+    /** @var bool 0x031 RandomSpecialCargoCraft BOOL */
+	public bool $RandomSpecialCargoCraft;
+    /** @var int 0x032 CraftType BYTE */
+	public int $CraftType;
+    /** @var int 0x033 NumberOfCraft BYTE */
+	public int $NumberOfCraft;
+    /** @var int 0x034 Status BYTE */
+	public int $Status;
+    /** @var int 0x035 Warhead BYTE */
+	public int $Warhead;
+    /** @var int 0x036 Beam BYTE */
+	public int $Beam;
+    /** @var int 0x037 Iff BYTE */
+	public int $Iff;
+    /** @var int 0x038 GroupAI BYTE */
+	public int $GroupAI;
+    /** @var int 0x039 Markings BYTE */
+	public int $Markings;
+    /** @var bool 0x03A ObeyPlayerOrders BOOL */
+	public bool $ObeyPlayerOrders;
+    /** @var int 0x03B Reserved1 BYTE */
+	public const Reserved1 = 0; // Unknown1 in TFW
+    /** @var int 0x03C Formation BYTE */
+	public int $Formation;
+    /** @var int 0x03D FormationSpacing BYTE */
+	public int $FormationSpacing; // Unknown2
+    /** @var int 0x03E GlobalGroup BYTE */
+	public int $GlobalGroup; // Unknown3
+    /** @var int 0x03F LeaderSpacing BYTE */
+	public int $LeaderSpacing; // Unknown4
+    /** @var int 0x040 NumberOfWaves BYTE */
+	public int $NumberOfWaves;
+    /** @var int 0x041 Unknown5 BYTE */
+	public int $Unknown5;
+    /** @var int 0x042 PlayerCraft BYTE */
+	public int $PlayerCraft;
+    /** @var int 0x043 Yaw BYTE */
+	public int $Yaw; // Unknown6
+    /** @var int 0x044 Pitch BYTE */
+	public int $Pitch; // Unknown7
+    /** @var int 0x045 Roll BYTE */
+	public int $Roll; // Unknown8
+    /** @var bool 0x046 Unknown9 BOOL */
+	public bool $Unknown9;
+    /** @var int 0x047 Unknown10 BYTE */
+	public int $Unknown10;
+    /** @var int 0x048 Reserved2 BYTE */
+	public const Reserved2 = 0; // Unknown11
+    /** @var int 0x049 ArrivalDifficulty BYTE */
+	public int $ArrivalDifficulty;
     /** @var Trigger 0x04A Arrival1 Trigger */
-    public $Arrival1;
+	public Trigger $Arrival1;
     /** @var Trigger 0x04E Arrival2 Trigger */
-    public $Arrival2;
-    /** @var boolean 0x052 Arrival1OrArrival2 BOOL */
-    public $Arrival1OrArrival2;
-    /** @var integer 0x053 Reserved3 BYTE */
-    public const Reserved3 = 0; //Unknown12
-    /** @var integer 0x054 ArrivalDelayMinutes BYTE */
-    public $ArrivalDelayMinutes;
-    /** @var integer 0x055 ArrivalDelaySeconds BYTE */
-    public $ArrivalDelaySeconds;
+	public Trigger $Arrival2;
+    /** @var bool 0x052 Arrival1OrArrival2 BOOL */
+	public bool $Arrival1OrArrival2;
+    /** @var int 0x053 Reserved3 BYTE */
+	public const Reserved3 = 0; // Unknown12
+    /** @var int 0x054 ArrivalDelayMinutes BYTE */
+	public int $ArrivalDelayMinutes;
+    /** @var int 0x055 ArrivalDelaySeconds BYTE */
+	public int $ArrivalDelaySeconds;
     /** @var Trigger 0x056 Departure Trigger */
-    public $Departure;
-    /** @var integer 0x05A DepartureDelayMinutes BYTE */
-    public $DepartureDelayMinutes; //Unknown13
-    /** @var integer 0x05B DepartureDelatSeconds BYTE */
-    public $DepartureDelatSeconds; //Unknown14
-    /** @var integer 0x05C AbortTrigger BYTE */
-    public $AbortTrigger;
-    /** @var integer 0x05D Reserved4 BYTE */
-    public const Reserved4 = 0; //Unknown15
-    /** @var integer 0x05E Unknown16 BYTE */
-    public $Unknown16;
-    /** @var integer 0x05F Reserved5 BYTE */
-    public const Reserved5 = 0; //Unknown17
-    /** @var integer 0x060 ArrivalMothership BYTE */
-    public $ArrivalMothership;
-    /** @var boolean 0x061 ArriveViaMothership BOOL */
-    public $ArriveViaMothership;
-    /** @var integer 0x062 DepartureMothership BYTE */
-    public $DepartureMothership;
-    /** @var boolean 0x063 DepartViaMothership BOOL */
-    public $DepartViaMothership;
-    /** @var integer 0x064 AlternateArrivalMothership BYTE */
-    public $AlternateArrivalMothership;
-    /** @var boolean 0x065 AlternateArriveViaMothership BOOL */
-    public $AlternateArriveViaMothership;
-    /** @var integer 0x066 AlternateDepartureMothership BYTE */
-    public $AlternateDepartureMothership;
-    /** @var boolean 0x067 AlternateDepartViaMothership BOOL */
-    public $AlternateDepartViaMothership;
-    /** @var Order[] 0x068 Orders Order */
-    public $Orders;
-    /** @var GoalFG[] 0x09E FlightGroupGoals GoalFG */
-    public $FlightGroupGoals;
-    /** @var integer 0x0A6 BonusGoalPoints SBYTE */
-    public $BonusGoalPoints;
-    /** @var Waypt[] 0x0A8 Waypoints Waypt */
-    public $Waypoints;
-    /** @var boolean 0x120 Unknown19 BOOL */
-    public $Unknown19;
-    /** @var integer 0x122 Unknown20 BYTE */
-    public $Unknown20;
-    /** @var boolean 0x123 Unknown21 BOOL */
-    public $Unknown21;
+	public Trigger $Departure;
+    /** @var int 0x05A DepartureDelayMinutes BYTE */
+	public int $DepartureDelayMinutes; // Unknown13
+    /** @var int 0x05B DepartureDelatSeconds BYTE */
+	public int $DepartureDelatSeconds; // Unknown14
+    /** @var int 0x05C AbortTrigger BYTE */
+	public int $AbortTrigger;
+    /** @var int 0x05D Reserved4 BYTE */
+	public const Reserved4 = 0; // Unknown15
+    /** @var int 0x05E Unknown16 BYTE */
+	public int $Unknown16;
+    /** @var int 0x05F Reserved5 BYTE */
+	public const Reserved5 = 0; // Unknown17
+    /** @var int 0x060 ArrivalMothership BYTE */
+	public int $ArrivalMothership;
+    /** @var bool 0x061 ArriveViaMothership BOOL */
+	public bool $ArriveViaMothership;
+    /** @var int 0x062 DepartureMothership BYTE */
+	public int $DepartureMothership;
+    /** @var bool 0x063 DepartViaMothership BOOL */
+	public bool $DepartViaMothership;
+    /** @var int 0x064 AlternateArrivalMothership BYTE */
+	public int $AlternateArrivalMothership;
+    /** @var bool 0x065 AlternateArriveViaMothership BOOL */
+	public bool $AlternateArriveViaMothership;
+    /** @var int 0x066 AlternateDepartureMothership BYTE */
+	public int $AlternateDepartureMothership;
+    /** @var bool 0x067 AlternateDepartViaMothership BOOL */
+	public bool $AlternateDepartViaMothership;
+    /** @var array<Order> 0x068 Orders Order */
+	public array $Orders;
+    /** @var array<GoalFG> 0x09E FlightGroupGoals GoalFG */
+	public array $FlightGroupGoals;
+    /** @var int 0x0A6 BonusGoalPoints SBYTE */
+	public int $BonusGoalPoints;
+    /** @var array<Waypt> 0x0A8 Waypoints Waypt */
+	public array $Waypoints;
+    /** @var bool 0x120 Unknown19 BOOL */
+	public bool $Unknown19;
+    /** @var int 0x122 Unknown20 BYTE */
+	public int $Unknown20;
+    /** @var bool 0x123 Unknown21 BOOL */
+	public bool $Unknown21;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -146,7 +147,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -233,7 +234,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Name" => $this->Name,
@@ -292,7 +293,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -374,52 +375,52 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getCraftTypeLabel() 
+    public function getCraftTypeLabel(): string 
     {
         return isset($this->CraftType) && isset(Constants::$CRAFTTYPE[$this->CraftType]) ? Constants::$CRAFTTYPE[$this->CraftType] : "Unknown";
     }
 
-    public function getStatusLabel() 
+    public function getStatusLabel(): string 
     {
         return isset($this->Status) && isset(Constants::$STATUS[$this->Status]) ? Constants::$STATUS[$this->Status] : "Unknown";
     }
 
-    public function getWarheadLabel() 
+    public function getWarheadLabel(): string 
     {
         return isset($this->Warhead) && isset(Constants::$WARHEAD[$this->Warhead]) ? Constants::$WARHEAD[$this->Warhead] : "Unknown";
     }
 
-    public function getBeamLabel() 
+    public function getBeamLabel(): string 
     {
         return isset($this->Beam) && isset(Constants::$BEAM[$this->Beam]) ? Constants::$BEAM[$this->Beam] : "Unknown";
     }
 
-    public function getGroupAILabel() 
+    public function getGroupAILabel(): string 
     {
         return isset($this->GroupAI) && isset(Constants::$GROUPAI[$this->GroupAI]) ? Constants::$GROUPAI[$this->GroupAI] : "Unknown";
     }
 
-    public function getMarkingsLabel() 
+    public function getMarkingsLabel(): string 
     {
         return isset($this->Markings) && isset(Constants::$MARKINGS[$this->Markings]) ? Constants::$MARKINGS[$this->Markings] : "Unknown";
     }
 
-    public function getFormationLabel() 
+    public function getFormationLabel(): string 
     {
         return isset($this->Formation) && isset(Constants::$FORMATION[$this->Formation]) ? Constants::$FORMATION[$this->Formation] : "Unknown";
     }
 
-    public function getArrivalDifficultyLabel() 
+    public function getArrivalDifficultyLabel(): string 
     {
         return isset($this->ArrivalDifficulty) && isset(Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty]) ? Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty] : "Unknown";
     }
 
-    public function getAbortTriggerLabel() 
+    public function getAbortTriggerLabel(): string 
     {
         return isset($this->AbortTrigger) && isset(Constants::$ABORTTRIGGER[$this->AbortTrigger]) ? Constants::$ABORTTRIGGER[$this->AbortTrigger] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::FLIGHTGROUPLENGTH;
     }

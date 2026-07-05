@@ -6,28 +6,29 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTTournTeamRecordBase extends PyriteBase implements Byteable
+abstract class PLTTournTeamRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTTOURNTEAMRECORDLENGTH INT */
-    public const PLTTOURNTEAMRECORDLENGTH = 20;
-    /** @var integer 0x0000 teamParticipationState INT */
-    public $teamParticipationState;
-    /** @var integer 0x0004 totalTeamScore INT */
-    public $totalTeamScore;
-    /** @var integer 0x0008 numberOfMeleeRankingsFirst INT */
-    public $numberOfMeleeRankingsFirst;
-    /** @var integer 0x000C numberOfMeleeRankingsSecond INT */
-    public $numberOfMeleeRankingsSecond;
-    /** @var integer 0x0010 numberOfMeleeRankingsThird INT */
-    public $numberOfMeleeRankingsThird;
+    /** @var int PLTTOURNTEAMRECORDLENGTH INT */
+	public const PLTTOURNTEAMRECORDLENGTH = 20;
+    /** @var int 0x0000 teamParticipationState INT */
+	public int $teamParticipationState;
+    /** @var int 0x0004 totalTeamScore INT */
+	public int $totalTeamScore;
+    /** @var int 0x0008 numberOfMeleeRankingsFirst INT */
+	public int $numberOfMeleeRankingsFirst;
+    /** @var int 0x000C numberOfMeleeRankingsSecond INT */
+	public int $numberOfMeleeRankingsSecond;
+    /** @var int 0x0010 numberOfMeleeRankingsThird INT */
+	public int $numberOfMeleeRankingsThird;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -35,7 +36,7 @@ abstract class PLTTournTeamRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -51,7 +52,7 @@ abstract class PLTTournTeamRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "teamParticipationState" => $this->teamParticipationState,
@@ -62,7 +63,7 @@ abstract class PLTTournTeamRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -77,7 +78,7 @@ abstract class PLTTournTeamRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTTOURNTEAMRECORDLENGTH;
     }

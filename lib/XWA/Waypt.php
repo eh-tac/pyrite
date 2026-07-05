@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XWA;
-    
+
 class Waypt extends Base\WayptBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new Waypt($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): Waypt
+  {
+    return (new Waypt($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

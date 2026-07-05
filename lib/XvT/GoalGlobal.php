@@ -2,12 +2,14 @@
 
 namespace Pyrite\XvT;
 
+use Pyrite\PyriteModel;
+
 class GoalGlobal extends Base\GoalGlobalBase
 {
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?PyriteModel $TIE = null): GoalGlobal
   {
-    return (new GoalGlobal($hex, $tie))->loadHex();
+    return (new GoalGlobal($hex, $TIE))->loadHex();
   }
 
   public function __toString()
@@ -18,26 +20,26 @@ class GoalGlobal extends Base\GoalGlobalBase
     $t3 = $this->TriggerB[0]->hasDataString();
     $t4 = $this->TriggerB[1]->hasDataString();
 
-    if ($this->Trigger1OrTrigger2 && $t1 && $t2) {
+    if ($this->Trigger1OrTrigger2 && !empty($t1) && !empty($t2)) {
       $bits[] = "($t1 OR $t2)";
     } else {
-      if ($t1) {
+      if (!empty($t1)) {
         $bits[] = $t1;
 
-        if ($t2) {
+        if (!empty($t2)) {
           $bits[] = "AND";
           $bits[] = $t2;
         }
       }
     }
 
-    if ($this->Trigger2OrTrigger3 && $t3 && $t4) {
+    if ($this->Trigger2OrTrigger3 && !empty($t3) && !empty($t4)) {
       $bits[] = "($t3 OR $t4)";
     } else {
-      if ($t3) {
+      if (!empty($t3)) {
         $bits[] = $t3;
 
-        if ($t4) {
+        if (!empty($t4)) {
           $bits[] = "AND";
           $bits[] = $t4;
         }

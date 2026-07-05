@@ -6,32 +6,33 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class GoalFGBase extends PyriteBase implements Byteable
+abstract class GoalFGBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  GOALFGLENGTH INT */
-    public const GOALFGLENGTH = 80;
-    /** @var integer 0x00 Argument BYTE */
-    public $Argument;
-    /** @var integer 0x01 Condition BYTE */
-    public $Condition;
-    /** @var integer 0x02 Amount BYTE */
-    public $Amount;
-    /** @var integer 0x03 Points SBYTE */
-    public $Points;
-    /** @var boolean[] 0x04 EnabledForTeam BOOL */
-    public $EnabledForTeam;
-    /** @var integer 0x0E Parameter BYTE */
-    public $Parameter; //or Goal time limit depending on order
-    /** @var integer 0x0F ActiveSequence BYTE */
-    public $ActiveSequence;
+    /** @var int GOALFGLENGTH INT */
+	public const GOALFGLENGTH = 80;
+    /** @var int 0x00 Argument BYTE */
+	public int $Argument;
+    /** @var int 0x01 Condition BYTE */
+	public int $Condition;
+    /** @var int 0x02 Amount BYTE */
+	public int $Amount;
+    /** @var int 0x03 Points SBYTE */
+	public int $Points;
+    /** @var array<bool> 0x04 EnabledForTeam BOOL */
+	public array $EnabledForTeam;
+    /** @var int 0x0E Parameter BYTE */
+	public int $Parameter; // or Goal time limit depending on order
+    /** @var int 0x0F ActiveSequence BYTE */
+	public int $ActiveSequence;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -39,7 +40,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -63,7 +64,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Argument" => $this->Argument,
@@ -76,7 +77,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -98,7 +99,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::GOALFGLENGTH;
     }

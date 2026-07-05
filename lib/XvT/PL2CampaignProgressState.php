@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XvT;
-    
+
 class PL2CampaignProgressState extends Base\PL2CampaignProgressStateBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new PL2CampaignProgressState($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): PL2CampaignProgressState
+  {
+    return (new PL2CampaignProgressState($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

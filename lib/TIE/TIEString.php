@@ -2,14 +2,16 @@
 
 namespace Pyrite\TIE;
 
+use Pyrite\PyriteModel;
+
 class TIEString extends Base\TIEStringBase
 {
-    public function __construct($hex, $tie)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = NULL)
     {
-        parent::__construct($hex, $tie);
-        if ($this->Length === 0) {
-            $this->PostMissionQuestionsLength = 2;
-        }
+        parent::__construct($hex, $TIE);
+        // if ($this->Length === 0) {
+        //     $this->PostMissionQuestionsLength = 2;
+        // }
 
         $this->TIEStringLength = $this->Length + 2;
     }

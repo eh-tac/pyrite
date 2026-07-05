@@ -16,14 +16,12 @@ class PilotFile extends Base\PilotFileBase
         return $plt;
     }
 
-    public static function fromHex($hex, $tie = null)
+    public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): PilotFile
     {
-        return (new PilotFile($hex, $tie))->loadHex();
+        return (new PilotFile($hex, $TIE))->loadHex();
     }
 
-    public function beforeConstruct()
-    {
-    }
+    public function beforeConstruct() {}
 
     public function __toString()
     {
@@ -65,7 +63,8 @@ class PilotFile extends Base\PilotFileBase
         }, $battles, array_keys($battles));
     }
 
-    public function getAllMissionScores() {
+    public function getAllMissionScores()
+    {
         $chunks = array_chunk($this->BattleScores, 8);
         $normalisedChunks = array_map(function ($scores, $battleIdx) {
             $status = $this->BattleStatuses[$battleIdx];

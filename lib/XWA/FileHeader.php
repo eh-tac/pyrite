@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XWA;
-    
+
 class FileHeader extends Base\FileHeaderBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new FileHeader($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): FileHeader
+  {
+    return (new FileHeader($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

@@ -29,12 +29,12 @@ const [tieG, xwG, xvtG, xwaG, lfdG, puzG] = [
 // make writers
 [
   // new TypeScriptWriter(path.join(packages, 'tie', 'src'), tieG),
-  // new PHPWriter(phpLibPath, tieG),
+  new PHPWriter(phpLibPath, tieG),
   new TypeScriptWriter(path.join(packages, 'xw', 'src'), xwG),
-  new PHPWriter(phpLibPath, xwG)
+  new PHPWriter(phpLibPath, xwG),
   // new TypeScriptWriter(path.join(packages, 'xvt', 'src'), xvtG),
-  // new PHPWriter(phpLibPath, xvtG),
+  new PHPWriter(phpLibPath, xvtG),
   // new TypeScriptWriter(path.join(packages, 'xwa', 'src'), xwaG),
-  // new PHPWriter(phpLibPath, xwaG),
+  new PHPWriter(phpLibPath, xwaG)
   // new TypeScriptWriter(path.join(packages, 'lfd', 'src'), lfdG)
 ].forEach((writer) => writer.write());

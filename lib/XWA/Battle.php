@@ -5,18 +5,18 @@ namespace Pyrite\XWA;
 use Pyrite\EHBL\BattleType;
 use Pyrite\EHBL\Platform;
 
-class Battle extends \Pyrite\EHBL\Battle {
-	public function __construct($type = BattleType::UNKNOWN, $num = 0, $title = '', $folder = '', array $missionFiles = [], array $resourceFiles = []) {
-		parent::__construct(Platform::XWA, $type, $num, $title, $folder, $missionFiles, $resourceFiles);
-	}
+class Battle extends \Pyrite\EHBL\Battle
+{
+	public function __construct(BattleType $type = BattleType::UNKNOWN, int $num = 0, string $folder = '', array $missionFiles = [], array $resourceFiles = [])
+	{
+		parent::__construct(Platform::XWA, $type, $num, '', $folder, $missionFiles, $resourceFiles);
+		// try to get the title from the mission lst if we can find it
+		if (count($resourceFiles) > 0 && file_exists($folder . $resourceFiles[0])) {
+			$missionLst = file_get_contents($folder . $resourceFiles[0]);
 
-	public static function fromFolder($type = BattleType::UNKNOWN, $num = 0, $folder = '', array $lsts = [], array $missionFiles = [], array $resourceFiles = []) {
-		$missionLst = file_get_contents($folder . $lsts[0]);
-		$title      = '';
-		if (preg_match('/BATTLE_8_HEADER!\[(.*)\]/m', $missionLst, $m)) {
-			$title = str_replace("Battle 8:", "", $m[1]);
+			if (preg_match('/BATTLE_8_HEADER!\[(.*)\]/m', $missionLst, $m)) {
+				$this->title = str_replace("Battle 8:", "", $m[1]);
+			}
 		}
-
-		return new Battle($type, $num, $title, $folder, $missionFiles, $resourceFiles);
 	}
 }

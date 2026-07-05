@@ -6,28 +6,29 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class GlobalUnitBase extends PyriteBase implements Byteable
+abstract class GlobalUnitBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  GLOBALUNITLENGTH INT */
-    public const GLOBALUNITLENGTH = 87;
+    /** @var int GLOBALUNITLENGTH INT */
+	public const GLOBALUNITLENGTH = 87;
     /** @var string 0x00 Name STR */
-    public $Name;
-    /** @var integer 0x40 Leader BYTE */
-    public $Leader;
-    /** @var integer 0x41 SpecialCargoCraft BYTE */
-    public $SpecialCargoCraft;
+	public string $Name;
+    /** @var int 0x40 Leader BYTE */
+	public int $Leader;
+    /** @var int 0x41 SpecialCargoCraft BYTE */
+	public int $SpecialCargoCraft;
     /** @var string 0x42 SpecialCargo STR */
-    public $SpecialCargo;
-    /** @var boolean 0x56 RandSpecCraft BOOL */
-    public $RandSpecCraft;
+	public string $SpecialCargo;
+    /** @var bool 0x56 RandSpecCraft BOOL */
+	public bool $RandSpecCraft;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -35,7 +36,7 @@ abstract class GlobalUnitBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -51,7 +52,7 @@ abstract class GlobalUnitBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Name" => $this->Name,
@@ -62,7 +63,7 @@ abstract class GlobalUnitBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -77,7 +78,7 @@ abstract class GlobalUnitBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::GLOBALUNITLENGTH;
     }

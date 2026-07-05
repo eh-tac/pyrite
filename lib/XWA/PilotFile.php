@@ -4,9 +4,9 @@ namespace Pyrite\XWA;
 
 class PilotFile extends Base\PilotFileBase
 {
-    public static function fromHex($hex, $tie = null)
+    public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): PilotFile
     {
-        return (new PilotFile($hex, $tie))->loadHex();
+        return (new PilotFile($hex, $TIE))->loadHex();
     }
 
     public static function createBlank($filename, $startMission = 0)

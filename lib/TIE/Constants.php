@@ -3,7 +3,7 @@ namespace Pyrite\TIE;
 
 class Constants
 {
-    public static $CRAFTTYPE = [
+    public static array $CRAFTTYPE = [
         0 => "None",
         1 => "X-wing",
         2 => "Y-wing",
@@ -183,7 +183,7 @@ class Constants
     public static $CRAFTTYPE_ASTEROIDFIELD = 86;
     public static $CRAFTTYPE_PLANET = 87;
 
-    public static $CRAFTABBR = [
+    public static array $CRAFTABBR = [
         0 => "None",
         1 => "X-W",
         2 => "Y-W",
@@ -363,7 +363,7 @@ class Constants
     public static $CRAFTABBR_ASTEROID2 = 86;
     public static $CRAFTABBR_PLANET = 87;
 
-    public static $STATUS = [
+    public static array $STATUS = [
         0 => "None",
         1 => "2X Warheads",
         2 => "1/2 Warheads",
@@ -389,7 +389,7 @@ class Constants
     public static $STATUS_HYPERDRIVEADDED = 9;
     public static $STATUS_INVINCIBLE = 20;
 
-    public static $WARHEAD = [
+    public static array $WARHEAD = [
         0 => "None",
         1 => "Heavy Rocket",
         2 => "Space Bomb",
@@ -409,7 +409,7 @@ class Constants
     public static $WARHEAD_ADVANCEDTORPEDO = 6;
     public static $WARHEAD_MAGPULSETORPEDO = 7;
 
-    public static $BEAM = [
+    public static array $BEAM = [
         0 => "None",
         1 => "Tractor Beam",
         2 => "Jamming Beam",
@@ -419,7 +419,7 @@ class Constants
     public static $BEAM_TRACTORBEAM = 1;
     public static $BEAM_JAMMINGBEAM = 2;
 
-    public static $GROUPAI = [
+    public static array $GROUPAI = [
         0 => "Rookie (None)",
         1 => "Novice",
         2 => "Veteran",
@@ -435,7 +435,7 @@ class Constants
     public static $GROUPAI_ACE = 4;
     public static $GROUPAI_TOPACEINVINCIBLE = 5;
 
-    public static $MARKINGS = [
+    public static array $MARKINGS = [
         0 => "Red (TIE - None)",
         1 => "Gold (TIE - Red)",
         2 => "Blue (TIE - Gold)",
@@ -447,7 +447,7 @@ class Constants
     public static $MARKINGS_BLUETIEGOLD = 2;
     public static $MARKINGS_GREENTIEBLUE = 3;
 
-    public static $FORMATION = [
+    public static array $FORMATION = [
         0 => "Vic",
         1 => "Finger Four",
         2 => "Line Astern",
@@ -477,7 +477,7 @@ class Constants
     public static $FORMATION_HIGHVIC = 11;
     public static $FORMATION_REVERSEHIGHVIC = 12;
 
-    public static $ARRIVALDIFFICULTY = [
+    public static array $ARRIVALDIFFICULTY = [
         0 => "All",
         1 => "Easy",
         2 => "Medium",
@@ -493,7 +493,7 @@ class Constants
     public static $ARRIVALDIFFICULTY_MEDIUMHARD = 4;
     public static $ARRIVALDIFFICULTY_EASYMEDIUM = 5;
 
-    public static $CONDITION = [
+    public static array $CONDITION = [
         0 => "Always (true)",
         1 => "Created",
         2 => "Destroyed",
@@ -547,7 +547,7 @@ class Constants
     public static $CONDITION_OUTOFWARHEADS = 23;
     public static $CONDITION_UNKNOWNARRIVE = 24;
 
-    public static $VARIABLETYPE = [
+    public static array $VARIABLETYPE = [
         0 => "None",
         1 => "Flight Group",
         2 => "CraftType (enum)",
@@ -573,7 +573,7 @@ class Constants
     public static $VARIABLETYPE_MISCENUM = 9;
     public static $VARIABLETYPE_UNKNOWN = 10;
 
-    public static $CRAFTCATEGORY = [
+    public static array $CRAFTCATEGORY = [
         0 => "Starfighters",
         1 => "Transports",
         2 => "Freighters/Containers",
@@ -591,7 +591,7 @@ class Constants
     public static $CRAFTCATEGORY_PLATFORMSFACILITIES = 5;
     public static $CRAFTCATEGORY_MINES = 6;
 
-    public static $OBJECTCATEGORY = [
+    public static array $OBJECTCATEGORY = [
         0 => "Craft",
         1 => "Weapons",
         2 => "Space Objects",
@@ -601,7 +601,7 @@ class Constants
     public static $OBJECTCATEGORY_WEAPONS = 1;
     public static $OBJECTCATEGORY_SPACEOBJECTS = 2;
 
-    public static $TRIGGERAMOUNT = [
+    public static array $TRIGGERAMOUNT = [
         0 => "100%",
         1 => "75%",
         2 => "50%",
@@ -637,7 +637,7 @@ class Constants
     public static $TRIGGERAMOUNT_ATLEASTONEOFFIRSTWAVE = 14;
     public static $TRIGGERAMOUNT_ALLBUTONEOFFIRSTWAVE = 15;
 
-    public static $GOALAMOUNT = [
+    public static array $GOALAMOUNT = [
         0 => "100%",
         1 => "50%",
         2 => "At least one",
@@ -651,7 +651,7 @@ class Constants
     public static $GOALAMOUNT_ALLBUTONE = 3;
     public static $GOALAMOUNT_SPECIALCRAFT = 4;
 
-    public static $ABORTTRIGGER = [
+    public static array $ABORTTRIGGER = [
         0 => "None",
         1 => "0% Shields",
         2 => "Systems 75% (fighters and transports only)",
@@ -667,7 +667,7 @@ class Constants
     public static $ABORTTRIGGER_N50PERCENTHULL = 4;
     public static $ABORTTRIGGER_ATTACKED = 5;
 
-    public static $ORDER = [
+    public static array $ORDER = [
         0 => "Hold Station",
         1 => "Go Home",
         2 => "Circle",
@@ -751,7 +751,7 @@ class Constants
     public static $ORDER_SSDISABLED = 38;
     public static $ORDER_SSDISABLED2 = 39;
 
-    public static $CRAFTWHEN = [
+    public static array $CRAFTWHEN = [
         1 => "Boarding",
         2 => "Boarded",
         3 => "Defence",
@@ -771,7 +771,7 @@ class Constants
     public static $CRAFTWHEN_PLAYERSCRAFT = 9;
     public static $CRAFTWHEN_NONPLAYERSCRAFT = 10;
 
-    public static $MISC = [
+    public static array $MISC = [
         0 => "Rookie craft",
         1 => "Novice craft",
         2 => "Officer craft",
@@ -871,7 +871,7 @@ class Constants
     public static $MISC_PLATFORMS = 51;
     public static $MISC_MINES = 54;
 
-    public static $EVENTTYPE = [
+    public static array $EVENTTYPE = [
         3 => "Page Break",
         4 => "Title Text",
         5 => "Caption Text",
@@ -923,7 +923,7 @@ class Constants
     public static $EVENTTYPE_TEXTTAG8 = 25;
     public static $EVENTTYPE_ENDBRIEFING = 34;
 
-    public static $TEXTTAGCOLOR = [
+    public static array $TEXTTAGCOLOR = [
         0 => "Green",
         1 => "Red",
         2 => "Purple",
@@ -943,7 +943,7 @@ class Constants
     public static $TEXTTAGCOLOR_GRAY = 6;
     public static $TEXTTAGCOLOR_WHITE = 7;
 
-    public static $BRIEFINGOFFICERS = [
+    public static array $BRIEFINGOFFICERS = [
         1 => "Both officers",
         2 => "Flight Officer",
         3 => "Secret Order",
@@ -953,7 +953,7 @@ class Constants
     public static $BRIEFINGOFFICERS_FLIGHTOFFICER = 2;
     public static $BRIEFINGOFFICERS_SECRETORDER = 3;
 
-    public static $QUESTIONTYPE = [
+    public static array $QUESTIONTYPE = [
         0 => "None",
         1 => "Primary Goals",
         2 => "Secondary Goals",
@@ -963,7 +963,7 @@ class Constants
     public static $QUESTIONTYPE_PRIMARYGOALS = 1;
     public static $QUESTIONTYPE_SECONDARYGOALS = 2;
 
-    public static $QUESTIONCONDITION = [
+    public static array $QUESTIONCONDITION = [
         0 => "None",
         4 => "Successful",
         5 => "Failed",
@@ -973,7 +973,7 @@ class Constants
     public static $QUESTIONCONDITION_SUCCESSFUL = 4;
     public static $QUESTIONCONDITION_FAILED = 5;
 
-    public static $MESSAGECOLOR = [
+    public static array $MESSAGECOLOR = [
         0 => "Red",
         1 => "Green",
         2 => "Blue",
@@ -985,7 +985,7 @@ class Constants
     public static $MESSAGECOLOR_BLUE = 2;
     public static $MESSAGECOLOR_PURPLE = 3;
 
-    public static $IFFCOLOR = [
+    public static array $IFFCOLOR = [
         0 => "Green",
         1 => "Red",
         2 => "Purple",
@@ -997,7 +997,7 @@ class Constants
     public static $IFFCOLOR_PURPLE = 2;
     public static $IFFCOLOR_BLUE = 3;
 
-    public static $PILOTSTATUS = [
+    public static array $PILOTSTATUS = [
         0 => "Alive",
         1 => "Captured",
         2 => "Killed",
@@ -1007,7 +1007,7 @@ class Constants
     public static $PILOTSTATUS_CAPTURED = 1;
     public static $PILOTSTATUS_KILLED = 2;
 
-    public static $PILOTRANK = [
+    public static array $PILOTRANK = [
         0 => "Cadet",
         1 => "Officer",
         2 => "Lieutenant",
@@ -1023,7 +1023,7 @@ class Constants
     public static $PILOTRANK_COMMANDER = 4;
     public static $PILOTRANK_GENERAL = 5;
 
-    public static $PILOTDIFFICULTY = [
+    public static array $PILOTDIFFICULTY = [
         0 => "Easy",
         1 => "Medium",
         2 => "Hard",
@@ -1033,7 +1033,7 @@ class Constants
     public static $PILOTDIFFICULTY_MEDIUM = 1;
     public static $PILOTDIFFICULTY_HARD = 2;
 
-    public static $TRAININGCRAFT = [
+    public static array $TRAININGCRAFT = [
         0 => "TIE Fighter",
         1 => "TIE Interceptor",
         2 => "TIE Bomber",
@@ -1051,7 +1051,7 @@ class Constants
     public static $TRAININGCRAFT_TIEDEFENDER = 5;
     public static $TRAININGCRAFT_MISSILEBOAT = 6;
 
-    public static $TRAININGCRAFTABBR = [
+    public static array $TRAININGCRAFTABBR = [
         0 => "T/F",
         1 => "T/I",
         2 => "T/B",
@@ -1069,7 +1069,7 @@ class Constants
     public static $TRAININGCRAFTABBR_TD = 5;
     public static $TRAININGCRAFTABBR_MIS = 6;
 
-    public static $BATTLESTATUS = [
+    public static array $BATTLESTATUS = [
         0 => "None",
         1 => "In Progress",
         2 => "Incomplete",
@@ -1081,7 +1081,7 @@ class Constants
     public static $BATTLESTATUS_INCOMPLETE = 2;
     public static $BATTLESTATUS_COMPLETED = 3;
 
-    public static $SECRETORDER = [
+    public static array $SECRETORDER = [
         0 => "None",
         1 => "First Circle",
         2 => "Second Circle",

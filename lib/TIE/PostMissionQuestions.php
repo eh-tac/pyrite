@@ -2,19 +2,20 @@
 
 namespace Pyrite\TIE;
 
+use Pyrite\PyriteModel;
 use Pyrite\Summary;
 
 class PostMissionQuestions extends Base\PostMissionQuestionsBase implements Summary
 {
-    public function __construct($hex, $tie)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
         if ($this->Length === 0) {
             $this->PostMissionQuestionsLength = 2;
         }
     }
 
-    protected function QuestionLength()
+    protected function QuestionLength(): int
     {
         if ($this->Length === 0) {
             return 0;
@@ -24,9 +25,10 @@ class PostMissionQuestions extends Base\PostMissionQuestionsBase implements Summ
             list($question) = explode(chr(10), $text, 2);
             return strlen($question);
         }
+        return 0;
     }
 
-    protected function AnswerLength()
+    protected function AnswerLength(): int
     {
         if ($this->Length === 0) {
             return 0;
@@ -36,9 +38,10 @@ class PostMissionQuestions extends Base\PostMissionQuestionsBase implements Summ
             list(, $answer) = explode(chr(10), $text, 2);
             return strlen($answer);
         }
+        return 0;
     }
 
-    public function summaryHash()
+    public function summaryHash(): array|false
     {
         if ($this->Length === 0) {
             return false;

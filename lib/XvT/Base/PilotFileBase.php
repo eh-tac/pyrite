@@ -6,44 +6,45 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\Constants;
 use Pyrite\XvT\TeamStats;
 
-abstract class PilotFileBase extends PyriteBase implements Byteable
+abstract class PilotFileBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PilotFileLength INT */
-    public $PilotFileLength;
+    /** @var int PilotFileLength INT */
+	public int $PilotFileLength;
     /** @var string 0x0000 Name CHAR */
-    public $Name;
-    /** @var integer 0x000E totalScore INT */
-    public $totalScore;
-    /** @var integer 0x035E Kills INT */
-    public $Kills;
-    /** @var integer 0x143E LasersHit INT */
-    public $LasersHit;
-    /** @var integer 0x144A LasersTotal INT */
-    public $LasersTotal;
-    /** @var integer 0x1456 WarheadsHit INT */
-    public $WarheadsHit;
-    /** @var integer 0x1462 WarheadsTotal INT */
-    public $WarheadsTotal;
-    /** @var integer 0x146E CraftLosses INT */
-    public $CraftLosses;
-    /** @var integer 0x2326 PilotRating INT */
-    public $PilotRating;
+	public string $Name;
+    /** @var int 0x000E totalScore INT */
+	public int $totalScore;
+    /** @var int 0x035E Kills INT */
+	public int $Kills;
+    /** @var int 0x143E LasersHit INT */
+	public int $LasersHit;
+    /** @var int 0x144A LasersTotal INT */
+	public int $LasersTotal;
+    /** @var int 0x1456 WarheadsHit INT */
+	public int $WarheadsHit;
+    /** @var int 0x1462 WarheadsTotal INT */
+	public int $WarheadsTotal;
+    /** @var int 0x146E CraftLosses INT */
+	public int $CraftLosses;
+    /** @var int 0x2326 PilotRating INT */
+	public int $PilotRating;
     /** @var string 0x2392 RatingLabel CHAR */
-    public $RatingLabel;
+	public string $RatingLabel;
     /** @var TeamStats 0x3ef2 RebelStats TeamStats */
-    public $RebelStats;
+	public TeamStats $RebelStats;
     /** @var TeamStats 0x12716 ImperialStats TeamStats */
-    public $ImperialStats;
+	public TeamStats $ImperialStats;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -51,7 +52,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -76,7 +77,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Name" => $this->Name,
@@ -94,7 +95,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -115,12 +116,12 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getPilotRatingLabel() 
+    public function getPilotRatingLabel(): string 
     {
         return isset($this->PilotRating) && isset(Constants::$PILOTRATING[$this->PilotRating]) ? Constants::$PILOTRATING[$this->PilotRating] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return $this->PilotFileLength;
     }

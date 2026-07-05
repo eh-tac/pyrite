@@ -6,52 +6,53 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTConnectedPlayerDataBase extends PyriteBase implements Byteable
+abstract class PLTConnectedPlayerDataBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTCONNECTEDPLAYERDATALENGTH INT */
-    public const PLTCONNECTEDPLAYERDATALENGTH = 88;
+    /** @var int PLTCONNECTEDPLAYERDATALENGTH INT */
+	public const PLTCONNECTEDPLAYERDATALENGTH = 88;
     /** @var string 0x0000 pilotLongNameUnused CHAR */
-    public $pilotLongNameUnused;
+	public string $pilotLongNameUnused;
     /** @var string 0x000E pilotShortName CHAR */
-    public $pilotShortName;
-    /** @var integer 0x001C fgIndex INT */
-    public $fgIndex;
-    /** @var integer 0x0020 DPPlayerID INT */
-    public $DPPlayerID;
-    /** @var integer 0x0024 pilotRank INT */
-    public $pilotRank;
-    /** @var integer 0x0028 playerScore INT */
-    public $playerScore;
-    /** @var integer 0x002C fullKills INT */
-    public $fullKills;
-    /** @var integer 0x0030 sharedKills INT */
-    public $sharedKills;
-    /** @var integer 0x0034 unusedInspections INT */
-    public $unusedInspections;
-    /** @var integer 0x0038 assistKills INT */
-    public $assistKills;
-    /** @var integer 0x003C losses INT */
-    public $losses;
-    /** @var integer 0x0040 craftType INT */
-    public $craftType;
-    /** @var integer 0x0044 optionalCraftIndex INT */
-    public $optionalCraftIndex;
-    /** @var integer 0x0048 optionalWarhead INT */
-    public $optionalWarhead;
-    /** @var integer 0x004C optionalBeam INT */
-    public $optionalBeam;
-    /** @var integer 0x0050 optionalCountermeasure INT */
-    public $optionalCountermeasure;
-    /** @var integer 0x0054 hasDisconnectedFromHostUNK INT */
-    public $hasDisconnectedFromHostUNK;
+	public string $pilotShortName;
+    /** @var int 0x001C fgIndex INT */
+	public int $fgIndex;
+    /** @var int 0x0020 DPPlayerID INT */
+	public int $DPPlayerID;
+    /** @var int 0x0024 pilotRank INT */
+	public int $pilotRank;
+    /** @var int 0x0028 playerScore INT */
+	public int $playerScore;
+    /** @var int 0x002C fullKills INT */
+	public int $fullKills;
+    /** @var int 0x0030 sharedKills INT */
+	public int $sharedKills;
+    /** @var int 0x0034 unusedInspections INT */
+	public int $unusedInspections;
+    /** @var int 0x0038 assistKills INT */
+	public int $assistKills;
+    /** @var int 0x003C losses INT */
+	public int $losses;
+    /** @var int 0x0040 craftType INT */
+	public int $craftType;
+    /** @var int 0x0044 optionalCraftIndex INT */
+	public int $optionalCraftIndex;
+    /** @var int 0x0048 optionalWarhead INT */
+	public int $optionalWarhead;
+    /** @var int 0x004C optionalBeam INT */
+	public int $optionalBeam;
+    /** @var int 0x0050 optionalCountermeasure INT */
+	public int $optionalCountermeasure;
+    /** @var int 0x0054 hasDisconnectedFromHostUNK INT */
+	public int $hasDisconnectedFromHostUNK;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -59,7 +60,7 @@ abstract class PLTConnectedPlayerDataBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -87,7 +88,7 @@ abstract class PLTConnectedPlayerDataBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "pilotLongNameUnused" => $this->pilotLongNameUnused,
@@ -110,7 +111,7 @@ abstract class PLTConnectedPlayerDataBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -137,7 +138,7 @@ abstract class PLTConnectedPlayerDataBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTCONNECTEDPLAYERDATALENGTH;
     }

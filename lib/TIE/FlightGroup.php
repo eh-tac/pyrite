@@ -7,6 +7,16 @@ use Pyrite\Summary;
 
 class FlightGroup extends Base\FlightGroupBase implements Summary, Countable
 {
+    public Mission $mission;
+
+    public function __construct(string $hex = null, ?\Pyrite\PyriteModel $TIE = null)
+    {
+        parent::__construct($hex, $TIE);
+        if ($TIE instanceof Mission) {
+            $this->mission = $TIE;
+        }
+    }
+
     public $destroyable = true;
     public $captureable = false; // in case these need to be overridden for special reasons.
 
@@ -138,7 +148,7 @@ class FlightGroup extends Base\FlightGroupBase implements Summary, Countable
 
     public function getMothershipFG()
     {
-        return $this->TIE->FlightGroups[$this->ArrivalMothership];
+        return $this->mission->FlightGroups[$this->ArrivalMothership];
     }
 
     public function label()
@@ -176,7 +186,7 @@ class FlightGroup extends Base\FlightGroupBase implements Summary, Countable
 
     public function getIFFLabel()
     {
-        return $this->TIE->lookupIFF($this->Iff);
+        return $this->mission->lookupIFF($this->Iff);
     }
 
     public function summaryHash()

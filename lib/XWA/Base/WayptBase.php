@@ -6,26 +6,27 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class WayptBase extends PyriteBase implements Byteable
+abstract class WayptBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  WAYPTLENGTH INT */
-    public const WAYPTLENGTH = 8;
-    /** @var integer 0x0 X SHORT */
-    public $X;
-    /** @var integer 0x2 Y SHORT */
-    public $Y;
-    /** @var integer 0x4 Z SHORT */
-    public $Z;
-    /** @var boolean 0x6 Enabled BOOL */
-    public $Enabled;
+    /** @var int WAYPTLENGTH INT */
+	public const WAYPTLENGTH = 8;
+    /** @var int 0x0 X SHORT */
+	public int $X;
+    /** @var int 0x2 Y SHORT */
+	public int $Y;
+    /** @var int 0x4 Z SHORT */
+	public int $Z;
+    /** @var bool 0x6 Enabled BOOL */
+	public bool $Enabled;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -33,7 +34,7 @@ abstract class WayptBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -48,7 +49,7 @@ abstract class WayptBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "X" => $this->X,
@@ -58,7 +59,7 @@ abstract class WayptBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -72,7 +73,7 @@ abstract class WayptBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::WAYPTLENGTH;
     }

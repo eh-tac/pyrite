@@ -6,189 +6,190 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XWA\Constants;
 use Pyrite\XWA\GoalFG;
 use Pyrite\XWA\Order;
 use Pyrite\XWA\TriggerPair;
 use Pyrite\XWA\Waypt;
 
-abstract class FlightGroupBase extends PyriteBase implements Byteable
+abstract class FlightGroupBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  FLIGHTGROUPLENGTH INT */
-    public const FLIGHTGROUPLENGTH = 3646;
+    /** @var int FLIGHTGROUPLENGTH INT */
+	public const FLIGHTGROUPLENGTH = 3646;
     /** @var string 0x000 Name STR */
-    public $Name;
-    /** @var integer 0x014 EnableDesignation BYTE */
-    public $EnableDesignation;
-    /** @var integer 0x015 EnableDesignation2 BYTE */
-    public $EnableDesignation2;
-    /** @var integer 0x016 Designation1 BYTE */
-    public $Designation1;
-    /** @var integer 0x017 Designation2 BYTE */
-    public $Designation2;
-    /** @var integer 0x018 Comm BYTE */
-    public $Comm; //(was Unknown1) {None, Minimal, Normal, Verbose}
-    /** @var integer 0x019 GlobalCargoIndex BYTE */
-    public $GlobalCargoIndex;
-    /** @var integer 0x01A GlobalSpecialCargoIndex BYTE */
-    public $GlobalSpecialCargoIndex;
+	public string $Name;
+    /** @var int 0x014 EnableDesignation BYTE */
+	public int $EnableDesignation;
+    /** @var int 0x015 EnableDesignation2 BYTE */
+	public int $EnableDesignation2;
+    /** @var int 0x016 Designation1 BYTE */
+	public int $Designation1;
+    /** @var int 0x017 Designation2 BYTE */
+	public int $Designation2;
+    /** @var int 0x018 Comm BYTE */
+	public int $Comm; // (was Unknown1) {None, Minimal, Normal, Verbose}
+    /** @var int 0x019 GlobalCargoIndex BYTE */
+	public int $GlobalCargoIndex;
+    /** @var int 0x01A GlobalSpecialCargoIndex BYTE */
+	public int $GlobalSpecialCargoIndex;
     /** @var string 0x028 Cargo STR */
-    public $Cargo;
+	public string $Cargo;
     /** @var string 0x03C SpecialCargo STR */
-    public $SpecialCargo;
+	public string $SpecialCargo;
     /** @var string 0x050 CraftRole STR */
-    public $CraftRole;
-    /** @var integer 0x069 SpecialCargoCraft BYTE */
-    public $SpecialCargoCraft;
-    /** @var boolean 0x06A RandomSpecialCargoCraft BOOL */
-    public $RandomSpecialCargoCraft;
-    /** @var integer 0x06B CraftType BYTE */
-    public $CraftType;
-    /** @var integer 0x06C NumberOfCraft BYTE */
-    public $NumberOfCraft;
-    /** @var integer 0x06D Status1 BYTE */
-    public $Status1;
-    /** @var integer 0x06E Warhead BYTE */
-    public $Warhead;
-    /** @var integer 0x06F Beam BYTE */
-    public $Beam;
-    /** @var integer 0x070 Iff BYTE */
-    public $Iff;
-    /** @var integer 0x071 Team BYTE */
-    public $Team;
-    /** @var integer 0x072 GroupAI BYTE */
-    public $GroupAI;
-    /** @var integer 0x073 Markings BYTE */
-    public $Markings;
-    /** @var integer 0x074 Radio BYTE */
-    public $Radio;
-    /** @var integer 0x076 Formation BYTE */
-    public $Formation;
-    /** @var integer 0x077 FormationSpacing BYTE */
-    public $FormationSpacing;
-    /** @var integer 0x078 GlobalGroup BYTE */
-    public $GlobalGroup;
-    /** @var integer 0x079 LeaderSpacingUnused BYTE */
-    public $LeaderSpacingUnused;
-    /** @var integer 0x07A NumberOfWaves BYTE */
-    public $NumberOfWaves;
-    /** @var integer 0x07B WavesDelay BYTE */
-    public $WavesDelay;
-    /** @var integer 0x07C StopArrivingWhen BYTE */
-    public $StopArrivingWhen;
-    /** @var integer 0x07D PlayerNumber BYTE */
-    public $PlayerNumber;
-    /** @var boolean 0x07E ArriveOnlyIfHuman BOOL */
-    public $ArriveOnlyIfHuman;
-    /** @var integer 0x07F PlayerCraft BYTE */
-    public $PlayerCraft;
-    /** @var integer 0x080 Yaw BYTE */
-    public $Yaw;
-    /** @var integer 0x081 Pitch BYTE */
-    public $Pitch;
-    /** @var integer 0x082 Roll BYTE */
-    public $Roll;
-    /** @var integer 0x084 Unknown4 BYTE */
-    public $Unknown4;
-    /** @var integer 0x086 Unknown5 BYTE */
-    public $Unknown5;
-    /** @var integer 0x087 ArrivalDifficulty BYTE */
-    public $ArrivalDifficulty;
-    /** @var TriggerPair[] 0x088 Arrival TriggerPair */
-    public $Arrival;
-    /** @var boolean 0x0A8 Arrivals12OrArrivals34 BOOL */
-    public $Arrivals12OrArrivals34;
-    /** @var integer 0x0AA ArrivalDelayMinutes BYTE */
-    public $ArrivalDelayMinutes;
-    /** @var integer 0x0AB ArrivalDelaySeconds BYTE */
-    public $ArrivalDelaySeconds;
+	public string $CraftRole;
+    /** @var int 0x069 SpecialCargoCraft BYTE */
+	public int $SpecialCargoCraft;
+    /** @var bool 0x06A RandomSpecialCargoCraft BOOL */
+	public bool $RandomSpecialCargoCraft;
+    /** @var int 0x06B CraftType BYTE */
+	public int $CraftType;
+    /** @var int 0x06C NumberOfCraft BYTE */
+	public int $NumberOfCraft;
+    /** @var int 0x06D Status1 BYTE */
+	public int $Status1;
+    /** @var int 0x06E Warhead BYTE */
+	public int $Warhead;
+    /** @var int 0x06F Beam BYTE */
+	public int $Beam;
+    /** @var int 0x070 Iff BYTE */
+	public int $Iff;
+    /** @var int 0x071 Team BYTE */
+	public int $Team;
+    /** @var int 0x072 GroupAI BYTE */
+	public int $GroupAI;
+    /** @var int 0x073 Markings BYTE */
+	public int $Markings;
+    /** @var int 0x074 Radio BYTE */
+	public int $Radio;
+    /** @var int 0x076 Formation BYTE */
+	public int $Formation;
+    /** @var int 0x077 FormationSpacing BYTE */
+	public int $FormationSpacing;
+    /** @var int 0x078 GlobalGroup BYTE */
+	public int $GlobalGroup;
+    /** @var int 0x079 LeaderSpacingUnused BYTE */
+	public int $LeaderSpacingUnused;
+    /** @var int 0x07A NumberOfWaves BYTE */
+	public int $NumberOfWaves;
+    /** @var int 0x07B WavesDelay BYTE */
+	public int $WavesDelay;
+    /** @var int 0x07C StopArrivingWhen BYTE */
+	public int $StopArrivingWhen;
+    /** @var int 0x07D PlayerNumber BYTE */
+	public int $PlayerNumber;
+    /** @var bool 0x07E ArriveOnlyIfHuman BOOL */
+	public bool $ArriveOnlyIfHuman;
+    /** @var int 0x07F PlayerCraft BYTE */
+	public int $PlayerCraft;
+    /** @var int 0x080 Yaw BYTE */
+	public int $Yaw;
+    /** @var int 0x081 Pitch BYTE */
+	public int $Pitch;
+    /** @var int 0x082 Roll BYTE */
+	public int $Roll;
+    /** @var int 0x084 Unknown4 BYTE */
+	public int $Unknown4;
+    /** @var int 0x086 Unknown5 BYTE */
+	public int $Unknown5;
+    /** @var int 0x087 ArrivalDifficulty BYTE */
+	public int $ArrivalDifficulty;
+    /** @var array<TriggerPair> 0x088 Arrival TriggerPair */
+	public array $Arrival;
+    /** @var bool 0x0A8 Arrivals12OrArrivals34 BOOL */
+	public bool $Arrivals12OrArrivals34;
+    /** @var int 0x0AA ArrivalDelayMinutes BYTE */
+	public int $ArrivalDelayMinutes;
+    /** @var int 0x0AB ArrivalDelaySeconds BYTE */
+	public int $ArrivalDelaySeconds;
     /** @var TriggerPair 0x0AC Departure TriggerPair */
-    public $Departure;
-    /** @var integer 0x0BC DepartureDelayMinutes BYTE */
-    public $DepartureDelayMinutes;
-    /** @var integer 0x0BD DepartureDelaySeconds BYTE */
-    public $DepartureDelaySeconds;
-    /** @var integer 0x0BE AbortTrigger BYTE */
-    public $AbortTrigger;
-    /** @var integer 0x0BF ArrivalRandDelaySeconds BYTE */
-    public $ArrivalRandDelaySeconds;
-    /** @var integer 0x0C0 Unknown8 BYTE */
-    public $Unknown8;
-    /** @var integer 0x0C2 ArrivalMothership BYTE */
-    public $ArrivalMothership;
-    /** @var integer 0x0C3 ArrivalMethod BYTE */
-    public $ArrivalMethod; //{Hyper, Mothership, Hyp Rgn FG}
-    /** @var integer 0x0C4 DepartureMothership BYTE */
-    public $DepartureMothership;
-    /** @var boolean 0x0C5 DepartMethod BOOL */
-    public $DepartMethod; //{Hyper, Mothership, Planet}
-    /** @var integer 0x0C6 AlternateMothership BYTE */
-    public $AlternateMothership;
-    /** @var boolean 0x0C7 AlternateMothershipUsed BOOL */
-    public $AlternateMothershipUsed;
-    /** @var integer 0x0C8 CapturedDepartureMothership BYTE */
-    public $CapturedDepartureMothership;
-    /** @var boolean 0x0C9 CapturedDepartViaMothership BOOL */
-    public $CapturedDepartViaMothership;
-    /** @var Order[] 0x0CA Orders Order */
-    public $Orders;
-    /** @var TriggerPair[] 0xA0A SkipTriggers TriggerPair */
-    public $SkipTriggers;
-    /** @var GoalFG[] 0xB0A FGGoals GoalFG */
-    public $FGGoals;
-    /** @var Waypt[] 0xD8A StartPoints Waypt */
-    public $StartPoints;
+	public TriggerPair $Departure;
+    /** @var int 0x0BC DepartureDelayMinutes BYTE */
+	public int $DepartureDelayMinutes;
+    /** @var int 0x0BD DepartureDelaySeconds BYTE */
+	public int $DepartureDelaySeconds;
+    /** @var int 0x0BE AbortTrigger BYTE */
+	public int $AbortTrigger;
+    /** @var int 0x0BF ArrivalRandDelaySeconds BYTE */
+	public int $ArrivalRandDelaySeconds;
+    /** @var int 0x0C0 Unknown8 BYTE */
+	public int $Unknown8;
+    /** @var int 0x0C2 ArrivalMothership BYTE */
+	public int $ArrivalMothership;
+    /** @var int 0x0C3 ArrivalMethod BYTE */
+	public int $ArrivalMethod; // {Hyper, Mothership, Hyp Rgn FG}
+    /** @var int 0x0C4 DepartureMothership BYTE */
+	public int $DepartureMothership;
+    /** @var bool 0x0C5 DepartMethod BOOL */
+	public bool $DepartMethod; // {Hyper, Mothership, Planet}
+    /** @var int 0x0C6 AlternateMothership BYTE */
+	public int $AlternateMothership;
+    /** @var bool 0x0C7 AlternateMothershipUsed BOOL */
+	public bool $AlternateMothershipUsed;
+    /** @var int 0x0C8 CapturedDepartureMothership BYTE */
+	public int $CapturedDepartureMothership;
+    /** @var bool 0x0C9 CapturedDepartViaMothership BOOL */
+	public bool $CapturedDepartViaMothership;
+    /** @var array<Order> 0x0CA Orders Order */
+	public array $Orders;
+    /** @var array<TriggerPair> 0xA0A SkipTriggers TriggerPair */
+	public array $SkipTriggers;
+    /** @var array<GoalFG> 0xB0A FGGoals GoalFG */
+	public array $FGGoals;
+    /** @var array<Waypt> 0xD8A StartPoints Waypt */
+	public array $StartPoints;
     /** @var Waypt 0xD9A CaptureHyperPoint Waypt */
-    public $CaptureHyperPoint;
+	public Waypt $CaptureHyperPoint;
     /** @var Waypt 0xDA2 HyperPoint Waypt */
-    public $HyperPoint;
-    /** @var integer[] 0xDAA StartPointRegions BYTE */
-    public $StartPointRegions;
-    /** @var integer 0xDAC CaptureHyperRegion BYTE */
-    public $CaptureHyperRegion;
-    /** @var integer 0xDAD HyperPointRegion BYTE */
-    public $HyperPointRegion;
-    /** @var boolean 0xDC4 DisableWaveNumbering BOOL */
-    public $DisableWaveNumbering;
-    /** @var integer 0xDC5 DepartureClockMin BYTE */
-    public $DepartureClockMin; //(was Unknown32)
-    /** @var integer 0xDC6 DepartureClockSec BYTE */
-    public $DepartureClockSec; //(was Unknown33)
-    /** @var integer 0xDC7 Countermeasures BYTE */
-    public $Countermeasures;
-    /** @var integer 0xDC8 CraftExplosionTime BYTE */
-    public $CraftExplosionTime;
-    /** @var integer 0xDC9 Status2 BYTE */
-    public $Status2;
-    /** @var integer 0xDCA GlobalUnit BYTE */
-    public $GlobalUnit;
-    /** @var integer 0xDCB Handicap BYTE */
-    public $Handicap; //{None, FavorRebels, EvenOnly, FavorImps, FavorRebsEven, FavorImpsEven}
-    /** @var integer[] 0xDCC OptionalWarheads BYTE */
-    public $OptionalWarheads;
-    /** @var integer[] 0xDD4 OptionalBeams BYTE */
-    public $OptionalBeams;
-    /** @var integer[] 0xDDA OptionalCountermeasures BYTE */
-    public $OptionalCountermeasures;
-    /** @var integer 0xDDE OptionalCraftCategory BYTE */
-    public $OptionalCraftCategory;
-    /** @var integer[] 0xDDF OptionalCraft BYTE */
-    public $OptionalCraft;
-    /** @var integer[] 0xDE9 NumberOfOptionalCraft BYTE */
-    public $NumberOfOptionalCraft;
-    /** @var integer[] 0xDF3 NumberofOptionalCraftWaves BYTE */
-    public $NumberofOptionalCraftWaves;
+	public Waypt $HyperPoint;
+    /** @var array<int> 0xDAA StartPointRegions BYTE */
+	public array $StartPointRegions;
+    /** @var int 0xDAC CaptureHyperRegion BYTE */
+	public int $CaptureHyperRegion;
+    /** @var int 0xDAD HyperPointRegion BYTE */
+	public int $HyperPointRegion;
+    /** @var bool 0xDC4 DisableWaveNumbering BOOL */
+	public bool $DisableWaveNumbering;
+    /** @var int 0xDC5 DepartureClockMin BYTE */
+	public int $DepartureClockMin; // (was Unknown32)
+    /** @var int 0xDC6 DepartureClockSec BYTE */
+	public int $DepartureClockSec; // (was Unknown33)
+    /** @var int 0xDC7 Countermeasures BYTE */
+	public int $Countermeasures;
+    /** @var int 0xDC8 CraftExplosionTime BYTE */
+	public int $CraftExplosionTime;
+    /** @var int 0xDC9 Status2 BYTE */
+	public int $Status2;
+    /** @var int 0xDCA GlobalUnit BYTE */
+	public int $GlobalUnit;
+    /** @var int 0xDCB Handicap BYTE */
+	public int $Handicap; // {None, FavorRebels, EvenOnly, FavorImps, FavorRebsEven, FavorImpsEven}
+    /** @var array<int> 0xDCC OptionalWarheads BYTE */
+	public array $OptionalWarheads;
+    /** @var array<int> 0xDD4 OptionalBeams BYTE */
+	public array $OptionalBeams;
+    /** @var array<int> 0xDDA OptionalCountermeasures BYTE */
+	public array $OptionalCountermeasures;
+    /** @var int 0xDDE OptionalCraftCategory BYTE */
+	public int $OptionalCraftCategory;
+    /** @var array<int> 0xDDF OptionalCraft BYTE */
+	public array $OptionalCraft;
+    /** @var array<int> 0xDE9 NumberOfOptionalCraft BYTE */
+	public array $NumberOfOptionalCraft;
+    /** @var array<int> 0xDF3 NumberofOptionalCraftWaves BYTE */
+	public array $NumberofOptionalCraftWaves;
     /** @var string 0xDFD PilotID STR */
-    public $PilotID;
-    /** @var integer 0xE12 Backdrop INT */
-    public $Backdrop;
+	public string $PilotID;
+    /** @var int 0xE12 Backdrop INT */
+	public int $Backdrop;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -196,7 +197,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -362,7 +363,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Name" => $this->Name,
@@ -451,7 +452,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -603,77 +604,77 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getDesignation1Label() 
+    public function getDesignation1Label(): string 
     {
         return isset($this->Designation1) && isset(Constants::$DESIGNATION[$this->Designation1]) ? Constants::$DESIGNATION[$this->Designation1] : "Unknown";
     }
 
-    public function getDesignation2Label() 
+    public function getDesignation2Label(): string 
     {
         return isset($this->Designation2) && isset(Constants::$DESIGNATION[$this->Designation2]) ? Constants::$DESIGNATION[$this->Designation2] : "Unknown";
     }
 
-    public function getCraftTypeLabel() 
+    public function getCraftTypeLabel(): string 
     {
         return isset($this->CraftType) && isset(Constants::$CRAFTTYPE[$this->CraftType]) ? Constants::$CRAFTTYPE[$this->CraftType] : "Unknown";
     }
 
-    public function getStatus1Label() 
+    public function getStatus1Label(): string 
     {
         return isset($this->Status1) && isset(Constants::$STATUS[$this->Status1]) ? Constants::$STATUS[$this->Status1] : "Unknown";
     }
 
-    public function getWarheadLabel() 
+    public function getWarheadLabel(): string 
     {
         return isset($this->Warhead) && isset(Constants::$WARHEAD[$this->Warhead]) ? Constants::$WARHEAD[$this->Warhead] : "Unknown";
     }
 
-    public function getBeamLabel() 
+    public function getBeamLabel(): string 
     {
         return isset($this->Beam) && isset(Constants::$BEAM[$this->Beam]) ? Constants::$BEAM[$this->Beam] : "Unknown";
     }
 
-    public function getGroupAILabel() 
+    public function getGroupAILabel(): string 
     {
         return isset($this->GroupAI) && isset(Constants::$GROUPAI[$this->GroupAI]) ? Constants::$GROUPAI[$this->GroupAI] : "Unknown";
     }
 
-    public function getMarkingsLabel() 
+    public function getMarkingsLabel(): string 
     {
         return isset($this->Markings) && isset(Constants::$MARKINGS[$this->Markings]) ? Constants::$MARKINGS[$this->Markings] : "Unknown";
     }
 
-    public function getRadioLabel() 
+    public function getRadioLabel(): string 
     {
         return isset($this->Radio) && isset(Constants::$RADIO[$this->Radio]) ? Constants::$RADIO[$this->Radio] : "Unknown";
     }
 
-    public function getFormationLabel() 
+    public function getFormationLabel(): string 
     {
         return isset($this->Formation) && isset(Constants::$FORMATION[$this->Formation]) ? Constants::$FORMATION[$this->Formation] : "Unknown";
     }
 
-    public function getFormationSpacingLabel() 
+    public function getFormationSpacingLabel(): string 
     {
         return isset($this->FormationSpacing) && isset(Constants::$FORMATIONSPACING[$this->FormationSpacing]) ? Constants::$FORMATIONSPACING[$this->FormationSpacing] : "Unknown";
     }
 
-    public function getStopArrivingWhenLabel() 
+    public function getStopArrivingWhenLabel(): string 
     {
         return isset($this->StopArrivingWhen) && isset(Constants::$STOPARRIVINGWHEN[$this->StopArrivingWhen]) ? Constants::$STOPARRIVINGWHEN[$this->StopArrivingWhen] : "Unknown";
     }
 
-    public function getArrivalDifficultyLabel() 
+    public function getArrivalDifficultyLabel(): string 
     {
         return isset($this->ArrivalDifficulty) && isset(Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty]) ? Constants::$ARRIVALDIFFICULTY[$this->ArrivalDifficulty] : "Unknown";
     }
 
-    public function getAbortTriggerLabel() 
+    public function getAbortTriggerLabel(): string 
     {
         return isset($this->AbortTrigger) && isset(Constants::$ABORTTRIGGER[$this->AbortTrigger]) ? Constants::$ABORTTRIGGER[$this->AbortTrigger] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::FLIGHTGROUPLENGTH;
     }

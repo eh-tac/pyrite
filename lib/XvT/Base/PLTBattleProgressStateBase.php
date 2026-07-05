@@ -6,34 +6,35 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTBattleProgressStateBase extends PyriteBase implements Byteable
+abstract class PLTBattleProgressStateBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTBATTLEPROGRESSSTATELENGTH INT */
-    public const PLTBATTLEPROGRESSSTATELENGTH = 140;
-    /** @var integer 0x0000 MissionsFlown INT */
-    public $MissionsFlown;
-    /** @var integer 0x0004 CombatMissionID INT */
-    public $CombatMissionID;
-    /** @var integer 0x0008 totalMissionCount INT */
-    public $totalMissionCount;
-    /** @var integer[] 0x000C Outcome INT */
-    public $Outcome;
-    /** @var integer[] 0x0034 BattleListIndex INT */
-    public $BattleListIndex;
-    /** @var integer[] 0x005C CombatMissionListIndex INT */
-    public $CombatMissionListIndex;
-    /** @var integer 0x0084 NumPlayers INT */
-    public $NumPlayers;
-    /** @var integer 0x0088 totalScore INT */
-    public $totalScore;
+    /** @var int PLTBATTLEPROGRESSSTATELENGTH INT */
+	public const PLTBATTLEPROGRESSSTATELENGTH = 140;
+    /** @var int 0x0000 MissionsFlown INT */
+	public int $MissionsFlown;
+    /** @var int 0x0004 CombatMissionID INT */
+	public int $CombatMissionID;
+    /** @var int 0x0008 totalMissionCount INT */
+	public int $totalMissionCount;
+    /** @var array<int> 0x000C Outcome INT */
+	public array $Outcome;
+    /** @var array<int> 0x0034 BattleListIndex INT */
+	public array $BattleListIndex;
+    /** @var array<int> 0x005C CombatMissionListIndex INT */
+	public array $CombatMissionListIndex;
+    /** @var int 0x0084 NumPlayers INT */
+	public int $NumPlayers;
+    /** @var int 0x0088 totalScore INT */
+	public int $totalScore;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -41,7 +42,7 @@ abstract class PLTBattleProgressStateBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -78,7 +79,7 @@ abstract class PLTBattleProgressStateBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "MissionsFlown" => $this->MissionsFlown,
@@ -92,7 +93,7 @@ abstract class PLTBattleProgressStateBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -125,7 +126,7 @@ abstract class PLTBattleProgressStateBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTBATTLEPROGRESSSTATELENGTH;
     }

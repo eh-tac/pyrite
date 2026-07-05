@@ -6,72 +6,73 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XWA\Constants;
 use Pyrite\XWA\GlobalCargo;
 use Pyrite\XWA\GlobalUnit;
 use Pyrite\XWA\Region;
 
-abstract class FileHeaderBase extends PyriteBase implements Byteable
+abstract class FileHeaderBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  FILEHEADERLENGTH INT */
-    public const FILEHEADERLENGTH = 9200;
-    /** @var integer 0x0000 PlatformID SHORT */
-    public $PlatformID; //(0x20)
-    /** @var integer 0x0002 NumFGs SHORT */
-    public $NumFGs;
-    /** @var integer 0x0004 NumMessages SHORT */
-    public $NumMessages;
-    /** @var integer 0x0006 TimeLimitMin BYTE */
-    public $TimeLimitMin;
-    /** @var integer 0x0007 TimeLimitSec BYTE */
-    public $TimeLimitSec;
-    /** @var integer 0x0008 WinType BYTE */
-    public $WinType; //(was Unknown1, default 1)
-    /** @var integer 0x0009 Backdrop BYTE */
-    public $Backdrop;
-    /** @var integer 0x000A Rescue BYTE */
-    public $Rescue;
-    /** @var integer 0x000B AllWayShown BYTE */
-    public $AllWayShown; //(was Unknown2, probably editor only)
-    /** @var integer[] 0x000C Vars BYTE */
-    public $Vars;
-    /** @var string[] 0x0014 IffNames STR */
-    public $IffNames;
-    /** @var Region[] 0x0064 Regions Region */
-    public $Regions;
-    /** @var GlobalCargo[] 0x0274 GlobalCargo GlobalCargo */
-    public $GlobalCargo;
-    /** @var GlobalUnit[] 0x0B34 GlobalGroups GlobalUnit */
-    public $GlobalGroups;
-    /** @var GlobalUnit[] 0x1614 GlobalUnits GlobalUnit */
-    public $GlobalUnits;
-    /** @var integer 0x23AC Hangar BYTE */
-    public $Hangar;
-    /** @var boolean 0x23AD GoalsUnimportant BOOL */
-    public $GoalsUnimportant;
-    /** @var integer 0x23AE TimeLimitMinutes BYTE */
-    public $TimeLimitMinutes;
-    /** @var boolean 0x23AF EndMissionWhenComplete BOOL */
-    public $EndMissionWhenComplete;
-    /** @var integer 0x23B0 BriefingOfficer BYTE */
-    public $BriefingOfficer;
-    /** @var integer 0x23B1 BriefingLogo BYTE */
-    public $BriefingLogo; //(also known as CommandOfficer)
-    /** @var integer 0x23B2 BriefingOfficerEntryLine BYTE */
-    public $BriefingOfficerEntryLine;
-    /** @var integer 0x23B3 SecondaryVersion BYTE */
-    public $SecondaryVersion; //(0x62 'b', was Unknown3, might be editor only)
-    /** @var integer 0x23B4 WinOfficer BYTE */
-    public $WinOfficer; //(was Unknown4)
-    /** @var integer 0x23B5 FailOfficer BYTE */
-    public $FailOfficer; //(was Unknown5)
+    /** @var int FILEHEADERLENGTH INT */
+	public const FILEHEADERLENGTH = 9200;
+    /** @var int 0x0000 PlatformID SHORT */
+	public int $PlatformID; // (0x20)
+    /** @var int 0x0002 NumFGs SHORT */
+	public int $NumFGs;
+    /** @var int 0x0004 NumMessages SHORT */
+	public int $NumMessages;
+    /** @var int 0x0006 TimeLimitMin BYTE */
+	public int $TimeLimitMin;
+    /** @var int 0x0007 TimeLimitSec BYTE */
+	public int $TimeLimitSec;
+    /** @var int 0x0008 WinType BYTE */
+	public int $WinType; // (was Unknown1, default 1)
+    /** @var int 0x0009 Backdrop BYTE */
+	public int $Backdrop;
+    /** @var int 0x000A Rescue BYTE */
+	public int $Rescue;
+    /** @var int 0x000B AllWayShown BYTE */
+	public int $AllWayShown; // (was Unknown2, probably editor only)
+    /** @var array<int> 0x000C Vars BYTE */
+	public array $Vars;
+    /** @var array<string> 0x0014 IffNames STR */
+	public array $IffNames;
+    /** @var array<Region> 0x0064 Regions Region */
+	public array $Regions;
+    /** @var array<GlobalCargo> 0x0274 GlobalCargo GlobalCargo */
+	public array $GlobalCargo;
+    /** @var array<GlobalUnit> 0x0B34 GlobalGroups GlobalUnit */
+	public array $GlobalGroups;
+    /** @var array<GlobalUnit> 0x1614 GlobalUnits GlobalUnit */
+	public array $GlobalUnits;
+    /** @var int 0x23AC Hangar BYTE */
+	public int $Hangar;
+    /** @var bool 0x23AD GoalsUnimportant BOOL */
+	public bool $GoalsUnimportant;
+    /** @var int 0x23AE TimeLimitMinutes BYTE */
+	public int $TimeLimitMinutes;
+    /** @var bool 0x23AF EndMissionWhenComplete BOOL */
+	public bool $EndMissionWhenComplete;
+    /** @var int 0x23B0 BriefingOfficer BYTE */
+	public int $BriefingOfficer;
+    /** @var int 0x23B1 BriefingLogo BYTE */
+	public int $BriefingLogo; // (also known as CommandOfficer)
+    /** @var int 0x23B2 BriefingOfficerEntryLine BYTE */
+	public int $BriefingOfficerEntryLine;
+    /** @var int 0x23B3 SecondaryVersion BYTE */
+	public int $SecondaryVersion; // (0x62 'b', was Unknown3, might be editor only)
+    /** @var int 0x23B4 WinOfficer BYTE */
+	public int $WinOfficer; // (was Unknown4)
+    /** @var int 0x23B5 FailOfficer BYTE */
+	public int $FailOfficer; // (was Unknown5)
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -79,7 +80,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -151,7 +152,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "PlatformID" => $this->PlatformID,
@@ -182,7 +183,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -246,32 +247,32 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getHangarLabel() 
+    public function getHangarLabel(): string 
     {
         return isset($this->Hangar) && isset(Constants::$HANGAR[$this->Hangar]) ? Constants::$HANGAR[$this->Hangar] : "Unknown";
     }
 
-    public function getBriefingOfficerLabel() 
+    public function getBriefingOfficerLabel(): string 
     {
         return isset($this->BriefingOfficer) && isset(Constants::$BRIEFINGOFFICER[$this->BriefingOfficer]) ? Constants::$BRIEFINGOFFICER[$this->BriefingOfficer] : "Unknown";
     }
 
-    public function getBriefingLogoLabel() 
+    public function getBriefingLogoLabel(): string 
     {
         return isset($this->BriefingLogo) && isset(Constants::$BRIEFINGLOGO[$this->BriefingLogo]) ? Constants::$BRIEFINGLOGO[$this->BriefingLogo] : "Unknown";
     }
 
-    public function getWinOfficerLabel() 
+    public function getWinOfficerLabel(): string 
     {
         return isset($this->WinOfficer) && isset(Constants::$BRIEFINGOFFICER[$this->WinOfficer]) ? Constants::$BRIEFINGOFFICER[$this->WinOfficer] : "Unknown";
     }
 
-    public function getFailOfficerLabel() 
+    public function getFailOfficerLabel(): string 
     {
         return isset($this->FailOfficer) && isset(Constants::$BRIEFINGOFFICER[$this->FailOfficer]) ? Constants::$BRIEFINGOFFICER[$this->FailOfficer] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::FILEHEADERLENGTH;
     }

@@ -6,35 +6,36 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\TIE\Event;
 use Pyrite\TIE\TIEString;
 use Pyrite\TIE\Tag;
 
-abstract class BriefingBase extends PyriteBase implements Byteable
+abstract class BriefingBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  BriefingLength INT */
-    public $BriefingLength;
-    /** @var integer 0x000 RunningTime SHORT */
-    public $RunningTime;
-    /** @var integer 0x002 Unknown SHORT */
-    public $Unknown;
-    /** @var integer 0x004 StartLength SHORT */
-    public $StartLength;
-    /** @var integer 0x006 EventsLength INT */
-    public $EventsLength; //Number of shorts used for events.
-    /** @var Event[] 0x00A Events Event */
-    public $Events; //Set to 0 and impossible to generate in the same way, needs custom implementation
-    /** @var Tag[] 0x32A Tags Tag */
-    public $Tags;
-    /** @var TIEString[] PV Strings TIEString */
-    public $Strings;
+    /** @var int BriefingLength INT */
+	public int $BriefingLength;
+    /** @var int 0x000 RunningTime SHORT */
+	public int $RunningTime;
+    /** @var int 0x002 Unknown SHORT */
+	public int $Unknown;
+    /** @var int 0x004 StartLength SHORT */
+	public int $StartLength;
+    /** @var int 0x006 EventsLength INT */
+	public int $EventsLength; // Number of shorts used for events.
+    /** @var array<Event> 0x00A Events Event */
+	public array $Events; // Set to 0 and impossible to generate in the same way, needs custom implementation
+    /** @var array<Tag> 0x32A Tags Tag */
+	public array $Tags;
+    /** @var array<TIEString> PV Strings TIEString */
+	public array $Strings;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -42,7 +43,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -53,6 +54,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $this->EventsLength = $this->getInt($hex, 0x006);
         $this->Events = [];
         $offset = 0x00A;
+		// @phpstan-ignore smaller.alwaysFalse
         for ($i = 0; $i < 0; $i++) {
             $t = (new Event(substr($hex, $offset), $this->TIE))->loadHex();
             $this->Events[] = $t;
@@ -78,7 +80,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "RunningTime" => $this->RunningTime,
@@ -91,7 +93,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -101,6 +103,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         $hex = $this->writeShort($this->StartLength, $hex, 0x004);
         $hex = $this->writeInt($this->EventsLength, $hex, 0x006);
         $offset = 0x00A;
+		// @phpstan-ignore smaller.alwaysFalse
         for ($i = 0; $i < 0; $i++) {
             $t = $this->Events[$i];
             $hex = $this->writeObject($t, $hex, $offset);
@@ -123,7 +126,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return $this->BriefingLength;
     }

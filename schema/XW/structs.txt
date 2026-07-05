@@ -129,7 +129,7 @@ struct Briefing (size 0)
   PV MissionHeader MissionHeader
   PV BYTE<90>[BriefingHeader-IconCount] IconExtraData
   PV Tag Tags
-  PV String Strings
+  PV XWString Strings
 }
 
 struct BriefingHeader (size 0x6)
@@ -194,9 +194,9 @@ struct Tag (size 0)
 	0x2	CHAR[Length]
 }
 
-struct String (size 0)
+struct XWString (size 0)
 {
 	0x0	SHORT	Length
-	0x2	CHAR[Length] String
+	0x2	CHAR[Length] Content
 	PV BYTE[Length] Highlight
 }

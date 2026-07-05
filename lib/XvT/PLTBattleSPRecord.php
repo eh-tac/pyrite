@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XvT;
-    
+
 class PLTBattleSPRecord extends Base\PLTBattleSPRecordBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new PLTBattleSPRecord($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): PLTBattleSPRecord
+  {
+    return (new PLTBattleSPRecord($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

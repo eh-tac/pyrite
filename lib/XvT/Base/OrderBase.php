@@ -6,59 +6,60 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\Constants;
 
-abstract class OrderBase extends PyriteBase implements Byteable
+abstract class OrderBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  ORDERLENGTH INT */
-    public const ORDERLENGTH = 82;
-    /** @var integer 0x00 Order BYTE */
-    public $Order;
-    /** @var integer 0x01 Throttle BYTE */
-    public $Throttle;
-    /** @var integer 0x02 Variable1 BYTE */
-    public $Variable1;
-    /** @var integer 0x03 Variable2 BYTE */
-    public $Variable2;
-    /** @var integer 0x04 Unknown6 BYTE */
-    public $Unknown6;
-    /** @var integer 0x05 Unknown7 BYTE */
-    public $Unknown7;
-    /** @var integer 0x06 Target3Type BYTE */
-    public $Target3Type;
-    /** @var integer 0x07 Target4Type BYTE */
-    public $Target4Type;
-    /** @var integer 0x08 Target3 BYTE */
-    public $Target3;
-    /** @var integer 0x09 Target4 BYTE */
-    public $Target4;
-    /** @var boolean 0x0A Target3OrTarget4 BOOL */
-    public $Target3OrTarget4;
-    /** @var integer 0x0B Unknown8 BYTE */
-    public $Unknown8;
-    /** @var integer 0x0C Target1Type BYTE */
-    public $Target1Type;
-    /** @var integer 0x0D Target1 BYTE */
-    public $Target1;
-    /** @var integer 0x0E Target2Type BYTE */
-    public $Target2Type;
-    /** @var integer 0x0F Target2 BYTE */
-    public $Target2;
-    /** @var boolean 0x10 Target1OrTarget2 BOOL */
-    public $Target1OrTarget2;
-    /** @var integer 0x11 Unknown9 BYTE */
-    public $Unknown9;
-    /** @var integer 0x12 Speed BYTE */
-    public $Speed;
+    /** @var int ORDERLENGTH INT */
+	public const ORDERLENGTH = 82;
+    /** @var int 0x00 Order BYTE */
+	public int $Order;
+    /** @var int 0x01 Throttle BYTE */
+	public int $Throttle;
+    /** @var int 0x02 Variable1 BYTE */
+	public int $Variable1;
+    /** @var int 0x03 Variable2 BYTE */
+	public int $Variable2;
+    /** @var int 0x04 Unknown6 BYTE */
+	public int $Unknown6;
+    /** @var int 0x05 Unknown7 BYTE */
+	public int $Unknown7;
+    /** @var int 0x06 Target3Type BYTE */
+	public int $Target3Type;
+    /** @var int 0x07 Target4Type BYTE */
+	public int $Target4Type;
+    /** @var int 0x08 Target3 BYTE */
+	public int $Target3;
+    /** @var int 0x09 Target4 BYTE */
+	public int $Target4;
+    /** @var bool 0x0A Target3OrTarget4 BOOL */
+	public bool $Target3OrTarget4;
+    /** @var int 0x0B Unknown8 BYTE */
+	public int $Unknown8;
+    /** @var int 0x0C Target1Type BYTE */
+	public int $Target1Type;
+    /** @var int 0x0D Target1 BYTE */
+	public int $Target1;
+    /** @var int 0x0E Target2Type BYTE */
+	public int $Target2Type;
+    /** @var int 0x0F Target2 BYTE */
+	public int $Target2;
+    /** @var bool 0x10 Target1OrTarget2 BOOL */
+	public bool $Target1OrTarget2;
+    /** @var int 0x11 Unknown9 BYTE */
+	public int $Unknown9;
+    /** @var int 0x12 Speed BYTE */
+	public int $Speed;
     /** @var string 0x13 Designation STR */
-    public $Designation;
+	public string $Designation;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -66,7 +67,7 @@ abstract class OrderBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -97,7 +98,7 @@ abstract class OrderBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Order" => $this->getOrderLabel(),
@@ -123,7 +124,7 @@ abstract class OrderBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -152,32 +153,32 @@ abstract class OrderBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getOrderLabel() 
+    public function getOrderLabel(): string 
     {
         return isset($this->Order) && isset(Constants::$ORDER[$this->Order]) ? Constants::$ORDER[$this->Order] : "Unknown";
     }
 
-    public function getTarget3TypeLabel() 
+    public function getTarget3TypeLabel(): string 
     {
         return isset($this->Target3Type) && isset(Constants::$VARIABLETYPE[$this->Target3Type]) ? Constants::$VARIABLETYPE[$this->Target3Type] : "Unknown";
     }
 
-    public function getTarget4TypeLabel() 
+    public function getTarget4TypeLabel(): string 
     {
         return isset($this->Target4Type) && isset(Constants::$VARIABLETYPE[$this->Target4Type]) ? Constants::$VARIABLETYPE[$this->Target4Type] : "Unknown";
     }
 
-    public function getTarget1TypeLabel() 
+    public function getTarget1TypeLabel(): string 
     {
         return isset($this->Target1Type) && isset(Constants::$VARIABLETYPE[$this->Target1Type]) ? Constants::$VARIABLETYPE[$this->Target1Type] : "Unknown";
     }
 
-    public function getTarget2TypeLabel() 
+    public function getTarget2TypeLabel(): string 
     {
         return isset($this->Target2Type) && isset(Constants::$VARIABLETYPE[$this->Target2Type]) ? Constants::$VARIABLETYPE[$this->Target2Type] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::ORDERLENGTH;
     }

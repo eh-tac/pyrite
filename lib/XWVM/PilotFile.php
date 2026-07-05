@@ -26,17 +26,17 @@ class PilotFile
         $this->loadXml($xml);
     }
 
-    public static function load(string $filename): self
+    public static function load(string $filename): PilotFile
     {
         return new self((string) file_get_contents($filename));
     }
 
-    public static function fromXml(string $xml): self
+    public static function fromXml(string $xml): PilotFile
     {
         return new self($xml);
     }
 
-    public static function fromHex($hex, $tie = null): self
+    public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): PilotFile
     {
         return self::fromXml($hex);
     }

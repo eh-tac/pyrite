@@ -6,32 +6,33 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class GlobalCargoBase extends PyriteBase implements Byteable
+abstract class GlobalCargoBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  GLOBALCARGOLENGTH INT */
-    public const GLOBALCARGOLENGTH = 140;
+    /** @var int GLOBALCARGOLENGTH INT */
+	public const GLOBALCARGOLENGTH = 140;
     /** @var string 0x00 Cargo STR */
-    public $Cargo;
-    /** @var integer 0x40 ID INT */
-    public $ID;
-    /** @var integer 0x44 Count INT */
-    public $Count; //(was Unknown1)
-    /** @var integer 0x48 Type BYTE */
-    public $Type; //(was Unknown2) {solid, liquid, gas}
-    /** @var integer 0x49 Volume BYTE */
-    public $Volume; //(was Unknown3)
-    /** @var integer 0x4A Value BYTE */
-    public $Value; //(was Unknown4)
-    /** @var integer 0x4B Volatility BYTE */
-    public $Volatility; //(was Unknown5) {low, med, high, kaboom!}
+	public string $Cargo;
+    /** @var int 0x40 ID INT */
+	public int $ID;
+    /** @var int 0x44 Count INT */
+	public int $Count; // (was Unknown1)
+    /** @var int 0x48 Type BYTE */
+	public int $Type; // (was Unknown2) {solid, liquid, gas}
+    /** @var int 0x49 Volume BYTE */
+	public int $Volume; // (was Unknown3)
+    /** @var int 0x4A Value BYTE */
+	public int $Value; // (was Unknown4)
+    /** @var int 0x4B Volatility BYTE */
+	public int $Volatility; // (was Unknown5) {low, med, high, kaboom!}
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -39,7 +40,7 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -57,7 +58,7 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Cargo" => $this->Cargo,
@@ -70,7 +71,7 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -87,7 +88,7 @@ abstract class GlobalCargoBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::GLOBALCARGOLENGTH;
     }

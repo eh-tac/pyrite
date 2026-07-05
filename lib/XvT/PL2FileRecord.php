@@ -101,8 +101,8 @@ class PL2FileRecord extends Base\PL2FileRecordBase implements IPilotFileBSF
     return $this->totalKillCount->exercise;
   }
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): PL2FileRecord
   {
-    return (new PL2FileRecord($hex, $tie))->loadHex();
+    return (new PL2FileRecord($hex, $TIE))->loadHex();
   }
 }

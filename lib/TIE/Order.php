@@ -1,9 +1,18 @@
 <?php
+
 namespace Pyrite\TIE;
 
 class Order extends Base\OrderBase
 {
-    public $diffLimit = true;
+    public Mission $mission;
+
+    public function __construct(string $hex = null, ?\Pyrite\PyriteModel $TIE = null)
+    {
+        parent::__construct($hex, $TIE);
+        if ($TIE instanceof Mission) {
+            $this->mission = $TIE;
+        }
+    }
 
     public function __toString()
     {
@@ -43,8 +52,7 @@ class Order extends Base\OrderBase
             case 0:
                 return '';
             case 1:
-                $fg = $this->TIE->FlightGroups[$var];
-                $fg->TIE = $this->TIE;
+                $fg = $this->mission->FlightGroups[$var];
                 return (string) $fg;
             case 2:
                 return Constants::$CRAFTTYPE[$var];
@@ -53,13 +61,13 @@ class Order extends Base\OrderBase
             case 4:
                 return Constants::$OBJECTCATEGORY[$var];
             case 5:
-                return $this->TIE->lookupIFF($var);
+                return $this->mission->lookupIFF($var);
             case 6:
                 return Constants::$ORDER[$var];
             case 7:
                 return Constants::$CRAFTWHEN[$var];
             case 8:
-                return $this->TIE->lookupGlobalGroup($var);
+                return $this->mission->lookupGlobalGroup($var);
             case 9:
                 return Constants::$MISC[$var];
             case 10:

@@ -6,40 +6,41 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class IconBase extends PyriteBase implements Byteable
+abstract class IconBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  ICONLENGTH INT */
-    public const ICONLENGTH = 64;
-    /** @var integer 0x000 CraftType SHORT */
-    public $CraftType;
-    /** @var integer 0x002 IFF SHORT */
-    public $IFF;
-    /** @var integer 0x004 NumberOfCraft SHORT */
-    public $NumberOfCraft;
-    /** @var integer 0x006 NumberOfWaves SHORT */
-    public $NumberOfWaves;
+    /** @var int ICONLENGTH INT */
+	public const ICONLENGTH = 64;
+    /** @var int 0x000 CraftType SHORT */
+	public int $CraftType;
+    /** @var int 0x002 IFF SHORT */
+	public int $IFF;
+    /** @var int 0x004 NumberOfCraft SHORT */
+	public int $NumberOfCraft;
+    /** @var int 0x006 NumberOfWaves SHORT */
+	public int $NumberOfWaves;
     /** @var string 0x008 Name CHAR */
-    public $Name;
+	public string $Name;
     /** @var string 0x018 Cargo CHAR */
-    public $Cargo;
+	public string $Cargo;
     /** @var string 0x028 SpecialCargo CHAR */
-    public $SpecialCargo;
-    /** @var integer 0x038 SpecialCargoCraft SHORT */
-    public $SpecialCargoCraft;
-    /** @var integer 0x03A Yaw SHORT */
-    public $Yaw;
-    /** @var integer 0x03C Pitch SHORT */
-    public $Pitch;
-    /** @var integer 0x03E Roll SHORT */
-    public $Roll;
+	public string $SpecialCargo;
+    /** @var int 0x038 SpecialCargoCraft SHORT */
+	public int $SpecialCargoCraft;
+    /** @var int 0x03A Yaw SHORT */
+	public int $Yaw;
+    /** @var int 0x03C Pitch SHORT */
+	public int $Pitch;
+    /** @var int 0x03E Roll SHORT */
+	public int $Roll;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -47,7 +48,7 @@ abstract class IconBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -69,7 +70,7 @@ abstract class IconBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "CraftType" => $this->CraftType,
@@ -86,7 +87,7 @@ abstract class IconBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -107,7 +108,7 @@ abstract class IconBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::ICONLENGTH;
     }

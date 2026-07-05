@@ -12,4 +12,4 @@ export { ViewportSetting } from './viewport-setting';
 export { Page } from './page';
 export { MissionHeader } from './mission-header';
 export { Tag } from './tag';
-export { String } from './string';
+export { XWString } from './xw-string';

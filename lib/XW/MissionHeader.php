@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XW;
-    
+
 class MissionHeader extends Base\MissionHeaderBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new MissionHeader($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): MissionHeader
+  {
+    return (new MissionHeader($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

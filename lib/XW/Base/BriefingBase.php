@@ -6,48 +6,49 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XW\BriefingHeader;
 use Pyrite\XW\Coordinate;
 use Pyrite\XW\Icon;
 use Pyrite\XW\MissionHeader;
 use Pyrite\XW\Page;
-use Pyrite\XW\String;
 use Pyrite\XW\Tag;
 use Pyrite\XW\ViewportSetting;
+use Pyrite\XW\XWString;
 
-abstract class BriefingBase extends PyriteBase implements Byteable
+abstract class BriefingBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  BriefingLength INT */
-    public $BriefingLength;
+    /** @var int BriefingLength INT */
+	public int $BriefingLength;
     /** @var BriefingHeader 0x00 BriefingHeader BriefingHeader */
-    public $BriefingHeader;
-    /** @var Coordinate[] 0x6 CoordinateSet Coordinate */
-    public $CoordinateSet;
-    /** @var Icon[] PV IconSet Icon */
-    public $IconSet;
-    /** @var integer PV WindowSettingsCount SHORT */
-    public $WindowSettingsCount;
-    /** @var ViewportSetting[] PV Viewports ViewportSetting */
-    public $Viewports;
-    /** @var integer PV PageCount SHORT */
-    public $PageCount;
-    /** @var Page[] PV Pages Page */
-    public $Pages;
+	public BriefingHeader $BriefingHeader;
+    /** @var array<Coordinate> 0x6 CoordinateSet Coordinate */
+	public array $CoordinateSet;
+    /** @var array<Icon> PV IconSet Icon */
+	public array $IconSet;
+    /** @var int PV WindowSettingsCount SHORT */
+	public int $WindowSettingsCount;
+    /** @var array<ViewportSetting> PV Viewports ViewportSetting */
+	public array $Viewports;
+    /** @var int PV PageCount SHORT */
+	public int $PageCount;
+    /** @var array<Page> PV Pages Page */
+	public array $Pages;
     /** @var MissionHeader PV MissionHeader MissionHeader */
-    public $MissionHeader;
-    /** @var integer[] PV IconExtraData BYTE */
-    public $IconExtraData;
+	public MissionHeader $MissionHeader;
+    /** @var array<int> PV IconExtraData BYTE */
+	public array $IconExtraData;
     /** @var Tag PV Tags Tag */
-    public $Tags;
-    /** @var String PV Strings String */
-    public $Strings;
+	public Tag $Tags;
+    /** @var XWString PV Strings XWString */
+	public XWString $Strings;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -55,7 +56,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -101,7 +102,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         }
         $this->Tags = (new Tag(substr($hex, $offset), $this->TIE))->loadHex();
         $offset += $this->Tags->getLength();
-        $this->Strings = (new String(substr($hex, $offset), $this->TIE))->loadHex();
+        $this->Strings = (new XWString(substr($hex, $offset), $this->TIE))->loadHex();
         $offset += $this->Strings->getLength();
         $this->BriefingLength = $offset;
 
@@ -109,7 +110,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "BriefingHeader" => $this->BriefingHeader,
@@ -126,7 +127,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -172,7 +173,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
     }
     
     protected abstract function CoordinateCount();
-    public function getLength()
+    public function getLength(): int
     {
         return $this->BriefingLength;
     }

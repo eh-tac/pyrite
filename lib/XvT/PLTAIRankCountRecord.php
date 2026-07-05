@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XvT;
-    
+
 class PLTAIRankCountRecord extends Base\PLTAIRankCountRecordBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new PLTAIRankCountRecord($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): PLTAIRankCountRecord
+  {
+    return (new PLTAIRankCountRecord($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

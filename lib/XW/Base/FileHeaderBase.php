@@ -6,35 +6,36 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XW\Constants;
 
-abstract class FileHeaderBase extends PyriteBase implements Byteable
+abstract class FileHeaderBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  FILEHEADERLENGTH INT */
-    public const FILEHEADERLENGTH = 206;
-    /** @var integer 0x00 Version SHORT */
-    public $Version;
-    /** @var integer 0x02 TimeLimit SHORT */
-    public $TimeLimit; //in minutes
-    /** @var integer 0x04 EndEvent SHORT */
-    public $EndEvent;
-    /** @var integer 0x06 Reserved SHORT */
-    public const Reserved = 0;
-    /** @var integer 0x08 MissionLocation SHORT */
-    public $MissionLocation;
-    /** @var string[] 0x0A CompletionMessage STR */
-    public $CompletionMessage;
-    /** @var integer 0xCA NumFGs SHORT */
-    public $NumFGs;
-    /** @var integer 0xCC NumObj SHORT */
-    public $NumObj;
+    /** @var int FILEHEADERLENGTH INT */
+	public const FILEHEADERLENGTH = 206;
+    /** @var int 0x00 Version SHORT */
+	public int $Version;
+    /** @var int 0x02 TimeLimit SHORT */
+	public int $TimeLimit; // in minutes
+    /** @var int 0x04 EndEvent SHORT */
+	public int $EndEvent;
+    /** @var int 0x06 Reserved SHORT */
+	public const Reserved = 0;
+    /** @var int 0x08 MissionLocation SHORT */
+	public int $MissionLocation;
+    /** @var array<string> 0x0A CompletionMessage STR */
+	public array $CompletionMessage;
+    /** @var int 0xCA NumFGs SHORT */
+	public int $NumFGs;
+    /** @var int 0xCC NumObj SHORT */
+	public int $NumObj;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -42,7 +43,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -67,7 +68,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Version" => $this->Version,
@@ -80,7 +81,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -102,17 +103,17 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getEndEventLabel() 
+    public function getEndEventLabel(): string 
     {
         return isset($this->EndEvent) && isset(Constants::$ENDEVENT[$this->EndEvent]) ? Constants::$ENDEVENT[$this->EndEvent] : "Unknown";
     }
 
-    public function getMissionLocationLabel() 
+    public function getMissionLocationLabel(): string 
     {
         return isset($this->MissionLocation) && isset(Constants::$MISSIONLOCATION[$this->MissionLocation]) ? Constants::$MISSIONLOCATION[$this->MissionLocation] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::FILEHEADERLENGTH;
     }

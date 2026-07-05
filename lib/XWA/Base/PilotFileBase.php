@@ -6,65 +6,66 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XWA\MissionData;
 
-abstract class PilotFileBase extends PyriteBase implements Byteable
+abstract class PilotFileBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PILOTFILELENGTH INT */
-    public const PILOTFILELENGTH = 152076;
+    /** @var int PILOTFILELENGTH INT */
+	public const PILOTFILELENGTH = 152076;
     /** @var string 0x00 Name CHAR */
-    public $Name;
-    /** @var integer 0x0E TotalScore INT */
-    public $TotalScore;
+	public string $Name;
+    /** @var int 0x0E TotalScore INT */
+	public int $TotalScore;
     /** @var string 0x4A MPName CHAR */
-    public $MPName;
+	public string $MPName;
     /** @var string 0x6A MPGameName CHAR */
-    public $MPGameName;
-    /** @var integer 0x9A ToNextRanking INT */
-    public $ToNextRanking;
-    /** @var integer 0x9E TourOfDutyScore INT */
-    public $TourOfDutyScore;
-    /** @var integer 0xA2 AzzameenScore INT */
-    public $AzzameenScore;
-    /** @var integer 0xA6 SimulatorScore INT */
-    public $SimulatorScore;
-    /** @var integer[] 0xD2 TourOfDutyKills INT */
-    public $TourOfDutyKills;
-    /** @var integer[] 0x8CE AzzameenKills INT */
-    public $AzzameenKills;
-    /** @var integer[] 0x10d2 SimulatorKills INT */
-    public $SimulatorKills;
-    /** @var integer[] 0x18d2 TourOfDutyPartials INT */
-    public $TourOfDutyPartials;
-    /** @var integer[] 0x20ce AzzameenPartials INT */
-    public $AzzameenPartials;
-    /** @var integer[] 0x28d2 SimulatorPartials INT */
-    public $SimulatorPartials;
-    /** @var integer 0x4d36 LasersHit INT */
-    public $LasersHit;
-    /** @var integer 0x4d42 LasersFired INT */
-    public $LasersFired;
-    /** @var integer 0x4d4e WarheadsHit INT */
-    public $WarheadsHit;
-    /** @var integer 0x4d5a WarheadsFired INT */
-    public $WarheadsFired;
-    /** @var integer 0x4d66 CraftLosses INT */
-    public $CraftLosses;
-    /** @var MissionData[] 0xACFA MissionData MissionData */
-    public $MissionData;
-    /** @var integer 0x10EA2 CurrentRank INT */
-    public $CurrentRank;
-    /** @var integer 0x10EA6 CurrentMedal INT */
-    public $CurrentMedal;
-    /** @var integer 0x1144E BonusTen INT */
-    public $BonusTen;
+	public string $MPGameName;
+    /** @var int 0x9A ToNextRanking INT */
+	public int $ToNextRanking;
+    /** @var int 0x9E TourOfDutyScore INT */
+	public int $TourOfDutyScore;
+    /** @var int 0xA2 AzzameenScore INT */
+	public int $AzzameenScore;
+    /** @var int 0xA6 SimulatorScore INT */
+	public int $SimulatorScore;
+    /** @var array<int> 0xD2 TourOfDutyKills INT */
+	public array $TourOfDutyKills;
+    /** @var array<int> 0x8CE AzzameenKills INT */
+	public array $AzzameenKills;
+    /** @var array<int> 0x10d2 SimulatorKills INT */
+	public array $SimulatorKills;
+    /** @var array<int> 0x18d2 TourOfDutyPartials INT */
+	public array $TourOfDutyPartials;
+    /** @var array<int> 0x20ce AzzameenPartials INT */
+	public array $AzzameenPartials;
+    /** @var array<int> 0x28d2 SimulatorPartials INT */
+	public array $SimulatorPartials;
+    /** @var int 0x4d36 LasersHit INT */
+	public int $LasersHit;
+    /** @var int 0x4d42 LasersFired INT */
+	public int $LasersFired;
+    /** @var int 0x4d4e WarheadsHit INT */
+	public int $WarheadsHit;
+    /** @var int 0x4d5a WarheadsFired INT */
+	public int $WarheadsFired;
+    /** @var int 0x4d66 CraftLosses INT */
+	public int $CraftLosses;
+    /** @var array<MissionData> 0xACFA MissionData MissionData */
+	public array $MissionData;
+    /** @var int 0x10EA2 CurrentRank INT */
+	public int $CurrentRank;
+    /** @var int 0x10EA6 CurrentMedal INT */
+	public int $CurrentMedal;
+    /** @var int 0x1144E BonusTen INT */
+	public int $BonusTen;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -72,7 +73,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -148,7 +149,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Name" => $this->Name,
@@ -177,7 +178,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -245,7 +246,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PILOTFILELENGTH;
     }

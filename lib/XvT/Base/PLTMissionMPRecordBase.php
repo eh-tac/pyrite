@@ -6,42 +6,43 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTMissionMPRecordBase extends PyriteBase implements Byteable
+abstract class PLTMissionMPRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTMISSIONMPRECORDLENGTH INT */
-    public const PLTMISSIONMPRECORDLENGTH = 48;
-    /** @var integer 0x0000 unknown0x0 INT */
-    public $unknown0x0;
-    /** @var integer 0x0004 totalCountFlown INT */
-    public $totalCountFlown;
-    /** @var integer 0x0008 totalCountFinishedFirst INT */
-    public $totalCountFinishedFirst;
-    /** @var integer 0x000C totalCountFinishedSecond INT */
-    public $totalCountFinishedSecond;
-    /** @var integer 0x0010 totalCountFinishedThird INT */
-    public $totalCountFinishedThird;
-    /** @var integer 0x0014 totalCountVictory INT */
-    public $totalCountVictory;
-    /** @var integer 0x0018 totalCountFailure INT */
-    public $totalCountFailure;
-    /** @var integer 0x001C bestScore INT */
-    public $bestScore;
-    /** @var integer 0x0020 bestTimeAsSeconds INT */
-    public $bestTimeAsSeconds;
-    /** @var integer 0x0024 bestFinishPlace INT */
-    public $bestFinishPlace;
-    /** @var integer 0x0028 bestEvaluationBadge INT */
-    public $bestEvaluationBadge;
-    /** @var integer 0x002C bestWinningMargin INT */
-    public $bestWinningMargin;
+    /** @var int PLTMISSIONMPRECORDLENGTH INT */
+	public const PLTMISSIONMPRECORDLENGTH = 48;
+    /** @var int 0x0000 unknown0x0 INT */
+	public int $unknown0x0;
+    /** @var int 0x0004 totalCountFlown INT */
+	public int $totalCountFlown;
+    /** @var int 0x0008 totalCountFinishedFirst INT */
+	public int $totalCountFinishedFirst;
+    /** @var int 0x000C totalCountFinishedSecond INT */
+	public int $totalCountFinishedSecond;
+    /** @var int 0x0010 totalCountFinishedThird INT */
+	public int $totalCountFinishedThird;
+    /** @var int 0x0014 totalCountVictory INT */
+	public int $totalCountVictory;
+    /** @var int 0x0018 totalCountFailure INT */
+	public int $totalCountFailure;
+    /** @var int 0x001C bestScore INT */
+	public int $bestScore;
+    /** @var int 0x0020 bestTimeAsSeconds INT */
+	public int $bestTimeAsSeconds;
+    /** @var int 0x0024 bestFinishPlace INT */
+	public int $bestFinishPlace;
+    /** @var int 0x0028 bestEvaluationBadge INT */
+	public int $bestEvaluationBadge;
+    /** @var int 0x002C bestWinningMargin INT */
+	public int $bestWinningMargin;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -49,7 +50,7 @@ abstract class PLTMissionMPRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -72,7 +73,7 @@ abstract class PLTMissionMPRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "unknown0x0" => $this->unknown0x0,
@@ -90,7 +91,7 @@ abstract class PLTMissionMPRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -112,7 +113,7 @@ abstract class PLTMissionMPRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTMISSIONMPRECORDLENGTH;
     }

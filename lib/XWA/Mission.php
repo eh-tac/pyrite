@@ -5,9 +5,9 @@ namespace Pyrite\XWA;
 class Mission extends Base\MissionBase
 {
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): Mission
   {
-    return (new Mission($hex, $tie))->loadHex();
+    return (new Mission($hex, $TIE))->loadHex();
   }
 
   public function __toString()

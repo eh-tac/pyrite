@@ -5,21 +5,19 @@ namespace Pyrite\XW;
 class PilotFile extends Base\PilotFileBase
 {
 
-    public function beforeConstruct()
-    {
-    }
+    public function beforeConstruct() {}
 
     public function __toString()
     {
         return '';
     }
 
-    public static function fromHex($hex, $tie = null)
+    public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): PilotFile
     {
-        return (new PilotFile($hex, $tie))->loadHex();
+        return (new PilotFile($hex, $TIE))->loadHex();
     }
 
-    public function getCompletedTrainingMissionScores()
+    public function getCompletedTrainingMissionScores(): array
     {
         $scores = array_merge($this->XWingHistoricalScore, $this->YWingHistoricalScore, $this->AWingHistoricalScore);
         $compls = array_merge(
@@ -37,7 +35,7 @@ class PilotFile extends Base\PilotFileBase
         return $missions;
     }
 
-    public function getCompletedTourMissionScores()
+    public function getCompletedTourMissionScores(): array
     {
         $scores = [$this->Tour1Scores, $this->Tour2Scores, $this->Tour3Scores, $this->getTour4Scores(), $this->getTour5Scores()];
 
@@ -50,7 +48,8 @@ class PilotFile extends Base\PilotFileBase
 
     // To get the 20 mission scores from the 24 number array, handle the optional missions
     // Tour 4 has optional missions 6, 8, 12, and 16. For these, only the higher of the two scores is counted.
-    public function getTour4Scores(){
+    public function getTour4Scores(): array
+    {
         $optionalMissions = [6, 8, 12, 16];
         $scores = [];
         $index = 0;
@@ -68,7 +67,8 @@ class PilotFile extends Base\PilotFileBase
     }
 
     // Tour 5 has optional missions 11, 14, 17, and 20. For these, only the higher of the two scores is counted.
-    public function getTour5Scores(){
+    public function getTour5Scores(): array
+    {
         // 11 14 17 20
         $optionalMissions = [11, 14, 17, 20];
         $scores = [];
@@ -88,9 +88,10 @@ class PilotFile extends Base\PilotFileBase
 
     // get the scores for all tour missions in this pilot file.
     // in order to allow processing with offsets, we include each tour but fill in 0s if incomplete
-    public function getAllTourMissionScores(){
+    public function getAllTourMissionScores(): array
+    {
         return array_merge(
-            $this->TourOperationsComplete[0] == 12 ? $this->Tour1Scores : array_fill(0, 12, 0), 
+            $this->TourOperationsComplete[0] == 12 ? $this->Tour1Scores : array_fill(0, 12, 0),
             $this->TourOperationsComplete[1] == 12 ? $this->Tour2Scores : array_fill(0, 12, 0),
             $this->TourOperationsComplete[2] == 14 ? $this->Tour3Scores : array_fill(0, 14, 0),
             $this->TourOperationsComplete[3] == 20 ? $this->getTour4Scores() : array_fill(0, 20, 0),
@@ -102,12 +103,12 @@ class PilotFile extends Base\PilotFileBase
      * get the scores for all completed missions in this pilot file.
      * For BSF processing, we're getting a flat list of all training missions and all tour missions that are marked as completed.
      */
-    public function getCompletedMissionScores($campaignMode = false)
+    public function getCompletedMissionScores($campaignMode = false): array
     {
         if ($campaignMode) {
             return $this->getAllTourMissionScores();
         }
-        
+
         return array_merge(
             $this->getCompletedTrainingMissionScores(),
             $this->getCompletedTourMissionScores()

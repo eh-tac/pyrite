@@ -6,9 +6,9 @@ class GoalFG extends Base\GoalFGBase
 {
   const POINT_MULTIPLIER = 25;
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): GoalFG
   {
-    return (new GoalFG($hex, $tie))->loadHex();
+    return (new GoalFG($hex, $TIE))->loadHex();
   }
 
   public function isActive(): bool

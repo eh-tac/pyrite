@@ -52,8 +52,8 @@ class PLTFileRecord extends Base\PLTFileRecordBase implements IPilotFileBSF
     return $this->totalKillCount->exercise;
   }
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): PLTFileRecord
   {
-    return (new PLTFileRecord($hex, $tie))->loadHex();
+    return (new PLTFileRecord($hex, $TIE))->loadHex();
   }
 }

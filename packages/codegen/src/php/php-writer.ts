@@ -26,7 +26,7 @@ class Constants
     ];
 
     for (const constant of constants) {
-      lines.push(`    public static \$${constant.name.toUpperCase()} = [`);
+      lines.push(`    public static array \$${constant.name.toUpperCase()} = [`);
       for (const [value, label] of constant.values) {
         lines.push(`        ${value} => "${label}",`);
       }
@@ -69,7 +69,7 @@ namespace ${this.namespace}\\${plt}\\Base;
 
 ${this.getBaseClassImports(props)}
 
-abstract class ${baseName} extends PyriteBase implements Byteable
+abstract class ${baseName} extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
@@ -81,7 +81,7 @@ abstract class ${baseName} extends PyriteBase implements Byteable
     ${this.baseHexString(props)}
     ${enums.map((p: PHPPropWriter): string => p.enumLookupFunction).join('\n')}
     ${struct.functionStubs.map((f: string): string => this.abstractFunction(f)).join('\n')}
-    public function getLength()
+    public function getLength(): int
     {
         return ${lengthProp.prop.isStatic ? 'self::' : '$this->'}${lengthProp.prop.name};
     }
@@ -95,15 +95,17 @@ abstract class ${baseName} extends PyriteBase implements Byteable
 
     let content = `<?php
 namespace ${this.namespace}\\${plt};
+
+use Pyrite\\PyriteModel;
     
 class ${struct.name} extends Base\\${baseClass}
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new ${struct.name}($hex, $tie))->loadHex();
+    public static function fromHex(string $hex, ?PyriteModel $TIE = null): ${struct.name} {
+      return (new ${struct.name}($hex, $TIE))->loadHex();
     }
 
-    public function __toString() 
+    public function __toString(): string 
     {
       return '';
     }
@@ -120,9 +122,9 @@ class ${struct.name} extends Base\\${baseClass}
     const props = struct.getProps().map((p) => new PHPPropWriter(p));
 
     return `
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -130,12 +132,12 @@ class ${struct.name} extends Base\\${baseClass}
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
 
-        ${props.map((p: PHPPropWriter) => p.getConstructorInit()).join('\n        ')}
+        ${props.map((p: PHPPropWriter) => p.getLoadHexInitializer()).join('\n        ')}
         ${struct.isVariableLength ? `$this->${lengthProp.prop.name} = $offset;` : ''}
 
         $this->hex = substr($this->hex, 0, $this->getLength());
@@ -144,7 +146,7 @@ class ${struct.name} extends Base\\${baseClass}
   }
 
   protected getBaseClassImports(props: PHPPropWriter[]): string {
-    const imports: string[] = ['Byteable', 'HexDecoder', 'HexEncoder', 'PyriteBase'];
+    const imports: string[] = ['Byteable', 'HexDecoder', 'HexEncoder', 'PyriteBase', 'PyriteModel'];
 
     const usedClassImports = [];
     let useConstants: boolean = false;
@@ -170,7 +172,7 @@ class ${struct.name} extends Base\\${baseClass}
   protected baseJSON(props: PHPPropWriter[]): string {
     const nonStatics = props.filter((p) => !p.prop.isStatic);
     return `
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             ${nonStatics.map((p: PHPPropWriter) => `"${p.prop.name}" => $this->${p.labelExpr}`).join(',\n            ')}
@@ -180,7 +182,7 @@ class ${struct.name} extends Base\\${baseClass}
 
   protected baseHexString(props: PHPPropWriter[]): string {
     return `
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -196,7 +198,7 @@ class ${struct.name} extends Base\\${baseClass}
   }
 
   protected functionStub(name: string): string {
-    return `protected function ${name.replace('()', '')}() 
+    return `protected function ${name.replace('()', '')}(): int 
     {
       return 0;
     }`;

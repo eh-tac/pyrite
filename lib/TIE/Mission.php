@@ -2,18 +2,25 @@
 
 namespace Pyrite\TIE;
 
+use Pyrite\PyriteModel;
+
 class Mission extends Base\MissionBase
 {
     public $valid = false;
 
-    public function __construct($hex)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $this);
+        parent::__construct($hex, $TIE);
         $this->valid = true;
         $this->TIE = $this;
     }
 
-    public function lookupIFF($iff)
+    public function valid(): bool
+    {
+        return true;
+    }
+
+    public function lookupIFF(int $iff): string
     {
         $IFFs = ["Rebel", "Imperial"];
         if (isset($this->TIE)) {
@@ -29,12 +36,12 @@ class Mission extends Base\MissionBase
         return $iffName;
     }
 
-    public function lookupGlobalGroup($gg)
+    public function lookupGlobalGroup(int $gg): string
     {
         return 'TODO ' . $gg;
     }
 
-    public function validate()
+    public function validate(): array
     {
         $errors = [];
         foreach ($this->FlightGroups as $fg) {
@@ -63,20 +70,21 @@ class Mission extends Base\MissionBase
         return $errors;
     }
 
-    public static function validHex($hex)
+    public static function validHex(string $hex): bool
     {
         $plat = substr($hex, 0, 2);
         $p = unpack('sshort', $plat)['short'];
         return $p === FileHeader::PLATFORM_ID;
     }
 
-    public function getPlayerFG()
+    public function getPlayerFG(): ?FlightGroup
     {
         foreach ($this->FlightGroups as $fg) {
             if ($fg->isPlayerCraft()) {
                 return $fg;
             }
         }
+        return null;
     }
 
     public function requiresPatch(): bool
@@ -84,7 +92,7 @@ class Mission extends Base\MissionBase
         return $this->flyRebelFighters() || $this->flyTransports() || $this->usesSlots();
     }
 
-    public function flyRebelFighters()
+    public function flyRebelFighters(): bool
     {
         $rebelFighters = [
             Constants::$CRAFTABBR_XW,
@@ -101,7 +109,7 @@ class Mission extends Base\MissionBase
         return false;
     }
 
-    public function flyTransports()
+    public function flyTransports(): bool
     {
         $transports = [
             Constants::$CRAFTABBR_SHU,

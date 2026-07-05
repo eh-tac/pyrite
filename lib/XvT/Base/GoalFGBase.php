@@ -6,45 +6,46 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\Constants;
 
-abstract class GoalFGBase extends PyriteBase implements Byteable
+abstract class GoalFGBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  GOALFGLENGTH INT */
-    public const GOALFGLENGTH = 78;
-    /** @var integer 0x00 GoalArgument BYTE */
-    public $GoalArgument;
-    /** @var integer 0x01 Condition BYTE */
-    public $Condition;
-    /** @var integer 0x02 Amount BYTE */
-    public $Amount;
-    /** @var integer 0x03 Points SBYTE */
-    public $Points;
-    /** @var boolean 0x04 Enabled BOOL */
-    public $Enabled;
-    /** @var integer 0x05 Team BYTE */
-    public $Team;
-    /** @var boolean 0x06 Unknown10 BOOL */
-    public $Unknown10;
-    /** @var boolean 0x07 Unknown11 BOOL */
-    public $Unknown11;
-    /** @var boolean 0x08 Unknown12 BOOL */
-    public $Unknown12;
-    /** @var integer 0x0B Unknown13 BYTE */
-    public $Unknown13;
-    /** @var boolean 0x0C Unknown14 BOOL */
-    public $Unknown14;
-    /** @var integer 0x0D Reserved BYTE */
-    public $Reserved; //(0) Unknown15
-    /** @var integer 0x0E Unknown16 BYTE */
-    public $Unknown16;
+    /** @var int GOALFGLENGTH INT */
+	public const GOALFGLENGTH = 78;
+    /** @var int 0x00 GoalArgument BYTE */
+	public int $GoalArgument;
+    /** @var int 0x01 Condition BYTE */
+	public int $Condition;
+    /** @var int 0x02 Amount BYTE */
+	public int $Amount;
+    /** @var int 0x03 Points SBYTE */
+	public int $Points;
+    /** @var bool 0x04 Enabled BOOL */
+	public bool $Enabled;
+    /** @var int 0x05 Team BYTE */
+	public int $Team;
+    /** @var bool 0x06 Unknown10 BOOL */
+	public bool $Unknown10;
+    /** @var bool 0x07 Unknown11 BOOL */
+	public bool $Unknown11;
+    /** @var bool 0x08 Unknown12 BOOL */
+	public bool $Unknown12;
+    /** @var int 0x0B Unknown13 BYTE */
+	public int $Unknown13;
+    /** @var bool 0x0C Unknown14 BOOL */
+	public bool $Unknown14;
+    /** @var int 0x0D Reserved BYTE */
+	public int $Reserved; // (0) Unknown15
+    /** @var int 0x0E Unknown16 BYTE */
+	public int $Unknown16;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -52,7 +53,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -76,7 +77,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "GoalArgument" => $this->getGoalArgumentLabel(),
@@ -95,7 +96,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -117,22 +118,22 @@ abstract class GoalFGBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getGoalArgumentLabel() 
+    public function getGoalArgumentLabel(): string 
     {
         return isset($this->GoalArgument) && isset(Constants::$GOALARGUMENT[$this->GoalArgument]) ? Constants::$GOALARGUMENT[$this->GoalArgument] : "Unknown";
     }
 
-    public function getConditionLabel() 
+    public function getConditionLabel(): string 
     {
         return isset($this->Condition) && isset(Constants::$CONDITION[$this->Condition]) ? Constants::$CONDITION[$this->Condition] : "Unknown";
     }
 
-    public function getAmountLabel() 
+    public function getAmountLabel(): string 
     {
         return isset($this->Amount) && isset(Constants::$AMOUNT[$this->Amount]) ? Constants::$AMOUNT[$this->Amount] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::GOALFGLENGTH;
     }

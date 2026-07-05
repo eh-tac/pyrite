@@ -6,29 +6,30 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XW\Constants;
 
-abstract class MissionHeaderBase extends PyriteBase implements Byteable
+abstract class MissionHeaderBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MISSIONHEADERLENGTH INT */
-    public const MISSIONHEADERLENGTH = 200;
-    /** @var integer 0x00 TimeLimitMinutes SHORT */
-    public $TimeLimitMinutes;
-    /** @var integer 0x02 EndEvent SHORT */
-    public $EndEvent;
-    /** @var integer 0x04 RndSeed SHORT */
-    public $RndSeed; //(unused)
-    /** @var integer 0x06 MissionLocation SHORT */
-    public $MissionLocation;
-    /** @var string[] 0x08 EndOfMissionMessages CHAR */
-    public $EndOfMissionMessages;
+    /** @var int MISSIONHEADERLENGTH INT */
+	public const MISSIONHEADERLENGTH = 200;
+    /** @var int 0x00 TimeLimitMinutes SHORT */
+	public int $TimeLimitMinutes;
+    /** @var int 0x02 EndEvent SHORT */
+	public int $EndEvent;
+    /** @var int 0x04 RndSeed SHORT */
+	public int $RndSeed; // (unused)
+    /** @var int 0x06 MissionLocation SHORT */
+	public int $MissionLocation;
+    /** @var array<string> 0x08 EndOfMissionMessages CHAR */
+	public array $EndOfMissionMessages;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -36,7 +37,7 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -58,7 +59,7 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "TimeLimitMinutes" => $this->TimeLimitMinutes,
@@ -69,7 +70,7 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -88,17 +89,17 @@ abstract class MissionHeaderBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getEndEventLabel() 
+    public function getEndEventLabel(): string 
     {
         return isset($this->EndEvent) && isset(Constants::$ENDEVENT[$this->EndEvent]) ? Constants::$ENDEVENT[$this->EndEvent] : "Unknown";
     }
 
-    public function getMissionLocationLabel() 
+    public function getMissionLocationLabel(): string 
     {
         return isset($this->MissionLocation) && isset(Constants::$MISSIONLOCATION[$this->MissionLocation]) ? Constants::$MISSIONLOCATION[$this->MissionLocation] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::MISSIONHEADERLENGTH;
     }

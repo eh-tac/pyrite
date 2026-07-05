@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XWA;
-    
+
 class Order extends Base\OrderBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new Order($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): Order
+  {
+    return (new Order($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

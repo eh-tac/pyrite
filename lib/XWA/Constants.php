@@ -3,7 +3,7 @@ namespace Pyrite\XWA;
 
 class Constants
 {
-    public static $CRAFTTYPE = [
+    public static array $CRAFTTYPE = [
         1 => "X-wing",
         2 => "Y-wing",
         3 => "A-wing",
@@ -415,7 +415,7 @@ class Constants
     public static $CRAFTTYPE_IMPERATORCLASSSTARDESTROYERII = 230;
     public static $CRAFTTYPE_PLANET4 = 231;
 
-    public static $CRAFTABBR = [
+    public static array $CRAFTABBR = [
         1 => "X-W",
         2 => "Y-W",
         3 => "A-W",
@@ -791,7 +791,7 @@ class Constants
     public static $CRAFTABBR_VSDII = 229;
     public static $CRAFTABBR_ISDII = 230;
 
-    public static $HANGAR = [
+    public static array $HANGAR = [
         0 => "Tutorial",
         1 => "Obstacle",
         2 => "Melee",
@@ -811,7 +811,7 @@ class Constants
     public static $HANGAR_CALAMARICRUISER = 6;
     public static $HANGAR_FAMILYMISSION = 7;
 
-    public static $BRIEFINGOFFICER = [
+    public static array $BRIEFINGOFFICER = [
         0 => "Devers",
         1 => "Kupalo",
         2 => "Zaletta",
@@ -843,7 +843,7 @@ class Constants
     public static $BRIEFINGOFFICER_TOMAAS = 12;
     public static $BRIEFINGOFFICER_DUNARI = 13;
 
-    public static $BRIEFINGLOGO = [
+    public static array $BRIEFINGLOGO = [
         4 => "Defiance",
         5 => "Liberty",
         6 => "Independence",
@@ -863,7 +863,7 @@ class Constants
     public static $BRIEFINGLOGO_ROGUESQUADRON = 10;
     public static $BRIEFINGLOGO_FAMILYTRANSPORT = 11;
 
-    public static $DESIGNATIONTEAM = [
+    public static array $DESIGNATIONTEAM = [
         0 => "Team1",
         1 => "Team2",
         2 => "Team3",
@@ -897,7 +897,7 @@ class Constants
     public static $DESIGNATIONTEAM_IMPERIAL = 13;
     public static $DESIGNATIONTEAM_NONE = 255;
 
-    public static $DESIGNATION = [
+    public static array $DESIGNATION = [
         0 => "Command Ship",
         1 => "Base",
         2 => "Station",
@@ -945,7 +945,7 @@ class Constants
     public static $DESIGNATION_HYPFROMANYREGION = 20;
     public static $DESIGNATION_HYPTOANYREGION = 21;
 
-    public static $STATUS = [
+    public static array $STATUS = [
         0 => "None",
         1 => "2X Warheads",
         2 => "1/2 Warheads",
@@ -1005,7 +1005,7 @@ class Constants
     public static $STATUS_IDED = 26;
     public static $STATUS_HANGAROBJECT = 27;
 
-    public static $WARHEAD = [
+    public static array $WARHEAD = [
         0 => "None",
         1 => "Space Bomb",
         2 => "Heavy Rocket",
@@ -1031,7 +1031,7 @@ class Constants
     public static $WARHEAD_ADVMAGPULSE = 9;
     public static $WARHEAD_CLUSTERBOMB = 10;
 
-    public static $BEAM = [
+    public static array $BEAM = [
         0 => "None",
         1 => "Tractor Beam",
         2 => "Jamming Beam",
@@ -1045,7 +1045,7 @@ class Constants
     public static $BEAM_DECOYBEAM = 3;
     public static $BEAM_ENERGYBEAM = 4;
 
-    public static $GROUPAI = [
+    public static array $GROUPAI = [
         0 => "Novice (None)",
         1 => "Officer",
         2 => "Veteran",
@@ -1061,7 +1061,7 @@ class Constants
     public static $GROUPAI_TOPACE = 4;
     public static $GROUPAI_SUPERACEINVINCIBLE = 5;
 
-    public static $MARKINGS = [
+    public static array $MARKINGS = [
         0 => "Red (TIE - None)",
         1 => "Gold (TIE - Red)",
         2 => "Blue (TIE - Gold)",
@@ -1073,7 +1073,7 @@ class Constants
     public static $MARKINGS_BLUETIEGOLD = 2;
     public static $MARKINGS_GREENTIEBLUE = 3;
 
-    public static $RADIO = [
+    public static array $RADIO = [
         0 => "None",
         1 => "Team 1",
         2 => "Team 2",
@@ -1111,7 +1111,7 @@ class Constants
     public static $RADIO_PLAYER7 = 15;
     public static $RADIO_PLAYER8 = 16;
 
-    public static $FORMATION = [
+    public static array $FORMATION = [
         0 => "Vic",
         1 => "Finger Four",
         2 => "Line Astern",
@@ -1183,7 +1183,7 @@ class Constants
     public static $FORMATION_SIDEHEXAGON = 32;
     public static $FORMATION_FRONTHEXAGON = 33;
 
-    public static $FORMATIONSPACING = [
+    public static array $FORMATIONSPACING = [
         0 => "Too Tight",
         1 => "Very Tight",
         2 => "Tight",
@@ -1209,7 +1209,7 @@ class Constants
     public static $FORMATIONSPACING_VERYLOOSE = 9;
     public static $FORMATIONSPACING_DISTANT = 10;
 
-    public static $STOPARRIVINGWHEN = [
+    public static array $STOPARRIVINGWHEN = [
         0 => "Never (always arrives)",
         1 => "Mission Complete",
         2 => "Team wins",
@@ -1221,7 +1221,7 @@ class Constants
     public static $STOPARRIVINGWHEN_TEAMWINS = 2;
     public static $STOPARRIVINGWHEN_TEAMLOSES = 3;
 
-    public static $ARRIVALDIFFICULTY = [
+    public static array $ARRIVALDIFFICULTY = [
         0 => "All",
         1 => "Easy",
         2 => "Medium",
@@ -1239,7 +1239,7 @@ class Constants
     public static $ARRIVALDIFFICULTY_LESSTHANHARD = 5;
     public static $ARRIVALDIFFICULTY_NEVER = 6;
 
-    public static $CONDITION = [
+    public static array $CONDITION = [
         0 => "Always (true)",
         1 => "Created",
         2 => "Destroyed",
@@ -1363,7 +1363,7 @@ class Constants
     public static $CONDITION_NOTBEIDED = 58;
     public static $CONDITION_SUPPORT = 59;
 
-    public static $VARIABLETYPE = [
+    public static array $VARIABLETYPE = [
         0 => "None",
         1 => "Flight Group",
         2 => "CraftType (enum)",
@@ -1423,7 +1423,7 @@ class Constants
     public static $VARIABLETYPE_CRAFTWITHOUTGLOBALCARGO = 26;
     public static $VARIABLETYPE_MESSAGE = 27;
 
-    public static $CRAFTCATEGORY = [
+    public static array $CRAFTCATEGORY = [
         0 => "Starfighters",
         1 => "Transports",
         2 => "Freighters/Containers",
@@ -1449,7 +1449,7 @@ class Constants
     public static $CRAFTCATEGORY_WEAPONEMPLACEMENTS = 9;
     public static $CRAFTCATEGORY_DROIDS = 10;
 
-    public static $OBJECTCATEGORY = [
+    public static array $OBJECTCATEGORY = [
         0 => "Craft",
         1 => "Weapons",
         2 => "Space Objects",
@@ -1461,7 +1461,7 @@ class Constants
     public static $OBJECTCATEGORY_SPACEOBJECTS = 2;
     public static $OBJECTCATEGORY_SPACEDEFENSES = 3;
 
-    public static $AMOUNT = [
+    public static array $AMOUNT = [
         0 => "100%",
         1 => "75%",
         2 => "50%",
@@ -1495,7 +1495,7 @@ class Constants
     public static $AMOUNT_EACHCRAFT = 18;
     public static $AMOUNT_EACHSPECIALCRAFT = 19;
 
-    public static $ABORTTRIGGER = [
+    public static array $ABORTTRIGGER = [
         0 => "None",
         1 => "0% Shields",
         2 => "Unknown",
@@ -1521,7 +1521,7 @@ class Constants
     public static $ABORTTRIGGER_N25PERCENTHULL = 9;
     public static $ABORTTRIGGER_INSPECTED = 10;
 
-    public static $ORDER = [
+    public static array $ORDER = [
         0 => "Hold Station",
         1 => "Go Home",
         2 => "Circle",
@@ -1655,7 +1655,7 @@ class Constants
     public static $ORDER_FOLLOWTARGETS = 63;
     public static $ORDER_HOMEIN = 64;
 
-    public static $CRAFTWHEN = [
+    public static array $CRAFTWHEN = [
         0 => "Captured",
         1 => "Inspected",
         2 => "Finished being boarded",
@@ -1717,7 +1717,7 @@ class Constants
     public static $CRAFTWHEN_IDD = 27;
     public static $CRAFTWHEN_NOTIDD = 28;
 
-    public static $EVENTTYPE = [
+    public static array $EVENTTYPE = [
         1 => "Seek",
         2 => "SHIP_INDEX",
         3 => "Page Break",
@@ -1785,7 +1785,7 @@ class Constants
     public static $EVENTTYPE_ZOOMPARAGRAPH = 31;
     public static $EVENTTYPE_ENDBRIEFING = 34;
 
-    public static $TFTCCRAFTTYPE = [
+    public static array $TFTCCRAFTTYPE = [
         1 => "X-Wing",
         2 => "Y-Wing",
         3 => "A-Wing",

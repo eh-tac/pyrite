@@ -6,109 +6,110 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XW\Constants;
 
-abstract class PilotFileBase extends PyriteBase implements Byteable
+abstract class PilotFileBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PILOTFILELENGTH INT */
-    public const PILOTFILELENGTH = 1705;
-    /** @var integer 0x000 PlatformID SHORT */
-    public $PlatformID;
-    /** @var integer 0x002 PilotStatus BYTE */
-    public $PilotStatus;
-    /** @var integer 0x003 PilotRank BYTE */
-    public $PilotRank;
-    /** @var integer 0x004 TotalTODScore INT */
-    public $TotalTODScore;
-    /** @var integer 0x008 RookieNumber SHORT */
-    public $RookieNumber;
-    /** @var boolean[] 0x00A TODMedals BOOL */
-    public $TODMedals;
-    /** @var integer 0x011 KalidorCrescent BYTE */
-    public $KalidorCrescent;
-    /** @var integer[] 0x026 MazeScore INT */
-    public $MazeScore; //XW YW AW BW
-    /** @var integer[] 0x086 MazeLevel BYTE */
-    public $MazeLevel;
-    /** @var integer[] 0x09E Unknown5 BYTE */
-    public $Unknown5;
-    /** @var integer[] 0x0A0 XWingHistoricalScore INT */
-    public $XWingHistoricalScore;
-    /** @var integer[] 0x0E0 YWingHistoricalScore INT */
-    public $YWingHistoricalScore;
-    /** @var integer[] 0x120 AWingHistoricalScore INT */
-    public $AWingHistoricalScore;
-    /** @var integer[] 0x160 BWingHistoricalScore INT */
-    public $BWingHistoricalScore;
-    /** @var integer[] 0x1A0 BonusHistoricalScore INT */
-    public $BonusHistoricalScore;
-    /** @var boolean[] 0x220 XWingHistoricalComplete BOOL */
-    public $XWingHistoricalComplete;
-    /** @var boolean[] 0x230 YWingHistoricalComplete BOOL */
-    public $YWingHistoricalComplete;
-    /** @var boolean[] 0x240 AWingHistoricalComplete BOOL */
-    public $AWingHistoricalComplete;
-    /** @var boolean[] 0x250 BWingHistoricalComplete BOOL */
-    public $BWingHistoricalComplete;
-    /** @var boolean[] 0x260 BonusHistoricalComplete BOOL */
-    public $BonusHistoricalComplete;
-    /** @var integer 0x280 CurrentTour BYTE */
-    public $CurrentTour;
-    /** @var integer 0x281 Unknown1 SHORT */
-    public $Unknown1;
-    /** @var integer 0x283 CurrentTourOpsComplete SHORT */
-    public $CurrentTourOpsComplete;
-    /** @var integer 0x287 CurrentTourOpsComplete2 SHORT */
-    public $CurrentTourOpsComplete2;
-    /** @var integer[] 0x2DF TourStatus BYTE */
-    public $TourStatus;
-    /** @var integer[] 0x2E7 TourNextMissionMaybe BYTE */
-    public $TourNextMissionMaybe;
-    /** @var integer 0x2EB Unknown4 INT */
-    public $Unknown4;
-    /** @var integer[] 0x2EF TourOperationsComplete BYTE */
-    public $TourOperationsComplete;
-    /** @var integer[] 0x2F7 Tour1Scores INT */
-    public $Tour1Scores;
-    /** @var integer[] 0x35B Tour2Scores INT */
-    public $Tour2Scores;
-    /** @var integer[] 0x3BF Tour3Scores INT */
-    public $Tour3Scores;
-    /** @var integer[] 0x423 Tour4Scores INT */
-    public $Tour4Scores;
-    /** @var integer[] 0x487 Tour5Scores INT */
-    public $Tour5Scores;
-    /** @var integer 0x62F Unknown2 BYTE */
-    public $Unknown2;
-    /** @var integer 0x630 Unknown3 BYTE */
-    public $Unknown3;
-    /** @var integer 0x633 SurfaceVictories SHORT */
-    public $SurfaceVictories;
-    /** @var integer[] 0x635 TODKills SHORT */
-    public $TODKills;
-    /** @var integer[] 0x665 TODCaptures SHORT */
-    public $TODCaptures;
-    /** @var integer 0x695 LasersFired INT */
-    public $LasersFired;
-    /** @var integer 0x699 LaserCraftHits INT */
-    public $LaserCraftHits;
-    /** @var integer 0x69D LaserGroundHits INT */
-    public $LaserGroundHits;
-    /** @var integer 0x6A1 MissilesFired SHORT */
-    public $MissilesFired;
-    /** @var integer 0x6A3 MissileCraftHits SHORT */
-    public $MissileCraftHits;
-    /** @var integer 0x6A5 MissileGroundHits SHORT */
-    public $MissileGroundHits;
-    /** @var integer 0x6A7 CraftLost SHORT */
-    public $CraftLost;
+    /** @var int PILOTFILELENGTH INT */
+	public const PILOTFILELENGTH = 1705;
+    /** @var int 0x000 PlatformID SHORT */
+	public int $PlatformID;
+    /** @var int 0x002 PilotStatus BYTE */
+	public int $PilotStatus;
+    /** @var int 0x003 PilotRank BYTE */
+	public int $PilotRank;
+    /** @var int 0x004 TotalTODScore INT */
+	public int $TotalTODScore;
+    /** @var int 0x008 RookieNumber SHORT */
+	public int $RookieNumber;
+    /** @var array<bool> 0x00A TODMedals BOOL */
+	public array $TODMedals;
+    /** @var int 0x011 KalidorCrescent BYTE */
+	public int $KalidorCrescent;
+    /** @var array<int> 0x026 MazeScore INT */
+	public array $MazeScore; // XW YW AW BW
+    /** @var array<int> 0x086 MazeLevel BYTE */
+	public array $MazeLevel;
+    /** @var array<int> 0x09E Unknown5 BYTE */
+	public array $Unknown5;
+    /** @var array<int> 0x0A0 XWingHistoricalScore INT */
+	public array $XWingHistoricalScore;
+    /** @var array<int> 0x0E0 YWingHistoricalScore INT */
+	public array $YWingHistoricalScore;
+    /** @var array<int> 0x120 AWingHistoricalScore INT */
+	public array $AWingHistoricalScore;
+    /** @var array<int> 0x160 BWingHistoricalScore INT */
+	public array $BWingHistoricalScore;
+    /** @var array<int> 0x1A0 BonusHistoricalScore INT */
+	public array $BonusHistoricalScore;
+    /** @var array<bool> 0x220 XWingHistoricalComplete BOOL */
+	public array $XWingHistoricalComplete;
+    /** @var array<bool> 0x230 YWingHistoricalComplete BOOL */
+	public array $YWingHistoricalComplete;
+    /** @var array<bool> 0x240 AWingHistoricalComplete BOOL */
+	public array $AWingHistoricalComplete;
+    /** @var array<bool> 0x250 BWingHistoricalComplete BOOL */
+	public array $BWingHistoricalComplete;
+    /** @var array<bool> 0x260 BonusHistoricalComplete BOOL */
+	public array $BonusHistoricalComplete;
+    /** @var int 0x280 CurrentTour BYTE */
+	public int $CurrentTour;
+    /** @var int 0x281 Unknown1 SHORT */
+	public int $Unknown1;
+    /** @var int 0x283 CurrentTourOpsComplete SHORT */
+	public int $CurrentTourOpsComplete;
+    /** @var int 0x287 CurrentTourOpsComplete2 SHORT */
+	public int $CurrentTourOpsComplete2;
+    /** @var array<int> 0x2DF TourStatus BYTE */
+	public array $TourStatus;
+    /** @var array<int> 0x2E7 TourNextMissionMaybe BYTE */
+	public array $TourNextMissionMaybe;
+    /** @var int 0x2EB Unknown4 INT */
+	public int $Unknown4;
+    /** @var array<int> 0x2EF TourOperationsComplete BYTE */
+	public array $TourOperationsComplete;
+    /** @var array<int> 0x2F7 Tour1Scores INT */
+	public array $Tour1Scores;
+    /** @var array<int> 0x35B Tour2Scores INT */
+	public array $Tour2Scores;
+    /** @var array<int> 0x3BF Tour3Scores INT */
+	public array $Tour3Scores;
+    /** @var array<int> 0x423 Tour4Scores INT */
+	public array $Tour4Scores;
+    /** @var array<int> 0x487 Tour5Scores INT */
+	public array $Tour5Scores;
+    /** @var int 0x62F Unknown2 BYTE */
+	public int $Unknown2;
+    /** @var int 0x630 Unknown3 BYTE */
+	public int $Unknown3;
+    /** @var int 0x633 SurfaceVictories SHORT */
+	public int $SurfaceVictories;
+    /** @var array<int> 0x635 TODKills SHORT */
+	public array $TODKills;
+    /** @var array<int> 0x665 TODCaptures SHORT */
+	public array $TODCaptures;
+    /** @var int 0x695 LasersFired INT */
+	public int $LasersFired;
+    /** @var int 0x699 LaserCraftHits INT */
+	public int $LaserCraftHits;
+    /** @var int 0x69D LaserGroundHits INT */
+	public int $LaserGroundHits;
+    /** @var int 0x6A1 MissilesFired SHORT */
+	public int $MissilesFired;
+    /** @var int 0x6A3 MissileCraftHits SHORT */
+	public int $MissileCraftHits;
+    /** @var int 0x6A5 MissileGroundHits SHORT */
+	public int $MissileGroundHits;
+    /** @var int 0x6A7 CraftLost SHORT */
+	public int $CraftLost;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -116,7 +117,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -316,7 +317,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "PlatformID" => $this->PlatformID,
@@ -367,7 +368,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -541,22 +542,22 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getPilotStatusLabel() 
+    public function getPilotStatusLabel(): string 
     {
         return isset($this->PilotStatus) && isset(Constants::$PILOTSTATUS[$this->PilotStatus]) ? Constants::$PILOTSTATUS[$this->PilotStatus] : "Unknown";
     }
 
-    public function getPilotRankLabel() 
+    public function getPilotRankLabel(): string 
     {
         return isset($this->PilotRank) && isset(Constants::$PILOTRANK[$this->PilotRank]) ? Constants::$PILOTRANK[$this->PilotRank] : "Unknown";
     }
 
-    public function getKalidorCrescentLabel() 
+    public function getKalidorCrescentLabel(): string 
     {
         return isset($this->KalidorCrescent) && isset(Constants::$KALIDORCRESCENT[$this->KalidorCrescent]) ? Constants::$KALIDORCRESCENT[$this->KalidorCrescent] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PILOTFILELENGTH;
     }

@@ -6,30 +6,31 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PL2CampaignProgressStateBase extends PyriteBase implements Byteable
+abstract class PL2CampaignProgressStateBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PL2CAMPAIGNPROGRESSSTATELENGTH INT */
-    public const PL2CAMPAIGNPROGRESSSTATELENGTH = 24;
-    /** @var integer 0x0000 unknown1 INT */
-    public $unknown1;
-    /** @var integer 0x0004 CurrentMissionNumber INT */
-    public $CurrentMissionNumber;
-    /** @var integer 0x0008 totalMissionCount INT */
-    public $totalMissionCount;
-    /** @var integer 0x000C CurrentMissionComplete INT */
-    public $CurrentMissionComplete;
-    /** @var integer 0x0010 PlayerCount INT */
-    public $PlayerCount;
-    /** @var integer 0x0014 totalScore INT */
-    public $totalScore;
+    /** @var int PL2CAMPAIGNPROGRESSSTATELENGTH INT */
+	public const PL2CAMPAIGNPROGRESSSTATELENGTH = 24;
+    /** @var int 0x0000 unknown1 INT */
+	public int $unknown1;
+    /** @var int 0x0004 CurrentMissionNumber INT */
+	public int $CurrentMissionNumber;
+    /** @var int 0x0008 totalMissionCount INT */
+	public int $totalMissionCount;
+    /** @var int 0x000C CurrentMissionComplete INT */
+	public int $CurrentMissionComplete;
+    /** @var int 0x0010 PlayerCount INT */
+	public int $PlayerCount;
+    /** @var int 0x0014 totalScore INT */
+	public int $totalScore;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -37,7 +38,7 @@ abstract class PL2CampaignProgressStateBase extends PyriteBase implements Byteab
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -54,7 +55,7 @@ abstract class PL2CampaignProgressStateBase extends PyriteBase implements Byteab
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "unknown1" => $this->unknown1,
@@ -66,7 +67,7 @@ abstract class PL2CampaignProgressStateBase extends PyriteBase implements Byteab
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -82,7 +83,7 @@ abstract class PL2CampaignProgressStateBase extends PyriteBase implements Byteab
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PL2CAMPAIGNPROGRESSSTATELENGTH;
     }

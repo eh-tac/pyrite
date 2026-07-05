@@ -6,75 +6,76 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XW\Constants;
 
-abstract class FlightGroupBase extends PyriteBase implements Byteable
+abstract class FlightGroupBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  FLIGHTGROUPLENGTH INT */
-    public const FLIGHTGROUPLENGTH = 148;
+    /** @var int FLIGHTGROUPLENGTH INT */
+	public const FLIGHTGROUPLENGTH = 148;
     /** @var string 0x000 Name CHAR */
-    public $Name;
+	public string $Name;
     /** @var string 0x010 Cargo CHAR */
-    public $Cargo;
+	public string $Cargo;
     /** @var string 0x020 SpecialCargo CHAR */
-    public $SpecialCargo;
-    /** @var integer 0x030 SpecialCargoCraft SHORT */
-    public $SpecialCargoCraft;
-    /** @var integer 0x032 CraftType SHORT */
-    public $CraftType;
-    /** @var integer 0x034 IFF SHORT */
-    public $IFF;
-    /** @var integer 0x036 FlightGroupStatus SHORT */
-    public $FlightGroupStatus; //(unusual formatting)
-    /** @var integer 0x038 NumberOfCraft SHORT */
-    public $NumberOfCraft;
-    /** @var integer 0x03A NumberOfWaves SHORT */
-    public $NumberOfWaves;
-    /** @var integer 0x03C ArrivalEvent SHORT */
-    public $ArrivalEvent;
-    /** @var integer 0x03E ArrivalDelay SHORT */
-    public $ArrivalDelay; //(unusual formatting)
-    /** @var integer 0x040 ArrivalFG SHORT */
-    public $ArrivalFG; //(-1 for none)
-    /** @var integer 0x042 Mothership SHORT */
-    public $Mothership; //(-1 for none)
-    /** @var integer 0x044 ArrivalHyperspace SHORT */
-    public $ArrivalHyperspace;
-    /** @var integer 0x046 DepartureHyperspace SHORT */
-    public $DepartureHyperspace;
-    /** @var integer[] 0x048 WaypointX SHORT */
-    public $WaypointX;
-    /** @var integer[] 0x056 WaypointY SHORT */
-    public $WaypointY;
-    /** @var integer[] 0x064 WaypointZ SHORT */
-    public $WaypointZ;
-    /** @var integer[] 0x072 WaypointEnabled SHORT */
-    public $WaypointEnabled;
-    /** @var integer 0x080 Formation SHORT */
-    public $Formation;
-    /** @var integer 0x082 PlayerCraft SHORT */
-    public $PlayerCraft;
-    /** @var integer 0x084 GroupAI SHORT */
-    public $GroupAI;
-    /** @var integer 0x086 Order SHORT */
-    public $Order;
-    /** @var integer 0x088 OrderValue SHORT */
-    public $OrderValue; //(dock time or throttle)
-    /** @var integer 0x08C Markings SHORT */
-    public $Markings;
-    /** @var integer 0x08E Objective SHORT */
-    public $Objective;
-    /** @var integer 0x090 TargetPrimary SHORT */
-    public $TargetPrimary; //(-1 for none)
-    /** @var integer 0x092 TargetSecondary SHORT */
-    public $TargetSecondary; //(-1 for none)
+	public string $SpecialCargo;
+    /** @var int 0x030 SpecialCargoCraft SHORT */
+	public int $SpecialCargoCraft;
+    /** @var int 0x032 CraftType SHORT */
+	public int $CraftType;
+    /** @var int 0x034 IFF SHORT */
+	public int $IFF;
+    /** @var int 0x036 FlightGroupStatus SHORT */
+	public int $FlightGroupStatus; // (unusual formatting)
+    /** @var int 0x038 NumberOfCraft SHORT */
+	public int $NumberOfCraft;
+    /** @var int 0x03A NumberOfWaves SHORT */
+	public int $NumberOfWaves;
+    /** @var int 0x03C ArrivalEvent SHORT */
+	public int $ArrivalEvent;
+    /** @var int 0x03E ArrivalDelay SHORT */
+	public int $ArrivalDelay; // (unusual formatting)
+    /** @var int 0x040 ArrivalFG SHORT */
+	public int $ArrivalFG; // (-1 for none)
+    /** @var int 0x042 Mothership SHORT */
+	public int $Mothership; // (-1 for none)
+    /** @var int 0x044 ArrivalHyperspace SHORT */
+	public int $ArrivalHyperspace;
+    /** @var int 0x046 DepartureHyperspace SHORT */
+	public int $DepartureHyperspace;
+    /** @var array<int> 0x048 WaypointX SHORT */
+	public array $WaypointX;
+    /** @var array<int> 0x056 WaypointY SHORT */
+	public array $WaypointY;
+    /** @var array<int> 0x064 WaypointZ SHORT */
+	public array $WaypointZ;
+    /** @var array<int> 0x072 WaypointEnabled SHORT */
+	public array $WaypointEnabled;
+    /** @var int 0x080 Formation SHORT */
+	public int $Formation;
+    /** @var int 0x082 PlayerCraft SHORT */
+	public int $PlayerCraft;
+    /** @var int 0x084 GroupAI SHORT */
+	public int $GroupAI;
+    /** @var int 0x086 Order SHORT */
+	public int $Order;
+    /** @var int 0x088 OrderValue SHORT */
+	public int $OrderValue; // (dock time or throttle)
+    /** @var int 0x08C Markings SHORT */
+	public int $Markings;
+    /** @var int 0x08E Objective SHORT */
+	public int $Objective;
+    /** @var int 0x090 TargetPrimary SHORT */
+	public int $TargetPrimary; // (-1 for none)
+    /** @var int 0x092 TargetSecondary SHORT */
+	public int $TargetSecondary; // (-1 for none)
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -82,7 +83,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -145,7 +146,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Name" => $this->Name,
@@ -179,7 +180,7 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -236,52 +237,52 @@ abstract class FlightGroupBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getCraftTypeLabel() 
+    public function getCraftTypeLabel(): string 
     {
         return isset($this->CraftType) && isset(Constants::$CRAFTTYPE[$this->CraftType]) ? Constants::$CRAFTTYPE[$this->CraftType] : "Unknown";
     }
 
-    public function getIFFLabel() 
+    public function getIFFLabel(): string 
     {
         return isset($this->IFF) && isset(Constants::$IFF[$this->IFF]) ? Constants::$IFF[$this->IFF] : "Unknown";
     }
 
-    public function getFlightGroupStatusLabel() 
+    public function getFlightGroupStatusLabel(): string 
     {
         return isset($this->FlightGroupStatus) && isset(Constants::$FLIGHTGROUPSTATUS[$this->FlightGroupStatus]) ? Constants::$FLIGHTGROUPSTATUS[$this->FlightGroupStatus] : "Unknown";
     }
 
-    public function getArrivalEventLabel() 
+    public function getArrivalEventLabel(): string 
     {
         return isset($this->ArrivalEvent) && isset(Constants::$ARRIVALEVENT[$this->ArrivalEvent]) ? Constants::$ARRIVALEVENT[$this->ArrivalEvent] : "Unknown";
     }
 
-    public function getFormationLabel() 
+    public function getFormationLabel(): string 
     {
         return isset($this->Formation) && isset(Constants::$FORMATION[$this->Formation]) ? Constants::$FORMATION[$this->Formation] : "Unknown";
     }
 
-    public function getGroupAILabel() 
+    public function getGroupAILabel(): string 
     {
         return isset($this->GroupAI) && isset(Constants::$GROUPAI[$this->GroupAI]) ? Constants::$GROUPAI[$this->GroupAI] : "Unknown";
     }
 
-    public function getOrderLabel() 
+    public function getOrderLabel(): string 
     {
         return isset($this->Order) && isset(Constants::$ORDER[$this->Order]) ? Constants::$ORDER[$this->Order] : "Unknown";
     }
 
-    public function getMarkingsLabel() 
+    public function getMarkingsLabel(): string 
     {
         return isset($this->Markings) && isset(Constants::$MARKINGS[$this->Markings]) ? Constants::$MARKINGS[$this->Markings] : "Unknown";
     }
 
-    public function getObjectiveLabel() 
+    public function getObjectiveLabel(): string 
     {
         return isset($this->Objective) && isset(Constants::$OBJECTIVE[$this->Objective]) ? Constants::$OBJECTIVE[$this->Objective] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::FLIGHTGROUPLENGTH;
     }

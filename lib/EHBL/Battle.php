@@ -3,38 +3,25 @@
 namespace Pyrite\EHBL;
 
 use Exception;
+use Pyrite\PyriteModel;
 
 class Battle
 {
-    public $platform;
-    public $type;
-    public $num;
-    public $title;
-    public $folder;
-    public $missionFiles = [];
-    public $resourceFiles = [];
-    public $readme;
-    public $plotline;
-    public $firstMission = '';
-    public $missions = [];
-    public $scores = [];
+    public string $readme;
+    public string $plotline;
+    public string $firstMission = '';
+    public array $missions = [];
+    public array $scores = [];
 
     public function __construct(
-        $platform,
-        $type = BattleType::UNKNOWN,
-        $num = 0,
-        $title = '',
-        $folder = '',
-        $missionFiles = [],
-        $resourceFiles = []
+        public Platform $platform,
+        public BattleType $type = BattleType::UNKNOWN,
+        public int $num = 0,
+        public string $title = '',
+        public string $folder = '',
+        public array $missionFiles = [],
+        public array $resourceFiles = []
     ) {
-        $this->platform = $platform;
-        $this->type = $type;
-        $this->num = $num;
-        $this->title = $title;
-        $this->folder = $folder;
-        $this->missionFiles = $missionFiles;
-        $this->resourceFiles = $resourceFiles;
         foreach ($resourceFiles as $file) {
             $path = $folder . $file;
             $lc = strtolower($file);
@@ -50,7 +37,7 @@ class Battle
         }
     }
 
-    public static function fromZipUpload($fileData)
+    public static function fromZipUpload(array $fileData)
     {
         $path = $fileData['tmp_name'];
         $name = str_replace('.zip', '', $fileData['name']);
@@ -58,7 +45,7 @@ class Battle
         return self::fromZip($path, $name);
     }
 
-    public static function fromEHMUpload($fileData)
+    public static function fromEHMUpload(array $fileData)
     {
         $path = $fileData['tmp_name'];
         $name = str_replace('.ehm', '', $fileData['name']);
@@ -66,7 +53,7 @@ class Battle
         return self::fromEHM($path, $name);
     }
 
-    public static function fromEHM($path, $name = null, $dir = null)
+    public static function fromEHM(string $path, string $name = null, string $dir = null)
     {
         $battle = self::fromZip($path, $name, $dir);
         if ($battle) {
@@ -75,7 +62,7 @@ class Battle
         return $battle;
     }
 
-    public static function fromZip($path, $name = null, $dir = null, $forceExtract = false)
+    public static function fromZip(string $path, string $name = null, string $dir = null, bool $forceExtract = false)
     {
         if (!$path) {
             return false;
@@ -106,7 +93,7 @@ class Battle
         return self::fromFolder($name, $dir);
     }
 
-    public static function fromFolder($name, $dir)
+    public static function fromFolder(string $name, string $dir)
     {
         list($platform, $type, $num) = self::parseKey($name);
         $dirContents = array_values(array_filter(scandir($dir), function ($f) {
@@ -147,17 +134,17 @@ class Battle
 
         switch ($platform) {
             case Platform::TIE:
-                return \Pyrite\TIE\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
+                return new \Pyrite\TIE\Battle($type, $num, $dir,  $missions, $resources);
             case Platform::XvT:
             case Platform::BoP:
-                $battle = \Pyrite\XvT\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
+                $battle = new \Pyrite\XvT\Battle($type, $num, $dir, $missions, $resources);
                 $battle->platform = $platform;
                 return $battle;
             case Platform::XWA:
             case Platform::TFTC:
-                return \Pyrite\XWA\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
+                return new \Pyrite\XWA\Battle($type, $num, $dir, $missions, $resources);
             case Platform::XW:
-                return \Pyrite\XW\Battle::fromFolder($type, $num, $dir, $manifests, $missions, $resources);
+                return new \Pyrite\XW\Battle($type, $num, $dir, $missions, $resources);
         }
     }
 
@@ -195,20 +182,16 @@ class Battle
     public function createBattleIndex()
     {
         $ehb = BattleIndex::build($this->name(), $this->title, $this->missionFiles);
-        $ehb->platform = Platform::battleIndexID($this->platform);
+        $ehb->platform = $this->platform->id();
         return $ehb;
     }
 
     public function name()
     {
-        return $this->platform . $this->type . $this->num;
+        return $this->platform->value . $this->type->value . $this->num;
     }
 
-    /**
-     * @param Battle $zipBattle
-     * @return array
-     */
-    public function validate($zipB)
+    public function validate(Battle $zipB): array
     {
         $errors = [];
         $ehb = $this->getBattleIndex();
@@ -236,22 +219,22 @@ class Battle
         return $errors;
     }
 
-    public function validateMission($missionFile, &$errors) {}
+    public function validateMission(string $missionFile, array &$errors) {}
 
-    public static function parseKey($key)
+    public static function parseKey(string $key): array
     {
         $platform = $type = $num = '';
-        foreach (Platform::$ALL as $p) {
-            if (substr($key, 0, strlen($p)) === $p) {
+        foreach (Platform::cases() as $p) {
+            if (substr($key, 0, strlen($p->value)) === $p->value) {
                 $platform = $p;
-                $key = substr($key, strlen($p));
+                $key = substr($key, strlen($p->value));
                 break;
             }
         }
-        foreach (BattleType::$ALL as $t) {
-            if (strpos($key, $t) !== false) {
-                $type = $t;
-                $key = str_replace($t, '', $key);
+        foreach (BattleType::cases() as $t) {
+            if (strpos($key, $t->value) !== false) {
+                $type = $t->value;
+                $key = str_replace($t->value, '', $key);
                 break;
             }
         }
@@ -300,7 +283,7 @@ class Battle
         return $this->scores;
     }
 
-    public function getDiffs($originalPyrite)
+    public function getDiffs(Battle $originalPyrite)
     {
         $diffs = [];
         if (empty($this->missions)) {
@@ -321,30 +304,30 @@ class Battle
         return $diffs;
     }
 
-    private function arrayRecursiveDiff($aArray1, $aArray2)
-    {
-        $aReturn = array();
+    // private function arrayRecursiveDiff(array $aArray1, array $aArray2)
+    // {
+    //     $aReturn = array();
 
-        foreach ($aArray1 as $mKey => $mValue) {
-            if (array_key_exists($mKey, $aArray2)) {
-                if (is_array($mValue)) {
-                    $aRecursiveDiff = $this->arrayRecursiveDiff($mValue, $aArray2[$mKey]);
-                    if (count($aRecursiveDiff)) {
-                        $aReturn[$mKey] = $aRecursiveDiff;
-                    }
-                } else {
-                    if ($mValue != $aArray2[$mKey]) {
-                        $aReturn[$mKey] = $mValue;
-                    }
-                }
-            } else {
-                $aReturn[$mKey] = $mValue;
-            }
-        }
-        return $aReturn;
-    }
+    //     foreach ($aArray1 as $mKey => $mValue) {
+    //         if (array_key_exists($mKey, $aArray2)) {
+    //             if (is_array($mValue)) {
+    //                 $aRecursiveDiff = $this->arrayRecursiveDiff($mValue, $aArray2[$mKey]);
+    //                 if (count($aRecursiveDiff)) {
+    //                     $aReturn[$mKey] = $aRecursiveDiff;
+    //                 }
+    //             } else {
+    //                 if ($mValue != $aArray2[$mKey]) {
+    //                     $aReturn[$mKey] = $mValue;
+    //                 }
+    //             }
+    //         } else {
+    //             $aReturn[$mKey] = $mValue;
+    //         }
+    //     }
+    //     return $aReturn;
+    // }
 
-    private function loadMission($contents)
+    private function loadMission(string $contents)
     {
         switch ($this->platform) {
             case Platform::TIE:
@@ -360,19 +343,23 @@ class Battle
         }
     }
 
-    protected function loadScoreKeeper($tie, $filename)
+    protected function loadScoreKeeper(PyriteModel $TIE, string $filename)
     {
         switch ($this->platform) {
             case Platform::TIE:
-                return new \Pyrite\TIE\ScoreKeeper($tie);
+                /** @var \Pyrite\TIE\Mission $TIE */
+                return new \Pyrite\TIE\ScoreKeeper($TIE);
             case Platform::XvT:
             case Platform::BoP:
-                return new \Pyrite\XvT\ScoreKeeper($tie, $filename);
+                /** @var \Pyrite\XvT\Mission $TIE */
+                return new \Pyrite\XvT\ScoreKeeper($TIE, $filename);
             case Platform::XWA:
             case Platform::TFTC:
-                return new \Pyrite\XWA\ScoreKeeper($tie);
+                /** @var \Pyrite\XWA\Mission $TIE */
+                return new \Pyrite\XWA\ScoreKeeper($TIE);
             case Platform::XW:
-                return new \Pyrite\XW\ScoreKeeper($tie);
+                /** @var \Pyrite\XW\Mission $TIE */
+                return new \Pyrite\XW\ScoreKeeper($TIE);
         }
     }
 }

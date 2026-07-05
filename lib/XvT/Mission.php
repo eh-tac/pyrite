@@ -2,11 +2,18 @@
 
 namespace Pyrite\XvT;
 
+use Pyrite\PyriteModel;
+
 class Mission extends Base\MissionBase
 {
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?PyriteModel $TIE = null): Mission
   {
-    return (new Mission($hex, $tie))->loadHex();
+    return (new Mission($hex, $TIE))->loadHex();
+  }
+
+  public function valid(): bool
+  {
+    return true;
   }
 
   public function __toString()

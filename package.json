@@ -15,6 +15,7 @@
   "scripts": {
     "build": "npm run build --workspaces --if-present",
     "lint": "eslint packages --ext .ts",
+    "stan": "composer phpstan",
     "test": "jest --projects packages/*/jest.config.cjs",
     "test:php": "sh -c 'if [ -x vendor/bin/phpunit ]; then exec vendor/bin/phpunit --configuration phpunit.xml \"$@\"; else exec phpunit --configuration phpunit.xml \"$@\"; fi' --",
     "format": "prettier --check .",

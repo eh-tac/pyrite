@@ -6,28 +6,29 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class IconBase extends PyriteBase implements Byteable
+abstract class IconBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  ICONLENGTH INT */
-    public const ICONLENGTH = 24;
-    /** @var integer 0x00 Species BYTE */
-    public $Species;
-    /** @var integer 0x01 IFF BYTE */
-    public $IFF;
-    /** @var integer 0x02 X SHORT */
-    public $X;
-    /** @var integer 0x04 Y SHORT */
-    public $Y;
-    /** @var integer 0x06 Orientation SHORT */
-    public $Orientation;
+    /** @var int ICONLENGTH INT */
+	public const ICONLENGTH = 24;
+    /** @var int 0x00 Species BYTE */
+	public int $Species;
+    /** @var int 0x01 IFF BYTE */
+	public int $IFF;
+    /** @var int 0x02 X SHORT */
+	public int $X;
+    /** @var int 0x04 Y SHORT */
+	public int $Y;
+    /** @var int 0x06 Orientation SHORT */
+	public int $Orientation;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -35,7 +36,7 @@ abstract class IconBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -51,7 +52,7 @@ abstract class IconBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Species" => $this->Species,
@@ -62,7 +63,7 @@ abstract class IconBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -77,7 +78,7 @@ abstract class IconBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::ICONLENGTH;
     }

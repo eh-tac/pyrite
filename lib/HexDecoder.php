@@ -5,7 +5,7 @@ namespace Pyrite;
 trait HexDecoder
 {
 	// TODO remove all early returns and replace with checks to see why they're not being decoded properly
-	public function getBool($chr, $startPos = NULL)
+	public function getBool(string $chr, int $startPos = NULL): bool
 	{
 		if ($startPos !== NULL) {
 			$chr = substr($chr, $startPos, 1);
@@ -13,7 +13,16 @@ trait HexDecoder
 		return ord($chr) ? TRUE : FALSE;
 	}
 
-	public function getSByte($chr, $startPos = NULL)
+	public function getByte(string $str, int $startPos = NULL): int
+	{
+		if ($startPos === NULL || $startPos >= strlen($str)) {
+			return 0;
+		}
+		$chr = $str[$startPos];
+		return unpack('Cbyte', $chr)['byte'];
+	}
+
+	public function getSByte(string $chr, int $startPos = NULL): int
 	{
 		if ($startPos !== NULL) {
 			$chr = substr($chr, $startPos, 1);
@@ -22,7 +31,7 @@ trait HexDecoder
 		return unpack('csbyte', $chr)['sbyte'];
 	}
 
-	public function getChar($chr, $startPos = 0, $length = 1)
+	public function getChar(string $chr, int $startPos = 0, int $length = 1): string
 	{
 		$chr = substr($chr, $startPos, $length);
 		return $this->printChar($chr);
@@ -30,13 +39,13 @@ trait HexDecoder
 		//        return unpack('cchar', $chr)['char'];
 	}
 
-	public function printChar($char)
+	public function printChar(string $char): string
 	{
 		$bits = explode(chr(0), $char);
 		return $bits[0];
 	}
 
-	public function getShort($str, $startPos = NULL)
+	public function getShort(string $str, int $startPos = NULL): int
 	{
 		if ($startPos !== NULL) {
 			$str = substr($str, $startPos, 2);
@@ -47,7 +56,7 @@ trait HexDecoder
 		return unpack('sshort', $str)['short'];
 	}
 
-	public function getUShort($str, $startPos = NULL)
+	public function getUShort(string $str, int $startPos = NULL): int
 	{
 		if ($startPos !== NULL) {
 			$str = substr($str, $startPos, 2);
@@ -58,7 +67,7 @@ trait HexDecoder
 		return unpack('Sshort', $str)['short'];
 	}
 
-	public function getInt($str, $startPos = NULL)
+	public function getInt(string $str, int $startPos = NULL): int
 	{
 		if ($startPos !== NULL) {
 			$str = substr($str, $startPos, 4);
@@ -69,12 +78,12 @@ trait HexDecoder
 
 	/**
 	 * Get a string from the provided hex string. Terminate the string at the first null/chr(0) character
-	 * @param     $str
+	 * @param string $str
 	 * @param int $start  If set, perform a substr from this position before looking for the null characters
 	 * @param int $length If set, perform a substr to this length from the start position
 	 * @return string
 	 */
-	public function getString($str, $start = 0, $length = PHP_INT_MAX)
+	public function getString(string $str, int $start = 0, int $length = PHP_INT_MAX): string
 	{
 		if ($start || $length) {
 			$str = substr($str, $start, $length);
@@ -83,22 +92,13 @@ trait HexDecoder
 		return utf8_encode(trim($bits[0]));
 	}
 
-	public function lookup($array, $chr, $startPos = NULL)
+	public function lookup(array $array, string $chr, int $startPos = NULL): string
 	{
 		$key = $this->getByte($chr, $startPos);
 		if (!isset($array[$key])) {
 			return "Unknown lookup $key";
 		}
 		return $array[$key];
-	}
-
-	public function getByte($str, $startPos = NULL)
-	{
-		if ($startPos === NULL || $startPos >= strlen($str)) {
-			return 0;
-		}
-		$chr = $str[$startPos];
-		return unpack('Cbyte', $chr)['byte'];
 	}
 
 	public function getByteString(int $byte): string

@@ -6,34 +6,35 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PL2CampaignRecordBase extends PyriteBase implements Byteable
+abstract class PL2CampaignRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PL2CAMPAIGNRECORDLENGTH INT */
-    public const PL2CAMPAIGNRECORDLENGTH = 32;
-    /** @var integer 0x0000 IDNumber INT */
-    public $IDNumber;
-    /** @var integer 0x0004 totalCountFlown INT */
-    public $totalCountFlown;
-    /** @var integer 0x0008 isMissionCompleteWithoutCheat INT */
-    public $isMissionCompleteWithoutCheat;
-    /** @var integer 0x000C bestScore INT */
-    public $bestScore;
-    /** @var integer 0x0010 bestEvaluationBadge INT */
-    public $bestEvaluationBadge;
-    /** @var integer 0x0014 bestTimeAsSeconds INT */
-    public $bestTimeAsSeconds;
-    /** @var integer 0x0018 isMissionComplete INT */
-    public $isMissionComplete;
-    /** @var integer 0x001C UIFrameTimerHelper INT */
-    public $UIFrameTimerHelper;
+    /** @var int PL2CAMPAIGNRECORDLENGTH INT */
+	public const PL2CAMPAIGNRECORDLENGTH = 32;
+    /** @var int 0x0000 IDNumber INT */
+	public int $IDNumber;
+    /** @var int 0x0004 totalCountFlown INT */
+	public int $totalCountFlown;
+    /** @var int 0x0008 isMissionCompleteWithoutCheat INT */
+	public int $isMissionCompleteWithoutCheat;
+    /** @var int 0x000C bestScore INT */
+	public int $bestScore;
+    /** @var int 0x0010 bestEvaluationBadge INT */
+	public int $bestEvaluationBadge;
+    /** @var int 0x0014 bestTimeAsSeconds INT */
+	public int $bestTimeAsSeconds;
+    /** @var int 0x0018 isMissionComplete INT */
+	public int $isMissionComplete;
+    /** @var int 0x001C UIFrameTimerHelper INT */
+	public int $UIFrameTimerHelper;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -41,7 +42,7 @@ abstract class PL2CampaignRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -60,7 +61,7 @@ abstract class PL2CampaignRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "IDNumber" => $this->IDNumber,
@@ -74,7 +75,7 @@ abstract class PL2CampaignRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -92,7 +93,7 @@ abstract class PL2CampaignRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PL2CAMPAIGNRECORDLENGTH;
     }

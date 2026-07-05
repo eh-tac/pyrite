@@ -6,45 +6,46 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XWA\TriggerPair;
 
-abstract class MessageBase extends PyriteBase implements Byteable
+abstract class MessageBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MESSAGELENGTH INT */
-    public const MESSAGELENGTH = 162;
-    /** @var integer 0x00 MessageIndex SHORT */
-    public $MessageIndex;
+    /** @var int MESSAGELENGTH INT */
+	public const MESSAGELENGTH = 162;
+    /** @var int 0x00 MessageIndex SHORT */
+	public int $MessageIndex;
     /** @var string 0x02 Message STR */
-    public $Message;
-    /** @var integer[] 0x52 SentToTeam BYTE */
-    public $SentToTeam;
-    /** @var TriggerPair[] 0x5C Triggers TriggerPair */
-    public $Triggers; //(contained Unknown1)
+	public string $Message;
+    /** @var array<int> 0x52 SentToTeam BYTE */
+	public array $SentToTeam;
+    /** @var array<TriggerPair> 0x5C Triggers TriggerPair */
+	public array $Triggers; // (contained Unknown1)
     /** @var string 0x7C Voice STR */
-    public $Voice;
-    /** @var integer 0x84 OriginatingFG INT */
-    public $OriginatingFG;
-    /** @var integer 0x88 Type INT */
-    public $Type;
-    /** @var integer 0x8C Delay BYTE */
-    public $Delay;
-    /** @var boolean 0x8D Triggers12OrTriggers34 BOOL */
-    public $Triggers12OrTriggers34;
-    /** @var integer 0x8E Color BYTE */
-    public $Color;
-    /** @var boolean 0x8F SpeakerHeader BOOL */
-    public $SpeakerHeader; //(was Unknown2)
+	public string $Voice;
+    /** @var int 0x84 OriginatingFG INT */
+	public int $OriginatingFG;
+    /** @var int 0x88 Type INT */
+	public int $Type;
+    /** @var int 0x8C Delay BYTE */
+	public int $Delay;
+    /** @var bool 0x8D Triggers12OrTriggers34 BOOL */
+	public bool $Triggers12OrTriggers34;
+    /** @var int 0x8E Color BYTE */
+	public int $Color;
+    /** @var bool 0x8F SpeakerHeader BOOL */
+	public bool $SpeakerHeader; // (was Unknown2)
     /** @var TriggerPair 0x90 Special TriggerPair */
-    public $Special;
-    /** @var integer 0xA0 SpecialMeaning BYTE */
-    public $SpecialMeaning; //(was Unknown3) {Ignore, Stop, Finished, Both}
+	public TriggerPair $Special;
+    /** @var int 0xA0 SpecialMeaning BYTE */
+	public int $SpecialMeaning; // (was Unknown3) {Ignore, Stop, Finished, Both}
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -52,7 +53,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -88,7 +89,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "MessageIndex" => $this->MessageIndex,
@@ -107,7 +108,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -140,7 +141,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::MESSAGELENGTH;
     }

@@ -6,10 +6,17 @@ use Countable;
 
 class FlightGroup extends Base\FlightGroupBase implements Countable
 {
+    public Mission $mission;
 
-    public function beforeConstruct()
+    public function __construct(string $hex = null, ?\Pyrite\PyriteModel $TIE = null)
     {
+        parent::__construct($hex, $TIE);
+        if ($TIE instanceof Mission) {
+            $this->mission = $TIE;
+        }
     }
+
+    public function beforeConstruct() {}
 
     public function __toString()
     {
@@ -30,9 +37,25 @@ class FlightGroup extends Base\FlightGroupBase implements Countable
     public function pointValue($difficultyIsIrrelevant = NULL)
     {
         $FG_POINTS = array(
-            0, 600, 400, 800, 400, 600, 600, 800, 600, 800,
-            200, 800, 1200, 6000, 4000, 1600, 8000,
-            1800, 1800 //only guessing re: BWing
+            0,
+            600,
+            400,
+            800,
+            400,
+            600,
+            600,
+            800,
+            600,
+            800,
+            200,
+            800,
+            1200,
+            6000,
+            4000,
+            1600,
+            8000,
+            1800,
+            1800 //only guessing re: BWing
         );
 
         $pts = count($this) * $FG_POINTS[$this->CraftType];
@@ -86,7 +109,7 @@ class FlightGroup extends Base\FlightGroupBase implements Countable
         }
         $e = $this->getArrivalEventLabel();
         if ($this->ArrivalFG) {
-            $fg = $this->TIE->getFG($this->ArrivalFG);
+            $fg = $this->mission->FlightGroups[$this->ArrivalFG];
             $e = $fg . ' - be ' . $e;
         }
         $d = $this->ArrivalDelay;

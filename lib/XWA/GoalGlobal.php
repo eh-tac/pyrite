@@ -6,9 +6,9 @@ class GoalGlobal extends Base\GoalGlobalBase
 {
   const POINT_MULTIPLIER = 25;
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): GoalGlobal
   {
-    return (new GoalGlobal($hex, $tie))->loadHex();
+    return (new GoalGlobal($hex, $TIE))->loadHex();
   }
 
   public function isActive()
@@ -24,28 +24,28 @@ class GoalGlobal extends Base\GoalGlobalBase
   public function __toString()
   {
     return 'debug';
-    $a = $this->Trigger1->isActive() ? (string)$this->Trigger1 : '';
-    $b = $this->Trigger2->isActive() ? (string)$this->Trigger2 : '';
-    $c = $this->Trigger3->isActive() ? (string)$this->Trigger3 : '';
-    $d = $this->Trigger4->isActive() ? (string)$this->Trigger4 : '';
-    $ab = $a;
-    $cd = $c;
-    if ($b) {
-      $ab .= $this->Trigger1OrTrigger2 ? ' OR ' : " AND ";
-      $ab .= $b;
-    }
+    // $a = $this->Trigger1->isActive() ? (string)$this->Trigger1 : '';
+    // $b = $this->Trigger2->isActive() ? (string)$this->Trigger2 : '';
+    // $c = $this->Trigger3->isActive() ? (string)$this->Trigger3 : '';
+    // $d = $this->Trigger4->isActive() ? (string)$this->Trigger4 : '';
+    // $ab = $a;
+    // $cd = $c;
+    // if ($b) {
+    //   $ab .= $this->Trigger1OrTrigger2 ? ' OR ' : " AND ";
+    //   $ab .= $b;
+    // }
 
-    if ($d) {
-      $cd .= $this->Trigger3OrTrigger4 ? ' OR ' : " AND ";
-      $cd .= $d;
-    }
+    // if ($d) {
+    //   $cd .= $this->Trigger3OrTrigger4 ? ' OR ' : " AND ";
+    //   $cd .= $d;
+    // }
 
-    $str = $ab;
-    if ($cd) {
-      $str .= $this->Triggers12OrTriggers34 ? ' OR ' : " AND ";
-      $str .= $cd;
-    }
+    // $str = $ab;
+    // if ($cd) {
+    //   $str .= $this->Triggers12OrTriggers34 ? ' OR ' : " AND ";
+    //   $str .= $cd;
+    // }
 
-    return $str ? "$str  - {$this->getPoints()} points" : '';
+    // return $str ? "$str  - {$this->getPoints()} points" : '';
   }
 }

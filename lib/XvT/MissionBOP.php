@@ -1,20 +1,22 @@
 <?php
+
 namespace Pyrite\XvT;
-    
+
 class MissionBOP extends Base\MissionBOPBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new MissionBOP($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): MissionBOP
+  {
+    return (new MissionBOP($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
+  public function __toString(): string
+  {
+    return '';
+  }
 
-    protected function FGGoalStringCount() 
-    {
-      return 0;
-    }
+  protected function FGGoalStringCount(): int
+  {
+    return 0;
+  }
 }

@@ -33,37 +33,49 @@ export class PHPPropWriter {
     return [];
   }
 
+  /**
+   * For generating the property declarations at the top of the base classes
+   * @example
+   * ```php
+   *   /** 0x000 Name STR * /
+   *   public string $Name;
+   *
+   *  /**  FLIGHTGROUPLENGTH INT * /
+   *  public const FLIGHTGROUPLENGTH = 1378; // possibly a comment too
+   * ```
+   */
   public get propertyDeclaration(): string {
-    let type = this.typeExpr;
-    if (this.prop.isArray) {
-      type = `${type}[]`;
-    }
+    const { isArray, isStatic, name, reservedValue, comment, docString } = this.prop;
 
-    let p = `$${this.prop.name}`;
-    if (this.prop.isStatic) {
-      p = `const ${this.prop.name} = ${this.prop.reservedValue}`;
-    }
-    p = `public ${p};`;
-    if (this.prop.comment) {
-      p = `${p} //${this.prop.comment}`;
-    }
-    return `/** @var ${type} ${this.prop.docString} */\n    ${p}`;
+    const propertyType = isArray ? 'array' : this.typeExpr;
+    const docType = isArray ? `array<${this.typeExpr}>` : this.typeExpr;
+
+    // static properties are declared with const and assigned their value
+    const declaration = isStatic ? `const ${name} = ${reservedValue}` : `${propertyType} $${name}`;
+
+    return [
+      `/** @var ${docType} ${docString.trim()} */`,
+      `public ${declaration};${comment ? ` // ${comment}` : ''}`
+    ].join('\n\t');
   }
 
+  /**
+   * The type expression for use in property declarations
+   */
   public get typeExpr(): string {
     if (this.prop instanceof PropObject) {
       return this.prop.structName;
     } else if (this.prop instanceof PropBool) {
-      return 'boolean';
+      return 'bool';
     } else if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
       return 'string';
     } else if (this.prop instanceof PropAny) {
       return 'mixed';
     }
-    return 'integer';
+    return 'int';
   }
 
-  public getConstructorInit(): string {
+  public getLoadHexInitializer(): string {
     let offsetExpr = '';
     if (this.prop.isStatic) {
       if (this.prop.previousValueOffset) {
@@ -76,15 +88,17 @@ export class PHPPropWriter {
     const p = `$this->${this.prop.name}`;
     let init = `${p} = ${this.getGetter()};`;
     if (this.prop.isArray) {
+      // if this is a dynamic array with a length of 0 because it needs to be handled in the non-base class, add a phpstan-ignore comment to avoid the error about the array being always false
+      const ignore = this.arrayLength === '0' ? `\n\t\t// @phpstan-ignore smaller.alwaysFalse` : '';
       init = `${p} = [];
-        $offset = ${this.offsetExpr};
+        $offset = ${this.offsetExpr};${ignore}
         for ($i = 0; $i < ${this.arrayLength}; $i++) {
             $t = ${this.getGetter(true)};
             ${p}[] = $t;
             $offset += ${this.propLength};
         }`;
     } else if (!this.prop.isFixedLength) {
-      // strings and objects have dynamic lengths so the offsets must be adjusted on the flyF
+      // strings and objects have dynamic lengths so the offsets must be adjusted on the fly
       // if this is a string with a defined offset, make sure that is included when incrementing the offset
       // otherwise if already in previous value mode, just += by the current length;
       const op = this.prop.previousValueOffset ? '+=' : `= ${this.prop.offset} +`;
@@ -138,7 +152,7 @@ export class PHPPropWriter {
     const enumName = this.prop.enumName.toUpperCase();
 
     return `
-    public function get${name}Label() 
+    public function get${name}Label(): string 
     {
         return isset($this->${name}) && isset(Constants::$${enumName}[$this->${name}]) ? Constants::$${enumName}[$this->${name}] : "Unknown";
     }`;
@@ -149,7 +163,9 @@ export class PHPPropWriter {
     const p = `$this->${this.prop.name}`;
     let out = `${this.getSetter(this.prop.isStatic ? this.prop.reservedValue.toString() : p)};`;
     if (this.prop.isArray) {
-      out = `$offset = ${this.offsetExpr};
+      // if this is a dynamic array with a length of 0 because it needs to be handled in the non-base class, add a phpstan-ignore comment to avoid the error about the array being always false
+      const ignore = this.arrayLength === '0' ? `\n\t\t// @phpstan-ignore smaller.alwaysFalse` : '';
+      out = `$offset = ${this.offsetExpr};${ignore}
         for ($i = 0; $i < ${this.arrayLength}; $i++) {
             $t = ${p}[$i];
             ${this.getSetter('$t', true)};

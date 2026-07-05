@@ -6,35 +6,36 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XWA\TriggerPair;
 
-abstract class GoalGlobalBase extends PyriteBase implements Byteable
+abstract class GoalGlobalBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  GOALGLOBALLENGTH INT */
-    public const GOALGLOBALLENGTH = 122;
-    /** @var TriggerPair[] 0x00 Triggers TriggerPair */
-    public $Triggers; //(contained Unknown1)
+    /** @var int GOALGLOBALLENGTH INT */
+	public const GOALGLOBALLENGTH = 122;
+    /** @var array<TriggerPair> 0x00 Triggers TriggerPair */
+	public array $Triggers; // (contained Unknown1)
     /** @var string 0x20 Name STR */
-    public $Name; //(contains Unknown2)
-    /** @var integer 0x30 Version BYTE */
-    public $Version;
-    /** @var boolean 0x31 Triggers12OrTriggers34 BOOL */
-    public $Triggers12OrTriggers34;
-    /** @var integer 0x32 Delay BYTE */
-    public $Delay; //(was Unknown3)
-    /** @var integer 0x33 Points SBYTE */
-    public $Points;
-    /** @var integer[] 0x34 PointsPerTrigger BYTE */
-    public $PointsPerTrigger; //(was Unknown4-6)
-    /** @var integer 0x38 ActiveSquence BYTE */
-    public $ActiveSquence;
+	public string $Name; // (contains Unknown2)
+    /** @var int 0x30 Version BYTE */
+	public int $Version;
+    /** @var bool 0x31 Triggers12OrTriggers34 BOOL */
+	public bool $Triggers12OrTriggers34;
+    /** @var int 0x32 Delay BYTE */
+	public int $Delay; // (was Unknown3)
+    /** @var int 0x33 Points SBYTE */
+	public int $Points;
+    /** @var array<int> 0x34 PointsPerTrigger BYTE */
+	public array $PointsPerTrigger; // (was Unknown4-6)
+    /** @var int 0x38 ActiveSquence BYTE */
+	public int $ActiveSquence;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -42,7 +43,7 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -73,7 +74,7 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Triggers" => $this->Triggers,
@@ -87,7 +88,7 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -115,7 +116,7 @@ abstract class GoalGlobalBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::GOALGLOBALLENGTH;
     }

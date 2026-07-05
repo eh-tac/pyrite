@@ -6,35 +6,36 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\Event;
 use Pyrite\XvT\Tag;
 use Pyrite\XvT\XvTString;
 
-abstract class BriefingBase extends PyriteBase implements Byteable
+abstract class BriefingBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  BriefingLength INT */
-    public $BriefingLength;
-    /** @var integer 0x000 RunningTime SHORT */
-    public $RunningTime;
-    /** @var integer 0x002 Unknown1 SHORT */
-    public $Unknown1;
-    /** @var integer 0x004 StartEvents SHORT */
-    public $StartEvents;
-    /** @var integer 0x006 EventsLength INT */
-    public $EventsLength;
-    /** @var Event[] 0x00A Events Event */
-    public $Events;
-    /** @var Tag[] 0x334 Tags Tag */
-    public $Tags;
-    /** @var XvTString[] PV Strings XvTString */
-    public $Strings;
+    /** @var int BriefingLength INT */
+	public int $BriefingLength;
+    /** @var int 0x000 RunningTime SHORT */
+	public int $RunningTime;
+    /** @var int 0x002 Unknown1 SHORT */
+	public int $Unknown1;
+    /** @var int 0x004 StartEvents SHORT */
+	public int $StartEvents;
+    /** @var int 0x006 EventsLength INT */
+	public int $EventsLength;
+    /** @var array<Event> 0x00A Events Event */
+	public array $Events;
+    /** @var array<Tag> 0x334 Tags Tag */
+	public array $Tags;
+    /** @var array<XvTString> PV Strings XvTString */
+	public array $Strings;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -42,7 +43,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -78,7 +79,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "RunningTime" => $this->RunningTime,
@@ -91,7 +92,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -123,7 +124,7 @@ abstract class BriefingBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return $this->BriefingLength;
     }

@@ -6,33 +6,34 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\PLTTournTeamRecord;
 
-abstract class PLTTournamentProgressStateBase extends PyriteBase implements Byteable
+abstract class PLTTournamentProgressStateBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTTOURNAMENTPROGRESSSTATELENGTH INT */
-    public const PLTTOURNAMENTPROGRESSSTATELENGTH = 256;
+    /** @var int PLTTOURNAMENTPROGRESSSTATELENGTH INT */
+	public const PLTTOURNAMENTPROGRESSSTATELENGTH = 256;
     /** @var string 0x0000 unknown1 CHAR */
-    public $unknown1;
-    /** @var integer 0x0024 completedMissionCount INT */
-    public $completedMissionCount;
-    /** @var integer 0x0028 totalMissionCount INT */
-    public $totalMissionCount;
-    /** @var PLTTournTeamRecord[] 0x002C teamRecord PLTTournTeamRecord */
-    public $teamRecord;
-    /** @var integer 0x00F4 playersActive INT */
-    public $playersActive;
-    /** @var integer 0x00F8 teamsActive INT */
-    public $teamsActive;
-    /** @var integer 0x00FC unknown2 INT */
-    public $unknown2;
+	public string $unknown1;
+    /** @var int 0x0024 completedMissionCount INT */
+	public int $completedMissionCount;
+    /** @var int 0x0028 totalMissionCount INT */
+	public int $totalMissionCount;
+    /** @var array<PLTTournTeamRecord> 0x002C teamRecord PLTTournTeamRecord */
+	public array $teamRecord;
+    /** @var int 0x00F4 playersActive INT */
+	public int $playersActive;
+    /** @var int 0x00F8 teamsActive INT */
+	public int $teamsActive;
+    /** @var int 0x00FC unknown2 INT */
+	public int $unknown2;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -40,7 +41,7 @@ abstract class PLTTournamentProgressStateBase extends PyriteBase implements Byte
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -64,7 +65,7 @@ abstract class PLTTournamentProgressStateBase extends PyriteBase implements Byte
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "unknown1" => $this->unknown1,
@@ -77,7 +78,7 @@ abstract class PLTTournamentProgressStateBase extends PyriteBase implements Byte
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -99,7 +100,7 @@ abstract class PLTTournamentProgressStateBase extends PyriteBase implements Byte
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTTOURNAMENTPROGRESSSTATELENGTH;
     }
