@@ -67,7 +67,8 @@ class Battle
         if (!$path) {
             return false;
         }
-        $name = $name ? $name : basename($path);
+        $info = pathinfo($path);
+        $name = $name ? $name : basename($path, '.' . $info['extension']);
         $rand = date("Ymd") . rand(1, 999);
         $dir = $dir ? $dir : "/tmp/$rand$name/";
         if (substr($dir, -1, 1) !== "/") {
@@ -223,25 +224,34 @@ class Battle
 
     public static function parseKey(string $key): array
     {
-        $platform = $type = $num = '';
-        foreach (Platform::cases() as $p) {
+        $originalKey = $key;
+        /** @var ?Platform $platform */ $platform = null;
+        /** @var ?BattleType $type */ $type = null;
+        /** @var ?int $num */ $num = null;
+
+        $platforms = Platform::cases();
+        usort($platforms, static fn(Platform $a, Platform $b) => strlen($b->value) <=> strlen($a->value));
+        foreach ($platforms as $p) {
             if (substr($key, 0, strlen($p->value)) === $p->value) {
                 $platform = $p;
                 $key = substr($key, strlen($p->value));
                 break;
             }
         }
-        foreach (BattleType::cases() as $t) {
-            if (strpos($key, $t->value) !== false) {
-                $type = $t->value;
-                $key = str_replace($t->value, '', $key);
+        $battleTypes = BattleType::cases();
+        usort($battleTypes, static fn(BattleType $a, BattleType $b) => strlen($b->value) <=> strlen($a->value));
+        foreach ($battleTypes as $t) {
+            if (substr($key, 0, strlen($t->value)) === $t->value) {
+                $type = $t;
+                $key = substr($key, strlen($t->value));
                 break;
             }
         }
-        $num = (int)$key;
-        if (!$platform || !$type || !is_numeric($num)) {
-            throw new Exception("Unable to parse $key as the battle name. Submissions must be in the format TIETC111");
+        if (!$platform || !$type || $key === '' || !ctype_digit($key)) {
+            throw new Exception("Unable to parse $originalKey as the battle name. Submissions must be in the format TIETC111");
         }
+
+        $num = (int)$key;
         return [$platform, $type, $num];
     }
 
@@ -303,29 +313,6 @@ class Battle
         }
         return $diffs;
     }
-
-    // private function arrayRecursiveDiff(array $aArray1, array $aArray2)
-    // {
-    //     $aReturn = array();
-
-    //     foreach ($aArray1 as $mKey => $mValue) {
-    //         if (array_key_exists($mKey, $aArray2)) {
-    //             if (is_array($mValue)) {
-    //                 $aRecursiveDiff = $this->arrayRecursiveDiff($mValue, $aArray2[$mKey]);
-    //                 if (count($aRecursiveDiff)) {
-    //                     $aReturn[$mKey] = $aRecursiveDiff;
-    //                 }
-    //             } else {
-    //                 if ($mValue != $aArray2[$mKey]) {
-    //                     $aReturn[$mKey] = $mValue;
-    //                 }
-    //             }
-    //         } else {
-    //             $aReturn[$mKey] = $mValue;
-    //         }
-    //     }
-    //     return $aReturn;
-    // }
 
     private function loadMission(string $contents)
     {
