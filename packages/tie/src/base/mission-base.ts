@@ -1,16 +1,12 @@
-import { Briefing } from "../briefing";
-import { Byteable } from "../../../byteable";
-import { FileHeader } from "../file-header";
-import { FlightGroup } from "../flight-group";
-import { GlobalGoal } from "../global-goal";
-import { IMission, PyriteBase } from "../../../pyrite-base";
-import { Message } from "../message";
-import { PostMissionQuestions } from "../post-mission-questions";
-import { PreMissionQuestions } from "../pre-mission-questions";
-import { getByte, writeByte, writeObject } from "../../../hex";
-// tslint:disable member-ordering
-// tslint:disable prefer-const
-
+import { Briefing } from '../briefing';
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { FileHeader } from '../file-header';
+import { FlightGroup } from '../flight-group';
+import { GlobalGoal } from '../global-goal';
+import { Message } from '../message';
+import { PostMissionQuestions } from '../post-mission-questions';
+import { PreMissionQuestions } from '../pre-mission-questions';
+import { writeByte, writeObject } from '@pyrite/core';
 export abstract class MissionBase extends PyriteBase implements Byteable {
   public MissionLength: number;
   public FileHeader: FileHeader;
@@ -36,14 +32,12 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
       offset += t.getLength();
     }
     this.Messages = [];
-    offset = offset;
     for (let i = 0; i < this.FileHeader.NumMessages; i++) {
       const t = new Message(hex.slice(offset), this.TIE);
       this.Messages.push(t);
       offset += t.getLength();
     }
     this.GlobalGoals = [];
-    offset = offset;
     for (let i = 0; i < 3; i++) {
       const t = new GlobalGoal(hex.slice(offset), this.TIE);
       this.GlobalGoals.push(t);
@@ -52,14 +46,12 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
     this.Briefing = new Briefing(hex.slice(offset), this.TIE);
     offset += this.Briefing.getLength();
     this.PreMissionQuestions = [];
-    offset = offset;
     for (let i = 0; i < 10; i++) {
       const t = new PreMissionQuestions(hex.slice(offset), this.TIE);
       this.PreMissionQuestions.push(t);
       offset += t.getLength();
     }
     this.PostMissionQuestions = [];
-    offset = offset;
     for (let i = 0; i < 10; i++) {
       const t = new PostMissionQuestions(hex.slice(offset), this.TIE);
       this.PostMissionQuestions.push(t);
@@ -78,7 +70,7 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
       GlobalGoals: this.GlobalGoals.map((t) => t.toJSON()),
       Briefing: this.Briefing.toJSON(),
       PreMissionQuestions: this.PreMissionQuestions.map((t) => t.toJSON()),
-      PostMissionQuestions: this.PostMissionQuestions.map((t) => t.toJSON()),
+      PostMissionQuestions: this.PostMissionQuestions.map((t) => t.toJSON())
     };
   }
 

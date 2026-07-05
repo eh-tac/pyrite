@@ -1,11 +1,11 @@
-import { BriefingBase } from "./base/briefing-base";
+import { BriefingBase } from './base/briefing-base';
 
-import { getInt, getShort } from "../../hex";
-import { IMission } from "../pyrite-base";
-import { Event } from "./event";
-import { Tag } from "./tag";
-import { TIEString } from "./tie-string";
-import { EventType } from "./constants";
+import { getInt, getShort } from '../../hex';
+import { IMission } from '../pyrite-base';
+import { Event } from './event';
+import { Tag } from './tag';
+import { TIEString } from './tie-string';
+import { EventType } from './constants';
 
 export class Briefing extends BriefingBase {
   public constructor(hex: ArrayBuffer, tie: IMission) {
@@ -36,7 +36,6 @@ export class Briefing extends BriefingBase {
     }
 
     this.Strings = [];
-    offset = offset;
     for (let i = 0; i < 32; i++) {
       const t = new TIEString(hex.slice(offset), this.TIE);
       this.Strings.push(t);

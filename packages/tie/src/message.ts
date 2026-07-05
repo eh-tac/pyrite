@@ -1,6 +1,6 @@
-import { MessageBase } from "./base/message-base";
-import { Constants, MessageColor } from "./constants";
-import { IMission } from "../pyrite-base";
+import { MessageBase } from './base/message-base';
+import { Constants, MessageColor } from './constants';
+import { IMission } from '../pyrite-base';
 
 export class Message extends MessageBase {
   public get MessageColourLabel(): string {
@@ -28,7 +28,7 @@ export class Message extends MessageBase {
       MessageColour: this.MessageColourLabel,
       Triggers: this.Triggers,
       EditorNote: this.EditorNote,
-      Trigger1OrTrigger2: this.Trigger1OrTrigger2,
+      Trigger1OrTrigger2: this.Trigger1OrTrigger2
     };
   }
 }

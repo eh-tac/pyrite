@@ -1,14 +1,22 @@
-import { PilotFileBase } from "./base/pilot-file-base";
-import { BattleSummary, PilotData, shootInfo, percent, KillSummary, MissionScore, TrainingSummary } from "../pilot";
-import { getByteString } from "../../hex";
-import { Constants, BattleStatus } from "./constants";
-import * as lodash from "lodash";
+import { PilotFileBase } from './base/pilot-file-base';
+import {
+  BattleSummary,
+  PilotData,
+  shootInfo,
+  percent,
+  KillSummary,
+  MissionScore,
+  TrainingSummary
+} from '../pilot';
+import { getByteString } from '../../hex';
+import { Constants, BattleStatus } from './constants';
+import * as lodash from 'lodash';
 
 export class PilotFile extends PilotFileBase implements PilotData {
   public beforeConstruct(): void {}
 
   public toString(): string {
-    return "";
+    return '';
   }
 
   public get LaserlessScore(): number {
@@ -45,8 +53,8 @@ export class PilotFile extends PilotFileBase implements PilotData {
           const mission: MissionScore = {
             completed: true,
             score,
-            secret: secret.charAt(m) === "1",
-            bonus: bonus.charAt(m) === "1"
+            secret: secret.charAt(m) === '1',
+            bonus: bonus.charAt(m) === '1'
           };
           return mission;
         })
@@ -77,7 +85,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
     return Object.values(Constants.TRAININGCRAFT).map((craft: string, idx: number) => {
       const summary: TrainingSummary = {
         craftLabel: craft,
-        scoreLabel: "Not flown",
+        scoreLabel: 'Not flown',
         trainingLevel: this.TrainingLevels[idx],
         trainingScore: this.TrainingScores[idx],
         missions: combatCompletions[idx].map((complete: boolean, mission: number) => {

@@ -1,9 +1,9 @@
-import { PreMissionQuestionsBase } from "./base/pre-mission-questions-base";
-import { IMission } from "../../pyrite-base";
+import { PreMissionQuestionsBase } from './base/pre-mission-questions-base';
+import { IMission } from '../../pyrite-base';
 
 export enum QuestionType {
-  Officer = "Officer",
-  Secret = "Secret"
+  Officer = 'Officer',
+  Secret = 'Secret'
 }
 
 export class PreMissionQuestions extends PreMissionQuestionsBase {

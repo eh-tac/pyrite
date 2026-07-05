@@ -1,4 +1,4 @@
-struct PilotFile (size 0)
+struct PilotFile (size 0x179be)
 {
   0x0000 CHAR<14> Name
   0x000E INT totalScore
@@ -596,7 +596,7 @@ struct PL2FileRecord (size 0x4852E)
 }
 
 
-struct TeamStats (size 0)
+struct TeamStats (size 0x52a8)
 {
   0x0000 INT[6] MeleeMedals
   0x0018 INT[6] TournamentMedals
@@ -774,7 +774,7 @@ struct FlightGroup (size 0x562)
 struct Role (size 0x4)
 {
 	0x0	CHAR<1>	Team
-	0x1	CHAR<3>	Designation (enum)
+	0x1	CHAR<3>	Designation
 }
 
 struct Trigger (size 0x4)

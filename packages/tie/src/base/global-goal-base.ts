@@ -1,15 +1,11 @@
-import { Byteable } from "../../../byteable";
-import { IMission, PyriteBase } from "../../../pyrite-base";
-import { Trigger } from "../trigger";
-import { getBool, writeBool, writeObject } from "../../../hex";
-// tslint:disable member-ordering
-// tslint:disable prefer-const
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Trigger } from '../trigger';
+import { getBool, writeBool, writeObject } from '@pyrite/core';
 export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
   public readonly GLOBALGOALLENGTH: number = 28;
   public Triggers: Trigger[];
   public Trigger1OrTrigger2: boolean;
-  
+
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
@@ -23,16 +19,15 @@ export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
       offset += t.getLength();
     }
     this.Trigger1OrTrigger2 = getBool(hex, 0x19);
-    
   }
-  
+
   public toJSON(): Record<string, unknown> | string {
     return {
       Triggers: this.Triggers.map((t) => t.toJSON()),
-      Trigger1OrTrigger2: this.Trigger1OrTrigger2,
+      Trigger1OrTrigger2: this.Trigger1OrTrigger2
     };
   }
-  
+
   public toHexBuffer(): ArrayBuffer {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
@@ -47,8 +42,7 @@ export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.GLOBALGOALLENGTH;
   }

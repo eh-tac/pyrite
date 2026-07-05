@@ -1,13 +1,13 @@
-import { FlightGroup } from "./flight-group";
-import { MissionBase } from "./base/mission-base";
-import { PreMissionQuestions, QuestionType } from "./pre-mission-questions";
-import { PostMissionQuestions } from "./post-mission-questions";
-import { QuestionCondition } from "./constants";
+import { FlightGroup } from './flight-group';
+import { MissionBase } from './base/mission-base';
+import { PreMissionQuestions, QuestionType } from './pre-mission-questions';
+import { PostMissionQuestions } from './post-mission-questions';
+import { QuestionCondition } from './constants';
 
 export enum Difficulty {
-  Easy = "Easy",
-  Medium = "Medium",
-  Hard = "Hard",
+  Easy = 'Easy',
+  Medium = 'Medium',
+  Hard = 'Hard'
 }
 
 const HARD_PTS = 7750;
@@ -41,30 +41,30 @@ export class Mission extends MissionBase {
 
   public get officerDebriefing(): PostMissionQuestions[] {
     return this.PostMissionQuestions.slice(0, 4).filter(
-      (q) => q.Length && q.QuestionCondition === QuestionCondition.successful,
+      (q) => q.Length && q.QuestionCondition === QuestionCondition.successful
     );
   }
 
   public get secretDebriefing(): PostMissionQuestions[] {
     return this.PostMissionQuestions.slice(5, 9).filter(
-      (q) => q.Length && q.QuestionCondition === QuestionCondition.successful,
+      (q) => q.Length && q.QuestionCondition === QuestionCondition.successful
     );
   }
 
   public get officerFailBriefing(): PostMissionQuestions[] {
     return this.PostMissionQuestions.slice(0, 4).filter(
-      (q) => q.Length && q.QuestionCondition === QuestionCondition.failed,
+      (q) => q.Length && q.QuestionCondition === QuestionCondition.failed
     );
   }
 
   public get secretFailBriefing(): PostMissionQuestions[] {
     return this.PostMissionQuestions.slice(5, 9).filter(
-      (q) => q.Length && q.QuestionCondition === QuestionCondition.failed,
+      (q) => q.Length && q.QuestionCondition === QuestionCondition.failed
     );
   }
 
   public getIFF(iff: number) {
-    let IFFs = ["Rebel", "Imperial"];
+    let IFFs = ['Rebel', 'Imperial'];
     IFFs = IFFs.concat(this.FileHeader.OtherIffNames);
 
     let IFFName = IFFs[iff] && IFFs[iff].trim() ? IFFs[iff] : `Unknown IFF ${iff}`;

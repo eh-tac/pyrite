@@ -1,12 +1,8 @@
-import { Byteable } from "../../../byteable";
-import { Event } from "../event";
-import { IMission, PyriteBase } from "../../../pyrite-base";
-import { TIEString } from "../tie-string";
-import { Tag } from "../tag";
-import { getInt, getShort, writeInt, writeObject, writeShort } from "../../../hex";
-// tslint:disable member-ordering
-// tslint:disable prefer-const
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Event } from '../event';
+import { TIEString } from '../tie-string';
+import { Tag } from '../tag';
+import { getInt, getShort, writeInt, writeObject, writeShort } from '@pyrite/core';
 export abstract class BriefingBase extends PyriteBase implements Byteable {
   public BriefingLength: number;
   public RunningTime: number;
@@ -16,7 +12,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
   public Events: Event[]; //Set to 0 and impossible to generate in the same way, needs custom implementation
   public Tags: Tag[];
   public Strings: TIEString[];
-  
+
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
@@ -27,21 +23,20 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     this.StartLength = getShort(hex, 0x004);
     this.EventsLength = getInt(hex, 0x006);
     this.Events = [];
-    offset = 0x00A;
+    offset = 0x00a;
     for (let i = 0; i < 0; i++) {
       const t = new Event(hex.slice(offset), this.TIE);
       this.Events.push(t);
       offset += t.getLength();
     }
     this.Tags = [];
-    offset = 0x32A;
+    offset = 0x32a;
     for (let i = 0; i < 32; i++) {
       const t = new Tag(hex.slice(offset), this.TIE);
       this.Tags.push(t);
       offset += t.getLength();
     }
     this.Strings = [];
-    offset = offset;
     for (let i = 0; i < 32; i++) {
       const t = new TIEString(hex.slice(offset), this.TIE);
       this.Strings.push(t);
@@ -49,7 +44,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     }
     this.BriefingLength = offset;
   }
-  
+
   public toJSON(): Record<string, unknown> | string {
     return {
       RunningTime: this.RunningTime,
@@ -58,10 +53,10 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
       EventsLength: this.EventsLength,
       Events: this.Events.map((t) => t.toJSON()),
       Tags: this.Tags.map((t) => t.toJSON()),
-      Strings: this.Strings.map((t) => t.toJSON()),
+      Strings: this.Strings.map((t) => t.toJSON())
     };
   }
-  
+
   public toHexBuffer(): ArrayBuffer {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
@@ -70,13 +65,13 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
     writeShort(hex, this.Unknown, 0x002);
     writeShort(hex, this.StartLength, 0x004);
     writeInt(hex, this.EventsLength, 0x006);
-    offset = 0x00A;
+    offset = 0x00a;
     for (let i = 0; i < this.Events.length; i++) {
       const t = this.Events[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = 0x32A;
+    offset = 0x32a;
     for (let i = 0; i < this.Tags.length; i++) {
       const t = this.Tags[i];
       writeObject(hex, t, offset);
@@ -90,8 +85,7 @@ export abstract class BriefingBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.BriefingLength;
   }

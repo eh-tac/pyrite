@@ -1,14 +1,14 @@
-import { GoalFGBase } from "./base/goal-fg-base";
+import { GoalFGBase } from './base/goal-fg-base';
 
 export class GoalFG extends GoalFGBase {
   public toString(): string {
-    if (this.Condition === 10) return "None";
+    if (this.Condition === 10) return 'None';
 
     return `${this.ConditionLabel} ${this.GoalAmountLabel}`;
   }
 
   public goalText(fgLabel: string, count: number): string {
-    const amount = count === 1 && this.GoalAmount === 0 ? "" : `${this.GoalAmountLabel} of `;
+    const amount = count === 1 && this.GoalAmount === 0 ? '' : `${this.GoalAmountLabel} of `;
     return `${amount}${fgLabel} must be ${this.ConditionLabel.toLowerCase()}`;
   }
 

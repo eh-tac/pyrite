@@ -1,6 +1,6 @@
-import { Briefing } from "./briefing";
-import { Constants } from "./constants";
-import { EventBase } from "./base/event-base";
+import { Briefing } from './briefing';
+import { Constants } from './constants';
+import { EventBase } from './base/event-base';
 
 export enum EventType {
   PageBreak = 3,
@@ -47,7 +47,7 @@ export class Event extends EventBase {
   public Briefing: Briefing;
 
   public toString(): string {
-    let extra: string = "";
+    let extra: string = '';
 
     if (this.EventType === 4 || this.EventType === 5) {
       // title or captions
@@ -62,7 +62,7 @@ export class Event extends EventBase {
 
       extra = `${t} at ${v[1]},${v[2]} ${col}`;
     } else if (this.Variables.length) {
-      extra = "Vars " + this.Variables.join(", ");
+      extra = 'Vars ' + this.Variables.join(', ');
     }
     return `${this.EventTypeLabel} ${extra} @ ${this.Time}`;
   }
@@ -73,12 +73,12 @@ export class Event extends EventBase {
     } else if (this.EventType >= 18 && this.EventType <= 25) {
       return this.Briefing.Tags[this.Variables[0]].Text;
     } else {
-      return "Unknown Text";
+      return 'Unknown Text';
     }
   }
 
   protected VariableCount(): number {
-    if (Event.countData.hasOwnProperty(this.EventType)) {
+    if (Object.prototype.hasOwnProperty.call(Event.countData, this.EventType)) {
       return Event.countData[this.EventType];
     }
     throw new Error(`Event.VariableCount - Unknown for ${this.EventType}`);

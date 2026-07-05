@@ -1,14 +1,31 @@
-import { Byteable } from "../../../byteable";
-import { AbortTrigger, ArrivalDifficulty, Beam, Constants, CraftType, Formation, GroupAI, Markings, Status, Warhead } from "../constants";
-import { GoalFG } from "../goal-fg";
-import { IMission, PyriteBase } from "../../../pyrite-base";
-import { Order } from "../order";
-import { Trigger } from "../trigger";
-import { Waypt } from "../waypt";
-import { getBool, getByte, getChar, getSByte, writeBool, writeByte, writeChar, writeObject, writeSByte } from "../../../hex";
-// tslint:disable member-ordering
-// tslint:disable prefer-const
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import {
+  AbortTrigger,
+  ArrivalDifficulty,
+  Beam,
+  Constants,
+  CraftType,
+  Formation,
+  GroupAI,
+  Markings,
+  Status,
+  Warhead
+} from '../constants';
+import { GoalFG } from '../goal-fg';
+import { Order } from '../order';
+import { Trigger } from '../trigger';
+import { Waypt } from '../waypt';
+import {
+  getBool,
+  getByte,
+  getChar,
+  getSByte,
+  writeBool,
+  writeByte,
+  writeChar,
+  writeObject,
+  writeSByte
+} from '@pyrite/core';
 export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public readonly FLIGHTGROUPLENGTH: number = 292;
   public Name: string;
@@ -69,14 +86,14 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
   public Unknown19: boolean;
   public Unknown20: number;
   public Unknown21: boolean;
-  
+
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.Name = getChar(hex, 0x000, 12);
-    this.Pilot = getChar(hex, 0x00C, 12);
+    this.Pilot = getChar(hex, 0x00c, 12);
     this.Cargo = getChar(hex, 0x018, 12);
     this.SpecialCargo = getChar(hex, 0x024, 12);
     this.SpecialCargoCraft = getByte(hex, 0x030);
@@ -89,12 +106,12 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.Iff = getByte(hex, 0x037);
     this.GroupAI = getByte(hex, 0x038) as GroupAI;
     this.Markings = getByte(hex, 0x039) as Markings;
-    this.ObeyPlayerOrders = getBool(hex, 0x03A);
+    this.ObeyPlayerOrders = getBool(hex, 0x03a);
     // static prop Reserved1
-    this.Formation = getByte(hex, 0x03C) as Formation;
-    this.FormationSpacing = getByte(hex, 0x03D);
-    this.GlobalGroup = getByte(hex, 0x03E);
-    this.LeaderSpacing = getByte(hex, 0x03F);
+    this.Formation = getByte(hex, 0x03c) as Formation;
+    this.FormationSpacing = getByte(hex, 0x03d);
+    this.GlobalGroup = getByte(hex, 0x03e);
+    this.LeaderSpacing = getByte(hex, 0x03f);
     this.NumberOfWaves = getByte(hex, 0x040);
     this.Unknown5 = getByte(hex, 0x041);
     this.PlayerCraft = getByte(hex, 0x042);
@@ -105,18 +122,18 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.Unknown10 = getByte(hex, 0x047);
     // static prop Reserved2
     this.ArrivalDifficulty = getByte(hex, 0x049) as ArrivalDifficulty;
-    this.Arrival1 = new Trigger(hex.slice(0x04A), this.TIE);
-    this.Arrival2 = new Trigger(hex.slice(0x04E), this.TIE);
+    this.Arrival1 = new Trigger(hex.slice(0x04a), this.TIE);
+    this.Arrival2 = new Trigger(hex.slice(0x04e), this.TIE);
     this.Arrival1OrArrival2 = getBool(hex, 0x052);
     // static prop Reserved3
     this.ArrivalDelayMinutes = getByte(hex, 0x054);
     this.ArrivalDelaySeconds = getByte(hex, 0x055);
     this.Departure = new Trigger(hex.slice(0x056), this.TIE);
-    this.DepartureDelayMinutes = getByte(hex, 0x05A);
-    this.DepartureDelatSeconds = getByte(hex, 0x05B);
-    this.AbortTrigger = getByte(hex, 0x05C) as AbortTrigger;
+    this.DepartureDelayMinutes = getByte(hex, 0x05a);
+    this.DepartureDelatSeconds = getByte(hex, 0x05b);
+    this.AbortTrigger = getByte(hex, 0x05c) as AbortTrigger;
     // static prop Reserved4
-    this.Unknown16 = getByte(hex, 0x05E);
+    this.Unknown16 = getByte(hex, 0x05e);
     // static prop Reserved5
     this.ArrivalMothership = getByte(hex, 0x060);
     this.ArriveViaMothership = getBool(hex, 0x061);
@@ -134,15 +151,15 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
       offset += t.getLength();
     }
     this.FlightGroupGoals = [];
-    offset = 0x09E;
+    offset = 0x09e;
     for (let i = 0; i < 4; i++) {
       const t = new GoalFG(hex.slice(offset), this.TIE);
       this.FlightGroupGoals.push(t);
       offset += t.getLength();
     }
-    this.BonusGoalPoints = getSByte(hex, 0x0A6);
+    this.BonusGoalPoints = getSByte(hex, 0x0a6);
     this.Waypoints = [];
-    offset = 0x0A8;
+    offset = 0x0a8;
     for (let i = 0; i < 4; i++) {
       const t = new Waypt(hex.slice(offset), this.TIE);
       this.Waypoints.push(t);
@@ -151,9 +168,8 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     this.Unknown19 = getBool(hex, 0x120);
     this.Unknown20 = getByte(hex, 0x122);
     this.Unknown21 = getBool(hex, 0x123);
-    
   }
-  
+
   public toJSON(): Record<string, unknown> | string {
     return {
       Name: this.Name,
@@ -208,16 +224,16 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
       Waypoints: this.Waypoints.map((t) => t.toJSON()),
       Unknown19: this.Unknown19,
       Unknown20: this.Unknown20,
-      Unknown21: this.Unknown21,
+      Unknown21: this.Unknown21
     };
   }
-  
+
   public toHexBuffer(): ArrayBuffer {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeChar(hex, this.Name, 0x000, 12);
-    writeChar(hex, this.Pilot, 0x00C, 12);
+    writeChar(hex, this.Pilot, 0x00c, 12);
     writeChar(hex, this.Cargo, 0x018, 12);
     writeChar(hex, this.SpecialCargo, 0x024, 12);
     writeByte(hex, this.SpecialCargoCraft, 0x030);
@@ -230,12 +246,12 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     writeByte(hex, this.Iff, 0x037);
     writeByte(hex, this.GroupAI, 0x038);
     writeByte(hex, this.Markings, 0x039);
-    writeBool(hex, this.ObeyPlayerOrders, 0x03A);
-    writeByte(hex, this.Reserved1, 0x03B);
-    writeByte(hex, this.Formation, 0x03C);
-    writeByte(hex, this.FormationSpacing, 0x03D);
-    writeByte(hex, this.GlobalGroup, 0x03E);
-    writeByte(hex, this.LeaderSpacing, 0x03F);
+    writeBool(hex, this.ObeyPlayerOrders, 0x03a);
+    writeByte(hex, this.Reserved1, 0x03b);
+    writeByte(hex, this.Formation, 0x03c);
+    writeByte(hex, this.FormationSpacing, 0x03d);
+    writeByte(hex, this.GlobalGroup, 0x03e);
+    writeByte(hex, this.LeaderSpacing, 0x03f);
     writeByte(hex, this.NumberOfWaves, 0x040);
     writeByte(hex, this.Unknown5, 0x041);
     writeByte(hex, this.PlayerCraft, 0x042);
@@ -246,19 +262,19 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
     writeByte(hex, this.Unknown10, 0x047);
     writeByte(hex, this.Reserved2, 0x048);
     writeByte(hex, this.ArrivalDifficulty, 0x049);
-    writeObject(hex, this.Arrival1, 0x04A);
-    writeObject(hex, this.Arrival2, 0x04E);
+    writeObject(hex, this.Arrival1, 0x04a);
+    writeObject(hex, this.Arrival2, 0x04e);
     writeBool(hex, this.Arrival1OrArrival2, 0x052);
     writeByte(hex, this.Reserved3, 0x053);
     writeByte(hex, this.ArrivalDelayMinutes, 0x054);
     writeByte(hex, this.ArrivalDelaySeconds, 0x055);
     writeObject(hex, this.Departure, 0x056);
-    writeByte(hex, this.DepartureDelayMinutes, 0x05A);
-    writeByte(hex, this.DepartureDelatSeconds, 0x05B);
-    writeByte(hex, this.AbortTrigger, 0x05C);
-    writeByte(hex, this.Reserved4, 0x05D);
-    writeByte(hex, this.Unknown16, 0x05E);
-    writeByte(hex, this.Reserved5, 0x05F);
+    writeByte(hex, this.DepartureDelayMinutes, 0x05a);
+    writeByte(hex, this.DepartureDelatSeconds, 0x05b);
+    writeByte(hex, this.AbortTrigger, 0x05c);
+    writeByte(hex, this.Reserved4, 0x05d);
+    writeByte(hex, this.Unknown16, 0x05e);
+    writeByte(hex, this.Reserved5, 0x05f);
     writeByte(hex, this.ArrivalMothership, 0x060);
     writeBool(hex, this.ArriveViaMothership, 0x061);
     writeByte(hex, this.DepartureMothership, 0x062);
@@ -273,14 +289,14 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = 0x09E;
+    offset = 0x09e;
     for (let i = 0; i < this.FlightGroupGoals.length; i++) {
       const t = this.FlightGroupGoals[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    writeSByte(hex, this.BonusGoalPoints, 0x0A6);
-    offset = 0x0A8;
+    writeSByte(hex, this.BonusGoalPoints, 0x0a6);
+    offset = 0x0a8;
     for (let i = 0; i < this.Waypoints.length; i++) {
       const t = this.Waypoints[i];
       writeObject(hex, t, offset);
@@ -292,43 +308,43 @@ export abstract class FlightGroupBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
+
   public get CraftTypeLabel(): string {
-    return Constants.CRAFTTYPE[this.CraftType] || "Unknown";
+    return Constants.CRAFTTYPE[this.CraftType] || 'Unknown';
   }
 
   public get StatusLabel(): string {
-    return Constants.STATUS[this.Status] || "Unknown";
+    return Constants.STATUS[this.Status] || 'Unknown';
   }
 
   public get WarheadLabel(): string {
-    return Constants.WARHEAD[this.Warhead] || "Unknown";
+    return Constants.WARHEAD[this.Warhead] || 'Unknown';
   }
 
   public get BeamLabel(): string {
-    return Constants.BEAM[this.Beam] || "Unknown";
+    return Constants.BEAM[this.Beam] || 'Unknown';
   }
 
   public get GroupAILabel(): string {
-    return Constants.GROUPAI[this.GroupAI] || "Unknown";
+    return Constants.GROUPAI[this.GroupAI] || 'Unknown';
   }
 
   public get MarkingsLabel(): string {
-    return Constants.MARKINGS[this.Markings] || "Unknown";
+    return Constants.MARKINGS[this.Markings] || 'Unknown';
   }
 
   public get FormationLabel(): string {
-    return Constants.FORMATION[this.Formation] || "Unknown";
+    return Constants.FORMATION[this.Formation] || 'Unknown';
   }
 
   public get ArrivalDifficultyLabel(): string {
-    return Constants.ARRIVALDIFFICULTY[this.ArrivalDifficulty] || "Unknown";
+    return Constants.ARRIVALDIFFICULTY[this.ArrivalDifficulty] || 'Unknown';
   }
 
   public get AbortTriggerLabel(): string {
-    return Constants.ABORTTRIGGER[this.AbortTrigger] || "Unknown";
+    return Constants.ABORTTRIGGER[this.AbortTrigger] || 'Unknown';
   }
-  
+
   public getLength(): number {
     return this.FLIGHTGROUPLENGTH;
   }

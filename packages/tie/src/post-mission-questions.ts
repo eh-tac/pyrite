@@ -1,5 +1,5 @@
-import { PostMissionQuestionsBase } from "./base/post-mission-questions-base";
-import { IMission } from "../../pyrite-base";
+import { PostMissionQuestionsBase } from './base/post-mission-questions-base';
+import { IMission } from '../../pyrite-base';
 
 export class PostMissionQuestions extends PostMissionQuestionsBase {
   constructor(hex: ArrayBuffer, tie?: IMission) {

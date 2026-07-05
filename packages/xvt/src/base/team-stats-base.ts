@@ -1,0 +1,435 @@
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { MissionData } from '../mission-data';
+import { getInt, writeInt, writeObject } from '@pyrite/core';
+export abstract class TeamStatsBase extends PyriteBase implements Byteable {
+  public readonly TEAMSTATSLENGTH: number = 21160;
+  public MeleeMedals: number[];
+  public TournamentMedals: number[];
+  public MissionTopRatings: number[];
+  public MissionMedals: number[];
+  public PlayCounts: number[];
+  public totalKills: number[];
+  public ExerciseKillsByType: number[];
+  public MeleeKillsByType: number[];
+  public CombatKillsByType: number[];
+  public ExercisePartialsByType: number[];
+  public MeleePartialsByType: number[];
+  public CombatPartialsByType: number[];
+  public ExerciseAssistsByType: number[];
+  public MeleeAssistsByType: number[];
+  public CombatAssistsByType: number[];
+  public HiddenCargoFound: number[];
+  public LasersHit: number[];
+  public LasersTotal: number[];
+  public WarheadsHit: number[];
+  public WarheadsTotal: number[];
+  public CraftLosses: number[];
+  public CollisionLosses: number[];
+  public StarshipLosses: number[];
+  public MineLosses: number[];
+  public TrainingMissionData: MissionData[];
+  public MeleeMissionData: MissionData[];
+  public CombatMissionData: MissionData[];
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
+    this.beforeConstruct();
+    let offset = 0;
+
+    this.MeleeMedals = [];
+    offset = 0x0000;
+    for (let i = 0; i < 6; i++) {
+      const t = getInt(hex, offset);
+      this.MeleeMedals.push(t);
+      offset += 4;
+    }
+    this.TournamentMedals = [];
+    offset = 0x0018;
+    for (let i = 0; i < 6; i++) {
+      const t = getInt(hex, offset);
+      this.TournamentMedals.push(t);
+      offset += 4;
+    }
+    this.MissionTopRatings = [];
+    offset = 0x0030;
+    for (let i = 0; i < 6; i++) {
+      const t = getInt(hex, offset);
+      this.MissionTopRatings.push(t);
+      offset += 4;
+    }
+    this.MissionMedals = [];
+    offset = 0x0048;
+    for (let i = 0; i < 6; i++) {
+      const t = getInt(hex, offset);
+      this.MissionMedals.push(t);
+      offset += 4;
+    }
+    this.PlayCounts = [];
+    offset = 0x0090;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.PlayCounts.push(t);
+      offset += 4;
+    }
+    this.totalKills = [];
+    offset = 0x00a8;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.totalKills.push(t);
+      offset += 4;
+    }
+    this.ExerciseKillsByType = [];
+    offset = 0x00c0;
+    for (let i = 0; i < 88; i++) {
+      const t = getInt(hex, offset);
+      this.ExerciseKillsByType.push(t);
+      offset += 4;
+    }
+    this.MeleeKillsByType = [];
+    offset = 0x0220;
+    for (let i = 0; i < 88; i++) {
+      const t = getInt(hex, offset);
+      this.MeleeKillsByType.push(t);
+      offset += 4;
+    }
+    this.CombatKillsByType = [];
+    offset = 0x0380;
+    for (let i = 0; i < 88; i++) {
+      const t = getInt(hex, offset);
+      this.CombatKillsByType.push(t);
+      offset += 4;
+    }
+    this.ExercisePartialsByType = [];
+    offset = 0x4e0;
+    for (let i = 0; i < 88; i++) {
+      const t = getInt(hex, offset);
+      this.ExercisePartialsByType.push(t);
+      offset += 4;
+    }
+    this.MeleePartialsByType = [];
+    offset = 0x640;
+    for (let i = 0; i < 88; i++) {
+      const t = getInt(hex, offset);
+      this.MeleePartialsByType.push(t);
+      offset += 4;
+    }
+    this.CombatPartialsByType = [];
+    offset = 0x7a0;
+    for (let i = 0; i < 88; i++) {
+      const t = getInt(hex, offset);
+      this.CombatPartialsByType.push(t);
+      offset += 4;
+    }
+    this.ExerciseAssistsByType = [];
+    offset = 0x900;
+    for (let i = 0; i < 88; i++) {
+      const t = getInt(hex, offset);
+      this.ExerciseAssistsByType.push(t);
+      offset += 4;
+    }
+    this.MeleeAssistsByType = [];
+    offset = 0xa60;
+    for (let i = 0; i < 88; i++) {
+      const t = getInt(hex, offset);
+      this.MeleeAssistsByType.push(t);
+      offset += 4;
+    }
+    this.CombatAssistsByType = [];
+    offset = 0xbc0;
+    for (let i = 0; i < 88; i++) {
+      const t = getInt(hex, offset);
+      this.CombatAssistsByType.push(t);
+      offset += 4;
+    }
+    this.HiddenCargoFound = [];
+    offset = 0x117c;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.HiddenCargoFound.push(t);
+      offset += 4;
+    }
+    this.LasersHit = [];
+    offset = 0x1188;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.LasersHit.push(t);
+      offset += 4;
+    }
+    this.LasersTotal = [];
+    offset = 0x1194;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.LasersTotal.push(t);
+      offset += 4;
+    }
+    this.WarheadsHit = [];
+    offset = 0x11a0;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.WarheadsHit.push(t);
+      offset += 4;
+    }
+    this.WarheadsTotal = [];
+    offset = 0x11ac;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.WarheadsTotal.push(t);
+      offset += 4;
+    }
+    this.CraftLosses = [];
+    offset = 0x11b8;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.CraftLosses.push(t);
+      offset += 4;
+    }
+    this.CollisionLosses = [];
+    offset = 0x11c4;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.CollisionLosses.push(t);
+      offset += 4;
+    }
+    this.StarshipLosses = [];
+    offset = 0x11d0;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.StarshipLosses.push(t);
+      offset += 4;
+    }
+    this.MineLosses = [];
+    offset = 0x11dc;
+    for (let i = 0; i < 3; i++) {
+      const t = getInt(hex, offset);
+      this.MineLosses.push(t);
+      offset += 4;
+    }
+    this.TrainingMissionData = [];
+    offset = 0x1360;
+    for (let i = 0; i < 100; i++) {
+      const t = new MissionData(hex.slice(offset), this.TIE);
+      this.TrainingMissionData.push(t);
+      offset += t.getLength();
+    }
+    this.MeleeMissionData = [];
+    offset = 0x2170;
+    for (let i = 0; i < 100; i++) {
+      const t = new MissionData(hex.slice(offset), this.TIE);
+      this.MeleeMissionData.push(t);
+      offset += t.getLength();
+    }
+    this.CombatMissionData = [];
+    offset = 0x4498;
+    for (let i = 0; i < 100; i++) {
+      const t = new MissionData(hex.slice(offset), this.TIE);
+      this.CombatMissionData.push(t);
+      offset += t.getLength();
+    }
+  }
+
+  public toJSON(): Record<string, unknown> | string {
+    return {
+      MeleeMedals: this.MeleeMedals,
+      TournamentMedals: this.TournamentMedals,
+      MissionTopRatings: this.MissionTopRatings,
+      MissionMedals: this.MissionMedals,
+      PlayCounts: this.PlayCounts,
+      totalKills: this.totalKills,
+      ExerciseKillsByType: this.ExerciseKillsByType,
+      MeleeKillsByType: this.MeleeKillsByType,
+      CombatKillsByType: this.CombatKillsByType,
+      ExercisePartialsByType: this.ExercisePartialsByType,
+      MeleePartialsByType: this.MeleePartialsByType,
+      CombatPartialsByType: this.CombatPartialsByType,
+      ExerciseAssistsByType: this.ExerciseAssistsByType,
+      MeleeAssistsByType: this.MeleeAssistsByType,
+      CombatAssistsByType: this.CombatAssistsByType,
+      HiddenCargoFound: this.HiddenCargoFound,
+      LasersHit: this.LasersHit,
+      LasersTotal: this.LasersTotal,
+      WarheadsHit: this.WarheadsHit,
+      WarheadsTotal: this.WarheadsTotal,
+      CraftLosses: this.CraftLosses,
+      CollisionLosses: this.CollisionLosses,
+      StarshipLosses: this.StarshipLosses,
+      MineLosses: this.MineLosses,
+      TrainingMissionData: this.TrainingMissionData.map((t) => t.toJSON()),
+      MeleeMissionData: this.MeleeMissionData.map((t) => t.toJSON()),
+      CombatMissionData: this.CombatMissionData.map((t) => t.toJSON())
+    };
+  }
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
+    let offset = 0;
+
+    offset = 0x0000;
+    for (let i = 0; i < this.MeleeMedals.length; i++) {
+      const t = this.MeleeMedals[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x0018;
+    for (let i = 0; i < this.TournamentMedals.length; i++) {
+      const t = this.TournamentMedals[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x0030;
+    for (let i = 0; i < this.MissionTopRatings.length; i++) {
+      const t = this.MissionTopRatings[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x0048;
+    for (let i = 0; i < this.MissionMedals.length; i++) {
+      const t = this.MissionMedals[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x0090;
+    for (let i = 0; i < this.PlayCounts.length; i++) {
+      const t = this.PlayCounts[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x00a8;
+    for (let i = 0; i < this.totalKills.length; i++) {
+      const t = this.totalKills[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x00c0;
+    for (let i = 0; i < this.ExerciseKillsByType.length; i++) {
+      const t = this.ExerciseKillsByType[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x0220;
+    for (let i = 0; i < this.MeleeKillsByType.length; i++) {
+      const t = this.MeleeKillsByType[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x0380;
+    for (let i = 0; i < this.CombatKillsByType.length; i++) {
+      const t = this.CombatKillsByType[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x4e0;
+    for (let i = 0; i < this.ExercisePartialsByType.length; i++) {
+      const t = this.ExercisePartialsByType[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x640;
+    for (let i = 0; i < this.MeleePartialsByType.length; i++) {
+      const t = this.MeleePartialsByType[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x7a0;
+    for (let i = 0; i < this.CombatPartialsByType.length; i++) {
+      const t = this.CombatPartialsByType[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x900;
+    for (let i = 0; i < this.ExerciseAssistsByType.length; i++) {
+      const t = this.ExerciseAssistsByType[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0xa60;
+    for (let i = 0; i < this.MeleeAssistsByType.length; i++) {
+      const t = this.MeleeAssistsByType[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0xbc0;
+    for (let i = 0; i < this.CombatAssistsByType.length; i++) {
+      const t = this.CombatAssistsByType[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x117c;
+    for (let i = 0; i < this.HiddenCargoFound.length; i++) {
+      const t = this.HiddenCargoFound[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x1188;
+    for (let i = 0; i < this.LasersHit.length; i++) {
+      const t = this.LasersHit[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x1194;
+    for (let i = 0; i < this.LasersTotal.length; i++) {
+      const t = this.LasersTotal[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x11a0;
+    for (let i = 0; i < this.WarheadsHit.length; i++) {
+      const t = this.WarheadsHit[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x11ac;
+    for (let i = 0; i < this.WarheadsTotal.length; i++) {
+      const t = this.WarheadsTotal[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x11b8;
+    for (let i = 0; i < this.CraftLosses.length; i++) {
+      const t = this.CraftLosses[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x11c4;
+    for (let i = 0; i < this.CollisionLosses.length; i++) {
+      const t = this.CollisionLosses[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x11d0;
+    for (let i = 0; i < this.StarshipLosses.length; i++) {
+      const t = this.StarshipLosses[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x11dc;
+    for (let i = 0; i < this.MineLosses.length; i++) {
+      const t = this.MineLosses[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x1360;
+    for (let i = 0; i < this.TrainingMissionData.length; i++) {
+      const t = this.TrainingMissionData[i];
+      writeObject(hex, t, offset);
+      offset += t.getLength();
+    }
+    offset = 0x2170;
+    for (let i = 0; i < this.MeleeMissionData.length; i++) {
+      const t = this.MeleeMissionData[i];
+      writeObject(hex, t, offset);
+      offset += t.getLength();
+    }
+    offset = 0x4498;
+    for (let i = 0; i < this.CombatMissionData.length; i++) {
+      const t = this.CombatMissionData[i];
+      writeObject(hex, t, offset);
+      offset += t.getLength();
+    }
+
+    return hex;
+  }
+
+  public getLength(): number {
+    return this.TEAMSTATSLENGTH;
+  }
+}

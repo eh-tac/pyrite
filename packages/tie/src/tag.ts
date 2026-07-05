@@ -1,5 +1,5 @@
-import { TagBase } from "./base/tag-base";
-import { IMission } from "../../pyrite-base";
+import { TagBase } from './base/tag-base';
+import { IMission } from '../../pyrite-base';
 
 export class Tag extends TagBase {
   public toString() {

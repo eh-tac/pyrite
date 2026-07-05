@@ -1,5 +1,5 @@
-import { TIEStringBase } from "./base/tie-string-base";
-import { IMission } from "../../pyrite-base";
+import { TIEStringBase } from './base/tie-string-base';
+import { IMission } from '../../pyrite-base';
 
 export class TIEString extends TIEStringBase {
   public toString() {

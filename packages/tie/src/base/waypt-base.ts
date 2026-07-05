@@ -1,9 +1,5 @@
-import { Byteable } from "../../../byteable";
-import { IMission, PyriteBase } from "../../../pyrite-base";
-import { getShort, writeShort } from "../../../hex";
-// tslint:disable member-ordering
-// tslint:disable prefer-const
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { getShort, writeShort } from '@pyrite/core';
 export abstract class WayptBase extends PyriteBase implements Byteable {
   public readonly WAYPTLENGTH: number = 30;
   public StartPoints: number[];
@@ -11,7 +7,7 @@ export abstract class WayptBase extends PyriteBase implements Byteable {
   public Rendezvous: number;
   public Hyperspace: number;
   public Briefing: number;
-  
+
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
@@ -32,21 +28,20 @@ export abstract class WayptBase extends PyriteBase implements Byteable {
       offset += 2;
     }
     this.Rendezvous = getShort(hex, 0x18);
-    this.Hyperspace = getShort(hex, 0x1A);
-    this.Briefing = getShort(hex, 0x1C);
-    
+    this.Hyperspace = getShort(hex, 0x1a);
+    this.Briefing = getShort(hex, 0x1c);
   }
-  
+
   public toJSON(): Record<string, unknown> | string {
     return {
       StartPoints: this.StartPoints,
       Waypoints: this.Waypoints,
       Rendezvous: this.Rendezvous,
       Hyperspace: this.Hyperspace,
-      Briefing: this.Briefing,
+      Briefing: this.Briefing
     };
   }
-  
+
   public toHexBuffer(): ArrayBuffer {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
@@ -64,13 +59,12 @@ export abstract class WayptBase extends PyriteBase implements Byteable {
       offset += 2;
     }
     writeShort(hex, this.Rendezvous, 0x18);
-    writeShort(hex, this.Hyperspace, 0x1A);
-    writeShort(hex, this.Briefing, 0x1C);
+    writeShort(hex, this.Hyperspace, 0x1a);
+    writeShort(hex, this.Briefing, 0x1c);
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.WAYPTLENGTH;
   }

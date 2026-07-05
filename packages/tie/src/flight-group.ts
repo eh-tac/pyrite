@@ -1,10 +1,10 @@
-import { FlightGroupBase } from "./base/flight-group-base";
-import { Difficulty } from "./mission";
-import { Craft } from "./craft";
-import { GoalFG } from "./goal-fg";
-import { Constants } from "./constants";
-import { IFielder, FieldProp, DataType } from "../pyrite-base";
-import { IMission } from "../../pyrite-base";
+import { FlightGroupBase } from './base/flight-group-base';
+import { Difficulty } from './mission';
+import { Craft } from './craft';
+import { GoalFG } from './goal-fg';
+import { Constants } from './constants';
+import { IFielder, FieldProp, DataType } from '../pyrite-base';
+import { IMission } from '../../pyrite-base';
 
 export class FlightGroup extends FlightGroupBase implements IFielder {
   public craft: Craft;
@@ -71,7 +71,9 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
   }
 
   public get WaveLabel(): string {
-    return this.NumberOfWaves ? `${this.NumberOfWaves + 1}x${this.NumberOfCraft}` : `${this.NumberOfCraft}`;
+    return this.NumberOfWaves
+      ? `${this.NumberOfWaves + 1}x${this.NumberOfCraft}`
+      : `${this.NumberOfCraft}`;
   }
 
   public toString(): string {
@@ -117,7 +119,9 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
     if (!this.arrives) {
       return false;
     }
-    return this.ArrivalDifficultyLabel === "All" || this.ArrivalDifficultyLabel.includes(difficulty);
+    return (
+      this.ArrivalDifficultyLabel === 'All' || this.ArrivalDifficultyLabel.includes(difficulty)
+    );
   }
 
   public get primaryGoal(): GoalFG {
@@ -141,23 +145,25 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
   }
 
   public get destroyable(): boolean {
-    return this.GroupAI !== 5 || !!this.FlightGroupGoals.find((goal: GoalFG) => goal.isInvincibleGoal); // TODO check global goals
+    return (
+      this.GroupAI !== 5 || !!this.FlightGroupGoals.find((goal: GoalFG) => goal.isInvincibleGoal)
+    ); // TODO check global goals
   }
 
   public field(name: string): FieldProp {
-    if (name === "Warhead") {
+    if (name === 'Warhead') {
       return {
         type: DataType.SELECT,
         options: Constants.WARHEAD,
-        value: this.Warhead,
+        value: this.Warhead
       };
-    } else if (name === "Name") {
+    } else if (name === 'Name') {
       return {
         type: DataType.char,
-        value: this.Name,
+        value: this.Name
       };
     } else {
-      console.warn("unknown", name);
+      console.warn('unknown', name);
     }
   }
 }

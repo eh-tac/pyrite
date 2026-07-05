@@ -1,4 +1,4 @@
-struct LFD (size 0)
+struct LFD (size 10)
 {
   0x00 Header Header 
 }

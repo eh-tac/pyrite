@@ -1,10 +1,6 @@
-import { Byteable } from "../../../byteable";
-import { Constants, QuestionCondition, QuestionType } from "../constants";
-import { IMission, PyriteBase } from "../../../pyrite-base";
-import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from "../../../hex";
-// tslint:disable member-ordering
-// tslint:disable prefer-const
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Constants, QuestionCondition, QuestionType } from '../constants';
+import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from '@pyrite/core';
 export abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable {
   public PostMissionQuestionsLength: number;
   public Length: number;
@@ -13,7 +9,7 @@ export abstract class PostMissionQuestionsBase extends PyriteBase implements Byt
   public Question: string;
   public readonly Spacer: number = 10;
   public Answer: string;
-  
+
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
@@ -30,17 +26,17 @@ export abstract class PostMissionQuestionsBase extends PyriteBase implements Byt
     offset += this.AnswerLength();
     this.PostMissionQuestionsLength = offset;
   }
-  
+
   public toJSON(): Record<string, unknown> | string {
     return {
       Length: this.Length,
       QuestionCondition: this.QuestionConditionLabel,
       QuestionType: this.QuestionTypeLabel,
       Question: this.Question,
-      Answer: this.Answer,
+      Answer: this.Answer
     };
   }
-  
+
   public toHexBuffer(): ArrayBuffer {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
@@ -56,13 +52,13 @@ export abstract class PostMissionQuestionsBase extends PyriteBase implements Byt
 
     return hex;
   }
-  
+
   public get QuestionConditionLabel(): string {
-    return Constants.QUESTIONCONDITION[this.QuestionCondition] || "Unknown";
+    return Constants.QUESTIONCONDITION[this.QuestionCondition] || 'Unknown';
   }
 
   public get QuestionTypeLabel(): string {
-    return Constants.QUESTIONTYPE[this.QuestionType] || "Unknown";
+    return Constants.QUESTIONTYPE[this.QuestionType] || 'Unknown';
   }
   protected abstract QuestionLength(): number;
   protected abstract AnswerLength(): number;

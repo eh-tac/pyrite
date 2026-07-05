@@ -1,10 +1,17 @@
-import { Byteable } from "../../../byteable";
-import { Constants, PilotDifficulty, PilotRank, PilotStatus, SecretOrder } from "../constants";
-import { IMission, PyriteBase } from "../../../pyrite-base";
-import { getBool, getByte, getInt, getShort, getUShort, writeBool, writeByte, writeInt, writeShort, writeUShort } from "../../../hex";
-// tslint:disable member-ordering
-// tslint:disable prefer-const
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Constants, PilotDifficulty, PilotRank, PilotStatus, SecretOrder } from '../constants';
+import {
+  getBool,
+  getByte,
+  getInt,
+  getShort,
+  getUShort,
+  writeBool,
+  writeByte,
+  writeInt,
+  writeShort,
+  writeUShort
+} from '@pyrite/core';
 export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public PilotFileLength: number;
   public readonly Start: number = 0;
@@ -32,7 +39,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
   public WarheadsFired: number;
   public WarheadsHit: number;
   public CraftLost: number;
-  
+
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
@@ -44,16 +51,16 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.PilotDifficulty = getByte(hex, 0x03) as PilotDifficulty;
     this.Score = getInt(hex, 0x04);
     this.SkillScore = getUShort(hex, 0x08);
-    this.SecretOrder = getByte(hex, 0x0A) as SecretOrder;
+    this.SecretOrder = getByte(hex, 0x0a) as SecretOrder;
     this.TrainingScores = [];
-    offset = 0x2A;
+    offset = 0x2a;
     for (let i = 0; i < 7; i++) {
       const t = getInt(hex, offset);
       this.TrainingScores.push(t);
       offset += 4;
     }
     this.TrainingLevels = [];
-    offset = 0x5A;
+    offset = 0x5a;
     for (let i = 0; i < 7; i++) {
       const t = getByte(hex, offset);
       this.TrainingLevels.push(t);
@@ -81,7 +88,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       offset += 1;
     }
     this.BattleLastMissions = [];
-    offset = 0x27D;
+    offset = 0x27d;
     for (let i = 0; i < 20; i++) {
       const t = getByte(hex, offset);
       this.BattleLastMissions.push(t);
@@ -102,21 +109,21 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       offset += 1;
     }
     this.BonusObjectives = [];
-    offset = 0x3A5;
+    offset = 0x3a5;
     for (let i = 0; i < 20; i++) {
       const t = getByte(hex, offset);
       this.BonusObjectives.push(t);
       offset += 1;
     }
     this.BattleScores = [];
-    offset = 0x3DA;
+    offset = 0x3da;
     for (let i = 0; i < 160; i++) {
       const t = getInt(hex, offset);
       this.BattleScores.push(t);
       offset += 4;
     }
-    this.TotalKills = getShort(hex, 0x65A);
-    this.TotalCaptures = getShort(hex, 0x65C);
+    this.TotalKills = getShort(hex, 0x65a);
+    this.TotalCaptures = getShort(hex, 0x65c);
     this.KillsByType = [];
     offset = 0x660;
     for (let i = 0; i < 69; i++) {
@@ -131,7 +138,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     this.CraftLost = getShort(hex, 0x786);
     this.PilotFileLength = offset;
   }
-  
+
   public toJSON(): Record<string, unknown> | string {
     return {
       PilotStatus: this.PilotStatusLabel,
@@ -157,10 +164,10 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       LasersHit: this.LasersHit,
       WarheadsFired: this.WarheadsFired,
       WarheadsHit: this.WarheadsHit,
-      CraftLost: this.CraftLost,
+      CraftLost: this.CraftLost
     };
   }
-  
+
   public toHexBuffer(): ArrayBuffer {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
@@ -171,14 +178,14 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
     writeByte(hex, this.PilotDifficulty, 0x03);
     writeInt(hex, this.Score, 0x04);
     writeUShort(hex, this.SkillScore, 0x08);
-    writeByte(hex, this.SecretOrder, 0x0A);
-    offset = 0x2A;
+    writeByte(hex, this.SecretOrder, 0x0a);
+    offset = 0x2a;
     for (let i = 0; i < this.TrainingScores.length; i++) {
       const t = this.TrainingScores[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
-    offset = 0x5A;
+    offset = 0x5a;
     for (let i = 0; i < this.TrainingLevels.length; i++) {
       const t = this.TrainingLevels[i];
       writeByte(hex, t, offset);
@@ -202,7 +209,7 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       writeByte(hex, t, offset);
       offset += 1;
     }
-    offset = 0x27D;
+    offset = 0x27d;
     for (let i = 0; i < this.BattleLastMissions.length; i++) {
       const t = this.BattleLastMissions[i];
       writeByte(hex, t, offset);
@@ -220,20 +227,20 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
       writeByte(hex, t, offset);
       offset += 1;
     }
-    offset = 0x3A5;
+    offset = 0x3a5;
     for (let i = 0; i < this.BonusObjectives.length; i++) {
       const t = this.BonusObjectives[i];
       writeByte(hex, t, offset);
       offset += 1;
     }
-    offset = 0x3DA;
+    offset = 0x3da;
     for (let i = 0; i < this.BattleScores.length; i++) {
       const t = this.BattleScores[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
-    writeShort(hex, this.TotalKills, 0x65A);
-    writeShort(hex, this.TotalCaptures, 0x65C);
+    writeShort(hex, this.TotalKills, 0x65a);
+    writeShort(hex, this.TotalCaptures, 0x65c);
     offset = 0x660;
     for (let i = 0; i < this.KillsByType.length; i++) {
       const t = this.KillsByType[i];
@@ -248,23 +255,23 @@ export abstract class PilotFileBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
+
   public get PilotStatusLabel(): string {
-    return Constants.PILOTSTATUS[this.PilotStatus] || "Unknown";
+    return Constants.PILOTSTATUS[this.PilotStatus] || 'Unknown';
   }
 
   public get PilotRankLabel(): string {
-    return Constants.PILOTRANK[this.PilotRank] || "Unknown";
+    return Constants.PILOTRANK[this.PilotRank] || 'Unknown';
   }
 
   public get PilotDifficultyLabel(): string {
-    return Constants.PILOTDIFFICULTY[this.PilotDifficulty] || "Unknown";
+    return Constants.PILOTDIFFICULTY[this.PilotDifficulty] || 'Unknown';
   }
 
   public get SecretOrderLabel(): string {
-    return Constants.SECRETORDER[this.SecretOrder] || "Unknown";
+    return Constants.SECRETORDER[this.SecretOrder] || 'Unknown';
   }
-  
+
   public getLength(): number {
     return this.PilotFileLength;
   }

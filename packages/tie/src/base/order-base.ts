@@ -1,10 +1,6 @@
-import { Byteable } from "../../../byteable";
-import { Constants, Order, VariableType } from "../constants";
-import { IMission, PyriteBase } from "../../../pyrite-base";
-import { getBool, getByte, writeBool, writeByte } from "../../../hex";
-// tslint:disable member-ordering
-// tslint:disable prefer-const
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Constants, Order, VariableType } from '../constants';
+import { getBool, getByte, writeBool, writeByte } from '@pyrite/core';
 export abstract class OrderBase extends PyriteBase implements Byteable {
   public readonly ORDERLENGTH: number = 18;
   public Order: Order;
@@ -22,11 +18,10 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
   public Target2Type: VariableType;
   public Target2: number;
   public Target1OrTarget2: boolean;
-  
+
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
-    let offset = 0;
 
     this.Order = getByte(hex, 0x00) as Order;
     this.Throttle = getByte(hex, 0x01);
@@ -37,15 +32,14 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
     this.Target4Type = getByte(hex, 0x07) as VariableType;
     this.Target3 = getByte(hex, 0x08);
     this.Target4 = getByte(hex, 0x09);
-    this.Target3OrTarget4 = getBool(hex, 0x0A);
-    this.Target1Type = getByte(hex, 0x0C) as VariableType;
-    this.Target1 = getByte(hex, 0x0D);
-    this.Target2Type = getByte(hex, 0x0E) as VariableType;
-    this.Target2 = getByte(hex, 0x0F);
+    this.Target3OrTarget4 = getBool(hex, 0x0a);
+    this.Target1Type = getByte(hex, 0x0c) as VariableType;
+    this.Target1 = getByte(hex, 0x0d);
+    this.Target2Type = getByte(hex, 0x0e) as VariableType;
+    this.Target2 = getByte(hex, 0x0f);
     this.Target1OrTarget2 = getBool(hex, 0x10);
-    
   }
-  
+
   public toJSON(): Record<string, unknown> | string {
     return {
       Order: this.OrderLabel,
@@ -62,13 +56,12 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
       Target1: this.Target1,
       Target2Type: this.Target2TypeLabel,
       Target2: this.Target2,
-      Target1OrTarget2: this.Target1OrTarget2,
+      Target1OrTarget2: this.Target1OrTarget2
     };
   }
-  
+
   public toHexBuffer(): ArrayBuffer {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
-    let offset = 0;
 
     writeByte(hex, this.Order, 0x00);
     writeByte(hex, this.Throttle, 0x01);
@@ -79,36 +72,36 @@ export abstract class OrderBase extends PyriteBase implements Byteable {
     writeByte(hex, this.Target4Type, 0x07);
     writeByte(hex, this.Target3, 0x08);
     writeByte(hex, this.Target4, 0x09);
-    writeBool(hex, this.Target3OrTarget4, 0x0A);
-    writeByte(hex, this.Target1Type, 0x0C);
-    writeByte(hex, this.Target1, 0x0D);
-    writeByte(hex, this.Target2Type, 0x0E);
-    writeByte(hex, this.Target2, 0x0F);
+    writeBool(hex, this.Target3OrTarget4, 0x0a);
+    writeByte(hex, this.Target1Type, 0x0c);
+    writeByte(hex, this.Target1, 0x0d);
+    writeByte(hex, this.Target2Type, 0x0e);
+    writeByte(hex, this.Target2, 0x0f);
     writeBool(hex, this.Target1OrTarget2, 0x10);
 
     return hex;
   }
-  
+
   public get OrderLabel(): string {
-    return Constants.ORDER[this.Order] || "Unknown";
+    return Constants.ORDER[this.Order] || 'Unknown';
   }
 
   public get Target3TypeLabel(): string {
-    return Constants.VARIABLETYPE[this.Target3Type] || "Unknown";
+    return Constants.VARIABLETYPE[this.Target3Type] || 'Unknown';
   }
 
   public get Target4TypeLabel(): string {
-    return Constants.VARIABLETYPE[this.Target4Type] || "Unknown";
+    return Constants.VARIABLETYPE[this.Target4Type] || 'Unknown';
   }
 
   public get Target1TypeLabel(): string {
-    return Constants.VARIABLETYPE[this.Target1Type] || "Unknown";
+    return Constants.VARIABLETYPE[this.Target1Type] || 'Unknown';
   }
 
   public get Target2TypeLabel(): string {
-    return Constants.VARIABLETYPE[this.Target2Type] || "Unknown";
+    return Constants.VARIABLETYPE[this.Target2Type] || 'Unknown';
   }
-  
+
   public getLength(): number {
     return this.ORDERLENGTH;
   }

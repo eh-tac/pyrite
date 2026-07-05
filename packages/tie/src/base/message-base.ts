@@ -1,10 +1,14 @@
-import { Byteable } from "../../../byteable";
-import { IMission, PyriteBase } from "../../../pyrite-base";
-import { Trigger } from "../trigger";
-import { getBool, getByte, getString, writeBool, writeByte, writeObject, writeString } from "../../../hex";
-// tslint:disable member-ordering
-// tslint:disable prefer-const
-
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { Trigger } from '../trigger';
+import {
+  getBool,
+  getByte,
+  getString,
+  writeBool,
+  writeByte,
+  writeObject,
+  writeString
+} from '@pyrite/core';
 export abstract class MessageBase extends PyriteBase implements Byteable {
   public readonly MESSAGELENGTH: number = 90;
   public Message: string;
@@ -12,7 +16,7 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
   public EditorNote: string;
   public DelaySeconds: number;
   public Trigger1OrTrigger2: boolean;
-  
+
   constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE!);
     this.beforeConstruct();
@@ -29,19 +33,18 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
     this.EditorNote = getString(hex, 0x48, 12);
     this.DelaySeconds = getByte(hex, 0x58);
     this.Trigger1OrTrigger2 = getBool(hex, 0x59);
-    
   }
-  
+
   public toJSON(): Record<string, unknown> | string {
     return {
       Message: this.Message,
       Triggers: this.Triggers.map((t) => t.toJSON()),
       EditorNote: this.EditorNote,
       DelaySeconds: this.DelaySeconds,
-      Trigger1OrTrigger2: this.Trigger1OrTrigger2,
+      Trigger1OrTrigger2: this.Trigger1OrTrigger2
     };
   }
-  
+
   public toHexBuffer(): ArrayBuffer {
     const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
@@ -59,8 +62,7 @@ export abstract class MessageBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.MESSAGELENGTH;
   }

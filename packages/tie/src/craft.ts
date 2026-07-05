@@ -1,4 +1,4 @@
-import { Constants } from "./constants";
+import { Constants } from './constants';
 
 const values = [
   0,
@@ -128,22 +128,22 @@ export class Craft {
   public get isStarship(): boolean {
     switch (this.label) {
       //TODO decide on the canonical source of names
-      case "Corellian Corvette":
-      case "Modified Corvette":
-      case "Nebulon B Frigate":
-      case "Modified Frigate":
-      case "C-3 Passenger Liner":
-      case "Carrack Cruiser":
-      case "Strike Cruiser":
-      case "Escort Carrier":
-      case "Dreadnaught":
-      case "Calamari Cruiser":
-      case "Lt Calamari Cruiser":
-      case "Interdictor Cruiser":
-      case "Victory-class Star Destroyer":
-      case "Victory Star Destroyer":
-      case "Star Destroyer":
-      case "Super Star Destroyer":
+      case 'Corellian Corvette':
+      case 'Modified Corvette':
+      case 'Nebulon B Frigate':
+      case 'Modified Frigate':
+      case 'C-3 Passenger Liner':
+      case 'Carrack Cruiser':
+      case 'Strike Cruiser':
+      case 'Escort Carrier':
+      case 'Dreadnaught':
+      case 'Calamari Cruiser':
+      case 'Lt Calamari Cruiser':
+      case 'Interdictor Cruiser':
+      case 'Victory-class Star Destroyer':
+      case 'Victory Star Destroyer':
+      case 'Star Destroyer':
+      case 'Super Star Destroyer':
         return true;
     }
     return false;

@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { Mission } from '../mission';
 import { ObjectGroup } from '../object-group';
-import { CraftType, ShipType } from '../constants';
+import { CraftType } from '../constants';
 
 const fixturePath = resolve(__dirname, '../../../../fixtures/xw/XWVMTC1M1.XWI');
 
