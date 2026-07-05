@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-tie-file-header",
   styleUrl: "file-header.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEFileHeaderComponent {
   @Element() public el: HTMLElement;

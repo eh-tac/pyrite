@@ -6,24 +6,25 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTCategoryTypeRecordBase extends PyriteBase implements Byteable
+abstract class PLTCategoryTypeRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTCATEGORYTYPERECORDLENGTH INT */
-    public const PLTCATEGORYTYPERECORDLENGTH = 12;
-    /** @var integer 0x0000 exercise INT */
-    public $exercise;
-    /** @var integer 0x0004 melee INT */
-    public $melee;
-    /** @var integer 0x0008 combat INT */
-    public $combat;
+    /** @var int PLTCATEGORYTYPERECORDLENGTH INT */
+	public const PLTCATEGORYTYPERECORDLENGTH = 12;
+    /** @var int 0x0000 exercise INT */
+	public int $exercise;
+    /** @var int 0x0004 melee INT */
+	public int $melee;
+    /** @var int 0x0008 combat INT */
+	public int $combat;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -31,7 +32,7 @@ abstract class PLTCategoryTypeRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -45,7 +46,7 @@ abstract class PLTCategoryTypeRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "exercise" => $this->exercise,
@@ -54,7 +55,7 @@ abstract class PLTCategoryTypeRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -67,7 +68,7 @@ abstract class PLTCategoryTypeRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTCATEGORYTYPERECORDLENGTH;
     }

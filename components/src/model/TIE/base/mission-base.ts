@@ -21,15 +21,15 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
   public PreMissionQuestions: PreMissionQuestions[];
   public PostMissionQuestions: PostMissionQuestions[];
   public readonly End: number = 255;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.FileHeader = new FileHeader(hex.slice(0x000), this.TIE);
     this.FlightGroups = [];
-    offset = 0x1CA;
+    offset = 0x1ca;
     for (let i = 0; i < this.FileHeader.NumFGs; i++) {
       const t = new FlightGroup(hex.slice(offset), this.TIE);
       this.FlightGroups.push(t);
@@ -69,61 +69,58 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
     offset += 1;
     this.MissionLength = offset;
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
-      FileHeader: this.FileHeader,
-      FlightGroups: this.FlightGroups,
-      Messages: this.Messages,
-      GlobalGoals: this.GlobalGoals,
-      Briefing: this.Briefing,
-      PreMissionQuestions: this.PreMissionQuestions,
-      PostMissionQuestions: this.PostMissionQuestions
+      FileHeader: this.FileHeader.toJSON(),
+      FlightGroups: this.FlightGroups.map((t) => t.toJSON()),
+      Messages: this.Messages.map((t) => t.toJSON()),
+      GlobalGoals: this.GlobalGoals.map((t) => t.toJSON()),
+      Briefing: this.Briefing.toJSON(),
+      PreMissionQuestions: this.PreMissionQuestions.map((t) => t.toJSON()),
+      PostMissionQuestions: this.PostMissionQuestions.map((t) => t.toJSON()),
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeObject(hex, this.FileHeader, 0x000);
-    offset = 0x1CA;
-    for (let i = 0; i < this.FileHeader.NumFGs; i++) {
+    offset = 0x1ca;
+    for (let i = 0; i < this.FlightGroups.length; i++) {
       const t = this.FlightGroups[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < this.FileHeader.NumMessages; i++) {
+    for (let i = 0; i < this.Messages.length; i++) {
       const t = this.Messages[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.GlobalGoals.length; i++) {
       const t = this.GlobalGoals[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeObject(hex, this.Briefing, offset);
-    offset = offset;
-    for (let i = 0; i < 10; i++) {
+    offset += this.Briefing.getLength();
+    for (let i = 0; i < this.PreMissionQuestions.length; i++) {
       const t = this.PreMissionQuestions[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.PostMissionQuestions.length; i++) {
       const t = this.PostMissionQuestions[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
     writeByte(hex, 255, offset);
+    offset += 1;
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.MissionLength;
   }

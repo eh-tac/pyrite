@@ -9,9 +9,9 @@ export abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements
   public exercise: number[];
   public melee: number[];
   public combat: number[];
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -30,41 +30,40 @@ export abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements
       offset += 4;
     }
     this.combat = [];
-    offset = 0x00C8;
+    offset = 0x00c8;
     for (let i = 0; i < 25; i++) {
       const t = getInt(hex, offset);
       this.combat.push(t);
       offset += 4;
     }
-    
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       exercise: this.exercise,
       melee: this.melee,
-      combat: this.combat
+      combat: this.combat,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     offset = 0x0000;
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < this.exercise.length; i++) {
       const t = this.exercise[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
     offset = 0x0064;
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < this.melee.length; i++) {
       const t = this.melee[i];
       writeInt(hex, t, offset);
       offset += 4;
     }
-    offset = 0x00C8;
-    for (let i = 0; i < 25; i++) {
+    offset = 0x00c8;
+    for (let i = 0; i < this.combat.length; i++) {
       const t = this.combat[i];
       writeInt(hex, t, offset);
       offset += 4;
@@ -72,8 +71,7 @@ export abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.PLTPLAYERRANKCOUNTRECORDLENGTH;
   }

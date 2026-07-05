@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-tie-goal-fg",
   styleUrl: "goal-fg.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEGoalFGComponent {
   @Element() public el: HTMLElement;

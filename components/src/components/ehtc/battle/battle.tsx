@@ -6,7 +6,7 @@ import { PilotSummary } from "../../../model/ehtc/pilot";
 @Component({
   tag: "ehtc-battle",
   styleUrl: "battle.scss",
-  shadow: true
+  shadow: true,
 })
 export class BattleComponent {
   @Prop({ mutable: true }) battle: Battle;
@@ -85,7 +85,7 @@ export class BattleComponent {
     const fields: { [key: string]: string | number } = {
       Missions: this.battle.missions,
       "Date added": this.battle.added,
-      "Date updated": this.battle.updated
+      "Date updated": this.battle.updated,
     };
 
     return (

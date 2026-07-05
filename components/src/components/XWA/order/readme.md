@@ -1,9 +1,6 @@
 # pyrite-xwa-order
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | -------- | --------- | ----------- | ------- | ----------- |
 | `order`  | --        |             | `Order` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

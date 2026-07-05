@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-tie-global-goal",
   styleUrl: "global-goal.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEGlobalGoalComponent {
   @Element() public el: HTMLElement;

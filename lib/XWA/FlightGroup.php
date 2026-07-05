@@ -8,9 +8,9 @@ class FlightGroup extends Base\FlightGroupBase implements Countable
 {
   public $craft;
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): FlightGroup
   {
-    $fg = (new FlightGroup($hex, $tie))->loadHex();
+    $fg = (new FlightGroup($hex, $TIE))->loadHex();
     $fg->craft = new CraftType($fg->CraftType);
     return $fg;
   }

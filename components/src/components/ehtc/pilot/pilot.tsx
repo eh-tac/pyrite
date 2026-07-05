@@ -5,7 +5,7 @@ import { Pilot } from "../../../model/ehtc";
 @Component({
   tag: "ehtc-pilot",
   styleUrl: "pilot.scss",
-  shadow: true
+  shadow: true,
 })
 export class PilotComponent {
   @Prop() pin: number;
@@ -21,9 +21,7 @@ export class PilotComponent {
   }
 
   private get rankImg(): string {
-    const rank = this.secondary
-      ? this.data.secondary.rankImage
-      : this.data.rankImage;
+    const rank = this.secondary ? this.data.secondary.rankImage : this.data.rankImage;
     return `${Config.ROOT}${rank}`;
   }
 
@@ -36,11 +34,7 @@ export class PilotComponent {
   }
 
   private get extraLine(): string {
-    return this.secondary
-      ? this.data.IDLine
-      : this.data.secondary
-      ? this.data.secondary.IDLine
-      : "";
+    return this.secondary ? this.data.IDLine : this.data.secondary ? this.data.secondary.IDLine : "";
   }
 
   private get fchgImg(): string {
@@ -51,7 +45,7 @@ export class PilotComponent {
   private loadPilot(): void {
     this.data = undefined;
     fetch(this.pilotUrl)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((pilot: Pilot) => {
         this.data = pilot;
       });
@@ -73,8 +67,7 @@ export class PilotComponent {
           <span class="subtitle rank">{this.rank}</span>
           <img src={this.fchgImg} class="fchg" />
           <span class="subtitle fchg">
-            {this.data.FCHG.label}{" "}
-            <span class="total">({this.data.FCHG.total})</span>
+            {this.data.FCHG.label} <span class="total">({this.data.FCHG.total})</span>
           </span>
         </div>
         <div class="right">

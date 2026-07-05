@@ -11,9 +11,9 @@ export abstract class WayptBase extends PyriteBase implements Byteable {
   public Rendezvous: number;
   public Hyperspace: number;
   public Briefing: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -32,45 +32,43 @@ export abstract class WayptBase extends PyriteBase implements Byteable {
       offset += 2;
     }
     this.Rendezvous = getShort(hex, 0x18);
-    this.Hyperspace = getShort(hex, 0x1A);
-    this.Briefing = getShort(hex, 0x1C);
-    
+    this.Hyperspace = getShort(hex, 0x1a);
+    this.Briefing = getShort(hex, 0x1c);
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       StartPoints: this.StartPoints,
       Waypoints: this.Waypoints,
       Rendezvous: this.Rendezvous,
       Hyperspace: this.Hyperspace,
-      Briefing: this.Briefing
+      Briefing: this.Briefing,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     offset = 0x00;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.StartPoints.length; i++) {
       const t = this.StartPoints[i];
       writeShort(hex, t, offset);
       offset += 2;
     }
     offset = 0x08;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.Waypoints.length; i++) {
       const t = this.Waypoints[i];
       writeShort(hex, t, offset);
       offset += 2;
     }
     writeShort(hex, this.Rendezvous, 0x18);
-    writeShort(hex, this.Hyperspace, 0x1A);
-    writeShort(hex, this.Briefing, 0x1C);
+    writeShort(hex, this.Hyperspace, 0x1a);
+    writeShort(hex, this.Briefing, 0x1c);
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.WAYPTLENGTH;
   }

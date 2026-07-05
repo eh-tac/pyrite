@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xwa-waypt",
   styleUrl: "waypt.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWAWayptComponent {
   @Element() public el: HTMLElement;

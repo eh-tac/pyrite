@@ -6,28 +6,29 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class ViewportSettingBase extends PyriteBase implements Byteable
+abstract class ViewportSettingBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  VIEWPORTSETTINGLENGTH INT */
-    public const VIEWPORTSETTINGLENGTH = 10;
-    /** @var integer 0x00 Top SHORT */
-    public $Top;
-    /** @var integer 0x02 Left SHORT */
-    public $Left;
-    /** @var integer 0x04 Bottom SHORT */
-    public $Bottom;
-    /** @var integer 0x06 Right SHORT */
-    public $Right;
-    /** @var integer 0x08 Visible SHORT */
-    public $Visible; //(boolean)
+    /** @var int VIEWPORTSETTINGLENGTH INT */
+	public const VIEWPORTSETTINGLENGTH = 10;
+    /** @var int 0x00 Top SHORT */
+	public int $Top;
+    /** @var int 0x02 Left SHORT */
+	public int $Left;
+    /** @var int 0x04 Bottom SHORT */
+	public int $Bottom;
+    /** @var int 0x06 Right SHORT */
+	public int $Right;
+    /** @var int 0x08 Visible SHORT */
+	public int $Visible; // (boolean)
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -35,7 +36,7 @@ abstract class ViewportSettingBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -51,7 +52,7 @@ abstract class ViewportSettingBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Top" => $this->Top,
@@ -62,7 +63,7 @@ abstract class ViewportSettingBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -77,7 +78,7 @@ abstract class ViewportSettingBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::VIEWPORTSETTINGLENGTH;
     }

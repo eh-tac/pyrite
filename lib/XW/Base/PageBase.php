@@ -6,28 +6,29 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PageBase extends PyriteBase implements Byteable
+abstract class PageBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PageLength INT */
-    public $PageLength;
-    /** @var integer 0x00 Duration SHORT */
-    public $Duration; //(ticks)
-    /** @var integer 0x02 EventsLength SHORT */
-    public $EventsLength;
-    /** @var integer 0x04 CoordinateSet SHORT */
-    public $CoordinateSet;
-    /** @var integer 0x06 PageType SHORT */
-    public $PageType;
-    /** @var integer[] 0x08 Events SHORT */
-    public $Events;
+    /** @var int PageLength INT */
+	public int $PageLength;
+    /** @var int 0x00 Duration SHORT */
+	public int $Duration; // (ticks)
+    /** @var int 0x02 EventsLength SHORT */
+	public int $EventsLength;
+    /** @var int 0x04 CoordinateSet SHORT */
+	public int $CoordinateSet;
+    /** @var int 0x06 PageType SHORT */
+	public int $PageType;
+    /** @var array<int> 0x08 Events SHORT */
+	public array $Events;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -35,7 +36,7 @@ abstract class PageBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -57,7 +58,7 @@ abstract class PageBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Duration" => $this->Duration,
@@ -68,7 +69,7 @@ abstract class PageBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -88,7 +89,7 @@ abstract class PageBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return $this->PageLength;
     }

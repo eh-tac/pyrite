@@ -1,9 +1,6 @@
 # pyrite-xw-briefing-header
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ---------------- | --------- | ----------- | ---------------- | ----------- |
 | `briefingheader` | --        |             | `BriefingHeader` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

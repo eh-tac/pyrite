@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PilotRecord Name="LockeTest">
+  <PilotGameRecord Id="xwing" Rank="FltCadet" Status="Alive" Difficulty="Medium" CurrentScore="0" AiScore="40000" AvatarIndex="0">
+    <HistoricTourRecord TourId="custom" CurrentTourStep="0">
+      <PilotOperationRecord TourStep="0" Score="2065" Complete="true" Hash="c21d29b3784ac31fe5748569b3f2d11f6c0a35b393dfd635e7a2539caab5c1f5" Name="XWVMTC2M1" />
+      <PilotOperationRecord TourStep="1" Score="0" />
+      <PilotOperationRecord TourStep="2" Score="0" />
+      <PilotOperationRecord TourStep="3" Score="0" />
+      <PilotOperationRecord TourStep="4" Score="0" />
+      <PilotOperationRecord TourStep="5" Score="0" />
+      <PilotOperationRecord TourStep="6" Score="2205" Complete="true" Hash="4c2d25af3695bfdb9bc4fd9eaf3b944789e29323c1bc5fecef08c700fc155e66" Name="XWVMTC2M2" />
+      <PilotOperationRecord TourStep="7" Score="18636" Complete="true" Hash="a78a044d5fc4fefbeff7bf78e55a607f815ffee68e79edbd9778aae798475b1b" Name="XWVMTC2M3" />
+      <PilotOperationRecord TourStep="8" Score="11845" Complete="true" Hash="8a0e7ccac7164b85ddce8ec9cb9fb167a6d16558e669eff9083958bfc968e4ac" Name="XWVMTC2M4" />
+      <PilotOperationRecord TourStep="9" Score="11350" Hash="39ae1678108f9960935b7e1175a1aedc2165bbe200c85363ae38db9ada890ed1" Name="XWVMF2M1" />
+      <PilotOperationRecord TourStep="10" Score="11622" Complete="true" Hash="cf4d6d45645e5ad63f498d0478cc6ce788095bbedf890497fbc9e4965efe3fd0" Name="XWVMF3M1" />
+    </HistoricTourRecord>
+    <CraftConfigurationPreferences>
+      <CraftConfigurationPreference CraftType="BWing" HardpointConfiguration="Classic mixed" />
+    </CraftConfigurationPreferences>
+  </PilotGameRecord>
+  <PilotGameRecord Id="tf" Rank="FltCadet" Status="Alive" Difficulty="Medium" CurrentScore="0" AiScore="0" AvatarIndex="0" />
+  <PilotGameRecord Id="xvt" Rank="FltCadet" Status="Alive" Difficulty="Medium" CurrentScore="0" AiScore="0" AvatarIndex="0" />
+  <PilotGameRecord Id="xwa" Rank="FltCadet" Status="Alive" Difficulty="Medium" CurrentScore="0" AiScore="0" AvatarIndex="0" />
+</PilotRecord>

@@ -1,9 +1,6 @@
 # pyrite-xvt-global-goal
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------ | --------- | ----------- | ------------ | ----------- |
 | `globalgoal` | --        |             | `GlobalGoal` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

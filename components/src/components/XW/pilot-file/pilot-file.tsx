@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xw-pilot-file",
   styleUrl: "pilot-file.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWPilotFileComponent {
   @Element() public el: HTMLElement;

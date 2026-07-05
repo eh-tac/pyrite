@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { GlobalGoal } from "../../../model/XvT";
 import { XvTGlobalGoalController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xvt-global-goal",
   styleUrl: "global-goal.scss",
-  shadow: false
+  shadow: false,
 })
 export class XvTGlobalGoalComponent {
   @Element() public el: HTMLElement;
@@ -21,10 +21,9 @@ export class XvTGlobalGoalComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Reserved')} />
-        <Field {...this.controller.getProps('Goal')} />
+        <Field {...this.controller.getProps("Reserved")} />
+        <Field {...this.controller.getProps("Goal")} />
       </Host>
-    )
+    );
   }
 }
-  

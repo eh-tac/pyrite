@@ -1,4 +1,4 @@
-export { Constants } from './constants';
+export { Constants, EventType } from "./constants";
 export { Mission } from "./mission";
 export { FileHeader } from "./file-header";
 export { FlightGroup } from "./flight-group";

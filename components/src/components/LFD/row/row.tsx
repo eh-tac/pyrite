@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { Row } from "../../../model/LFD";
 import { LFDRowController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-lfd-row",
   styleUrl: "row.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDRowComponent {
   @Element() public el: HTMLElement;
@@ -21,11 +21,10 @@ export class LFDRowComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Length')} />
-        <Field {...this.controller.getProps('Left')} />
-        <Field {...this.controller.getProps('Top')} />
+        <Field {...this.controller.getProps("Length")} />
+        <Field {...this.controller.getProps("Left")} />
+        <Field {...this.controller.getProps("Top")} />
       </Host>
-    )
+    );
   }
 }
-  

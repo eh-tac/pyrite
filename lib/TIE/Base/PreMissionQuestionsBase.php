@@ -6,26 +6,27 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PreMissionQuestionsBase extends PyriteBase implements Byteable
+abstract class PreMissionQuestionsBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PreMissionQuestionsLength INT */
-    public $PreMissionQuestionsLength;
-    /** @var integer 0x0 Length SHORT */
-    public $Length;
+    /** @var int PreMissionQuestionsLength INT */
+	public int $PreMissionQuestionsLength;
+    /** @var int 0x0 Length SHORT */
+	public int $Length;
     /** @var string 0x2 Question CHAR */
-    public $Question;
-    /** @var integer PV Spacer BYTE */
-    public const Spacer = 10;
+	public string $Question;
+    /** @var int PV Spacer BYTE */
+	public const Spacer = 10;
     /** @var string PV Answer CHAR */
-    public $Answer;
+	public string $Answer;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -33,7 +34,7 @@ abstract class PreMissionQuestionsBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -51,7 +52,7 @@ abstract class PreMissionQuestionsBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Length" => $this->Length,
@@ -60,7 +61,7 @@ abstract class PreMissionQuestionsBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -75,7 +76,7 @@ abstract class PreMissionQuestionsBase extends PyriteBase implements Byteable
     
     protected abstract function QuestionLength();
 protected abstract function AnswerLength();
-    public function getLength()
+    public function getLength(): int
     {
         return $this->PreMissionQuestionsLength;
     }

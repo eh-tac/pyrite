@@ -1,5 +1,5 @@
 export class Constants {
-  public static DESIGNATION = {
+  public static DESIGNATION: Record<Designation, string> = {
     0: "None",
     1: "Base",
     2: "Command Ship",
@@ -15,7 +15,7 @@ export class Constants {
     12: "Tertiary Target",
   };
 
-  public static SHIPS = {
+  public static SHIPS: Record<Ships, string> = {
     0: "Unknown",
     1: "X-Wing",
     2: "Y-Wing",
@@ -87,7 +87,7 @@ export class Constants {
     68: "Asteroid War Launcher",
     69: "X7 Factory",
     70: "Comm Sat",
-    71: "Comm Sat",
+    71: "Comm Sat2",
     72: "*Sat3",
     73: "*Sat4",
     74: "*Sat5",
@@ -100,7 +100,7 @@ export class Constants {
     81: "*Probe2",
     82: "*Probe3",
     83: "Nav Buoy",
-    84: "Nav Buoy",
+    84: "Nav Buoy2",
     85: "*Pilot",
     86: "Asteroid",
     87: "Planet",
@@ -111,7 +111,7 @@ export class Constants {
     92: "Modified Strike Cruiser",
   };
 
-  public static PILOTRATING = {
+  public static PILOTRATING: Record<PilotRating, string> = {
     0: "Target Drone",
     1: "Ground Crew",
     2: "Trainee",
@@ -139,7 +139,7 @@ export class Constants {
     24: "Jedi Master",
   };
 
-  public static WARHEAD = {
+  public static WARHEAD: Record<Warhead, string> = {
     0: "None",
     1: "Heavy Rocket",
     2: "Space Bomb",
@@ -151,21 +151,21 @@ export class Constants {
     8: "(Ion Pulse)",
   };
 
-  public static BEAM = {
+  public static BEAM: Record<Beam, string> = {
     0: "None",
     1: "Tractor Beam",
     2: "Jamming Beam",
     3: "Decoy Beam",
   };
 
-  public static COUNTERMEASURES = {
+  public static COUNTERMEASURES: Record<Countermeasures, string> = {
     0: "None",
     1: "Chaff",
     2: "Flare",
     3: "(Cluster Mine)",
   };
 
-  public static BESTRATING = {
+  public static BESTRATING: Record<BestRating, string> = {
     0: "Gold",
     1: "Silver",
     2: "Bronze",
@@ -174,7 +174,7 @@ export class Constants {
     5: "Lead",
   };
 
-  public static STATUS = {
+  public static STATUS: Record<Status, string> = {
     0: "None",
     1: "2X Warheads",
     2: "1/2 Warheads",
@@ -186,20 +186,20 @@ export class Constants {
     8: "Shields added or 200%",
     9: "Hyperdrive added",
     10: "Unknown",
-    11: "Unknown",
-    12: "(200% Shields)",
+    11: "Unknown2",
+    12: "(200% Shields2)",
     13: "Shields 50%, Charging",
-    14: "(No Lasers)",
-    15: "Unknown",
+    14: "(No Lasers2)",
+    15: "Unknown3",
     16: "Shields + Hyperdrive added",
-    17: "Unknown",
+    17: "Unknown4",
     18: "200% Shields",
     19: "(50% Shields)",
     20: "Invincible",
     21: "Infinite Warheads",
   };
 
-  public static GROUPAI = {
+  public static GROUPAI: Record<GroupAI, string> = {
     0: "Rookie (None)",
     1: "Officer",
     2: "Veteran",
@@ -208,14 +208,14 @@ export class Constants {
     5: "Jedi (Invincible)",
   };
 
-  public static MARKINGS = {
+  public static MARKINGS: Record<Markings, string> = {
     0: "Red (TIE - None)",
     1: "Gold (TIE - Red)",
     2: "Blue (TIE - Gold)",
     3: "Green (TIE - Blue)",
   };
 
-  public static RADIO = {
+  public static RADIO: Record<Radio, string> = {
     0: "None",
     1: "Team 1 (Imperial)",
     2: "Team 2 (Rebel)",
@@ -235,7 +235,7 @@ export class Constants {
     16: "Player 8",
   };
 
-  public static FORMATION = {
+  public static FORMATION: Record<Formation, string> = {
     0: "Vic",
     1: "Finger Four",
     2: "Line Astern",
@@ -273,7 +273,7 @@ export class Constants {
     34: "Single Point",
   };
 
-  public static ARRIVALDIFFICULTY = {
+  public static ARRIVALDIFFICULTY: Record<ArrivalDifficulty, string> = {
     0: "All",
     1: "Easy",
     2: "Medium",
@@ -281,13 +281,13 @@ export class Constants {
     4: "Medium, Hard",
     5: "Easy, Medium",
     6: "Never",
-    7: "Never",
-    8: "Easy",
-    9: "Medium",
-    10: "Hard",
+    7: "Never2",
+    8: "Easy2",
+    9: "Medium2",
+    10: "Hard2",
   };
 
-  public static CONDITION = {
+  public static CONDITION: Record<Condition, string> = {
     0: "Always (true)",
     1: "Created",
     2: "Destroyed",
@@ -312,7 +312,7 @@ export class Constants {
     21: "0% Shields",
     22: "50% Hull",
     23: "Out of Warheads",
-    24: "Unknown (arrive?)",
+    24: "Unknown2 (arrive?)",
     25: "be dropped off",
     26: "destroyed in 1 hit",
     27: "NOT be disabled",
@@ -326,9 +326,9 @@ export class Constants {
     35: "25% Shields",
     36: "75% Hull",
     37: "25% Hull",
-    38: "Unknown",
-    39: "Unknown",
-    40: "Unknown",
+    38: "Unknown3",
+    39: "Unknown4",
+    40: "Unknown5",
     41: "be all Player Craft",
     42: "reinforced by AI?",
     43: "come and go",
@@ -337,7 +337,7 @@ export class Constants {
     46: "be carried away",
   };
 
-  public static VARIABLETYPE = {
+  public static VARIABLETYPE: Record<VariableType, string> = {
     0: "None",
     1: "Flight Group",
     2: "CraftType (enum)",
@@ -352,7 +352,7 @@ export class Constants {
     23: "Global Unit",
   };
 
-  public static CRAFTCATEGORY = {
+  public static CRAFTCATEGORY: Record<CraftCategory, string> = {
     0: "Starfighters",
     1: "Transports",
     2: "Freighters/Containers",
@@ -362,13 +362,13 @@ export class Constants {
     6: "Mines",
   };
 
-  public static OBJECTCATEGORY = {
+  public static OBJECTCATEGORY: Record<ObjectCategory, string> = {
     0: "Craft",
     1: "Weapons",
     2: "Space Objects",
   };
 
-  public static AMOUNT = {
+  public static AMOUNT: Record<Amount, string> = {
     0: "100%",
     1: "75%",
     2: "50%",
@@ -390,7 +390,7 @@ export class Constants {
     18: "Each craft",
   };
 
-  public static ABORTTRIGGER = {
+  public static ABORTTRIGGER: Record<AbortTrigger, string> = {
     0: "None",
     1: "0% Shields",
     2: "Unknown",
@@ -403,7 +403,7 @@ export class Constants {
     9: "25% Hull",
   };
 
-  public static ORDER = {
+  public static ORDER: Record<Order, string> = {
     0: "Hold Station",
     1: "Go Home",
     2: "Circle",
@@ -434,19 +434,19 @@ export class Constants {
     27: "SS Patrol and Disable",
     28: "SS Hold Steady",
     29: "SS Go Home",
-    30: "SS Wait",
+    30: "SS Wait2",
     31: "SS Board",
     32: "Board to Repair",
-    33: "Hold Station",
+    33: "Hold Station2",
     34: "Hold Steady",
     35: "SS Hold Station",
     36: "Self-destruct",
     37: "Kamikaze",
     38: "SS Disabled",
-    39: "SS Hold Steady",
+    39: "SS Hold Steady2",
   };
 
-  public static CRAFTWHEN = {
+  public static CRAFTWHEN: Record<CraftWhen, string> = {
     1: "Inspected",
     2: "Boarded",
     4: "Disabled",
@@ -459,7 +459,7 @@ export class Constants {
     12: "not disabled",
   };
 
-  public static EVENTTYPE = {
+  public static EVENTTYPE: Record<EventType, string> = {
     3: "Stop",
     4: "Title Text",
     5: "Caption Text",
@@ -486,12 +486,12 @@ export class Constants {
     34: "End Briefing",
   };
 
-  public static PLATFORMID = {
+  public static PLATFORMID: Record<PlatformID, string> = {
     18: "XvT",
     20: "BoP",
   };
 
-  public static MISSIONTYPE = {
+  public static MISSIONTYPE: Record<MissionType, string> = {
     0: "Training",
     1: "Unknown",
     2: "Melee",
@@ -499,7 +499,7 @@ export class Constants {
     4: "Multiplayer Combat",
   };
 
-  public static TEAM = {
+  public static TEAM: Record<Team, string> = {
     49: "Imperial",
     50: "Rebel",
     51: "Team 3",
@@ -508,14 +508,14 @@ export class Constants {
     104: "Unknown",
   };
 
-  public static GOALARGUMENT = {
+  public static GOALARGUMENT: Record<GoalArgument, string> = {
     0: "must",
     1: "must NOT",
     2: "BONUS must",
     3: "BONUS must NOT",
   };
 
-  public static SHIPCATEGORY = {
+  public static SHIPCATEGORY: Record<ShipCategory, string> = {
     0: "None",
     1: "All Flyable",
     2: "All Rebel Flyable",
@@ -523,7 +523,7 @@ export class Constants {
     4: "User Defined",
   };
 
-  public static MISSIONPERFORMANCE = {
+  public static MISSIONPERFORMANCE: Record<MissionPerformance, string> = {
     0: "None",
     1: "Top",
     2: "Excellent",
@@ -533,18 +533,17 @@ export class Constants {
     6: "Reprimand",
   };
 
-  public static BATTLEOUTCOME = {
+  public static BATTLEOUTCOME: Record<BattleOutcome, string> = {
     0: "ImperialVictory",
     1: "RebelVictory",
     2: "Draw",
   };
 
-  public static PILOTFACTION = {
+  public static PILOTFACTION: Record<PilotFaction, string> = {
     0: "Rebel",
     1: "Imperial",
     2: "Multiplayer",
   };
-
 }
 
 export enum Designation {
@@ -635,7 +634,7 @@ export enum Ships {
   asteroidWarLauncher = 68,
   x7Factory = 69,
   commSat = 70,
-  // duplicate commSat = 71,
+  commSat2 = 71,
   sat3 = 72,
   sat4 = 73,
   sat5 = 74,
@@ -648,7 +647,7 @@ export enum Ships {
   probe2 = 81,
   probe3 = 82,
   navBuoy = 83,
-  // duplicate navBuoy = 84,
+  navBuoy2 = 84,
   pilot = 85,
   asteroid = 86,
   planet = 87,
@@ -734,14 +733,14 @@ export enum Status {
   shieldsAddedOr200Percent = 8,
   hyperdriveAdded = 9,
   unknown = 10,
-  // duplicate unknown = 11,
-  n200PercentShields = 12,
+  unknown2 = 11,
+  n200PercentShields2 = 12,
   shields50PercentCharging = 13,
-  // duplicate noLasers = 14,
-  // duplicate unknown = 15,
+  noLasers2 = 14,
+  unknown3 = 15,
   shieldsHyperdriveAdded = 16,
-  // duplicate unknown = 17,
-  // duplicate n200PercentShields = 18,
+  unknown4 = 17,
+  n200PercentShields = 18,
   n50PercentShields = 19,
   invincible = 20,
   infiniteWarheads = 21,
@@ -829,10 +828,10 @@ export enum ArrivalDifficulty {
   mediumHard = 4,
   easyMedium = 5,
   never = 6,
-  // duplicate never = 7,
-  // duplicate easy = 8,
-  // duplicate medium = 9,
-  // duplicate hard = 10,
+  never2 = 7,
+  easy2 = 8,
+  medium2 = 9,
+  hard2 = 10,
 }
 
 export enum Condition {
@@ -860,7 +859,7 @@ export enum Condition {
   n0PercentShields = 21,
   n50PercentHull = 22,
   outOfWarheads = 23,
-  unknownArrive = 24,
+  unknown2Arrive = 24,
   beDroppedOff = 25,
   destroyedIn1Hit = 26,
   notBeDisabled = 27,
@@ -874,9 +873,9 @@ export enum Condition {
   n25PercentShields = 35,
   n75PercentHull = 36,
   n25PercentHull = 37,
-  // duplicate unknown = 38,
-  // duplicate unknown = 39,
-  // duplicate unknown = 40,
+  unknown3 = 38,
+  unknown4 = 39,
+  unknown5 = 40,
   beAllPlayerCraft = 41,
   reinforcedByAi = 42,
   comeAndGo = 43,
@@ -982,16 +981,16 @@ export enum Order {
   ssPatrolAndDisable = 27,
   ssHoldSteady = 28,
   ssGoHome = 29,
-  // duplicate ssWait = 30,
+  ssWait2 = 30,
   ssBoard = 31,
   boardToRepair = 32,
-  // duplicate holdStation = 33,
+  holdStation2 = 33,
   holdSteady = 34,
   ssHoldStation = 35,
   selfdestruct = 36,
   kamikaze = 37,
   ssDisabled = 38,
-  // duplicate ssHoldSteady = 39,
+  ssHoldSteady2 = 39,
 }
 
 export enum CraftWhen {

@@ -9,28 +9,27 @@ export abstract class CoordinateBase extends PyriteBase implements Byteable {
   public X: number;
   public Y: number;
   public Z: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.X = getShort(hex, 0x00);
     this.Y = getShort(hex, 0x02);
     this.Z = getShort(hex, 0x04);
-    
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       X: this.X,
       Y: this.Y,
-      Z: this.Z
+      Z: this.Z,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.X, 0x00);
@@ -39,8 +38,7 @@ export abstract class CoordinateBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.COORDINATELENGTH;
   }

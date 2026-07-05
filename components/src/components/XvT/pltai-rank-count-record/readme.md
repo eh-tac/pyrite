@@ -1,9 +1,6 @@
 # pyrite-xvt-pltai-rank-count-record
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ---------------------- | --------- | ----------- | ---------------------- | ----------- |
 | `pltairankcountrecord` | --        |             | `PLTAIRankCountRecord` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

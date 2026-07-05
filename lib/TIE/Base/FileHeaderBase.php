@@ -6,39 +6,40 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\TIE\Constants;
 
-abstract class FileHeaderBase extends PyriteBase implements Byteable
+abstract class FileHeaderBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  FILEHEADERLENGTH INT */
-    public const FILEHEADERLENGTH = 458;
-    /** @var integer 0x000 PlatformID SHORT */
-    public const PlatformID = -1;
-    /** @var integer 0x002 NumFGs SHORT */
-    public $NumFGs;
-    /** @var integer 0x004 NumMessages SHORT */
-    public $NumMessages;
-    /** @var integer 0x006 NumGGs SHORT */
-    public const NumGGs = 3; //might be # of GlobalGoals
-    /** @var integer 0x008 Unknown1 BYTE */
-    public $Unknown1;
-    /** @var boolean 0x009 Unknown2 BOOL */
-    public $Unknown2;
-    /** @var integer 0x00A BriefingOfficers BYTE */
-    public $BriefingOfficers;
-    /** @var boolean 0x00D CapturedOnEject BOOL */
-    public $CapturedOnEject;
-    /** @var string[] 0x018 EndOfMissionMessages CHAR */
-    public $EndOfMissionMessages;
-    /** @var string[] 0x19A OtherIffNames CHAR */
-    public $OtherIffNames;
+    /** @var int FILEHEADERLENGTH INT */
+	public const FILEHEADERLENGTH = 458;
+    /** @var int 0x000 PlatformID SHORT */
+	public const PlatformID = -1;
+    /** @var int 0x002 NumFGs SHORT */
+	public int $NumFGs;
+    /** @var int 0x004 NumMessages SHORT */
+	public int $NumMessages;
+    /** @var int 0x006 NumGGs SHORT */
+	public const NumGGs = 3; // might be # of GlobalGoals
+    /** @var int 0x008 Unknown1 BYTE */
+	public int $Unknown1;
+    /** @var bool 0x009 Unknown2 BOOL */
+	public bool $Unknown2;
+    /** @var int 0x00A BriefingOfficers BYTE */
+	public int $BriefingOfficers;
+    /** @var bool 0x00D CapturedOnEject BOOL */
+	public bool $CapturedOnEject;
+    /** @var array<string> 0x018 EndOfMissionMessages CHAR */
+	public array $EndOfMissionMessages;
+    /** @var array<string> 0x19A OtherIffNames CHAR */
+	public array $OtherIffNames;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -46,7 +47,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -79,7 +80,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "NumFGs" => $this->NumFGs,
@@ -93,7 +94,7 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -122,12 +123,12 @@ abstract class FileHeaderBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getBriefingOfficersLabel() 
+    public function getBriefingOfficersLabel(): string 
     {
         return isset($this->BriefingOfficers) && isset(Constants::$BRIEFINGOFFICERS[$this->BriefingOfficers]) ? Constants::$BRIEFINGOFFICERS[$this->BriefingOfficers] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::FILEHEADERLENGTH;
     }

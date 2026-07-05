@@ -88,7 +88,7 @@ const values = [
   50,
   50,
   0, //asteroid,
-  0
+  0,
 ]; //'Planet']
 
 const missiles = [
@@ -108,7 +108,7 @@ const missiles = [
   0, //"T-Wing",
   0, //"Z-95 Headhunter",
   0, //"R-41 Starchaser",
-  16
+  16,
 ];
 
 export class Craft {

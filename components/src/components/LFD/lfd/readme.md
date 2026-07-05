@@ -1,9 +1,6 @@
 # pyrite-lfd
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,12 +8,9 @@
 | -------- | --------- | ----------- | -------- | ----------- |
 | `file`   | `file`    |             | `string` | `undefined` |
 
-
 ## Methods
 
 ### `loadArrayBuffer(value: ArrayBuffer) => Promise<void>`
-
-
 
 #### Parameters
 
@@ -28,9 +22,6 @@
 
 Type: `Promise<void>`
 
-
-
-
 ## Dependencies
 
 ### Depends on
@@ -38,6 +29,7 @@ Type: `Promise<void>`
 - [pyrite-lfd-rmap](../rmap)
 
 ### Graph
+
 ```mermaid
 graph TD;
   pyrite-lfd --> pyrite-lfd-rmap
@@ -45,6 +37,6 @@ graph TD;
   style pyrite-lfd fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

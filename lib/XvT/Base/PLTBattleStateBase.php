@@ -6,31 +6,32 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\PLTBattleProgressState;
 
-abstract class PLTBattleStateBase extends PyriteBase implements Byteable
+abstract class PLTBattleStateBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTBATTLESTATELENGTH INT */
-    public const PLTBATTLESTATELENGTH = 160;
-    /** @var integer 0x0000 ConfigRandomSeed INT */
-    public $ConfigRandomSeed;
-    /** @var integer 0x0004 IsInProgressUNK INT */
-    public $IsInProgressUNK;
-    /** @var integer 0x0008 ConfigBattleLength INT */
-    public $ConfigBattleLength;
-    /** @var integer 0x000C ConfigGameRandomizeLevel INT */
-    public $ConfigGameRandomizeLevel;
+    /** @var int PLTBATTLESTATELENGTH INT */
+	public const PLTBATTLESTATELENGTH = 160;
+    /** @var int 0x0000 ConfigRandomSeed INT */
+	public int $ConfigRandomSeed;
+    /** @var int 0x0004 IsInProgressUNK INT */
+	public int $IsInProgressUNK;
+    /** @var int 0x0008 ConfigBattleLength INT */
+	public int $ConfigBattleLength;
+    /** @var int 0x000C ConfigGameRandomizeLevel INT */
+	public int $ConfigGameRandomizeLevel;
     /** @var PLTBattleProgressState 0x0010 saveState PLTBattleProgressState */
-    public $saveState;
-    /** @var integer 0x009C unknown2 INT */
-    public $unknown2;
+	public PLTBattleProgressState $saveState;
+    /** @var int 0x009C unknown2 INT */
+	public int $unknown2;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -38,7 +39,7 @@ abstract class PLTBattleStateBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -55,7 +56,7 @@ abstract class PLTBattleStateBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "ConfigRandomSeed" => $this->ConfigRandomSeed,
@@ -67,7 +68,7 @@ abstract class PLTBattleStateBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -83,7 +84,7 @@ abstract class PLTBattleStateBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTBATTLESTATELENGTH;
     }

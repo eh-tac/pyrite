@@ -1,16 +1,18 @@
 <?php
+
 namespace Pyrite\LFD;
 
-use Pyrite\Hex;
+use Pyrite\PyriteModel;
 
 class RmapLFD extends LFD
 {
-    public $SubHeaders = [];
-    public $Blocks = [];
+    public array $SubHeaders = [];
+    public array $Blocks = [];
 
-    public function __construct($hex)
+    public function __construct(public string $hex, public ?PyriteModel $TIE = NULL)
     {
-        parent::__construct($hex);
+        parent::__construct($hex, $TIE);
+
         $off = 16;
         while ($off < $this->HeaderLength) {
             $this->SubHeaders[] = new LFD(substr($hex, $off, 16));
@@ -18,7 +20,7 @@ class RmapLFD extends LFD
         }
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             'type' => $this->HeaderType,

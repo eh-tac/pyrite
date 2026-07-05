@@ -1,5 +1,5 @@
 export class Constants {
-  public static TYPE = {
+  public static TYPE: Record<Type, string> = {
     0: "ANIM",
     1: "BLAS",
     2: "BMAP",
@@ -18,7 +18,6 @@ export class Constants {
     15: "VOIC",
     16: "XACT",
   };
-
 }
 
 export enum Type {

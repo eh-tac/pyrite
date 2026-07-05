@@ -1,9 +1,6 @@
 # pyrite-xvt-plt-file-record
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | --------------- | --------- | ----------- | --------------- | ----------- |
 | `pltfilerecord` | --        |             | `PLTFileRecord` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

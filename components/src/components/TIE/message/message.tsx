@@ -4,7 +4,7 @@ import { Message } from "../../../model/TIE";
 @Component({
   tag: "pyrite-tie-message",
   styleUrl: "message.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEMessageComponent {
   @Prop() public message: Message;

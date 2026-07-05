@@ -29,11 +29,44 @@ class PL2FileRecord extends Base\PL2FileRecordBase implements IPilotFileBSF
     return $this->faction[1];
   }
 
+  public function hasValidCampaignData()
+  {
+    $imperial = array_slice($this->getImperialFaction()->missionSPCampaign, 51, 15);
+    $imperialSum = array_sum(array_map(static function (PL2CampaignRecord $mission) {
+      return $mission->bestScore;
+    }, $imperial));
+
+    $imperialStateBest = max(array_map(fn($c) => $c->bestScore, $this->getImperialFaction()->statusSPCampaign));
+
+    if ($imperialSum !== $imperialStateBest) {
+      return false;
+    }
+
+    $rebel = array_slice($this->getRebelFaction()->missionSPCampaign, 71, 15);
+    $rebelSum = array_sum(array_map(static function (PL2CampaignRecord $mission) {
+      return $mission->bestScore;
+    }, $rebel));
+
+    $rebelStateBest = max(array_map(fn($c) => $c->bestScore, $this->getRebelFaction()->statusSPCampaign));
+
+    if ($rebelSum !== $rebelStateBest) {
+      return false;
+    }
+
+
+    return true;
+  }
+
   public function getCompletedMissionScores($isCampaign = false)
   {
     return array_map(function (PL2CampaignRecord $mission) {
       return $mission->bestScore;
     }, $this->getCompletedMissions($isCampaign));
+  }
+
+  public function getCampaignTotalScore()
+  {
+    return array_sum($this->getCompletedMissionScores(true));
   }
 
   public function getCompletedMissionTimes($isCampaign = false)
@@ -68,8 +101,8 @@ class PL2FileRecord extends Base\PL2FileRecordBase implements IPilotFileBSF
     return $this->totalKillCount->exercise;
   }
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): PL2FileRecord
   {
-    return (new PL2FileRecord($hex, $tie))->loadHex();
+    return (new PL2FileRecord($hex, $TIE))->loadHex();
   }
 }

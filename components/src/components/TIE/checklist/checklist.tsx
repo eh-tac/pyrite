@@ -7,7 +7,7 @@ type Tab = "messages";
 @Component({
   tag: "pyrite-tie-checklist",
   styleUrl: "checklist.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEChecklistComponent {
   @Element() public el: HTMLElement;

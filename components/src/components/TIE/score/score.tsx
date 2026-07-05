@@ -10,7 +10,7 @@ interface Score {
 @Component({
   tag: "pyrite-tie-score",
   styleUrl: "score.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEScoreComponent {
   @Prop() public mission: Mission;
@@ -56,7 +56,7 @@ export class TIEScoreComponent {
           this.total += p;
           this.flightGroups.push({
             label: fgStr,
-            value: p
+            value: p,
           });
         }
 
@@ -71,7 +71,7 @@ export class TIEScoreComponent {
           this.total += bp;
           bonus.push({ label: fg.bonusGoal.goalText(fg.label, fg.count), value: bp });
         }
-      }
+      },
     );
     // todo globals
     if (secondary.length) {
@@ -140,7 +140,7 @@ export class TIEScoreComponent {
         <ion-item color="primary">
           <ion-label>{this.total}</ion-label>
         </ion-item>
-      </ion-list>
+      </ion-list>,
     ];
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { XWAString } from "../../../model/XWA";
 import { XWAStringController } from "../../../controllers/XWA";
 import { Field } from "../../fields/field";
@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xwa-xwa-string",
   styleUrl: "xwa-string.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWAStringComponent {
   @Element() public el: HTMLElement;
@@ -21,9 +21,8 @@ export class XWAStringComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Magic')} />
+        <Field {...this.controller.getProps("Magic")} />
       </Host>
-    )
+    );
   }
 }
-  

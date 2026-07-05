@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { Trigger } from "../../../model/XvT";
 import { XvTTriggerController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xvt-trigger",
   styleUrl: "trigger.scss",
-  shadow: false
+  shadow: false,
 })
 export class XvTTriggerComponent {
   @Element() public el: HTMLElement;
@@ -21,12 +21,11 @@ export class XvTTriggerComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Condition')} />
-        <Field {...this.controller.getProps('VariableType')} />
-        <Field {...this.controller.getProps('Variable')} />
-        <Field {...this.controller.getProps('Amount')} />
+        <Field {...this.controller.getProps("Condition")} />
+        <Field {...this.controller.getProps("VariableType")} />
+        <Field {...this.controller.getProps("Variable")} />
+        <Field {...this.controller.getProps("Amount")} />
       </Host>
-    )
+    );
   }
 }
-  

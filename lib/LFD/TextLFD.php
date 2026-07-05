@@ -3,17 +3,19 @@
 namespace Pyrite\LFD;
 
 use Pyrite\Byteable;
-use Pyrite\Hex;
+use Pyrite\PyriteModel;
 use Pyrite\HexDecoder;
+use Pyrite\HexEncoder;
 
 class TextLFD extends LFD
 {
-	public $NumberOfStrings; // number of missions + 4
-	public $Strings = [];
+	public int $NumberOfStrings; // number of missions + 4
+	/** @var array<LFDString> */
+	public array $Strings = [];
 
-	public function __construct($hex)
+	public function __construct(public string $hex, public ?PyriteModel $TIE = NULL)
 	{
-		parent::__construct($hex);
+		parent::__construct($hex, $TIE);
 		$this->NumberOfStrings = $this->getShort($hex, 0x10);
 		$off                   = 0x12;
 		for ($i = 0; $i < $this->NumberOfStrings; $i++) {
@@ -23,7 +25,7 @@ class TextLFD extends LFD
 		}
 	}
 
-	public function __debugInfo()
+	public function __debugInfo(): array
 	{
 		return [
 			'type'            => $this->HeaderType,
@@ -38,13 +40,14 @@ class TextLFD extends LFD
 class LFDString implements Byteable, \ArrayAccess
 {
 	use HexDecoder;
+	use HexEncoder;
 
-	public $Length; // total length of all SubStrings and the final Reserved value.
-	public $SubStrings = []; // Null terminated
-	public $Reserved; // 0x00
-	public $Hex;
+	public int $Length; // total length of all SubStrings and the final Reserved value.
+	public array $SubStrings = []; // Null terminated
+	public int $Reserved; // 0x00
+	public string $Hex;
 
-	public function __construct($hex)
+	public function __construct(string $hex)
 	{
 		$this->Length = $this->getShort($hex);
 		if ($this->Length > 1) {
@@ -59,22 +62,22 @@ class LFDString implements Byteable, \ArrayAccess
 		return $this->Length + 2;
 	}
 
-	public function offsetExists($offset)
+	public function offsetExists($offset): bool
 	{
 		return isset($this->SubStrings[$offset]);
 	}
 
-	public function offsetGet($offset)
+	public function offsetGet($offset): string
 	{
 		return isset($this->SubStrings[$offset]) ? $this->SubStrings[$offset] : '';
 	}
 
-	public function offsetSet($offset, $value)
+	public function offsetSet($offset, $value): void
 	{
 		$this->SubStrings[$offset] = $value;
 	}
 
-	public function offsetUnset($offset)
+	public function offsetUnset($offset): void
 	{
 		unset($this->SubStrings[$offset]);
 	}

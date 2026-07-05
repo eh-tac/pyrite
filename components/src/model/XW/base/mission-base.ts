@@ -12,15 +12,15 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
   public FileHeader: FileHeader;
   public FlightGroups: FlightGroup[];
   public ObjectGroups: ObjectGroup[];
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.FileHeader = new FileHeader(hex.slice(0x00), this.TIE);
     this.FlightGroups = [];
-    offset = 0xCE;
+    offset = 0xce;
     for (let i = 0; i < this.FileHeader.NumFGs; i++) {
       const t = new FlightGroup(hex.slice(offset), this.TIE);
       this.FlightGroups.push(t);
@@ -35,28 +35,27 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
     }
     this.MissionLength = offset;
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
-      FileHeader: this.FileHeader,
-      FlightGroups: this.FlightGroups,
-      ObjectGroups: this.ObjectGroups
+      FileHeader: this.FileHeader.toJSON(),
+      FlightGroups: this.FlightGroups.map((t) => t.toJSON()),
+      ObjectGroups: this.ObjectGroups.map((t) => t.toJSON()),
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeObject(hex, this.FileHeader, 0x00);
-    offset = 0xCE;
-    for (let i = 0; i < this.FileHeader.NumFGs; i++) {
+    offset = 0xce;
+    for (let i = 0; i < this.FlightGroups.length; i++) {
       const t = this.FlightGroups[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    offset = offset;
-    for (let i = 0; i < this.FileHeader.NumObj; i++) {
+    for (let i = 0; i < this.ObjectGroups.length; i++) {
       const t = this.ObjectGroups[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
@@ -64,8 +63,7 @@ export abstract class MissionBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.MissionLength;
   }

@@ -6,24 +6,25 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements Byteable
+abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTPLAYERRANKCOUNTRECORDLENGTH INT */
-    public const PLTPLAYERRANKCOUNTRECORDLENGTH = 300;
-    /** @var integer[] 0x0000 exercise INT */
-    public $exercise;
-    /** @var integer[] 0x0064 melee INT */
-    public $melee;
-    /** @var integer[] 0x00C8 combat INT */
-    public $combat;
+    /** @var int PLTPLAYERRANKCOUNTRECORDLENGTH INT */
+	public const PLTPLAYERRANKCOUNTRECORDLENGTH = 300;
+    /** @var array<int> 0x0000 exercise INT */
+	public array $exercise;
+    /** @var array<int> 0x0064 melee INT */
+	public array $melee;
+    /** @var array<int> 0x00C8 combat INT */
+	public array $combat;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -31,7 +32,7 @@ abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements Byteab
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -63,7 +64,7 @@ abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements Byteab
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "exercise" => $this->exercise,
@@ -72,7 +73,7 @@ abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements Byteab
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -100,7 +101,7 @@ abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements Byteab
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTPLAYERRANKCOUNTRECORDLENGTH;
     }

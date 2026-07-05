@@ -1,9 +1,6 @@
 # pyrite-tie-tie-string
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ----------- | --------- | ----------- | ----------- | ----------- |
 | `tiestring` | --        |             | `TIEString` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

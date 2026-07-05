@@ -46,10 +46,10 @@ export class PilotFile extends PilotFileBase implements PilotData {
             completed: true,
             score,
             secret: secret.charAt(m) === "1",
-            bonus: bonus.charAt(m) === "1"
+            bonus: bonus.charAt(m) === "1",
           };
           return mission;
-        })
+        }),
       };
       return bs;
     });
@@ -58,7 +58,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
   public get MissionScores(): MissionScore[] {
     return this.BattleSummary.reduce(
       (carry: MissionScore[], battle: BattleSummary) => carry.concat(battle.missions),
-      []
+      [],
     );
   }
 
@@ -67,7 +67,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
       const craftLabel = Constants.CRAFTTYPE[i + 1];
       return {
         craftLabel,
-        kills
+        kills,
       } as KillSummary;
     });
   }
@@ -83,10 +83,10 @@ export class PilotFile extends PilotFileBase implements PilotData {
         missions: combatCompletions[idx].map((complete: boolean, mission: number) => {
           const combatMission: MissionScore = {
             completed: complete,
-            score: this.CombatScores[idx][mission]
+            score: this.CombatScores[idx][mission],
           };
           return combatMission;
-        })
+        }),
       };
       if (summary.trainingScore) {
         summary.scoreLabel = `${summary.trainingScore} (Level ${summary.trainingLevel})`;

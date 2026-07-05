@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-tie-post-mission-questions",
   styleUrl: "post-mission-questions.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEPostMissionQuestionsComponent {
   @Element() public el: HTMLElement;

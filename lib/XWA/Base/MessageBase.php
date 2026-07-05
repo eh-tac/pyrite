@@ -6,59 +6,46 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
-use Pyrite\XWA\Trigger;
+use Pyrite\PyriteModel;
+use Pyrite\XWA\TriggerPair;
 
-abstract class MessageBase extends PyriteBase implements Byteable
+abstract class MessageBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MESSAGELENGTH INT */
-    public const MESSAGELENGTH = 162;
-    /** @var integer 0x00 MessageIndex SHORT */
-    public $MessageIndex;
+    /** @var int MESSAGELENGTH INT */
+	public const MESSAGELENGTH = 162;
+    /** @var int 0x00 MessageIndex SHORT */
+	public int $MessageIndex;
     /** @var string 0x02 Message STR */
-    public $Message;
-    /** @var integer[] 0x52 SetToTeam BYTE */
-    public $SetToTeam;
-    /** @var Trigger 0x5C Trigger1 Trigger */
-    public $Trigger1;
-    /** @var Trigger 0x62 Trigger2 Trigger */
-    public $Trigger2;
-    /** @var integer 0x68 Unknown1 BYTE */
-    public $Unknown1;
-    /** @var boolean 0x6A Trigger1OrTrigger2 BOOL */
-    public $Trigger1OrTrigger2;
-    /** @var Trigger 0x6C Trigger3 Trigger */
-    public $Trigger3;
-    /** @var Trigger 0x72 Trigger4 Trigger */
-    public $Trigger4;
-    /** @var boolean 0x7A Trigger3OrTrigger4 BOOL */
-    public $Trigger3OrTrigger4;
+	public string $Message;
+    /** @var array<int> 0x52 SentToTeam BYTE */
+	public array $SentToTeam;
+    /** @var array<TriggerPair> 0x5C Triggers TriggerPair */
+	public array $Triggers; // (contained Unknown1)
     /** @var string 0x7C Voice STR */
-    public $Voice;
-    /** @var integer 0x84 OriginatingFG BYTE */
-    public $OriginatingFG;
-    /** @var integer 0x8C DelaySeconds BYTE */
-    public $DelaySeconds;
-    /** @var boolean 0x8D Triggers12OrTriggers34 BOOL */
-    public $Triggers12OrTriggers34;
-    /** @var integer 0x8E Color BYTE */
-    public $Color;
-    /** @var integer 0x8F Unknown2 BYTE */
-    public $Unknown2;
-    /** @var Trigger 0x90 Cancel1 Trigger */
-    public $Cancel1;
-    /** @var Trigger 0x96 Cancel2 Trigger */
-    public $Cancel2;
-    /** @var boolean 0x9E Cancel1OrCancel2 BOOL */
-    public $Cancel1OrCancel2;
-    /** @var boolean 0xA0 Unknown3 BOOL */
-    public $Unknown3;
+	public string $Voice;
+    /** @var int 0x84 OriginatingFG INT */
+	public int $OriginatingFG;
+    /** @var int 0x88 Type INT */
+	public int $Type;
+    /** @var int 0x8C Delay BYTE */
+	public int $Delay;
+    /** @var bool 0x8D Triggers12OrTriggers34 BOOL */
+	public bool $Triggers12OrTriggers34;
+    /** @var int 0x8E Color BYTE */
+	public int $Color;
+    /** @var bool 0x8F SpeakerHeader BOOL */
+	public bool $SpeakerHeader; // (was Unknown2)
+    /** @var TriggerPair 0x90 Special TriggerPair */
+	public TriggerPair $Special;
+    /** @var int 0xA0 SpecialMeaning BYTE */
+	public int $SpecialMeaning; // (was Unknown3) {Ignore, Stop, Finished, Both}
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -66,70 +53,62 @@ abstract class MessageBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
 
         $this->MessageIndex = $this->getShort($hex, 0x00);
         $this->Message = $this->getString($hex, 0x02);
-        $this->SetToTeam = [];
+        $this->SentToTeam = [];
         $offset = 0x52;
         for ($i = 0; $i < 10; $i++) {
             $t = $this->getByte($hex, $offset);
-            $this->SetToTeam[] = $t;
+            $this->SentToTeam[] = $t;
             $offset += 1;
         }
-        $this->Trigger1 = (new Trigger(substr($hex, 0x5C), $this->TIE))->loadHex();
-        $this->Trigger2 = (new Trigger(substr($hex, 0x62), $this->TIE))->loadHex();
-        $this->Unknown1 = $this->getByte($hex, 0x68);
-        $this->Trigger1OrTrigger2 = $this->getBool($hex, 0x6A);
-        $this->Trigger3 = (new Trigger(substr($hex, 0x6C), $this->TIE))->loadHex();
-        $this->Trigger4 = (new Trigger(substr($hex, 0x72), $this->TIE))->loadHex();
-        $this->Trigger3OrTrigger4 = $this->getBool($hex, 0x7A);
+        $this->Triggers = [];
+        $offset = 0x5C;
+        for ($i = 0; $i < 2; $i++) {
+            $t = (new TriggerPair(substr($hex, $offset), $this->TIE))->loadHex();
+            $this->Triggers[] = $t;
+            $offset += $t->getLength();
+        }
         $this->Voice = $this->getString($hex, 0x7C);
-        $this->OriginatingFG = $this->getByte($hex, 0x84);
-        $this->DelaySeconds = $this->getByte($hex, 0x8C);
+        $this->OriginatingFG = $this->getInt($hex, 0x84);
+        $this->Type = $this->getInt($hex, 0x88);
+        $this->Delay = $this->getByte($hex, 0x8C);
         $this->Triggers12OrTriggers34 = $this->getBool($hex, 0x8D);
         $this->Color = $this->getByte($hex, 0x8E);
-        $this->Unknown2 = $this->getByte($hex, 0x8F);
-        $this->Cancel1 = (new Trigger(substr($hex, 0x90), $this->TIE))->loadHex();
-        $this->Cancel2 = (new Trigger(substr($hex, 0x96), $this->TIE))->loadHex();
-        $this->Cancel1OrCancel2 = $this->getBool($hex, 0x9E);
-        $this->Unknown3 = $this->getBool($hex, 0xA0);
+        $this->SpeakerHeader = $this->getBool($hex, 0x8F);
+        $this->Special = (new TriggerPair(substr($hex, 0x90), $this->TIE))->loadHex();
+        $this->SpecialMeaning = $this->getByte($hex, 0xA0);
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "MessageIndex" => $this->MessageIndex,
             "Message" => $this->Message,
-            "SetToTeam" => $this->SetToTeam,
-            "Trigger1" => $this->Trigger1,
-            "Trigger2" => $this->Trigger2,
-            "Unknown1" => $this->Unknown1,
-            "Trigger1OrTrigger2" => $this->Trigger1OrTrigger2,
-            "Trigger3" => $this->Trigger3,
-            "Trigger4" => $this->Trigger4,
-            "Trigger3OrTrigger4" => $this->Trigger3OrTrigger4,
+            "SentToTeam" => $this->SentToTeam,
+            "Triggers" => $this->Triggers,
             "Voice" => $this->Voice,
             "OriginatingFG" => $this->OriginatingFG,
-            "DelaySeconds" => $this->DelaySeconds,
+            "Type" => $this->Type,
+            "Delay" => $this->Delay,
             "Triggers12OrTriggers34" => $this->Triggers12OrTriggers34,
             "Color" => $this->Color,
-            "Unknown2" => $this->Unknown2,
-            "Cancel1" => $this->Cancel1,
-            "Cancel2" => $this->Cancel2,
-            "Cancel1OrCancel2" => $this->Cancel1OrCancel2,
-            "Unknown3" => $this->Unknown3
+            "SpeakerHeader" => $this->SpeakerHeader,
+            "Special" => $this->Special,
+            "SpecialMeaning" => $this->SpecialMeaning
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -138,33 +117,31 @@ abstract class MessageBase extends PyriteBase implements Byteable
         $hex = $this->writeString($this->Message, $hex, 0x02);
         $offset = 0x52;
         for ($i = 0; $i < 10; $i++) {
-            $t = $this->SetToTeam[$i];
+            $t = $this->SentToTeam[$i];
             $hex = $this->writeByte($t, $hex, $offset);
             $offset += 1;
         }
-        $hex = $this->writeObject($this->Trigger1, $hex, 0x5C);
-        $hex = $this->writeObject($this->Trigger2, $hex, 0x62);
-        $hex = $this->writeByte($this->Unknown1, $hex, 0x68);
-        $hex = $this->writeBool($this->Trigger1OrTrigger2, $hex, 0x6A);
-        $hex = $this->writeObject($this->Trigger3, $hex, 0x6C);
-        $hex = $this->writeObject($this->Trigger4, $hex, 0x72);
-        $hex = $this->writeBool($this->Trigger3OrTrigger4, $hex, 0x7A);
+        $offset = 0x5C;
+        for ($i = 0; $i < 2; $i++) {
+            $t = $this->Triggers[$i];
+            $hex = $this->writeObject($t, $hex, $offset);
+            $offset += $t->getLength();
+        }
         $hex = $this->writeString($this->Voice, $hex, 0x7C);
-        $hex = $this->writeByte($this->OriginatingFG, $hex, 0x84);
-        $hex = $this->writeByte($this->DelaySeconds, $hex, 0x8C);
+        $hex = $this->writeInt($this->OriginatingFG, $hex, 0x84);
+        $hex = $this->writeInt($this->Type, $hex, 0x88);
+        $hex = $this->writeByte($this->Delay, $hex, 0x8C);
         $hex = $this->writeBool($this->Triggers12OrTriggers34, $hex, 0x8D);
         $hex = $this->writeByte($this->Color, $hex, 0x8E);
-        $hex = $this->writeByte($this->Unknown2, $hex, 0x8F);
-        $hex = $this->writeObject($this->Cancel1, $hex, 0x90);
-        $hex = $this->writeObject($this->Cancel2, $hex, 0x96);
-        $hex = $this->writeBool($this->Cancel1OrCancel2, $hex, 0x9E);
-        $hex = $this->writeBool($this->Unknown3, $hex, 0xA0);
+        $hex = $this->writeBool($this->SpeakerHeader, $hex, 0x8F);
+        $hex = $this->writeObject($this->Special, $hex, 0x90);
+        $hex = $this->writeByte($this->SpecialMeaning, $hex, 0xA0);
 
         return $hex;
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::MESSAGELENGTH;
     }

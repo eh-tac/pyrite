@@ -10,9 +10,9 @@ export abstract class PreMissionQuestionsBase extends PyriteBase implements Byte
   public Question: string;
   public readonly Spacer: number = 10;
   public Answer: string;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -25,29 +25,31 @@ export abstract class PreMissionQuestionsBase extends PyriteBase implements Byte
     offset += this.AnswerLength();
     this.PreMissionQuestionsLength = offset;
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       Length: this.Length,
       Question: this.Question,
-      Answer: this.Answer
+      Answer: this.Answer,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Length, 0x0);
-    writeChar(hex, this.Question, 0x2);
+    writeChar(hex, this.Question, 0x2, this.QuestionLength());
     writeByte(hex, 10, offset);
-    writeChar(hex, this.Answer, offset);
+    offset += 1;
+    writeChar(hex, this.Answer, offset, this.AnswerLength());
+    offset += this.AnswerLength();
 
     return hex;
   }
-  
-  protected abstract QuestionLength();
-protected abstract AnswerLength();
+
+  protected abstract QuestionLength(): number;
+  protected abstract AnswerLength(): number;
   public getLength(): number {
     return this.PreMissionQuestionsLength;
   }

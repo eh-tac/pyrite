@@ -1,9 +1,6 @@
 # ehtc-pilot
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -12,7 +9,6 @@
 | `pin`       | `pin`       |             | `number`  | `undefined` |
 | `secondary` | `secondary` |             | `boolean` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -5,7 +5,7 @@ import { ehtcAPI } from "../api-store/util";
 @Component({
   tag: "ehtc-battle-select",
   styleUrl: "battle-select.scss",
-  shadow: false
+  shadow: false,
 })
 export class BattleSelectComponent {
   @Element() el: HTMLElement;
@@ -144,7 +144,7 @@ export class BattleSelectComponent {
       () => {
         this.suggestions = undefined;
       },
-      { once: true }
+      { once: true },
     );
     this.suggestionIdx = undefined;
   }

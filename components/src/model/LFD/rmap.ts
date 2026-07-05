@@ -10,7 +10,10 @@ export class Rmap extends RmapBase {
 
   public beforeConstruct(): void {}
 
-  public constructor(public hex: ArrayBuffer, tie?: IMission) {
+  public constructor(
+    public hex: ArrayBuffer,
+    tie?: IMission,
+  ) {
     super(hex, tie);
     let offset = this.RmapLength;
     this.RawData = this.Subheaders.map((h: Header) => {

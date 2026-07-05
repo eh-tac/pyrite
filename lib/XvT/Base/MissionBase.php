@@ -6,6 +6,7 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\Briefing;
 use Pyrite\XvT\FileHeader;
 use Pyrite\XvT\FlightGroup;
@@ -13,35 +14,35 @@ use Pyrite\XvT\GlobalGoal;
 use Pyrite\XvT\Message;
 use Pyrite\XvT\Team;
 
-abstract class MissionBase extends PyriteBase implements Byteable
+abstract class MissionBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MissionLength INT */
-    public $MissionLength;
+    /** @var int MissionLength INT */
+	public int $MissionLength;
     /** @var FileHeader 0x000 FileHeader FileHeader */
-    public $FileHeader;
-    /** @var FlightGroup[] 0x0A4 FlightGroups FlightGroup */
-    public $FlightGroups;
-    /** @var Message[] PV Messages Message */
-    public $Messages;
-    /** @var GlobalGoal[] PV GlobalGoals GlobalGoal */
-    public $GlobalGoals;
-    /** @var Team[] PV Teams Team */
-    public $Teams;
-    /** @var Briefing[] PV Briefing Briefing */
-    public $Briefing;
-    /** @var string[] PV FGGoalStrings STR */
-    public $FGGoalStrings;
-    /** @var string[] PV GlobalGoalStrings STR */
-    public $GlobalGoalStrings;
+	public FileHeader $FileHeader;
+    /** @var array<FlightGroup> 0x0A4 FlightGroups FlightGroup */
+	public array $FlightGroups;
+    /** @var array<Message> PV Messages Message */
+	public array $Messages;
+    /** @var array<GlobalGoal> PV GlobalGoals GlobalGoal */
+	public array $GlobalGoals;
+    /** @var array<Team> PV Teams Team */
+	public array $Teams;
+    /** @var array<Briefing> PV Briefing Briefing */
+	public array $Briefing;
+    /** @var array<string> PV FGGoalStrings STR */
+	public array $FGGoalStrings;
+    /** @var array<string> PV GlobalGoalStrings STR */
+	public array $GlobalGoalStrings;
     /** @var string PV MissionDescription STR */
-    public $MissionDescription;
+	public string $MissionDescription;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -49,7 +50,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -111,7 +112,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "FileHeader" => $this->FileHeader,
@@ -126,7 +127,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -180,7 +181,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
     }
     
     protected abstract function FGGoalStringCount();
-    public function getLength()
+    public function getLength(): int
     {
         return $this->MissionLength;
     }

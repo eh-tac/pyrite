@@ -1,9 +1,6 @@
 # pyrite-tie-checklist
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -12,7 +9,6 @@
 | `lfdUrl`     | `lfd-url`     |             | `string` | `undefined` |
 | `missionUrl` | `mission-url` |             | `string` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

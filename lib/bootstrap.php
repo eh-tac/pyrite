@@ -1,5 +1,5 @@
 <?php
-set_error_handler(function ($severity, $message, $file, $line) {
+set_error_handler(function (int $severity, string $message, string $file, int $line): bool {
   if (error_reporting() & $severity) {
     // minor stuff
     echo "<pre>";
@@ -8,9 +8,10 @@ set_error_handler(function ($severity, $message, $file, $line) {
   } else {
     throw new ErrorException($message, 0, $severity, $file, $line);
   }
+  return false; // call normal PHP error handler as well
 });
 
-function pyriteLoader($class)
+function pyriteLoader(string $class)
 {
   $ds      = DIRECTORY_SEPARATOR;
   $rootDir = dirname(__FILE__) . $ds;
@@ -24,7 +25,7 @@ function pyriteLoader($class)
     list($platform, $class) = $bits;
 
     $path[] = $platform . $ds;
-    if (strpos($class, 'Base')) {
+    if (strpos($class, 'Base') !== false) {
       $path[] = 'gen' . $ds;
     }
   }

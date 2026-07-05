@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XvT;
-    
+
 class Event extends Base\EventBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new Event($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): Event
+  {
+    return (new Event($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

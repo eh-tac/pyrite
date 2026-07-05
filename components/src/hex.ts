@@ -1,10 +1,11 @@
+import { Byteable } from "./byteable";
+
 export function getBool(hex: ArrayBuffer, start: number = 0): boolean {
-  const byte = getByte(hex.slice(start));
-  return !!byte;
+  return new DataView(hex).getUint8(start) !== 0;
 }
 
 export function getByte(hex: ArrayBuffer, start: number = 0): number {
-  return new Uint8Array(hex.slice(start))[0];
+  return new DataView(hex).getUint8(start);
 }
 
 export function getByteString(byte: number): string {
@@ -16,16 +17,16 @@ export function getByteString(byte: number): string {
 }
 
 export function getSByte(hex: ArrayBuffer, start: number = 0): number {
-  return new Int8Array(hex.slice(start))[0];
+  return new DataView(hex).getInt8(start);
 }
 
 export function getSChar(hex: ArrayBuffer, start: number = 0, length: number = 0): string {
-  return String.fromCharCode.apply(null, new Int8Array(hex.slice(start), length));
+  return String.fromCodePoint.apply(null, Array.from(new Int8Array(hex.slice(start), length)));
 }
 
 export function getChar(hex: ArrayBuffer, start: number = 0, length: number = 0): string {
-  let str: string = String.fromCharCode.apply(null, new Uint8Array(hex.slice(start, start + length)));
-  const end = str.indexOf(String.fromCharCode(0));
+  let str: string = String.fromCodePoint.apply(null, Array.from(new Uint8Array(hex, start, length)));
+  const end = str.indexOf(String.fromCodePoint(0));
   if (end !== -1) {
     str = str.substr(0, end);
   }
@@ -33,69 +34,82 @@ export function getChar(hex: ArrayBuffer, start: number = 0, length: number = 0)
 }
 
 export function getShort(hex: ArrayBuffer, start: number = 0): number {
-  return new Int16Array(hex.slice(start), 0, 1)[0];
+  return new DataView(hex).getInt16(start, true);
 }
 
 export function getUShort(hex: ArrayBuffer, start: number = 0): number {
-  return new Uint16Array(hex.slice(start), 0, 1)[0];
+  return new DataView(hex).getUint16(start, true);
 }
 
 export function getInt(hex: ArrayBuffer, start: number = 0): number {
-  return new Int32Array(hex.slice(start), 0, 1)[0];
+  return new DataView(hex).getInt32(start, true);
 }
 
 export function getIntArray(hex: ArrayBuffer, start: number = 0, count: number = 1): number[] {
-  return Array.from(new Int32Array(hex.slice(start), 0, count));
+  const view = new DataView(hex);
+  return Array.from({ length: count }, (_, i) => view.getInt32(start + i * 4, true));
 }
 
 export function getUInt(hex: ArrayBuffer, start: number = 0): number {
-  return new Uint32Array(hex.slice(start), 0, 1)[0];
+  return new DataView(hex).getUint32(start, true);
 }
 
 export function getString(hex: ArrayBuffer, start: number = 0, length: number = 99999): string {
-  let str = String.fromCharCode.apply(null, new Uint8Array(hex.slice(start, length)));
-  const end = str.indexOf(String.fromCharCode(0));
+  const actualLength = Math.min(length, hex.byteLength - start);
+  let str = String.fromCodePoint.apply(null, Array.from(new Uint8Array(hex, start, actualLength)));
+  const end = str.indexOf(String.fromCodePoint(0));
   if (end !== -1) {
     str = str.substr(0, end);
   }
   return str.trim();
 }
 
-export function writeBool(hex: string, value: boolean, start: number = 0): void {
-  // const byte = getByte(hex, start);
-  // return !!byte;
+export function writeBool(hex: ArrayBuffer, value: boolean, pos: number = 0): void {
+  writeByte(hex, value ? 1 : 0, pos);
 }
 
-export function writeByte(hex: string, value: number, start: number = 0): void {
-  // return new Uint8Array(hex, start)[0];
+export function writeByte(hex: ArrayBuffer, value: number, pos: number = 0): void {
+  new Uint8Array(hex)[pos] = value & 0xff;
 }
 
-export function writeSByte(hex: string, value: number, start: number = 0): void {
-  // return new Int8Array(hex, start)[0];
+export function writeSByte(hex: ArrayBuffer, value: number, pos: number = 0): void {
+  new Int8Array(hex)[pos] = value;
 }
 
-export function writeChar(hex: string, value: string, length: number = 1, start: number = 0): void {
-  // return String.fromCharCode.apply(null, new Uint8Array(hex, start, length));
-}
-
-export function writeShort(hex: string, value: number, start: number = 0): void {
-  // return new Int16Array(hex, start, 1)[0];
-}
-
-export function writeUShort(hex: string, value: number, start: number = 0): void {
-  // return new UInt16Array(hex, start, 1)[0];
-}
-
-export function writeInt(hex: string, value: number, start: number = 0): void {
-  // return new Int32Array(hex, start, 1)[0];
-}
-
-export function writeString(hex: string, value: string, start: number = 0, length: number = 99999): void {
-  hex = hex.substring(start, start + length);
-  const end = hex.indexOf(String.fromCharCode(0));
-  if (end !== -1) {
-    hex = hex.substr(0, end);
+export function writeChar(hex: ArrayBuffer, value: string, pos: number = 0, length: number = 1): void {
+  const view = new Uint8Array(hex);
+  for (let i = 0; i < length; i++) {
+    view[pos + i] = i < value.length ? value.charCodeAt(i) : 0;
   }
 }
 
-export function writeObject(hex: string, value: any, position: number): void {}
+export function writeShort(hex: ArrayBuffer, value: number, pos: number = 0): void {
+  new DataView(hex).setInt16(pos, value, true);
+}
+
+export function writeUShort(hex: ArrayBuffer, value: number, pos: number = 0): void {
+  new DataView(hex).setUint16(pos, value, true);
+}
+
+export function writeInt(hex: ArrayBuffer, value: number, pos: number = 0): void {
+  new DataView(hex).setInt32(pos, value, true);
+}
+
+export function writeString(hex: ArrayBuffer, value: string, pos: number = 0, length: number = 99999): void {
+  const view = new Uint8Array(hex);
+  const maxLength = Math.min(length, value.length);
+  for (let i = 0; i < maxLength; i++) {
+    view[pos + i] = value.charCodeAt(i);
+  }
+  if (maxLength < length) {
+    view[pos + maxLength] = 0;
+  }
+}
+
+export function writeObject(hex: ArrayBuffer, value: Byteable, pos: number): void {
+  const valueView = new DataView(value.toHexBuffer());
+  const view = new DataView(hex);
+  for (let i = 0; i < valueView.byteLength; i++) {
+    view.setUint8(pos + i, valueView.getUint8(i));
+  }
+}

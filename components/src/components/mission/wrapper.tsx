@@ -8,7 +8,7 @@ import { Mission as XWAMission } from "../../model/XWA";
 @Component({
   tag: "pyrite-mission-wrapper",
   styleUrl: "",
-  shadow: true
+  shadow: true,
 })
 export class PyriteMissionWrapper {
   @Element() public el: HTMLElement;

@@ -18,7 +18,7 @@ class ScoreRow
         $this->isHeader = $isHeader;
     }
 
-    public function disable(): self
+    public function disable(): static
     {
         $this->number = 0;
         return $this;

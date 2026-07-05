@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PilotRecord Name="pickledyoda">
+  <PilotGameRecord Id="xwing" Rank="FltCadet" Status="Alive" Difficulty="Medium" ActiveTour="tour1" CurrentScore="13650" AiScore="13650" Droid="R0-S13" AvatarIndex="0">
+    <PilotAwardRecord Award="kalidor" Level="0" />
+    <TrainingRecord CraftType="TIEAdvanced" HighScore="29805" HighestLevelCompleted="2" />
+    <PilotTourRecord TourId="tour1" CurrentTourStep="1">
+      <PilotOperationRecord TourStep="0" Score="13650" Attempts="1" />
+    </PilotTourRecord>
+    <HistoricTourRecord TourId="xcombat" CurrentTourStep="0">
+      <PilotOperationRecord TourStep="0" Score="16036" Complete="true" />
+      <PilotOperationRecord TourStep="1" Score="0" />
+      <PilotOperationRecord TourStep="2" Score="0" />
+      <PilotOperationRecord TourStep="3" Score="0" />
+      <PilotOperationRecord TourStep="4" Score="0" />
+      <PilotOperationRecord TourStep="5" Score="0" />
+    </HistoricTourRecord>
+    <EntityVictoryRecord Id="CorellianCorvette" Kills="0" Captures="1" />
+    <EntityVictoryRecord Id="Freighter" Kills="3" Captures="0" />
+    <StatRecord Id="ProjectileShots" Value="6" />
+    <StatRecord Id="ProjectilesHits" Value="6" />
+    <StatRecord Id="LaserShots" Value="137" />
+    <StatRecord Id="LaserHits" Value="129" />
+  </PilotGameRecord>
+  <PilotGameRecord Id="tf" Rank="FltCadet" Status="Alive" Difficulty="Medium" CurrentScore="0" AiScore="0" AvatarIndex="0" />
+  <PilotGameRecord Id="xvt" Rank="FltCadet" Status="Alive" Difficulty="Medium" CurrentScore="0" AiScore="0" AvatarIndex="0" />
+  <PilotGameRecord Id="xwa" Rank="FltCadet" Status="Alive" Difficulty="Medium" CurrentScore="0" AiScore="0" AvatarIndex="0" />
+</PilotRecord>

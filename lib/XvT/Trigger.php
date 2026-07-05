@@ -5,9 +5,9 @@ namespace Pyrite\XvT;
 class Trigger extends Base\TriggerBase
 {
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): Trigger
   {
-    return (new Trigger($hex, $tie))->loadHex();
+    return (new Trigger($hex, $TIE))->loadHex();
   }
 
   public function __toString()

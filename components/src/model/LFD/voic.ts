@@ -43,6 +43,6 @@ export class Voic extends VoicBase {
 
   public base64(): string {
     const prefix = "data:audio/voc;base64,";
-    return prefix + btoa(String.fromCharCode.apply(null, new Uint8Array(this.hex.slice(16))));
+    return prefix + btoa(String.fromCodePoint.apply(null, new Uint8Array(this.hex.slice(16))));
   }
 }

@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-lfd",
   styleUrl: "lfd.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDComponent {
   @Element() public el: HTMLElement;

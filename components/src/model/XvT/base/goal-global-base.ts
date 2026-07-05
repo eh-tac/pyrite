@@ -13,9 +13,9 @@ export abstract class GoalGlobalBase extends PyriteBase implements Byteable {
   public Trigger2OrTrigger3: boolean;
   public Trigger12OrTrigger34: boolean;
   public Points: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -26,9 +26,9 @@ export abstract class GoalGlobalBase extends PyriteBase implements Byteable {
       this.TriggerA.push(t);
       offset += t.getLength();
     }
-    this.Trigger1OrTrigger2 = getBool(hex, 0x0A);
+    this.Trigger1OrTrigger2 = getBool(hex, 0x0a);
     this.TriggerB = [];
-    offset = 0x0B;
+    offset = 0x0b;
     for (let i = 0; i < 2; i++) {
       const t = new Trigger(hex.slice(offset), this.TIE);
       this.TriggerB.push(t);
@@ -37,33 +37,32 @@ export abstract class GoalGlobalBase extends PyriteBase implements Byteable {
     this.Trigger2OrTrigger3 = getBool(hex, 0x15);
     this.Trigger12OrTrigger34 = getBool(hex, 0x27);
     this.Points = getSByte(hex, 0x29);
-    
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
-      TriggerA: this.TriggerA,
+      TriggerA: this.TriggerA.map((t) => t.toJSON()),
       Trigger1OrTrigger2: this.Trigger1OrTrigger2,
-      TriggerB: this.TriggerB,
+      TriggerB: this.TriggerB.map((t) => t.toJSON()),
       Trigger2OrTrigger3: this.Trigger2OrTrigger3,
       Trigger12OrTrigger34: this.Trigger12OrTrigger34,
-      Points: this.Points
+      Points: this.Points,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     offset = 0x00;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < this.TriggerA.length; i++) {
       const t = this.TriggerA[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
     }
-    writeBool(hex, this.Trigger1OrTrigger2, 0x0A);
-    offset = 0x0B;
-    for (let i = 0; i < 2; i++) {
+    writeBool(hex, this.Trigger1OrTrigger2, 0x0a);
+    offset = 0x0b;
+    for (let i = 0; i < this.TriggerB.length; i++) {
       const t = this.TriggerB[i];
       writeObject(hex, t, offset);
       offset += t.getLength();
@@ -74,8 +73,7 @@ export abstract class GoalGlobalBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.GOALGLOBALLENGTH;
   }

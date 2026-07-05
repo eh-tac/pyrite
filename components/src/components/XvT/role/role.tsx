@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xvt-role",
   styleUrl: "role.scss",
-  shadow: false
+  shadow: false,
 })
 export class XvTRoleComponent {
   @Element() public el: HTMLElement;

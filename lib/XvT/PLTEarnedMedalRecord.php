@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XvT;
-    
+
 class PLTEarnedMedalRecord extends Base\PLTEarnedMedalRecordBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new PLTEarnedMedalRecord($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): PLTEarnedMedalRecord
+  {
+    return (new PLTEarnedMedalRecord($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

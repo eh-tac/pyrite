@@ -6,12 +6,15 @@ import {
   PL2FileRecord as PilotFile,
   PL2CampaignRecord,
   PL2FactionRecord,
-  PLTCategoryTypeRecord
+  PLTCategoryTypeRecord,
 } from "../../model/XvT";
 import { TriStat } from "../../model/XvT/pl-2-faction-record";
 
 export class BoPPltController extends PilotFileController {
-  public constructor(filepath: string, public plt: PilotFile) {
+  public constructor(
+    filepath: string,
+    public plt: PilotFile,
+  ) {
     super(filepath);
   }
 
@@ -22,14 +25,14 @@ export class BoPPltController extends PilotFileController {
     if (rebel.hasData()) {
       tabs.push(
         ["Stats (R)", this.renderTeamStats("Rebel", rebel)],
-        ["Missions (R)", this.renderTeamMissions("Rebel", rebel)]
+        ["Missions (R)", this.renderTeamMissions("Rebel", rebel)],
       );
     }
     const imprl = this.plt.getImperialFaction();
     if (imprl.hasData()) {
       tabs.push(
         ["Stats (I)", this.renderTeamStats("Imperial", imprl)],
-        ["Missions (I)", this.renderTeamMissions("Imperial", imprl)]
+        ["Missions (I)", this.renderTeamMissions("Imperial", imprl)],
       );
     }
 
@@ -48,7 +51,7 @@ export class BoPPltController extends PilotFileController {
     this.plt
       .getCompletedMissions()
       .slice(battleData.offset ?? 0, battleData.missions)
-      .forEach(m => {
+      .forEach((m) => {
         if (m.totalCountFlown) {
           missionScores.push(m);
           totalScore += m.bestScore;
@@ -79,8 +82,8 @@ export class BoPPltController extends PilotFileController {
             `Mission ${m + 1}`,
             missionScores[m].bestScore.toLocaleString(),
             "Too many missions flown",
-            "text-danger"
-          )
+            "text-danger",
+          ),
         );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
@@ -162,7 +165,7 @@ export class BoPPltController extends PilotFileController {
                 Kills By Type
               </td>
             </tr>
-            {stats.BattleVictories.map(s => this.renderTriRow(s))}
+            {stats.BattleVictories.map((s) => this.renderTriRow(s))}
           </tbody>
         </table>
       </div>
@@ -188,7 +191,7 @@ export class BoPPltController extends PilotFileController {
           <h6 class="my-0 font-weight-bold">Campaign</h6>
         </li>
         {stats.missionSPCampaign.map((m, i) =>
-          m.isMissionComplete ? this.renderBoPCampaign(`Mission ${i + 1}`, m) : ""
+          m.isMissionComplete ? this.renderBoPCampaign(`Mission ${i + 1}`, m) : "",
         )}
         {/* <li class="list-group-item kv d-flex justify-content-between">
           <h6 class="my-0 font-weight-bold">Melees</h6>

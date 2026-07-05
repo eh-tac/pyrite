@@ -6,37 +6,38 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\Constants;
 
-abstract class MissionDataBase extends PyriteBase implements Byteable
+abstract class MissionDataBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MISSIONDATALENGTH INT */
-    public const MISSIONDATALENGTH = 36;
-    /** @var integer 0x00 AttemptCount INT */
-    public $AttemptCount;
-    /** @var integer 0x04 WinCount INT */
-    public $WinCount;
-    /** @var integer 0x08 LossCount INT */
-    public $LossCount;
-    /** @var integer 0x0C BestScore INT */
-    public $BestScore;
-    /** @var integer 0x10 BestTime INT */
-    public $BestTime;
-    /** @var integer 0x14 BestTimeSecond INT */
-    public $BestTimeSecond;
-    /** @var integer 0x18 BestRating INT */
-    public $BestRating;
-    /** @var integer 0x1C Something INT */
-    public $Something;
-    /** @var integer 0x20 Other INT */
-    public $Other;
+    /** @var int MISSIONDATALENGTH INT */
+	public const MISSIONDATALENGTH = 36;
+    /** @var int 0x00 AttemptCount INT */
+	public int $AttemptCount;
+    /** @var int 0x04 WinCount INT */
+	public int $WinCount;
+    /** @var int 0x08 LossCount INT */
+	public int $LossCount;
+    /** @var int 0x0C BestScore INT */
+	public int $BestScore;
+    /** @var int 0x10 BestTime INT */
+	public int $BestTime;
+    /** @var int 0x14 BestTimeSecond INT */
+	public int $BestTimeSecond;
+    /** @var int 0x18 BestRating INT */
+	public int $BestRating;
+    /** @var int 0x1C Something INT */
+	public int $Something;
+    /** @var int 0x20 Other INT */
+	public int $Other;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -44,7 +45,7 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -64,7 +65,7 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "AttemptCount" => $this->AttemptCount,
@@ -79,7 +80,7 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -97,12 +98,12 @@ abstract class MissionDataBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getBestRatingLabel() 
+    public function getBestRatingLabel(): string 
     {
         return isset($this->BestRating) && isset(Constants::$BESTRATING[$this->BestRating]) ? Constants::$BESTRATING[$this->BestRating] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::MISSIONDATALENGTH;
     }

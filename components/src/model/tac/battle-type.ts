@@ -4,7 +4,7 @@ export class BattleType {
     public code: string,
     public platform: string,
     public subgroup: string,
-    public count: number
+    public count: number,
   ) {}
 
   public get route(): string {

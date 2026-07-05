@@ -7,7 +7,7 @@ export class Battle extends BattleSummary {
     public nr: number,
     public name: string,
     public ratingAvg: string,
-    public missions: number
+    public missions: number,
   ) {
     super(URL, code, nr, name, ratingAvg, missions);
   }

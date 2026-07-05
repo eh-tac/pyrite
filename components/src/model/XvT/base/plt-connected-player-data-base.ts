@@ -23,33 +23,32 @@ export abstract class PLTConnectedPlayerDataBase extends PyriteBase implements B
   public optionalBeam: number;
   public optionalCountermeasure: number;
   public hasDisconnectedFromHostUNK: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.pilotLongNameUnused = getChar(hex, 0x0000, 14);
-    this.pilotShortName = getChar(hex, 0x000E, 14);
-    this.fgIndex = getInt(hex, 0x001C);
+    this.pilotShortName = getChar(hex, 0x000e, 14);
+    this.fgIndex = getInt(hex, 0x001c);
     this.DPPlayerID = getInt(hex, 0x0020);
     this.pilotRank = getInt(hex, 0x0024);
     this.playerScore = getInt(hex, 0x0028);
-    this.fullKills = getInt(hex, 0x002C);
+    this.fullKills = getInt(hex, 0x002c);
     this.sharedKills = getInt(hex, 0x0030);
     this.unusedInspections = getInt(hex, 0x0034);
     this.assistKills = getInt(hex, 0x0038);
-    this.losses = getInt(hex, 0x003C);
+    this.losses = getInt(hex, 0x003c);
     this.craftType = getInt(hex, 0x0040);
     this.optionalCraftIndex = getInt(hex, 0x0044);
     this.optionalWarhead = getInt(hex, 0x0048);
-    this.optionalBeam = getInt(hex, 0x004C);
+    this.optionalBeam = getInt(hex, 0x004c);
     this.optionalCountermeasure = getInt(hex, 0x0050);
     this.hasDisconnectedFromHostUNK = getInt(hex, 0x0054);
-    
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       pilotLongNameUnused: this.pilotLongNameUnused,
       pilotShortName: this.pilotShortName,
@@ -67,36 +66,35 @@ export abstract class PLTConnectedPlayerDataBase extends PyriteBase implements B
       optionalWarhead: this.optionalWarhead,
       optionalBeam: this.optionalBeam,
       optionalCountermeasure: this.optionalCountermeasure,
-      hasDisconnectedFromHostUNK: this.hasDisconnectedFromHostUNK
+      hasDisconnectedFromHostUNK: this.hasDisconnectedFromHostUNK,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
-    writeChar(hex, this.pilotLongNameUnused, 0x0000);
-    writeChar(hex, this.pilotShortName, 0x000E);
-    writeInt(hex, this.fgIndex, 0x001C);
+    writeChar(hex, this.pilotLongNameUnused, 0x0000, 14);
+    writeChar(hex, this.pilotShortName, 0x000e, 14);
+    writeInt(hex, this.fgIndex, 0x001c);
     writeInt(hex, this.DPPlayerID, 0x0020);
     writeInt(hex, this.pilotRank, 0x0024);
     writeInt(hex, this.playerScore, 0x0028);
-    writeInt(hex, this.fullKills, 0x002C);
+    writeInt(hex, this.fullKills, 0x002c);
     writeInt(hex, this.sharedKills, 0x0030);
     writeInt(hex, this.unusedInspections, 0x0034);
     writeInt(hex, this.assistKills, 0x0038);
-    writeInt(hex, this.losses, 0x003C);
+    writeInt(hex, this.losses, 0x003c);
     writeInt(hex, this.craftType, 0x0040);
     writeInt(hex, this.optionalCraftIndex, 0x0044);
     writeInt(hex, this.optionalWarhead, 0x0048);
-    writeInt(hex, this.optionalBeam, 0x004C);
+    writeInt(hex, this.optionalBeam, 0x004c);
     writeInt(hex, this.optionalCountermeasure, 0x0050);
     writeInt(hex, this.hasDisconnectedFromHostUNK, 0x0054);
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.PLTCONNECTEDPLAYERDATALENGTH;
   }

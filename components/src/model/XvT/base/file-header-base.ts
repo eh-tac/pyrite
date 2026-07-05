@@ -18,9 +18,9 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public Unknown6: boolean;
   public TimeLimitMinutes: number;
   public TimeLimitSeconds: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -29,17 +29,16 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     this.NumMessages = getShort(hex, 0x04);
     this.Unknown1 = getByte(hex, 0x06);
     this.Unknown2 = getByte(hex, 0x08);
-    this.Unknown3 = getBool(hex, 0x0B);
+    this.Unknown3 = getBool(hex, 0x0b);
     this.Unknown4 = getChar(hex, 0x28, 16);
     this.Unknown5 = getChar(hex, 0x50, 16);
     this.MissionType = getByte(hex, 0x64);
     this.Unknown6 = getBool(hex, 0x65);
     this.TimeLimitMinutes = getByte(hex, 0x66);
     this.TimeLimitSeconds = getByte(hex, 0x67);
-    
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       PlatformID: this.PlatformID,
       NumFGs: this.NumFGs,
@@ -52,12 +51,12 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
       MissionType: this.MissionType,
       Unknown6: this.Unknown6,
       TimeLimitMinutes: this.TimeLimitMinutes,
-      TimeLimitSeconds: this.TimeLimitSeconds
+      TimeLimitSeconds: this.TimeLimitSeconds,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.PlatformID, 0x00);
@@ -65,9 +64,9 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
     writeShort(hex, this.NumMessages, 0x04);
     writeByte(hex, this.Unknown1, 0x06);
     writeByte(hex, this.Unknown2, 0x08);
-    writeBool(hex, this.Unknown3, 0x0B);
-    writeChar(hex, this.Unknown4, 0x28);
-    writeChar(hex, this.Unknown5, 0x50);
+    writeBool(hex, this.Unknown3, 0x0b);
+    writeChar(hex, this.Unknown4, 0x28, 16);
+    writeChar(hex, this.Unknown5, 0x50, 16);
     writeByte(hex, this.MissionType, 0x64);
     writeBool(hex, this.Unknown6, 0x65);
     writeByte(hex, this.TimeLimitMinutes, 0x66);
@@ -75,8 +74,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.FILEHEADERLENGTH;
   }

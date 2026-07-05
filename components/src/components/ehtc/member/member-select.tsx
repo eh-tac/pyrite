@@ -7,7 +7,7 @@ type Member = PilotSummary | CharacterSummary;
 @Component({
   tag: "ehtc-member-select",
   styleUrl: "member-select.scss",
-  shadow: false
+  shadow: false,
 })
 export class MemberSelectComponent {
   @Element() el: HTMLElement;
@@ -84,7 +84,7 @@ export class MemberSelectComponent {
     this.externalPINInputElement.readOnly = this.readonly;
 
     parent.appendChild(this.externalPINInputElement);
-    this.filterArray = this.filter ? this.filter.split(",").map(s => parseInt(s, 10)) : [];
+    this.filterArray = this.filter ? this.filter.split(",").map((s) => parseInt(s, 10)) : [];
 
     ehtcAPI(this.listURL).then((d: Member[]) => {
       this.memberList = d;
@@ -92,7 +92,7 @@ export class MemberSelectComponent {
         this.memberList = d.filter(
           (m: CharacterSummary) =>
             (this.mode !== "character" && this.filterArray.includes(parseInt(m.PIN))) ||
-            (this.mode === "character" && this.filterArray.includes(m.characterId))
+            (this.mode === "character" && this.filterArray.includes(m.characterId)),
         );
       }
 
@@ -120,8 +120,9 @@ export class MemberSelectComponent {
     this.selectMember(
       this.memberList.find(
         (m: CharacterSummary) =>
-          (this.mode !== "character" && parseInt(m.PIN, 10) === v) || (this.mode === "character" && m.characterId === v)
-      )
+          (this.mode !== "character" && parseInt(m.PIN, 10) === v) ||
+          (this.mode === "character" && m.characterId === v),
+      ),
     );
     return Promise.resolve();
   }
@@ -172,7 +173,7 @@ export class MemberSelectComponent {
       () => {
         this.suggestions = undefined;
       },
-      { once: true }
+      { once: true },
     );
     this.suggestionIdx = undefined;
   }

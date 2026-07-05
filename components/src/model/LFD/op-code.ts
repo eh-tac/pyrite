@@ -1,11 +1,10 @@
 import { OpCodeBase } from "./base/op-code-base";
-    
-export class OpCode extends OpCodeBase {
 
+export class OpCode extends OpCodeBase {
   public beforeConstruct(): void {}
 
   public toString(): string {
-    return '';
+    return "";
   }
 
   protected ColorCount(): number {

@@ -1,9 +1,6 @@
 # pyrite-xvt-pl-2-file-record
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | --------------- | --------- | ----------- | --------------- | ----------- |
 | `pl2filerecord` | --        |             | `PL2FileRecord` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

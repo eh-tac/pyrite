@@ -1,35 +1,36 @@
 <?php
+
 namespace Pyrite\LFD;
 
 class BattleTextLFD extends TextLFD
 {
-    public $BattleName;
-    public $CutsceneName;
-    public $TitleBattle1;
-    public $TitleBattle2;
-    public $TitleCutscene1;
-    public $TitleCutscene2;
-    public $DeltName;
-    public $SystemName;
-    public $Frame;
-    public $MissionFilenames = [];
-    public $MissionDescriptions = [];
+    public string $BattleName;
+    public string $CutsceneName;
+    public string $TitleBattle1;
+    public string $TitleBattle2;
+    public string $TitleCutscene1;
+    public string $TitleCutscene2;
+    public string $DeltName;
+    public string $SystemName;
+    public string $Frame;
+    public array $MissionFilenames = [];
+    public array $MissionDescriptions = [];
 
-    public function __construct($hex)
+    public function __construct(string $hex = null, ?\Pyrite\PyriteModel $TIE = null)
     {
-        parent::__construct($hex);
+        parent::__construct($hex, $TIE);
         if (count($this->Strings)) {
-					list($this->BattleName, $this->CutsceneName) = $this->Strings[0];
-					list($this->TitleBattle1, $this->TitleBattle2, $this->TitleCutscene1, $this->TitleCutscene2) = $this->Strings[1];
-					list($this->DeltName, $this->SystemName, $this->Frame) = $this->Strings[2];
-					$this->MissionFilenames    = $this->Strings[3]->SubStrings;
-					$this->MissionDescriptions = array_slice($this->Strings, 4);
-				} else {
-//        	print_r(['Error in Battle Text LFD', $this]);
-				}
+            list($this->BattleName, $this->CutsceneName) = $this->Strings[0];
+            list($this->TitleBattle1, $this->TitleBattle2, $this->TitleCutscene1, $this->TitleCutscene2) = $this->Strings[1];
+            list($this->DeltName, $this->SystemName, $this->Frame) = $this->Strings[2];
+            $this->MissionFilenames    = $this->Strings[3]->SubStrings;
+            $this->MissionDescriptions = array_slice($this->Strings, 4);
+        } else {
+            //        	print_r(['Error in Battle Text LFD', $this]);
+        }
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             'type' => $this->HeaderType,

@@ -6,9 +6,9 @@ class GoalFG extends Base\GoalFGBase
 {
   const POINT_MULTIPLIER = 25;
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): GoalFG
   {
-    return (new GoalFG($hex, $tie))->loadHex();
+    return (new GoalFG($hex, $TIE))->loadHex();
   }
 
   public function isActive(): bool
@@ -16,7 +16,7 @@ class GoalFG extends Base\GoalFGBase
     if ($this->Condition === Constants::$CONDITION_NONEFALSE) {
       return false;
     }
-    return $this->Enabled;
+    return $this->EnabledForTeam[0];
   }
 
   public function __toString()

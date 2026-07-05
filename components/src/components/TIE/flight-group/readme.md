@@ -1,9 +1,6 @@
 # pyrite-tie-flight-group
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------- | --------- | ----------- | ------------- | ----------- |
 | `flightgroup` | --        |             | `FlightGroup` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

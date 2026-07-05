@@ -1,5 +1,5 @@
 import { Byteable } from "../../../byteable";
-import { Constants } from "../constants";
+import { Constants, EndEvent, MissionLocation } from "../constants";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { getShort, getString, writeShort, writeString } from "../../../hex";
 // tslint:disable member-ordering
@@ -9,36 +9,35 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public readonly FILEHEADERLENGTH: number = 206;
   public Version: number;
   public TimeLimit: number; //in minutes
-  public EndEvent: number;
+  public EndEvent: EndEvent;
   public readonly Reserved: number = 0;
-  public MissionLocation: number;
+  public MissionLocation: MissionLocation;
   public CompletionMessage: string[];
   public NumFGs: number;
   public NumObj: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.Version = getShort(hex, 0x00);
     this.TimeLimit = getShort(hex, 0x02);
-    this.EndEvent = getShort(hex, 0x04);
+    this.EndEvent = getShort(hex, 0x04) as EndEvent;
     // static prop Reserved
-    this.MissionLocation = getShort(hex, 0x08);
+    this.MissionLocation = getShort(hex, 0x08) as MissionLocation;
     this.CompletionMessage = [];
-    offset = 0x0A;
+    offset = 0x0a;
     for (let i = 0; i < 3; i++) {
       const t = getString(hex, offset, 64);
       this.CompletionMessage.push(t);
-      offset += t.length + 1;
+      offset += 64;
     }
-    this.NumFGs = getShort(hex, 0xCA);
-    this.NumObj = getShort(hex, 0xCC);
-    
+    this.NumFGs = getShort(hex, 0xca);
+    this.NumObj = getShort(hex, 0xcc);
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       Version: this.Version,
       TimeLimit: this.TimeLimit,
@@ -46,31 +45,31 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
       MissionLocation: this.MissionLocationLabel,
       CompletionMessage: this.CompletionMessage,
       NumFGs: this.NumFGs,
-      NumObj: this.NumObj
+      NumObj: this.NumObj,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Version, 0x00);
     writeShort(hex, this.TimeLimit, 0x02);
     writeShort(hex, this.EndEvent, 0x04);
-    writeShort(hex, 0, 0x06);
+    writeShort(hex, this.Reserved, 0x06);
     writeShort(hex, this.MissionLocation, 0x08);
-    offset = 0x0A;
-    for (let i = 0; i < 3; i++) {
+    offset = 0x0a;
+    for (let i = 0; i < this.CompletionMessage.length; i++) {
       const t = this.CompletionMessage[i];
-      writeString(hex, t, offset);
-      offset += t.length + 1;
+      writeString(hex, t, offset, 64);
+      offset += 64;
     }
-    writeShort(hex, this.NumFGs, 0xCA);
-    writeShort(hex, this.NumObj, 0xCC);
+    writeShort(hex, this.NumFGs, 0xca);
+    writeShort(hex, this.NumObj, 0xcc);
 
     return hex;
   }
-  
+
   public get EndEventLabel(): string {
     return Constants.ENDEVENT[this.EndEvent] || "Unknown";
   }
@@ -78,7 +77,7 @@ export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public get MissionLocationLabel(): string {
     return Constants.MISSIONLOCATION[this.MissionLocation] || "Unknown";
   }
-  
+
   public getLength(): number {
     return this.FILEHEADERLENGTH;
   }

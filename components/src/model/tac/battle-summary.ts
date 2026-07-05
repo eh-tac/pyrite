@@ -5,7 +5,7 @@ export class BattleSummary {
     public nr: number,
     public name: string,
     public ratingAvg: string,
-    public missions: number
+    public missions: number,
   ) {}
 
   public get route(): string {

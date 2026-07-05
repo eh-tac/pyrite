@@ -1,9 +1,6 @@
 # pyrite-lfd-tie-battle
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ----------- | --------- | ----------- | ----------- | ----------- |
 | `tiebattle` | --        |             | `TIEBattle` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

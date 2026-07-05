@@ -2,12 +2,14 @@
 
 namespace Pyrite\XvT;
 
+use Pyrite\PyriteModel;
+
 class GoalFG extends Base\GoalFGBase
 {
 
-  public static function fromHex($hex, $tie = null)
+  public static function fromHex(string $hex, ?PyriteModel $TIE = null): GoalFG
   {
-    return (new GoalFG($hex, $tie))->loadHex();
+    return (new GoalFG($hex, $TIE))->loadHex();
   }
 
   public function __toString()
@@ -22,7 +24,7 @@ class GoalFG extends Base\GoalFGBase
 
   public function hasConditionSet()
   {
-    return $this->Enabled && $this->Condition != Constants::$CONDITION_NONEFALSE && $this->Condition != Constants::$CONDITION_ALWAYSTRUE; 
+    return $this->Enabled && $this->Condition != Constants::$CONDITION_NONEFALSE && $this->Condition != Constants::$CONDITION_ALWAYSTRUE;
   }
 
   public function isBonus()

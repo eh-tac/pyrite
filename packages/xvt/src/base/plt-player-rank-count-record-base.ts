@@ -1,0 +1,77 @@
+import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import { getInt, writeInt } from '@pyrite/core';
+export abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements Byteable {
+  public readonly PLTPLAYERRANKCOUNTRECORDLENGTH: number = 300;
+  public exercise: number[];
+  public melee: number[];
+  public combat: number[];
+
+  constructor(
+    public hex: ArrayBuffer,
+    public TIE?: IMission
+  ) {
+    super(hex, TIE!);
+    this.beforeConstruct();
+    let offset = 0;
+
+    this.exercise = [];
+    offset = 0x0000;
+    for (let i = 0; i < 25; i++) {
+      const t = getInt(hex, offset);
+      this.exercise.push(t);
+      offset += 4;
+    }
+    this.melee = [];
+    offset = 0x0064;
+    for (let i = 0; i < 25; i++) {
+      const t = getInt(hex, offset);
+      this.melee.push(t);
+      offset += 4;
+    }
+    this.combat = [];
+    offset = 0x00c8;
+    for (let i = 0; i < 25; i++) {
+      const t = getInt(hex, offset);
+      this.combat.push(t);
+      offset += 4;
+    }
+  }
+
+  public toJSON(): Record<string, unknown> | string {
+    return {
+      exercise: this.exercise,
+      melee: this.melee,
+      combat: this.combat
+    };
+  }
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
+    let offset = 0;
+
+    offset = 0x0000;
+    for (let i = 0; i < this.exercise.length; i++) {
+      const t = this.exercise[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x0064;
+    for (let i = 0; i < this.melee.length; i++) {
+      const t = this.melee[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+    offset = 0x00c8;
+    for (let i = 0; i < this.combat.length; i++) {
+      const t = this.combat[i];
+      writeInt(hex, t, offset);
+      offset += 4;
+    }
+
+    return hex;
+  }
+
+  public getLength(): number {
+    return this.PLTPLAYERRANKCOUNTRECORDLENGTH;
+  }
+}

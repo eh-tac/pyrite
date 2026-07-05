@@ -1,0 +1,113 @@
+import type {
+  BattleSummary,
+  KillSummary,
+  MissionScore,
+  PilotData,
+  TrainingSummary
+} from '@pyrite/core';
+import { getByteString, percent, shootInfo } from '@pyrite/core';
+
+import { PilotFileBase } from './base/pilot-file-base';
+import { BattleStatus, Constants } from './constants';
+
+function chunkArray<T>(array: T[], chunkSize: number): T[][] {
+  const chunks: T[][] = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    chunks.push(array.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
+
+export class PilotFile extends PilotFileBase implements PilotData {
+  public beforeConstruct(): void {}
+
+  public toString(): string {
+    return '';
+  }
+
+  public get LaserlessScore(): number {
+    return this.Score - this.LasersHit * 3;
+  }
+
+  public get LaserLabel(): string {
+    return shootInfo(this.LasersHit, this.LasersFired);
+  }
+
+  public get LaserPercent(): string {
+    return percent(this.LasersHit, this.LasersFired);
+  }
+
+  public get WarheadLabel(): string {
+    return shootInfo(this.WarheadsHit, this.WarheadsFired);
+  }
+
+  public get WarheadPercent(): string {
+    return percent(this.WarheadsHit, this.WarheadsFired);
+  }
+
+  public get BattleSummary(): BattleSummary[] {
+    const battles = chunkArray(this.BattleScores, 8);
+    return battles.map((scores: number[], battle: number) => {
+      const status = this.BattleStatuses[battle] as BattleStatus;
+      const last = this.BattleLastMissions[battle];
+      const secret = getByteString(this.SecretObjectives[battle]);
+      const bonus = getByteString(this.BonusObjectives[battle]);
+      const bs: BattleSummary = {
+        completed: status === BattleStatus.completed,
+        status: Constants.BATTLESTATUS[status],
+        missions: scores.slice(0, last || 0).map((score: number, m: number) => {
+          const mission: MissionScore = {
+            completed: true,
+            score,
+            secret: secret.charAt(m) === '1',
+            bonus: bonus.charAt(m) === '1'
+          };
+          return mission;
+        })
+      };
+      return bs;
+    });
+  }
+
+  public get MissionScores(): MissionScore[] {
+    return this.BattleSummary.reduce(
+      (carry: MissionScore[], battle: BattleSummary) => [...carry, ...battle.missions],
+      []
+    );
+  }
+
+  public get BattleVictories(): KillSummary[] {
+    return this.KillsByType.map((kills: number, i: number) => {
+      const craftLabel = Constants.CRAFTTYPE[(i + 1) as keyof typeof Constants.CRAFTTYPE];
+      return {
+        craftLabel,
+        kills
+      } as KillSummary;
+    });
+  }
+
+  public get TrainingSummary(): TrainingSummary[] {
+    const combatCompletions = chunkArray(this.CombatCompletes, 8);
+    const combatScores = chunkArray(this.CombatScores, 8);
+    return Object.values(Constants.TRAININGCRAFT).map((craft: string, idx: number) => {
+      const summary: TrainingSummary = {
+        craftLabel: craft,
+        scoreLabel: 'Not flown',
+        trainingLevel: this.TrainingLevels[idx],
+        trainingScore: this.TrainingScores[idx],
+        missions: combatCompletions[idx].map((isComplete: boolean, mission: number) => {
+          const combatMission: MissionScore = {
+            completed: isComplete,
+            score: combatScores[idx][mission]
+          };
+          return combatMission;
+        })
+      };
+      if (summary.trainingScore) {
+        summary.scoreLabel = `${summary.trainingScore} (Level ${summary.trainingLevel})`;
+      }
+
+      return summary;
+    });
+  }
+}

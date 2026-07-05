@@ -6,38 +6,39 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteable
+abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTBATTLEMPRECORDLENGTH INT */
-    public const PLTBATTLEMPRECORDLENGTH = 40;
-    /** @var integer 0x0000 unknown0x0 INT */
-    public $unknown0x0;
-    /** @var integer 0x0004 totalCountFlown INT */
-    public $totalCountFlown;
-    /** @var integer 0x0008 totalCountVictory INT */
-    public $totalCountVictory;
-    /** @var integer 0x000C totalCountFailure INT */
-    public $totalCountFailure;
-    /** @var integer 0x0010 totalCount10MissionMarathonUNK INT */
-    public $totalCount10MissionMarathonUNK;
-    /** @var integer 0x0014 bestScore INT */
-    public $bestScore;
-    /** @var integer 0x0018 unknown0x18 INT */
-    public $unknown0x18;
-    /** @var integer 0x001C unknown0x1C INT */
-    public $unknown0x1C;
-    /** @var integer 0x0020 bestEvaluationMedal INT */
-    public $bestEvaluationMedal;
-    /** @var integer 0x0024 bestVictoryMargin INT */
-    public $bestVictoryMargin;
+    /** @var int PLTBATTLEMPRECORDLENGTH INT */
+	public const PLTBATTLEMPRECORDLENGTH = 40;
+    /** @var int 0x0000 unknown0x0 INT */
+	public int $unknown0x0;
+    /** @var int 0x0004 totalCountFlown INT */
+	public int $totalCountFlown;
+    /** @var int 0x0008 totalCountVictory INT */
+	public int $totalCountVictory;
+    /** @var int 0x000C totalCountFailure INT */
+	public int $totalCountFailure;
+    /** @var int 0x0010 totalCount10MissionMarathonUNK INT */
+	public int $totalCount10MissionMarathonUNK;
+    /** @var int 0x0014 bestScore INT */
+	public int $bestScore;
+    /** @var int 0x0018 unknown0x18 INT */
+	public int $unknown0x18;
+    /** @var int 0x001C unknown0x1C INT */
+	public int $unknown0x1C;
+    /** @var int 0x0020 bestEvaluationMedal INT */
+	public int $bestEvaluationMedal;
+    /** @var int 0x0024 bestVictoryMargin INT */
+	public int $bestVictoryMargin;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -45,7 +46,7 @@ abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -66,7 +67,7 @@ abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "unknown0x0" => $this->unknown0x0,
@@ -82,7 +83,7 @@ abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -102,7 +103,7 @@ abstract class PLTBattleMPRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTBATTLEMPRECORDLENGTH;
     }

@@ -5,7 +5,7 @@ import { Mission } from "../../../model/TIE/mission";
 @Component({
   tag: "pyrite-tie-flightgroups",
   styleUrl: "flightgroups.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEFlightGroupsComponent {
   @Prop() public mission: Mission;

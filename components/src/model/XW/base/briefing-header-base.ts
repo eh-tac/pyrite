@@ -9,28 +9,27 @@ export abstract class BriefingHeaderBase extends PyriteBase implements Byteable 
   public PlatformID: number; //(2)
   public IconCount: number;
   public CoordinateCount: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.PlatformID = getShort(hex, 0x00);
     this.IconCount = getShort(hex, 0x02);
     this.CoordinateCount = getShort(hex, 0x04);
-    
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       PlatformID: this.PlatformID,
       IconCount: this.IconCount,
-      CoordinateCount: this.CoordinateCount
+      CoordinateCount: this.CoordinateCount,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.PlatformID, 0x00);
@@ -39,8 +38,7 @@ export abstract class BriefingHeaderBase extends PyriteBase implements Byteable 
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.BRIEFINGHEADERLENGTH;
   }

@@ -31,7 +31,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
       } else {
         scores.push(this.Tour4Scores[index]);
         index++;
-      } 
+      }
     }
     return scores;
   }
@@ -48,13 +48,19 @@ export class PilotFile extends PilotFileBase implements PilotData {
       } else {
         scores.push(this.Tour5Scores[index]);
         index++;
-      } 
+      }
     }
     return scores;
   }
 
   public get BattleSummary(): BattleSummary[] {
-    const tods = [this.Tour1Scores, this.Tour2Scores, this.Tour3Scores, this.OptionalTour4Scores, this.OptionalTour5Scores];
+    const tods = [
+      this.Tour1Scores,
+      this.Tour2Scores,
+      this.Tour3Scores,
+      this.OptionalTour4Scores,
+      this.OptionalTour5Scores,
+    ];
 
     return tods.map((scores: number[], battle: number) => {
       const status = this.TourStatus[battle];
@@ -65,9 +71,9 @@ export class PilotFile extends PilotFileBase implements PilotData {
         missions: scores.slice(0, last || 0).map((score: number, m: number) => {
           return {
             completed: true,
-            score
+            score,
           };
-        })
+        }),
       };
       return bs;
     });
@@ -76,20 +82,18 @@ export class PilotFile extends PilotFileBase implements PilotData {
   public get MissionScores(): MissionScore[] {
     return this.BattleSummary.reduce(
       (carry: MissionScore[], battle: BattleSummary) => carry.concat(battle.missions),
-      []
+      [],
     );
   }
 
   public get BattleVictories(): KillSummary[] {
-    return this.TODKills.map(
-      (kills: number, i: number): KillSummary => {
-        const craftLabel = Constants.SHIPTYPE[i + 1];
-        return {
-          craftLabel,
-          kills
-        };
-      }
-    );
+    return this.TODKills.map((kills: number, i: number): KillSummary => {
+      const craftLabel = Constants.SHIPTYPE[i + 1];
+      return {
+        craftLabel,
+        kills,
+      };
+    });
   }
 
   public get TrainingSummary(): TrainingSummary[] {
@@ -98,13 +102,13 @@ export class PilotFile extends PilotFileBase implements PilotData {
       this.XWingHistoricalComplete,
       this.YWingHistoricalComplete,
       this.AWingHistoricalComplete,
-      this.BWingHistoricalComplete
+      this.BWingHistoricalComplete,
     ];
     const hisScore = [
       this.XWingHistoricalScore,
       this.YWingHistoricalScore,
       this.AWingHistoricalScore,
-      this.BWingHistoricalScore
+      this.BWingHistoricalScore,
     ];
     return craft.map((craftLabel: string, idx: number) => {
       const summary: TrainingSummary = {
@@ -115,10 +119,10 @@ export class PilotFile extends PilotFileBase implements PilotData {
         missions: hisCom[idx].map((complete: boolean, mission: number) => {
           const combatMission: MissionScore = {
             completed: complete,
-            score: hisScore[idx][mission]
+            score: hisScore[idx][mission],
           };
           return combatMission;
-        })
+        }),
       };
       if (summary.trainingScore) {
         summary.scoreLabel = `${summary.trainingScore} (Level ${summary.trainingLevel})`;
@@ -136,7 +140,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
     return this.XWingHistoricalScore.map((score, index) => {
       return {
         completed: this.XWingHistoricalComplete[index],
-        score
+        score,
       };
     });
   }
@@ -145,7 +149,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
     return this.YWingHistoricalScore.map((score, index) => {
       return {
         completed: this.YWingHistoricalComplete[index],
-        score
+        score,
       };
     });
   }
@@ -154,7 +158,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
     return this.AWingHistoricalScore.map((score, index) => {
       return {
         completed: this.AWingHistoricalComplete[index],
-        score
+        score,
       };
     });
   }
@@ -163,7 +167,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
     return this.Tour1Scores.map((score, index) => {
       return {
         completed: index < this.TourOperationsComplete[0],
-        score
+        score,
       };
     });
   }

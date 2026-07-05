@@ -6,26 +6,27 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byteable
+abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTEARNEDMEDALRECORDLENGTH INT */
-    public const PLTEARNEDMEDALRECORDLENGTH = 96;
-    /** @var integer[] 0x0000 meleePlaqueCount INT */
-    public $meleePlaqueCount;
-    /** @var integer[] 0x0018 tournamentPlaqueCount INT */
-    public $tournamentPlaqueCount;
-    /** @var integer[] 0x0030 exerciseBadgeCount INT */
-    public $exerciseBadgeCount;
-    /** @var integer[] 0x0048 battleMedalCount INT */
-    public $battleMedalCount;
+    /** @var int PLTEARNEDMEDALRECORDLENGTH INT */
+	public const PLTEARNEDMEDALRECORDLENGTH = 96;
+    /** @var array<int> 0x0000 meleePlaqueCount INT */
+	public array $meleePlaqueCount;
+    /** @var array<int> 0x0018 tournamentPlaqueCount INT */
+	public array $tournamentPlaqueCount;
+    /** @var array<int> 0x0030 exerciseBadgeCount INT */
+	public array $exerciseBadgeCount;
+    /** @var array<int> 0x0048 battleMedalCount INT */
+	public array $battleMedalCount;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -33,7 +34,7 @@ abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -72,7 +73,7 @@ abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "meleePlaqueCount" => $this->meleePlaqueCount,
@@ -82,7 +83,7 @@ abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -116,7 +117,7 @@ abstract class PLTEarnedMedalRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTEARNEDMEDALRECORDLENGTH;
     }

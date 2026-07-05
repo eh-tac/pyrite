@@ -1,80 +1,95 @@
 <?php
+
 namespace Pyrite\TIE;
 
 use Pyrite\Summary;
 
 class Event extends Base\EventBase implements Summary
 {
-	public $Briefing;
+    public Briefing $Briefing;
+    public Mission $mission;
+
+    public function __construct(string $hex = null, ?\Pyrite\PyriteModel $TIE = null)
+    {
+        parent::__construct($hex, $TIE);
+        if ($TIE instanceof Mission) {
+            $this->mission = $TIE;
+            $this->Briefing = $TIE->Briefing;
+        }
+    }
 
     protected function VariableCount()
     {
         static $counts = [
-                3 => 0,
-                4 => 1,
-                5 => 1,
-                6 => 2,
-                7 => 2,
-                8 => 0,
-                9 => 1,
-                10 => 1,
-                11 => 1,
-                12 => 1,
-                13 => 1,
-                14 => 1,
-                15 => 1,
-                16 => 1,
-                17 => 0,
-                18 => 4,
-                19 => 4,
-                20 => 4,
-                21 => 4,
-                22 => 4,
-                23 => 4,
-                24 => 4,
-                25 => 4,
-                34 => 0
-            ];
+            3 => 0,
+            4 => 1,
+            5 => 1,
+            6 => 2,
+            7 => 2,
+            8 => 0,
+            9 => 1,
+            10 => 1,
+            11 => 1,
+            12 => 1,
+            13 => 1,
+            14 => 1,
+            15 => 1,
+            16 => 1,
+            17 => 0,
+            18 => 4,
+            19 => 4,
+            20 => 4,
+            21 => 4,
+            22 => 4,
+            23 => 4,
+            24 => 4,
+            25 => 4,
+            34 => 0
+        ];
         if (isset($counts[$this->EventType])) {
             return $counts[$this->EventType];
         } else {
             return 0;
-//            throw new \Error("Unknown count for {$this->EventType}");
+            //            throw new \Error("Unknown count for {$this->EventType}");
         }
     }
 
-    public function summaryHash(){
-    	$notes = '';
-    	if ($str = $this->getStr()){
-    		$notes = (string)$str;
-		} else if ($fg = $this->getFG()){
-    	    $notes = (string)$fg;
-		} else if ($tag = $this->getTag()){
-    		$notes = (string)$tag;
-		}
-    	return [
-    		'Type' => $this->getEventTypeLabel(),
-			'At' => $this->Time,
-			'Notes' => $notes
-		];
-	}
+    public function summaryHash()
+    {
+        $notes = '';
+        if ($str = $this->getStr()) {
+            $notes = (string)$str;
+        } else if ($fg = $this->getFG()) {
+            $notes = (string)$fg;
+        } else if ($tag = $this->getTag()) {
+            $notes = (string)$tag;
+        }
+        return [
+            'Type' => $this->getEventTypeLabel(),
+            'At' => $this->Time,
+            'Notes' => $notes
+        ];
+    }
 
-	public function getStr(){
+    public function getStr()
+    {
         if ($this->EventType == 4 || $this->EventType == 5) {
             return $this->Briefing->Strings[$this->Variables[0]];
         }
         return false;
     }
 
-    public function getFG(){
-        if ($this->EventType >= 9 && $this->EventType <= 16){
-            return $this->TIE->FlightGroups[$this->Variables[0]];
+    public function getFG()
+    {
+        if ($this->EventType >= 9 && $this->EventType <= 16) {
+            return $this->mission->FlightGroups[$this->Variables[0]];
         }
         return false;
     }
 
-    public function getTag(){
-        if ($this->EventType >= 19 && $this->EventType <= 25){
+    public function getTag()
+    {
+        if ($this->EventType >= 19 && $this->EventType <= 25) {
             return $this->Briefing->Tags[$this->Variables[0]];
         }
         return false;

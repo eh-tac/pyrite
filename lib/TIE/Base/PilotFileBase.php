@@ -6,69 +6,70 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\TIE\Constants;
 
-abstract class PilotFileBase extends PyriteBase implements Byteable
+abstract class PilotFileBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PilotFileLength INT */
-    public $PilotFileLength;
-    /** @var integer 0x00 Start BYTE */
-    public const Start = 0;
-    /** @var integer 0x01 PilotStatus BYTE */
-    public $PilotStatus;
-    /** @var integer 0x02 PilotRank BYTE */
-    public $PilotRank;
-    /** @var integer 0x03 PilotDifficulty BYTE */
-    public $PilotDifficulty;
-    /** @var integer 0x04 Score INT */
-    public $Score;
-    /** @var integer 0x08 SkillScore USHORT */
-    public $SkillScore;
-    /** @var integer 0x0A SecretOrder BYTE */
-    public $SecretOrder;
-    /** @var integer[] 0x2A TrainingScores INT */
-    public $TrainingScores;
-    /** @var integer[] 0x5A TrainingLevels BYTE */
-    public $TrainingLevels;
-    /** @var integer[] 0x88 CombatScores INT */
-    public $CombatScores;
-    /** @var boolean[] 0x208 CombatCompletes BOOL */
-    public $CombatCompletes;
-    /** @var integer[] 0x269 BattleStatuses BYTE */
-    public $BattleStatuses;
-    /** @var integer[] 0x27D BattleLastMissions BYTE */
-    public $BattleLastMissions;
-    /** @var integer[] 0x291 Persistence BYTE */
-    public $Persistence;
-    /** @var integer[] 0x391 SecretObjectives BYTE */
-    public $SecretObjectives;
-    /** @var integer[] 0x3A5 BonusObjectives BYTE */
-    public $BonusObjectives;
-    /** @var integer[] 0x3DA BattleScores INT */
-    public $BattleScores;
-    /** @var integer 0x65A TotalKills SHORT */
-    public $TotalKills;
-    /** @var integer 0x65C TotalCaptures SHORT */
-    public $TotalCaptures;
-    /** @var integer[] 0x660 KillsByType SHORT */
-    public $KillsByType;
-    /** @var integer 0x774 LasersFired INT */
-    public $LasersFired;
-    /** @var integer 0x778 LasersHit INT */
-    public $LasersHit;
-    /** @var integer 0x780 WarheadsFired USHORT */
-    public $WarheadsFired;
-    /** @var integer 0x782 WarheadsHit USHORT */
-    public $WarheadsHit;
-    /** @var integer 0x786 CraftLost SHORT */
-    public $CraftLost;
+    /** @var int PilotFileLength INT */
+	public int $PilotFileLength;
+    /** @var int 0x00 Start BYTE */
+	public const Start = 0;
+    /** @var int 0x01 PilotStatus BYTE */
+	public int $PilotStatus;
+    /** @var int 0x02 PilotRank BYTE */
+	public int $PilotRank;
+    /** @var int 0x03 PilotDifficulty BYTE */
+	public int $PilotDifficulty;
+    /** @var int 0x04 Score INT */
+	public int $Score;
+    /** @var int 0x08 SkillScore USHORT */
+	public int $SkillScore;
+    /** @var int 0x0A SecretOrder BYTE */
+	public int $SecretOrder;
+    /** @var array<int> 0x2A TrainingScores INT */
+	public array $TrainingScores;
+    /** @var array<int> 0x5A TrainingLevels BYTE */
+	public array $TrainingLevels;
+    /** @var array<int> 0x88 CombatScores INT */
+	public array $CombatScores;
+    /** @var array<bool> 0x208 CombatCompletes BOOL */
+	public array $CombatCompletes;
+    /** @var array<int> 0x269 BattleStatuses BYTE */
+	public array $BattleStatuses;
+    /** @var array<int> 0x27D BattleLastMissions BYTE */
+	public array $BattleLastMissions;
+    /** @var array<int> 0x291 Persistence BYTE */
+	public array $Persistence;
+    /** @var array<int> 0x391 SecretObjectives BYTE */
+	public array $SecretObjectives;
+    /** @var array<int> 0x3A5 BonusObjectives BYTE */
+	public array $BonusObjectives;
+    /** @var array<int> 0x3DA BattleScores INT */
+	public array $BattleScores;
+    /** @var int 0x65A TotalKills SHORT */
+	public int $TotalKills;
+    /** @var int 0x65C TotalCaptures SHORT */
+	public int $TotalCaptures;
+    /** @var array<int> 0x660 KillsByType SHORT */
+	public array $KillsByType;
+    /** @var int 0x774 LasersFired INT */
+	public int $LasersFired;
+    /** @var int 0x778 LasersHit INT */
+	public int $LasersHit;
+    /** @var int 0x780 WarheadsFired USHORT */
+	public int $WarheadsFired;
+    /** @var int 0x782 WarheadsHit USHORT */
+	public int $WarheadsHit;
+    /** @var int 0x786 CraftLost SHORT */
+	public int $CraftLost;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -76,7 +77,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -178,7 +179,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "PilotStatus" => $this->getPilotStatusLabel(),
@@ -208,7 +209,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -297,27 +298,27 @@ abstract class PilotFileBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getPilotStatusLabel() 
+    public function getPilotStatusLabel(): string 
     {
         return isset($this->PilotStatus) && isset(Constants::$PILOTSTATUS[$this->PilotStatus]) ? Constants::$PILOTSTATUS[$this->PilotStatus] : "Unknown";
     }
 
-    public function getPilotRankLabel() 
+    public function getPilotRankLabel(): string 
     {
         return isset($this->PilotRank) && isset(Constants::$PILOTRANK[$this->PilotRank]) ? Constants::$PILOTRANK[$this->PilotRank] : "Unknown";
     }
 
-    public function getPilotDifficultyLabel() 
+    public function getPilotDifficultyLabel(): string 
     {
         return isset($this->PilotDifficulty) && isset(Constants::$PILOTDIFFICULTY[$this->PilotDifficulty]) ? Constants::$PILOTDIFFICULTY[$this->PilotDifficulty] : "Unknown";
     }
 
-    public function getSecretOrderLabel() 
+    public function getSecretOrderLabel(): string 
     {
         return isset($this->SecretOrder) && isset(Constants::$SECRETORDER[$this->SecretOrder]) ? Constants::$SECRETORDER[$this->SecretOrder] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return $this->PilotFileLength;
     }

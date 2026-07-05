@@ -6,47 +6,48 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XW\Constants;
 
-abstract class ObjectGroupBase extends PyriteBase implements Byteable
+abstract class ObjectGroupBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  OBJECTGROUPLENGTH INT */
-    public const OBJECTGROUPLENGTH = 70;
-    /** @var string[] 0x000 Name CHAR */
-    public $Name; //(ignored?)
-    /** @var string[] 0x010 Cargo CHAR */
-    public $Cargo; //(ignored?)
-    /** @var string[] 0x020 SpecialCargo CHAR */
-    public $SpecialCargo; //(ignored?)
-    /** @var integer 0x030 SpecialCargoCraft SHORT */
-    public $SpecialCargoCraft; //(ignored?)
-    /** @var integer 0x032 CraftType SHORT */
-    public $CraftType;
-    /** @var integer 0x034 IFF SHORT */
-    public $IFF;
-    /** @var integer 0x036 ObjectFormation SHORT */
-    public $ObjectFormation; //or values (unusual formatting)
-    /** @var integer 0x038 NumberOfCraft SHORT */
-    public $NumberOfCraft; //or values (unusual formatting)
-    /** @var integer 0x03A X SHORT */
-    public $X;
-    /** @var integer 0x03C Y SHORT */
-    public $Y;
-    /** @var integer 0x03E Z SHORT */
-    public $Z;
-    /** @var integer 0x040 Yaw SHORT */
-    public $Yaw;
-    /** @var integer 0x042 Pitch SHORT */
-    public $Pitch;
-    /** @var integer 0x044 Roll SHORT */
-    public $Roll;
+    /** @var int OBJECTGROUPLENGTH INT */
+	public const OBJECTGROUPLENGTH = 70;
+    /** @var string 0x000 Name CHAR */
+	public string $Name; // (ignored?)
+    /** @var string 0x010 Cargo CHAR */
+	public string $Cargo; // (ignored?)
+    /** @var string 0x020 SpecialCargo CHAR */
+	public string $SpecialCargo; // (ignored?)
+    /** @var int 0x030 SpecialCargoCraft SHORT */
+	public int $SpecialCargoCraft; // (ignored?)
+    /** @var int 0x032 CraftType SHORT */
+	public int $CraftType;
+    /** @var int 0x034 IFF SHORT */
+	public int $IFF;
+    /** @var int 0x036 ObjectFormation SHORT */
+	public int $ObjectFormation; // or values (unusual formatting)
+    /** @var int 0x038 NumberOfCraft SHORT */
+	public int $NumberOfCraft; // or values (unusual formatting)
+    /** @var int 0x03A X SHORT */
+	public int $X;
+    /** @var int 0x03C Y SHORT */
+	public int $Y;
+    /** @var int 0x03E Z SHORT */
+	public int $Z;
+    /** @var int 0x040 Yaw SHORT */
+	public int $Yaw;
+    /** @var int 0x042 Pitch SHORT */
+	public int $Pitch;
+    /** @var int 0x044 Roll SHORT */
+	public int $Roll;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -54,32 +55,14 @@ abstract class ObjectGroupBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
 
-        $this->Name = [];
-        $offset = 0x000;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
-            $this->Name[] = $t;
-            $offset += 1;
-        }
-        $this->Cargo = [];
-        $offset = 0x010;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
-            $this->Cargo[] = $t;
-            $offset += 1;
-        }
-        $this->SpecialCargo = [];
-        $offset = 0x020;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->getChar($hex, $offset, 1);
-            $this->SpecialCargo[] = $t;
-            $offset += 1;
-        }
+        $this->Name = $this->getChar($hex, 0x000, 16);
+        $this->Cargo = $this->getChar($hex, 0x010, 16);
+        $this->SpecialCargo = $this->getChar($hex, 0x020, 16);
         $this->SpecialCargoCraft = $this->getShort($hex, 0x030);
         $this->CraftType = $this->getShort($hex, 0x032);
         $this->IFF = $this->getShort($hex, 0x034);
@@ -97,7 +80,7 @@ abstract class ObjectGroupBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Name" => $this->Name,
@@ -117,29 +100,14 @@ abstract class ObjectGroupBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
 
-        $offset = 0x000;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->Name[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
-        }
-        $offset = 0x010;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->Cargo[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
-        }
-        $offset = 0x020;
-        for ($i = 0; $i < 16; $i++) {
-            $t = $this->SpecialCargo[$i];
-            $hex = $this->writeChar($t, $hex, $offset);
-            $offset += 1;
-        }
+        $hex = $this->writeChar($this->Name, $hex, 0x000);
+        $hex = $this->writeChar($this->Cargo, $hex, 0x010);
+        $hex = $this->writeChar($this->SpecialCargo, $hex, 0x020);
         $hex = $this->writeShort($this->SpecialCargoCraft, $hex, 0x030);
         $hex = $this->writeShort($this->CraftType, $hex, 0x032);
         $hex = $this->writeShort($this->IFF, $hex, 0x034);
@@ -155,22 +123,22 @@ abstract class ObjectGroupBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getCraftTypeLabel() 
+    public function getCraftTypeLabel(): string 
     {
         return isset($this->CraftType) && isset(Constants::$CRAFTTYPE[$this->CraftType]) ? Constants::$CRAFTTYPE[$this->CraftType] : "Unknown";
     }
 
-    public function getIFFLabel() 
+    public function getIFFLabel(): string 
     {
         return isset($this->IFF) && isset(Constants::$IFF[$this->IFF]) ? Constants::$IFF[$this->IFF] : "Unknown";
     }
 
-    public function getObjectFormationLabel() 
+    public function getObjectFormationLabel(): string 
     {
         return isset($this->ObjectFormation) && isset(Constants::$OBJECTFORMATION[$this->ObjectFormation]) ? Constants::$OBJECTFORMATION[$this->ObjectFormation] : "Unknown";
     }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::OBJECTGROUPLENGTH;
     }

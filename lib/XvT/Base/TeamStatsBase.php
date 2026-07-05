@@ -6,73 +6,74 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\MissionData;
 
-abstract class TeamStatsBase extends PyriteBase implements Byteable
+abstract class TeamStatsBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  TeamStatsLength INT */
-    public $TeamStatsLength;
-    /** @var integer[] 0x0000 MeleeMedals INT */
-    public $MeleeMedals;
-    /** @var integer[] 0x0018 TournamentMedals INT */
-    public $TournamentMedals;
-    /** @var integer[] 0x0030 MissionTopRatings INT */
-    public $MissionTopRatings;
-    /** @var integer[] 0x0048 MissionMedals INT */
-    public $MissionMedals;
-    /** @var integer[] 0x0090 PlayCounts INT */
-    public $PlayCounts;
-    /** @var integer[] 0x00A8 totalKills INT */
-    public $totalKills;
-    /** @var integer[] 0x00C0 ExerciseKillsByType INT */
-    public $ExerciseKillsByType;
-    /** @var integer[] 0x0220 MeleeKillsByType INT */
-    public $MeleeKillsByType;
-    /** @var integer[] 0x0380 CombatKillsByType INT */
-    public $CombatKillsByType;
-    /** @var integer[] 0x4e0 ExercisePartialsByType INT */
-    public $ExercisePartialsByType;
-    /** @var integer[] 0x640 MeleePartialsByType INT */
-    public $MeleePartialsByType;
-    /** @var integer[] 0x7a0 CombatPartialsByType INT */
-    public $CombatPartialsByType;
-    /** @var integer[] 0x900 ExerciseAssistsByType INT */
-    public $ExerciseAssistsByType;
-    /** @var integer[] 0xa60 MeleeAssistsByType INT */
-    public $MeleeAssistsByType;
-    /** @var integer[] 0xbc0 CombatAssistsByType INT */
-    public $CombatAssistsByType;
-    /** @var integer[] 0x117c HiddenCargoFound INT */
-    public $HiddenCargoFound;
-    /** @var integer[] 0x1188 LasersHit INT */
-    public $LasersHit;
-    /** @var integer[] 0x1194 LasersTotal INT */
-    public $LasersTotal;
-    /** @var integer[] 0x11a0 WarheadsHit INT */
-    public $WarheadsHit;
-    /** @var integer[] 0x11ac WarheadsTotal INT */
-    public $WarheadsTotal;
-    /** @var integer[] 0x11b8 CraftLosses INT */
-    public $CraftLosses;
-    /** @var integer[] 0x11c4 CollisionLosses INT */
-    public $CollisionLosses;
-    /** @var integer[] 0x11d0 StarshipLosses INT */
-    public $StarshipLosses;
-    /** @var integer[] 0x11dc MineLosses INT */
-    public $MineLosses;
-    /** @var MissionData[] 0x1360 TrainingMissionData MissionData */
-    public $TrainingMissionData;
-    /** @var MissionData[] 0x2170 MeleeMissionData MissionData */
-    public $MeleeMissionData;
-    /** @var MissionData[] 0x4498 CombatMissionData MissionData */
-    public $CombatMissionData;
+    /** @var int TEAMSTATSLENGTH INT */
+	public const TEAMSTATSLENGTH = 21160;
+    /** @var array<int> 0x0000 MeleeMedals INT */
+	public array $MeleeMedals;
+    /** @var array<int> 0x0018 TournamentMedals INT */
+	public array $TournamentMedals;
+    /** @var array<int> 0x0030 MissionTopRatings INT */
+	public array $MissionTopRatings;
+    /** @var array<int> 0x0048 MissionMedals INT */
+	public array $MissionMedals;
+    /** @var array<int> 0x0090 PlayCounts INT */
+	public array $PlayCounts;
+    /** @var array<int> 0x00A8 totalKills INT */
+	public array $totalKills;
+    /** @var array<int> 0x00C0 ExerciseKillsByType INT */
+	public array $ExerciseKillsByType;
+    /** @var array<int> 0x0220 MeleeKillsByType INT */
+	public array $MeleeKillsByType;
+    /** @var array<int> 0x0380 CombatKillsByType INT */
+	public array $CombatKillsByType;
+    /** @var array<int> 0x4e0 ExercisePartialsByType INT */
+	public array $ExercisePartialsByType;
+    /** @var array<int> 0x640 MeleePartialsByType INT */
+	public array $MeleePartialsByType;
+    /** @var array<int> 0x7a0 CombatPartialsByType INT */
+	public array $CombatPartialsByType;
+    /** @var array<int> 0x900 ExerciseAssistsByType INT */
+	public array $ExerciseAssistsByType;
+    /** @var array<int> 0xa60 MeleeAssistsByType INT */
+	public array $MeleeAssistsByType;
+    /** @var array<int> 0xbc0 CombatAssistsByType INT */
+	public array $CombatAssistsByType;
+    /** @var array<int> 0x117c HiddenCargoFound INT */
+	public array $HiddenCargoFound;
+    /** @var array<int> 0x1188 LasersHit INT */
+	public array $LasersHit;
+    /** @var array<int> 0x1194 LasersTotal INT */
+	public array $LasersTotal;
+    /** @var array<int> 0x11a0 WarheadsHit INT */
+	public array $WarheadsHit;
+    /** @var array<int> 0x11ac WarheadsTotal INT */
+	public array $WarheadsTotal;
+    /** @var array<int> 0x11b8 CraftLosses INT */
+	public array $CraftLosses;
+    /** @var array<int> 0x11c4 CollisionLosses INT */
+	public array $CollisionLosses;
+    /** @var array<int> 0x11d0 StarshipLosses INT */
+	public array $StarshipLosses;
+    /** @var array<int> 0x11dc MineLosses INT */
+	public array $MineLosses;
+    /** @var array<MissionData> 0x1360 TrainingMissionData MissionData */
+	public array $TrainingMissionData;
+    /** @var array<MissionData> 0x2170 MeleeMissionData MissionData */
+	public array $MeleeMissionData;
+    /** @var array<MissionData> 0x4498 CombatMissionData MissionData */
+	public array $CombatMissionData;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -80,7 +81,7 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -274,13 +275,13 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
             $this->CombatMissionData[] = $t;
             $offset += $t->getLength();
         }
-        $this->TeamStatsLength = $offset;
+        
 
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "MeleeMedals" => $this->MeleeMedals,
@@ -313,7 +314,7 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -485,8 +486,8 @@ abstract class TeamStatsBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
-        return $this->TeamStatsLength;
+        return self::TEAMSTATSLENGTH;
     }
 }

@@ -6,40 +6,41 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PLTTournMPRecordBase extends PyriteBase implements Byteable
+abstract class PLTTournMPRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTTOURNMPRECORDLENGTH INT */
-    public const PLTTOURNMPRECORDLENGTH = 44;
-    /** @var integer 0x0000 unknown0x0 INT */
-    public $unknown0x0;
-    /** @var integer 0x0004 totalCountFlown INT */
-    public $totalCountFlown;
-    /** @var integer 0x0008 numberOfFinishesAnyUNK INT */
-    public $numberOfFinishesAnyUNK;
-    /** @var integer 0x000C numberOfFinishesFirst INT */
-    public $numberOfFinishesFirst;
-    /** @var integer 0x0010 numberOfFinishesSecond INT */
-    public $numberOfFinishesSecond;
-    /** @var integer 0x0014 numberOfFinishesThird INT */
-    public $numberOfFinishesThird;
-    /** @var integer 0x0018 bestScore INT */
-    public $bestScore;
-    /** @var integer 0x001C bestFinish INT */
-    public $bestFinish;
-    /** @var integer 0x0020 unknown0x20 INT */
-    public $unknown0x20;
-    /** @var integer 0x0024 bestEvaluationMedal INT */
-    public $bestEvaluationMedal;
-    /** @var integer 0x0028 bestFinishPointMargin INT */
-    public $bestFinishPointMargin;
+    /** @var int PLTTOURNMPRECORDLENGTH INT */
+	public const PLTTOURNMPRECORDLENGTH = 44;
+    /** @var int 0x0000 unknown0x0 INT */
+	public int $unknown0x0;
+    /** @var int 0x0004 totalCountFlown INT */
+	public int $totalCountFlown;
+    /** @var int 0x0008 numberOfFinishesAnyUNK INT */
+	public int $numberOfFinishesAnyUNK;
+    /** @var int 0x000C numberOfFinishesFirst INT */
+	public int $numberOfFinishesFirst;
+    /** @var int 0x0010 numberOfFinishesSecond INT */
+	public int $numberOfFinishesSecond;
+    /** @var int 0x0014 numberOfFinishesThird INT */
+	public int $numberOfFinishesThird;
+    /** @var int 0x0018 bestScore INT */
+	public int $bestScore;
+    /** @var int 0x001C bestFinish INT */
+	public int $bestFinish;
+    /** @var int 0x0020 unknown0x20 INT */
+	public int $unknown0x20;
+    /** @var int 0x0024 bestEvaluationMedal INT */
+	public int $bestEvaluationMedal;
+    /** @var int 0x0028 bestFinishPointMargin INT */
+	public int $bestFinishPointMargin;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -47,7 +48,7 @@ abstract class PLTTournMPRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -69,7 +70,7 @@ abstract class PLTTournMPRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "unknown0x0" => $this->unknown0x0,
@@ -86,7 +87,7 @@ abstract class PLTTournMPRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -107,7 +108,7 @@ abstract class PLTTournMPRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTTOURNMPRECORDLENGTH;
     }

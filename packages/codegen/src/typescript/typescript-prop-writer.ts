@@ -1,0 +1,220 @@
+import { kebabCase } from 'lodash-es';
+
+import type { FieldAttr } from '../interfaces/controller-base';
+import type { Prop } from '../prop';
+import { PropAny, PropBool, PropChar, PropObject, PropStr } from '../prop';
+
+export class TypeScriptPropWriter {
+  public constructor(public prop: Prop) {}
+
+  public get toJSONExpr(): string {
+    if (this.prop instanceof PropObject) {
+      return this.prop.isArray
+        ? `${this.prop.name}.map((t) => t.toJSON())`
+        : `${this.prop.name}.toJSON()`;
+    }
+    return this.prop.enumName ? `${this.prop.name}Label` : this.prop.name;
+  }
+
+  public get offsetExpr(): string {
+    return this.prop.previousValueOffset ? 'offset' : this.prop.offset;
+  }
+
+  // whether this prop needs an offset variable to be tracked in the constructor and hex output functions
+  public get needsOffset(): boolean {
+    return !!this.prop.isArray || !!this.prop.previousValueOffset;
+  }
+
+  public getExpression(object: string = 'this'): string {
+    return `${object}.${this.prop.name}`;
+  }
+
+  // functions in class order:
+  // imports
+  // declaration,
+  // loading in the constructor,
+  // utility functions (like enum labels)
+  // output for saving
+
+  public get hexImports(): string[] {
+    return [this.prop.isStatic ? null : this.prop.hexGetter, this.prop.hexSetter].filter(Boolean);
+  }
+
+  public get classImports(): string[] {
+    if (this.prop instanceof PropObject) {
+      return [this.prop.structName];
+    }
+    return [];
+  }
+
+  public get propertyDeclaration(): string {
+    let type = this.typeExpr;
+    if (this.prop.isArray) {
+      type = `${type}[]`;
+    }
+
+    let p = `${this.prop.name}: ${type}`;
+    if (this.prop.isStatic) {
+      p = `readonly ${p} = ${this.prop.reservedValue}`;
+    }
+    p = `public ${p};`;
+    if (this.prop.comment) {
+      p = `${p} //${this.prop.comment}`;
+    }
+    return p;
+  }
+
+  public get typeExpr(): string {
+    if (this.prop instanceof PropObject) {
+      return this.prop.structName;
+    }
+    if (this.prop instanceof PropBool) {
+      return 'boolean';
+    }
+    if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
+      return 'string';
+    }
+    if (this.prop instanceof PropAny) {
+      return 'any';
+    }
+    if (this.prop.enumName) {
+      return this.prop.enumName;
+    }
+    return 'number';
+  }
+
+  public getConstructorInit(): string {
+    let offsetExpr = '';
+    if (this.prop.isStatic) {
+      if (this.prop.previousValueOffset) {
+        // ensure the offset is correct if the final prop is statically ignored
+        offsetExpr = `\n    offset += ${this.propLength};`;
+      }
+      return `// static prop ${this.prop.name}${offsetExpr}`;
+    }
+
+    const p = `this.${this.prop.name}`;
+    let init = `${p} = ${this.getGetter()};`;
+    const preArray = this.offsetExpr === 'offset' ? '' : `offset = ${this.offsetExpr};\n    `;
+    if (this.prop.isArray) {
+      init = `${p} = [];
+    ${preArray}for (let i = 0; i < ${this.arrayLength}; i++) {
+      const t = ${this.getGetter(true)};
+      ${p}.push(t);
+      offset += ${this.propLength};
+    }`;
+    } else if (!this.prop.isFixedLength) {
+      // strings and objects have dynamic lengths so the offsets must be adjusted on the fly
+      // if this is a string with a defined offset, make sure that is included when incrementing the offset
+      // otherwise if already in previous value mode, just += by the current length;
+      const op = this.prop.previousValueOffset ? '+=' : `= ${this.prop.offset} +`;
+      offsetExpr = `\n    offset ${op} ${this.propLength};`;
+    } else if (this.prop.previousValueOffset) {
+      // this prop is a fixed length but the offset is based on the previous value, so increment the offset by the length of this prop
+      offsetExpr = `\n    offset += ${this.propLength};`;
+    }
+    return `${init}${offsetExpr}`;
+  }
+
+  public getGetter(isInLoop = false): string {
+    const off = isInLoop ? 'offset' : this.offsetExpr;
+    if (this.prop instanceof PropObject) {
+      return `new ${this.prop.structName}(hex.slice(${off}), this.TIE)`;
+    }
+    if (this.prop instanceof PropAny) {
+      return `undefined`;
+    }
+    const params = ['hex', off];
+    if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
+      params.push(this.typeLength);
+    }
+    const cast = this.prop.enumName ? ` as ${this.typeExpr}` : '';
+
+    return `${this.prop.hexGetter}(${params.join(', ')})${cast}`;
+  }
+
+  public get arrayLength(): string {
+    if (this.prop.arrayLengthExpression) {
+      return `this.${this.prop.arrayLengthExpression.replace('-', '.')}`;
+    }
+    return this.prop.arrayLengthValue!.toString(10);
+  }
+
+  public get typeLength(): string {
+    if (this.prop.typeLengthExpression) {
+      const obj = this.prop.isArray ? 't' : `this`;
+      return `${obj}.${this.prop.typeLengthExpression}`;
+    }
+    return this.prop.baseSize.toString(10);
+  }
+
+  public get propLength(): string {
+    const obj = this.prop.isArray ? 't' : `this.${this.prop.name}`;
+    if (this.prop instanceof PropStr) {
+      if (this.prop.isFixedLength) {
+        return this.prop.baseSize.toString(10);
+      }
+      return `${obj}.length + 1`;
+    }
+    if (this.prop instanceof PropObject) {
+      return `${obj}.getLength()`;
+    }
+    return this.typeLength;
+  }
+
+  public get enumLookupFunction(): string {
+    const name = this.prop.name;
+    const enumName = this.prop.enumName.toUpperCase();
+
+    return `
+  public get ${name}Label(): string {
+    return Constants.${enumName}[this.${name}] || "Unknown";
+  }`;
+  }
+
+  public getOutputHex(): string {
+    let offsetExpr = '';
+    const p = `this.${this.prop.name}`;
+    let out = `${this.getSetter(
+      this.prop.isStatic && this.prop.reservedValue ? this.prop.reservedValue.toString() : p
+    )};`;
+    if (this.prop.isArray) {
+      const preArray = this.offsetExpr === 'offset' ? '' : `offset = ${this.offsetExpr};\n    `;
+      out = `${preArray}for (let i = 0; i < ${p}.length; i++) {
+      const t = ${p}[i];
+      ${this.getSetter('t', true)};
+      offset += ${this.propLength};
+    }`;
+    } else if (this.prop.previousValueOffset) {
+      // this prop is a fixed length but the offset is based on the previous value, so increment the offset by the length of this prop
+      offsetExpr = `\n    offset += ${this.propLength};`;
+    }
+    return `${out}${offsetExpr}`;
+  }
+
+  public getSetter(propOverride?: string, isInLoop = false): string {
+    const off = isInLoop ? 'offset' : this.offsetExpr;
+    const params = ['hex', propOverride || `this.${this.prop.name}`, off];
+    if (this.prop instanceof PropChar || this.prop instanceof PropStr) {
+      params.push(this.typeLength);
+    }
+    return `${this.prop.hexSetter}(${params.join(', ')})`;
+  }
+
+  public getFieldProps(constantLookup: Record<string, any>, plt: string): FieldAttr {
+    const props: FieldAttr = {
+      name: this.prop.name,
+      type: this.prop.type
+    };
+    if (this.prop.enumName && constantLookup[this.prop.enumName]) {
+      props['options'] = `Constants.${this.prop.enumName.toUpperCase()}`;
+    }
+
+    if (this.prop instanceof PropObject) {
+      const kebab = kebabCase(this.prop.structName);
+      props['componentTag'] = `pyrite-${plt}-${kebab.replace(plt, '')}`.toLowerCase();
+      props['componentProp'] = this.prop.structName.toLowerCase();
+    }
+    return props;
+  }
+}

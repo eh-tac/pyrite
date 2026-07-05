@@ -6,31 +6,32 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\TIE\Constants;
 
-abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable
+abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PostMissionQuestionsLength INT */
-    public $PostMissionQuestionsLength;
-    /** @var integer 0x0 Length SHORT */
-    public $Length;
-    /** @var integer 0x2 QuestionCondition BYTE */
-    public $QuestionCondition;
-    /** @var integer 0x3 QuestionType BYTE */
-    public $QuestionType;
+    /** @var int PostMissionQuestionsLength INT */
+	public int $PostMissionQuestionsLength;
+    /** @var int 0x0 Length SHORT */
+	public int $Length;
+    /** @var int 0x2 QuestionCondition BYTE */
+	public int $QuestionCondition;
+    /** @var int 0x3 QuestionType BYTE */
+	public int $QuestionType;
     /** @var string 0x4 Question CHAR */
-    public $Question;
-    /** @var integer PV Spacer BYTE */
-    public const Spacer = 10;
+	public string $Question;
+    /** @var int PV Spacer BYTE */
+	public const Spacer = 10;
     /** @var string PV Answer CHAR */
-    public $Answer;
+	public string $Answer;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -38,7 +39,7 @@ abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -58,7 +59,7 @@ abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Length" => $this->Length,
@@ -69,7 +70,7 @@ abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -84,18 +85,18 @@ abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getQuestionConditionLabel() 
+    public function getQuestionConditionLabel(): string 
     {
         return isset($this->QuestionCondition) && isset(Constants::$QUESTIONCONDITION[$this->QuestionCondition]) ? Constants::$QUESTIONCONDITION[$this->QuestionCondition] : "Unknown";
     }
 
-    public function getQuestionTypeLabel() 
+    public function getQuestionTypeLabel(): string 
     {
         return isset($this->QuestionType) && isset(Constants::$QUESTIONTYPE[$this->QuestionType]) ? Constants::$QUESTIONTYPE[$this->QuestionType] : "Unknown";
     }
     protected abstract function QuestionLength();
 protected abstract function AnswerLength();
-    public function getLength()
+    public function getLength(): int
     {
         return $this->PostMissionQuestionsLength;
     }

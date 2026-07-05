@@ -1,9 +1,6 @@
 # pyrite-xw-coordinate
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------ | --------- | ----------- | ------------ | ----------- |
 | `coordinate` | --        |             | `Coordinate` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

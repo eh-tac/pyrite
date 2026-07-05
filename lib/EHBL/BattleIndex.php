@@ -6,24 +6,24 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-class BattleIndex extends PyriteBase implements Byteable
+class BattleIndex extends PyriteBase implements Byteable, PyriteModel
 {
 	use HexDecoder;
 	use HexEncoder;
 
-	public $platform;
-	public $key;
-	public $encryptionOffset;
-	public $title;
-	public $missions = [];
+	public int $platform;
+	public int $encryptionOffset;
+	public string $title;
+	public array $missions = [];
 
-	public function __construct($key = '')
+	public function __construct(public string $key = '', public ?PyriteModel $TIE = null)
 	{
-		$this->key = $key; // TODO
+		parent::__construct('', $TIE);
 	}
 
-	public static function fromHex($hex, $key = '')
+	public static function fromHex(string $hex, string $key = ''): BattleIndex
 	{
 		$battle = (new BattleIndex($key))
 			->setHex($hex);
@@ -95,12 +95,12 @@ class BattleIndex extends PyriteBase implements Byteable
 		return $this;
 	}
 
-	public function getLength()
+	public function getLength(): int
 	{
 		return count($this->missions) * 21 + 65;
 	}
 
-	public function toHexString($hex = null)
+	public function toHexString($hex = null): string
 	{
 		$hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
 
@@ -117,7 +117,7 @@ class BattleIndex extends PyriteBase implements Byteable
 		return $hex;
 	}
 
-	public function compareHex($otherHex)
+	public function compareHex(string $otherHex): bool
 	{
 		$other = new BattleIndex($otherHex);
 		return ($this->encryptionOffset === $other->encryptionOffset &&
@@ -127,7 +127,7 @@ class BattleIndex extends PyriteBase implements Byteable
 		);
 	}
 
-	public function __debugInfo()
+	public function __debugInfo(): array
 	{
 		return [
 			"platform" => $this->platform,

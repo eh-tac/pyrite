@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-tie-event",
   styleUrl: "event.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEEventComponent {
   @Element() public el: HTMLElement;

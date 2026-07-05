@@ -1,5 +1,5 @@
 import { BattleSummary } from "../pilot";
-import { MissionData } from "../XWA";
+import { MissionData } from ".";
 import { PilotFileBase } from "./base/pilot-file-base";
 import { Constants } from "./constants";
 
@@ -20,7 +20,7 @@ const TFTCRCounts: Record<number, number> = {
   30: 4,
   34: 4,
   38: 3,
-  41: 5
+  41: 5,
 };
 
 export class PilotFile extends PilotFileBase {
@@ -69,7 +69,7 @@ export class PilotFile extends PilotFileBase {
     let mIdx = 0;
 
     function processMissions(missions: MissionData[], expectedCount: number = 0) {
-      const won = missions.filter(m => m && m.WinCount && m.AttemptCount).length;
+      const won = missions.filter((m) => m && m.WinCount && m.AttemptCount).length;
       const completed = won === expectedCount;
       let status = "None";
       if (completed && won === expectedCount) {
@@ -131,7 +131,7 @@ export class PilotFile extends PilotFileBase {
           Label: lookup[i + 1],
           TourOfDuty: `${this.TourOfDutyKills[i]} (${this.TourOfDutyPartials[i]})`,
           Azzameen: `${this.AzzameenKills[i]} (${this.AzzameenPartials[i]})`,
-          Simulator: `${this.SimulatorKills[i]} (${this.SimulatorPartials[i]})`
+          Simulator: `${this.SimulatorKills[i]} (${this.SimulatorPartials[i]})`,
         });
       }
     }

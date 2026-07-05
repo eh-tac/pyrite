@@ -20,7 +20,7 @@ export class Mission extends MissionBase implements IMission {
   }
 
   public validate(): void {
-    this.FlightGroups.forEach(fg => {
+    this.FlightGroups.forEach((fg) => {
       fg.validate();
     });
   }

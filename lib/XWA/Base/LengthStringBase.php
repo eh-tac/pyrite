@@ -18,7 +18,7 @@ abstract class LengthStringBase extends PyriteBase implements Byteable
     public $Length;
     /** @var string[] 0x2 Text CHAR */
     public $Text;
-    
+
     public function __construct($hex = null, $tie = null)
     {
         parent::__construct($hex, $tie);
@@ -27,9 +27,8 @@ abstract class LengthStringBase extends PyriteBase implements Byteable
     /**
      * Process the $hex string provided in the constructor.
      * Separating the constructor and loading allows for the objects to be made from scratch.
-     * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -47,16 +46,16 @@ abstract class LengthStringBase extends PyriteBase implements Byteable
         $this->hex = substr($this->hex, 0, $this->getLength());
         return $this;
     }
-    
-    public function __debugInfo()
+
+    public function __debugInfo(): array
     {
         return [
             "Length" => $this->Length,
             "Text" => $this->Text
         ];
     }
-    
-    public function toHexString($hex = null)
+
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -71,9 +70,9 @@ abstract class LengthStringBase extends PyriteBase implements Byteable
 
         return $hex;
     }
-    
-    
-    public function getLength()
+
+
+    public function getLength(): int
     {
         return $this->LengthStringLength;
     }

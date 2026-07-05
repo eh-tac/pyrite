@@ -13,9 +13,9 @@ export class PostMissionQuestions extends PostMissionQuestionsBase {
     if (this.Length === 0) {
       return 0;
     }
-    let text: string = String.fromCharCode.apply(null, new Uint8Array(this.hex.slice(4)));
+    let text: string = String.fromCodePoint.apply(null, new Uint8Array(this.hex.slice(4)));
     text = text.substr(0, this.Length);
-    const splitter = String.fromCharCode(10);
+    const splitter = String.fromCodePoint(10);
     if (text.includes(splitter)) {
       const idx = text.indexOf(splitter);
       return idx;
@@ -26,9 +26,9 @@ export class PostMissionQuestions extends PostMissionQuestionsBase {
     if (this.Length === 0) {
       return 0;
     }
-    let text: string = String.fromCharCode.apply(null, new Uint8Array(this.hex.slice(4)));
+    let text: string = String.fromCodePoint.apply(null, new Uint8Array(this.hex.slice(4)));
     text = text.substr(0, this.Length);
-    const splitter = String.fromCharCode(10);
+    const splitter = String.fromCodePoint(10);
     if (text.includes(splitter)) {
       const idx = text.indexOf(splitter);
       return this.Length - idx - 3;

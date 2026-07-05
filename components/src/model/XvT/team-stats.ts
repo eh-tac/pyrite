@@ -16,7 +16,7 @@ export class TeamStats extends TeamStatsBase {
   }
 
   public hasData(): boolean {
-    return this.PlayCounts.some(n => !!n);
+    return this.PlayCounts.some((n) => !!n);
   }
 
   public get BattleVictories(): TriStat[] {
@@ -27,7 +27,7 @@ export class TeamStats extends TeamStatsBase {
           Label: Constants.SHIPS[i],
           Exercise: `${this.ExerciseKillsByType[i]} (${this.ExercisePartialsByType[i]})`,
           Melee: `${this.MeleeKillsByType[i]} (${this.MeleePartialsByType[i]})`,
-          Combat: `${this.CombatKillsByType[i]} (${this.CombatAssistsByType[i]})`
+          Combat: `${this.CombatKillsByType[i]} (${this.CombatAssistsByType[i]})`,
         });
       }
     }
@@ -39,7 +39,7 @@ export class TeamStats extends TeamStatsBase {
       Label: "Lasers",
       Exercise: this.shootInfo(this.LasersHit[0], this.LasersTotal[0]),
       Melee: this.shootInfo(this.LasersHit[1], this.LasersTotal[1]),
-      Combat: this.shootInfo(this.LasersHit[2], this.LasersTotal[2])
+      Combat: this.shootInfo(this.LasersHit[2], this.LasersTotal[2]),
     };
   }
 
@@ -48,7 +48,7 @@ export class TeamStats extends TeamStatsBase {
       Label: "",
       Exercise: this.percent(this.LasersHit[0], this.LasersTotal[0]),
       Melee: this.percent(this.LasersHit[1], this.LasersTotal[1]),
-      Combat: this.percent(this.LasersHit[2], this.LasersTotal[2])
+      Combat: this.percent(this.LasersHit[2], this.LasersTotal[2]),
     };
   }
 
@@ -57,7 +57,7 @@ export class TeamStats extends TeamStatsBase {
       Label: "Warheads",
       Exercise: this.shootInfo(this.WarheadsHit[0], this.WarheadsTotal[0]),
       Melee: this.shootInfo(this.WarheadsHit[1], this.WarheadsTotal[1]),
-      Combat: this.shootInfo(this.WarheadsHit[2], this.WarheadsTotal[2])
+      Combat: this.shootInfo(this.WarheadsHit[2], this.WarheadsTotal[2]),
     };
   }
 
@@ -66,7 +66,7 @@ export class TeamStats extends TeamStatsBase {
       Label: "",
       Exercise: this.percent(this.WarheadsHit[0], this.WarheadsTotal[0]),
       Melee: this.percent(this.WarheadsHit[1], this.WarheadsTotal[1]),
-      Combat: this.percent(this.WarheadsHit[2], this.WarheadsTotal[2])
+      Combat: this.percent(this.WarheadsHit[2], this.WarheadsTotal[2]),
     };
   }
 
@@ -75,7 +75,7 @@ export class TeamStats extends TeamStatsBase {
       Label: "Missions Flown",
       Exercise: this.PlayCounts[0],
       Melee: this.PlayCounts[1],
-      Combat: this.PlayCounts[2]
+      Combat: this.PlayCounts[2],
     };
   }
 
@@ -84,7 +84,7 @@ export class TeamStats extends TeamStatsBase {
       Label: "Kills",
       Exercise: this.totalKills[0],
       Melee: this.totalKills[1],
-      Combat: this.totalKills[2]
+      Combat: this.totalKills[2],
     };
   }
 
@@ -93,7 +93,7 @@ export class TeamStats extends TeamStatsBase {
       Label: "Hidden Cargo Found",
       Exercise: this.HiddenCargoFound[0],
       Melee: this.HiddenCargoFound[1],
-      Combat: this.HiddenCargoFound[2]
+      Combat: this.HiddenCargoFound[2],
     };
   }
 
@@ -102,7 +102,7 @@ export class TeamStats extends TeamStatsBase {
       Label: "Craft Lost",
       Exercise: this.CraftLosses[0],
       Melee: this.CraftLosses[1],
-      Combat: this.CraftLosses[2]
+      Combat: this.CraftLosses[2],
     };
   }
 
@@ -111,7 +111,7 @@ export class TeamStats extends TeamStatsBase {
       Label: "Collisions",
       Exercise: this.CollisionLosses[0],
       Melee: this.CollisionLosses[1],
-      Combat: this.CollisionLosses[2]
+      Combat: this.CollisionLosses[2],
     };
   }
 

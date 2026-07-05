@@ -6,7 +6,7 @@ enum Tab {
   MESS = "messages",
   GLOBALS = "globals",
   BRIEF = "briefing",
-  INFO = "overview"
+  INFO = "overview",
 }
 
 const tabs: { [K in Tab]: string } = {
@@ -14,13 +14,13 @@ const tabs: { [K in Tab]: string } = {
   messages: "Messages",
   globals: "Globals",
   briefing: "Briefing",
-  overview: "Overview"
+  overview: "Overview",
 };
 
 @Component({
   tag: "pyrite-tie-mission",
   styleUrl: "mission.scss",
-  shadow: false
+  shadow: false,
 })
 export class TIEMissionComponent {
   @Element() public el: HTMLElement;

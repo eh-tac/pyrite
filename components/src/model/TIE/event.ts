@@ -13,7 +13,7 @@ export enum EventType {
   FGTag8 = 16,
   ClearTextTags = 17,
   TextTag1 = 18,
-  TextTag8 = 25
+  TextTag8 = 25,
 }
 
 export class Event extends EventBase {
@@ -41,7 +41,7 @@ export class Event extends EventBase {
     23: 4,
     24: 4,
     25: 4,
-    34: 0
+    34: 0,
   };
 
   public Briefing: Briefing;

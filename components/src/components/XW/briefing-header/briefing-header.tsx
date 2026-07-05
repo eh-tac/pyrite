@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { BriefingHeader } from "../../../model/XW";
 import { XWBriefingHeaderController } from "../../../controllers/XW";
 import { Field } from "../../fields/field";
@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xw-briefing-header",
   styleUrl: "briefing-header.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWBriefingHeaderComponent {
   @Element() public el: HTMLElement;
@@ -21,11 +21,10 @@ export class XWBriefingHeaderComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('PlatformID')} />
-        <Field {...this.controller.getProps('IconCount')} />
-        <Field {...this.controller.getProps('CoordinateCount')} />
+        <Field {...this.controller.getProps("PlatformID")} />
+        <Field {...this.controller.getProps("IconCount")} />
+        <Field {...this.controller.getProps("CoordinateCount")} />
       </Host>
-    )
+    );
   }
 }
-  

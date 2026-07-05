@@ -9,28 +9,27 @@ export abstract class PLTCategoryTypeRecordBase extends PyriteBase implements By
   public exercise: number;
   public melee: number;
   public combat: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.exercise = getInt(hex, 0x0000);
     this.melee = getInt(hex, 0x0004);
     this.combat = getInt(hex, 0x0008);
-    
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       exercise: this.exercise,
       melee: this.melee,
-      combat: this.combat
+      combat: this.combat,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.exercise, 0x0000);
@@ -39,8 +38,7 @@ export abstract class PLTCategoryTypeRecordBase extends PyriteBase implements By
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.PLTCATEGORYTYPERECORDLENGTH;
   }

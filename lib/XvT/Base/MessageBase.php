@@ -6,39 +6,40 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\Trigger;
 
-abstract class MessageBase extends PyriteBase implements Byteable
+abstract class MessageBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MESSAGELENGTH INT */
-    public const MESSAGELENGTH = 116;
-    /** @var integer 0x00 MessageIndex SHORT */
-    public $MessageIndex;
+    /** @var int MESSAGELENGTH INT */
+	public const MESSAGELENGTH = 116;
+    /** @var int 0x00 MessageIndex SHORT */
+	public int $MessageIndex;
     /** @var string 0x02 Message CHAR */
-    public $Message;
-    /** @var integer[] 0x42 SentToTeams BYTE */
-    public $SentToTeams;
-    /** @var Trigger[] 0x4C TriggerA Trigger */
-    public $TriggerA;
-    /** @var boolean 0x56 Trigger1OrTrigger2 BOOL */
-    public $Trigger1OrTrigger2;
-    /** @var Trigger[] 0x57 TriggerB Trigger */
-    public $TriggerB;
-    /** @var boolean 0x61 Trigger3OrTrigger4 BOOL */
-    public $Trigger3OrTrigger4;
+	public string $Message;
+    /** @var array<int> 0x42 SentToTeams BYTE */
+	public array $SentToTeams;
+    /** @var array<Trigger> 0x4C TriggerA Trigger */
+	public array $TriggerA;
+    /** @var bool 0x56 Trigger1OrTrigger2 BOOL */
+	public bool $Trigger1OrTrigger2;
+    /** @var array<Trigger> 0x57 TriggerB Trigger */
+	public array $TriggerB;
+    /** @var bool 0x61 Trigger3OrTrigger4 BOOL */
+	public bool $Trigger3OrTrigger4;
     /** @var string 0x62 EditorNote STR */
-    public $EditorNote;
-    /** @var integer 0x72 DelaySeconds BYTE */
-    public $DelaySeconds;
-    /** @var boolean 0x73 Trigger12OrTrigger34 BOOL */
-    public $Trigger12OrTrigger34;
+	public string $EditorNote;
+    /** @var int 0x72 DelaySeconds BYTE */
+	public int $DelaySeconds;
+    /** @var bool 0x73 Trigger12OrTrigger34 BOOL */
+	public bool $Trigger12OrTrigger34;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -46,7 +47,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -85,7 +86,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "MessageIndex" => $this->MessageIndex,
@@ -101,7 +102,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -136,7 +137,7 @@ abstract class MessageBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::MESSAGELENGTH;
     }

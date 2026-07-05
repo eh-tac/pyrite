@@ -1,9 +1,6 @@
 # pyrite-xvt-plt-mission-sp-record
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | -------------------- | --------- | ----------- | -------------------- | ----------- |
 | `pltmissionsprecord` | --        |             | `PLTMissionSPRecord` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

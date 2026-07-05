@@ -11,9 +11,9 @@ export abstract class PageBase extends PyriteBase implements Byteable {
   public CoordinateSet: number;
   public PageType: number;
   public Events: number[];
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -30,19 +30,19 @@ export abstract class PageBase extends PyriteBase implements Byteable {
     }
     this.PageLength = offset;
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       Duration: this.Duration,
       EventsLength: this.EventsLength,
       CoordinateSet: this.CoordinateSet,
       PageType: this.PageType,
-      Events: this.Events
+      Events: this.Events,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Duration, 0x00);
@@ -50,7 +50,7 @@ export abstract class PageBase extends PyriteBase implements Byteable {
     writeShort(hex, this.CoordinateSet, 0x04);
     writeShort(hex, this.PageType, 0x06);
     offset = 0x08;
-    for (let i = 0; i < this.EventsLength; i++) {
+    for (let i = 0; i < this.Events.length; i++) {
       const t = this.Events[i];
       writeShort(hex, t, offset);
       offset += 2;
@@ -58,8 +58,7 @@ export abstract class PageBase extends PyriteBase implements Byteable {
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.PageLength;
   }

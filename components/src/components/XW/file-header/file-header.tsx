@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xw-file-header",
   styleUrl: "file-header.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWFileHeaderComponent {
   @Element() public el: HTMLElement;

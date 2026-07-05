@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xw-object-group",
   styleUrl: "object-group.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWObjectGroupComponent {
   @Element() public el: HTMLElement;

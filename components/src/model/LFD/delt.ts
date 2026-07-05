@@ -1,11 +1,10 @@
 import { DeltBase } from "./base/delt-base";
-    
-export class Delt extends DeltBase {
 
+export class Delt extends DeltBase {
   public beforeConstruct(): void {}
 
   public toString(): string {
-    return '';
+    return "";
   }
 
   protected RowCount(): number {

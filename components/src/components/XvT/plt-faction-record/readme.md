@@ -1,9 +1,6 @@
 # pyrite-xvt-plt-faction-record
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------------ | --------- | ----------- | ------------------ | ----------- |
 | `pltfactionrecord` | --        |             | `PLTFactionRecord` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

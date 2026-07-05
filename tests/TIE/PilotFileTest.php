@@ -9,7 +9,7 @@ final class TIEPilotFileTest extends TestCase
     public function testSkillScore(): void
     {
         $dir = dirname(__FILE__);
-        $tie = \Pyrite\TIE\PilotFile::load($dir . '/../data/TIETC19.tfr');
+        $tie = \Pyrite\TIE\PilotFile::load($dir . '/../../fixtures/TIETC19.tfr');
         $tie->loadHex();
         $this->assertEquals(65535, $tie->SkillScore);
     }
@@ -17,7 +17,7 @@ final class TIEPilotFileTest extends TestCase
     public function testPhoenixCampaign(): void
     {
         $dir = dirname(__FILE__);
-        $tie = \Pyrite\TIE\PilotFile::load($dir . '/../data/PHOENIX.TFR');
+        $tie = \Pyrite\TIE\PilotFile::load($dir . '/../../fixtures/PHOENIX.TFR');
         $tie->loadHex();
         $scores = $tie->getCompletedMissionScores(true);
         $this->assertCount(160, $scores, 'PHOENIX.TFR should have 13 battles of data which is 76 missions but 160 slots are returned');
@@ -28,11 +28,11 @@ final class TIEPilotFileTest extends TestCase
     public function testTieCmp12CompletedMissionScores(): void
     {
         $dir = dirname(__FILE__);
-        $tie = \Pyrite\TIE\PilotFile::load($dir . '/../data/TIECMP12.tfr');
+        $tie = \Pyrite\TIE\PilotFile::load($dir . '/../../fixtures/TIECMP12.tfr');
         $tie->loadHex();
         $scores = $tie->getCompletedMissionScores(true);
         $this->assertCount(160, $scores, 'TIECMP12.tfr should have 20 battles of data which is 160 missions');
-        
+
         // First 11 battles should have 0 scores x 8 missions each
         for ($i = 0; $i < 88; $i++) {
             $this->assertEquals(0, $scores[$i], "Mission " . ($i + 1) . " should have a score of 0");

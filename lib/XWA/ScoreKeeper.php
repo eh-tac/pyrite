@@ -9,7 +9,7 @@ class ScoreKeeper  implements IScoreKeeper
 {
     private $TIE;
 
-    /** @var FlightGroup */
+    /** @var array FlightGroup */
     private $playerCraft = array();
     private $globalGoals = array();
     private $fgGoals = array();
@@ -72,7 +72,7 @@ class ScoreKeeper  implements IScoreKeeper
             }
 
             /** @var GoalFG $goal */
-            foreach ($fg->Goals as $goal) {
+            foreach ($fg->FGGoals as $goal) {
                 if ($goal->getPoints()) {
                     $this->fgGoals[] = $fg . " - " . $goal;
                     $this->total += $goal->getPoints();

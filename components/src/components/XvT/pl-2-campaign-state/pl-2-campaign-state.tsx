@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { PL2CampaignState } from "../../../model/XvT";
 import { XvTPL2CampaignStateController } from "../../../controllers/XvT";
 import { Field } from "../../fields/field";
@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xvt-pl-2-campaign-state",
   styleUrl: "pl-2-campaign-state.scss",
-  shadow: false
+  shadow: false,
 })
 export class XvTPL2CampaignStateComponent {
   @Element() public el: HTMLElement;
@@ -21,13 +21,12 @@ export class XvTPL2CampaignStateComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('ConfigRandomSeed')} />
-        <Field {...this.controller.getProps('IsInProgressUNK')} />
-        <Field {...this.controller.getProps('ConfigGameRandomizeLevel')} />
-        <Field {...this.controller.getProps('saveState')} />
-        <Field {...this.controller.getProps('unknown2')} />
+        <Field {...this.controller.getProps("ConfigRandomSeed")} />
+        <Field {...this.controller.getProps("IsInProgressUNK")} />
+        <Field {...this.controller.getProps("ConfigGameRandomizeLevel")} />
+        <Field {...this.controller.getProps("saveState")} />
+        <Field {...this.controller.getProps("unknown2")} />
       </Host>
-    )
+    );
   }
 }
-  

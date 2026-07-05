@@ -1,5 +1,5 @@
-import { Constants, Event, FlightGroup, Mission } from "../../../model/TIE";
-import { EventType } from "../../../model/TIE/event";
+import { Constants, Event, EventType, FlightGroup, Mission } from "../../../model/TIE";
+import { IFFColor } from "../../../model/TIE/constants";
 import { FontFile } from "../../../model/util/font";
 import { DrawingObject } from "../../../view-model/drawing-object";
 
@@ -15,8 +15,8 @@ export class TIEDrawMap extends DrawingObject {
   private width: number;
   private height: number;
 
-  private title: string;
-  private caption: string;
+  private title: string = "";
+  private caption: string = "";
   // colours
   private grid: string = "#780000";
   private textBG: string = "#0000aa";
@@ -26,7 +26,7 @@ export class TIEDrawMap extends DrawingObject {
     public font: FontFile,
     public mission: Mission,
     public iconBitmap: ImageBitmap,
-    public dummyCtx: CanvasRenderingContext2D
+    public dummyCtx: CanvasRenderingContext2D,
   ) {
     super(ctx, font);
     this.width = ctx.canvas.width;
@@ -42,18 +42,18 @@ export class TIEDrawMap extends DrawingObject {
 
   public processEvent(event: Event): void {
     switch (event.EventType) {
-      case EventType.TitleText:
+      case EventType.titleText:
         this.title = event.Text;
         break;
-      case EventType.CaptionText:
+      case EventType.captionText:
         this.caption = event.Text;
         break;
-      case EventType.MoveMap:
+      case EventType.moveMap:
         this.mapX = event.Variables[0];
         this.mapY = event.Variables[1];
         break;
       // todo move canvas
-      case EventType.ZoomMap:
+      case EventType.zoomMap:
         this.zoomX = event.Variables[0];
         this.zoomY = event.Variables[1];
         break;
@@ -81,8 +81,8 @@ export class TIEDrawMap extends DrawingObject {
 
     this.offX = Math.round((2 * -this.zoomX * this.mapX) / 256 + this.width / 2);
     this.offY = Math.round((2 * -this.zoomY * this.mapY) / 256 + this.height / 2);
-    const fgsToDraw = this.mission.FlightGroups.filter(fg => fg.showOnBriefing);
-    fgsToDraw.forEach(fg => {
+    const fgsToDraw = this.mission.FlightGroups.filter((fg) => fg.showOnBriefing);
+    fgsToDraw.forEach((fg) => {
       this.drawFG(fg);
     });
 
@@ -107,7 +107,7 @@ export class TIEDrawMap extends DrawingObject {
     const briefY = fg.briefingCoordinates[1];
     const x = Math.round((2 * this.zoomX * briefX) / 256) + this.offX + 4;
     const y = Math.round((2 * this.zoomY * briefY) / 256) + this.offY + 4;
-    const colour = this.getHex(Constants.IFFCOLOR[fg.Iff].toLowerCase());
+    const colour = this.getHex(Constants.IFFCOLOR[fg.Iff as IFFColor].toLowerCase());
 
     const iconPos = fg.CraftType;
 

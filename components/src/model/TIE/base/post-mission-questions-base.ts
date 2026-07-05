@@ -1,5 +1,5 @@
 import { Byteable } from "../../../byteable";
-import { Constants } from "../constants";
+import { Constants, QuestionCondition, QuestionType } from "../constants";
 import { IMission, PyriteBase } from "../../../pyrite-base";
 import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from "../../../hex";
 // tslint:disable member-ordering
@@ -8,20 +8,20 @@ import { getByte, getChar, getShort, writeByte, writeChar, writeShort } from "..
 export abstract class PostMissionQuestionsBase extends PyriteBase implements Byteable {
   public PostMissionQuestionsLength: number;
   public Length: number;
-  public QuestionCondition: number;
-  public QuestionType: number;
+  public QuestionCondition: QuestionCondition;
+  public QuestionType: QuestionType;
   public Question: string;
   public readonly Spacer: number = 10;
   public Answer: string;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.Length = getShort(hex, 0x0);
-    this.QuestionCondition = getByte(hex, 0x2);
-    this.QuestionType = getByte(hex, 0x3);
+    this.QuestionCondition = getByte(hex, 0x2) as QuestionCondition;
+    this.QuestionType = getByte(hex, 0x3) as QuestionType;
     this.Question = getChar(hex, 0x4, this.QuestionLength());
     offset = 0x4 + this.QuestionLength();
     // static prop Spacer
@@ -30,31 +30,33 @@ export abstract class PostMissionQuestionsBase extends PyriteBase implements Byt
     offset += this.AnswerLength();
     this.PostMissionQuestionsLength = offset;
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       Length: this.Length,
       QuestionCondition: this.QuestionConditionLabel,
       QuestionType: this.QuestionTypeLabel,
       Question: this.Question,
-      Answer: this.Answer
+      Answer: this.Answer,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Length, 0x0);
     writeByte(hex, this.QuestionCondition, 0x2);
     writeByte(hex, this.QuestionType, 0x3);
-    writeChar(hex, this.Question, 0x4);
+    writeChar(hex, this.Question, 0x4, this.QuestionLength());
     writeByte(hex, 10, offset);
-    writeChar(hex, this.Answer, offset);
+    offset += 1;
+    writeChar(hex, this.Answer, offset, this.AnswerLength());
+    offset += this.AnswerLength();
 
     return hex;
   }
-  
+
   public get QuestionConditionLabel(): string {
     return Constants.QUESTIONCONDITION[this.QuestionCondition] || "Unknown";
   }
@@ -62,8 +64,8 @@ export abstract class PostMissionQuestionsBase extends PyriteBase implements Byt
   public get QuestionTypeLabel(): string {
     return Constants.QUESTIONTYPE[this.QuestionType] || "Unknown";
   }
-  protected abstract QuestionLength();
-protected abstract AnswerLength();
+  protected abstract QuestionLength(): number;
+  protected abstract AnswerLength(): number;
   public getLength(): number {
     return this.PostMissionQuestionsLength;
   }

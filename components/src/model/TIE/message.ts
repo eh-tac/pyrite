@@ -1,5 +1,5 @@
 import { MessageBase } from "./base/message-base";
-import { Constants } from "./constants";
+import { Constants, MessageColor } from "./constants";
 import { IMission } from "../pyrite-base";
 
 export class Message extends MessageBase {
@@ -7,7 +7,7 @@ export class Message extends MessageBase {
     return Constants.MESSAGECOLOR[this.MessageColour];
   }
   public DisplayText: string;
-  public MessageColour = 0;
+  public MessageColour: MessageColor = MessageColor.red;
 
   public constructor(hex: ArrayBuffer, tie?: IMission) {
     super(hex, tie);
@@ -21,14 +21,14 @@ export class Message extends MessageBase {
     }
   }
 
-  public toJSON(): object {
+  public toJSON(): Record<string, unknown> | string {
     const start = this.MessageColour === 0 ? 0 : 1;
     return {
       Message: this.Message.substr(start),
       MessageColour: this.MessageColourLabel,
       Triggers: this.Triggers,
       EditorNote: this.EditorNote,
-      Trigger1OrTrigger2: this.Trigger1OrTrigger2
+      Trigger1OrTrigger2: this.Trigger1OrTrigger2,
     };
   }
 }

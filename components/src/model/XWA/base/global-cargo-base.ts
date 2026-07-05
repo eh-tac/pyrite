@@ -1,58 +1,60 @@
 import { Byteable } from "../../../byteable";
 import { IMission, PyriteBase } from "../../../pyrite-base";
-import { getBool, getByte, getString, writeBool, writeByte, writeString } from "../../../hex";
+import { getByte, getInt, getString, writeByte, writeInt, writeString } from "../../../hex";
 // tslint:disable member-ordering
 // tslint:disable prefer-const
 
 export abstract class GlobalCargoBase extends PyriteBase implements Byteable {
   public readonly GLOBALCARGOLENGTH: number = 140;
   public Cargo: string;
-  public Unknown1: boolean;
-  public Unknown2: number;
-  public Unknown3: number;
-  public Unknown4: number;
-  public Unknown5: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+  public ID: number;
+  public Count: number; //(was Unknown1)
+  public Type: number; //(was Unknown2) {solid, liquid, gas}
+  public Volume: number; //(was Unknown3)
+  public Value: number; //(was Unknown4)
+  public Volatility: number; //(was Unknown5) {low, med, high, kaboom!}
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.Cargo = getString(hex, 0x00, 64);
-    this.Unknown1 = getBool(hex, 0x44);
-    this.Unknown2 = getByte(hex, 0x48);
-    this.Unknown3 = getByte(hex, 0x49);
-    this.Unknown4 = getByte(hex, 0x4A);
-    this.Unknown5 = getByte(hex, 0x4B);
-    
+    this.ID = getInt(hex, 0x40);
+    this.Count = getInt(hex, 0x44);
+    this.Type = getByte(hex, 0x48);
+    this.Volume = getByte(hex, 0x49);
+    this.Value = getByte(hex, 0x4a);
+    this.Volatility = getByte(hex, 0x4b);
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       Cargo: this.Cargo,
-      Unknown1: this.Unknown1,
-      Unknown2: this.Unknown2,
-      Unknown3: this.Unknown3,
-      Unknown4: this.Unknown4,
-      Unknown5: this.Unknown5
+      ID: this.ID,
+      Count: this.Count,
+      Type: this.Type,
+      Volume: this.Volume,
+      Value: this.Value,
+      Volatility: this.Volatility,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
-    writeString(hex, this.Cargo, 0x00);
-    writeBool(hex, this.Unknown1, 0x44);
-    writeByte(hex, this.Unknown2, 0x48);
-    writeByte(hex, this.Unknown3, 0x49);
-    writeByte(hex, this.Unknown4, 0x4A);
-    writeByte(hex, this.Unknown5, 0x4B);
+    writeString(hex, this.Cargo, 0x00, 64);
+    writeInt(hex, this.ID, 0x40);
+    writeInt(hex, this.Count, 0x44);
+    writeByte(hex, this.Type, 0x48);
+    writeByte(hex, this.Volume, 0x49);
+    writeByte(hex, this.Value, 0x4a);
+    writeByte(hex, this.Volatility, 0x4b);
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.GLOBALCARGOLENGTH;
   }

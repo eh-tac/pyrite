@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XW;
-    
+
 class BriefingHeader extends Base\BriefingHeaderBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new BriefingHeader($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): BriefingHeader
+  {
+    return (new BriefingHeader($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

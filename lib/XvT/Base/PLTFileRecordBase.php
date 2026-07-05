@@ -6,6 +6,7 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\PLTAIRankCountRecord;
 use Pyrite\XvT\PLTCategoryTypeRecord;
 use Pyrite\XvT\PLTConnectedPlayerData;
@@ -14,261 +15,261 @@ use Pyrite\XvT\PLTPlayerRankCountRecord;
 use Pyrite\XvT\PLTTeamResultRecord;
 use Pyrite\XvT\PLTTournTeamRecord;
 
-abstract class PLTFileRecordBase extends PyriteBase implements Byteable
+abstract class PLTFileRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PLTFILERECORDLENGTH INT */
-    public const PLTFILERECORDLENGTH = 253754;
+    /** @var int PLTFILERECORDLENGTH INT */
+	public const PLTFILERECORDLENGTH = 253754;
     /** @var string 0x0000 PilotName CHAR */
-    public $PilotName;
-    /** @var integer 0x000E totalScore INT */
-    public $totalScore;
-    /** @var integer 0x0012 PlayerID INT */
-    public $PlayerID;
-    /** @var integer 0x0016 continuedOrReflownMission INT */
-    public $continuedOrReflownMission;
-    /** @var integer 0x001A isHosting INT */
-    public $isHosting;
-    /** @var integer 0x001E numHumanPlayersInMission INT */
-    public $numHumanPlayersInMission;
-    /** @var integer 0x0022 frontFlyMode INT */
-    public $frontFlyMode;
-    /** @var integer[] 0x0026 unknown0x26 INT */
-    public $unknown0x26;
-    /** @var integer[] 0x0166 unknown0x166 INT */
-    public $unknown0x166;
-    /** @var integer[] 0x0186 unknown0x186 INT */
-    public $unknown0x186;
-    /** @var integer 0x02C6 lastTeamNumber INT */
-    public $lastTeamNumber;
-    /** @var integer 0x02CA lastSelectedMissionType INT */
-    public $lastSelectedMissionType;
-    /** @var integer 0x02CE lastSelectedTraining INT */
-    public $lastSelectedTraining;
-    /** @var integer 0x02D2 lastSelectedMelee INT */
-    public $lastSelectedMelee;
-    /** @var integer 0x02D6 lastSelectedTournament INT */
-    public $lastSelectedTournament;
-    /** @var integer 0x02DA lastSelectedCombat INT */
-    public $lastSelectedCombat;
-    /** @var integer 0x02DE lastSelectedBattle INT */
-    public $lastSelectedBattle;
+	public string $PilotName;
+    /** @var int 0x000E totalScore INT */
+	public int $totalScore;
+    /** @var int 0x0012 PlayerID INT */
+	public int $PlayerID;
+    /** @var int 0x0016 continuedOrReflownMission INT */
+	public int $continuedOrReflownMission;
+    /** @var int 0x001A isHosting INT */
+	public int $isHosting;
+    /** @var int 0x001E numHumanPlayersInMission INT */
+	public int $numHumanPlayersInMission;
+    /** @var int 0x0022 frontFlyMode INT */
+	public int $frontFlyMode;
+    /** @var array<int> 0x0026 unknown0x26 INT */
+	public array $unknown0x26;
+    /** @var array<int> 0x0166 unknown0x166 INT */
+	public array $unknown0x166;
+    /** @var array<int> 0x0186 unknown0x186 INT */
+	public array $unknown0x186;
+    /** @var int 0x02C6 lastTeamNumber INT */
+	public int $lastTeamNumber;
+    /** @var int 0x02CA lastSelectedMissionType INT */
+	public int $lastSelectedMissionType;
+    /** @var int 0x02CE lastSelectedTraining INT */
+	public int $lastSelectedTraining;
+    /** @var int 0x02D2 lastSelectedMelee INT */
+	public int $lastSelectedMelee;
+    /** @var int 0x02D6 lastSelectedTournament INT */
+	public int $lastSelectedTournament;
+    /** @var int 0x02DA lastSelectedCombat INT */
+	public int $lastSelectedCombat;
+    /** @var int 0x02DE lastSelectedBattle INT */
+	public int $lastSelectedBattle;
     /** @var string 0x02E2 GameNameString CHAR */
-    public $GameNameString;
-    /** @var integer[] 0x02F8 unknown0x2F8 BYTE */
-    public $unknown0x2F8;
+	public string $GameNameString;
+    /** @var array<int> 0x02F8 unknown0x2F8 BYTE */
+	public array $unknown0x2F8;
     /** @var string 0x0302 GameNameString2 CHAR */
-    public $GameNameString2;
-    /** @var integer[] 0x0318 unknown0x318 BYTE */
-    public $unknown0x318;
-    /** @var integer 0x0322 lastMissionWasNonSpecific INT */
-    public $lastMissionWasNonSpecific;
-    /** @var integer 0x0326 unknown0x326 INT */
-    public $unknown0x326;
-    /** @var integer 0x032A PromoPoints INT */
-    public $PromoPoints;
-    /** @var integer 0x032E WorsePromoPoints INT */
-    public $WorsePromoPoints;
-    /** @var integer 0x0332 RankAdjustmentApplied INT */
-    public $RankAdjustmentApplied;
-    /** @var integer 0x0336 PercentToNextRank INT */
-    public $PercentToNextRank;
+	public string $GameNameString2;
+    /** @var array<int> 0x0318 unknown0x318 BYTE */
+	public array $unknown0x318;
+    /** @var int 0x0322 lastMissionWasNonSpecific INT */
+	public int $lastMissionWasNonSpecific;
+    /** @var int 0x0326 unknown0x326 INT */
+	public int $unknown0x326;
+    /** @var int 0x032A PromoPoints INT */
+	public int $PromoPoints;
+    /** @var int 0x032E WorsePromoPoints INT */
+	public int $WorsePromoPoints;
+    /** @var int 0x0332 RankAdjustmentApplied INT */
+	public int $RankAdjustmentApplied;
+    /** @var int 0x0336 PercentToNextRank INT */
+	public int $PercentToNextRank;
     /** @var PLTCategoryTypeRecord 0x033A totalCategoryScore PLTCategoryTypeRecord */
-    public $totalCategoryScore;
+	public PLTCategoryTypeRecord $totalCategoryScore;
     /** @var PLTCategoryTypeRecord 0x0346 numFlownNonSeries PLTCategoryTypeRecord */
-    public $numFlownNonSeries;
+	public PLTCategoryTypeRecord $numFlownNonSeries;
     /** @var PLTCategoryTypeRecord 0x0352 numFlownSeries PLTCategoryTypeRecord */
-    public $numFlownSeries;
+	public PLTCategoryTypeRecord $numFlownSeries;
     /** @var PLTCategoryTypeRecord 0x035E totalKillCount PLTCategoryTypeRecord */
-    public $totalKillCount;
+	public PLTCategoryTypeRecord $totalKillCount;
     /** @var PLTCategoryTypeRecord 0x036A numVanillaFriendlyKills PLTCategoryTypeRecord */
-    public $numVanillaFriendlyKills;
-    /** @var integer[] 0x0376 totalCraftFullKillsExercise INT */
-    public $totalCraftFullKillsExercise;
-    /** @var integer[] 0x04D6 totalCraftFullKillsMelee INT */
-    public $totalCraftFullKillsMelee;
-    /** @var integer[] 0x0636 totalCraftFullKillsCombat INT */
-    public $totalCraftFullKillsCombat;
-    /** @var integer[] 0x0796 totalCraftSharedKillsExercise INT */
-    public $totalCraftSharedKillsExercise;
-    /** @var integer[] 0x08F6 totalCraftSharedKillsMelee INT */
-    public $totalCraftSharedKillsMelee;
-    /** @var integer[] 0x0A56 totalCraftSharedKillsCombat INT */
-    public $totalCraftSharedKillsCombat;
-    /** @var integer[] 0x0BB6 totalCraftAssistKillsExercise INT */
-    public $totalCraftAssistKillsExercise;
-    /** @var integer[] 0x0D16 totalCraftAssistKillsMelee INT */
-    public $totalCraftAssistKillsMelee;
-    /** @var integer[] 0x0E76 totalCraftAssistKillsCombat INT */
-    public $totalCraftAssistKillsCombat;
+	public PLTCategoryTypeRecord $numVanillaFriendlyKills;
+    /** @var array<int> 0x0376 totalCraftFullKillsExercise INT */
+	public array $totalCraftFullKillsExercise;
+    /** @var array<int> 0x04D6 totalCraftFullKillsMelee INT */
+	public array $totalCraftFullKillsMelee;
+    /** @var array<int> 0x0636 totalCraftFullKillsCombat INT */
+	public array $totalCraftFullKillsCombat;
+    /** @var array<int> 0x0796 totalCraftSharedKillsExercise INT */
+	public array $totalCraftSharedKillsExercise;
+    /** @var array<int> 0x08F6 totalCraftSharedKillsMelee INT */
+	public array $totalCraftSharedKillsMelee;
+    /** @var array<int> 0x0A56 totalCraftSharedKillsCombat INT */
+	public array $totalCraftSharedKillsCombat;
+    /** @var array<int> 0x0BB6 totalCraftAssistKillsExercise INT */
+	public array $totalCraftAssistKillsExercise;
+    /** @var array<int> 0x0D16 totalCraftAssistKillsMelee INT */
+	public array $totalCraftAssistKillsMelee;
+    /** @var array<int> 0x0E76 totalCraftAssistKillsCombat INT */
+	public array $totalCraftAssistKillsCombat;
     /** @var PLTPlayerRankCountRecord 0x0FD6 totalFullKillsOnPlayerRank PLTPlayerRankCountRecord */
-    public $totalFullKillsOnPlayerRank;
+	public PLTPlayerRankCountRecord $totalFullKillsOnPlayerRank;
     /** @var PLTPlayerRankCountRecord 0x1102 totalSharedKillsOnPlayerRank PLTPlayerRankCountRecord */
-    public $totalSharedKillsOnPlayerRank;
+	public PLTPlayerRankCountRecord $totalSharedKillsOnPlayerRank;
     /** @var PLTPlayerRankCountRecord 0x122E totalAssistKillsOnPlayerRank PLTPlayerRankCountRecord */
-    public $totalAssistKillsOnPlayerRank;
+	public PLTPlayerRankCountRecord $totalAssistKillsOnPlayerRank;
     /** @var PLTAIRankCountRecord 0x135A totalFullKillsOnAIRank PLTAIRankCountRecord */
-    public $totalFullKillsOnAIRank;
+	public PLTAIRankCountRecord $totalFullKillsOnAIRank;
     /** @var PLTAIRankCountRecord 0x13A2 totalSharedKillsOnAIRank PLTAIRankCountRecord */
-    public $totalSharedKillsOnAIRank;
+	public PLTAIRankCountRecord $totalSharedKillsOnAIRank;
     /** @var PLTAIRankCountRecord 0x13EA totalAssistKillsOnAIRank PLTAIRankCountRecord */
-    public $totalAssistKillsOnAIRank;
+	public PLTAIRankCountRecord $totalAssistKillsOnAIRank;
     /** @var PLTCategoryTypeRecord 0x1432 totalHiddenCargoFound PLTCategoryTypeRecord */
-    public $totalHiddenCargoFound;
+	public PLTCategoryTypeRecord $totalHiddenCargoFound;
     /** @var PLTCategoryTypeRecord 0x143E totalLaserHit PLTCategoryTypeRecord */
-    public $totalLaserHit;
+	public PLTCategoryTypeRecord $totalLaserHit;
     /** @var PLTCategoryTypeRecord 0x144A totalLaserFired PLTCategoryTypeRecord */
-    public $totalLaserFired;
+	public PLTCategoryTypeRecord $totalLaserFired;
     /** @var PLTCategoryTypeRecord 0x1456 totalWarheadHit PLTCategoryTypeRecord */
-    public $totalWarheadHit;
+	public PLTCategoryTypeRecord $totalWarheadHit;
     /** @var PLTCategoryTypeRecord 0x1462 totalWarheadFired PLTCategoryTypeRecord */
-    public $totalWarheadFired;
+	public PLTCategoryTypeRecord $totalWarheadFired;
     /** @var PLTCategoryTypeRecord 0x146E totalCraftLosses PLTCategoryTypeRecord */
-    public $totalCraftLosses;
+	public PLTCategoryTypeRecord $totalCraftLosses;
     /** @var PLTCategoryTypeRecord 0x147A totalLossesFromCollision PLTCategoryTypeRecord */
-    public $totalLossesFromCollision;
+	public PLTCategoryTypeRecord $totalLossesFromCollision;
     /** @var PLTCategoryTypeRecord 0x1486 totalLossesFromStarships PLTCategoryTypeRecord */
-    public $totalLossesFromStarships;
+	public PLTCategoryTypeRecord $totalLossesFromStarships;
     /** @var PLTCategoryTypeRecord 0x1492 totalLossesFromMines PLTCategoryTypeRecord */
-    public $totalLossesFromMines;
+	public PLTCategoryTypeRecord $totalLossesFromMines;
     /** @var PLTPlayerRankCountRecord 0x149E totalLossesFromPlayerRank PLTPlayerRankCountRecord */
-    public $totalLossesFromPlayerRank;
+	public PLTPlayerRankCountRecord $totalLossesFromPlayerRank;
     /** @var PLTAIRankCountRecord 0x15CA totalLossesFromAIRank PLTAIRankCountRecord */
-    public $totalLossesFromAIRank;
-    /** @var integer[] 0x1612 unknown0x1612 BYTE */
-    public $unknown0x1612;
-    /** @var integer 0x163A unknownPlaqueWon INT */
-    public $unknownPlaqueWon;
-    /** @var PLTTournTeamRecord[] 0x163E TournTeamRecords PLTTournTeamRecord */
-    public $TournTeamRecords;
-    /** @var integer 0x1706 numHumanPlayersUNK INT */
-    public $numHumanPlayersUNK;
-    /** @var integer 0x170A numTeamsUNK INT */
-    public $numTeamsUNK;
-    /** @var integer 0x170E unknown0x170E INT */
-    public $unknown0x170E;
-    /** @var integer 0x1712 unknown0x1712 INT */
-    public $unknown0x1712;
-    /** @var integer 0x1716 numCombatFlownInLastBattle INT */
-    public $numCombatFlownInLastBattle;
-    /** @var integer[] 0x171A unknown0x171A BYTE */
-    public $unknown0x171A;
-    /** @var integer[] 0x1F1E battleCombatMissionID INT */
-    public $battleCombatMissionID;
-    /** @var integer[] 0x1F2E unknown0x1F2E BYTE */
-    public $unknown0x1F2E;
-    /** @var integer 0x2322 totalScoreForCurrentBattleUNK INT */
-    public $totalScoreForCurrentBattleUNK;
-    /** @var integer 0x2326 CurrentRank INT */
-    public $CurrentRank;
-    /** @var integer 0x232A totalCountMissionsFlown INT */
-    public $totalCountMissionsFlown;
-    /** @var integer[] 0x232E RankAchievedOnMissionCount INT */
-    public $RankAchievedOnMissionCount;
+	public PLTAIRankCountRecord $totalLossesFromAIRank;
+    /** @var array<int> 0x1612 unknown0x1612 BYTE */
+	public array $unknown0x1612;
+    /** @var int 0x163A unknownPlaqueWon INT */
+	public int $unknownPlaqueWon;
+    /** @var array<PLTTournTeamRecord> 0x163E TournTeamRecords PLTTournTeamRecord */
+	public array $TournTeamRecords;
+    /** @var int 0x1706 numHumanPlayersUNK INT */
+	public int $numHumanPlayersUNK;
+    /** @var int 0x170A numTeamsUNK INT */
+	public int $numTeamsUNK;
+    /** @var int 0x170E unknown0x170E INT */
+	public int $unknown0x170E;
+    /** @var int 0x1712 unknown0x1712 INT */
+	public int $unknown0x1712;
+    /** @var int 0x1716 numCombatFlownInLastBattle INT */
+	public int $numCombatFlownInLastBattle;
+    /** @var array<int> 0x171A unknown0x171A BYTE */
+	public array $unknown0x171A;
+    /** @var array<int> 0x1F1E battleCombatMissionID INT */
+	public array $battleCombatMissionID;
+    /** @var array<int> 0x1F2E unknown0x1F2E BYTE */
+	public array $unknown0x1F2E;
+    /** @var int 0x2322 totalScoreForCurrentBattleUNK INT */
+	public int $totalScoreForCurrentBattleUNK;
+    /** @var int 0x2326 CurrentRank INT */
+	public int $CurrentRank;
+    /** @var int 0x232A totalCountMissionsFlown INT */
+	public int $totalCountMissionsFlown;
+    /** @var array<int> 0x232E RankAchievedOnMissionCount INT */
+	public array $RankAchievedOnMissionCount;
     /** @var string 0x2392 RankString CHAR */
-    public $RankString;
-    /** @var integer 0x23B2 debriefMissionScore INT */
-    public $debriefMissionScore;
-    /** @var integer[] 0x23B6 debriefFullKillsOnPlayer INT */
-    public $debriefFullKillsOnPlayer;
-    /** @var integer[] 0x23D6 debriefSharedKillsOnPlayer INT */
-    public $debriefSharedKillsOnPlayer;
-    /** @var integer[] 0x23F6 debriefFullKillsOnFG INT */
-    public $debriefFullKillsOnFG;
-    /** @var integer[] 0x24B6 debriefSharedKillsOnFG INT */
-    public $debriefSharedKillsOnFG;
-    /** @var integer[] 0x2576 debriefFullKillsByPlayer INT */
-    public $debriefFullKillsByPlayer;
-    /** @var integer[] 0x2596 debriefSharedKillsByPlayer INT */
-    public $debriefSharedKillsByPlayer;
-    /** @var integer[] 0x25B6 debriefFullKillsByFG INT */
-    public $debriefFullKillsByFG;
-    /** @var integer[] 0x2676 debriefSharedKillsByFG INT */
-    public $debriefSharedKillsByFG;
-    /** @var integer[] 0x2736 debriefMeleeAIRankFG INT */
-    public $debriefMeleeAIRankFG;
+	public string $RankString;
+    /** @var int 0x23B2 debriefMissionScore INT */
+	public int $debriefMissionScore;
+    /** @var array<int> 0x23B6 debriefFullKillsOnPlayer INT */
+	public array $debriefFullKillsOnPlayer;
+    /** @var array<int> 0x23D6 debriefSharedKillsOnPlayer INT */
+	public array $debriefSharedKillsOnPlayer;
+    /** @var array<int> 0x23F6 debriefFullKillsOnFG INT */
+	public array $debriefFullKillsOnFG;
+    /** @var array<int> 0x24B6 debriefSharedKillsOnFG INT */
+	public array $debriefSharedKillsOnFG;
+    /** @var array<int> 0x2576 debriefFullKillsByPlayer INT */
+	public array $debriefFullKillsByPlayer;
+    /** @var array<int> 0x2596 debriefSharedKillsByPlayer INT */
+	public array $debriefSharedKillsByPlayer;
+    /** @var array<int> 0x25B6 debriefFullKillsByFG INT */
+	public array $debriefFullKillsByFG;
+    /** @var array<int> 0x2676 debriefSharedKillsByFG INT */
+	public array $debriefSharedKillsByFG;
+    /** @var array<int> 0x2736 debriefMeleeAIRankFG INT */
+	public array $debriefMeleeAIRankFG;
     /** @var PLTCategoryTypeRecord 0x27F6 UnknownRecord1 PLTCategoryTypeRecord */
-    public $UnknownRecord1;
+	public PLTCategoryTypeRecord $UnknownRecord1;
     /** @var PLTCategoryTypeRecord 0x2802 UnknownRecord2 PLTCategoryTypeRecord */
-    public $UnknownRecord2;
+	public PLTCategoryTypeRecord $UnknownRecord2;
     /** @var PLTCategoryTypeRecord 0x280E UnknownRecord3 PLTCategoryTypeRecord */
-    public $UnknownRecord3;
+	public PLTCategoryTypeRecord $UnknownRecord3;
     /** @var PLTCategoryTypeRecord 0x281A debriefEnemyKills PLTCategoryTypeRecord */
-    public $debriefEnemyKills;
+	public PLTCategoryTypeRecord $debriefEnemyKills;
     /** @var PLTCategoryTypeRecord 0x2826 debriefFriendlyKills PLTCategoryTypeRecord */
-    public $debriefFriendlyKills;
-    /** @var integer[] 0x2832 debriefFullKillsByShipTypeA INT */
-    public $debriefFullKillsByShipTypeA;
-    /** @var integer[] 0x2992 debriefFullKillsByShipTypeB INT */
-    public $debriefFullKillsByShipTypeB;
-    /** @var integer[] 0x2AF2 debriefFullKillsByShipTypeC INT */
-    public $debriefFullKillsByShipTypeC;
-    /** @var integer[] 0x2C52 debriefSharedKillsByShipTypeA INT */
-    public $debriefSharedKillsByShipTypeA;
-    /** @var integer[] 0x2DB2 debriefSharedKillsByShipTypeB INT */
-    public $debriefSharedKillsByShipTypeB;
-    /** @var integer[] 0x2F12 debriefSharedKillsByShipTypeC INT */
-    public $debriefSharedKillsByShipTypeC;
-    /** @var integer[] 0x3072 debriefAssistKillsByShipTypeA INT */
-    public $debriefAssistKillsByShipTypeA;
-    /** @var integer[] 0x31D2 debriefAssistKillsByShipTypeB INT */
-    public $debriefAssistKillsByShipTypeB;
-    /** @var integer[] 0x3332 debriefAssistKillsByShipTypeC INT */
-    public $debriefAssistKillsByShipTypeC;
+	public PLTCategoryTypeRecord $debriefFriendlyKills;
+    /** @var array<int> 0x2832 debriefFullKillsByShipTypeA INT */
+	public array $debriefFullKillsByShipTypeA;
+    /** @var array<int> 0x2992 debriefFullKillsByShipTypeB INT */
+	public array $debriefFullKillsByShipTypeB;
+    /** @var array<int> 0x2AF2 debriefFullKillsByShipTypeC INT */
+	public array $debriefFullKillsByShipTypeC;
+    /** @var array<int> 0x2C52 debriefSharedKillsByShipTypeA INT */
+	public array $debriefSharedKillsByShipTypeA;
+    /** @var array<int> 0x2DB2 debriefSharedKillsByShipTypeB INT */
+	public array $debriefSharedKillsByShipTypeB;
+    /** @var array<int> 0x2F12 debriefSharedKillsByShipTypeC INT */
+	public array $debriefSharedKillsByShipTypeC;
+    /** @var array<int> 0x3072 debriefAssistKillsByShipTypeA INT */
+	public array $debriefAssistKillsByShipTypeA;
+    /** @var array<int> 0x31D2 debriefAssistKillsByShipTypeB INT */
+	public array $debriefAssistKillsByShipTypeB;
+    /** @var array<int> 0x3332 debriefAssistKillsByShipTypeC INT */
+	public array $debriefAssistKillsByShipTypeC;
     /** @var PLTPlayerRankCountRecord 0x3492 debriefFullKillsOnPlayerRank PLTPlayerRankCountRecord */
-    public $debriefFullKillsOnPlayerRank;
+	public PLTPlayerRankCountRecord $debriefFullKillsOnPlayerRank;
     /** @var PLTPlayerRankCountRecord 0x35BE debriefSharedKillsOnPlayerRank PLTPlayerRankCountRecord */
-    public $debriefSharedKillsOnPlayerRank;
+	public PLTPlayerRankCountRecord $debriefSharedKillsOnPlayerRank;
     /** @var PLTPlayerRankCountRecord 0x36EA debriefAssistKillsOnPlayerRank PLTPlayerRankCountRecord */
-    public $debriefAssistKillsOnPlayerRank;
+	public PLTPlayerRankCountRecord $debriefAssistKillsOnPlayerRank;
     /** @var PLTAIRankCountRecord 0x3816 debriefFullKillsOnAIRank PLTAIRankCountRecord */
-    public $debriefFullKillsOnAIRank;
+	public PLTAIRankCountRecord $debriefFullKillsOnAIRank;
     /** @var PLTAIRankCountRecord 0x385E debriefSharedKillsOnAIRank PLTAIRankCountRecord */
-    public $debriefSharedKillsOnAIRank;
+	public PLTAIRankCountRecord $debriefSharedKillsOnAIRank;
     /** @var PLTAIRankCountRecord 0x38A6 debriefAssistKillsOnAIRank PLTAIRankCountRecord */
-    public $debriefAssistKillsOnAIRank;
+	public PLTAIRankCountRecord $debriefAssistKillsOnAIRank;
     /** @var PLTCategoryTypeRecord 0x38EE debriefNumHiddenCargoFound PLTCategoryTypeRecord */
-    public $debriefNumHiddenCargoFound;
+	public PLTCategoryTypeRecord $debriefNumHiddenCargoFound;
     /** @var PLTCategoryTypeRecord 0x38FA debriefNumCannonHits PLTCategoryTypeRecord */
-    public $debriefNumCannonHits;
+	public PLTCategoryTypeRecord $debriefNumCannonHits;
     /** @var PLTCategoryTypeRecord 0x3906 debriefNumCannonFired PLTCategoryTypeRecord */
-    public $debriefNumCannonFired;
+	public PLTCategoryTypeRecord $debriefNumCannonFired;
     /** @var PLTCategoryTypeRecord 0x3912 debriefNumWarheadHits PLTCategoryTypeRecord */
-    public $debriefNumWarheadHits;
+	public PLTCategoryTypeRecord $debriefNumWarheadHits;
     /** @var PLTCategoryTypeRecord 0x391E debriefNumWarheadFired PLTCategoryTypeRecord */
-    public $debriefNumWarheadFired;
+	public PLTCategoryTypeRecord $debriefNumWarheadFired;
     /** @var PLTCategoryTypeRecord 0x392A debriefNumCraftLosses PLTCategoryTypeRecord */
-    public $debriefNumCraftLosses;
+	public PLTCategoryTypeRecord $debriefNumCraftLosses;
     /** @var PLTCategoryTypeRecord 0x3936 debriefCraftLossesFromCollision PLTCategoryTypeRecord */
-    public $debriefCraftLossesFromCollision;
+	public PLTCategoryTypeRecord $debriefCraftLossesFromCollision;
     /** @var PLTCategoryTypeRecord 0x3942 debriefCraftLossesFromStarship PLTCategoryTypeRecord */
-    public $debriefCraftLossesFromStarship;
+	public PLTCategoryTypeRecord $debriefCraftLossesFromStarship;
     /** @var PLTCategoryTypeRecord 0x394E debriefCraftLossesFromMine PLTCategoryTypeRecord */
-    public $debriefCraftLossesFromMine;
+	public PLTCategoryTypeRecord $debriefCraftLossesFromMine;
     /** @var PLTPlayerRankCountRecord 0x395A debriefLossesFromPlayerRank PLTPlayerRankCountRecord */
-    public $debriefLossesFromPlayerRank;
+	public PLTPlayerRankCountRecord $debriefLossesFromPlayerRank;
     /** @var PLTAIRankCountRecord 0x3A86 debriefLossesFromAIRank PLTAIRankCountRecord */
-    public $debriefLossesFromAIRank;
-    /** @var PLTConnectedPlayerData[] 0x3ACE connectedPlayerData PLTConnectedPlayerData */
-    public $connectedPlayerData;
-    /** @var PLTTeamResultRecord[] 0x3D8E debriefTeamResult PLTTeamResultRecord */
-    public $debriefTeamResult;
-    /** @var integer 0x3EA6 lastSelectedFaction INT */
-    public $lastSelectedFaction;
+	public PLTAIRankCountRecord $debriefLossesFromAIRank;
+    /** @var array<PLTConnectedPlayerData> 0x3ACE connectedPlayerData PLTConnectedPlayerData */
+	public array $connectedPlayerData;
+    /** @var array<PLTTeamResultRecord> 0x3D8E debriefTeamResult PLTTeamResultRecord */
+	public array $debriefTeamResult;
+    /** @var int 0x3EA6 lastSelectedFaction INT */
+	public int $lastSelectedFaction;
     /** @var PLTFactionRecord 0x3EAA rebelSingleplayerData PLTFactionRecord */
-    public $rebelSingleplayerData;
+	public PLTFactionRecord $rebelSingleplayerData;
     /** @var PLTFactionRecord 0x126CE imperialSingleplayerData PLTFactionRecord */
-    public $imperialSingleplayerData;
+	public PLTFactionRecord $imperialSingleplayerData;
     /** @var PLTFactionRecord 0x20EF2 rebelMultiplayerData PLTFactionRecord */
-    public $rebelMultiplayerData;
+	public PLTFactionRecord $rebelMultiplayerData;
     /** @var PLTFactionRecord 0x2F716 imperialMultiplayerData PLTFactionRecord */
-    public $imperialMultiplayerData;
+	public PLTFactionRecord $imperialMultiplayerData;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -276,7 +277,7 @@ abstract class PLTFileRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -649,7 +650,7 @@ abstract class PLTFileRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "PilotName" => $this->PilotName,
@@ -777,7 +778,7 @@ abstract class PLTFileRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -1109,7 +1110,7 @@ abstract class PLTFileRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PLTFILERECORDLENGTH;
     }

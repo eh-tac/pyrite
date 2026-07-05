@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XW;
-    
+
 class Coordinate extends Base\CoordinateBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new Coordinate($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): Coordinate
+  {
+    return (new Coordinate($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

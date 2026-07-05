@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-lfd-battle-text",
   styleUrl: "battle-text.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDBattleTextComponent {
   @Element() public el: HTMLElement;

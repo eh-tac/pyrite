@@ -1,0 +1,91 @@
+struct LFD (size 10)
+{
+  0x00 Header Header 
+}
+
+struct Header (size 10)
+{
+	0x00 CHAR<4> Type
+  0x04 CHAR<8> Name
+  0x0C INT Length little endian
+}
+
+struct Rmap (size 0)
+{
+  0x00 Header Header  
+  0x10 Header[HeaderCount()] Subheaders
+}
+
+struct TIEBattle (size 0)
+{
+  0x00 Rmap HeaderMap
+  0x30 BattleText BattleName
+  PV Delt BattleImage
+}
+
+struct BattleText (size 0)
+{
+  0x00 Header Header
+  0x10 SHORT NumStrings  
+  0x12 LString Names
+  PV LString Titles
+  PV LString Image
+  PV LString MissionFiles
+  PV LString[NumMissions()] MissionDescriptions
+}
+
+struct LText (size 0)
+{
+  0x00 SHORT NumStrings
+  0x02 LString[NumStrings] Strings
+}
+
+struct LString (size 0)
+{
+  0x00 SHORT Length
+  0x02 STR[0] Substrings
+  PV BYTE Reserved Reserved(0)
+}
+
+struct Delt (size 0) 
+{
+  0x00 Header Header
+  0x10 SHORT Left
+  0x12 SHORT Top
+  0x14 SHORT Right
+  0x16 SHORT Bottom
+  0x18 Row[RowCount()] Rows
+  PV SHORT Reserved Reserved(0)
+}
+
+struct Row (size 0)
+{
+  0x00 SHORT Length
+  0x02 SHORT Left
+  0x04 SHORT Top
+  0x06 BYTE[ColorCount()] ColorIndexes
+  0x06 OpCode[OpCount()] Operations
+}
+
+struct OpCode (size 0)
+{
+  0x00 BYTE Value
+  0x01 BYTE[ColorCount()] ColorIndex
+}
+
+struct Voic (size 0)
+{
+  0x00 Header Header
+  0x10 CHAR<19> Creative
+  0x23 BYTE[3] Abort
+  0x26 BYTE[2] Version
+  0x28 BYTE[2] VersionHash
+  0x2A VoicData Data
+  PV BYTE Terminator
+}
+
+struct VoicData (size 0){
+  0x00 BYTE Type
+  0x01 BYTE[3] Size
+  0x04 BYTE Data
+}

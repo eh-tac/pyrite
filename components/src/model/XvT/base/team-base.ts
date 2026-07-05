@@ -10,16 +10,16 @@ export abstract class TeamBase extends PyriteBase implements Byteable {
   public Name: string;
   public Allegiances: boolean[];
   public EndOfMissionMessages: string[];
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.Reserved = getShort(hex, 0x000);
     this.Name = getString(hex, 0x002, 16);
     this.Allegiances = [];
-    offset = 0x01A;
+    offset = 0x01a;
     for (let i = 0; i < 10; i++) {
       const t = getBool(hex, offset);
       this.Allegiances.push(t);
@@ -32,41 +32,39 @@ export abstract class TeamBase extends PyriteBase implements Byteable {
       this.EndOfMissionMessages.push(t);
       offset += 64;
     }
-    
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       Reserved: this.Reserved,
       Name: this.Name,
       Allegiances: this.Allegiances,
-      EndOfMissionMessages: this.EndOfMissionMessages
+      EndOfMissionMessages: this.EndOfMissionMessages,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Reserved, 0x000);
-    writeString(hex, this.Name, 0x002);
-    offset = 0x01A;
-    for (let i = 0; i < 10; i++) {
+    writeString(hex, this.Name, 0x002, 16);
+    offset = 0x01a;
+    for (let i = 0; i < this.Allegiances.length; i++) {
       const t = this.Allegiances[i];
       writeBool(hex, t, offset);
       offset += 1;
     }
     offset = 0x024;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.EndOfMissionMessages.length; i++) {
       const t = this.EndOfMissionMessages[i];
-      writeChar(hex, t, offset);
+      writeChar(hex, t, offset, 64);
       offset += 64;
     }
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.TEAMLENGTH;
   }

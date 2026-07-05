@@ -6,29 +6,30 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\PL2CampaignProgressState;
 
-abstract class PL2CampaignStateBase extends PyriteBase implements Byteable
+abstract class PL2CampaignStateBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PL2CAMPAIGNSTATELENGTH INT */
-    public const PL2CAMPAIGNSTATELENGTH = 40;
-    /** @var integer 0x0000 ConfigRandomSeed INT */
-    public $ConfigRandomSeed;
-    /** @var integer 0x0004 IsInProgressUNK INT */
-    public $IsInProgressUNK;
-    /** @var integer 0x0008 ConfigGameRandomizeLevel INT */
-    public $ConfigGameRandomizeLevel;
+    /** @var int PL2CAMPAIGNSTATELENGTH INT */
+	public const PL2CAMPAIGNSTATELENGTH = 40;
+    /** @var int 0x0000 ConfigRandomSeed INT */
+	public int $ConfigRandomSeed;
+    /** @var int 0x0004 IsInProgressUNK INT */
+	public int $IsInProgressUNK;
+    /** @var int 0x0008 ConfigGameRandomizeLevel INT */
+	public int $ConfigGameRandomizeLevel;
     /** @var PL2CampaignProgressState 0x000C saveState PL2CampaignProgressState */
-    public $saveState;
-    /** @var integer 0x0024 unknown2 INT */
-    public $unknown2;
+	public PL2CampaignProgressState $saveState;
+    /** @var int 0x0024 unknown2 INT */
+	public int $unknown2;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -36,7 +37,7 @@ abstract class PL2CampaignStateBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -52,7 +53,7 @@ abstract class PL2CampaignStateBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "ConfigRandomSeed" => $this->ConfigRandomSeed,
@@ -63,7 +64,7 @@ abstract class PL2CampaignStateBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -78,7 +79,7 @@ abstract class PL2CampaignStateBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PL2CAMPAIGNSTATELENGTH;
     }

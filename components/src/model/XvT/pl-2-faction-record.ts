@@ -44,7 +44,7 @@ export class PL2FactionRecord extends PL2FactionRecordBase {
           Label: Constants.SHIPS[i],
           exercise: `${this.totalFullKillsOnCraftEMC[i]} (${this.totalSharedKillsOnCraftEMC[i]})`,
           melee: `${this.totalFullKillsOnCraftEMC[i + 100]} (${this.totalSharedKillsOnCraftEMC[i + 100]})`,
-          combat: `${this.totalFullKillsOnCraftEMC[i + 200]} (${this.totalSharedKillsOnCraftEMC[i + 200]})`
+          combat: `${this.totalFullKillsOnCraftEMC[i + 200]} (${this.totalSharedKillsOnCraftEMC[i + 200]})`,
         });
       }
     }

@@ -2,24 +2,22 @@
 
 namespace Pyrite\EHBL;
 
-final class BattleType
+enum BattleType: string
 {
-  const FREE = "F";
-  const TC = "TC";
-  const IW = "IW";
-  const DB = "DB";
-  const FCHG = "FCHG";
-  const CAB = "CAB";
-  const ID = "ID";
-  const IS = "IS";
-  const DIR = "DIR";
-  const BHG = "BHG";
-  const FMC = "FMC";
-  const HF = "HF";
-  const CD = "CD";
-  const CMP = "CMP";
-  const UNKNOWN = "UNK";
-  const TAC = "TAC";
-
-  public static $ALL = [self::TC, self::IW, self::DB, self::FCHG, self::CAB, self::ID, self::BHG, self::FMC, self::HF, self::CD, self::TAC, self::UNKNOWN, self::IS, self::DIR, self::CMP, self::FREE];
+  case FREE = "F";
+  case TC = "TC";
+  case IW = "IW";
+  case DB = "DB";
+  case FCHG = "FCHG";
+  case CAB = "CAB";
+  case ID = "ID";
+  case IS = "IS";
+  case DIR = "DIR";
+  case BHG = "BHG";
+  case FMC = "FMC";
+  case HF = "HF";
+  case CD = "CD";
+  case CMP = "CMP";
+  case UNKNOWN = "UNK";
+  case TAC = "TAC";
 }

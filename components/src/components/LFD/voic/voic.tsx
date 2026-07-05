@@ -1,4 +1,4 @@
-import { Component, Prop, Host, h, JSX, Element } from "@stencil/core"
+import { Component, Prop, Host, h, JSX, Element } from "@stencil/core";
 import { Voic } from "../../../model/LFD";
 import { LFDVoicController } from "../../../controllers/LFD";
 import { Field } from "../../fields/field";
@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-lfd-voic",
   styleUrl: "voic.scss",
-  shadow: false
+  shadow: false,
 })
 export class LFDVoicComponent {
   @Element() public el: HTMLElement;
@@ -21,10 +21,9 @@ export class LFDVoicComponent {
   public render(): JSX.Element {
     return (
       <Host>
-        <Field {...this.controller.getProps('Header')} />
-        <Field {...this.controller.getProps('Data')} />
+        <Field {...this.controller.getProps("Header")} />
+        <Field {...this.controller.getProps("Data")} />
       </Host>
-    )
+    );
   }
 }
-  

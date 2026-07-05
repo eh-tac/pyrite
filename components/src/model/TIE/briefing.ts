@@ -1,6 +1,6 @@
 import { BriefingBase } from "./base/briefing-base";
 
-import { getInt, getShort } from "../hex";
+import { getInt, getShort } from "../../hex";
 import { IMission } from "../pyrite-base";
 import { Event } from "./event";
 import { Tag } from "./tag";
@@ -46,6 +46,6 @@ export class Briefing extends BriefingBase {
   }
 
   public get Captions(): string[] {
-    return this.Events.filter(e => e.EventType === EventType.captionText).map(e => e.Text);
+    return this.Events.filter((e) => e.EventType === EventType.captionText).map((e) => e.Text);
   }
 }

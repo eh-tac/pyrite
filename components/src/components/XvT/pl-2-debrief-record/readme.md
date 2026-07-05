@@ -1,9 +1,6 @@
 # pyrite-xvt-pl-2-debrief-record
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,7 +8,6 @@
 | ------------------ | --------- | ----------- | ------------------ | ----------- |
 | `pl2debriefrecord` | --        |             | `PL2DebriefRecord` | `undefined` |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

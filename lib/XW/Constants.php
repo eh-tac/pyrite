@@ -3,7 +3,7 @@ namespace Pyrite\XW;
 
 class Constants
 {
-    public static $PILOTSTATUS = [
+    public static array $PILOTSTATUS = [
         0 => "Normal",
         1 => "Captured",
         2 => "Killed",
@@ -13,7 +13,7 @@ class Constants
     public static $PILOTSTATUS_CAPTURED = 1;
     public static $PILOTSTATUS_KILLED = 2;
 
-    public static $PILOTRANK = [
+    public static array $PILOTRANK = [
         0 => "Cadet",
         1 => "Officer",
         2 => "Lieutenant",
@@ -29,7 +29,7 @@ class Constants
     public static $PILOTRANK_COMMANDER = 4;
     public static $PILOTRANK_GENERAL = 5;
 
-    public static $KALIDORCRESCENT = [
+    public static array $KALIDORCRESCENT = [
         0 => "None",
         1 => "Kalidor Crescent",
         2 => "Bronze Cluster",
@@ -47,7 +47,7 @@ class Constants
     public static $KALIDORCRESCENT_GOLDWINGS = 5;
     public static $KALIDORCRESCENT_DIAMONDEYES = 6;
 
-    public static $TOURSTATUS = [
+    public static array $TOURSTATUS = [
         0 => "Inactive",
         1 => "Active",
         2 => "Incomplete",
@@ -59,7 +59,7 @@ class Constants
     public static $TOURSTATUS_INCOMPLETE = 2;
     public static $TOURSTATUS_COMPLETE = 3;
 
-    public static $TOURMEDALS = [
+    public static array $TOURMEDALS = [
         1 => "Corellian Cross",
         2 => "Mantooine Medallion",
         3 => "Star Of Alderaan",
@@ -73,7 +73,7 @@ class Constants
     public static $TOURMEDALS_SHIELDOFYAVIN = 4;
     public static $TOURMEDALS_TALONSOFHOTH = 5;
 
-    public static $SHIPTYPE = [
+    public static array $SHIPTYPE = [
         0 => "X-Wing",
         1 => "Y-Wing",
         2 => "A-Wing",
@@ -125,7 +125,7 @@ class Constants
     public static $SHIPTYPE_COMMSAT2 = 22;
     public static $SHIPTYPE_PROBE = 23;
 
-    public static $ENDEVENT = [
+    public static array $ENDEVENT = [
         0 => "Rescued",
         1 => "Captured",
         5 => "Hit Exhaust Port",
@@ -135,7 +135,7 @@ class Constants
     public static $ENDEVENT_CAPTURED = 1;
     public static $ENDEVENT_HITEXHAUSTPORT = 5;
 
-    public static $MISSIONLOCATION = [
+    public static array $MISSIONLOCATION = [
         0 => "Deep Space",
         1 => "Death Star",
     ];
@@ -143,7 +143,7 @@ class Constants
     public static $MISSIONLOCATION_DEEPSPACE = 0;
     public static $MISSIONLOCATION_DEATHSTAR = 1;
 
-    public static $CRAFTTYPE = [
+    public static array $CRAFTTYPE = [
         0 => "None",
         1 => "X-Wing",
         2 => "Y-Wing",
@@ -162,7 +162,38 @@ class Constants
         15 => "Corellian Corvette",
         16 => "Imperial Star Destroyer",
         17 => "TIE Advanced",
-        18 => "B-Wing",
+        18 => "Mine1",
+        19 => "Mine2",
+        20 => "Mine3",
+        21 => "Mine4",
+        22 => "Satellite",
+        23 => "Nav Buoy",
+        24 => "Probe",
+        25 => "B-wing icon (BRF file only)",
+        26 => "Asteroid1",
+        27 => "Asteroid2",
+        28 => "Asteroid3",
+        29 => "Asteroid4",
+        30 => "Asteroid5",
+        31 => "Asteroid6",
+        32 => "Asteroid7",
+        33 => "Asteroid8",
+        34 => "Rock World (backdrops)",
+        35 => "Gray Ring World",
+        36 => "Gray World",
+        37 => "Brown World",
+        38 => "Gray World II",
+        39 => "Planet & Moon",
+        40 => "Gray Crescent",
+        41 => "Orange Crescent 1",
+        42 => "Orange Crescent 2",
+        43 => "Orange Crescent 3",
+        44 => "Orange Crescent 4",
+        45 => "Orange Crescent 5",
+        46 => "Orange Crescent 6",
+        47 => "Orange Crescent 7",
+        48 => "Orange Crescent 8",
+        49 => "Death Star",
     ];
 
     public static $CRAFTTYPE_NONE = 0;
@@ -183,9 +214,40 @@ class Constants
     public static $CRAFTTYPE_CORELLIANCORVETTE = 15;
     public static $CRAFTTYPE_IMPERIALSTARDESTROYER = 16;
     public static $CRAFTTYPE_TIEADVANCED = 17;
-    public static $CRAFTTYPE_BWING = 18;
+    public static $CRAFTTYPE_MINE1 = 18;
+    public static $CRAFTTYPE_MINE2 = 19;
+    public static $CRAFTTYPE_MINE3 = 20;
+    public static $CRAFTTYPE_MINE4 = 21;
+    public static $CRAFTTYPE_SATELLITE = 22;
+    public static $CRAFTTYPE_NAVBUOY = 23;
+    public static $CRAFTTYPE_PROBE = 24;
+    public static $CRAFTTYPE_BWINGICONBRFFILEONLY = 25;
+    public static $CRAFTTYPE_ASTEROID1 = 26;
+    public static $CRAFTTYPE_ASTEROID2 = 27;
+    public static $CRAFTTYPE_ASTEROID3 = 28;
+    public static $CRAFTTYPE_ASTEROID4 = 29;
+    public static $CRAFTTYPE_ASTEROID5 = 30;
+    public static $CRAFTTYPE_ASTEROID6 = 31;
+    public static $CRAFTTYPE_ASTEROID7 = 32;
+    public static $CRAFTTYPE_ASTEROID8 = 33;
+    public static $CRAFTTYPE_ROCKWORLDBACKDROPS = 34;
+    public static $CRAFTTYPE_GRAYRINGWORLD = 35;
+    public static $CRAFTTYPE_GRAYWORLD = 36;
+    public static $CRAFTTYPE_BROWNWORLD = 37;
+    public static $CRAFTTYPE_GRAYWORLDII = 38;
+    public static $CRAFTTYPE_PLANETNMOON = 39;
+    public static $CRAFTTYPE_GRAYCRESCENT = 40;
+    public static $CRAFTTYPE_ORANGECRESCENT1 = 41;
+    public static $CRAFTTYPE_ORANGECRESCENT2 = 42;
+    public static $CRAFTTYPE_ORANGECRESCENT3 = 43;
+    public static $CRAFTTYPE_ORANGECRESCENT4 = 44;
+    public static $CRAFTTYPE_ORANGECRESCENT5 = 45;
+    public static $CRAFTTYPE_ORANGECRESCENT6 = 46;
+    public static $CRAFTTYPE_ORANGECRESCENT7 = 47;
+    public static $CRAFTTYPE_ORANGECRESCENT8 = 48;
+    public static $CRAFTTYPE_DEATHSTAR = 49;
 
-    public static $IFF = [
+    public static array $IFF = [
         0 => "Default",
         1 => "Rebel",
         2 => "Imperial",
@@ -199,7 +261,7 @@ class Constants
     public static $IFF_NEUTRAL = 3;
     public static $IFF_NEUTRALALSOBLUE = 4;
 
-    public static $FLIGHTGROUPSTATUS = [
+    public static array $FLIGHTGROUPSTATUS = [
         0 => "None",
         1 => "No Warheads",
         2 => "1/2 Warheads",
@@ -223,7 +285,7 @@ class Constants
     public static $FLIGHTGROUPSTATUS_BWNOSHIELDS = 13;
     public static $FLIGHTGROUPSTATUS_BW12SHIELDS = 14;
 
-    public static $GROUPAI = [
+    public static array $GROUPAI = [
         0 => "Novice (None)",
         1 => "Officer",
         2 => "Veteran",
@@ -237,7 +299,7 @@ class Constants
     public static $GROUPAI_ACE = 3;
     public static $GROUPAI_TOPACE = 4;
 
-    public static $MARKINGS = [
+    public static array $MARKINGS = [
         0 => "Red (TIE - None)",
         1 => "Gold (TIE - Red)",
         2 => "Blue (TIE - Gold)",
@@ -249,7 +311,7 @@ class Constants
     public static $MARKINGS_BLUETIEGOLD = 2;
     public static $MARKINGS_GREENTIEBLUE = 3;
 
-    public static $OBJECTFORMATION = [
+    public static array $OBJECTFORMATION = [
         0 => "Floor (X-Y plane)",
         1 => "Side (Y-Z plane)",
         2 => "Front (X-Z plane)",
@@ -261,7 +323,7 @@ class Constants
     public static $OBJECTFORMATION_FRONTXZPLANE = 2;
     public static $OBJECTFORMATION_SCATTEREDMAYBEBUGGYUNDEFINEDLOCATIONS = 3;
 
-    public static $ARRIVALEVENT = [
+    public static array $ARRIVALEVENT = [
         0 => "Mission Start",
         1 => "On Arrival",
         2 => "On Destroyed",
@@ -279,7 +341,7 @@ class Constants
     public static $ARRIVALEVENT_ONIDENTIFIED = 5;
     public static $ARRIVALEVENT_ONDISABLED = 6;
 
-    public static $FORMATION = [
+    public static array $FORMATION = [
         0 => "Vic",
         1 => "Finger Four",
         2 => "Line Astern",
@@ -307,7 +369,7 @@ class Constants
     public static $FORMATION_HILO = 16;
     public static $FORMATION_SPIRAL = 17;
 
-    public static $OBJECTIVE = [
+    public static array $OBJECTIVE = [
         0 => "None",
         1 => "100% be Destroyed",
         2 => "100% must Complete Mission",
@@ -345,7 +407,7 @@ class Constants
     public static $OBJECTIVE_N50PERCENTIDENTIFIED = 15;
     public static $OBJECTIVE_ARRIVE = 16;
 
-    public static $ORDER = [
+    public static array $ORDER = [
         0 => "Hold Steady",
         1 => "Fly Home",
         2 => "Circle and Ignore",
@@ -373,7 +435,7 @@ class Constants
         24 => "Disable Freighters",
         25 => "Disable Starships",
         26 => "Starship Static Fire",
-        27 => "Starship Fly Dance",
+        27 => "Starship Fly Once",
         28 => "Starship Circle",
         29 => "Starship Await Return",
         30 => "Starship Await Launch",
@@ -407,13 +469,13 @@ class Constants
     public static $ORDER_DISABLEFREIGHTERS = 24;
     public static $ORDER_DISABLESTARSHIPS = 25;
     public static $ORDER_STARSHIPSTATICFIRE = 26;
-    public static $ORDER_STARSHIPFLYDANCE = 27;
+    public static $ORDER_STARSHIPFLYONCE = 27;
     public static $ORDER_STARSHIPCIRCLE = 28;
     public static $ORDER_STARSHIPAWAITRETURN = 29;
     public static $ORDER_STARSHIPAWAITLAUNCH = 30;
     public static $ORDER_STARSHIPAWAITBOARDING = 31;
 
-    public static $CRAFTCOLOUR = [
+    public static array $CRAFTCOLOUR = [
         0 => "Red",
         1 => "Gold",
         2 => "Blue",
@@ -423,7 +485,7 @@ class Constants
     public static $CRAFTCOLOUR_GOLD = 1;
     public static $CRAFTCOLOUR_BLUE = 2;
 
-    public static $OBJECTOBJECTIVE = [
+    public static array $OBJECTOBJECTIVE = [
         3 => "None",
         4 => "Destroy",
         5 => "Survive",

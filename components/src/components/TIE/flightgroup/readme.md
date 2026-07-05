@@ -1,9 +1,6 @@
 # pyrite-tie-flightgroups
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,19 +8,19 @@
 | --------- | --------- | ----------- | --------- | ----------- |
 | `mission` | --        |             | `Mission` | `undefined` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [pyrite-mission](../../mission)
- - [pyrite-tie-mission](../mission)
+- [pyrite-mission](../../mission)
+- [pyrite-tie-mission](../mission)
 
 ### Depends on
 
 - [pyrite-tie-flightgroup](.)
 
 ### Graph
+
 ```mermaid
 graph TD;
   pyrite-tie-flightgroups --> pyrite-tie-flightgroup
@@ -32,6 +29,6 @@ graph TD;
   style pyrite-tie-flightgroups fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -1,9 +1,6 @@
 # pyrite-lfd-rmap
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
@@ -11,18 +8,18 @@
 | -------- | --------- | ----------- | ------ | ----------- |
 | `rmap`   | --        |             | `Rmap` | `undefined` |
 
-
 ## Dependencies
 
 ### Used by
 
- - [pyrite-lfd](../lfd)
+- [pyrite-lfd](../lfd)
 
 ### Depends on
 
 - [pyrite-lfd-battle-text](../battle-text)
 
 ### Graph
+
 ```mermaid
 graph TD;
   pyrite-lfd-rmap --> pyrite-lfd-battle-text
@@ -30,6 +27,6 @@ graph TD;
   style pyrite-lfd-rmap fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

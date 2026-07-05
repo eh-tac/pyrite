@@ -6,36 +6,37 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 
-abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implements Byteable
+abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PL2CAMPAIGNSTATUSSPRECORDLENGTH INT */
-    public const PL2CAMPAIGNSTATUSSPRECORDLENGTH = 36;
-    /** @var integer 0x0000 unknown0x0 INT */
-    public $unknown0x0;
-    /** @var integer 0x0004 isStartedUNK INT */
-    public $isStartedUNK;
-    /** @var integer 0x0008 missionNumber INT */
-    public $missionNumber;
-    /** @var integer 0x000C isFinished INT */
-    public $isFinished;
-    /** @var integer 0x0010 bestScore INT */
-    public $bestScore;
-    /** @var integer 0x0014 unknown0x14 INT */
-    public $unknown0x14;
-    /** @var integer 0x0018 unknown0x18 INT */
-    public $unknown0x18;
-    /** @var integer 0x001C unknown0x1C INT */
-    public $unknown0x1C;
-    /** @var integer 0x0020 unknown0x20 INT */
-    public $unknown0x20;
+    /** @var int PL2CAMPAIGNSTATUSSPRECORDLENGTH INT */
+	public const PL2CAMPAIGNSTATUSSPRECORDLENGTH = 36;
+    /** @var int 0x0000 unknown0x0 INT */
+	public int $unknown0x0;
+    /** @var int 0x0004 isStartedUNK INT */
+	public int $isStartedUNK;
+    /** @var int 0x0008 missionNumber INT */
+	public int $missionNumber;
+    /** @var int 0x000C isFinished INT */
+	public int $isFinished;
+    /** @var int 0x0010 bestScore INT */
+	public int $bestScore;
+    /** @var int 0x0014 unknown0x14 INT */
+	public int $unknown0x14;
+    /** @var int 0x0018 unknown0x18 INT */
+	public int $unknown0x18;
+    /** @var int 0x001C unknown0x1C INT */
+	public int $unknown0x1C;
+    /** @var int 0x0020 unknown0x20 INT */
+	public int $unknown0x20;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -43,7 +44,7 @@ abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implements Bytea
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -63,7 +64,7 @@ abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implements Bytea
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "unknown0x0" => $this->unknown0x0,
@@ -78,7 +79,7 @@ abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implements Bytea
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -97,7 +98,7 @@ abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implements Bytea
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PL2CAMPAIGNSTATUSSPRECORDLENGTH;
     }

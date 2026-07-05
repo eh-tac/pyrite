@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XvT;
-    
+
 class PLTMissionMPRecord extends Base\PLTMissionMPRecordBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new PLTMissionMPRecord($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = null): PLTMissionMPRecord
+  {
+    return (new PLTMissionMPRecord($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

@@ -1,12 +1,16 @@
-import { getByte, getByteString, getChar } from "../../hex";
+import { getByte, getByteString, getChar } from "../../../hex";
 
 export class Glyph {
   public data: string[] = [];
-  public code: number;
-  public char: string;
+  public code: number = 0;
+  public char: string = "";
   public image: ImageData;
 
-  constructor(hex: ArrayBuffer | undefined, public w: number, public h: number) {
+  constructor(
+    hex: ArrayBuffer | undefined,
+    public w: number,
+    public h: number,
+  ) {
     this.data = [];
     this.image = new ImageData(w, h);
 

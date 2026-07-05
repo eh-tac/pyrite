@@ -6,27 +6,28 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XW\FileHeader;
 use Pyrite\XW\FlightGroup;
 use Pyrite\XW\ObjectGroup;
 
-abstract class MissionBase extends PyriteBase implements Byteable
+abstract class MissionBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  MissionLength INT */
-    public $MissionLength;
+    /** @var int MissionLength INT */
+	public int $MissionLength;
     /** @var FileHeader 0x00 FileHeader FileHeader */
-    public $FileHeader;
-    /** @var FlightGroup[] 0xCE FlightGroups FlightGroup */
-    public $FlightGroups;
-    /** @var ObjectGroup[] PV ObjectGroups ObjectGroup */
-    public $ObjectGroups;
+	public FileHeader $FileHeader;
+    /** @var array<FlightGroup> 0xCE FlightGroups FlightGroup */
+	public array $FlightGroups;
+    /** @var array<ObjectGroup> PV ObjectGroups ObjectGroup */
+	public array $ObjectGroups;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -34,7 +35,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -60,7 +61,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "FileHeader" => $this->FileHeader,
@@ -69,7 +70,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -92,7 +93,7 @@ abstract class MissionBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return $this->MissionLength;
     }

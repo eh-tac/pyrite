@@ -6,7 +6,7 @@ import { Field } from "../../fields/field";
 @Component({
   tag: "pyrite-xw-flight-group",
   styleUrl: "flight-group.scss",
-  shadow: false
+  shadow: false,
 })
 export class XWFlightGroupComponent {
   @Element() public el: HTMLElement;

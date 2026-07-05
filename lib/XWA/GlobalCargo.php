@@ -1,17 +1,17 @@
 <?php
+
 namespace Pyrite\XWA;
-    
+
 class GlobalCargo extends Base\GlobalCargoBase
 {
 
-    public static function fromHex($hex, $tie = null) {
-      return (new GlobalCargo($hex, $tie))->loadHex();
-    }
+  public static function fromHex(string $hex, ?\Pyrite\PyriteModel $TIE = NULL): GlobalCargo
+  {
+    return (new GlobalCargo($hex, $TIE))->loadHex();
+  }
 
-    public function __toString() 
-    {
-      return '';
-    }
-
-    
+  public function __toString(): string
+  {
+    return '';
+  }
 }

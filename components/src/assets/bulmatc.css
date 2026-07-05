@@ -410,8 +410,20 @@ button,
 input,
 select,
 textarea {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-family:
+    BlinkMacSystemFont,
+    -apple-system,
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    "Helvetica",
+    "Arial",
+    sans-serif;
 }
 
 code,
@@ -525,11 +537,15 @@ table th {
 
 a.box:hover,
 a.box:focus {
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px #fafafa;
+  box-shadow:
+    0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0 0 1px #fafafa;
 }
 
 a.box:active {
-  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.2), 0 0 0 1px #fafafa;
+  box-shadow:
+    inset 0 1px 2px rgba(10, 10, 10, 0.2),
+    0 0 0 1px #fafafa;
 }
 
 .button {
@@ -4456,7 +4472,9 @@ fieldset[disabled] .select select:hover {
 .dropdown-content {
   background-color: #3a3f44;
   border-radius: 4px;
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+  box-shadow:
+    0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
 }
@@ -5951,7 +5969,9 @@ a.navbar-item.is-active,
   .navbar-dropdown.is-boxed {
     border-radius: 6px;
     border-top: none;
-    box-shadow: 0 8px 8px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+    box-shadow:
+      0 8px 8px rgba(10, 10, 10, 0.1),
+      0 0 0 1px rgba(10, 10, 10, 0.1);
     display: block;
     opacity: 0;
     pointer-events: none;
@@ -6179,7 +6199,9 @@ a.navbar-item.is-active,
 
 .panel {
   border-radius: 6px;
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+  box-shadow:
+    0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);
   font-size: 1rem;
 }
 .panel:not(:last-child) {
@@ -9486,18 +9508,54 @@ a.has-text-danger-dark:focus {
 }
 
 .is-family-primary {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
+  font-family:
+    BlinkMacSystemFont,
+    -apple-system,
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    "Helvetica",
+    "Arial",
+    sans-serif !important;
 }
 
 .is-family-secondary {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
+  font-family:
+    BlinkMacSystemFont,
+    -apple-system,
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    "Helvetica",
+    "Arial",
+    sans-serif !important;
 }
 
 .is-family-sans-serif {
-  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-    "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !important;
+  font-family:
+    BlinkMacSystemFont,
+    -apple-system,
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    "Helvetica",
+    "Arial",
+    sans-serif !important;
 }
 
 .is-family-monospace {

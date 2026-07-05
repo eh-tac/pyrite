@@ -7,7 +7,7 @@ import { ehtcAPI } from "../api-store/util";
 @Component({
   tag: "ehtc-battle-center",
   styleUrl: "battle-center.scss",
-  shadow: true
+  shadow: true,
 })
 export class BattleCenterComponent {
   @State() public page: string;
@@ -138,7 +138,7 @@ export class BattleCenterComponent {
   private selectPlatform(platform: string, event: MouseEvent): void {
     this.platform = platform;
 
-    ehtcAPI(this.typeUrl).then(data => {
+    ehtcAPI(this.typeUrl).then((data) => {
       this.typeData = data;
       this.page = "battle-types";
     });
@@ -171,7 +171,7 @@ export class BattleCenterComponent {
     const item = event.target as HTMLElement;
     item.innerHTML = "<ion-spinner name='dots' />";
 
-    ehtcAPI(this.listUrl).then(data => {
+    ehtcAPI(this.listUrl).then((data) => {
       this.listData = data;
       this.page = "battle-list";
     });
@@ -206,7 +206,7 @@ export class BattleCenterComponent {
     // const item = event.target as HTMLIonItemElement;
     // item.innerHTML = "<ion-spinner name='dots' />";
 
-    ehtcAPI(this.battleUrl).then(data => {
+    ehtcAPI(this.battleUrl).then((data) => {
       this.fullBattle = data;
       this.page = "battle";
     });

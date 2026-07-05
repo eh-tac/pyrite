@@ -14,6 +14,10 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
     this.craft = new Craft(this.CraftType);
   }
 
+  public get isPlayer(): boolean {
+    return this.PlayerCraft > 0;
+  }
+
   public get label(): string {
     return this.toString();
   }
@@ -34,7 +38,7 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
     if (this.AlternateArriveViaMothership) {
       ms.push(this.TIE.getFlightGroup(this.AlternateArrivalMothership));
     }
-    return ms;
+    return ms as unknown as FlightGroup[];
   }
 
   public get hasMultipleWaves(): boolean {
@@ -51,15 +55,15 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
   }
 
   public get startCoordinates(): number[] {
-    return this.Waypoints.map(w => (w.StartPoints[0] * 1.6) / 1000);
+    return this.Waypoints.map((w) => (w.StartPoints[0] * 1.6) / 1000);
   }
 
   public get hyperCoordinates(): number[] {
-    return this.Waypoints.map(w => (w.Hyperspace * 1.6) / 1000);
+    return this.Waypoints.map((w) => (w.Hyperspace * 1.6) / 1000);
   }
 
   public get briefingCoordinates(): number[] {
-    return this.Waypoints.map(w => w.Briefing);
+    return this.Waypoints.map((w) => w.Briefing);
   }
 
   public get CraftTypeAbbr(): string {
@@ -145,12 +149,12 @@ export class FlightGroup extends FlightGroupBase implements IFielder {
       return {
         type: DataType.SELECT,
         options: Constants.WARHEAD,
-        value: this.Warhead
+        value: this.Warhead,
       };
     } else if (name === "Name") {
       return {
         type: DataType.char,
-        value: this.Name
+        value: this.Name,
       };
     } else {
       console.warn("unknown", name);

@@ -6,67 +6,68 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
+use Pyrite\PyriteModel;
 use Pyrite\XvT\PLTAIRankCountRecord;
 use Pyrite\XvT\PLTCategoryTypeRecord;
 use Pyrite\XvT\PLTPlayerRankCountRecord;
 
-abstract class PL2DebriefRecordBase extends PyriteBase implements Byteable
+abstract class PL2DebriefRecordBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  PL2DEBRIEFRECORDLENGTH INT */
-    public const PL2DEBRIEFRECORDLENGTH = 5256;
+    /** @var int PL2DEBRIEFRECORDLENGTH INT */
+	public const PL2DEBRIEFRECORDLENGTH = 5256;
     /** @var PLTCategoryTypeRecord 0x0000 UnknownRecord1 PLTCategoryTypeRecord */
-    public $UnknownRecord1;
+	public PLTCategoryTypeRecord $UnknownRecord1;
     /** @var PLTCategoryTypeRecord 0x000C UnknownRecord2 PLTCategoryTypeRecord */
-    public $UnknownRecord2;
+	public PLTCategoryTypeRecord $UnknownRecord2;
     /** @var PLTCategoryTypeRecord 0x0018 UnknownRecord3 PLTCategoryTypeRecord */
-    public $UnknownRecord3;
+	public PLTCategoryTypeRecord $UnknownRecord3;
     /** @var PLTCategoryTypeRecord 0x0024 enemyKillsEXX PLTCategoryTypeRecord */
-    public $enemyKillsEXX;
+	public PLTCategoryTypeRecord $enemyKillsEXX;
     /** @var PLTCategoryTypeRecord 0x0030 friendlyKillsEXX PLTCategoryTypeRecord */
-    public $friendlyKillsEXX;
-    /** @var integer[] 0x003C totalKillCountByCraftType INT */
-    public $totalKillCountByCraftType;
+	public PLTCategoryTypeRecord $friendlyKillsEXX;
+    /** @var array<int> 0x003C totalKillCountByCraftType INT */
+	public array $totalKillCountByCraftType;
     /** @var PLTPlayerRankCountRecord 0x0E4C FullKillsOnPlayerRank PLTPlayerRankCountRecord */
-    public $FullKillsOnPlayerRank;
+	public PLTPlayerRankCountRecord $FullKillsOnPlayerRank;
     /** @var PLTPlayerRankCountRecord 0x0F78 SharedKillsOnPlayerRank PLTPlayerRankCountRecord */
-    public $SharedKillsOnPlayerRank;
+	public PLTPlayerRankCountRecord $SharedKillsOnPlayerRank;
     /** @var PLTPlayerRankCountRecord 0x10A4 AssistKillsOnPlayerRank PLTPlayerRankCountRecord */
-    public $AssistKillsOnPlayerRank;
+	public PLTPlayerRankCountRecord $AssistKillsOnPlayerRank;
     /** @var PLTAIRankCountRecord 0x11D0 FullKillsOnAIRank PLTAIRankCountRecord */
-    public $FullKillsOnAIRank;
+	public PLTAIRankCountRecord $FullKillsOnAIRank;
     /** @var PLTAIRankCountRecord 0x1218 SharedKillsOnAIRank PLTAIRankCountRecord */
-    public $SharedKillsOnAIRank;
+	public PLTAIRankCountRecord $SharedKillsOnAIRank;
     /** @var PLTAIRankCountRecord 0x1260 AssistKillsOnAIRank PLTAIRankCountRecord */
-    public $AssistKillsOnAIRank;
+	public PLTAIRankCountRecord $AssistKillsOnAIRank;
     /** @var PLTCategoryTypeRecord 0x12A8 NumHiddenCargoFoundEXX PLTCategoryTypeRecord */
-    public $NumHiddenCargoFoundEXX;
+	public PLTCategoryTypeRecord $NumHiddenCargoFoundEXX;
     /** @var PLTCategoryTypeRecord 0x12B4 NumCannonHitsEXX PLTCategoryTypeRecord */
-    public $NumCannonHitsEXX;
+	public PLTCategoryTypeRecord $NumCannonHitsEXX;
     /** @var PLTCategoryTypeRecord 0x12C0 NumCannonFiredEXX PLTCategoryTypeRecord */
-    public $NumCannonFiredEXX;
+	public PLTCategoryTypeRecord $NumCannonFiredEXX;
     /** @var PLTCategoryTypeRecord 0x12CC NumWarheadHitsEXX PLTCategoryTypeRecord */
-    public $NumWarheadHitsEXX;
+	public PLTCategoryTypeRecord $NumWarheadHitsEXX;
     /** @var PLTCategoryTypeRecord 0x12D8 NumWarheadFiredEXX PLTCategoryTypeRecord */
-    public $NumWarheadFiredEXX;
+	public PLTCategoryTypeRecord $NumWarheadFiredEXX;
     /** @var PLTCategoryTypeRecord 0x12E4 NumCraftLossesEXX PLTCategoryTypeRecord */
-    public $NumCraftLossesEXX;
+	public PLTCategoryTypeRecord $NumCraftLossesEXX;
     /** @var PLTCategoryTypeRecord 0x12F0 CraftLossesFromCollisionEXX PLTCategoryTypeRecord */
-    public $CraftLossesFromCollisionEXX;
+	public PLTCategoryTypeRecord $CraftLossesFromCollisionEXX;
     /** @var PLTCategoryTypeRecord 0x12FC CraftLossesFromStarshipEXX PLTCategoryTypeRecord */
-    public $CraftLossesFromStarshipEXX;
+	public PLTCategoryTypeRecord $CraftLossesFromStarshipEXX;
     /** @var PLTCategoryTypeRecord 0x1308 CraftLossesFromMineEXX PLTCategoryTypeRecord */
-    public $CraftLossesFromMineEXX;
+	public PLTCategoryTypeRecord $CraftLossesFromMineEXX;
     /** @var PLTPlayerRankCountRecord 0x1314 LossesFromPlayerRank PLTPlayerRankCountRecord */
-    public $LossesFromPlayerRank;
+	public PLTPlayerRankCountRecord $LossesFromPlayerRank;
     /** @var PLTAIRankCountRecord 0x1440 LossesFromAIRank PLTAIRankCountRecord */
-    public $LossesFromAIRank;
+	public PLTAIRankCountRecord $LossesFromAIRank;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -74,7 +75,7 @@ abstract class PL2DebriefRecordBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -114,7 +115,7 @@ abstract class PL2DebriefRecordBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "UnknownRecord1" => $this->UnknownRecord1,
@@ -143,7 +144,7 @@ abstract class PL2DebriefRecordBase extends PyriteBase implements Byteable
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -181,7 +182,7 @@ abstract class PL2DebriefRecordBase extends PyriteBase implements Byteable
     }
     
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::PL2DEBRIEFRECORDLENGTH;
     }

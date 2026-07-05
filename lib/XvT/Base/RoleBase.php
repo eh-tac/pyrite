@@ -6,23 +6,23 @@ use Pyrite\Byteable;
 use Pyrite\HexDecoder;
 use Pyrite\HexEncoder;
 use Pyrite\PyriteBase;
-use Pyrite\XvT\Constants;
+use Pyrite\PyriteModel;
 
-abstract class RoleBase extends PyriteBase implements Byteable
+abstract class RoleBase extends PyriteBase implements Byteable, PyriteModel
 {
     use HexDecoder;
     use HexEncoder;
 
-    /** @var integer  ROLELENGTH INT */
-    public const ROLELENGTH = 4;
+    /** @var int ROLELENGTH INT */
+	public const ROLELENGTH = 4;
     /** @var string 0x0 Team CHAR */
-    public $Team;
+	public string $Team;
     /** @var string 0x1 Designation CHAR */
-    public $Designation;
+	public string $Designation;
     
-    public function __construct($hex = null, $tie = null)
+    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
     {
-        parent::__construct($hex, $tie);
+        parent::__construct($hex, $TIE);
     }
 
     /**
@@ -30,7 +30,7 @@ abstract class RoleBase extends PyriteBase implements Byteable
      * Separating the constructor and loading allows for the objects to be made from scratch.
      * @return $this 
      */
-    public function loadHex()
+    public function loadHex(): static
     {
         $hex = $this->hex;
         $offset = 0;
@@ -43,15 +43,15 @@ abstract class RoleBase extends PyriteBase implements Byteable
         return $this;
     }
     
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             "Team" => $this->Team,
-            "Designation" => $this->getDesignationLabel()
+            "Designation" => $this->Designation
         ];
     }
     
-    public function toHexString($hex = null)
+    public function toHexString($hex = null): string
     {
         $hex = $hex ? $hex : str_pad("", $this->getLength(), chr(0));
         $offset = 0;
@@ -62,12 +62,8 @@ abstract class RoleBase extends PyriteBase implements Byteable
         return $hex;
     }
     
-    public function getDesignationLabel() 
-    {
-        return isset($this->Designation) && isset(Constants::$DESIGNATION[$this->Designation]) ? Constants::$DESIGNATION[$this->Designation] : "Unknown";
-    }
     
-    public function getLength()
+    public function getLength(): int
     {
         return self::ROLELENGTH;
     }

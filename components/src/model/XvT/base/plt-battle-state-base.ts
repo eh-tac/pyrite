@@ -13,47 +13,45 @@ export abstract class PLTBattleStateBase extends PyriteBase implements Byteable 
   public ConfigGameRandomizeLevel: number;
   public saveState: PLTBattleProgressState;
   public unknown2: number;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
     this.ConfigRandomSeed = getInt(hex, 0x0000);
     this.IsInProgressUNK = getInt(hex, 0x0004);
     this.ConfigBattleLength = getInt(hex, 0x0008);
-    this.ConfigGameRandomizeLevel = getInt(hex, 0x000C);
+    this.ConfigGameRandomizeLevel = getInt(hex, 0x000c);
     this.saveState = new PLTBattleProgressState(hex.slice(0x0010), this.TIE);
-    this.unknown2 = getInt(hex, 0x009C);
-    
+    this.unknown2 = getInt(hex, 0x009c);
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       ConfigRandomSeed: this.ConfigRandomSeed,
       IsInProgressUNK: this.IsInProgressUNK,
       ConfigBattleLength: this.ConfigBattleLength,
       ConfigGameRandomizeLevel: this.ConfigGameRandomizeLevel,
-      saveState: this.saveState,
-      unknown2: this.unknown2
+      saveState: this.saveState.toJSON(),
+      unknown2: this.unknown2,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeInt(hex, this.ConfigRandomSeed, 0x0000);
     writeInt(hex, this.IsInProgressUNK, 0x0004);
     writeInt(hex, this.ConfigBattleLength, 0x0008);
-    writeInt(hex, this.ConfigGameRandomizeLevel, 0x000C);
+    writeInt(hex, this.ConfigGameRandomizeLevel, 0x000c);
     writeObject(hex, this.saveState, 0x0010);
-    writeInt(hex, this.unknown2, 0x009C);
+    writeInt(hex, this.unknown2, 0x009c);
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.PLTBATTLESTATELENGTH;
   }

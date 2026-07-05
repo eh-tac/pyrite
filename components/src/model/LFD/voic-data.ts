@@ -1,5 +1,4 @@
 import { getByte, getInt } from "../../hex";
-import { getUInt } from "../hex";
 import { IMission } from "../pyrite-base";
 import { VoicDataBase } from "./base/voic-data-base";
 
@@ -45,7 +44,7 @@ DATA BLOCK:
 
  */
 export class VoicData extends VoicDataBase {
-  protected loadData() {
+  protected loadData(): number {
     const offset = 0x06;
     // the size is stored as a 3 byte integer
     // for who knows what reason.
@@ -56,13 +55,14 @@ export class VoicData extends VoicDataBase {
 
     this.Data = new Uint8Array(this.hex.slice(offset, offset + size));
     this.VoicDataLength = size + 6;
+    return this.VoicDataLength;
   }
-  protected writeData() {
+  protected writeData(): number {
     throw new Error("Method not implemented.");
   }
   public sampleRate: number;
   public compressionType: number;
-  public Data: Uint8Array;
+  public Data: any;
   public beforeConstruct(): void {}
 
   public toString(): string {

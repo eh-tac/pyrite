@@ -44,7 +44,7 @@ export class FlightGroup extends FlightGroupBase {
       15: "CRV",
       16: "ISD",
       17: "T/A",
-      18: "B/W"
+      18: "B/W",
     };
     return abbr[this.CraftType];
   }
@@ -61,7 +61,7 @@ export class FlightGroup extends FlightGroupBase {
       this.CraftTypeLabel,
       this.Name,
       this.Objective ? ` - MUST ${this.ObjectiveLabel}` : "",
-      this.Objective ? arrival : ""
+      this.Objective ? arrival : "",
     ].join(" ");
   }
 }

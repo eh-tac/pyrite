@@ -8,9 +8,9 @@ export abstract class TIEStringBase extends PyriteBase implements Byteable {
   public TIEStringLength: number;
   public Length: number;
   public Text: string;
-  
-  constructor(hex: ArrayBuffer, tie?: IMission) {
-    super(hex, tie);
+
+  constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE!);
     this.beforeConstruct();
     let offset = 0;
 
@@ -19,25 +19,24 @@ export abstract class TIEStringBase extends PyriteBase implements Byteable {
     offset = 0x2 + this.Length;
     this.TIEStringLength = offset;
   }
-  
-  public toJSON(): object {
+
+  public toJSON(): Record<string, unknown> | string {
     return {
       Length: this.Length,
-      Text: this.Text
+      Text: this.Text,
     };
   }
-  
-  public toHexString(): string {
-    let hex: string = '';
+
+  public toHexBuffer(): ArrayBuffer {
+    const hex: ArrayBuffer = new ArrayBuffer(this.getLength());
     let offset = 0;
 
     writeShort(hex, this.Length, 0x0);
-    writeChar(hex, this.Text, 0x2);
+    writeChar(hex, this.Text, 0x2, this.Length);
 
     return hex;
   }
-  
-  
+
   public getLength(): number {
     return this.TIEStringLength;
   }
