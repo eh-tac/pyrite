@@ -41,6 +41,7 @@ abstract class TIEStringBase extends PyriteBase implements Byteable, PyriteModel
         $this->TIEStringLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

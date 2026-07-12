@@ -61,6 +61,7 @@ abstract class PLTPlayerRankCountRecordBase extends PyriteBase implements Byteab
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

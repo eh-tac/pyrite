@@ -3,6 +3,7 @@
 namespace Pyrite\EHBL;
 
 use Exception;
+use Pyrite\IScoreKeeper;
 use Pyrite\PyriteModel;
 
 class Battle
@@ -282,6 +283,9 @@ class Battle
         }
     }
 
+    /**
+     * @return array<IScoreKeeper>
+     */
     public function getScoreKeepers()
     {
         if (empty($this->missions)) {

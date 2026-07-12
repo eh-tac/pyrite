@@ -70,6 +70,7 @@ abstract class PLTMissionMPRecordBase extends PyriteBase implements Byteable, Py
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

@@ -115,6 +115,7 @@ abstract class MissionBOPBase extends PyriteBase implements Byteable, PyriteMode
         $this->MissionBOPLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

@@ -10,11 +10,10 @@ class Message extends Base\MessageBase implements Summary
 
     public Mission $mission;
 
-    public function __construct(string $hex = null, ?\Pyrite\PyriteModel $TIE = null)
+    protected function afterLoadHex(): void
     {
-        parent::__construct($hex, $TIE);
-        if ($TIE instanceof Mission) {
-            $this->mission = $TIE;
+        if ($this->TIE instanceof Mission) {
+            $this->mission = $this->TIE;
         }
     }
 

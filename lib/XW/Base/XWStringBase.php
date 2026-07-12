@@ -55,6 +55,7 @@ abstract class XWStringBase extends PyriteBase implements Byteable, PyriteModel
         $this->XWStringLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

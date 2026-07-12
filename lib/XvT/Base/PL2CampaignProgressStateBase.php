@@ -52,6 +52,7 @@ abstract class PL2CampaignProgressStateBase extends PyriteBase implements Byteab
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

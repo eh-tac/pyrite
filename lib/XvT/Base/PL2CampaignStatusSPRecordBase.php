@@ -61,6 +61,7 @@ abstract class PL2CampaignStatusSPRecordBase extends PyriteBase implements Bytea
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

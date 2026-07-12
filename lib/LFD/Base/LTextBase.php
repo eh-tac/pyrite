@@ -47,6 +47,7 @@ abstract class LTextBase extends PyriteBase implements Byteable, PyriteModel
         $this->LTextLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

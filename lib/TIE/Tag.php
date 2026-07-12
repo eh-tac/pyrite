@@ -6,10 +6,8 @@ use Pyrite\PyriteModel;
 
 class Tag extends Base\TagBase
 {
-    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
+    protected function afterLoadHex(): void
     {
-        parent::__construct($hex, $TIE);
-
         $this->TagLength = $this->Length + 2;
     }
 

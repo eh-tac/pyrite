@@ -9,12 +9,13 @@ class Event extends Base\EventBase implements Summary
     public Briefing $Briefing;
     public Mission $mission;
 
-    public function __construct(string $hex = null, ?\Pyrite\PyriteModel $TIE = null)
+    protected function afterLoadHex(): void
     {
-        parent::__construct($hex, $TIE);
-        if ($TIE instanceof Mission) {
-            $this->mission = $TIE;
-            $this->Briefing = $TIE->Briefing;
+        if ($this->TIE instanceof Mission) {
+            $this->mission = $this->TIE;
+            if (isset($this->TIE->Briefing) && $this->TIE->Briefing instanceof Briefing) {
+                $this->Briefing = $this->TIE->Briefing;
+            }
         }
     }
 

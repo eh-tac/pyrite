@@ -7,9 +7,8 @@ use Pyrite\Summary;
 
 class PostMissionQuestions extends Base\PostMissionQuestionsBase implements Summary
 {
-    public function __construct(string $hex = null, ?PyriteModel $TIE = null)
+    protected function afterLoadHex(): void
     {
-        parent::__construct($hex, $TIE);
         if ($this->Length === 0) {
             $this->PostMissionQuestionsLength = 2;
         }

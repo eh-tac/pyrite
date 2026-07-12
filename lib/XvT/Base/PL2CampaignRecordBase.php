@@ -58,6 +58,7 @@ abstract class PL2CampaignRecordBase extends PyriteBase implements Byteable, Pyr
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

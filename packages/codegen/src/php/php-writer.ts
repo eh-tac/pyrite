@@ -144,6 +144,7 @@ class ${struct.name} extends Base\\${baseClass}
         ${struct.isVariableLength ? `$this->${lengthProp.prop.name} = $offset;` : ''}
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }`;
   }
