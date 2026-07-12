@@ -4,9 +4,6 @@ namespace Pyrite\XWA;
 
 class MissionData extends Base\MissionDataBase
 {
-
-  public function beforeConstruct(): void {}
-
   public function __toString(): string
   {
     return '';

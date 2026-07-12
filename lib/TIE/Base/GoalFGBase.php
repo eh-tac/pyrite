@@ -41,6 +41,7 @@ abstract class GoalFGBase extends PyriteBase implements Byteable, PyriteModel
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

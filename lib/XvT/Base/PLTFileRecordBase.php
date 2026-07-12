@@ -647,6 +647,7 @@ abstract class PLTFileRecordBase extends PyriteBase implements Byteable, PyriteM
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

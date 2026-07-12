@@ -47,6 +47,7 @@ abstract class RmapBase extends PyriteBase implements Byteable, PyriteModel
         $this->RmapLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

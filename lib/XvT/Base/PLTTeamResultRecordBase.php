@@ -55,6 +55,7 @@ abstract class PLTTeamResultRecordBase extends PyriteBase implements Byteable, P
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

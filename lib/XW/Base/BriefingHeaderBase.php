@@ -43,6 +43,7 @@ abstract class BriefingHeaderBase extends PyriteBase implements Byteable, Pyrite
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

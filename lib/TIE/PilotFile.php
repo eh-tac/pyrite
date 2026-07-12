@@ -21,8 +21,6 @@ class PilotFile extends Base\PilotFileBase
         return (new PilotFile($hex, $TIE))->loadHex();
     }
 
-    public function beforeConstruct() {}
-
     public function __toString()
     {
         return "TIE PLT: {$this->filename}";

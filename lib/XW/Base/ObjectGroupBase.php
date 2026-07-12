@@ -77,6 +77,7 @@ abstract class ObjectGroupBase extends PyriteBase implements Byteable, PyriteMod
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

@@ -76,6 +76,7 @@ abstract class VoicBase extends PyriteBase implements Byteable, PyriteModel
         $this->VoicLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

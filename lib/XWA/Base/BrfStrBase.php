@@ -46,6 +46,7 @@ abstract class BrfStrBase extends PyriteBase implements Byteable, PyriteModel
         $this->BrfStrLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

@@ -62,6 +62,7 @@ abstract class PLTTournamentProgressStateBase extends PyriteBase implements Byte
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

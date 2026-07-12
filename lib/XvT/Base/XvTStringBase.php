@@ -41,6 +41,7 @@ abstract class XvTStringBase extends PyriteBase implements Byteable, PyriteModel
         $this->XvTStringLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

@@ -347,6 +347,7 @@ abstract class PLTFactionRecordBase extends PyriteBase implements Byteable, Pyri
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

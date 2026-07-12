@@ -1,0 +1,73 @@
+name: Release on Composer Version Change
+
+on:
+  pull_request_target:
+    types:
+      - closed
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: >-
+      github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check whether composer.json changed in the PR
+        id: changed_file
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          changed="$(gh api repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files --paginate --jq '.[] | select(.filename == "composer.json") | .filename' | head -n 1)"
+
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout merged revision
+        if: steps.changed_file.outputs.changed == 'true'
+        uses: actions/checkout@v6
+        with:
+          ref: '${{ github.event.pull_request.merge_commit_sha || github.event.pull_request.base.ref }}'
+
+      - name: Read version from composer.json
+        if: steps.changed_file.outputs.changed == 'true'
+        id: version
+        run: |
+          version="$(python3 - <<'PY'
+          import json
+
+          with open('composer.json', 'r', encoding='utf-8') as fh:
+              print(json.load(fh)['version'])
+          PY
+          )"
+
+          if [[ -z "$version" ]]; then
+            echo "composer.json version is empty" >&2
+            exit 1
+          fi
+
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Check whether the release already exists
+        if: steps.changed_file.outputs.changed == 'true'
+        id: release_check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub release
+        if: steps.release_check.outputs.exists != 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: '${{ steps.version.outputs.tag }}'
+          target_commitish: '${{ github.event.pull_request.merge_commit_sha || github.sha }}'
+          generate_release_notes: true

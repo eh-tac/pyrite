@@ -41,5 +41,5 @@ class PyriteBase implements PyriteModel
 		return 0;
 	}
 
-	protected function beforeConstruct() {}
+	protected function afterLoadHex(): void {}
 }

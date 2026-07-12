@@ -43,6 +43,7 @@ abstract class PLTCategoryTypeRecordBase extends PyriteBase implements Byteable,
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

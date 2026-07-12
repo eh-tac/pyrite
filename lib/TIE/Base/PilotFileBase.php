@@ -176,6 +176,7 @@ abstract class PilotFileBase extends PyriteBase implements Byteable, PyriteModel
         $this->PilotFileLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

@@ -49,6 +49,7 @@ abstract class GlobalUnitBase extends PyriteBase implements Byteable, PyriteMode
         
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

@@ -4,8 +4,7 @@ namespace Pyrite\XW;
 
 class Mission extends Base\MissionBase
 {
-
-    public function beforeConstruct()
+    protected function afterLoadHex(): void
     {
         $this->TIE = $this;
     }
@@ -15,10 +14,8 @@ class Mission extends Base\MissionBase
         return '';
     }
 
-    public function getFG($id)
+    public function getFG(int $id)
     {
         return $this->FlightGroups[$id];
     }
-
-
 }

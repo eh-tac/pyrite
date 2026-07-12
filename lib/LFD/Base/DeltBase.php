@@ -64,6 +64,7 @@ abstract class DeltBase extends PyriteBase implements Byteable, PyriteModel
         $this->DeltLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     

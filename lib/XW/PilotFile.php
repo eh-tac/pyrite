@@ -4,9 +4,6 @@ namespace Pyrite\XW;
 
 class PilotFile extends Base\PilotFileBase
 {
-
-    public function beforeConstruct() {}
-
     public function __toString()
     {
         return '';

@@ -67,6 +67,7 @@ abstract class BattleTextBase extends PyriteBase implements Byteable, PyriteMode
         $this->BattleTextLength = $offset;
 
         $this->hex = substr($this->hex, 0, $this->getLength());
+        $this->afterLoadHex();
         return $this;
     }
     
