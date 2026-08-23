@@ -1,4 +1,5 @@
-import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, Element, State, Method, Event, EventEmitter } from '@stencil/core';
+import { JSX } from '@stencil/core/jsx-runtime';
 import { BattleSummary } from '../model';
 import { ehtcAPI } from '../api-store/util';
 
@@ -8,24 +9,24 @@ import { ehtcAPI } from '../api-store/util';
   shadow: false,
 })
 export class BattleSelectComponent {
-  @Element() el: HTMLElement;
-  @Event() battleSelect: EventEmitter<BattleSummary>;
+  @Element() el!: HTMLElement;
+  @Event() battleSelect!: EventEmitter<BattleSummary>;
 
   // battle id = value
-  @Prop({ reflect: true, mutable: true }) value: string;
-  @Prop({ reflect: true }) battle: BattleSummary;
-  @Prop() category: string;
+  @Prop({ reflect: true, mutable: true }) value?: string;
+  @Prop({ reflect: true }) battle?: BattleSummary;
+  @Prop() category?: string;
   // domain override. defaults to empty for same domain requests
-  @Prop() domain: string;
-  @Prop() name: string;
-  @Prop() disabled: boolean;
-  @Prop() readonly: boolean;
+  @Prop() domain: string = '';
+  @Prop() name!: string;
+  @Prop() disabled: boolean = false;
+  @Prop() readonly: boolean = false;
 
   @State() selection?: BattleSummary;
   @State() suggestions?: BattleSummary[];
   @State() suggestionIdx?: number;
-  @State() query: string;
-  @State() battleList: BattleSummary[];
+  @State() query: string = '';
+  @State() battleList: BattleSummary[] = [];
 
   private onInput: (e: Event) => void = (e: Event) => {
     if (this.disabled) {
@@ -57,7 +58,7 @@ export class BattleSelectComponent {
           this.suggestionIdx = this.suggestions.length - 1; // wrap around
         }
       }
-    } else if (e.key === 'Enter') {
+    } else if (e.key === 'Enter' && this.suggestionIdx) {
       e.stopPropagation();
       e.preventDefault();
       const m = this.suggestions[this.suggestionIdx];
@@ -67,7 +68,7 @@ export class BattleSelectComponent {
     }
   };
 
-  private externalInputElement: HTMLInputElement;
+  private externalInputElement!: HTMLInputElement;
 
   private get editable(): boolean {
     return !this.disabled && !this.readonly;
@@ -81,10 +82,10 @@ export class BattleSelectComponent {
         this.selection = this.battleList.find((m: BattleSummary) => m.id === v);
       }
     });
-    const parent = this.el.parentElement;
+    const parent = this.el.parentElement!;
     this.externalInputElement = parent.ownerDocument.createElement('input');
     this.externalInputElement.type = 'hidden';
-    this.externalInputElement.value = this.value;
+    this.externalInputElement.value = this.value!;
     this.externalInputElement.name = this.name;
     this.externalInputElement.disabled = this.disabled;
     this.externalInputElement.readOnly = this.readonly;

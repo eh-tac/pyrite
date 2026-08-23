@@ -1,3 +1,4 @@
+import { IMission } from '@pyrite/core';
 import { MissionBase } from './base/mission-base';
 import { QuestionCondition } from './constants';
 import type { FlightGroup } from './flight-group';
@@ -15,7 +16,7 @@ const HARD_PTS = 7750;
 const MED_PTS = 5250;
 const EASY_PTS = 2750;
 
-export class Mission extends MissionBase {
+export class Mission extends MissionBase implements IMission {
   public valid = false;
 
   public constructor(x: ArrayBuffer) {

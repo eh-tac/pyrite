@@ -1,9 +1,10 @@
+import { IMission } from '@pyrite/core';
 import { TriggerBase } from './base/trigger-base';
 import { Mission } from './mission';
 
 export class Trigger extends TriggerBase {
   public mission: Mission;
-  public constructor(hex: ArrayBuffer, TIE?: Mission) {
+  public constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE);
     this.mission = TIE as Mission;
   }

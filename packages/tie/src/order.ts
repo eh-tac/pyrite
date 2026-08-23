@@ -1,10 +1,11 @@
 import { OrderBase } from './base/order-base';
 import { Constants } from './constants';
+import type { IMission } from '@pyrite/core';
 import { Mission } from './mission';
 
 export class Order extends OrderBase {
   public mission: Mission;
-  public constructor(hex: ArrayBuffer, TIE?: Mission) {
+  public constructor(hex: ArrayBuffer, TIE?: IMission) {
     super(hex, TIE);
     this.mission = TIE as Mission;
   }

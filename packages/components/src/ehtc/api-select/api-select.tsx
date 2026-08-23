@@ -1,5 +1,6 @@
-import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } from "@stencil/core";
-import { ehtcAPI } from "../api-store/util";
+import { Component, Prop, Element, State, Method, Event, EventEmitter, AttachInternals } from '@stencil/core';
+import { JSX } from '@stencil/core/jsx-runtime';
+import { ehtcAPI } from '../api-store/util';
 
 export interface ApiSummary {
   id: number;
@@ -8,49 +9,46 @@ export interface ApiSummary {
 }
 
 @Component({
-  tag: "ehtc-api-select",
-  styleUrl: "api-select.scss",
+  tag: 'ehtc-api-select',
+  styleUrl: 'api-select.scss',
+  formAssociated: true,
   shadow: false,
 })
 export class ApiSelectComponent {
-  @Element() el: HTMLElement;
-  @Event() apiSelect: EventEmitter<ApiSummary>;
+  @AttachInternals() internals!: ElementInternals;
+  @Element() el!: HTMLElement;
+  @Event() apiSelect!: EventEmitter<ApiSummary>;
 
-  @Prop({ reflect: true }) value: string;
-  @Prop({ reflect: true }) item: ApiSummary;
+  @Prop({ reflect: true }) item?: ApiSummary;
   // domain override. defaults to empty for same domain requests
-  @Prop() domain: string;
-  @Prop() name: string;
-  @Prop() url: string;
-  @Prop() displayId?: "left" | "right";
-  @Prop() displayDescription?: "subtitle" | "none";
+  @Prop() domain: string = '';
+  @Prop() url!: string;
+  @Prop() displayId?: 'left' | 'right';
+  @Prop() displayDescription?: 'subtitle' | 'none';
 
   @State() selection?: ApiSummary;
   @State() suggestions?: ApiSummary[];
-  @State() query: string;
-  @State() fullList: ApiSummary[];
+  @State() query: string = '';
+  @State() fullList: ApiSummary[] = [];
 
-  private onInput: (e: Event) => void;
-  private externalInputElement: HTMLInputElement;
+  private onInput?: (e: Event) => void = (e: Event) => {
+    const input = e.target as HTMLInputElement;
+    this.updateQuery(input.value);
+  };
 
   public componentWillLoad(): void {
-    this.onInput = (e: Event) => {
-      const input = e.target as HTMLInputElement;
-      this.updateQuery(input.value);
-    };
     ehtcAPI(this.listURL).then((d: ApiSummary[]) => {
       this.fullList = d;
-      if (this.value) {
-        const v = parseInt(this.value, 10);
-        this.selection = this.fullList.find((m: ApiSummary) => m.id === v);
-      }
+      console.log('TODO: set value??');
+      // if (this.value) {
+      //   const v = parseInt(this.value, 10);
+      //   this.selection = this.fullList.find((m: ApiSummary) => m.id === v);
+      // }
     });
-    const parent = this.el.parentElement;
-    this.externalInputElement = parent.ownerDocument.createElement("input");
-    this.externalInputElement.type = "hidden";
-    this.externalInputElement.value = this.value;
-    this.externalInputElement.name = this.name;
-    parent.appendChild(this.externalInputElement);
+  }
+
+  public formStateRestoreCallback(state: any, mode: 'autocomplete' | 'history'): void {
+    console.log('formStateRestoreCallback', state, mode);
   }
 
   @Method()
@@ -61,15 +59,13 @@ export class ApiSelectComponent {
 
   @Method()
   public setValue(val: string | number): Promise<void> {
-    const v = typeof val === "number" ? val : parseInt(val, 10);
-    this.selectItem(
-      this.fullList.find((m: ApiSummary) => m.id === v || m.name.toLowerCase() === val.toString().toLowerCase()),
-    );
+    const v = typeof val === 'number' ? val : parseInt(val, 10);
+    this.selectItem(this.fullList.find((m: ApiSummary) => m.id === v || m.name.toLowerCase() === val.toString().toLowerCase()));
     return Promise.resolve();
   }
 
   private get listURL(): string {
-    const d = this.domain || "";
+    const d = this.domain || '';
     return `${d}${this.url}`;
   }
 
@@ -86,8 +82,8 @@ export class ApiSelectComponent {
     const q = this.query.toLowerCase();
     const match = (str: string) => {
       const s = str.toLowerCase();
-      const t = s.replace("-", "");
-      const u = t.replace(" ", "");
+      const t = s.replace('-', '');
+      const u = t.replace(' ', '');
       return s.includes(q) || t.includes(q) || u.includes(q);
     };
 
@@ -97,7 +93,7 @@ export class ApiSelectComponent {
       })
       .slice(0, 15);
     document.body.addEventListener(
-      "click",
+      'click',
       () => {
         this.suggestions = undefined;
       },
@@ -107,26 +103,24 @@ export class ApiSelectComponent {
 
   private selectItem(b?: ApiSummary): void {
     this.selection = b;
-    this.value = this.externalInputElement.value = b ? b.id.toString(10) : "";
+    this.internals.setFormValue(b ? b.id.toString(10) : '');
+    // this.value = this.externalInputElement.value = b ? b.id.toString(10) : '';
     this.apiSelect.emit(b);
-    this.externalInputElement.dispatchEvent(new InputEvent("input"));
   }
 
   private renderItem(b: ApiSummary): JSX.Element {
     // id and description are conditionally shown based on props
     const id = <span class="tag is-info mb-0 is-radiusless">#{b.id}</span>;
-    const desc = b.description && (
-      <div class="tag is-primary description is-radiusless has-text-grey-lighter">{b.description}</div>
-    );
+    const desc = b.description && <div class="tag is-primary description is-radiusless has-text-grey-lighter">{b.description}</div>;
 
     return (
       <div class="item-summary" onClick={this.selectItem.bind(this, b)}>
-        <div class="topline tags has-addons mb-0" style={{ width: "100%" }}>
-          {this.displayId === "left" && id}
+        <div class="topline tags has-addons mb-0" style={{ width: '100%' }}>
+          {this.displayId === 'left' && id}
           <span class="item-label tag is-primary mb-0 is-radiusless">{b.name}</span>
-          {this.displayId === "right" && id}
+          {this.displayId === 'right' && id}
         </div>
-        {this.displayDescription === "subtitle" && desc}
+        {this.displayDescription === 'subtitle' && desc}
       </div>
     );
   }
@@ -136,7 +130,7 @@ export class ApiSelectComponent {
       return <p>Loading...</p>;
     }
     return (
-      <div class={{ "ehtc-api-select": true, dropdown: true, "is-active": !this.selection && !!this.suggestions }}>
+      <div class={{ 'ehtc-api-select': true, 'dropdown': true, 'is-active': !this.selection && !!this.suggestions }}>
         {!this.selection && (
           <div class="dropdown-trigger field mb-0">
             <div class="control">
@@ -154,8 +148,7 @@ export class ApiSelectComponent {
         )}
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
-            {this.suggestions &&
-              this.suggestions.map((s: ApiSummary) => <div class="record">{this.renderItem(s)}</div>)}
+            {this.suggestions && this.suggestions.map((s: ApiSummary) => <div class="record">{this.renderItem(s)}</div>)}
             <span class="no-data">No matches found</span>
           </div>
         </div>
