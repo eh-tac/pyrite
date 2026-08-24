@@ -52,7 +52,7 @@ class ScoreKeeper  implements IScoreKeeper
 
     public function getTotal(): int
     {
-        return 0;
+        return $this->win;
     }
 
     public function process()
@@ -84,6 +84,8 @@ class ScoreKeeper  implements IScoreKeeper
                 $this->playerCraft[] = $fg;
             }
         }
+
+        $this->goals[] = ScoreRow::create('Win mission', 1, $this->win);
 
         $primary = $this->TIE->GlobalGoals[0]->Goal[0];
         if ($primary->isActive()) {

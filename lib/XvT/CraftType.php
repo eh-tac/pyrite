@@ -80,15 +80,35 @@ class CraftType
 		67 => ['name' => 'Asteroid Laser Battery', 'abbr' => 'LAS BAT', 'points' => 130, 'missileCount' => 50],
 		68 => ['name' => 'Asteroid Warhead Battery', 'abbr' => 'W LNCHR', 'points' => 130, 'missileCount' => 50],
 		69 => ['name' => 'X/7 Factory', 'abbr' => 'FAC/1', 'points' => 130, 'missileCount' => 50],
-		70 => ['name' => 'Ship Yard', 'abbr' => 'SHPYD', 'points' => 165, 'missileCount' => 50],
-		71 => ['name' => 'Repair Yard', 'abbr' => 'REPYD', 'points' => 150, 'missileCount' => 50],
-		72 => ['name' => 'Gun Emplacement', 'abbr' => 'GPLT', 'points' => 20, 'missileCount' => 4],
-		73 => ['name' => 'Modified Strike Cruiser', 'abbr' => 'M/SC', 'points' => 125, 'missileCount' => 0]
+		70 => ['name' => "Comm Sat", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		71 => ['name' => "Comm Sat2", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		72 => ['name' => "*Sat3", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		73 => ['name' => "*Sat4", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		74 => ['name' => "*Sat5", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		75 => ['name' => "Mine Type A", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		76 => ['name' => "Mine Type B", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		77 => ['name' => "Mine Type C", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		78 => ['name' => "*Mine4", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		79 => ['name' => "*Mine5", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		80 => ['name' => "Probe", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		81 => ['name' => "*Probe2", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		82 => ['name' => "*Probe3", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		83 => ['name' => "Nav Buoy", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		84 => ['name' => "Nav Buoy2", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		85 => ['name' => "*Pilot", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		86 => ['name' => "Asteroid", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		87 => ['name' => "Planet", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		88 => ['name' => "Obstacle", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		89 => ['name' => "Unused", 'abbr' => 'TBC', 'points' => 0, 'missileCount' => 0],
+		90 => ['name' => 'Ship Yard', 'abbr' => 'SHPYD', 'points' => 165, 'missileCount' => 50],
+		91 => ['name' => 'Repair Yard', 'abbr' => 'REPYD', 'points' => 150, 'missileCount' => 50],
+		92 => ['name' => 'Modified Strike Cruiser', 'abbr' => 'M/SC', 'points' => 125, 'missileCount' => 0],
+
 	];
 
 	public function __construct(public int $ID)
 	{
-		$data = self::$data[$ID];
+		$data = isset(self::$data[$ID]) ? self::$data[$ID] : self::$data[0];
 		$this->Name = $data['name'];
 		$this->Abbr = $data['abbr'];
 		$this->craftPoints = $data['points'] * 40;
