@@ -11,7 +11,7 @@ export interface ItemSummary {
   shadow: false,
 })
 export class WrapSelectComponent {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
   @Event() itemSelect: EventEmitter<ItemSummary>;
 
   @Prop({ reflect: true, mutable: true }) value: string;

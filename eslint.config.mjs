@@ -4,6 +4,8 @@ import globals from 'globals';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
+import stencil from '@stencil/eslint-plugin';
+import { setSyntheticTrailingComments } from 'typescript';
 
 export default [
   {
@@ -86,4 +88,9 @@ export default [
       '@typescript-eslint/no-explicit-any': 'off'
     }
   }
+  // {
+  // FFS many things are still incompatible with eslint 10
+  //   files: ['packages/components/**/*.ts', 'packages/components/**/*.tsx'],
+  //   ...stencil.configs.flat.recommended
+  // }
 ];

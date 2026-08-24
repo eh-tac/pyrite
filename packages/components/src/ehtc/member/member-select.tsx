@@ -10,7 +10,7 @@ type Member = PilotSummary | CharacterSummary;
   shadow: false,
 })
 export class MemberSelectComponent {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
   @Event() memberSelect: EventEmitter<PilotSummary | CharacterSummary>;
   // member PIN = value
   @Prop({ reflect: true, mutable: true }) value: string;

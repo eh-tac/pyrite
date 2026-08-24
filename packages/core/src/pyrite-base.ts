@@ -33,7 +33,7 @@ export interface IFielder {
 export abstract class PyriteBase {
   public constructor(
     public hex: ArrayBuffer,
-    public TIE: IMission
+    public TIE?: IMission
   ) {}
 
   // public compareHex(other: string): boolean {

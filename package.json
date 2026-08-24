@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@stencil/eslint-plugin": "^1.4.0",
     "@swc/core": "^1.15.33",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",

@@ -8,8 +8,8 @@ import { TIEString } from './tie-string';
 import { Mission } from './mission';
 
 export class Briefing extends BriefingBase {
-  public constructor(hex: ArrayBuffer, tie: IMission) {
-    super(hex, tie);
+  public constructor(hex: ArrayBuffer, TIE?: IMission) {
+    super(hex, TIE);
     let offset = 0;
     this.RunningTime = getShort(hex, 0x000);
     this.Unknown = getShort(hex, 0x002);

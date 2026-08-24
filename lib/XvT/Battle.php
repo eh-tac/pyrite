@@ -42,7 +42,7 @@ class Battle extends \Pyrite\EHBL\Battle
 		$sk = new \Pyrite\XvT\ScoreKeeper($TIE);
 		if ($this->missionLst) {
 			foreach ($this->missionLst->entries as $entry) {
-				if (strtolower(trim($entry['filename'])) === strtolower(trim($filename))) {
+				if (isset($entry['filename']) && strtolower(trim($entry['filename'])) === strtolower(trim($filename))) {
 					$sk->lstData = $entry;
 				}
 			}

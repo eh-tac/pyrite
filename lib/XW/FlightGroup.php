@@ -21,7 +21,7 @@ class FlightGroup extends Base\FlightGroupBase implements Countable
         $c = $this->NumberOfCraft;
 
         $t = $this->getCraftTypeLabel();
-        $n = implode($this->Name);
+        $n = $this->Name;
 
         return "$w x $c $t $n";
     }

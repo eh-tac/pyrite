@@ -13,10 +13,11 @@ class Battle extends \Pyrite\EHBL\Battle
         parent::__construct(Platform::TIE, $type, $num, '', $folder, $missionFiles, $resourceFiles);
         // try to get the title from the battle lfd if we can find it
         // TODO validation that LFDs has items
-        // TOTO validation that LFD matches mission files etc
+        // TODO validation that LFD matches mission files etc
         // TODO handle multiple LFD battles
-        if (count($resourceFiles) > 0 && file_exists($folder . $resourceFiles[0])) {
-            $lfd = new BattleLFD(file_get_contents($folder . $resourceFiles[0]));
+        $lfds = array_filter($resourceFiles, fn($f) => str_ends_with(strtolower($f), '.lfd'));
+        if (count($lfds) > 0 && file_exists($folder . $lfds[0])) {
+            $lfd = new BattleLFD(file_get_contents($folder . $lfds[0]));
 
             $this->title = $lfd->BattleText->BattleName;
         }

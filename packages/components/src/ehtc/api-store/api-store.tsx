@@ -1,24 +1,24 @@
-import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } from "@stencil/core";
+import { Component, Prop, Element, Method } from '@stencil/core';
 
 @Component({
-  tag: "ehtc-api-store",
+  tag: 'ehtc-api-store',
   shadow: true,
 })
 export class ApiSelectComponent {
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop() domain: string = "";
-  @Prop() cachePrefix: string = "pyrite";
+  @Prop() domain: string = '';
+  @Prop() cachePrefix: string = 'pyrite';
 
-  private etagCache: { [key: string]: string };
-  private responseCache: { [key: string]: any };
+  private etagCache: { [key: string]: string } = {};
+  private responseCache: { [key: string]: any } = {};
 
   private requestQueue: [string, (value: any) => void][] = [];
   private verifiedUrls: Set<string> = new Set<string>();
   private processing = false;
 
   private getCacheKey(suffix?: string): string {
-    const suff = suffix ? `-${suffix}` : "";
+    const suff = suffix ? `-${suffix}` : '';
     return `${this.cachePrefix}-api-cache${suff}`;
   }
 
@@ -43,18 +43,18 @@ export class ApiSelectComponent {
 
     this.processing = true;
     if (this.requestQueue.length) {
-      const [nextUrl, nextPromiseResolve] = this.requestQueue.shift();
+      const [nextUrl, nextPromiseResolve] = this.requestQueue.shift()!;
       if (this.verifiedUrls.has(nextUrl)) {
         // we've seen this before. return the cached item
         nextPromiseResolve(this.responseCache[nextUrl]);
         this.processing = false;
         this.processQueue();
       } else {
-        const headers = {};
+        const headers: Record<string, string> = {};
         if (this.etagCache[nextUrl] && this.responseCache[nextUrl]) {
-          headers["If-None-Match"] = this.etagCache[nextUrl];
+          headers['If-None-Match'] = this.etagCache[nextUrl];
         }
-        let responseTag = "";
+        let responseTag = '';
 
         fetch(nextUrl, { headers })
           .then((r: Response) => {
@@ -62,11 +62,11 @@ export class ApiSelectComponent {
               // we have cached data and the server agreed with the etag we sent, so use the cached data
               return Promise.resolve(this.responseCache[nextUrl]);
             } else {
-              responseTag = r.headers.get("ETag");
+              responseTag = r.headers.get('ETag') ?? '';
               return r.json();
             }
           })
-          .then((d) => {
+          .then(d => {
             // whether from the cache or API response, we have the right data for this endpoint
             this.verifiedUrls.add(nextUrl);
             // this is new data to us, so save it
@@ -78,7 +78,7 @@ export class ApiSelectComponent {
             nextPromiseResolve(d);
             return Promise.resolve(d);
           })
-          .then((d) => {
+          .then(d => {
             this.processing = false;
             this.processQueue();
           });
@@ -99,7 +99,7 @@ export class ApiSelectComponent {
     localStorage.removeItem(baseKey);
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
-      if (k.startsWith(baseKey)) {
+      if (k && k.startsWith(baseKey)) {
         const ls = localStorage.getItem(k);
         if (ls) {
           const data = JSON.parse(ls);
@@ -115,7 +115,7 @@ export class ApiSelectComponent {
     localStorage.removeItem(baseKey);
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
-      if (k.startsWith(baseKey)) {
+      if (k && k.startsWith(baseKey)) {
         localStorage.removeItem(k);
       }
     }
@@ -127,13 +127,13 @@ export class ApiSelectComponent {
     try {
       localStorage.setItem(key, data);
     } catch (e) {
-      console.log("Unable to write to EHTC API component cache - clearing and retrying", e);
+      console.log('Unable to write to EHTC API component cache - clearing and retrying', e);
       this.clearCache();
       try {
         localStorage.setItem(key, data);
       } catch (e) {
         this.clearCache();
-        console.warn("Unable to write to EHTC API component cache - aborting", e);
+        console.warn('Unable to write to EHTC API component cache - aborting', e);
       }
     }
   }
