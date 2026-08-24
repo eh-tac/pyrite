@@ -133,6 +133,11 @@ class Battle
                 }
             }
         }
+        // if this directory does not have a readme but the parent does, copy it in...
+        if (!in_array('readme.txt', $resources) && file_exists(dirname($dir) . '/readme.txt')) {
+            copy(dirname($dir) . '/readme.txt', $dir . 'readme.txt');
+            $resources[] = 'readme.txt';
+        }
 
         switch ($platform) {
             case Platform::TIE:
@@ -147,6 +152,8 @@ class Battle
                 return new \Pyrite\XWA\Battle($type, $num, $dir, $missions, $resources);
             case Platform::XW:
                 return new \Pyrite\XW\Battle($type, $num, $dir, $missions, $resources);
+            default:
+                return new \Pyrite\EHBL\Battle($platform, $type, $num, '', $dir, $missions, $resources);
         }
     }
 
