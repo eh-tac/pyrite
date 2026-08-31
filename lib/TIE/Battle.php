@@ -15,11 +15,14 @@ class Battle extends \Pyrite\EHBL\Battle
         // TODO validation that LFDs has items
         // TODO validation that LFD matches mission files etc
         // TODO handle multiple LFD battles
-        $lfds = array_filter($resourceFiles, fn($f) => str_ends_with(strtolower($f), '.lfd'));
-        if (count($lfds) > 0 && file_exists($folder . $lfds[0])) {
-            $lfd = new BattleLFD(file_get_contents($folder . $lfds[0]));
-
-            $this->title = $lfd->BattleText->BattleName;
+        try {
+            $lfds = array_values(array_filter($resourceFiles, fn($f) => str_ends_with(strtolower($f), '.lfd')));
+            if (count($lfds) > 0 && file_exists($folder . $lfds[0])) {
+                $lfd = new BattleLFD(file_get_contents($folder . $lfds[0]));
+                $this->title = $lfd->BattleText->BattleName;
+            }
+        } catch (\Exception $e) {
+            // ignore errors, just don't set the title
         }
     }
 
