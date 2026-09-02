@@ -283,6 +283,9 @@ class Battle
     {
         // assumes missions is populated
         foreach ($this->missions as $file => $tie) {
+            if (!($tie instanceof PyriteModel)) {
+                continue;
+            }
             $sk = $this->loadScoreKeeper($tie, $file);
             if ($sk) {
                 $this->scores[$file] = $sk;
@@ -335,8 +338,10 @@ class Battle
                 return new \Pyrite\XvT\Mission($contents);
             case Platform::XWA:
             case Platform::TFTC:
+            case Platform::EMB:
                 return new \Pyrite\XWA\Mission($contents);
             case Platform::XW:
+            case Platform::XWVM:
                 return new \Pyrite\XW\Mission($contents);
         }
     }
@@ -356,6 +361,7 @@ class Battle
                 /** @var \Pyrite\XWA\Mission $TIE */
                 return new \Pyrite\XWA\ScoreKeeper($TIE);
             case Platform::XW:
+            case Platform::XWVM:
                 /** @var \Pyrite\XW\Mission $TIE */
                 return new \Pyrite\XW\ScoreKeeper($TIE);
         }
