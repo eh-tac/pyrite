@@ -1,7 +1,9 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { getByte, getChar, writeByte, writeChar, writeObject } from '@pyrite/core';
+
 import { Header } from '../header';
 import { VoicData } from '../voic-data';
-import { getByte, getChar, writeByte, writeChar, writeObject } from '@pyrite/core';
 export abstract class VoicBase extends PyriteBase implements Byteable {
   public VoicLength: number;
   public Header: Header;

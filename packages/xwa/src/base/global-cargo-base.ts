@@ -1,4 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getByte, getInt, getString, writeByte, writeInt, writeString } from '@pyrite/core';
 export abstract class GlobalCargoBase extends PyriteBase implements Byteable {
   public readonly GLOBALCARGOLENGTH: number = 140;

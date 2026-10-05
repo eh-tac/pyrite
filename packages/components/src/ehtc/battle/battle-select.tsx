@@ -1,7 +1,9 @@
-import { Component, Prop, Element, State, Method, Event, EventEmitter } from '@stencil/core';
-import { JSX } from '@stencil/core/jsx-runtime';
-import { BattleSummary } from '../model';
+import type { EventEmitter } from '@stencil/core';
+import { Component, Element, Event,Method, Prop, State } from '@stencil/core';
+import type { JSX } from '@stencil/core/jsx-runtime';
+
 import { ehtcAPI } from '../api-store/util';
+import type { BattleSummary } from '../model';
 
 @Component({
   tag: 'ehtc-battle-select',
@@ -9,7 +11,7 @@ import { ehtcAPI } from '../api-store/util';
   shadow: false,
 })
 export class BattleSelectComponent {
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLEhtcBattleSelectElement;
   @Event() battleSelect!: EventEmitter<BattleSummary>;
 
   // battle id = value
@@ -90,7 +92,7 @@ export class BattleSelectComponent {
     this.externalInputElement.disabled = this.disabled;
     this.externalInputElement.readOnly = this.readonly;
 
-    parent.appendChild(this.externalInputElement);
+    parent.append(this.externalInputElement);
     document.body.addEventListener('keydown', (ke: KeyboardEvent) => {
       if (ke.key === 'Escape' && this.suggestions) {
         this.suggestions = undefined;

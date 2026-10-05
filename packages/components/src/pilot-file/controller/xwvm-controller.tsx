@@ -1,9 +1,7 @@
-import { JSX, h } from "@stencil/core";
-
-import { Battle } from "../../model/ehtc";
-import { PilotFile } from "../../model/XWVM";
-import type { XWVMBattleSummary, XWVMMissionScore } from "../../model/XWVM";
-import { PilotFileController } from "./controller";
+import type { JSX } from '@stencil/core/jsx-runtime';
+import { PilotFileController } from './controller';
+import { PilotFile, XWVMBattleSummary, XWVMMissionScore } from '@pyrite/xwvm';
+import { BattleDetail } from '@pyrite/ehtc-api';
 
 export class XWVMController extends PilotFileController {
   public constructor(
@@ -13,23 +11,23 @@ export class XWVMController extends PilotFileController {
     super(filepath);
   }
 
-  public renderTabs(battleData?: Battle): [string, JSX.Element][] {
+  public renderTabs(battleData?: BattleDetail): [string, JSX.Element][] {
     const tabs: [string, JSX.Element][] = [
-      ["Summary", this.renderPilotInformation()],
-      ["Battles", this.renderBattles()],
+      ['Summary', this.renderPilotInformation()],
+      ['Battles', this.renderBattles()],
     ];
 
     if (battleData) {
-      tabs.unshift(["BSF", this.renderBSF(battleData)]);
+      tabs.unshift(['BSF', this.renderBSF(battleData)]);
     }
     return tabs;
   }
 
-  private renderBSF(battleData: Battle): JSX.Element {
+  private renderBSF(battleData: BattleDetail): JSX.Element {
     const scores = battleData.highScores;
     const totalScore = this.pilot.TotalScore;
-    const percent = scores && scores.total ? this.percentage(totalScore, scores.total.score) : "No high score found";
-    const type = battleData.missions === 1 ? "Mission" : "Battle";
+    const percent = scores && scores.total ? this.percentage(totalScore, scores.total.score) : 'No high score found';
+    const type = battleData.missions === 1 ? 'Mission' : 'Battle';
     const missionScores = this.pilot.MissionScores;
     const missionCount = Math.max(missionScores.length, scores.missions.length);
     const missions: JSX.Element[] = [];
@@ -39,18 +37,18 @@ export class XWVMController extends PilotFileController {
         missions.push(this.renderMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].score, "Too many missions flown", "text-danger"),
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].score, 'Too many missions flown', 'text-danger'),
         );
       } else if (scores.missions[m]) {
-        missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
+        missions.push(this.renderItem(`Mission ${m + 1}`, 'Not flown', '', 'text-danger'));
       }
     }
 
     return (
       <ul class="list-group">
         <li class="list-group-item heading">BSF Details</li>
-        {this.renderItem("Filename", this.filename)}
-        {this.renderItem(`${type} Score`, totalScore.toLocaleString(), percent, "font-weight-bold")}
+        {this.renderItem('Filename', this.filename)}
+        {this.renderItem(`${type} Score`, totalScore.toLocaleString(), percent, 'font-weight-bold')}
         {missions}
       </ul>
     );
@@ -60,11 +58,11 @@ export class XWVMController extends PilotFileController {
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Pilot Information</li>
-        {this.renderItem("Filename", this.filename)}
-        {this.renderItem("Pilot Name", this.pilot.Name || "Unknown")}
-        {this.renderItem("Valid XML", this.pilot.Valid ? "Yes" : "No")}
-        {this.renderItem("Total Score", this.pilot.TotalScore.toLocaleString())}
-        {this.renderItem("Missions", this.pilot.MissionScores.length.toLocaleString())}
+        {this.renderItem('Filename', this.filename)}
+        {this.renderItem('Pilot Name', this.pilot.Name || 'Unknown')}
+        {this.renderItem('Valid XML', this.pilot.Valid ? 'Yes' : 'No')}
+        {this.renderItem('Total Score', this.pilot.TotalScore.toLocaleString())}
+        {this.renderItem('Missions', this.pilot.MissionScores.length.toLocaleString())}
       </ul>
     );
   }
@@ -89,8 +87,8 @@ export class XWVMController extends PilotFileController {
   }
 
   private renderMission(key: string, mission: XWVMMissionScore, highScore?: number): JSX.Element {
-    const percent = highScore ? this.percentage(mission.score, highScore) : "";
-    const status = mission.completed ? "Complete" : "Incomplete";
+    const percent = highScore ? this.percentage(mission.score, highScore) : '';
+    const status = mission.completed ? 'Complete' : 'Incomplete';
 
     return (
       <div class="list-group-item data d-flex justify-content-between">

@@ -1,11 +1,13 @@
 import type {
+  Accuracy,
   BattleSummary,
   KillSummary,
   MissionScore,
+  Percent,
   PilotData,
   TrainingSummary
 } from '@pyrite/core';
-import { getByteString, percent, shootInfo } from '@pyrite/core';
+import { accuracy, getByteString, percent } from '@pyrite/core';
 
 import { PilotFileBase } from './base/pilot-file-base';
 import { BattleStatus, Constants } from './constants';
@@ -29,19 +31,19 @@ export class PilotFile extends PilotFileBase implements PilotData {
     return this.Score - this.LasersHit * 3;
   }
 
-  public get LaserLabel(): string {
-    return shootInfo(this.LasersHit, this.LasersFired);
+  public get LaserLabel(): Accuracy {
+    return accuracy(this.LasersHit, this.LasersFired);
   }
 
-  public get LaserPercent(): string {
+  public get LaserPercent(): Percent {
     return percent(this.LasersHit, this.LasersFired);
   }
 
-  public get WarheadLabel(): string {
-    return shootInfo(this.WarheadsHit, this.WarheadsFired);
+  public get WarheadLabel(): Accuracy {
+    return accuracy(this.WarheadsHit, this.WarheadsFired);
   }
 
-  public get WarheadPercent(): string {
+  public get WarheadPercent(): Percent {
     return percent(this.WarheadsHit, this.WarheadsFired);
   }
 
@@ -53,10 +55,12 @@ export class PilotFile extends PilotFileBase implements PilotData {
       const secret = getByteString(this.SecretObjectives[battle]);
       const bonus = getByteString(this.BonusObjectives[battle]);
       const bs: BattleSummary = {
+        hasData: status !== BattleStatus.none,
         completed: status === BattleStatus.completed,
         status: Constants.BATTLESTATUS[status],
         missions: scores.slice(0, last || 0).map((score: number, m: number) => {
           const mission: MissionScore = {
+            hasData: true,
             completed: true,
             score,
             secret: secret.charAt(m) === '1',
@@ -97,6 +101,7 @@ export class PilotFile extends PilotFileBase implements PilotData {
         trainingScore: this.TrainingScores[idx],
         missions: combatCompletions[idx].map((isComplete: boolean, mission: number) => {
           const combatMission: MissionScore = {
+            hasData: isComplete || combatScores[idx][mission] > 0,
             completed: isComplete,
             score: combatScores[idx][mission]
           };

@@ -1,9 +1,11 @@
 import type { IMission } from '@pyrite/core';
+
 import { FlightGroupBase } from './base/flight-group-base';
 import { Constants } from './constants';
 import { Craft } from './craft';
 import type { GoalFG } from './goal-fg';
-import { Difficulty, Mission } from './mission';
+import type { Mission } from './mission';
+import { Difficulty } from './mission';
 
 export class FlightGroup extends FlightGroupBase {
   public craft: Craft;

@@ -1,7 +1,8 @@
+import type { IMission } from '@pyrite/core';
+
 import { OrderBase } from './base/order-base';
 import { Constants } from './constants';
-import type { IMission } from '@pyrite/core';
-import { Mission } from './mission';
+import type { Mission } from './mission';
 
 export class Order extends OrderBase {
   public mission: Mission;

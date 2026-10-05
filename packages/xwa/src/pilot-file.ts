@@ -1,4 +1,5 @@
-import type { BattleSummary } from '@pyrite/core';
+import type { Accuracy, Percent } from '@pyrite/core';
+import { type BattleSummary, accuracy, percent } from '@pyrite/core';
 
 import type { MissionData } from '.';
 import { PilotFileBase } from './base/pilot-file-base';
@@ -48,27 +49,28 @@ export class PilotFile extends PilotFileBase {
     return this.BonusTen / 10;
   }
 
-  public get LaserLabel(): string {
-    return this.shootInfo(this.LasersHit, this.LasersFired);
+  public get LaserLabel(): Accuracy {
+    return accuracy(this.LasersHit, this.LasersFired);
   }
 
-  public get LaserPercent(): string {
-    return this.percent(this.LasersHit, this.LasersFired);
+  public get LaserPercent(): Percent {
+    return percent(this.LasersHit, this.LasersFired);
   }
 
-  public get WarheadLabel(): string {
-    return this.shootInfo(this.WarheadsHit, this.WarheadsFired);
+  public get WarheadLabel(): Accuracy {
+    return accuracy(this.WarheadsHit, this.WarheadsFired);
   }
 
-  public get WarheadPercent(): string {
-    return this.percent(this.WarheadsHit, this.WarheadsFired);
+  public get WarheadPercent(): Percent {
+    return percent(this.WarheadsHit, this.WarheadsFired);
   }
 
-  public get BattleSummary(): BattleSummary[] {
-    const battles: BattleSummary[] = [];
+  public get BattleSummary(): BattleSummary<MissionData>[] {
+    const battles: BattleSummary<MissionData>[] = [];
     let mIdx = 0;
 
     function processMissions(missions: MissionData[], expectedCount: number = 0) {
+      const hasData = missions.some((m) => m.AttemptCount) !== undefined;
       const won = missions.filter((m) => m && m.WinCount && m.AttemptCount).length;
       const isCompleted = won === expectedCount;
       let status = 'None';
@@ -79,7 +81,7 @@ export class PilotFile extends PilotFileBase {
       } else if (won && !expectedCount) {
         status = 'Custom battle';
       }
-      battles.push({ completed: isCompleted, status, missions });
+      battles.push({ hasData, completed: isCompleted, status, missions });
       mIdx += expectedCount;
     }
 
@@ -100,7 +102,7 @@ export class PilotFile extends PilotFileBase {
       // XWA EH custom missions start at 53 (battle 8)
       for (let i = 0; i < 8; i++) {
         // add empty content for battles 0-7
-        battles.push({ completed: false, status: 'None', missions: [] });
+        battles.push({ hasData: false, completed: false, status: 'None', missions: [] });
       }
       mIdx = 53;
       // could be any number of custom missions added, but lets assume its not more than 53
@@ -110,7 +112,7 @@ export class PilotFile extends PilotFileBase {
       // TFTC EH custom missions start at 100 (battle 20)
       for (let i = 0; i < 20; i++) {
         // add empty content for battles 0-19
-        battles.push({ completed: false, status: 'None', missions: [] });
+        battles.push({ hasData: false, completed: false, status: 'None', missions: [] });
       }
       mIdx = 100;
       // could be any number of custom missions added, but lets assume its not more than 100
@@ -136,15 +138,6 @@ export class PilotFile extends PilotFileBase {
       }
     }
     return victories;
-  }
-
-  private shootInfo(hit: number, fired: number): string {
-    return `${hit.toLocaleString()} / ${fired.toLocaleString()}`;
-  }
-
-  private percent(hit: number, fired: number): string {
-    const per = fired ? Math.floor((hit / fired) * 100) : 0;
-    return `${per} %`;
   }
 
   private hasTypeKills(type: number): boolean {

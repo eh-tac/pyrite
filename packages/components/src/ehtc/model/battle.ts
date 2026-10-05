@@ -1,4 +1,4 @@
-import { PilotSummary } from "./pilot";
+import type { PilotSummary } from "./pilot";
 
 export class BattleSummary {
   constructor(

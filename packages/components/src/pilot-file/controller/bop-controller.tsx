@@ -1,10 +1,8 @@
-import { JSX } from '@stencil/core';
+import type { BattleDetail } from '@pyrite/ehtc-api';
+import type { PL2CampaignRecord, PL2FactionRecord, PL2FileRecord as PilotFile, TriStat } from '@pyrite/xvt';
+import type { JSX } from '@stencil/core/jsx-runtime';
 
 import { PilotFileController } from './controller';
-import { Battle } from '../../ehtc/model';
-import { PL2FileRecord as PilotFile, PL2CampaignRecord, PL2FactionRecord } from '@pyrite/xvt';
-
-type TriStat = { Label: string; exercise: number; melee: number; combat: number };
 
 export class BoPPltController extends PilotFileController {
   public constructor(
@@ -14,7 +12,7 @@ export class BoPPltController extends PilotFileController {
     super(filepath);
   }
 
-  public renderTabs(battleData?: Battle): [string, JSX.Element][] {
+  public renderTabs(battleData?: BattleDetail): [string, JSX.Element][] {
     const tabs: [string, JSX.Element][] = [['Summary', this.renderPilotInformation()]];
 
     const rebel = this.plt.getRebelFaction();
@@ -38,7 +36,7 @@ export class BoPPltController extends PilotFileController {
     return tabs;
   }
 
-  protected renderBSF(battleData: Battle): JSX.Element {
+  protected renderBSF(battleData: BattleDetail): JSX.Element {
     const scores = battleData.highScores;
 
     let totalScore: number = 0;
@@ -48,10 +46,12 @@ export class BoPPltController extends PilotFileController {
       .getCompletedMissions()
       .slice(battleData.offset ?? 0, battleData.missions)
       .forEach(m => {
-        if (m.totalCountFlown) {
-          missionScores.push(m);
-          totalScore += m.bestScore;
+        if (!m.totalCountFlown) {
+          return;
         }
+
+        missionScores.push(m);
+        totalScore += m.bestScore;
       });
     const percent: string =
       scores && scores.total ? this.percentage(totalScore, scores.total.score) : 'No high score found';
@@ -172,9 +172,9 @@ export class BoPPltController extends PilotFileController {
     return (
       <tr class={className}>
         <td>{stat.Label}</td>
-        <td class={className || 'text-info'}>{stat.exercise}</td>
-        <td class={className || 'text-info'}>{stat.melee}</td>
-        <td class={className || 'text-info'}>{stat.combat}</td>
+        <td class={className || 'text-info'}>{stat.Exercise}</td>
+        <td class={className || 'text-info'}>{stat.Melee}</td>
+        <td class={className || 'text-info'}>{stat.Combat}</td>
       </tr>
     );
   }

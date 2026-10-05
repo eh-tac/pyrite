@@ -1,4 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getShort, writeShort } from '@pyrite/core';
 export abstract class ViewportSettingBase extends PyriteBase implements Byteable {
   public readonly VIEWPORTSETTINGLENGTH: number = 10;

@@ -89,7 +89,7 @@ export function writeChar(
 ): void {
   const view = new Uint8Array(hex);
   for (let i = 0; i < length; i++) {
-    view[pos + i] = i < value.length ? value.charCodeAt(i) : 0;
+    view[pos + i] = i < value.length ? (value.codePointAt(i) ?? 0) : 0;
   }
 }
 
@@ -114,7 +114,7 @@ export function writeString(
   const view = new Uint8Array(hex);
   const maxLength = Math.min(length, value.length);
   for (let i = 0; i < maxLength; i++) {
-    view[pos + i] = value.charCodeAt(i);
+    view[pos + i] = value.codePointAt(i) ?? 0;
   }
   if (maxLength < length) {
     view[pos + maxLength] = 0;

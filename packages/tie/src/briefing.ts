@@ -1,11 +1,12 @@
-import { getInt, getShort } from '@pyrite/core';
 import type { IMission } from '@pyrite/core';
+import { getInt, getShort } from '@pyrite/core';
+
 import { BriefingBase } from './base/briefing-base';
 import { EventType } from './constants';
 import { Event } from './event';
+import type { Mission } from './mission';
 import { Tag } from './tag';
 import { TIEString } from './tie-string';
-import { Mission } from './mission';
 
 export class Briefing extends BriefingBase {
   public constructor(hex: ArrayBuffer, TIE?: IMission) {

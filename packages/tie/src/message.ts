@@ -1,4 +1,5 @@
 import type { IMission } from '@pyrite/core';
+
 import { MessageBase } from './base/message-base';
 import { Constants, MessageColor } from './constants';
 

@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
-    "lint": "eslint packages --ext .ts",
+    "lint": "eslint packages --ext .ts,.tsx",
     "typecheck": "node ./scripts/typecheck-all.mjs",
     "stan": "composer phpstan",
     "test": "jest --projects packages/*/jest.config.cjs",
@@ -23,7 +23,8 @@
     "test:php": "sh -c 'if [ -x vendor/bin/phpunit ]; then exec vendor/bin/phpunit --configuration phpunit.xml \"$@\"; else exec phpunit --configuration phpunit.xml \"$@\"; fi' --",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
-    "generate": "tsx packages/codegen/src/run.ts"
+    "generate": "tsx packages/codegen/src/run.ts",
+    "postgenerate": "npm run lint"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -35,6 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^8.62.1",
     "@typescript-eslint/parser": "^8.62.1",
     "eslint": "^10.6.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "eslint-plugin-unicorn": "^70.0.0",
     "globals": "^16.2.0",

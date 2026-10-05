@@ -1,8 +1,9 @@
-import { IMission } from '@pyrite/core';
+import type { IMission } from '@pyrite/core';
+
 import { EventBase } from './base/event-base';
 import type { Briefing } from './briefing';
 import { Constants } from './constants';
-import { Mission } from './mission';
+import type { Mission } from './mission';
 
 export enum EventType {
   PageBreak = 3,

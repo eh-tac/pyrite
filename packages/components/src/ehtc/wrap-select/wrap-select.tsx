@@ -1,4 +1,6 @@
-import { JSX, Component, Prop, Element, State, Method, Event, EventEmitter } from '@stencil/core';
+import type { EventEmitter} from '@stencil/core';
+import { Component, Element, Event,Method, Prop, State } from '@stencil/core';
+import type { JSX } from '@stencil/core/jsx-runtime';
 
 export interface ItemSummary {
   id: number;
@@ -11,7 +13,7 @@ export interface ItemSummary {
   shadow: false,
 })
 export class WrapSelectComponent {
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLEhtcWrapSelectElement;
   @Event() itemSelect: EventEmitter<ItemSummary>;
 
   @Prop({ reflect: true, mutable: true }) value: string;
@@ -35,7 +37,8 @@ export class WrapSelectComponent {
       return;
     }
 
-    if (e.key === 'ArrowDown') {
+    switch (e.key) {
+    case 'ArrowDown': {
       if (this.suggestionIdx === undefined) {
         this.suggestionIdx = 0;
       } else {
@@ -44,7 +47,10 @@ export class WrapSelectComponent {
           this.suggestionIdx = 0; // wrap around
         }
       }
-    } else if (e.key === 'ArrowUp') {
+    
+    break;
+    }
+    case 'ArrowUp': {
       if (this.suggestionIdx === undefined) {
         this.suggestionIdx = this.suggestions.length - 1;
       } else {
@@ -53,13 +59,20 @@ export class WrapSelectComponent {
           this.suggestionIdx = this.suggestions.length - 1; // wrap around
         }
       }
-    } else if (e.key === 'Enter') {
+    
+    break;
+    }
+    case 'Enter': {
       e.stopPropagation();
       e.preventDefault();
       const m = this.suggestions[this.suggestionIdx];
       if (m) {
         this.selectItem(m);
       }
+    
+    break;
+    }
+    // No default
     }
   };
   private onClick: (e: Event) => void = (e: Event) => {
@@ -98,7 +111,7 @@ export class WrapSelectComponent {
     this.externalInputElement.name = this.name;
     this.externalInputElement.disabled = this.disabled;
     this.externalInputElement.readOnly = this.readonly;
-    parent.appendChild(this.externalInputElement);
+    parent.append(this.externalInputElement);
 
     this.el.querySelectorAll('option').forEach(optEl => {
       const item = {
@@ -187,7 +200,10 @@ export class WrapSelectComponent {
       );
     }
     return (
-      <div class={{ 'ehtc-wrap-select': true, 'dropdown': true, 'is-active': !this.selection && !!this.suggestions }} onClick={this.onClick}>
+      <div
+        class={{ 'ehtc-wrap-select': true, 'dropdown': true, 'is-active': !this.selection && !!this.suggestions }}
+        onClick={this.onClick}
+      >
         <div style={{ display: 'none' }}>
           <slot />
         </div>
@@ -219,7 +235,10 @@ export class WrapSelectComponent {
         )}
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
-            {this.suggestions && this.suggestions.map((s: ItemSummary, idx: number) => <div class={{ record: true, hover: this.suggestionIdx === idx }}>{this.renderItem(s)}</div>)}
+            {this.suggestions &&
+              this.suggestions.map((s: ItemSummary, idx: number) => (
+                <div class={{ record: true, hover: this.suggestionIdx === idx }}>{this.renderItem(s)}</div>
+              ))}
             <span class="no-data">No matches found</span>
           </div>
         </div>

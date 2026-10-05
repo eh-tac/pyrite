@@ -1,6 +1,8 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { Header } from '../header';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { writeObject } from '@pyrite/core';
+
+import { Header } from '../header';
 export abstract class RmapBase extends PyriteBase implements Byteable {
   public RmapLength: number;
   public Header: Header;

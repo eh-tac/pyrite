@@ -1,11 +1,13 @@
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { getString, writeObject, writeString } from '@pyrite/core';
+
 import { Briefing } from '../briefing';
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { FileHeader } from '../file-header';
 import { FlightGroup } from '../flight-group';
 import { GlobalGoal } from '../global-goal';
 import { Message } from '../message';
 import { Team } from '../team';
-import { getString, writeObject, writeString } from '@pyrite/core';
 export abstract class MissionBase extends PyriteBase implements Byteable {
   public MissionLength: number;
   public FileHeader: FileHeader;

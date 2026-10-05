@@ -1,9 +1,9 @@
-import { JSX, h } from "@stencil/core";
+import type { JSX } from '@stencil/core/jsx-runtime';
 
-import { PilotFileController } from "./controller";
-import { TrainingSummary, MissionScore, KillSummary, BattleSummary } from "../../model/pilot";
-import { Battle } from "../../model/ehtc";
-import { PilotFile } from "../../model/XW";
+import { PilotFileController } from './controller';
+import { PilotFile } from '@pyrite/xw';
+import { BattleDetail } from '@pyrite/ehtc-api';
+import { BattleSummary, KillSummary, MissionScore, TrainingSummary } from '@pyrite/core';
 
 export class XWController extends PilotFileController {
   public constructor(
@@ -13,27 +13,27 @@ export class XWController extends PilotFileController {
     super(filepath);
   }
 
-  public renderTabs(battleData?: Battle): [string, JSX.Element][] {
+  public renderTabs(battleData?: BattleDetail): [string, JSX.Element][] {
     const tabs: [string, JSX.Element][] = [
-      ["Summary", this.renderPilotInformation()],
-      ["Battles", this.renderBattles()],
-      ["Kills", this.renderKills()],
-      ["Training", this.renderTraining()],
+      ['Summary', this.renderPilotInformation()],
+      ['Battles', this.renderBattles()],
+      ['Kills', this.renderKills()],
+      ['Training', this.renderTraining()],
     ];
 
     if (battleData) {
-      tabs.unshift(["BSF", this.renderBSF(battleData)]);
+      tabs.unshift(['BSF', this.renderBSF(battleData)]);
     }
     return tabs;
   }
 
-  private renderBSF(battleData: Battle): JSX.Element {
+  private renderBSF(battleData: BattleDetail): JSX.Element {
     const scores = battleData.highScores;
 
     const totalScore: number = this.plt.TotalXWHistoricScore;
     const percent: string =
-      scores && scores.total ? this.percentage(totalScore, scores.total.score) : "No high score found";
-    const type = battleData.missions === 1 ? "Mission" : "Battle";
+      scores && scores.total ? this.percentage(totalScore, scores.total.score) : 'No high score found';
+    const type = battleData.missions === 1 ? 'Mission' : 'Battle';
 
     const battleRow = (
       <li class="list-group-item kv heading d-flex justify-content-between">
@@ -55,23 +55,23 @@ export class XWController extends PilotFileController {
         missions.push(this.renderXWMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]?.completed) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].score, "Too many missions flown", "text-danger"),
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].score, 'Too many missions flown', 'text-danger'),
         );
       } else if (scores.missions[m]) {
-        missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
+        missions.push(this.renderItem(`Mission ${m + 1}`, 'Not flown', '', 'text-danger'));
       } else {
-        console.error("Unknown state?");
+        console.error('Unknown state?');
       }
     }
 
     return (
       <ul class="list-group">
         <li class="list-group-item heading">BSF Details</li>
-        {this.renderItem("Filename", this.filename)}
-        {this.renderItem("Lasers", this.plt.LaserLabel, this.plt.LaserPercent)}
-        {this.renderItem("Warheads", this.plt.WarheadLabel, this.plt.WarheadPercent)}
-        {this.renderItem("Kills", this.plt.TotalKills)}
-        {this.renderItem("Captures", this.plt.TotalCaptures)}
+        {this.renderItem('Filename', this.filename)}
+        {this.renderItem('Lasers', this.plt.LaserLabel, this.plt.LaserPercent)}
+        {this.renderItem('Warheads', this.plt.WarheadLabel, this.plt.WarheadPercent)}
+        {this.renderItem('Kills', this.plt.TotalKills)}
+        {this.renderItem('Captures', this.plt.TotalCaptures)}
 
         {battleRow}
         {missions}
@@ -84,17 +84,17 @@ export class XWController extends PilotFileController {
     const complete = mission.completed;
     const secret = mission.secret;
     const bonus = mission.bonus;
-    const hs = highScore ? this.percentage(mission.score, highScore) : "";
+    const hs = highScore ? this.percentage(mission.score, highScore) : '';
 
     if (!complete && !score) {
-      return "";
+      return null;
     }
     const icons: JSX.Element[] = [
       <i
-        class={`material-icons ${complete ? "complete" : "failed"}`}
-        aria-label={complete ? "Mission complete" : "Mission failed"}
+        class={`material-icons ${complete ? 'complete' : 'failed'}`}
+        aria-label={complete ? 'Mission complete' : 'Mission failed'}
       >
-        {complete ? "done" : "close"}
+        {complete ? 'done' : 'close'}
       </i>,
     ];
     if (secret) {
@@ -116,22 +116,22 @@ export class XWController extends PilotFileController {
 
   private renderPilotInformation(): JSX.Element {
     const fields: { [key: string]: string | number } = {
-      Filename: this.filename,
-      Status: this.plt.PilotStatusLabel,
-      Rank: this.plt.PilotRankLabel,
-      "Rookie Number": this.plt.RookieNumber,
-      "Tour Score": this.plt.TotalTODScore.toLocaleString(),
-      "Laser hits": this.plt.LaserLabel,
-      "Warhead hits": this.plt.WarheadLabel,
-      Kills: this.plt.TotalKills,
-      Captures: this.plt.TotalCaptures,
-      "Craft lost": this.plt.CraftLost,
+      'Filename': this.filename,
+      'Status': this.plt.PilotStatusLabel,
+      'Rank': this.plt.PilotRankLabel,
+      'Rookie Number': this.plt.RookieNumber,
+      'Tour Score': this.plt.TotalTODScore.toLocaleString(),
+      'Laser hits': this.plt.LaserLabel,
+      'Warhead hits': this.plt.WarheadLabel,
+      'Kills': this.plt.TotalKills,
+      'Captures': this.plt.TotalCaptures,
+      'Craft lost': this.plt.CraftLost,
     };
 
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Pilot Information</li>
-        {Object.entries(fields).map((value: [string, string]) => this.renderItem(value[0], value[1]))}
+        {Object.entries(fields).map((value: [string, string | number]) => this.renderItem(value[0], value[1]))}
       </ul>
     );
   }
@@ -141,7 +141,7 @@ export class XWController extends PilotFileController {
       <ul class="list-group">
         <li class="list-group-item heading">Tours of Duty</li>
         {this.plt.BattleSummary.map((battle: BattleSummary, b: number) =>
-          battle.missions.length ? (
+          battle.missions.length > 0 ? (
             <li class="list-group-item">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 text-muted">Tour {b + 1}</h5>
@@ -152,7 +152,7 @@ export class XWController extends PilotFileController {
               )}
             </li>
           ) : (
-            ""
+            ''
           ),
         )}
       </ul>
@@ -180,7 +180,7 @@ export class XWController extends PilotFileController {
         {this.plt.TrainingSummary.map((train: TrainingSummary) => (
           <li class="list-group-item">
             <h5 class="mb-1">{train.craftLabel}</h5>
-            {this.renderItem("Obstacle Course", train.scoreLabel, "", "py-0")}
+            {this.renderItem('Obstacle Course', train.scoreLabel, '', 'py-0')}
             {train.missions.map((mission: MissionScore, m: number) =>
               this.renderXWMission(`Mission ${m + 1}`, mission),
             )}

@@ -1,5 +1,8 @@
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { getByte, getShort, writeByte, writeObject, writeShort } from '@pyrite/core';
+
 import { BriefingHeader } from '../briefing-header';
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { Coordinate } from '../coordinate';
 import { Icon } from '../icon';
 import { MissionHeader } from '../mission-header';
@@ -7,7 +10,6 @@ import { Page } from '../page';
 import { Tag } from '../tag';
 import { ViewportSetting } from '../viewport-setting';
 import { XWString } from '../xw-string';
-import { getByte, getShort, writeByte, writeObject, writeShort } from '@pyrite/core';
 export abstract class BriefingBase extends PyriteBase implements Byteable {
   public BriefingLength: number;
   public BriefingHeader: BriefingHeader;

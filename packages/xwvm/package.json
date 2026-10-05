@@ -24,6 +24,10 @@
     "preinstall": "npm run build"
   },
   "dependencies": {
-    "@pyrite/core": "file:../core"
+    "@pyrite/core": "file:../core",
+    "jsdom": "^30.1.2"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^30.0.0"
   }
 }

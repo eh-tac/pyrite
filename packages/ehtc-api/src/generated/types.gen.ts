@@ -100,9 +100,13 @@ export type BattleDetail = Battle & {
     patches: Array<unknown>;
     highScores: {
         /**
-         * Score summary, or an empty string when none exists.
+         * Score summary, or null when none exists.
          */
-        total: PilotScore | '';
+        total: {
+            pilot: string;
+            score: number;
+            date: string;
+        } | null;
         missions: Array<PilotScore>;
     };
     statistics: Array<unknown>;

@@ -1,6 +1,7 @@
-import { IMission } from '@pyrite/core';
+import type { IMission } from '@pyrite/core';
+
 import { TriggerBase } from './base/trigger-base';
-import { Mission } from './mission';
+import type { Mission } from './mission';
 
 export class Trigger extends TriggerBase {
   public mission: Mission;

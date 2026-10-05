@@ -101,6 +101,12 @@ export namespace Components {
         "search": (query: string) => Promise<void>;
         "value": string;
     }
+    interface MaterialIcon {
+        /**
+          * @default 'star'
+         */
+        "name": string;
+    }
     interface PyritePilotFile {
         /**
           * @default false
@@ -205,6 +211,12 @@ declare global {
         prototype: HTMLEhtcWrapSelectElement;
         new (): HTMLEhtcWrapSelectElement;
     };
+    interface HTMLMaterialIconElement extends Components.MaterialIcon, HTMLStencilElement {
+    }
+    var HTMLMaterialIconElement: {
+        prototype: HTMLMaterialIconElement;
+        new (): HTMLMaterialIconElement;
+    };
     interface HTMLPyritePilotFileElement extends Components.PyritePilotFile, HTMLStencilElement {
     }
     var HTMLPyritePilotFileElement: {
@@ -217,6 +229,7 @@ declare global {
         "ehtc-battle-select": HTMLEhtcBattleSelectElement;
         "ehtc-member-select": HTMLEhtcMemberSelectElement;
         "ehtc-wrap-select": HTMLEhtcWrapSelectElement;
+        "material-icon": HTMLMaterialIconElement;
         "pyrite-pilot-file": HTMLPyritePilotFileElement;
     }
 }
@@ -322,6 +335,12 @@ declare namespace LocalJSX {
         "readonly"?: boolean;
         "value"?: string;
     }
+    interface MaterialIcon {
+        /**
+          * @default 'star'
+         */
+        "name"?: string;
+    }
     interface PyritePilotFile {
         /**
           * @default false
@@ -368,6 +387,9 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "readonly": boolean;
     }
+    interface MaterialIconAttributes {
+        "name": string;
+    }
     interface PyritePilotFileAttributes {
         "file": string;
         "bsf": string;
@@ -380,6 +402,7 @@ declare namespace LocalJSX {
         "ehtc-battle-select": Omit<EhtcBattleSelect, keyof EhtcBattleSelectAttributes> & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes]?: EhtcBattleSelect[K] } & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes as `attr:${K}`]?: EhtcBattleSelectAttributes[K] } & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes as `prop:${K}`]?: EhtcBattleSelect[K] } & OneOf<"name", EhtcBattleSelect["name"], EhtcBattleSelectAttributes["name"]>;
         "ehtc-member-select": Omit<EhtcMemberSelect, keyof EhtcMemberSelectAttributes> & { [K in keyof EhtcMemberSelect & keyof EhtcMemberSelectAttributes]?: EhtcMemberSelect[K] } & { [K in keyof EhtcMemberSelect & keyof EhtcMemberSelectAttributes as `attr:${K}`]?: EhtcMemberSelectAttributes[K] } & { [K in keyof EhtcMemberSelect & keyof EhtcMemberSelectAttributes as `prop:${K}`]?: EhtcMemberSelect[K] };
         "ehtc-wrap-select": Omit<EhtcWrapSelect, keyof EhtcWrapSelectAttributes> & { [K in keyof EhtcWrapSelect & keyof EhtcWrapSelectAttributes]?: EhtcWrapSelect[K] } & { [K in keyof EhtcWrapSelect & keyof EhtcWrapSelectAttributes as `attr:${K}`]?: EhtcWrapSelectAttributes[K] } & { [K in keyof EhtcWrapSelect & keyof EhtcWrapSelectAttributes as `prop:${K}`]?: EhtcWrapSelect[K] };
+        "material-icon": Omit<MaterialIcon, keyof MaterialIconAttributes> & { [K in keyof MaterialIcon & keyof MaterialIconAttributes]?: MaterialIcon[K] } & { [K in keyof MaterialIcon & keyof MaterialIconAttributes as `attr:${K}`]?: MaterialIconAttributes[K] } & { [K in keyof MaterialIcon & keyof MaterialIconAttributes as `prop:${K}`]?: MaterialIcon[K] };
         "pyrite-pilot-file": Omit<PyritePilotFile, keyof PyritePilotFileAttributes> & { [K in keyof PyritePilotFile & keyof PyritePilotFileAttributes]?: PyritePilotFile[K] } & { [K in keyof PyritePilotFile & keyof PyritePilotFileAttributes as `attr:${K}`]?: PyritePilotFileAttributes[K] } & { [K in keyof PyritePilotFile & keyof PyritePilotFileAttributes as `prop:${K}`]?: PyritePilotFile[K] } & OneOf<"file", PyritePilotFile["file"], PyritePilotFileAttributes["file"]>;
     }
 }
@@ -392,6 +415,7 @@ declare module "@stencil/core" {
             "ehtc-battle-select": LocalJSX.IntrinsicElements["ehtc-battle-select"] & JSXBase.HTMLAttributes<HTMLEhtcBattleSelectElement>;
             "ehtc-member-select": LocalJSX.IntrinsicElements["ehtc-member-select"] & JSXBase.HTMLAttributes<HTMLEhtcMemberSelectElement>;
             "ehtc-wrap-select": LocalJSX.IntrinsicElements["ehtc-wrap-select"] & JSXBase.HTMLAttributes<HTMLEhtcWrapSelectElement>;
+            "material-icon": LocalJSX.IntrinsicElements["material-icon"] & JSXBase.HTMLAttributes<HTMLMaterialIconElement>;
             "pyrite-pilot-file": LocalJSX.IntrinsicElements["pyrite-pilot-file"] & JSXBase.HTMLAttributes<HTMLPyritePilotFileElement>;
         }
     }

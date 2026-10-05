@@ -1,6 +1,8 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { Trigger } from '../trigger';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getBool, writeBool, writeObject } from '@pyrite/core';
+
+import { Trigger } from '../trigger';
 export abstract class TriggerPairBase extends PyriteBase implements Byteable {
   public readonly TRIGGERPAIRLENGTH: number = 16;
   public Trigger1: Trigger;

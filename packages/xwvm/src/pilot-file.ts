@@ -1,4 +1,6 @@
-import { BattleSummary as BaseBattleSummary, MissionScore } from '@pyrite/core';
+/* eslint-disable unicorn/no-computed-property-existence-check */
+import type { BattleSummary as BaseBattleSummary, MissionScore } from '@pyrite/core';
+import { JSDOM } from 'jsdom';
 
 export interface XWVMMissionScore extends MissionScore {
   name: string;
@@ -8,9 +10,8 @@ export interface XWVMMissionScore extends MissionScore {
   hash?: string;
 }
 
-export interface XWVMBattleSummary extends BaseBattleSummary {
+export interface XWVMBattleSummary extends BaseBattleSummary<XWVMMissionScore> {
   battle: string;
-  missions: XWVMMissionScore[];
 }
 
 interface ParsedTag {
@@ -82,6 +83,7 @@ export class PilotFile {
 
       if (!battles[mission.battle]) {
         battles[mission.battle] = {
+          hasData: true,
           battle: mission.battle,
           completed: true,
           status: 'Completed',
@@ -100,7 +102,7 @@ export class PilotFile {
 
     this.BattleSummary = Object.values(battles).map((battle: XWVMBattleSummary) => ({
       ...battle,
-      missions: battle.missions.sort(
+      missions: battle.missions.toSorted(
         (a: XWVMMissionScore, b: XWVMMissionScore) => a.mission - b.mission
       )
     }));
@@ -115,20 +117,21 @@ export class PilotFile {
 
     return {
       name,
+      hasData: true,
       battle: match[1],
-      mission: parseInt(match[2], 10),
-      score: parseInt(attributes.Score || '0', 10),
+      mission: Number(match[2]),
+      score: Number(attributes.Score || '0'),
       completed: (attributes.Complete || '').toLowerCase() === 'true',
-      tourStep: attributes.TourStep === undefined ? undefined : parseInt(attributes.TourStep, 10),
+      tourStep: attributes.TourStep === undefined ? undefined : Number(attributes.TourStep),
       hash: attributes.Hash || ''
     };
   }
 
   private isWellFormedXml(xml: string): boolean {
-    if (typeof DOMParser !== 'undefined') {
-      const doc = new DOMParser().parseFromString(xml, 'application/xml');
-      const parserError = doc.getElementsByTagName('parsererror');
-      if (parserError.length) {
+    if (JSDOM !== undefined) {
+      const doc = new JSDOM(xml, { contentType: 'application/xml' }).window.document;
+      const parserError = doc.querySelectorAll(':scope parsererror');
+      if (parserError.length > 0) {
         this.Valid = false;
         this.Errors.push(parserError[0].textContent || 'Invalid XML.');
         return false;
@@ -169,9 +172,9 @@ export class PilotFile {
       }
     }
 
-    if (stack.length) {
+    if (stack.length > 0) {
       this.Valid = false;
-      this.Errors.push(`Unclosed XML tag: ${stack[stack.length - 1]}.`);
+      this.Errors.push(`Unclosed XML tag: ${stack.at(-1)}.`);
       return false;
     }
 
@@ -204,7 +207,7 @@ export class PilotFile {
   }
 
   private parseTag(token: string): ParsedTag | undefined {
-    if (/^<\?/.test(token) || /^<!--/.test(token) || /^<!/.test(token)) {
+    if (/^<\?/.test(token) || token.startsWith('<!--') || token.startsWith('<!')) {
       return {
         name: '',
         closing: false,
@@ -213,8 +216,8 @@ export class PilotFile {
       };
     }
 
-    const closing = /^<\//.test(token);
-    const selfClosing = /\/>$/.test(token);
+    const isClosing = /^<\//.test(token);
+    const isSelfClosing = /\/>$/.test(token);
     const nameMatch = /^<\/?\s*([A-Za-z_][\w:.-]*)/.exec(token);
     if (!nameMatch) {
       return undefined;
@@ -229,8 +232,8 @@ export class PilotFile {
 
     return {
       name: nameMatch[1],
-      closing,
-      selfClosing,
+      closing: isClosing,
+      selfClosing: isSelfClosing,
       attributes
     };
   }

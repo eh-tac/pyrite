@@ -1,5 +1,7 @@
-import { Component, Prop, Element, Event, EventEmitter, State, Method, AttachInternals } from '@stencil/core';
-import { MemberSummary, Character } from '@pyrite/ehtc-api';
+import type { Character, MemberSummary } from '@pyrite/ehtc-api';
+import type { EventEmitter} from '@stencil/core';
+import { AttachInternals,Component, Element, Event, Method, Prop, State } from '@stencil/core';
+
 import { ehtcAPI } from '../api-store/util';
 
 type Member = MemberSummary | Character;
@@ -11,7 +13,7 @@ type Member = MemberSummary | Character;
   formAssociated: true,
 })
 export class MemberSelectComponent {
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLEhtcMemberSelectElement;
   @AttachInternals() internals!: ElementInternals;
   @Event() memberSelect!: EventEmitter<MemberSummary | Character>;
   // member PIN = value
@@ -42,7 +44,8 @@ export class MemberSelectComponent {
       return;
     }
 
-    if (e.key === 'ArrowDown') {
+    switch (e.key) {
+    case 'ArrowDown': {
       if (this.suggestionIdx === undefined) {
         this.suggestionIdx = 0;
       } else {
@@ -51,7 +54,10 @@ export class MemberSelectComponent {
           this.suggestionIdx = 0; // wrap around
         }
       }
-    } else if (e.key === 'ArrowUp') {
+    
+    break;
+    }
+    case 'ArrowUp': {
       if (this.suggestionIdx === undefined) {
         this.suggestionIdx = this.suggestions.length - 1;
       } else {
@@ -60,13 +66,20 @@ export class MemberSelectComponent {
           this.suggestionIdx = this.suggestions.length - 1; // wrap around
         }
       }
-    } else if (e.key === 'Enter') {
+    
+    break;
+    }
+    case 'Enter': {
       e.stopPropagation();
       e.preventDefault();
       const m = this.suggestions[this.suggestionIdx ?? 0];
       if (m) {
         this.selectMember(m);
       }
+    
+    break;
+    }
+    // No default
     }
   };
   // private externalPINInputElement: HTMLInputElement;
@@ -95,7 +108,7 @@ export class MemberSelectComponent {
 
     ehtcAPI(this.listURL).then((d: Member[]) => {
       this.memberList = d;
-      if (this.filterArray.length) {
+      if (this.filterArray.length > 0) {
         this.memberList =
           this.mode === 'character'
             ? (d as Character[]).filter((c: Character) => charFilter(c))

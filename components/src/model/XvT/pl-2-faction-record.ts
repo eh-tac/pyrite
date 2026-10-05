@@ -1,7 +1,6 @@
 import { IMission } from "../pyrite-base";
 import { PL2FactionRecordBase } from "./base/pl-2-faction-record-base";
-import { Constants } from "./constants";
-import { PLTCategoryTypeRecord } from "./plt-category-type-record";
+import { Constants, Ships } from "./constants";
 
 export interface TriStat {
   Label: string;
@@ -41,7 +40,7 @@ export class PL2FactionRecord extends PL2FactionRecordBase {
     for (let i = 1; i < 93; i++) {
       if (this.hasTypeKills(i)) {
         victories.push({
-          Label: Constants.SHIPS[i],
+          Label: Constants.SHIPS[i as Ships],
           exercise: `${this.totalFullKillsOnCraftEMC[i]} (${this.totalSharedKillsOnCraftEMC[i]})`,
           melee: `${this.totalFullKillsOnCraftEMC[i + 100]} (${this.totalSharedKillsOnCraftEMC[i + 100]})`,
           combat: `${this.totalFullKillsOnCraftEMC[i + 200]} (${this.totalSharedKillsOnCraftEMC[i + 200]})`,
@@ -60,14 +59,5 @@ export class PL2FactionRecord extends PL2FactionRecordBase {
       this.totalFullKillsOnCraftEMC[type + 200] ||
       this.totalSharedKillsOnCraftEMC[type + 200];
     return k > 0;
-  }
-
-  private shootInfo(hit: number, fired: number): string {
-    return `${hit} / ${fired}`;
-  }
-
-  private percent(hit: number, fired: number): string {
-    const per = fired ? Math.floor((hit / fired) * 100) : 0;
-    return `${per} %`;
   }
 }

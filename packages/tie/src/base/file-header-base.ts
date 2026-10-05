@@ -1,5 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { BriefingOfficers, Constants } from '../constants';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import {
   getBool,
   getByte,
@@ -10,6 +10,9 @@ import {
   writeChar,
   writeShort
 } from '@pyrite/core';
+
+import type { BriefingOfficers} from '../constants';
+import { Constants } from '../constants';
 export abstract class FileHeaderBase extends PyriteBase implements Byteable {
   public readonly FILEHEADERLENGTH: number = 458;
   public readonly PlatformID: number = -1;

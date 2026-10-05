@@ -1,5 +1,7 @@
-import { Component, Prop, Element, State, Method, Event, EventEmitter, AttachInternals } from '@stencil/core';
-import { JSX } from '@stencil/core/jsx-runtime';
+import type { EventEmitter} from '@stencil/core';
+import { AttachInternals,Component, Element, Event, Method, Prop, State } from '@stencil/core';
+import type { JSX } from '@stencil/core/jsx-runtime';
+
 import { ehtcAPI } from '../api-store/util';
 
 export interface ApiSummary {
@@ -16,7 +18,7 @@ export interface ApiSummary {
 })
 export class ApiSelectComponent {
   @AttachInternals() internals!: ElementInternals;
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLEhtcApiSelectElement;
   @Event() apiSelect!: EventEmitter<ApiSummary>;
 
   @Prop({ reflect: true }) item?: ApiSummary;

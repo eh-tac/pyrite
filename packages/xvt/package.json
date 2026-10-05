@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts --clean",
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "dev": "tsx watch src/index.ts",
     "lint": "eslint src --ext .ts",
     "test": "jest --config ./jest.config.cjs",

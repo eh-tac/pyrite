@@ -1,7 +1,9 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { getShort, writeObject, writeShort } from '@pyrite/core';
+
 import { Header } from '../header';
 import { LString } from '../l-string';
-import { getShort, writeObject, writeShort } from '@pyrite/core';
 export abstract class BattleTextBase extends PyriteBase implements Byteable {
   public BattleTextLength: number;
   public Header: Header;

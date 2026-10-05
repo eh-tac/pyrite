@@ -1,6 +1,8 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { PL2CampaignProgressState } from '../pl-2-campaign-progress-state';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getInt, writeInt, writeObject } from '@pyrite/core';
+
+import { PL2CampaignProgressState } from '../pl-2-campaign-progress-state';
 export abstract class PL2CampaignStateBase extends PyriteBase implements Byteable {
   public readonly PL2CAMPAIGNSTATELENGTH: number = 40;
   public ConfigRandomSeed: number;

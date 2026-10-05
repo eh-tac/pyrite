@@ -1,6 +1,8 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { GoalGlobal } from '../goal-global';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getShort, writeObject, writeShort } from '@pyrite/core';
+
+import { GoalGlobal } from '../goal-global';
 export abstract class GlobalGoalBase extends PyriteBase implements Byteable {
   public readonly GLOBALGOALLENGTH: number = 368;
   public Reserved: number; //(3)

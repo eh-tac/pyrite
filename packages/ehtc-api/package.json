@@ -13,7 +13,9 @@
   },
   "scripts": {
     "generate": "openapi-ts",
-    "build": "npm run generate && tsup src/index.ts --format esm --dts --clean",
+    "postgenerate": "npm run lint",
+    "build": "npm run generate && tsup src/index.ts --format esm,cjs --dts --clean",
+    "lint": "eslint src --ext .ts",
     "typecheck": "tsc --noEmit --project tsconfig.json"
   },
   "devDependencies": {

@@ -1,7 +1,9 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { getShort, writeObject, writeShort } from '@pyrite/core';
+
 import { Header } from '../header';
 import { Row } from '../row';
-import { getShort, writeObject, writeShort } from '@pyrite/core';
 export abstract class DeltBase extends PyriteBase implements Byteable {
   public DeltLength: number;
   public Header: Header;

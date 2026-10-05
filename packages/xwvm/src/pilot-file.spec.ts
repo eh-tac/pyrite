@@ -1,10 +1,10 @@
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import { PilotFile } from "./pilot-file";
 
 function fixture(name: string): string {
-  return fs.readFileSync(path.resolve(__dirname, "../../../../fixtures/xwvm", name), "utf-8");
+  return fs.readFileSync(path.resolve(__dirname, "../../../../fixtures/xwvm", name), "utf8");
 }
 
 describe("XWVM PilotFile", () => {

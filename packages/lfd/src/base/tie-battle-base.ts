@@ -1,8 +1,10 @@
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { writeObject } from '@pyrite/core';
+
 import { BattleText } from '../battle-text';
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
 import { Delt } from '../delt';
 import { Rmap } from '../rmap';
-import { writeObject } from '@pyrite/core';
 export abstract class TIEBattleBase extends PyriteBase implements Byteable {
   public TIEBattleLength: number;
   public HeaderMap: Rmap;

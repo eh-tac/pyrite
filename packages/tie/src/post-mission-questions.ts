@@ -1,4 +1,5 @@
 import type { IMission } from '@pyrite/core';
+
 import { PostMissionQuestionsBase } from './base/post-mission-questions-base';
 
 export class PostMissionQuestions extends PostMissionQuestionsBase {

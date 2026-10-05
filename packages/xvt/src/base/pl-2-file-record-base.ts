@@ -1,16 +1,5 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { PL2CampaignProgressState } from '../pl-2-campaign-progress-state';
-import { PL2CampaignState } from '../pl-2-campaign-state';
-import { PL2DebriefRecord } from '../pl-2-debrief-record';
-import { PL2FactionRecord } from '../pl-2-faction-record';
-import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
-import { PLTBattleProgressState } from '../plt-battle-progress-state';
-import { PLTBattleState } from '../plt-battle-state';
-import { PLTCategoryTypeRecord } from '../plt-category-type-record';
-import { PLTConnectedPlayerData } from '../plt-connected-player-data';
-import { PLTPlayerRankCountRecord } from '../plt-player-rank-count-record';
-import { PLTTeamResultRecord } from '../plt-team-result-record';
-import { PLTTournamentProgressState } from '../plt-tournament-progress-state';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import {
   getByte,
   getChar,
@@ -22,6 +11,19 @@ import {
   writeObject,
   writeShort
 } from '@pyrite/core';
+
+import { PL2CampaignProgressState } from '../pl-2-campaign-progress-state';
+import { PL2CampaignState } from '../pl-2-campaign-state';
+import { PL2DebriefRecord } from '../pl-2-debrief-record';
+import { PL2FactionRecord } from '../pl-2-faction-record';
+import { PLTBattleProgressState } from '../plt-battle-progress-state';
+import { PLTBattleState } from '../plt-battle-state';
+import { PLTCategoryTypeRecord } from '../plt-category-type-record';
+import { PLTConnectedPlayerData } from '../plt-connected-player-data';
+import { PLTPlayerRankCountRecord } from '../plt-player-rank-count-record';
+import { PLTTeamResultRecord } from '../plt-team-result-record';
+import { PLTTournamentProgressState } from '../plt-tournament-progress-state';
+import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
 export abstract class PL2FileRecordBase extends PyriteBase implements Byteable {
   public readonly PL2FILERECORDLENGTH: number = 296238;
   public PilotName: string;

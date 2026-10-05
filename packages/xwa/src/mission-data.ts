@@ -3,6 +3,9 @@ import type { MissionScore } from '@pyrite/core';
 import { MissionDataBase } from './base/mission-data-base';
 
 export class MissionData extends MissionDataBase implements MissionScore {
+  public get hasData(): boolean {
+    return !!this.AttemptCount;
+  }
   public beforeConstruct(): void {}
 
   public toString(): string {

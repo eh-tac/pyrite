@@ -1,4 +1,5 @@
-import { Battle } from '../../ehtc/model';
+import type { BattleDetail } from '@pyrite/ehtc-api';
+import type { JSX } from '@stencil/core/jsx-runtime';
 
 export abstract class PilotFileController {
   public tabs: [string, JSX.Element][] = [];
@@ -11,9 +12,9 @@ export abstract class PilotFileController {
     return '';
   }
 
-  public abstract renderTabs(battleData?: Battle): [string, JSX.Element][];
+  public abstract renderTabs(battleData?: BattleDetail): [string, JSX.Element][];
 
-  protected renderItem(key: string, value: string | number, subtitle?: string, className?: string) {
+  protected renderItem(key: string, value: string | number, subtitle?: string, className?: string): JSX.Element {
     const vClass = className && className.includes('text-') ? className : 'text-info';
     return (
       <li class={`list-group-item kv data d-flex justify-content-between ${className || ''}`}>

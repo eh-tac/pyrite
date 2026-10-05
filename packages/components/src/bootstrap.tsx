@@ -1,4 +1,4 @@
-import { JSX } from '@stencil/core';
+import type { JSX } from '@stencil/core/jsx-runtime';
 
 export function tabPanes(tabs: [string, JSX.Element][], activeTab: string, tabClick: (select: string) => void) {
   return (
@@ -7,12 +7,12 @@ export function tabPanes(tabs: [string, JSX.Element][], activeTab: string, tabCl
         {tabs.map(tab => {
           const name = tab[0];
           const low = name.toLowerCase();
-          const on = low === activeTab;
+          const isOn = low === activeTab;
 
           return (
             <li class="nav-item">
               <a
-                class={`nav-link border-0 ${on ? 'active' : ''}`}
+                class={`nav-link border-0 ${isOn ? 'active' : ''}`}
                 id={`${low}-tab`}
                 data-toggle="tab"
                 href={`#${low}`}
@@ -32,10 +32,15 @@ export function tabPanes(tabs: [string, JSX.Element][], activeTab: string, tabCl
           const name = tab[0];
           const content = tab[1];
           const low = name.toLowerCase();
-          const on = low === activeTab;
+          const isOn = low === activeTab;
 
           return (
-            <div class={`tab-pane fade ${on ? 'show active' : ''}`} id={low} role="tabpanel" aria-labelledby={`${low}-tab`}>
+            <div
+              class={`tab-pane fade ${isOn ? 'show active' : ''}`}
+              id={low}
+              role="tabpanel"
+              aria-labelledby={`${low}-tab`}
+            >
               {content}
             </div>
           );

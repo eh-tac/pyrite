@@ -1,6 +1,9 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { Constants, Order, VariableType } from '../constants';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
 import { getBool, getByte, getString, writeBool, writeByte, writeString } from '@pyrite/core';
+
+import type { Order, VariableType } from '../constants';
+import { Constants } from '../constants';
 export abstract class OrderBase extends PyriteBase implements Byteable {
   public readonly ORDERLENGTH: number = 82;
   public Order: Order;

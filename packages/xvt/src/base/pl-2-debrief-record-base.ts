@@ -1,8 +1,10 @@
-import { Byteable, IMission, PyriteBase } from '@pyrite/core';
-import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
+import type { Byteable, IMission} from '@pyrite/core';
+import { PyriteBase } from '@pyrite/core';
+import { getInt, writeInt, writeObject } from '@pyrite/core';
+
 import { PLTCategoryTypeRecord } from '../plt-category-type-record';
 import { PLTPlayerRankCountRecord } from '../plt-player-rank-count-record';
-import { getInt, writeInt, writeObject } from '@pyrite/core';
+import { PLTAIRankCountRecord } from '../pltai-rank-count-record';
 export abstract class PL2DebriefRecordBase extends PyriteBase implements Byteable {
   public readonly PL2DEBRIEFRECORDLENGTH: number = 5256;
   public UnknownRecord1: PLTCategoryTypeRecord;

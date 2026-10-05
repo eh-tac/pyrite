@@ -1,10 +1,10 @@
-import { JSX } from '@stencil/core';
-import { BattleDetail as Battle } from '@pyrite/ehtc-api';
+import type { BattleSummary, KillSummary, MissionScore, TrainingSummary } from '@pyrite/core';
+import type { BattleDetail } from '@pyrite/ehtc-api';
+import type { PilotFile } from '@pyrite/tie';
+import type { JSX } from '@stencil/core/jsx-runtime';
 
+import { MaterialIcon } from '../../material-icon/material-icon';
 import { PilotFileController } from './controller';
-import { TrainingSummary, MissionScore, KillSummary, BattleSummary } from '../../model/pilot';
-import { PilotFile } from '@pyrite/tie';
-import { ICON_CHECK_CIRCLE, ICON_CLOSE, ICON_DONE } from '../../global/icons';
 
 export class TFRController extends PilotFileController {
   public constructor(
@@ -14,7 +14,7 @@ export class TFRController extends PilotFileController {
     super(filepath);
   }
 
-  public renderTabs(battleData?: Battle): [string, JSX.Element][] {
+  public renderTabs(battleData?: BattleDetail): [string, JSX.Element][] {
     const tabs: [string, JSX.Element][] = [
       ['Summary', this.renderPilotInformation()],
       ['Battles', this.renderBattles()],
@@ -28,11 +28,14 @@ export class TFRController extends PilotFileController {
     return tabs;
   }
 
-  private renderBSF(battleData: Battle): JSX.Element {
+  private renderBSF(battleData: BattleDetail): JSX.Element {
     const scores = battleData.highScores;
 
     const totalScore: number = this.tfr.LaserlessScore;
-    const percent: string = scores && scores.total && scores.total.score ? this.percentage(totalScore, scores.total.score) : 'No high score found';
+    const percent: string =
+      scores && scores.total && scores.total.score
+        ? this.percentage(totalScore, scores.total.score)
+        : 'No high score found';
     const type = battleData.missions === 1 ? 'Mission' : 'Battle';
 
     const battleRow = (
@@ -55,7 +58,9 @@ export class TFRController extends PilotFileController {
       if (missionScores[m] && scores?.missions?.[m]) {
         missions.push(this.renderTIEMission(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
-        missions.push(this.renderItem(`Mission ${m + 1}`, missionScores[m].score, 'Too many missionss flown', 'text-danger'));
+        missions.push(
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].score, 'Too many missionss flown', 'text-danger'),
+        );
       } else if (scores?.missions?.[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, 'Not flown', '', 'text-danger'));
       } else {
@@ -78,7 +83,7 @@ export class TFRController extends PilotFileController {
     );
   }
 
-  protected renderTIEMission(key: string, mission: MissionScore, highScore?: number): JSX.Element {
+  private renderTIEMission(key: string, mission: MissionScore, highScore?: number): JSX.Element {
     const score = mission.score || 0;
     const complete = mission.completed;
     const secret = mission.secret;
@@ -86,16 +91,34 @@ export class TFRController extends PilotFileController {
     const hs = highScore ? this.percentage(mission.score, highScore) : '';
 
     if (!complete && !score) {
-      return '';
+      return null;
     }
     console.log('render tie mission', key, mission, score);
     // TODO get icons rendering with styles
-    const icons: JSX.Element[] = [complete ? <span class="complete">{ICON_DONE}</span> : <span class="incomplete">{ICON_CLOSE}</span>];
+    const icons: JSX.Element[] = [
+      complete ? (
+        <span class="complete">
+          <MaterialIcon name="check" />
+        </span>
+      ) : (
+        <span class="incomplete">
+          <MaterialIcon name="check_indeterminate_small" />
+        </span>
+      ),
+    ];
     if (secret) {
-      icons.push(<span class="secret">{ICON_CHECK_CIRCLE}</span>);
+      icons.push(
+        <span class="secret">
+          <MaterialIcon name="award_star" />
+        </span>,
+      );
     }
     if (bonus) {
-      icons.push(<span class="bonus">{ICON_CHECK_CIRCLE}</span>);
+      icons.push(
+        <span class="bonus">
+          <MaterialIcon name="award_star" />
+        </span>,
+      );
     }
 
     return (
@@ -128,7 +151,7 @@ export class TFRController extends PilotFileController {
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Pilot Information</li>
-        {Object.entries(fields).map((value: [string, string]) => this.renderItem(value[0], value[1]))}
+        {Object.entries(fields).map((value: [string, string | number]) => this.renderItem(value[0], value[1]))}
       </ul>
     );
   }
@@ -145,7 +168,9 @@ export class TFRController extends PilotFileController {
                   <h5 class="mb-1 text-muted">Battle {b + 1}</h5>
                   <small>{battle.status}</small>
                 </div>
-                {battle.missions.map((mission: MissionScore, m: number) => this.renderTIEMission(`Mission ${m + 1}`, mission))}
+                {battle.missions.map((mission: MissionScore, m: number) =>
+                  this.renderTIEMission(`Mission ${m + 1}`, mission),
+                )}
               </li>
             ),
         )}
@@ -157,7 +182,9 @@ export class TFRController extends PilotFileController {
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Player Battle Victories</li>
-        {this.tfr.BattleVictories.filter((bv: KillSummary) => bv.kills).map((bv: KillSummary) => this.renderItem(bv.craftLabel, bv.kills))}
+        {this.tfr.BattleVictories.filter((bv: KillSummary) => bv.kills).map((bv: KillSummary) =>
+          this.renderItem(bv.craftLabel, bv.kills),
+        )}
         <li class="list-group-item no-data">
           <small class="text-muted">No kills recorded</small>
         </li>
@@ -173,7 +200,9 @@ export class TFRController extends PilotFileController {
           <li class="list-group-item">
             <h5 class="mb-1">{train.craftLabel}</h5>
             {this.renderItem('Obstacle Course', train.scoreLabel, '', 'py-0')}
-            {train.missions.map((mission: MissionScore, m: number) => this.renderTIEMission(`Mission ${m + 1}`, mission))}
+            {train.missions.map((mission: MissionScore, m: number) =>
+              this.renderTIEMission(`Mission ${m + 1}`, mission),
+            )}
             <li class="list-group-item no-data py-0">
               <span class="text-muted">No training missions flown</span>
             </li>

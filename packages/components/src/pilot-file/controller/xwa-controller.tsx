@@ -1,10 +1,9 @@
-import { JSX } from '@stencil/core';
+import type { BattleSummary } from '@pyrite/core';
+import type { BattleDetail } from '@pyrite/ehtc-api';
+import type { MissionData, PilotFile, TriStat } from '@pyrite/xwa';
+import type { JSX } from '@stencil/core/jsx-runtime';
 
 import { PilotFileController } from './controller';
-import { Battle, BattleDetail } from '@pyrite/ehtc-api';
-import { PilotFile, MissionData } from '@pyrite/xwa';
-import { BattleSummary } from '../../model/pilot';
-import { TriStat } from '../types';
 
 export class XWAPltController extends PilotFileController {
   public constructor(
@@ -14,7 +13,7 @@ export class XWAPltController extends PilotFileController {
     super(filepath);
   }
 
-  public renderTabs(battleData?: Battle): [string, JSX.Element][] {
+  public renderTabs(battleData?: BattleDetail): [string, JSX.Element][] {
     const tabs: [string, JSX.Element][] = [
       ['Summary', this.renderPilotInformation()],
       ['Battles', this.renderBattles()],
@@ -29,16 +28,18 @@ export class XWAPltController extends PilotFileController {
 
   protected renderBSF(battleData: BattleDetail): JSX.Element {
     let scores = battleData.highScores;
-    let battleHS = scores.total.score;
+    let battleHS = scores.total?.score;
 
     let totalScore: number = 0;
 
     const missionScores: MissionData[] = [];
     this.plt.MissionData.forEach(m => {
-      if (m.WinCount && m.AttemptCount) {
-        missionScores.push(m);
-        totalScore += m.Total;
+      if (!(m.WinCount && m.AttemptCount)) {
+      	return;
       }
+
+      missionScores.push(m);
+      totalScore += m.Total;
     });
 
     const type: string = battleData.missions === 1 ? 'Mission' : 'Battle';
@@ -129,22 +130,18 @@ export class XWAPltController extends PilotFileController {
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Tours of Duty</li>
-        {this.plt.BattleSummary.map((battle: BattleSummary, b: number) => {
-          if (battle.status === 'None' || battle.missions.length === 0) {
-            return '';
-          } else {
-            return (
+        {this.plt.BattleSummary.map((battle: BattleSummary<MissionData>, b: number) => {
+          return battle.status === 'None' || battle.missions.length === 0 ? '' : (
               <li class="list-group-item">
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="mb-1 text-muted">Battle {b}</h5>
                   <small>{battle.status}</small>
                 </div>
                 {battle.missions.map((mission: MissionData, m: number) =>
-                  mission.AttemptCount ? this.renderXWAMission(`Mission ${m + 1}`, mission) : '',
+                  mission.hasData ? this.renderXWAMission(`Mission ${m + 1}`, mission) : '',
                 )}
               </li>
             );
-          }
         })}
       </ul>
     );

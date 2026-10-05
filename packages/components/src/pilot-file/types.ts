@@ -3,3 +3,10 @@ export type TriStat = {
   melee: number;
   combat: number;
 };
+
+export type XWATriStat = {
+  Label: string;
+  TourOfDuty: number;
+  Azzameen: number;
+  Simulator: number;
+};

@@ -1,4 +1,5 @@
-import { IMission } from '@pyrite/core';
+import type { IMission } from '@pyrite/core';
+
 import { MissionBase } from './base/mission-base';
 import { QuestionCondition } from './constants';
 import type { FlightGroup } from './flight-group';
