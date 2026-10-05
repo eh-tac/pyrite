@@ -1,8 +1,8 @@
-import { JSX, h } from '@stencil/core';
+import { JSX } from '@stencil/core';
 
 import { PilotFileController } from './controller';
 import { Battle } from '../../ehtc/model';
-import { PL2FileRecord as PilotFile, PL2CampaignRecord, PL2FactionRecord, PLTCategoryTypeRecord } from '@pyrite/xvt';
+import { PL2FileRecord as PilotFile, PL2CampaignRecord, PL2FactionRecord } from '@pyrite/xvt';
 
 type TriStat = { Label: string; exercise: number; melee: number; combat: number };
 
@@ -19,11 +19,17 @@ export class BoPPltController extends PilotFileController {
 
     const rebel = this.plt.getRebelFaction();
     if (rebel.hasData()) {
-      tabs.push(['Stats (R)', this.renderTeamStats('Rebel', rebel)], ['Missions (R)', this.renderTeamMissions('Rebel', rebel)]);
+      tabs.push(
+        ['Stats (R)', this.renderTeamStats('Rebel', rebel)],
+        ['Missions (R)', this.renderTeamMissions('Rebel', rebel)],
+      );
     }
     const imprl = this.plt.getImperialFaction();
     if (imprl.hasData()) {
-      tabs.push(['Stats (I)', this.renderTeamStats('Imperial', imprl)], ['Missions (I)', this.renderTeamMissions('Imperial', imprl)]);
+      tabs.push(
+        ['Stats (I)', this.renderTeamStats('Imperial', imprl)],
+        ['Missions (I)', this.renderTeamMissions('Imperial', imprl)],
+      );
     }
 
     if (battleData) {
@@ -47,7 +53,8 @@ export class BoPPltController extends PilotFileController {
           totalScore += m.bestScore;
         }
       });
-    const percent: string = scores && scores.total ? this.percentage(totalScore, scores.total.score) : 'No high score found';
+    const percent: string =
+      scores && scores.total ? this.percentage(totalScore, scores.total.score) : 'No high score found';
     const type = battleData.missions === 1 ? 'Mission' : 'Battle';
 
     const battleRow = (
@@ -66,7 +73,14 @@ export class BoPPltController extends PilotFileController {
       if (missionScores[m] && scores.missions[m]) {
         missions.push(this.renderBoPCampaign(`Mission ${m + 1}`, missionScores[m], scores.missions[m].score));
       } else if (missionScores[m]) {
-        missions.push(this.renderItem(`Mission ${m + 1}`, missionScores[m].bestScore.toLocaleString(), 'Too many missions flown', 'text-danger'));
+        missions.push(
+          this.renderItem(
+            `Mission ${m + 1}`,
+            missionScores[m].bestScore.toLocaleString(),
+            'Too many missions flown',
+            'text-danger',
+          ),
+        );
       } else if (scores.missions[m]) {
         missions.push(this.renderItem(`Mission ${m + 1}`, 'Not flown', '', 'text-danger'));
       } else {
@@ -172,7 +186,9 @@ export class BoPPltController extends PilotFileController {
         <li class="list-group-item kv d-flex justify-content-between">
           <h6 class="my-0 font-weight-bold">Campaign</h6>
         </li>
-        {stats.missionSPCampaign.map((m, i) => (m.isMissionComplete ? this.renderBoPCampaign(`Mission ${i + 1}`, m) : ''))}
+        {stats.missionSPCampaign.map((m, i) =>
+          m.isMissionComplete ? this.renderBoPCampaign(`Mission ${i + 1}`, m) : '',
+        )}
         {/* <li class="list-group-item kv d-flex justify-content-between">
           <h6 class="my-0 font-weight-bold">Melees</h6>
         </li>

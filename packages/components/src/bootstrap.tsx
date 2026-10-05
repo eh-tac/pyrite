@@ -1,6 +1,6 @@
-import { JSX, h } from '@stencil/core';
+import { JSX } from '@stencil/core';
 
-export function tabPanes(tabs: [string, JSX.Element][], activeTab: string, tabClick: (select: string) => void): JSX.Element {
+export function tabPanes(tabs: [string, JSX.Element][], activeTab: string, tabClick: (select: string) => void) {
   return (
     <div class="pyrite-tab-pane">
       <ul class="nav nav-tabs" id="myTab" role="tablist">

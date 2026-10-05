@@ -10,7 +10,8 @@
     "packages/xvt",
     "packages/xwa",
     "packages/xw",
-    "packages/components"
+    "packages/components",
+    "packages/ehtc-api"
   ],
   "scripts": {
     "build": "npm run build --workspaces --if-present",
@@ -42,5 +43,13 @@
     "tsup": "^8.5.0",
     "tsx": "^4.22.3",
     "typescript": "^5.8.3"
+  },
+  "overrides": {
+    "@hey-api/json-schema-ref-parser": {
+      "js-yaml": "4.3.2"
+    },
+    "tsup": {
+      "esbuild": "0.28.2"
+    }
   }
 }

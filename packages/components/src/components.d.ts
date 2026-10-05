@@ -6,47 +6,65 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ApiSummary } from "./ehtc/api-select/api-select";
-import { BattleSummary, CharacterSummary, PilotSummary } from "./ehtc/model";
+import { BattleSummary } from "./ehtc/model";
+import { Character, MemberSummary } from "@pyrite/ehtc-api";
 import { ItemSummary } from "./ehtc/wrap-select/wrap-select";
 export { ApiSummary } from "./ehtc/api-select/api-select";
-export { BattleSummary, CharacterSummary, PilotSummary } from "./ehtc/model";
+export { BattleSummary } from "./ehtc/model";
+export { Character, MemberSummary } from "@pyrite/ehtc-api";
 export { ItemSummary } from "./ehtc/wrap-select/wrap-select";
 export namespace Components {
     interface EhtcApiSelect {
-        "displayDescription"?: "subtitle" | "none";
-        "displayId"?: "left" | "right";
+        "displayDescription"?: 'subtitle' | 'none';
+        "displayId"?: 'left' | 'right';
+        /**
+          * @default ''
+         */
         "domain": string;
-        "item": ApiSummary;
-        "name": string;
+        "item"?: ApiSummary;
         "search": (query: string) => Promise<void>;
         "setValue": (val: string | number) => Promise<void>;
         "url": string;
-        "value": string;
     }
     interface EhtcApiStore {
         "apiFetch": (url: string) => Promise<any>;
         /**
-          * @default "pyrite"
+          * @default 'pyrite'
          */
         "cachePrefix": string;
         /**
-          * @default ""
+          * @default ''
          */
         "domain": string;
     }
     interface EhtcBattleSelect {
-        "battle": BattleSummary;
-        "category": string;
+        "battle"?: BattleSummary;
+        "category"?: string;
+        /**
+          * @default false
+         */
         "disabled": boolean;
+        /**
+          * @default ''
+         */
         "domain": string;
         "name": string;
+        /**
+          * @default false
+         */
         "readonly": boolean;
         "search": (query: string) => Promise<void>;
         "setValue": (val: string | number) => Promise<void>;
-        "value": string;
+        "value"?: string;
     }
     interface EhtcMemberSelect {
+        /**
+          * @default false
+         */
         "disabled": boolean;
+        /**
+          * @default ''
+         */
         "domain": string;
         /**
           * @default ''
@@ -56,7 +74,13 @@ export namespace Components {
           * @default 'character'
          */
         "mode": 'character' | 'member' | 'member-aliases';
+        /**
+          * @default ''
+         */
         "name": string;
+        /**
+          * @default false
+         */
         "readonly": boolean;
         "search": (query: string) => Promise<void>;
         "setValue": (val: string | number) => Promise<void>;
@@ -64,6 +88,9 @@ export namespace Components {
           * @default 'active'
          */
         "status": 'active' | 'all';
+        /**
+          * @default ''
+         */
         "value": string;
     }
     interface EhtcWrapSelect {
@@ -145,7 +172,7 @@ declare global {
         new (): HTMLEhtcBattleSelectElement;
     };
     interface HTMLEhtcMemberSelectElementEventMap {
-        "memberSelect": PilotSummary | CharacterSummary;
+        "memberSelect": MemberSummary | Character;
     }
     interface HTMLEhtcMemberSelectElement extends Components.EhtcMemberSelect, HTMLStencilElement {
         addEventListener<K extends keyof HTMLEhtcMemberSelectElementEventMap>(type: K, listener: (this: HTMLEhtcMemberSelectElement, ev: EhtcMemberSelectCustomEvent<HTMLEhtcMemberSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -197,53 +224,94 @@ declare namespace LocalJSX {
     type OneOf<K extends string, PropT, AttrT = PropT> = { [P in K]: PropT } & { [P in `attr:${K}` | `prop:${K}`]?: never } | { [P in `attr:${K}`]: AttrT } & { [P in K | `prop:${K}`]?: never } | { [P in `prop:${K}`]: PropT } & { [P in K | `attr:${K}`]?: never };
 
     interface EhtcApiSelect {
-        "displayDescription"?: "subtitle" | "none";
-        "displayId"?: "left" | "right";
+        /**
+          * If `true`, the user cannot interact with the element.
+         */
+        "disabled"?: boolean;
+        "displayDescription"?: 'subtitle' | 'none';
+        "displayId"?: 'left' | 'right';
+        /**
+          * @default ''
+         */
         "domain"?: string;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
         "item"?: ApiSummary;
+        /**
+          * The name of the element, used when submitting an HTML form.
+         */
         "name"?: string;
         "onApiSelect"?: (event: EhtcApiSelectCustomEvent<ApiSummary>) => void;
-        "url"?: string;
-        "value"?: string;
+        "url": string;
     }
     interface EhtcApiStore {
         /**
-          * @default "pyrite"
+          * @default 'pyrite'
          */
         "cachePrefix"?: string;
         /**
-          * @default ""
+          * @default ''
          */
         "domain"?: string;
     }
     interface EhtcBattleSelect {
         "battle"?: BattleSummary;
         "category"?: string;
+        /**
+          * @default false
+         */
         "disabled"?: boolean;
+        /**
+          * @default ''
+         */
         "domain"?: string;
-        "name"?: string;
+        "name": string;
         "onBattleSelect"?: (event: EhtcBattleSelectCustomEvent<BattleSummary>) => void;
+        /**
+          * @default false
+         */
         "readonly"?: boolean;
         "value"?: string;
     }
     interface EhtcMemberSelect {
+        /**
+          * @default false
+         */
         "disabled"?: boolean;
+        /**
+          * @default ''
+         */
         "domain"?: string;
         /**
           * @default ''
          */
         "filter"?: string;
         /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
           * @default 'character'
          */
         "mode"?: 'character' | 'member' | 'member-aliases';
+        /**
+          * @default ''
+         */
         "name"?: string;
-        "onMemberSelect"?: (event: EhtcMemberSelectCustomEvent<PilotSummary | CharacterSummary>) => void;
+        "onMemberSelect"?: (event: EhtcMemberSelectCustomEvent<MemberSummary | Character>) => void;
+        /**
+          * @default false
+         */
         "readonly"?: boolean;
         /**
           * @default 'active'
          */
         "status"?: 'active' | 'all';
+        /**
+          * @default ''
+         */
         "value"?: string;
     }
     interface EhtcWrapSelect {
@@ -267,12 +335,10 @@ declare namespace LocalJSX {
     }
 
     interface EhtcApiSelectAttributes {
-        "value": string;
         "domain": string;
-        "name": string;
         "url": string;
-        "displayId": "left" | "right";
-        "displayDescription": "subtitle" | "none";
+        "displayId": 'left' | 'right';
+        "displayDescription": 'subtitle' | 'none';
     }
     interface EhtcApiStoreAttributes {
         "domain": string;
@@ -309,9 +375,9 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
-        "ehtc-api-select": Omit<EhtcApiSelect, keyof EhtcApiSelectAttributes> & { [K in keyof EhtcApiSelect & keyof EhtcApiSelectAttributes]?: EhtcApiSelect[K] } & { [K in keyof EhtcApiSelect & keyof EhtcApiSelectAttributes as `attr:${K}`]?: EhtcApiSelectAttributes[K] } & { [K in keyof EhtcApiSelect & keyof EhtcApiSelectAttributes as `prop:${K}`]?: EhtcApiSelect[K] };
+        "ehtc-api-select": Omit<EhtcApiSelect, keyof EhtcApiSelectAttributes> & { [K in keyof EhtcApiSelect & keyof EhtcApiSelectAttributes]?: EhtcApiSelect[K] } & { [K in keyof EhtcApiSelect & keyof EhtcApiSelectAttributes as `attr:${K}`]?: EhtcApiSelectAttributes[K] } & { [K in keyof EhtcApiSelect & keyof EhtcApiSelectAttributes as `prop:${K}`]?: EhtcApiSelect[K] } & OneOf<"url", EhtcApiSelect["url"], EhtcApiSelectAttributes["url"]>;
         "ehtc-api-store": Omit<EhtcApiStore, keyof EhtcApiStoreAttributes> & { [K in keyof EhtcApiStore & keyof EhtcApiStoreAttributes]?: EhtcApiStore[K] } & { [K in keyof EhtcApiStore & keyof EhtcApiStoreAttributes as `attr:${K}`]?: EhtcApiStoreAttributes[K] } & { [K in keyof EhtcApiStore & keyof EhtcApiStoreAttributes as `prop:${K}`]?: EhtcApiStore[K] };
-        "ehtc-battle-select": Omit<EhtcBattleSelect, keyof EhtcBattleSelectAttributes> & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes]?: EhtcBattleSelect[K] } & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes as `attr:${K}`]?: EhtcBattleSelectAttributes[K] } & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes as `prop:${K}`]?: EhtcBattleSelect[K] };
+        "ehtc-battle-select": Omit<EhtcBattleSelect, keyof EhtcBattleSelectAttributes> & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes]?: EhtcBattleSelect[K] } & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes as `attr:${K}`]?: EhtcBattleSelectAttributes[K] } & { [K in keyof EhtcBattleSelect & keyof EhtcBattleSelectAttributes as `prop:${K}`]?: EhtcBattleSelect[K] } & OneOf<"name", EhtcBattleSelect["name"], EhtcBattleSelectAttributes["name"]>;
         "ehtc-member-select": Omit<EhtcMemberSelect, keyof EhtcMemberSelectAttributes> & { [K in keyof EhtcMemberSelect & keyof EhtcMemberSelectAttributes]?: EhtcMemberSelect[K] } & { [K in keyof EhtcMemberSelect & keyof EhtcMemberSelectAttributes as `attr:${K}`]?: EhtcMemberSelectAttributes[K] } & { [K in keyof EhtcMemberSelect & keyof EhtcMemberSelectAttributes as `prop:${K}`]?: EhtcMemberSelect[K] };
         "ehtc-wrap-select": Omit<EhtcWrapSelect, keyof EhtcWrapSelectAttributes> & { [K in keyof EhtcWrapSelect & keyof EhtcWrapSelectAttributes]?: EhtcWrapSelect[K] } & { [K in keyof EhtcWrapSelect & keyof EhtcWrapSelectAttributes as `attr:${K}`]?: EhtcWrapSelectAttributes[K] } & { [K in keyof EhtcWrapSelect & keyof EhtcWrapSelectAttributes as `prop:${K}`]?: EhtcWrapSelect[K] };
         "pyrite-pilot-file": Omit<PyritePilotFile, keyof PyritePilotFileAttributes> & { [K in keyof PyritePilotFile & keyof PyritePilotFileAttributes]?: PyritePilotFile[K] } & { [K in keyof PyritePilotFile & keyof PyritePilotFileAttributes as `attr:${K}`]?: PyritePilotFileAttributes[K] } & { [K in keyof PyritePilotFile & keyof PyritePilotFileAttributes as `prop:${K}`]?: PyritePilotFile[K] } & OneOf<"file", PyritePilotFile["file"], PyritePilotFileAttributes["file"]>;

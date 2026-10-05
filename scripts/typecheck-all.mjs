@@ -8,6 +8,7 @@ const projectConfigs = [
   //   'components/tsconfig.json',
   //   'components/tsconfig.commonjs.json',
   'packages/codegen/tsconfig.json',
+  'packages/ehtc-api/tsconfig.json',
   'packages/components/tsconfig.json',
   'packages/core/tsconfig.json',
   'packages/lfd/tsconfig.json',

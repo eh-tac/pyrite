@@ -1,10 +1,10 @@
-import { JSX, h } from "@stencil/core";
+import { JSX } from '@stencil/core';
 
-import { PilotFileController } from "./controller";
-import { Battle } from "../../model/ehtc";
-import { PilotFile, MissionData } from "../../model/XWA";
-import { BattleSummary } from "../../model/pilot";
-import { TriStat } from "../../model/XWA/pilot-file";
+import { PilotFileController } from './controller';
+import { Battle, BattleDetail } from '@pyrite/ehtc-api';
+import { PilotFile, MissionData } from '@pyrite/xwa';
+import { BattleSummary } from '../../model/pilot';
+import { TriStat } from '../types';
 
 export class XWAPltController extends PilotFileController {
   public constructor(
@@ -16,33 +16,33 @@ export class XWAPltController extends PilotFileController {
 
   public renderTabs(battleData?: Battle): [string, JSX.Element][] {
     const tabs: [string, JSX.Element][] = [
-      ["Summary", this.renderPilotInformation()],
-      ["Battles", this.renderBattles()],
-      ["Kills", this.renderKills()],
+      ['Summary', this.renderPilotInformation()],
+      ['Battles', this.renderBattles()],
+      ['Kills', this.renderKills()],
     ];
 
     if (battleData) {
-      tabs.unshift(["BSF", this.renderBSF(battleData)]);
+      tabs.unshift(['BSF', this.renderBSF(battleData)]);
     }
     return tabs;
   }
 
-  protected renderBSF(battleData: Battle): JSX.Element {
+  protected renderBSF(battleData: BattleDetail): JSX.Element {
     let scores = battleData.highScores;
-    let battleHS = battleData.highScores.total.score;
+    let battleHS = scores.total.score;
 
     let totalScore: number = 0;
 
     const missionScores: MissionData[] = [];
-    this.plt.MissionData.forEach((m) => {
+    this.plt.MissionData.forEach(m => {
       if (m.WinCount && m.AttemptCount) {
         missionScores.push(m);
         totalScore += m.Total;
       }
     });
 
-    const type: string = battleData.missions === 1 ? "Mission" : "Battle";
-    const percent: string = battleHS ? this.percentage(totalScore, battleHS) : "No High Score found";
+    const type: string = battleData.missions === 1 ? 'Mission' : 'Battle';
+    const percent: string = battleHS ? this.percentage(totalScore, battleHS) : 'No High Score found';
 
     const battleRow = (
       <li class="list-group-item kv heading d-flex justify-content-between">
@@ -62,22 +62,22 @@ export class XWAPltController extends PilotFileController {
         missions.push(this.renderXWAMission(`Mission ${m + 1}`, missionScores[m], score));
       } else if (missionScores[m] && m >= battleData.missions) {
         missions.push(
-          this.renderItem(`Mission ${m + 1}`, missionScores[m].Total, "Too many missions flown", "text-danger"),
+          this.renderItem(`Mission ${m + 1}`, missionScores[m].Total, 'Too many missions flown', 'text-danger'),
         );
       } else if (!missionScores[m] && m < battleData.missions) {
-        missions.push(this.renderItem(`Mission ${m + 1}`, "Not flown", "", "text-danger"));
+        missions.push(this.renderItem(`Mission ${m + 1}`, 'Not flown', '', 'text-danger'));
       } else {
-        console.error("Unknown state?");
+        console.error('Unknown state?');
       }
     }
 
     return (
       <ul class="list-group">
         <li class="list-group-item heading">BSF Details</li>
-        {this.renderItem("Filename", this.filename)}
-        {this.renderItem("Rank", this.plt.CurrentRank)}
-        {this.renderItem("Lasers", this.plt.LaserLabel, this.plt.LaserPercent)}
-        {this.renderItem("Warheads", this.plt.WarheadLabel, this.plt.WarheadPercent)}
+        {this.renderItem('Filename', this.filename)}
+        {this.renderItem('Rank', this.plt.CurrentRank)}
+        {this.renderItem('Lasers', this.plt.LaserLabel, this.plt.LaserPercent)}
+        {this.renderItem('Warheads', this.plt.WarheadLabel, this.plt.WarheadPercent)}
 
         {battleRow}
         {missions}
@@ -86,7 +86,7 @@ export class XWAPltController extends PilotFileController {
   }
 
   protected renderXWAMission(key: string, mission: MissionData, highScore?: number): JSX.Element {
-    const hs = highScore ? this.percentage(mission.Total, highScore) : "";
+    const hs = highScore ? this.percentage(mission.Total, highScore) : '';
 
     return (
       <div class="list-group-item data d-flex justify-content-between">
@@ -111,16 +111,16 @@ export class XWAPltController extends PilotFileController {
     return (
       <ul class="list-group">
         <li class="list-group-item heading">Pilot Information</li>
-        {this.renderItem("Filename", this.filename)}
+        {this.renderItem('Filename', this.filename)}
 
-        {this.renderItem("Pilot Name", this.plt.Name)}
-        {this.renderItem("Tours of Duty Score", this.plt.TourOfDutyScore.toLocaleString())}
-        {this.renderItem("Azzameen Score", this.plt.AzzameenScore.toLocaleString())}
-        {this.renderItem("Simulator Score", this.plt.SimulatorScore.toLocaleString())}
-        {this.renderItem("Bonus Points", this.plt.BonusScore.toLocaleString())}
-        {this.renderItem("Total Score", this.plt.TotalScore.toLocaleString())}
-        {this.renderItem("Lasers", this.plt.LaserLabel, this.plt.LaserPercent)}
-        {this.renderItem("Warheads", this.plt.WarheadLabel, this.plt.WarheadPercent)}
+        {this.renderItem('Pilot Name', this.plt.Name)}
+        {this.renderItem('Tours of Duty Score', this.plt.TourOfDutyScore.toLocaleString())}
+        {this.renderItem('Azzameen Score', this.plt.AzzameenScore.toLocaleString())}
+        {this.renderItem('Simulator Score', this.plt.SimulatorScore.toLocaleString())}
+        {this.renderItem('Bonus Points', this.plt.BonusScore.toLocaleString())}
+        {this.renderItem('Total Score', this.plt.TotalScore.toLocaleString())}
+        {this.renderItem('Lasers', this.plt.LaserLabel, this.plt.LaserPercent)}
+        {this.renderItem('Warheads', this.plt.WarheadLabel, this.plt.WarheadPercent)}
       </ul>
     );
   }
@@ -130,8 +130,8 @@ export class XWAPltController extends PilotFileController {
       <ul class="list-group">
         <li class="list-group-item heading">Tours of Duty</li>
         {this.plt.BattleSummary.map((battle: BattleSummary, b: number) => {
-          if (battle.status === "None" || battle.missions.length === 0) {
-            return "";
+          if (battle.status === 'None' || battle.missions.length === 0) {
+            return '';
           } else {
             return (
               <li class="list-group-item">
@@ -140,7 +140,7 @@ export class XWAPltController extends PilotFileController {
                   <small>{battle.status}</small>
                 </div>
                 {battle.missions.map((mission: MissionData, m: number) =>
-                  mission.AttemptCount ? this.renderXWAMission(`Mission ${m + 1}`, mission) : "",
+                  mission.AttemptCount ? this.renderXWAMission(`Mission ${m + 1}`, mission) : '',
                 )}
               </li>
             );
@@ -165,7 +165,7 @@ export class XWAPltController extends PilotFileController {
               <th>Combat Sim</th>
             </tr>
           </thead>
-          <tbody>{this.plt.BattleVictories.map((s) => this.renderTriRow(s))}</tbody>
+          <tbody>{this.plt.BattleVictories.map(s => this.renderTriRow(s))}</tbody>
         </table>
       </div>
     );
@@ -175,9 +175,9 @@ export class XWAPltController extends PilotFileController {
     return (
       <tr class={className}>
         <td>{stat.Label}</td>
-        <td class={className || "text-info"}>{stat.TourOfDuty}</td>
-        <td class={className || "text-info"}>{stat.Azzameen}</td>
-        <td class={className || "text-info"}>{stat.Simulator}</td>
+        <td class={className || 'text-info'}>{stat.TourOfDuty}</td>
+        <td class={className || 'text-info'}>{stat.Azzameen}</td>
+        <td class={className || 'text-info'}>{stat.Simulator}</td>
       </tr>
     );
   }

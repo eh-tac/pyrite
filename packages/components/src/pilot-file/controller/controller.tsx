@@ -1,4 +1,3 @@
-import { JSX, h } from '@stencil/core';
 import { Battle } from '../../ehtc/model';
 
 export abstract class PilotFileController {
@@ -7,14 +6,14 @@ export abstract class PilotFileController {
 
   public get filename(): string {
     if (this.filepath) {
-      return this.filepath.split('/').pop();
+      return this.filepath.split('/').pop() as string;
     }
     return '';
   }
 
-  public abstract renderTabs(battleData: Battle): [string, JSX.Element][];
+  public abstract renderTabs(battleData?: Battle): [string, JSX.Element][];
 
-  protected renderItem(key: string, value: string | number, subtitle?: string, className?: string): JSX.Element {
+  protected renderItem(key: string, value: string | number, subtitle?: string, className?: string) {
     const vClass = className && className.includes('text-') ? className : 'text-info';
     return (
       <li class={`list-group-item kv data d-flex justify-content-between ${className || ''}`}>

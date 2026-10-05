@@ -1,32 +1,34 @@
-import { JSX, Component, Prop, h, Element, Event, EventEmitter, State, Method } from '@stencil/core';
-import { PilotSummary, CharacterSummary } from '../model';
+import { Component, Prop, Element, Event, EventEmitter, State, Method, AttachInternals } from '@stencil/core';
+import { MemberSummary, Character } from '@pyrite/ehtc-api';
 import { ehtcAPI } from '../api-store/util';
 
-type Member = PilotSummary | CharacterSummary;
+type Member = MemberSummary | Character;
 
 @Component({
   tag: 'ehtc-member-select',
   styleUrl: 'member-select.scss',
   shadow: false,
+  formAssociated: true,
 })
 export class MemberSelectComponent {
   @Element() el!: HTMLElement;
-  @Event() memberSelect: EventEmitter<PilotSummary | CharacterSummary>;
+  @AttachInternals() internals!: ElementInternals;
+  @Event() memberSelect!: EventEmitter<MemberSummary | Character>;
   // member PIN = value
-  @Prop({ reflect: true, mutable: true }) value: string;
+  @Prop({ reflect: true, mutable: true }) value: string = '';
   // domain override. defaults to empty for same domain requests
-  @Prop() domain: string;
-  @Prop() name: string;
+  @Prop() domain: string = '';
+  @Prop() name: string = '';
   @Prop() mode: 'character' | 'member' | 'member-aliases' = 'character';
   @Prop() status: 'active' | 'all' = 'active';
   @Prop() filter: string = '';
-  @Prop() disabled: boolean;
-  @Prop() readonly: boolean;
+  @Prop() disabled: boolean = false;
+  @Prop() readonly: boolean = false;
   @State() selection?: Member;
   @State() suggestions?: Member[];
   @State() suggestionIdx?: number;
-  @State() query: string;
-  @State() memberList: Member[];
+  @State() query: string = '';
+  @State() memberList: Member[] = [];
 
   private onInput: (e: Event) => void = (e: Event) => {
     if (this.disabled) {
@@ -61,38 +63,43 @@ export class MemberSelectComponent {
     } else if (e.key === 'Enter') {
       e.stopPropagation();
       e.preventDefault();
-      const m = this.suggestions[this.suggestionIdx];
+      const m = this.suggestions[this.suggestionIdx ?? 0];
       if (m) {
         this.selectMember(m);
       }
     }
   };
-  private externalPINInputElement: HTMLInputElement;
+  // private externalPINInputElement: HTMLInputElement;
   private filterArray: number[] = [];
 
   private get editable(): boolean {
+    // return this.internals.
+    // return true; // TODO should disabled live from the internals or WHAT
     return !this.disabled && !this.readonly;
   }
 
   public componentWillLoad(): void {
-    const parent = this.el.parentElement;
-    this.externalPINInputElement = parent.ownerDocument.createElement('input');
-    this.externalPINInputElement.type = 'hidden';
-    this.externalPINInputElement.value = this.value;
-    this.externalPINInputElement.name = this.name;
-    this.externalPINInputElement.disabled = this.disabled;
-    this.externalPINInputElement.readOnly = this.readonly;
+    // const parent = this.el.parentElement;
+    // this.externalPINInputElement = parent.ownerDocument.createElement('input');
+    // this.externalPINInputElement.type = 'hidden';
+    // this.externalPINInputElement.value = this.value;
+    // this.externalPINInputElement.name = this.name;
+    // this.externalPINInputElement.disabled = this.disabled;
+    // this.externalPINInputElement.readOnly = this.readonly;
 
-    parent.appendChild(this.externalPINInputElement);
+    // parent.appendChild(this.externalPINInputElement);
     this.filterArray = this.filter ? this.filter.split(',').map(s => parseInt(s, 10)) : [];
+
+    const charFilter = (c: Character) => this.filterArray.includes(c.characterId);
+    const memberFilter = (m: Member) => this.filterArray.includes(m.PIN, 10);
 
     ehtcAPI(this.listURL).then((d: Member[]) => {
       this.memberList = d;
       if (this.filterArray.length) {
-        this.memberList = d.filter(
-          (m: CharacterSummary) =>
-            (this.mode !== 'character' && this.filterArray.includes(parseInt(m.PIN))) || (this.mode === 'character' && this.filterArray.includes(m.characterId)),
-        );
+        this.memberList =
+          this.mode === 'character'
+            ? (d as Character[]).filter((c: Character) => charFilter(c))
+            : d.filter((m: Member) => memberFilter(m as Member));
       }
 
       if (this.value) {
@@ -117,7 +124,11 @@ export class MemberSelectComponent {
   public setValue(val: string | number): Promise<void> {
     const v = typeof val === 'number' ? val : parseInt(val, 10);
     this.selectMember(
-      this.memberList.find((m: CharacterSummary) => (this.mode !== 'character' && parseInt(m.PIN, 10) === v) || (this.mode === 'character' && m.characterId === v)),
+      this.memberList.find(
+        (m: Member) =>
+          (this.mode !== 'character' && m.PIN === v) ||
+          (this.mode === 'character' && (m as Character).characterId === v),
+      ),
     );
     return Promise.resolve();
   }
@@ -143,23 +154,23 @@ export class MemberSelectComponent {
 
   private getSuggestions() {
     const q = this.query.toLowerCase();
-    const match = (str?: string) => str && str.toLowerCase().includes(q);
-    const exact = (str?: string) => str && str.toLowerCase() === q;
-    const score = (str?: string) => (match(str) ? str.toLowerCase().indexOf(q) : 99);
-    const nactv = (m: Member) => m.description.includes('[Inactive]');
+    const match = (str?: string) => !!str && str.toLowerCase().includes(q);
+    const exact = (str?: string) => !!str && str.toLowerCase() === q;
+    const score = (str?: string) => (str && match(str) ? str.toLowerCase().indexOf(q) : 99);
+    const nactv = (m: Member) => m.description?.includes('[Inactive]');
 
     // PIN > 1 excludes the system profile
     const filtered = this.memberList.filter((p: Member): boolean => {
-      return parseInt(p.PIN) > 1 && (match(p.PIN.toString()) || match(p.label) || match(p.description));
+      return !!p.PIN && p.PIN > 1 && (match(p.PIN.toString()) || match(p.label) || match(p.description));
     });
     const sorted = filtered.sort((a: Member, b: Member): number => {
-      if (exact(a.PIN.toString()) || exact(a.label) || exact(a.description)) return -1;
-      if (exact(b.PIN.toString()) || exact(b.label) || exact(b.description)) return 1;
+      if (exact(a.PIN?.toString()) || exact(a.label) || exact(a.description)) return -1;
+      if (exact(b.PIN?.toString()) || exact(b.label) || exact(b.description)) return 1;
       if (nactv(a)) return 1;
       if (nactv(b)) return -1;
 
-      const aScore = Math.min(score(a.PIN.toString()), score(a.label), score(a.description));
-      const bScore = Math.min(score(b.PIN.toString()), score(b.label), score(b.description));
+      const aScore = Math.min(score(a.PIN?.toString()), score(a.label), score(a.description));
+      const bScore = Math.min(score(b.PIN?.toString()), score(b.label), score(b.description));
       return aScore - bScore;
     });
     this.suggestions = sorted.slice(0, 15);
@@ -177,16 +188,17 @@ export class MemberSelectComponent {
     this.selection = m;
     let val = '';
     if (m) {
-      const num = this.mode === 'character' ? (m as CharacterSummary).characterId : m.PIN;
+      const num = this.mode === 'character' ? (m as Character).characterId : m.PIN;
       val = num.toString(10);
     }
     this.value = val;
     this.memberSelect.emit(m);
-    this.externalPINInputElement.value = val;
-    this.externalPINInputElement.dispatchEvent(new InputEvent('input'));
+    this.internals.setFormValue(val);
+    // this.externalPINInputElement.value = val;
+    // this.externalPINInputElement.dispatchEvent(new InputEvent('input'));
   }
 
-  private renderMember(p: Member): JSX.Element {
+  private renderMember(p: Member) {
     return (
       <div class="pilot-summary" onClick={this.selectMember.bind(this, p)}>
         <div class="topline tags has-addons mb-0" style={{ width: '100%' }}>
@@ -198,7 +210,7 @@ export class MemberSelectComponent {
     );
   }
 
-  public render(): JSX.Element {
+  public render() {
     if (!this.memberList) {
       return <p>Loading...</p>;
     }
@@ -232,7 +244,10 @@ export class MemberSelectComponent {
         )}
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
-            {this.suggestions && this.suggestions.map((s: Member, idx: number) => <div class={{ record: true, hover: this.suggestionIdx === idx }}>{this.renderMember(s)}</div>)}
+            {this.suggestions &&
+              this.suggestions.map((s: Member, idx: number) => (
+                <div class={{ record: true, hover: this.suggestionIdx === idx }}>{this.renderMember(s)}</div>
+              ))}
             <span class="no-data">No matches found</span>
           </div>
         </div>

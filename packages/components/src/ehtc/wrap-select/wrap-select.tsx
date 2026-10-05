@@ -1,4 +1,4 @@
-import { JSX, Component, Prop, h, Element, State, Method, Event, EventEmitter } from "@stencil/core";
+import { JSX, Component, Prop, Element, State, Method, Event, EventEmitter } from '@stencil/core';
 
 export interface ItemSummary {
   id: number;
@@ -6,8 +6,8 @@ export interface ItemSummary {
 }
 
 @Component({
-  tag: "ehtc-wrap-select",
-  styleUrl: "wrap-select.scss",
+  tag: 'ehtc-wrap-select',
+  styleUrl: 'wrap-select.scss',
   shadow: false,
 })
 export class WrapSelectComponent {
@@ -35,7 +35,7 @@ export class WrapSelectComponent {
       return;
     }
 
-    if (e.key === "ArrowDown") {
+    if (e.key === 'ArrowDown') {
       if (this.suggestionIdx === undefined) {
         this.suggestionIdx = 0;
       } else {
@@ -44,7 +44,7 @@ export class WrapSelectComponent {
           this.suggestionIdx = 0; // wrap around
         }
       }
-    } else if (e.key === "ArrowUp") {
+    } else if (e.key === 'ArrowUp') {
       if (this.suggestionIdx === undefined) {
         this.suggestionIdx = this.suggestions.length - 1;
       } else {
@@ -53,7 +53,7 @@ export class WrapSelectComponent {
           this.suggestionIdx = this.suggestions.length - 1; // wrap around
         }
       }
-    } else if (e.key === "Enter") {
+    } else if (e.key === 'Enter') {
       e.stopPropagation();
       e.preventDefault();
       const m = this.suggestions[this.suggestionIdx];
@@ -72,7 +72,7 @@ export class WrapSelectComponent {
     } else {
       this.suggestions = this.fullList;
       document.body.addEventListener(
-        "click",
+        'click',
         () => {
           this.suggestions = undefined;
         },
@@ -92,15 +92,15 @@ export class WrapSelectComponent {
     this.fullList = [];
 
     const parent = this.el.parentElement;
-    this.externalInputElement = parent.ownerDocument.createElement("input");
-    this.externalInputElement.type = "hidden";
+    this.externalInputElement = parent.ownerDocument.createElement('input');
+    this.externalInputElement.type = 'hidden';
     this.externalInputElement.value = this.value;
     this.externalInputElement.name = this.name;
     this.externalInputElement.disabled = this.disabled;
     this.externalInputElement.readOnly = this.readonly;
     parent.appendChild(this.externalInputElement);
 
-    this.el.querySelectorAll("option").forEach((optEl) => {
+    this.el.querySelectorAll('option').forEach(optEl => {
       const item = {
         id: optEl.value ? parseInt(optEl.value, 10) : null,
         name: optEl.textContent,
@@ -114,8 +114,8 @@ export class WrapSelectComponent {
         }
       }
     });
-    document.body.addEventListener("keydown", (ke: KeyboardEvent) => {
-      if (ke.key === "Escape" && this.suggestions) {
+    document.body.addEventListener('keydown', (ke: KeyboardEvent) => {
+      if (ke.key === 'Escape' && this.suggestions) {
         this.suggestions = undefined;
       }
     });
@@ -140,18 +140,18 @@ export class WrapSelectComponent {
     const q = this.query.toLowerCase();
     const match = (str: string) => {
       const s = str.toLowerCase();
-      const t = s.replace("-", "");
-      const u = t.replace(" ", "");
+      const t = s.replace('-', '');
+      const u = t.replace(' ', '');
       return s.includes(q) || t.includes(q) || u.includes(q);
     };
 
     this.suggestions = this.fullList
       .filter((b: ItemSummary): boolean => {
-        return match(b.id ? b.id.toString() : "") || match(b.name);
+        return match(b.id ? b.id.toString() : '') || match(b.name);
       })
       .slice(0, 15);
     document.body.addEventListener(
-      "click",
+      'click',
       () => {
         this.suggestions = undefined;
       },
@@ -162,15 +162,15 @@ export class WrapSelectComponent {
 
   private selectItem(b?: ItemSummary): void {
     this.selection = b;
-    this.value = this.externalInputElement.value = b ? b.id.toString(10) : "";
+    this.value = this.externalInputElement.value = b ? b.id.toString(10) : '';
     this.itemSelect.emit(b);
-    this.externalInputElement.dispatchEvent(new InputEvent("input"));
+    this.externalInputElement.dispatchEvent(new InputEvent('input'));
   }
 
   private renderItem(b: ItemSummary): JSX.Element {
     return (
       <div class="item-summary" onClick={this.selectItem.bind(this, b)}>
-        <div class="topline tags has-addons" style={{ width: "100%" }}>
+        <div class="topline tags has-addons" style={{ width: '100%' }}>
           <span class="item-label tag is-primary mb-0 is-radiusless">{b.name}</span>
         </div>
       </div>
@@ -187,11 +187,8 @@ export class WrapSelectComponent {
       );
     }
     return (
-      <div
-        class={{ "ehtc-wrap-select": true, dropdown: true, "is-active": !this.selection && !!this.suggestions }}
-        onClick={this.onClick}
-      >
-        <div style={{ display: "none" }}>
+      <div class={{ 'ehtc-wrap-select': true, 'dropdown': true, 'is-active': !this.selection && !!this.suggestions }} onClick={this.onClick}>
+        <div style={{ display: 'none' }}>
           <slot />
         </div>
         {!this.selection && (
@@ -222,10 +219,7 @@ export class WrapSelectComponent {
         )}
         <div class="dropdown-menu pt-0" id="dropdown-menu" role="menu">
           <div class="dropdown-content records py-0 is-white">
-            {this.suggestions &&
-              this.suggestions.map((s: ItemSummary, idx: number) => (
-                <div class={{ record: true, hover: this.suggestionIdx === idx }}>{this.renderItem(s)}</div>
-              ))}
+            {this.suggestions && this.suggestions.map((s: ItemSummary, idx: number) => <div class={{ record: true, hover: this.suggestionIdx === idx }}>{this.renderItem(s)}</div>)}
             <span class="no-data">No matches found</span>
           </div>
         </div>

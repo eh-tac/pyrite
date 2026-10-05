@@ -1,4 +1,4 @@
-import { Component, h, JSX, Prop, State, Element, Method, Watch } from '@stencil/core';
+import { Component, Prop, State, Element, Method, Watch } from '@stencil/core';
 import { tabPanes } from '../bootstrap';
 import { PilotFileController } from './controller/controller';
 import { TFRController } from './controller/tfr-controller';
@@ -71,9 +71,9 @@ export class PilotViewer {
     return Promise.resolve();
   }
 
-  public render(): JSX.Element {
-    let title: JSX.Element = 'Pyrite Pilot File Viewer';
-    let content: JSX.Element = <p class="text-center my-3">Select a file to view</p>;
+  public render() {
+    let title = 'Pyrite Pilot File Viewer';
+    let content = <p class="text-center my-3">Select a file to view</p>;
 
     if (this.controller) {
       title = this.controller.filename;

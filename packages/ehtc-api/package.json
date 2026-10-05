@@ -1,0 +1,22 @@
+{
+  "name": "@pyrite/ehtc-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "generate": "openapi-ts",
+    "build": "npm run generate && tsup src/index.ts --format esm --dts --clean",
+    "typecheck": "tsc --noEmit --project tsconfig.json"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "0.99.0"
+  }
+}
